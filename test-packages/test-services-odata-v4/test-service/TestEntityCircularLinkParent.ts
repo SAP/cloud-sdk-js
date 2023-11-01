@@ -40,17 +40,17 @@ export class TestEntityCircularLinkParent<
    * Key Property.
    * Maximum length: 10.
    */
-  declare keyProperty: DeserializedType<T, 'Edm.String'>;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
   /**
    * One-to-one navigation property to the {@link TestEntityCircularLinkChild} entity.
    */
-  declare toFirstChild?: TestEntityCircularLinkChild<T> | null;
+  toFirstChild?: TestEntityCircularLinkChild<T> | null;
   /**
    * One-to-many navigation property to the {@link TestEntityCircularLinkChild} entity.
    */
-  declare toChildren: TestEntityCircularLinkChild<T>[];
+  toChildren!: TestEntityCircularLinkChild<T>[];
 
-  constructor(_entityApi: TestEntityCircularLinkParentApi<T>) {
+  constructor(readonly _entityApi: TestEntityCircularLinkParentApi<T>) {
     super(_entityApi);
   }
 }

@@ -17,6 +17,7 @@ export declare class CaseTest<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements CaseTestType<T>
 {
+  readonly _entityApi: CaseTestApi<T>;
   /**
    * Technical entity name for CaseTest.
    */

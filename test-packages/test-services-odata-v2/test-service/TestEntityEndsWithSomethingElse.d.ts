@@ -19,6 +19,7 @@ export declare class TestEntityEndsWithSomethingElse<
   extends Entity
   implements TestEntityEndsWithSomethingElseType<T>
 {
+  readonly _entityApi: TestEntityEndsWithSomethingElseApi<T>;
   /**
    * Technical entity name for TestEntityEndsWithSomethingElse.
    */

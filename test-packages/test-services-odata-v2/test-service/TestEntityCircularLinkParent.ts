@@ -39,13 +39,13 @@ export class TestEntityCircularLinkParent<
   /**
    * Key Property.
    */
-  declare keyProperty: DeserializedType<T, 'Edm.String'>;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
   /**
    * One-to-many navigation property to the {@link TestEntityCircularLinkChild} entity.
    */
-  declare toChild: TestEntityCircularLinkChild<T>[];
+  toChild!: TestEntityCircularLinkChild<T>[];
 
-  constructor(_entityApi: TestEntityCircularLinkParentApi<T>) {
+  constructor(readonly _entityApi: TestEntityCircularLinkParentApi<T>) {
     super(_entityApi);
   }
 }

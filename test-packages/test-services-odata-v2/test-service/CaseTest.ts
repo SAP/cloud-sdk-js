@@ -33,9 +33,9 @@ export class CaseTest<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Property String.
    */
-  declare keyPropertyString: DeserializedType<T, 'Edm.String'>;
+  keyPropertyString!: DeserializedType<T, 'Edm.String'>;
 
-  constructor(_entityApi: CaseTestApi<T>) {
+  constructor(readonly _entityApi: CaseTestApi<T>) {
     super(_entityApi);
   }
 }

@@ -41,33 +41,33 @@ export class TestEntityLvl2MultiLink<
    * Maximum length: 10.
    * @nullable
    */
-  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Boolean Property.
    * @nullable
    */
-  declare booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Guid Property.
    * @nullable
    */
-  declare guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Int 16 Property.
    * @nullable
    */
-  declare int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   /**
    * Key Property.
    * Maximum length: 10.
    */
-  declare keyProperty: DeserializedType<T, 'Edm.String'>;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
   /**
    * One-to-many navigation property to the {@link TestEntityLvl3MultiLink} entity.
    */
-  declare toMultiLink2: TestEntityLvl3MultiLink<T>[];
+  toMultiLink2!: TestEntityLvl3MultiLink<T>[];
 
-  constructor(_entityApi: TestEntityLvl2MultiLinkApi<T>) {
+  constructor(readonly _entityApi: TestEntityLvl2MultiLinkApi<T>) {
     super(_entityApi);
   }
 }

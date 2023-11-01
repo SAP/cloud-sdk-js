@@ -18,6 +18,7 @@ export declare class Airports<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements AirportsType<T>
 {
+  readonly _entityApi: AirportsApi<T>;
   /**
    * Technical entity name for Airports.
    */

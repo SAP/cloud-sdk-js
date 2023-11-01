@@ -19,6 +19,7 @@ export declare class TestEntityWithSharedEntityType2<
   extends Entity
   implements TestEntityWithSharedEntityType2Type<T>
 {
+  readonly _entityApi: TestEntityWithSharedEntityType2Api<T>;
   /**
    * Technical entity name for TestEntityWithSharedEntityType2.
    */

@@ -35,9 +35,9 @@ export class TestEntityEndsWithSomethingElse<
   /**
    * Key Property.
    */
-  declare keyProperty: DeserializedType<T, 'Edm.String'>;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
 
-  constructor(_entityApi: TestEntityEndsWithSomethingElseApi<T>) {
+  constructor(readonly _entityApi: TestEntityEndsWithSomethingElseApi<T>) {
     super(_entityApi);
   }
 }

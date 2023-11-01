@@ -33,19 +33,19 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Test Entity Link.
    */
-  declare keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>;
+  keyTestEntityLink!: DeserializedType<T, 'Edm.Int32'>;
   /**
    * Key To Test Entity.
    */
-  declare keyToTestEntity: DeserializedType<T, 'Edm.Int32'>;
+  keyToTestEntity!: DeserializedType<T, 'Edm.Int32'>;
   /**
    * String Property.
    * Maximum length: 111.
    * @nullable
    */
-  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
 
-  constructor(_entityApi: TestEntityLinkApi<T>) {
+  constructor(readonly _entityApi: TestEntityLinkApi<T>) {
     super(_entityApi);
   }
 }

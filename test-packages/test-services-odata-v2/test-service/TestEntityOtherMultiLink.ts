@@ -35,9 +35,9 @@ export class TestEntityOtherMultiLink<
   /**
    * Key Property.
    */
-  declare keyProperty: DeserializedType<T, 'Edm.String'>;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
 
-  constructor(_entityApi: TestEntityOtherMultiLinkApi<T>) {
+  constructor(readonly _entityApi: TestEntityOtherMultiLinkApi<T>) {
     super(_entityApi);
   }
 }

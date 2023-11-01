@@ -35,21 +35,21 @@ export class Airports<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Icao Code.
    */
-  declare icaoCode: DeserializedType<T, 'Edm.String'>;
+  icaoCode!: DeserializedType<T, 'Edm.String'>;
   /**
    * Name.
    */
-  declare name: DeserializedType<T, 'Edm.String'>;
+  name!: DeserializedType<T, 'Edm.String'>;
   /**
    * Iata Code.
    */
-  declare iataCode: DeserializedType<T, 'Edm.String'>;
+  iataCode!: DeserializedType<T, 'Edm.String'>;
   /**
    * Location.
    */
-  declare location: AirportLocation<T>;
+  location!: AirportLocation<T>;
 
-  constructor(_entityApi: AirportsApi<T>) {
+  constructor(readonly _entityApi: AirportsApi<T>) {
     super(_entityApi);
   }
 }

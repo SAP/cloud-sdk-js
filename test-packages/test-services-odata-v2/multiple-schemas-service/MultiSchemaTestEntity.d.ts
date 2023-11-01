@@ -19,6 +19,7 @@ export declare class MultiSchemaTestEntity<
   extends Entity
   implements MultiSchemaTestEntityType<T>
 {
+  readonly _entityApi: MultiSchemaTestEntityApi<T>;
   /**
    * Technical entity name for MultiSchemaTestEntity.
    */

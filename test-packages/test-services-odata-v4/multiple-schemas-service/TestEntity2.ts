@@ -33,14 +33,14 @@ export class TestEntity2<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Property String.
    */
-  declare keyPropertyString: DeserializedType<T, 'Edm.String'>;
+  keyPropertyString!: DeserializedType<T, 'Edm.String'>;
   /**
    * Single Property.
    * @nullable
    */
-  declare singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
+  singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
 
-  constructor(_entityApi: TestEntity2Api<T>) {
+  constructor(readonly _entityApi: TestEntity2Api<T>) {
     super(_entityApi);
   }
 }

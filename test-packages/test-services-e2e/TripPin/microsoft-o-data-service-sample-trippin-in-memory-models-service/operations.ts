@@ -41,7 +41,7 @@ export function getNearestAirport<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: GetNearestAirportParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   GetNearestAirportParameters<DeSerializersT>,
@@ -83,7 +83,7 @@ export function resetDataSource<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: ResetDataSourceParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   ResetDataSourceParameters<DeSerializersT>,

@@ -33,14 +33,14 @@ export class TestEntity4<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Property String.
    */
-  declare keyPropertyString: DeserializedType<T, 'Edm.String'>;
+  keyPropertyString!: DeserializedType<T, 'Edm.String'>;
   /**
    * Boolean Property.
    * @nullable
    */
-  declare booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
 
-  constructor(_entityApi: TestEntity4Api<T>) {
+  constructor(readonly _entityApi: TestEntity4Api<T>) {
     super(_entityApi);
   }
 }

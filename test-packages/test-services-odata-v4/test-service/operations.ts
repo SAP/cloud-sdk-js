@@ -41,7 +41,7 @@ export function testFunctionImportEdmReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
@@ -78,7 +78,7 @@ export function testFunctionImportEdmReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
@@ -128,7 +128,7 @@ export function testFunctionImportNullableTest<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportNullableTestParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportNullableTestParameters<DeSerializersT>,
@@ -181,7 +181,7 @@ export function testFunctionImportEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
@@ -219,7 +219,7 @@ export function testFunctionImportEntityReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
@@ -257,7 +257,7 @@ export function testFunctionImportSharedEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
   OperationRequestBuilder<
     DeSerializersT,
@@ -298,7 +298,7 @@ export function testFunctionImportSharedEntityReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
   OperationRequestBuilder<
     DeSerializersT,
@@ -339,7 +339,7 @@ export function testFunctionImportComplexReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
@@ -378,7 +378,7 @@ export function testFunctionImportComplexReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
@@ -434,7 +434,7 @@ export function testFunctionImportMultipleParams<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportMultipleParamsParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportMultipleParamsParameters<DeSerializersT>,
@@ -492,7 +492,7 @@ export function testFunctionImportWithDifferentName<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
@@ -526,7 +526,7 @@ export function testActionImportNoParameterNoReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterNoReturnTypeParameters<DeSerializersT>,
@@ -577,7 +577,7 @@ export function testActionImportMultipleParameterComplexReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportMultipleParameterComplexReturnTypeParameters<DeSerializersT>,
@@ -642,7 +642,7 @@ export function testActionImportUnsupportedEdmTypes<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportUnsupportedEdmTypesParameters<DeSerializersT>,
@@ -685,7 +685,7 @@ export function testActionImportNoParameterEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNoParameterEntityReturnTypeParameters<DeSerializersT>,
@@ -723,7 +723,7 @@ export function testActionImportSharedEntityReturnType<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportSharedEntityReturnTypeParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
   OperationRequestBuilder<
     DeSerializersT,
@@ -764,7 +764,7 @@ export function testActionImportSharedEntityReturnTypeCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
   OperationRequestBuilder<
     DeSerializersT,
@@ -818,7 +818,7 @@ export function testActionImportNullableTest<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: TestActionImportNullableTestParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): OperationRequestBuilder<
   DeSerializersT,
   TestActionImportNullableTestParameters<DeSerializersT>,

@@ -50,155 +50,152 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Property Guid.
    */
-  declare keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>;
+  keyPropertyGuid!: DeserializedType<T, 'Edm.Guid'>;
   /**
    * Key Property String.
    */
-  declare keyPropertyString: DeserializedType<T, 'Edm.String'>;
+  keyPropertyString!: DeserializedType<T, 'Edm.String'>;
   /**
    * String Property.
    * Maximum length: 10.
    * @nullable
    */
-  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Boolean Property.
    * @nullable
    */
-  declare booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Guid Property.
    * @nullable
    */
-  declare guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Int 16 Property.
    * @nullable
    */
-  declare int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   /**
    * Int 32 Property.
    * @nullable
    */
-  declare int32Property?: DeserializedType<T, 'Edm.Int32'> | null;
+  int32Property?: DeserializedType<T, 'Edm.Int32'> | null;
   /**
    * Int 64 Property.
    * @nullable
    */
-  declare int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
+  int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
   /**
    * Decimal Property.
    * @nullable
    */
-  declare decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
+  decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
   /**
    * Single Property.
    * @nullable
    */
-  declare singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
+  singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
   /**
    * Double Property.
    * @nullable
    */
-  declare doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
+  doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
   /**
    * Float Property.
    * @nullable
    */
-  declare floatProperty?: DeserializedType<T, 'Edm.Float'> | null;
+  floatProperty?: DeserializedType<T, 'Edm.Float'> | null;
   /**
    * Time Of Day Property.
    * @nullable
    */
-  declare timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
+  timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
   /**
    * Key Date Property.
    * @nullable
    */
-  declare keyDateProperty?: DeserializedType<T, 'Edm.Date'> | null;
+  keyDateProperty?: DeserializedType<T, 'Edm.Date'> | null;
   /**
    * Date Time Off Set Property.
    * @nullable
    */
-  declare dateTimeOffSetProperty?: DeserializedType<
-    T,
-    'Edm.DateTimeOffset'
-  > | null;
+  dateTimeOffSetProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
   /**
    * Duration Property.
    * @nullable
    */
-  declare durationProperty?: DeserializedType<T, 'Edm.Duration'> | null;
+  durationProperty?: DeserializedType<T, 'Edm.Duration'> | null;
   /**
    * Byte Property.
    * @nullable
    */
-  declare byteProperty?: DeserializedType<T, 'Edm.Byte'> | null;
+  byteProperty?: DeserializedType<T, 'Edm.Byte'> | null;
   /**
    * S Byte Property.
    * @nullable
    */
-  declare sByteProperty?: DeserializedType<T, 'Edm.SByte'> | null;
+  sByteProperty?: DeserializedType<T, 'Edm.SByte'> | null;
   /**
    * Geography Point Property.
    * @nullable
    */
-  declare geographyPointProperty?: DeserializedType<T, 'Edm.Any'> | null;
+  geographyPointProperty?: DeserializedType<T, 'Edm.Any'> | null;
   /**
    * Something The Sdk Does Not Support.
    * @nullable
    */
-  declare somethingTheSdkDoesNotSupport?: DeserializedType<T, 'Edm.Any'> | null;
+  somethingTheSdkDoesNotSupport?: DeserializedType<T, 'Edm.Any'> | null;
   /**
    * Collection Property.
    * Maximum length: 10.
    * @nullable
    */
-  declare collectionProperty?: DeserializedType<T, 'Edm.String'>[] | null;
+  collectionProperty?: DeserializedType<T, 'Edm.String'>[] | null;
   /**
    * Complex Type Property.
    * @nullable
    */
-  declare complexTypeProperty?: TestComplexType<T> | null;
+  complexTypeProperty?: TestComplexType<T> | null;
   /**
    * Complex Type Collection Property.
    * @nullable
    */
-  declare complexTypeCollectionProperty?: TestComplexType<T>[] | null;
+  complexTypeCollectionProperty?: TestComplexType<T>[] | null;
   /**
    * Enum Property.
    * @nullable
    */
-  declare enumProperty?: TestEnumType | null;
+  enumProperty?: TestEnumType | null;
   /**
    * Enum Property Int 64.
    * @nullable
    */
-  declare enumPropertyInt64?: TestEnumTypeInt64 | null;
+  enumPropertyInt64?: TestEnumTypeInt64 | null;
   /**
    * Enum Property With One Member.
    * @nullable
    */
-  declare enumPropertyWithOneMember?: TestEnumTypeWithOneMember | null;
+  enumPropertyWithOneMember?: TestEnumTypeWithOneMember | null;
   /**
    * Enum Collection Property.
    * @nullable
    */
-  declare enumCollectionProperty?: TestEnumType[] | null;
+  enumCollectionProperty?: TestEnumType[] | null;
   /**
    * One-to-many navigation property to the {@link TestEntityMultiLink} entity.
    */
-  declare toMultiLink: TestEntityMultiLink<T>[];
+  toMultiLink!: TestEntityMultiLink<T>[];
   /**
    * One-to-many navigation property to the {@link TestEntityMultiLink} entity.
    */
-  declare toOtherMultiLink: TestEntityMultiLink<T>[];
+  toOtherMultiLink!: TestEntityMultiLink<T>[];
   /**
    * One-to-one navigation property to the {@link TestEntitySingleLink} entity.
    */
-  declare toSingleLink?: TestEntitySingleLink<T> | null;
+  toSingleLink?: TestEntitySingleLink<T> | null;
 
-  constructor(_entityApi: TestEntityApi<T>) {
+  constructor(readonly _entityApi: TestEntityApi<T>) {
     super(_entityApi);
   }
 
@@ -209,7 +206,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundFunctionWithoutArguments(
     parameters: BoundFunctionWithoutArgumentsParameters<T>,
-    deSerializers: T = defaultDeSerializers as T
+    deSerializers?: T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -224,10 +221,14 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
       'boundFunctionWithoutArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers,
+      deSerializers || defaultDeSerializers,
       'function'
     );
   }
@@ -239,7 +240,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundFunctionWithArguments(
     parameters: BoundFunctionWithArgumentsParameters<T>,
-    deSerializers: T = defaultDeSerializers as T
+    deSerializers?: T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -257,10 +258,14 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
       'boundFunctionWithArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers,
+      deSerializers || defaultDeSerializers,
       'function'
     );
   }
@@ -272,7 +277,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundActionWithoutArguments(
     parameters: BoundActionWithoutArgumentsParameters<T>,
-    deSerializers: T = defaultDeSerializers as T
+    deSerializers?: T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -287,10 +292,14 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
       'boundActionWithoutArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers,
+      deSerializers || defaultDeSerializers,
       'action'
     );
   }

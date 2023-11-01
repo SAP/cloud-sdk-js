@@ -19,6 +19,7 @@ export declare class TestEntityWithEnumKey<
   extends Entity
   implements TestEntityWithEnumKeyType<T>
 {
+  readonly _entityApi: TestEntityWithEnumKeyApi<T>;
   /**
    * Technical entity name for TestEntityWithEnumKey.
    */

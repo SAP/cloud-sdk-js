@@ -35,19 +35,19 @@ export class TestEntity3<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Property String.
    */
-  declare keyPropertyString: DeserializedType<T, 'Edm.String'>;
+  keyPropertyString!: DeserializedType<T, 'Edm.String'>;
   /**
    * Enum Property.
    * @nullable
    */
-  declare enumProperty?: TestEnumType2 | null;
+  enumProperty?: TestEnumType2 | null;
   /**
    * Complex Type Property.
    * @nullable
    */
-  declare complexTypeProperty?: TestComplexType2<T> | null;
+  complexTypeProperty?: TestComplexType2<T> | null;
 
-  constructor(_entityApi: TestEntity3Api<T>) {
+  constructor(readonly _entityApi: TestEntity3Api<T>) {
     super(_entityApi);
   }
 }

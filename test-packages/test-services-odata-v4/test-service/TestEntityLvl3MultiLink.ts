@@ -37,19 +37,19 @@ export class TestEntityLvl3MultiLink<
    * Maximum length: 10.
    * @nullable
    */
-  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Guid Property.
    * @nullable
    */
-  declare guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Key Property.
    * Maximum length: 10.
    */
-  declare keyProperty: DeserializedType<T, 'Edm.String'>;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
 
-  constructor(_entityApi: TestEntityLvl3MultiLinkApi<T>) {
+  constructor(readonly _entityApi: TestEntityLvl3MultiLinkApi<T>) {
     super(_entityApi);
   }
 }

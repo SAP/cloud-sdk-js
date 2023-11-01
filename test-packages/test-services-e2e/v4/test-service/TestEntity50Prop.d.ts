@@ -19,6 +19,7 @@ export declare class TestEntity50Prop<
   extends Entity
   implements TestEntity50PropType<T>
 {
+  readonly _entityApi: TestEntity50PropApi<T>;
   /**
    * Technical entity name for TestEntity50Prop.
    */

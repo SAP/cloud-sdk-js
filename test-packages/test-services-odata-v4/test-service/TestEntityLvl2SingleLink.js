@@ -13,6 +13,7 @@ const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 class TestEntityLvl2SingleLink extends odata_v4_1.Entity {
     constructor(_entityApi) {
         super(_entityApi);
+        this._entityApi = _entityApi;
     }
 }
 exports.TestEntityLvl2SingleLink = TestEntityLvl2SingleLink;

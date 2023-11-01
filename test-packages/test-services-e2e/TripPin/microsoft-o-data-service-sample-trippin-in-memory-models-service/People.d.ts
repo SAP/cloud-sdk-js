@@ -20,6 +20,7 @@ export declare class People<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements PeopleType<T>
 {
+  readonly _entityApi: PeopleApi<T>;
   /**
    * Technical entity name for People.
    */

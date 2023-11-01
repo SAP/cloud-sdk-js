@@ -20,6 +20,7 @@ export declare class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements TestEntityType<T>
 {
+  readonly _entityApi: TestEntityApi<T>;
   /**
    * Technical entity name for TestEntity.
    */

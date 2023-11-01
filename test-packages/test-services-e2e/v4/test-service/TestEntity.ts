@@ -42,53 +42,53 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Test Entity.
    */
-  declare keyTestEntity: DeserializedType<T, 'Edm.Int32'>;
+  keyTestEntity!: DeserializedType<T, 'Edm.Int32'>;
   /**
    * String Property.
    * Maximum length: 111.
    * @nullable
    */
-  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Guid Property.
    * @nullable
    */
-  declare guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Boolean Property.
    * @nullable
    */
-  declare booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Int 64 Property.
    * @nullable
    */
-  declare int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
+  int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
   /**
    * Double Property.
    * @nullable
    */
-  declare doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
+  doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
   /**
    * Decimal Property.
    * @nullable
    */
-  declare decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
+  decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
   /**
    * Date Property.
    * @nullable
    */
-  declare dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
+  dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
   /**
    * Time Of Day Property.
    * @nullable
    */
-  declare timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
+  timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
   /**
    * Data Time Offset Data Time Property.
    * @nullable
    */
-  declare dataTimeOffsetDataTimeProperty?: DeserializedType<
+  dataTimeOffsetDataTimeProperty?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
@@ -96,16 +96,16 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    * Data Time Offset Timestamp Property.
    * @nullable
    */
-  declare dataTimeOffsetTimestampProperty?: DeserializedType<
+  dataTimeOffsetTimestampProperty?: DeserializedType<
     T,
     'Edm.DateTimeOffset'
   > | null;
   /**
    * One-to-many navigation property to the {@link TestEntityLink} entity.
    */
-  declare toMultiLink: TestEntityLink<T>[];
+  toMultiLink!: TestEntityLink<T>[];
 
-  constructor(_entityApi: TestEntityApi<T>) {
+  constructor(readonly _entityApi: TestEntityApi<T>) {
     super(_entityApi);
   }
 
@@ -116,7 +116,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundFunctionWithoutArguments(
     parameters: BoundFunctionWithoutArgumentsParameters<T>,
-    deSerializers: T = defaultDeSerializers as T
+    deSerializers?: T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -131,10 +131,14 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
       'boundFunctionWithoutArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers,
+      deSerializers || defaultDeSerializers,
       'function'
     );
   }
@@ -146,7 +150,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundFunctionWithoutArgumentsComplexReturnType(
     parameters: BoundFunctionWithoutArgumentsComplexReturnTypeParameters<T>,
-    deSerializers: T = defaultDeSerializers as T
+    deSerializers?: T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -166,7 +170,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
           ).deserializeComplexType(data, MyComplexReturnType)
         ),
       params,
-      deSerializers,
+      deSerializers || defaultDeSerializers,
       'function'
     );
   }
@@ -178,7 +182,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundFunctionWithArguments(
     parameters: BoundFunctionWithArgumentsParameters<T>,
-    deSerializers: T = defaultDeSerializers as T
+    deSerializers?: T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -196,10 +200,14 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
       'boundFunctionWithArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers,
+      deSerializers || defaultDeSerializers,
       'function'
     );
   }
@@ -211,7 +219,7 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    */
   boundActionWithoutArguments(
     parameters: BoundActionWithoutArgumentsParameters<T>,
-    deSerializers: T = defaultDeSerializers as T
+    deSerializers?: T
   ): BoundOperationRequestBuilder<
     TestEntity<T>,
     T,
@@ -226,10 +234,14 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
       'boundActionWithoutArguments',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(val.value, 'Edm.String', deSerializers)
+          edmToTs(
+            val.value,
+            'Edm.String',
+            deSerializers || defaultDeSerializers
+          )
         ),
       params,
-      deSerializers,
+      deSerializers || defaultDeSerializers,
       'action'
     );
   }

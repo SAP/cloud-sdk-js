@@ -34,14 +34,14 @@ export class Photos<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Id.
    */
-  declare id: DeserializedType<T, 'Edm.Int64'>;
+  id!: DeserializedType<T, 'Edm.Int64'>;
   /**
    * Name.
    * @nullable
    */
-  declare name?: DeserializedType<T, 'Edm.String'> | null;
+  name?: DeserializedType<T, 'Edm.String'> | null;
 
-  constructor(_entityApi: PhotosApi<T>) {
+  constructor(readonly _entityApi: PhotosApi<T>) {
     super(_entityApi);
   }
 }

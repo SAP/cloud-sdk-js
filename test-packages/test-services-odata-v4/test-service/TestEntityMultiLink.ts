@@ -43,37 +43,37 @@ export class TestEntityMultiLink<T extends DeSerializers = DefaultDeSerializers>
    * Maximum length: 10.
    * @nullable
    */
-  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Boolean Property.
    * @nullable
    */
-  declare booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Guid Property.
    * @nullable
    */
-  declare guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Int 16 Property.
    * @nullable
    */
-  declare int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   /**
    * Key Property.
    * Maximum length: 10.
    */
-  declare keyProperty: DeserializedType<T, 'Edm.String'>;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
   /**
    * One-to-many navigation property to the {@link TestEntityLvl2MultiLink} entity.
    */
-  declare toMultiLink1: TestEntityLvl2MultiLink<T>[];
+  toMultiLink1!: TestEntityLvl2MultiLink<T>[];
   /**
    * One-to-one navigation property to the {@link TestEntityLvl2SingleLink} entity.
    */
-  declare toSingleLink?: TestEntityLvl2SingleLink<T> | null;
+  toSingleLink?: TestEntityLvl2SingleLink<T> | null;
 
-  constructor(_entityApi: TestEntityMultiLinkApi<T>) {
+  constructor(readonly _entityApi: TestEntityMultiLinkApi<T>) {
     super(_entityApi);
   }
 }

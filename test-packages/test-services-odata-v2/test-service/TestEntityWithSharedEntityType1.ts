@@ -36,9 +36,9 @@ export class TestEntityWithSharedEntityType1<
    * Key Property.
    * Maximum length: 10.
    */
-  declare keyProperty: DeserializedType<T, 'Edm.String'>;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
 
-  constructor(_entityApi: TestEntityWithSharedEntityType1Api<T>) {
+  constructor(readonly _entityApi: TestEntityWithSharedEntityType1Api<T>) {
     super(_entityApi);
   }
 }

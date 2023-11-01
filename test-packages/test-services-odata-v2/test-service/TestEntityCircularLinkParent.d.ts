@@ -23,6 +23,7 @@ export declare class TestEntityCircularLinkParent<
   extends Entity
   implements TestEntityCircularLinkParentType<T>
 {
+  readonly _entityApi: TestEntityCircularLinkParentApi<T>;
   /**
    * Technical entity name for TestEntityCircularLinkParent.
    */

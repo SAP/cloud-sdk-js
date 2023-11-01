@@ -11,6 +11,7 @@ import {
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
+  getProxyConfig,
   getTenantIdWithFallback,
   HttpDestination,
   resolveDestination
@@ -83,6 +84,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
 
     const destinationRequestConfig =
       await buildHttpRequest(resolvedDestination);
+
     logCustomHeadersWarning(requestConfig.headers);
     const request = await buildRequestWithMergedHeadersAndQueryParameters(
       requestConfig,
@@ -399,6 +401,7 @@ async function buildDestinationHttpRequestConfig(
     baseURL: destination.url,
     headers,
     params: destination.queryParameters,
+    proxy: getProxyConfig(destination),
     ...(await getAgentConfigAsync(destination))
   };
 }
@@ -455,7 +458,6 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   'method'
 > {
   return {
-    proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config

@@ -37,44 +37,44 @@ export class People<T extends DeSerializers = DefaultDeSerializers>
   /**
    * User Name.
    */
-  userName!: DeserializedType<T, 'Edm.String'>;
+  declare userName: DeserializedType<T, 'Edm.String'>;
   /**
    * First Name.
    */
-  firstName!: DeserializedType<T, 'Edm.String'>;
+  declare firstName: DeserializedType<T, 'Edm.String'>;
   /**
    * Last Name.
    */
-  lastName!: DeserializedType<T, 'Edm.String'>;
+  declare lastName: DeserializedType<T, 'Edm.String'>;
   /**
    * Emails.
    * @nullable
    */
-  emails?: DeserializedType<T, 'Edm.String'>[] | null;
+  declare emails?: DeserializedType<T, 'Edm.String'>[] | null;
   /**
    * Address Info.
    * @nullable
    */
-  addressInfo?: Location<T>[] | null;
+  declare addressInfo?: Location<T>[] | null;
   /**
    * Gender.
    * @nullable
    */
-  gender?: PersonGender | null;
+  declare gender?: PersonGender | null;
   /**
    * Concurrency.
    */
-  concurrency!: DeserializedType<T, 'Edm.Int64'>;
+  declare concurrency: DeserializedType<T, 'Edm.Int64'>;
   /**
    * One-to-many navigation property to the {@link People} entity.
    */
-  friends!: People<T>[];
+  declare friends: People<T>[];
   /**
    * One-to-one navigation property to the {@link Photos} entity.
    */
-  photo?: Photos<T> | null;
+  declare photo?: Photos<T> | null;
 
-  constructor(readonly _entityApi: PeopleApi<T>) {
+  constructor(_entityApi: PeopleApi<T>) {
     super(_entityApi);
   }
 }

@@ -19,7 +19,6 @@ export declare class TestEntityLvl3MultiLink<
   extends Entity
   implements TestEntityLvl3MultiLinkType<T>
 {
-  readonly _entityApi: TestEntityLvl3MultiLinkApi<T>;
   /**
    * Technical entity name for TestEntityLvl3MultiLink.
    */

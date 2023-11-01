@@ -36,9 +36,9 @@ export class TestEntityEndsWithSomethingElse<
    * Key Property.
    * Maximum length: 10.
    */
-  keyProperty!: DeserializedType<T, 'Edm.String'>;
+  declare keyProperty: DeserializedType<T, 'Edm.String'>;
 
-  constructor(readonly _entityApi: TestEntityEndsWithSomethingElseApi<T>) {
+  constructor(_entityApi: TestEntityEndsWithSomethingElseApi<T>) {
     super(_entityApi);
   }
 }

@@ -34,9 +34,9 @@ export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers>
    * Key Property.
    * Maximum length: 10.
    */
-  keyProperty!: DeserializedType<T, 'Edm.String'>;
+  declare keyProperty: DeserializedType<T, 'Edm.String'>;
 
-  constructor(readonly _entityApi: TestEntityEndsWithApi<T>) {
+  constructor(_entityApi: TestEntityEndsWithApi<T>) {
     super(_entityApi);
   }
 }

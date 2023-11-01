@@ -70,7 +70,7 @@ describe('jwt', () => {
     });
   });
 
-  describe('retrieveJwt', () => {
+  describe('retrieveJwt()', () => {
     it('returns undefined when incoming message has no auth header', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT())).toBeUndefined();
     });
@@ -98,7 +98,7 @@ describe('jwt', () => {
     });
   });
 
-  describe('verifyJwt', () => {
+  describe('verifyJw())', () => {
     beforeEach(() => {
       process.env.VCAP_SERVICES = JSON.stringify({
         xsuaa: [
@@ -252,37 +252,37 @@ describe('jwt', () => {
     });
   });
 
-  describe('audiences', () => {
+  describe('audiences()', () => {
     it('returns a set of the entries of the "aud" claim, if present. If a dot is present, we only take everything before the dot', () => {
       const token = {
         aud: ['one', 'two.one', 'three.two.one']
       };
 
-      expect(audiences(token)).toEqual(new Set(['one', 'two', 'three']));
+      expect(audiences(token)).toEqual(['one', 'two', 'three']);
     });
 
     it('returns an empty set if the "aud" claim is empty', () => {
       const tokenEmpty = { aud: [] };
 
-      expect(audiences(tokenEmpty)).toEqual(new Set());
+      expect(audiences(tokenEmpty)).toEqual([]);
     });
 
-    it('returns a set of the entries of the "scope" claim iff the "aud" claim is not present and if the entry contains a dot (and then we again only take everything before the dot', () => {
+    it('returns audiences from scope, if no "aud" property exists', () => {
       const token = {
         scope: ['one', 'two.one', 'three.two.one']
       };
 
-      expect(audiences(token)).toEqual(new Set(['two', 'three']));
+      expect(audiences(token)).toEqual(['two', 'three']);
     });
 
     it('returns an empty set if the "aud" claim is missing and the "scope" claim is empty', () => {
       const tokenEmpty = { scope: [] };
 
-      expect(audiences(tokenEmpty)).toEqual(new Set());
+      expect(audiences(tokenEmpty)).toEqual([]);
     });
 
     it('returns an empty set if neither the "aud" nor the "scope" claim are present', () => {
-      expect(audiences({})).toEqual(new Set());
+      expect(audiences({})).toEqual([]);
     });
   });
 

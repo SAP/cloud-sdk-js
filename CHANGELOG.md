@@ -28,6 +28,28 @@
 
 - 
 
+# 3.7.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.7.0
+
+## Fixed Issues
+
+- [odata-common, odata-v2, odata-v4, generator, generator-common] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+  [Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`. (bdcf14f85)
+
+# 3.6.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.6.0
+
+## Compatibility Notes
+
+- [connectivity] Proxy configuration is no longer realized through a proxy agent, but with the native axios proxy setting instead. (025b6aa2c)
+
+## Fixed Issues
+
+- [connectivity] Use axios native proxy, instead of proxy agent, which causes connection issues for write requests on SAP Cloud Connector. (025b6aa2c)
+- [http-client] Fix CSRF token fetching against OnPremise systems. (c2a2987c5)
+
 # 3.5.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.5.0

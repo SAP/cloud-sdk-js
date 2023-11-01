@@ -8,6 +8,15 @@ import {
 } from '../test/test-util';
 import { CustomDeSerializers } from './de-serializers';
 
+describe('entity', () => {
+  it('returns enumerable false for _oDataVersion', () => {
+    const entity = new TestEntity(testEntityApi);
+    expect(
+      Object.getOwnPropertyDescriptor(entity, '_oDataVersion')?.enumerable
+    ).toBeFalsy();
+    expect(entity['_oDataVersion']).toEqual('v2');
+  });
+});
 describe('remote state', () => {
   it('setOrInitializeRemoteState() sets remote state on entity', () => {
     const entity = testEntityApi

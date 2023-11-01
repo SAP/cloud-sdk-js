@@ -17,9 +17,9 @@
     "@actions/core": "^1.9.1"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.0",
+    "@vercel/ncc": "^0.38.1",
     "depcheck": "^1.4.3",
-    "eslint": "^8.49.0",
+    "eslint": "^8.52.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   }

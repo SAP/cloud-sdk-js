@@ -1,5 +1,32 @@
 # @sap-cloud-sdk/odata-v2
 
+## 3.7.0
+
+### Minor Changes
+
+- bdcf14f85: [Fixed Issue] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+  [Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`.
+
+### Patch Changes
+
+- Updated dependencies [bdcf14f85]
+  - @sap-cloud-sdk/odata-common@3.7.0
+  - @sap-cloud-sdk/connectivity@3.7.0
+  - @sap-cloud-sdk/http-client@3.7.0
+  - @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Patch Changes
+
+- Updated dependencies [c2a2987c5]
+- Updated dependencies [025b6aa2c]
+- Updated dependencies [025b6aa2c]
+  - @sap-cloud-sdk/http-client@3.6.0
+  - @sap-cloud-sdk/connectivity@3.6.0
+  - @sap-cloud-sdk/odata-common@3.6.0
+  - @sap-cloud-sdk/util@3.6.0
+
 ## 3.5.0
 
 ### Patch Changes

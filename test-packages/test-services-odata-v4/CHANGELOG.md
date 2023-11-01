@@ -1,5 +1,14 @@
 # @sap-cloud-sdk/test-services-odata-v4
 
+## 3.7.0
+
+### Minor Changes
+
+- bdcf14f85: [Fixed Issue] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+  [Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`.
+
+## 3.6.0
+
 ## 3.5.0
 
 ## 3.4.0

@@ -31,7 +31,7 @@
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
     "test": "yarn test:unit",
-    "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest)",
+    "test:unit": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",

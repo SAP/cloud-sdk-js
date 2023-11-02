@@ -17,7 +17,7 @@
     "stop:mail-server": "pm2 stop test/mail/mail-server.js",
     "deploy": "cds deploy --to sqlite --no-save",
     "test": "yarn test:e2e",
-    "test:e2e": "yarn node --experimental-vm-modules $(yarn bin jest)",
+    "test:e2e": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'",

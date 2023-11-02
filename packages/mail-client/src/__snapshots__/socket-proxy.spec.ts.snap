@@ -163,7 +163,7 @@ exports[`socket proxy customAuthRequestHandler return the correct buffer with lo
     119,
     53,
     99,
-    0,
+    12,
     99,
     108,
     111,

@@ -10,6 +10,7 @@ describe('socket proxy', () => {
       const authRequest = await customAuthRequestHandler(jwt, locationId);
 
       expect(authRequest).toMatchSnapshot();
+      expect(authRequest[authRequest.length - 1]).toBe(0);
     });
 
     it('return the correct buffer with location ID', async () => {

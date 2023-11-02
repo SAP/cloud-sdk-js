@@ -19,6 +19,9 @@ export async function customAuthRequestHandler(
     ? [...Buffer.from(cloudConnectorLocationId)]
     : [];
 
+  const cloudConnectorLocationIdLengthBuffer = Buffer.alloc(1);
+  cloudConnectorLocationIdLengthBuffer.writeUInt8(cloudConnectorLocationIdBytes.length, 0)
+
   const customAuthenticationRequest = [
     // Authentication method version - currently 1
     0x01,
@@ -27,7 +30,7 @@ export async function customAuthRequestHandler(
     // The actual value of the JWT in its encoded form
     ...jwtBytes,
     // Length of the Cloud Connector location ID (0 if no Cloud Connector location ID is used)
-    0x00,
+    ...cloudConnectorLocationIdLengthBuffer,
     // Optional. The value of the Cloud Connector location ID in base64-encoded form (if the the value of the location ID is not 0)
     ...cloudConnectorLocationIdBytes
   ];

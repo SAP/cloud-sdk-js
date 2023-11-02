@@ -19,7 +19,9 @@ jobs:
           node-version: 18
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - run: yarn test:unit --concurrency=1
+      - run: |
+          echo $0
+          yarn test:unit --concurrency=1
         shell: bash
       - run: yarn test:integration
         if: always()

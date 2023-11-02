@@ -13,16 +13,6 @@ const TestEntity3_1 = require("./TestEntity3");
  */
 class TestEntity3RequestBuilder extends odata_v4_1.RequestBuilder {
     /**
-     * Returns a request builder for retrieving one `TestEntity3` entity based on its keys.
-     * @param keyPropertyString Key property. See {@link TestEntity3.keyPropertyString}.
-     * @returns A request builder for creating requests to retrieve one `TestEntity3` entity based on its keys.
-     */
-    getByKey(keyPropertyString) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
-            KeyPropertyString: keyPropertyString
-        });
-    }
-    /**
      * Returns a request builder for querying all `TestEntity3` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntity3` entities.
      */
@@ -36,6 +26,16 @@ class TestEntity3RequestBuilder extends odata_v4_1.RequestBuilder {
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `TestEntity3` entity based on its keys.
+     * @param keyPropertyString Key property. See {@link TestEntity3.keyPropertyString}.
+     * @returns A request builder for creating requests to retrieve one `TestEntity3` entity based on its keys.
+     */
+    getByKey(keyPropertyString) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+            KeyPropertyString: keyPropertyString
+        });
     }
     /**
      * Returns a request builder for updating an entity of type `TestEntity3`.

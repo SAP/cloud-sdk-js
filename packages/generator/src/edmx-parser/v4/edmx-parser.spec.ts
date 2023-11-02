@@ -46,8 +46,8 @@ describe('edmx-edmx-parser', () => {
       resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV', 'API_TEST_SRV.edmx')
     );
 
-    expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(14);
-    expect(parseEntityType(metadataEdmx.root).length).toBe(14);
+    expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(15);
+    expect(parseEntityType(metadataEdmx.root).length).toBe(15);
     expect(
       parseOperationImports(metadataEdmx.root, 'function').length +
         parseOperationImports(metadataEdmx.root, 'action').length
@@ -62,7 +62,9 @@ describe('edmx-edmx-parser', () => {
 
     parseEntityType(metadataEdmx.root).forEach(e => {
       expect(e.Key.PropertyRef).toBeInstanceOf(Array);
-      expect(e.Key.PropertyRef.length).toBeGreaterThan(0);
+      if (!e.Name.includes('WithNoKeys')) {
+        expect(e.Key.PropertyRef.length).toBeGreaterThan(0);
+      }
       expect(e.NavigationProperty).toBeInstanceOf(Array);
       expect(e.Property).toBeInstanceOf(Array);
     });

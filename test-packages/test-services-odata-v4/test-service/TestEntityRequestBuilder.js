@@ -8,20 +8,6 @@ const TestEntity_1 = require("./TestEntity");
  */
 class TestEntityRequestBuilder extends odata_v4_1.RequestBuilder {
     /**
-     * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
-     * @param keyPropertyGuid Key property. See {@link TestEntity.keyPropertyGuid}.
-     * @param keyPropertyString Key property. See {@link TestEntity.keyPropertyString}.
-     * @param keyDateProperty Key property. See {@link TestEntity.keyDateProperty}.
-     * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
-     */
-    getByKey(keyPropertyGuid, keyPropertyString, keyDateProperty) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
-            KeyPropertyGuid: keyPropertyGuid,
-            KeyPropertyString: keyPropertyString,
-            KeyDateProperty: keyDateProperty
-        });
-    }
-    /**
      * Returns a request builder for querying all `TestEntity` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
      */
@@ -35,6 +21,20 @@ class TestEntityRequestBuilder extends odata_v4_1.RequestBuilder {
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
+     * @param keyPropertyGuid Key property. See {@link TestEntity.keyPropertyGuid}.
+     * @param keyPropertyString Key property. See {@link TestEntity.keyPropertyString}.
+     * @param keyDateProperty Key property. See {@link TestEntity.keyDateProperty}.
+     * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
+     */
+    getByKey(keyPropertyGuid, keyPropertyString, keyDateProperty) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+            KeyPropertyGuid: keyPropertyGuid,
+            KeyPropertyString: keyPropertyString,
+            KeyDateProperty: keyDateProperty
+        });
     }
     /**
      * Returns a request builder for updating an entity of type `TestEntity`.

@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityWithEnumKey } from './TestEntityWithEnumKey';
 import { TestEnumType } from './TestEnumType';
@@ -23,20 +23,6 @@ import { TestEnumType } from './TestEnumType';
 export class TestEntityWithEnumKeyRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityWithEnumKey<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityWithEnumKey` entity based on its keys.
-   * @param keyPropertyEnum1 Key property. See {@link TestEntityWithEnumKey.keyPropertyEnum1}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityWithEnumKey` entity based on its keys.
-   */
-  getByKey(
-    keyPropertyEnum1: DeserializedType<T, 'API_TEST_SRV.A_TestEnumType'>
-  ): GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T>(
-      this.entityApi,
-      { KeyPropertyEnum1: keyPropertyEnum1 }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityWithEnumKey` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithEnumKey` entities.
@@ -58,6 +44,20 @@ export class TestEntityWithEnumKeyRequestBuilder<
     return new CreateRequestBuilder<TestEntityWithEnumKey<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityWithEnumKey` entity based on its keys.
+   * @param keyPropertyEnum1 Key property. See {@link TestEntityWithEnumKey.keyPropertyEnum1}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityWithEnumKey` entity based on its keys.
+   */
+  getByKey(
+    keyPropertyEnum1: DeserializedType<T, 'API_TEST_SRV.A_TestEnumType'>
+  ): GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityWithEnumKey<T>, T>(
+      this.entityApi,
+      { KeyPropertyEnum1: keyPropertyEnum1 }
     );
   }
 

@@ -112,7 +112,10 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
     // see customAuthRequestHandler and customAuthResponseHandler for custom auth details.
     custom_auth_method: 0x80,
     custom_auth_request_handler: () =>
-      customAuthRequestHandler(proxyAuthorization, mailDestination.cloudConnectorLocationId),
+      customAuthRequestHandler(
+        proxyAuthorization,
+        mailDestination.cloudConnectorLocationId
+      ),
     custom_auth_response_size: 2,
     custom_auth_response_handler: customAuthResponseHandler
   };

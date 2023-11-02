@@ -5,15 +5,20 @@
  * @internal
  */
 // eslint-disable-next-line @typescript-eslint/require-await
-export async function customAuthRequestHandler(jwt: string, cloudConnectorLocationId?: string): Promise<Buffer> {
+export async function customAuthRequestHandler(
+  jwt: string,
+  cloudConnectorLocationId?: string
+): Promise<Buffer> {
   const jwtBytes = [...Buffer.from(jwt)];
   const jwtBytesLength = jwtBytes.length;
 
   const jwtLengthBuffer = Buffer.alloc(4);
   jwtLengthBuffer.writeUInt32BE(jwtBytesLength, 0);
-  
-  const cloudConnectorLocationIdBytes = cloudConnectorLocationId ? [...Buffer.from(cloudConnectorLocationId)] : []
-  
+
+  const cloudConnectorLocationIdBytes = cloudConnectorLocationId
+    ? [...Buffer.from(cloudConnectorLocationId)]
+    : [];
+
   const customAuthenticationRequest = [
     // Authentication method version - currently 1
     0x01,

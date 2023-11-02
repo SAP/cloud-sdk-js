@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
 /**
@@ -21,14 +21,6 @@ import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
 export declare class MultiSchemaTestEntityRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<MultiSchemaTestEntity<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `MultiSchemaTestEntity` entity based on its keys.
-   * @param keyProperty Key property. See {@link MultiSchemaTestEntity.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<MultiSchemaTestEntity<T>, T>;
   /**
    * Returns a request builder for querying all `MultiSchemaTestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `MultiSchemaTestEntity` entities.
@@ -42,6 +34,14 @@ export declare class MultiSchemaTestEntityRequestBuilder<
   create(
     entity: MultiSchemaTestEntity<T>
   ): CreateRequestBuilder<MultiSchemaTestEntity<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `MultiSchemaTestEntity` entity based on its keys.
+   * @param keyProperty Key property. See {@link MultiSchemaTestEntity.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<MultiSchemaTestEntity<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `MultiSchemaTestEntity`.
    * @param entity The entity to be updated

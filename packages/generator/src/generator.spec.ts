@@ -209,7 +209,7 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(38);
+      expect(files.length).toBe(40);
     });
 
     it('generates TestEntity.ts file', () => {
@@ -258,6 +258,20 @@ describe('generator', () => {
           'testActionImportMultipleParameterComplexReturnType'
         ])
       );
+    });
+
+    it('generates RequestBuilder for keyless entity without a delete(), update(), and getByKeys() method', () => {
+      const requestBuilderClass = files
+        .find(
+          file => file.getBaseName() === 'TestEntityWithNoKeysRequestBuilder.ts'
+        )
+        ?.getClass('TestEntityWithNoKeysRequestBuilder');
+
+      expect(requestBuilderClass).toBeDefined();
+
+      ['delete', 'update', 'getByKeys'].forEach(methodName => {
+        expect(requestBuilderClass?.getMethod(methodName)).not.toBeDefined();
+      });
     });
   });
 

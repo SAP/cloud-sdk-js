@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { Airlines } from './Airlines';
 
@@ -22,19 +22,6 @@ import { Airlines } from './Airlines';
 export class AirlinesRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Airlines<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `Airlines` entity based on its keys.
-   * @param airlineCode Key property. See {@link Airlines.airlineCode}.
-   * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
-   */
-  getByKey(
-    airlineCode: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<Airlines<T>, T> {
-    return new GetByKeyRequestBuilder<Airlines<T>, T>(this.entityApi, {
-      AirlineCode: airlineCode
-    });
-  }
-
   /**
    * Returns a request builder for querying all `Airlines` entities.
    * @returns A request builder for creating requests to retrieve all `Airlines` entities.
@@ -50,6 +37,19 @@ export class AirlinesRequestBuilder<
    */
   create(entity: Airlines<T>): CreateRequestBuilder<Airlines<T>, T> {
     return new CreateRequestBuilder<Airlines<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `Airlines` entity based on its keys.
+   * @param airlineCode Key property. See {@link Airlines.airlineCode}.
+   * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
+   */
+  getByKey(
+    airlineCode: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Airlines<T>, T> {
+    return new GetByKeyRequestBuilder<Airlines<T>, T>(this.entityApi, {
+      AirlineCode: airlineCode
+    });
   }
 
   /**

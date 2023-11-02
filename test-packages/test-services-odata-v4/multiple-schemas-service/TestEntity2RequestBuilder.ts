@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity2 } from './TestEntity2';
 
@@ -22,19 +22,6 @@ import { TestEntity2 } from './TestEntity2';
 export class TestEntity2RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity2<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntity2` entity based on its keys.
-   * @param keyPropertyString Key property. See {@link TestEntity2.keyPropertyString}.
-   * @returns A request builder for creating requests to retrieve one `TestEntity2` entity based on its keys.
-   */
-  getByKey(
-    keyPropertyString: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntity2<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntity2<T>, T>(this.entityApi, {
-      KeyPropertyString: keyPropertyString
-    });
-  }
-
   /**
    * Returns a request builder for querying all `TestEntity2` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity2` entities.
@@ -50,6 +37,19 @@ export class TestEntity2RequestBuilder<
    */
   create(entity: TestEntity2<T>): CreateRequestBuilder<TestEntity2<T>, T> {
     return new CreateRequestBuilder<TestEntity2<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntity2` entity based on its keys.
+   * @param keyPropertyString Key property. See {@link TestEntity2.keyPropertyString}.
+   * @returns A request builder for creating requests to retrieve one `TestEntity2` entity based on its keys.
+   */
+  getByKey(
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntity2<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntity2<T>, T>(this.entityApi, {
+      KeyPropertyString: keyPropertyString
+    });
   }
 
   /**

@@ -13,16 +13,6 @@ const People_1 = require("./People");
  */
 class PeopleRequestBuilder extends odata_v4_1.RequestBuilder {
     /**
-     * Returns a request builder for retrieving one `People` entity based on its keys.
-     * @param userName Key property. See {@link People.userName}.
-     * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
-     */
-    getByKey(userName) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
-            UserName: userName
-        });
-    }
-    /**
      * Returns a request builder for querying all `People` entities.
      * @returns A request builder for creating requests to retrieve all `People` entities.
      */
@@ -36,6 +26,16 @@ class PeopleRequestBuilder extends odata_v4_1.RequestBuilder {
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `People` entity based on its keys.
+     * @param userName Key property. See {@link People.userName}.
+     * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
+     */
+    getByKey(userName) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+            UserName: userName
+        });
     }
     /**
      * Returns a request builder for updating an entity of type `People`.

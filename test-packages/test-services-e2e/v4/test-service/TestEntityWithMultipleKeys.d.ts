@@ -20,7 +20,6 @@ export declare class TestEntityWithMultipleKeys<
   extends Entity
   implements TestEntityWithMultipleKeysType<T>
 {
-  readonly _entityApi: TestEntityWithMultipleKeysApi<T>;
   /**
    * Technical entity name for TestEntityWithMultipleKeys.
    */

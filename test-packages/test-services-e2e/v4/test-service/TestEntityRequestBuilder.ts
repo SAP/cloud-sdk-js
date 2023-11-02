@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 
@@ -22,19 +22,6 @@ import { TestEntity } from './TestEntity';
 export class TestEntityRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
-   * @param keyTestEntity Key property. See {@link TestEntity.keyTestEntity}.
-   * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
-   */
-  getByKey(
-    keyTestEntity: DeserializedType<T, 'Edm.Int32'>
-  ): GetByKeyRequestBuilder<TestEntity<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntity<T>, T>(this.entityApi, {
-      KeyTestEntity: keyTestEntity
-    });
-  }
-
   /**
    * Returns a request builder for querying all `TestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
@@ -50,6 +37,19 @@ export class TestEntityRequestBuilder<
    */
   create(entity: TestEntity<T>): CreateRequestBuilder<TestEntity<T>, T> {
     return new CreateRequestBuilder<TestEntity<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
+   * @param keyTestEntity Key property. See {@link TestEntity.keyTestEntity}.
+   * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
+   */
+  getByKey(
+    keyTestEntity: DeserializedType<T, 'Edm.Int32'>
+  ): GetByKeyRequestBuilder<TestEntity<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntity<T>, T>(this.entityApi, {
+      KeyTestEntity: keyTestEntity
+    });
   }
 
   /**

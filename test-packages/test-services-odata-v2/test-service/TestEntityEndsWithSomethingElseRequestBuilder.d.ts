@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { TestEntityEndsWithSomethingElse } from './TestEntityEndsWithSomethingElse';
 /**
@@ -21,14 +21,6 @@ import { TestEntityEndsWithSomethingElse } from './TestEntityEndsWithSomethingEl
 export declare class TestEntityEndsWithSomethingElseRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityEndsWithSomethingElse<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityEndsWithSomethingElse` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityEndsWithSomethingElse.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityEndsWithSomethingElse` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityEndsWithSomethingElse<T>, T>;
   /**
    * Returns a request builder for querying all `TestEntityEndsWithSomethingElse` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityEndsWithSomethingElse` entities.
@@ -42,6 +34,14 @@ export declare class TestEntityEndsWithSomethingElseRequestBuilder<
   create(
     entity: TestEntityEndsWithSomethingElse<T>
   ): CreateRequestBuilder<TestEntityEndsWithSomethingElse<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntityEndsWithSomethingElse` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityEndsWithSomethingElse.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityEndsWithSomethingElse` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityEndsWithSomethingElse<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityEndsWithSomethingElse`.
    * @param entity The entity to be updated

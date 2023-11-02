@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { People } from './People';
 /**
@@ -21,14 +21,6 @@ import { People } from './People';
 export declare class PeopleRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<People<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `People` entity based on its keys.
-   * @param userName Key property. See {@link People.userName}.
-   * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
-   */
-  getByKey(
-    userName: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<People<T>, T>;
   /**
    * Returns a request builder for querying all `People` entities.
    * @returns A request builder for creating requests to retrieve all `People` entities.
@@ -40,6 +32,14 @@ export declare class PeopleRequestBuilder<
    * @returns A request builder for creating requests that create an entity of type `People`.
    */
   create(entity: People<T>): CreateRequestBuilder<People<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `People` entity based on its keys.
+   * @param userName Key property. See {@link People.userName}.
+   * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
+   */
+  getByKey(
+    userName: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<People<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `People`.
    * @param entity The entity to be updated

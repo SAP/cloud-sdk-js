@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { TestEntityMultiLink } from './TestEntityMultiLink';
 
@@ -22,20 +22,6 @@ import { TestEntityMultiLink } from './TestEntityMultiLink';
 export class TestEntityMultiLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityMultiLink<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityMultiLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityMultiLink.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityMultiLink` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityMultiLink<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityMultiLink<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityMultiLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityMultiLink` entities.
@@ -55,6 +41,20 @@ export class TestEntityMultiLinkRequestBuilder<
     return new CreateRequestBuilder<TestEntityMultiLink<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityMultiLink` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityMultiLink.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityMultiLink` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityMultiLink<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityMultiLink<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

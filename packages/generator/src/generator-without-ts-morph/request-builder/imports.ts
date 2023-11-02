@@ -19,7 +19,7 @@ export function requestBuilderImportDeclarations(
         'DeserializedType',
         'RequestBuilder',
         ...propertyTypeImportNames(entity.keys)
-      ],
+      ].sort(),
       oDataVersion
     ),
     entityImportDeclaration(entity),
@@ -31,20 +31,23 @@ function requestBuilderImports(entity: VdmEntity) {
   const imports = [
     'DefaultDeSerializers',
     'DeSerializers',
-    'GetAllRequestBuilder',
-    'GetByKeyRequestBuilder'
+    'GetAllRequestBuilder'
   ];
 
   if (entity.creatable) {
     imports.push('CreateRequestBuilder');
   }
 
-  if (entity.updatable) {
-    imports.push('UpdateRequestBuilder');
-  }
+  if (entity.keys.length) {
+    imports.push('GetByKeyRequestBuilder');
 
-  if (entity.deletable) {
-    imports.push('DeleteRequestBuilder');
+    if (entity.updatable) {
+      imports.push('UpdateRequestBuilder');
+    }
+
+    if (entity.deletable) {
+      imports.push('DeleteRequestBuilder');
+    }
   }
 
   return imports;

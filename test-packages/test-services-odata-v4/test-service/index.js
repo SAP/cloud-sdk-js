@@ -21,6 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 __exportStar(require("./TestEntity"), exports);
 __exportStar(require("./TestEntityWithEnumKey"), exports);
+__exportStar(require("./TestEntityWithNoKeys"), exports);
 __exportStar(require("./TestEntityWithSharedEntityType1"), exports);
 __exportStar(require("./TestEntityWithSharedEntityType2"), exports);
 __exportStar(require("./TestEntityMultiLink"), exports);
@@ -35,6 +36,7 @@ __exportStar(require("./TestEntityEndsWith"), exports);
 __exportStar(require("./TestEntityEndsWithSomethingElse"), exports);
 __exportStar(require("./TestEntityRequestBuilder"), exports);
 __exportStar(require("./TestEntityWithEnumKeyRequestBuilder"), exports);
+__exportStar(require("./TestEntityWithNoKeysRequestBuilder"), exports);
 __exportStar(require("./TestEntityWithSharedEntityType1RequestBuilder"), exports);
 __exportStar(require("./TestEntityWithSharedEntityType2RequestBuilder"), exports);
 __exportStar(require("./TestEntityMultiLinkRequestBuilder"), exports);

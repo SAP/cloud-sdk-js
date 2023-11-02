@@ -24,7 +24,7 @@
     "generate-edmx": "cds compile srv -s TestService -2 edmx > TestService.edmx"
   },
   "devDependencies": {
-    "@apidevtools/swagger-parser": "^10.0.2",
+    "@apidevtools/swagger-parser": "^10.1.0",
     "@sap-cloud-sdk/connectivity": "^3.7.0",
     "@sap-cloud-sdk/generator": "^3.7.0",
     "@sap-cloud-sdk/http-client": "^3.7.0",

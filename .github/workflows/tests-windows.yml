@@ -16,7 +16,7 @@ jobs:
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit --concurrency=1

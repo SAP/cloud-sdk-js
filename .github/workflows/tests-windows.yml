@@ -20,6 +20,7 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit --concurrency=1
+        shell: bash
       - run: yarn test:integration
         if: always()
       - run: yarn test:self

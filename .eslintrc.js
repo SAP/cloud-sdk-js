@@ -28,7 +28,6 @@ module.exports = {
     'dist',
     'node_modules',
     'README.md',
-    'test-packages/e2e-tests/test/generator-test-output',
     'test-packages/test-services-odata-v2',
     'test-packages/test-services-odata-v4',
     'test-packages/test-services-odata-common',

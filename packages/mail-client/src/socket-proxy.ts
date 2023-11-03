@@ -20,7 +20,10 @@ export async function customAuthRequestHandler(
     : [];
 
   const cloudConnectorLocationIdLengthBuffer = Buffer.alloc(1);
-  cloudConnectorLocationIdLengthBuffer.writeUInt8(cloudConnectorLocationIdBytes.length, 0)
+  cloudConnectorLocationIdLengthBuffer.writeUInt8(
+    cloudConnectorLocationIdBytes.length,
+    0
+  );
 
   const customAuthenticationRequest = [
     // Authentication method version - currently 1

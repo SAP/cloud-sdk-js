@@ -100,7 +100,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "axios": "^1.6.0",
     "depcheck": "^1.4.3",
-    "eslint": "^8.52.0",
+    "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.29.0",

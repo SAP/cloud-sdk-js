@@ -1609,10 +1609,10 @@
   resolved "https://registry.npmjs.org/@tsd/typescript/-/typescript-5.2.2.tgz#b3a11006737a41abb492fe5a16de17a1c3a0126e"
   integrity sha512-VtjHPAKJqLJoHHKBDNofzvQB2+ZVxjXU/Gw6INAS9aINLQYVsxfzrQ2s84huCeYWZRTtrr7R0J7XgpZHjNwBCw==
 
-"@types/async-retry@^1.4.7":
-  version "1.4.7"
-  resolved "https://registry.npmjs.org/@types/async-retry/-/async-retry-1.4.7.tgz#2b2bbb44f6755f28eba367a6593d198f5e2cb45b"
-  integrity sha512-4NH5wuf9x7LZWD23/knI6RBywD1qCmLm7wNaqq0riy7hdDrCGGfkPOUvx0Cb78lVrFrEnCvocoL8+UcvSQlBDw==
+"@types/async-retry@^1.4.8":
+  version "1.4.8"
+  resolved "https://registry.npmjs.org/@types/async-retry/-/async-retry-1.4.8.tgz#eb32df13aceb9ba1a8a80e7fe518ff4e3fe46bb3"
+  integrity sha512-Qup/B5PWLe86yI5I3av6ePGaeQrIHNKCwbsQotD6aHQ6YkHsMUxVZkZsmx/Ry3VZQ6uysHwTjQ7666+k6UjVJA==
   dependencies:
     "@types/retry" "*"
 

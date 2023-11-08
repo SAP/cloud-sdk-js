@@ -1766,9 +1766,9 @@
     "@types/lodash" "*"
 
 "@types/lodash@*", "@types/lodash@>=4.14.200":
-  version "4.14.200"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.200.tgz#435b6035c7eba9cdf1e039af8212c9e9281e7149"
-  integrity sha512-YI/M/4HRImtNf3pJgbF+W6FrXovqj+T+/HpENLTooK9PnkacBsDpeP3IpHab40CClUfhNmdM2WTNP2sa2dni5Q==
+  version "4.14.201"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.201.tgz#76f47cb63124e806824b6c18463daf3e1d480239"
+  integrity sha512-y9euML0cim1JrykNxADLfaG0FgD1g/yTHwUs/Jg9ZIU7WKj2/4IW9Lbb1WZbvck78W/lfGXFfe+u2EGfIJXdLQ==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -1816,10 +1816,10 @@
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==
 
-"@types/opossum@^8.1.5":
-  version "8.1.5"
-  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-8.1.5.tgz#e4309cd693145c706b7bf558b5319016ab3eb0ba"
-  integrity sha512-dlj7zQjqJE9/iiyFKXQVml3RMBmMhTbbdUO+r2/EjjVzxxQLZ/5IAFooIPjntRaje4xbNolEPu8grIt+DocfrQ==
+"@types/opossum@^8.1.6":
+  version "8.1.6"
+  resolved "https://registry.npmjs.org/@types/opossum/-/opossum-8.1.6.tgz#af6da9e04a7f66824ccb889db414ee5325a6800d"
+  integrity sha512-xBjGEtJ/cRfGA0lDNMv6U0AXys4F0VpgwJdngSqen/P06vvwPtKPgDBLHIWPu61Qi9fve7nIQ8VagZgPj5orpQ==
   dependencies:
     "@types/node" "*"
 

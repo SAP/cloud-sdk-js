@@ -1753,10 +1753,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/license-checker@^25.0.5":
-  version "25.0.5"
-  resolved "https://registry.npmjs.org/@types/license-checker/-/license-checker-25.0.5.tgz#724dad18b97f9172f7748e1a38aa552067976730"
-  integrity sha512-pqDJIbTPLuMcVmjO66L2zdMASJqSwBriJ7j484ZM7HzwrsJMvayiRmdpw/Dt+1YX/MEgptXA21HFWU/RvJcKww==
+"@types/license-checker@^25.0.6":
+  version "25.0.6"
+  resolved "https://registry.npmjs.org/@types/license-checker/-/license-checker-25.0.6.tgz#c346285ee7e42bac58a4922059453f50a5d4175d"
+  integrity sha512-ju/75+YPkNE5vX1iPer+qtI1eI/LqJVYZgOsmSHI1iiEM1bQL5Gh1lEvyjR9T7ZXVE1FwJa2doWJEEmPNwbZkw==
 
 "@types/lodash.clonedeep@^4.5.7":
   version "4.5.7"

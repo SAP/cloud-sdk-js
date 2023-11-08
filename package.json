@@ -90,7 +90,7 @@
     "@changesets/cli": "^2.26.2",
     "@types/jest": "^29.5.3",
     "@types/jsonwebtoken": "^9.0.5",
-    "@types/license-checker": "^25.0.5",
+    "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.3",
     "@types/node": "^18.18.8",
     "@types/prettier": "3.0.0",

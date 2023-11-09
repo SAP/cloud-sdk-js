@@ -1,3 +1,5 @@
+import { encodeBase64 } from '@sap-cloud-sdk/util';
+
 /**
  * Custom authentication request handler used for OnPrem connectivity.
  * Return type has to match SocksProxy type which is defined to expect Promise<Buffer>, even if the function below is not really async
@@ -15,15 +17,13 @@ export async function customAuthRequestHandler(
   const jwtLengthBuffer = Buffer.alloc(4);
   jwtLengthBuffer.writeUInt32BE(jwtBytesLength, 0);
 
-  const cloudConnectorLocationIdBytes = cloudConnectorLocationId
-    ? [...Buffer.from(cloudConnectorLocationId)]
-    : [];
+  const ccLocationIdBase64String = cloudConnectorLocationId
+    ? encodeBase64(cloudConnectorLocationId)
+    : '';
+  const ccLocationIdLength = Buffer.byteLength(ccLocationIdBase64String);
 
   const cloudConnectorLocationIdLengthBuffer = Buffer.alloc(1);
-  cloudConnectorLocationIdLengthBuffer.writeUInt8(
-    cloudConnectorLocationIdBytes.length,
-    0
-  );
+  cloudConnectorLocationIdLengthBuffer.writeUInt8(ccLocationIdLength);
 
   const customAuthenticationRequest = [
     // Authentication method version - currently 1
@@ -35,7 +35,7 @@ export async function customAuthRequestHandler(
     // Length of the Cloud Connector location ID (0 if no Cloud Connector location ID is used)
     ...cloudConnectorLocationIdLengthBuffer,
     // Optional. The value of the Cloud Connector location ID in base64-encoded form (if the the value of the location ID is not 0)
-    ...cloudConnectorLocationIdBytes
+    ...Buffer.from(ccLocationIdBase64String)
   ];
   return Buffer.from(customAuthenticationRequest);
 }

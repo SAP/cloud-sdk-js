@@ -104,6 +104,12 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
     );
   }
 
+  if (!mailDestination.cloudConnectorLocationId) {
+    logger.debug(
+      'The Cloud Connector locationID is undefined. The default Cloud Connector of the subaccount will be used which may result in errors.'
+    );
+  }
+
   return {
     host: mailDestination.proxyConfiguration.host,
     port: mailDestination.proxyConfiguration.port,

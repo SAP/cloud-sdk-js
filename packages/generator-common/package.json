@@ -47,7 +47,7 @@
     "voca": "^1.4.1"
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.30",
+    "@types/yargs": "^17.0.31",
     "mock-fs": "^5.2.0"
   }
 }

@@ -1545,16 +1545,17 @@
     node-cache "^5.1.0"
     verror "1.10.0"
 
-"@sap/xssec@^3.2.17":
-  version "3.2.17"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.17.tgz#ad05e09dc1e3688169caf3d6946c9f5989eddbd6"
-  integrity sha512-Xr/5heLr8OEZ8XVKXPa2QHeJApWK5K04ijYSvMU+e1I2XzayVTKqGN84UedCPQi446oz9eqnUvOSKKiIYvuH9g==
+"@sap/xssec@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.4.0.tgz#0d8a14778585e48e31aecbaced55203ebcee2dde"
+  integrity sha512-q3CjIZk2UbKDdso7SWDjVMBkLQvDFVfZnTm4Bl/d1BtjXXOAVgsN+opZxlA/V/EOPENxNoKkUF7+YzKsQwjpbQ==
   dependencies:
     axios "^0.26.0"
     debug "^4.3.2"
-    jsonwebtoken "^9.0.0"
+    jsonwebtoken "^9.0.2"
     lru-cache "^6.0.0"
     node-rsa "^1.1.1"
+    rewire "^7.0.0"
     valid-url "1.0.9"
 
 "@sinclair/typebox@^0.27.8":
@@ -4238,7 +4239,7 @@ eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1, eslint-visitor-keys@^3.4
   resolved "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz#0cd72fe8550e3c2eae156a96a4dddcd1c8ac5800"
   integrity sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==
 
-eslint@^8, eslint@^8.53.0:
+eslint@^8, eslint@^8.47.0, eslint@^8.53.0:
   version "8.53.0"
   resolved "https://registry.npmjs.org/eslint/-/eslint-8.53.0.tgz#14f2c8244298fcae1f46945459577413ba2697ce"
   integrity sha512-N4VuiPjXDUa4xVeV/GC/RV3hQW9Nw+Y463lkWaKKXKYMvmRiRDAtfpuPFLN+E1/6ZhyR8J2ig+eVREnYgUsiag==
@@ -6383,7 +6384,7 @@ jsonpath-plus@^7.2.0:
   resolved "https://registry.npmjs.org/jsonpath-plus/-/jsonpath-plus-7.2.0.tgz#7ad94e147b3ed42f7939c315d2b9ce490c5a3899"
   integrity sha512-zBfiUPM5nD0YZSBT/o/fbCUlCcepMIdP0CJZxM1+KgA4f2T206f6VAg9e7mX35+KlMaIc5qXW34f3BnwJ3w+RA==
 
-jsonwebtoken@^9.0.0, jsonwebtoken@^9.0.2:
+jsonwebtoken@^9.0.2:
   version "9.0.2"
   resolved "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.2.tgz#65ff91f4abef1784697d40952bb1998c504caaf3"
   integrity sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==
@@ -8511,6 +8512,13 @@ reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+
+rewire@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/rewire/-/rewire-7.0.0.tgz#41db5482370c88758ffc9a719f7c92a761fa8fbf"
+  integrity sha512-DyyNyzwMtGYgu0Zl/ya0PR/oaunM+VuCuBxCuhYJHHaV0V+YvYa3bBGxb5OZ71vndgmp1pYY8F4YOwQo1siRGw==
+  dependencies:
+    eslint "^8.47.0"
 
 rimraf@^3.0.0, rimraf@^3.0.2:
   version "3.0.2"

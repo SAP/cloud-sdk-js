@@ -49,8 +49,8 @@ export async function getDestinationFromServiceBinding(
   const decodedJwt = options.iss
     ? { iss: options.iss }
     : options.jwt
-    ? decodeJwt(options.jwt)
-    : undefined;
+      ? decodeJwt(options.jwt)
+      : undefined;
 
   const retrievalOptions = { ...options, jwt: decodedJwt };
   let destination;

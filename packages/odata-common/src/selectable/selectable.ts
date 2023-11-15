@@ -23,10 +23,10 @@ export type Selectable<
       | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>
       | AllFields<EntityT>
   : ODataVersionOf<EntityT> extends 'v4'
-  ?
-      | SimpleTypeFields<EntityT>
-      | ComplexTypeField<EntityT, DeSerializersT, any, boolean, boolean>
-      | CustomField<EntityT, DeSerializersT, boolean>
-      | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>
-      | AllFields<EntityT>
-  : never;
+    ?
+        | SimpleTypeFields<EntityT>
+        | ComplexTypeField<EntityT, DeSerializersT, any, boolean, boolean>
+        | CustomField<EntityT, DeSerializersT, boolean>
+        | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>
+        | AllFields<EntityT>
+    : never;

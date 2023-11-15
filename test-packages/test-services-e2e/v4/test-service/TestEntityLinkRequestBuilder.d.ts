@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityLink } from './TestEntityLink';
 /**
@@ -21,16 +21,6 @@ import { TestEntityLink } from './TestEntityLink';
 export declare class TestEntityLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLink<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityLink` entity based on its keys.
-   * @param keyTestEntityLink Key property. See {@link TestEntityLink.keyTestEntityLink}.
-   * @param keyToTestEntity Key property. See {@link TestEntityLink.keyToTestEntity}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
-   */
-  getByKey(
-    keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>,
-    keyToTestEntity: DeserializedType<T, 'Edm.Int32'>
-  ): GetByKeyRequestBuilder<TestEntityLink<T>, T>;
   /**
    * Returns a request builder for querying all `TestEntityLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityLink` entities.
@@ -42,6 +32,16 @@ export declare class TestEntityLinkRequestBuilder<
    * @returns A request builder for creating requests that create an entity of type `TestEntityLink`.
    */
   create(entity: TestEntityLink<T>): CreateRequestBuilder<TestEntityLink<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntityLink` entity based on its keys.
+   * @param keyTestEntityLink Key property. See {@link TestEntityLink.keyTestEntityLink}.
+   * @param keyToTestEntity Key property. See {@link TestEntityLink.keyToTestEntity}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
+   */
+  getByKey(
+    keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>,
+    keyToTestEntity: DeserializedType<T, 'Edm.Int32'>
+  ): GetByKeyRequestBuilder<TestEntityLink<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityLink`.
    * @param entity The entity to be updated

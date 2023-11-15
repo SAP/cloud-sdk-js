@@ -61,6 +61,13 @@ describe('entity', () => {
       .build();
   });
 
+  it('returns enumerable false for _oDataVersion', () => {
+    expect(
+      Object.getOwnPropertyDescriptor(entity, '_oDataVersion')?.enumerable
+    ).toBeFalsy();
+    expect(entity['_oDataVersion']).toEqual('v4');
+  });
+
   it('asObject', () => {
     const currentState = entity.asObject();
 

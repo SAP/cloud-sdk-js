@@ -26,6 +26,7 @@ const logger = createLogger({
   messageContext: 'mail-client'
 });
 
+// TODO: refactor mail destination stuff to separate file?
 function buildMailDestination(destination: Destination): MailDestination {
   const originalProperties = destination.originalProperties;
   if (!originalProperties) {
@@ -102,6 +103,13 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
       'The proxy authorization is undefined, which is mandatory for creating a socket connection.'
     );
   }
+
+  if (!mailDestination.cloudConnectorLocationId) {
+    logger.debug(
+      'The Cloud Connector locationID is undefined. The default Cloud Connector of the subaccount will be used which may result in errors.'
+    );
+  }
+
   return {
     host: mailDestination.proxyConfiguration.host,
     port: mailDestination.proxyConfiguration.port,
@@ -110,7 +118,10 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
     // see customAuthRequestHandler and customAuthResponseHandler for custom auth details.
     custom_auth_method: 0x80,
     custom_auth_request_handler: () =>
-      customAuthRequestHandler(proxyAuthorization),
+      customAuthRequestHandler(
+        proxyAuthorization,
+        mailDestination.cloudConnectorLocationId
+      ),
     custom_auth_response_size: 2,
     custom_auth_response_handler: customAuthResponseHandler
   };

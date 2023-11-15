@@ -59,6 +59,10 @@
 
       </EntityType>
 
+      <EntityType Name="A_TestEntityWithNoKeysType">
+        <Property Name="NormalProperty" Type="Edm.String" Nullable="true"/>
+      </EntityType>
+
       <EntityType Name="A_TestEntityTypeToBeShared">
         <Key>
           <PropertyRef Name="KeyProperty"/>
@@ -293,6 +297,8 @@
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
         </EntitySet>
         <EntitySet Name="A_TestEntityWithEnumKey" EntityType="API_TEST_SRV.A_TestEntityWithEnumKeyType" sap:content-version="1">
+        </EntitySet>
+        <EntitySet Name="A_TestEntityWithNoKeys" EntityType="API_TEST_SRV.A_TestEntityWithNoKeysType" sap:content-version="1">
         </EntitySet>
         <EntitySet Name="A_TestEntityWithSharedEntityType1" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
         </EntitySet>

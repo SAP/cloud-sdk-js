@@ -27,7 +27,6 @@ export declare class TestEntitySingleLink<
   extends Entity
   implements TestEntitySingleLinkType<T>
 {
-  readonly _entityApi: TestEntitySingleLinkApi<T>;
   /**
    * Technical entity name for TestEntitySingleLink.
    */

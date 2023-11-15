@@ -6,11 +6,15 @@ import { createRequestConfig } from '@sap-cloud-sdk/test-services-odata-common/c
 
 describe('ODataCreateRequestConfig', () => {
   const config = createRequestConfig({
-    payload: commonEntityApi.entityBuilder().build()
+    payload: commonEntityApi.entityBuilder().stringProperty('test').build()
   });
 
   it('method is post', () => {
     expect(config.method).toBe('post');
+  });
+
+  it('should only contain properties set using the builder in the payload', () => {
+    expect(config.payload).toMatchObject({ StringProperty: 'test' });
   });
 
   it('has resourcePath without keys', () => {

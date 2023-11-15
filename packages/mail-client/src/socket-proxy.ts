@@ -1,3 +1,5 @@
+import { encodeBase64 } from '@sap-cloud-sdk/util';
+
 /**
  * Custom authentication request handler used for OnPrem connectivity.
  * Return type has to match SocksProxy type which is defined to expect Promise<Buffer>, even if the function below is not really async
@@ -5,11 +7,24 @@
  * @internal
  */
 // eslint-disable-next-line @typescript-eslint/require-await
-export async function customAuthRequestHandler(jwt: string): Promise<Buffer> {
+export async function customAuthRequestHandler(
+  jwt: string,
+  cloudConnectorLocationId?: string
+): Promise<Buffer> {
   const jwtBytes = [...Buffer.from(jwt)];
   const jwtBytesLength = jwtBytes.length;
+
   const jwtLengthBuffer = Buffer.alloc(4);
   jwtLengthBuffer.writeUInt32BE(jwtBytesLength, 0);
+
+  const ccLocationIdBase64String = cloudConnectorLocationId
+    ? encodeBase64(cloudConnectorLocationId)
+    : '';
+  const ccLocationIdLength = Buffer.byteLength(ccLocationIdBase64String);
+
+  const cloudConnectorLocationIdLengthBuffer = Buffer.alloc(1);
+  cloudConnectorLocationIdLengthBuffer.writeUInt8(ccLocationIdLength);
+
   const customAuthenticationRequest = [
     // Authentication method version - currently 1
     0x01,
@@ -18,8 +33,9 @@ export async function customAuthRequestHandler(jwt: string): Promise<Buffer> {
     // The actual value of the JWT in its encoded form
     ...jwtBytes,
     // Length of the Cloud Connector location ID (0 if no Cloud Connector location ID is used)
-    0x00
+    ...cloudConnectorLocationIdLengthBuffer,
     // Optional. The value of the Cloud Connector location ID in base64-encoded form (if the the value of the location ID is not 0)
+    ...Buffer.from(ccLocationIdBase64String)
   ];
   return Buffer.from(customAuthenticationRequest);
 }

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator-common",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "description": "SAP Cloud SDK for JavaScript common functions of OData client generator and OpenAPI clint generator.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -28,7 +28,7 @@
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
     "test": "yarn test:unit",
-    "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest)",
+    "test:unit": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
@@ -37,17 +37,17 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^3.6.0",
+    "@sap-cloud-sdk/util": "^3.7.0",
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^11.1.1",
     "glob": "^10.3.10",
-    "typescript": "~5.1.6",
-    "prettier": "^3.0.3",
+    "typescript": "~5.2.2",
+    "prettier": "^3.1.0",
     "yargs": "^17.7.2",
     "voca": "^1.4.1"
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.26",
+    "@types/yargs": "^17.0.31",
     "mock-fs": "^5.2.0"
   }
 }

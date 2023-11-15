@@ -4,15 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 
@@ -22,20 +22,6 @@ import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 export class TestEntityCircularLinkChildRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityCircularLinkChild<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityCircularLinkChild` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityCircularLinkChild.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkChild` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityCircularLinkChild<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityCircularLinkChild<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityCircularLinkChild` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityCircularLinkChild` entities.
@@ -57,6 +43,20 @@ export class TestEntityCircularLinkChildRequestBuilder<
     return new CreateRequestBuilder<TestEntityCircularLinkChild<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityCircularLinkChild` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityCircularLinkChild.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkChild` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityCircularLinkChild<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityCircularLinkChild<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

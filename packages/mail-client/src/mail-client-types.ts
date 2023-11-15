@@ -252,6 +252,11 @@ export interface MailDestination {
    * Based on the additional destination property 'mail.password'.
    */
   password?: string;
+  /**
+   * Location ID of the Cloud Connector to be used for connection to an On-Premise system. Optional.
+   * Corresponds to property "CloudConnectorLocationId" in the additional properties of a destination.
+   */
+  cloudConnectorLocationId?: string;
 }
 
 /**

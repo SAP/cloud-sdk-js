@@ -1536,10 +1536,10 @@
     node-cache "^5.1.0"
     verror "1.10.0"
 
-"@sap/xsenv@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-4.0.0.tgz#7509f98b10e972b5a7607b1f4bad350cc6acfc12"
-  integrity sha512-I3otC5A+WYt/4mnbgQmY1sx9OsLjcvhmDp800zLWqNMPbYy7FmnpgZ6TbECnsNL5pU1NOSHV9CNFpomdP/FBdg==
+"@sap/xsenv@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-4.1.0.tgz#ae2ddc897b36d8e3042acc24d2aa6fe9f1968769"
+  integrity sha512-eeEneXg84e4X4WSPwjmejpz3YTz+3EX8BWc0u0V30OiVcpHVmN6bCj5x2xmGtauP97v/D9OYEs/4ULF2mx+/Nw==
   dependencies:
     debug "4.3.3"
     node-cache "^5.1.0"

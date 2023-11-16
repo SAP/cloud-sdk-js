@@ -28,6 +28,27 @@
 
 - 
 
+# 3.8.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.8.0
+
+## Compatibility Notes
+
+- [connectivity] Remove unused internal functionality around JWT property access, like `userFromJwt` (removed) and `audiences` (changed). (693cd655f)
+
+## New Functionalities
+
+- [mail-client] Add Support for `Location ID` in destinations of type `MAIL` (8516b7f04)
+
+## Fixed Issues
+
+- [generator] Don't generate `delete()`, `update()`, and `getByKey()` methods in the RequestBuilder of an entity without keys.
+  - @sap-cloud-sdk/generator-common@3.8.0
+  - @sap-cloud-sdk/odata-common@3.8.0
+  - @sap-cloud-sdk/odata-v2@3.8.0
+  - @sap-cloud-sdk/odata-v4@3.8.0
+  - @sap-cloud-sdk/util@3.8.0 (34ef77a1c)
+
 # 3.7.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.7.0

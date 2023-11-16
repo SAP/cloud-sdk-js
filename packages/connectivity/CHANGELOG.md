@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.8.0
+
+### Minor Changes
+
+- 693cd655f: [Compatibility Note] Remove unused internal functionality around JWT property access, like `userFromJwt` (removed) and `audiences` (changed).
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.8.0
+- @sap-cloud-sdk/util@3.8.0
+
 ## 3.7.0
 
 ### Patch Changes

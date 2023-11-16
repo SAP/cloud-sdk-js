@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/mail-client
 
+## 3.8.0
+
+### Minor Changes
+
+- 8516b7f04: [New Functionality] Add Support for `Location ID` in destinations of type `MAIL`
+
+### Patch Changes
+
+- Updated dependencies [693cd655f]
+  - @sap-cloud-sdk/connectivity@3.8.0
+  - @sap-cloud-sdk/util@3.8.0
+
 ## 3.7.0
 
 ### Patch Changes

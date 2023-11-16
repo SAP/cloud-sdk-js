@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 3.8.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.8.0
+- @sap-cloud-sdk/openapi@3.8.0
+- @sap-cloud-sdk/util@3.8.0
+
 ## 3.7.0
 
 ### Patch Changes

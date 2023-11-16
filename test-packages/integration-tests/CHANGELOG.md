@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/integration-tests
 
+## 3.8.0
+
+### Patch Changes
+
+- Updated dependencies [693cd655f]
+- Updated dependencies [8516b7f04]
+  - @sap-cloud-sdk/connectivity@3.8.0
+  - @sap-cloud-sdk/mail-client@3.8.0
+  - @sap-cloud-sdk/http-client@3.8.0
+  - @sap-cloud-sdk/test-util@3.8.0
+  - @sap-cloud-sdk/util@3.8.0
+  - @sap-cloud-sdk/test-services-odata-v2@3.8.0
+  - @sap-cloud-sdk/test-services-odata-v4@3.8.0
+
 ## 3.7.0
 
 ### Patch Changes

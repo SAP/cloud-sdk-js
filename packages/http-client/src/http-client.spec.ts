@@ -25,6 +25,7 @@ import {
   connectivityProxyConfigMock,
   defaultDestination,
   destinationBindingClientSecretMock,
+  jku,
   mockClientCredentialsGrantCall,
   mockInstanceDestinationsCall,
   mockServiceBindings,
@@ -246,8 +247,14 @@ describe('generic http client', () => {
     });
 
     function mockJwtValidationAndServiceToken() {
-      const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
-      nock(jku).get('/').reply(200, responseWithPublicKey());
+      nock(jku)
+        .get('')
+        .query({ zid: testTenants.subscriber })
+        .reply(200, responseWithPublicKey());
+      nock(jku)
+        .get('')
+        .query({ zid: testTenants.provider })
+        .reply(200, responseWithPublicKey());
       mockUserTokenGrantCall(
         providerXsuaaUrl,
         1,
@@ -259,8 +266,7 @@ describe('generic http client', () => {
         providerXsuaaUrl,
         { access_token: providerServiceToken },
         200,
-        destinationBindingClientSecretMock.credentials,
-        testTenants.provider
+        destinationBindingClientSecretMock.credentials
       );
       mockClientCredentialsGrantCall(
         subscriberXsuaaUrl,

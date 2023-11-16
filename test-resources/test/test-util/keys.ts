@@ -6,7 +6,7 @@ export const privateKey =
 export const publicKey =
   '-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmiePzeSLIl9Lf9SAmAhYoPWm8A2MYCSnaXW9vOodG96nTJvz5fnPxgSJZLw+kJT3MOVz7K0xrbZNah5aL07hdapS3DzF5G1ejqycnaFgFS6ER0se1UbpvtdxkEVAM3MTYTbttCDkRJYK3zPsoevXvrw1vNgqC13q729sjlFYiOa4GDmMR/34Zh3UvfifhsW1O0xRYTs9Qj3MK7xnhwTVSTF5qox3tO64Ue8ZzntMhNq69xdfVenRQjtbejZb4Y5ghzC2d0hmn1LRTs2r1wrudUIDCCTfDBBK7tk9onb1SxekUJdVfZEfM8hkvRKJHr2okFMrp8w3XuHVzOM63iPaWQIDAQAB-----END PUBLIC KEY-----';
 
-const defaultJku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
+const defaultJku = 'https://authentication.sap.hana.ondemand.com/token_keys';
 export { defaultJku as jku };
 
 export function signedJwt(payload, algorithm: Algorithm = 'RS512') {

@@ -119,24 +119,32 @@ describe('jwt', () => {
     });
 
     it('succeeds and decodes for correct key', async () => {
-      nock(jku).get('/').reply(200, responseWithPublicKey());
+      nock(jku)
+        .get('')
+        .query({ zid: jwtPayload.zid })
+        .reply(200, responseWithPublicKey());
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload))
+        verifyJwt(signedJwtForVerification(jwtPayload), {
+          cacheVerificationKeys: false
+        })
       ).resolves.toEqual(jwtPayload);
     });
 
     it('succeeds and decodes for correct inline key', async () => {
       nock(jku)
-        .get('/')
+        .get('')
+        .query({ zid: jwtPayload.zid })
         .reply(200, responseWithPublicKey(publicKey.split('\n').join('')));
 
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload))
+        verifyJwt(signedJwtForVerification(jwtPayload), {
+          cacheVerificationKeys: false
+        })
       ).resolves.toEqual(jwtPayload);
     });
 
     it('fails for no key', async () => {
-      nock(jku).get('/').reply(200, { keys: [] });
+      nock(jku).get('').query({ zid: jwtPayload.zid }).reply(200, { keys: [] });
 
       await expect(
         verifyJwt(signedJwtForVerification(jwtPayload), {
@@ -145,16 +153,15 @@ describe('jwt', () => {
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT.',
         cause: {
-          message:
-            'Obtained token keys from UAA, but key with requested keyID "https://my-jku-url.authentication.sap.hana.ondemand.comkey-id-1" still not found in cache.'
+          message: 'JWKS does not contain JWK with kid key-id-1.'
         }
       });
     });
 
     it('fails for incorrect key id', async () => {
       const response = responseWithPublicKey();
-      response.keys[0].kid = 'unknown';
-      nock(jku).get('/').reply(200, response);
+      response.keys[0].kid = 'otherKey';
+      nock(jku).get('').query({ zid: jwtPayload.zid }).reply(200, response);
 
       await expect(() =>
         verifyJwt(signedJwtForVerification(jwtPayload), {
@@ -163,8 +170,7 @@ describe('jwt', () => {
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT.',
         cause: {
-          message:
-            'Obtained token keys from UAA, but key with requested keyID "https://my-jku-url.authentication.sap.hana.ondemand.comkey-id-1" still not found in cache.'
+          message: 'JWKS does not contain JWK with kid key-id-1.'
         }
       });
     });
@@ -185,7 +191,10 @@ describe('jwt', () => {
     });
 
     it('fails if the verification key is not conform with the signed JWT', async () => {
-      nock(jku).get('/').reply(200, responseWithPublicKey('WRONG'));
+      nock(jku)
+        .get('')
+        .query({ zid: jwtPayload.zid })
+        .reply(200, responseWithPublicKey('WRONG'));
 
       await expect(() =>
         verifyJwt(signedJwtForVerification(jwtPayload), {
@@ -196,7 +205,10 @@ describe('jwt', () => {
 
     it('caches the key after fetching it', async () => {
       // We mock only a single HTTP call
-      nock(jku).get('/').reply(200, responseWithPublicKey());
+      nock(jku)
+        .get('')
+        .query({ zid: jwtPayload.zid })
+        .reply(200, responseWithPublicKey());
 
       await verifyJwt(signedJwtForVerification(jwtPayload), {
         cacheVerificationKeys: true
@@ -213,13 +225,16 @@ describe('jwt', () => {
     });
 
     it('fails on the second call when caching is disabled', async () => {
-      nock(jku).get('/').reply(200, responseWithPublicKey());
+      nock(jku)
+        .get('')
+        .query({ zid: jwtPayload.zid })
+        .reply(200, responseWithPublicKey());
 
       await verifyJwt(signedJwtForVerification(jwtPayload), {
         cacheVerificationKeys: false
       });
 
-      nock(jku).get('/').reply(500);
+      nock(jku).get('/').query({ zid: jwtPayload.zid }).reply(500);
 
       await expect(() =>
         verifyJwt(signedJwtForVerification(jwtPayload), {
@@ -229,7 +244,10 @@ describe('jwt', () => {
     });
 
     it('caches per default', async () => {
-      nock(jku).get('/').reply(200, responseWithPublicKey());
+      nock(jku)
+        .get('')
+        .query({ zid: jwtPayload.zid })
+        .reply(200, responseWithPublicKey());
 
       const jwt = signedJwtForVerification(jwtPayload);
       await verifyJwt(jwt);
@@ -239,14 +257,20 @@ describe('jwt', () => {
     });
 
     it('fetches a new key when a the cache has been disabled', async () => {
-      nock(jku).get('/').reply(200, responseWithPublicKey());
+      nock(jku)
+        .get('')
+        .query({ zid: jwtPayload.zid })
+        .reply(200, responseWithPublicKey());
 
       const jwt = signedJwtForVerification(jwtPayload);
       await verifyJwt(jwt);
       // If you execute all tests the cache of xssec is populated already and the nock remains. Hence this extra clear.
       nock.cleanAll();
 
-      const nockAfter = nock(jku).get('/').reply(200, responseWithPublicKey());
+      const nockAfter = nock(jku)
+        .get('')
+        .query({ zid: jwtPayload.zid })
+        .reply(200, responseWithPublicKey());
       await verifyJwt(jwt, { cacheVerificationKeys: false });
       expect(nockAfter.isDone()).toBe(true);
     });

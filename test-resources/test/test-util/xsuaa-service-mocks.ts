@@ -7,6 +7,7 @@ export function mockClientCredentialsGrantCall(
   response: any,
   responseCode: number,
   serviceCredentials: ServiceCredentials,
+  zoneId?: string,
   delay = 0
 ) {
   return nock(uri, {
@@ -16,6 +17,7 @@ export function mockClientCredentialsGrantCall(
       grant_type: 'client_credentials',
       client_id: serviceCredentials.clientid,
       client_secret: serviceCredentials.clientsecret,
+      app_tid: zoneId,
       response_type: 'token'
     })
     .delay(delay)
@@ -26,7 +28,8 @@ export function mockClientCredentialsGrantWithCertCall(
   uri: string,
   response: any,
   responseCode: number,
-  serviceCredentials: ServiceCredentials
+  serviceCredentials: ServiceCredentials,
+  zoneId?: string
 ) {
   return nock(uri, {
     reqheaders: xsuaaRequestHeaders()
@@ -34,6 +37,7 @@ export function mockClientCredentialsGrantWithCertCall(
     .post('/oauth/token', {
       grant_type: 'client_credentials',
       client_id: serviceCredentials.clientid,
+      app_tid: zoneId,
       response_type: 'token'
     })
     .reply(responseCode, function () {
@@ -50,7 +54,7 @@ export function mockUserTokenGrantCall(
   accessTokenResponse: string,
   accessTokenAssertion: string,
   creds: ServiceCredentials,
-  responseCode = 200,
+  responseCode = 200
 ) {
   return nock(uri)
     .post('/oauth/token', {

@@ -98,7 +98,7 @@ describe('jwt', () => {
     });
   });
 
-  describe('verifyJw())', () => {
+  describe('verifyJwt())', () => {
     beforeEach(() => {
       process.env.VCAP_SERVICES = JSON.stringify({
         xsuaa: [

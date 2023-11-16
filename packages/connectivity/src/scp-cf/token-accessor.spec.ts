@@ -6,7 +6,8 @@ import {
   mockServiceBindings,
   providerXsuaaCertUrl,
   providerXsuaaUrl,
-  subscriberXsuaaUrl
+  subscriberXsuaaUrl,
+  testTenants
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import { signedJwt } from '../../../../test-resources/test/test-util/keys';
 import {
@@ -157,14 +158,16 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: providerServiceToken },
         200,
-        destinationBindingClientSecretMock.credentials
+        destinationBindingClientSecretMock.credentials,
+        testTenants.provider
       );
 
       mockClientCredentialsGrantCall(
         subscriberXsuaaUrl,
         { access_token: subscriberServiceToken },
         200,
-        destinationBindingClientSecretMock.credentials
+        destinationBindingClientSecretMock.credentials,
+        testTenants.subscriber
       );
 
       const providerToken = await serviceToken('destination', {

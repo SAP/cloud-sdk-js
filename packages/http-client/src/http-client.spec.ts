@@ -36,6 +36,7 @@ import {
   subscriberServiceToken,
   subscriberUserToken,
   subscriberXsuaaUrl,
+  testTenants,
   xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
 import * as csrf from './csrf-token-middleware';
@@ -258,13 +259,15 @@ describe('generic http client', () => {
         providerXsuaaUrl,
         { access_token: providerServiceToken },
         200,
-        destinationBindingClientSecretMock.credentials
+        destinationBindingClientSecretMock.credentials,
+        testTenants.provider
       );
       mockClientCredentialsGrantCall(
         subscriberXsuaaUrl,
         { access_token: subscriberServiceToken },
         200,
-        destinationBindingClientSecretMock.credentials
+        destinationBindingClientSecretMock.credentials,
+        testTenants.subscriber
       );
     }
 

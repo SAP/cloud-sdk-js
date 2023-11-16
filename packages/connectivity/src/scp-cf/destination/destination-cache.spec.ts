@@ -114,7 +114,7 @@ describe('destination cache', () => {
     await destinationCache.clear();
     destinationServiceCache.clear();
     nock.cleanAll();
-    jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   describe('caching', () => {

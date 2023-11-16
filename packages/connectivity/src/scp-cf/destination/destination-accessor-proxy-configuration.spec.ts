@@ -41,7 +41,7 @@ describe('proxy configuration', () => {
 
   afterEach(() => {
     delete process.env['https_proxy'];
-    jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('should take the environment variable', async () => {

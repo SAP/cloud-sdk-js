@@ -334,7 +334,7 @@ describe('destination service', () => {
 
   describe('fetchDestination', () => {
     afterEach(() => {
-      jest.resetAllMocks();
+      jest.restoreAllMocks();
     });
 
     it('uses a circuit breaker', async () => {

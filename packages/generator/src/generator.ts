@@ -66,6 +66,7 @@ const logger = createLogger({
  * Main entry point for the OData client generation.
  * Generates models and API files.
  * @param options - Options to configure generation.
+ * @returns A promise to void.
  */
 export async function generate(
   options: GeneratorOptions & { config?: string }

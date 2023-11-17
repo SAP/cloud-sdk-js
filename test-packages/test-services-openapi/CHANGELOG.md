@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/test-services-openapi
 
+## 3.8.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/openapi-generator@3.8.1
+- @sap-cloud-sdk/util@3.8.1
+
 ## 3.8.0
 
 ### Patch Changes

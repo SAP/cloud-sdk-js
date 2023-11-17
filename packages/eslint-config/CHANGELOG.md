@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/eslint-config
 
+## 3.8.1
+
+### Patch Changes
+
+- d6bbd3210: [Improvement] Update eslint plugins
+
 ## 3.8.0
 
 ## 3.7.0

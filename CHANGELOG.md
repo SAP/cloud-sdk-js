@@ -28,6 +28,14 @@
 
 - 
 
+# 3.8.1
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.8.1
+
+## Improvements
+
+- [eslint-config] Update eslint plugins (d6bbd3210)
+
 # 3.8.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.8.0

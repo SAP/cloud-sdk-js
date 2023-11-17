@@ -60,6 +60,7 @@ export class AsyncCache<T> implements AsyncCacheInterface<T> {
    * Setter of entries in cache.
    * @param key - The entry's key.
    * @param item - The entry to cache.
+   * @returns A promise to oid.
    */
   async set(key: string | undefined, item: CacheEntry<T>): Promise<void> {
     return this.cache.set(key, item);
@@ -67,6 +68,7 @@ export class AsyncCache<T> implements AsyncCacheInterface<T> {
 
   /**
    * Clear all cached items.
+   * @returns A promise to void.
    */
   async clear(): Promise<void> {
     return this.cache.clear();

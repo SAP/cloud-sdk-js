@@ -39,7 +39,6 @@ export interface BasicProxyConfiguration {
 
   /**
    * The protocol used by the proxy.
-   *
    */
   protocol: Protocol;
 }

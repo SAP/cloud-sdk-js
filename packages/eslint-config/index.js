@@ -195,7 +195,7 @@ module.exports = {
     ],
     'jsdoc/check-syntax': 'error',
     'jsdoc/multiline-blocks': 'error',
-    'jsdoc/newline-after-description': ['error', 'never'],
+    'jsdoc/tag-lines': ['error', { 'tag-lines': 0 }],
     'jsdoc/no-bad-blocks': 'error',
     'jsdoc/no-defaults': 'error',
     'jsdoc/no-types': 'error',

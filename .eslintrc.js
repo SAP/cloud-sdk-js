@@ -61,9 +61,10 @@ module.exports = {
     'no-restricted-syntax': [
       'error',
       {
-        'selector': 'TSEnumDeclaration',
-        'message': 'Enums are weird in TypeScript. Prefer union types or const objects instead.'
-      },
+        selector: 'TSEnumDeclaration',
+        message:
+          'Enums are weird in TypeScript. Prefer union types or const objects instead.'
+      }
     ]
   }
 };

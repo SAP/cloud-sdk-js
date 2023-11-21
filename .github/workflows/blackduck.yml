@@ -26,11 +26,11 @@ jobs:
           flags: \
             --version=$PROJECT_VERSION \
             --scanProperties="\
-            --detect.yarn.prod.only=true \
+            --detect.yarn.dependency.types.excluded=NONE,NON_PRODUCTION \
             --blackduck.signature.scanner.memory=4096 \
             --detect.timeout=6000 \
-            --blackduck.trust.cert=true \
-            --detect.excluded.directories=test-packages"
+            --blackduck.trust.cert=true" \
+            # --detect.excluded.directories=test-packages"
         env:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}

@@ -92,7 +92,7 @@ function getCredentials(
 export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
   if (!mailDestination.proxyConfiguration) {
     throw Error(
-      "The proxy configuration is undefined, which is mandatory for creating a socket connection."
+      'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
     );
   }
 

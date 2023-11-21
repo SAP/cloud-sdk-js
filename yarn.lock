@@ -688,10 +688,10 @@
     typescript "^5.2.2"
     yargs "^17.7.2"
 
-"@definitelytyped/dtslint@^0.0.194":
-  version "0.0.194"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.194.tgz#41ec795d27644f3c191da1838f5603a007496f62"
-  integrity sha512-wzEXVN7mVW8Gj6ie9pHvPHJgUsexCzs8YiWNIY1kzIyiqRQ035HCh8d2xTD0wcWcktT7BYD/vUsgIxjiyrPEgw==
+"@definitelytyped/dtslint@^0.0.195":
+  version "0.0.195"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.195.tgz#4422dade3ee411720539e99a03b931cc31cfc9f4"
+  integrity sha512-2Zv2iEz0S5P4ZdCDSSu6hDpWS+KZIJsPbxqtI8VfxGvjH/LXAjvQKrPMeGQEiRxwwoBVmBneU6HjErEdwPPSMQ==
   dependencies:
     "@definitelytyped/dts-critic" "0.0.190"
     "@definitelytyped/header-parser" "0.0.189"

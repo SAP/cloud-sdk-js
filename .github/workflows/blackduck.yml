@@ -25,7 +25,8 @@ jobs:
           command: detectExecuteScan
           flags: \
             --version=$PROJECT_VERSION \
-            --excludedDirectories=/test-packages/** \
+            --minScanInterval=0 \
+            --excludedDirectories=test-packages \
             --scanProperties=" \
             --blackduck.signature.scanner.memory=4096 \
             --detect.timeout=6000 \

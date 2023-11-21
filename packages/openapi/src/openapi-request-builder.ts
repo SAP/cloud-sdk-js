@@ -76,6 +76,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     Object.entries(requestConfiguration).forEach(([key, value]) => {
       this.customRequestConfiguration[key] = value;
     });
+    console.log("test");
     return this;
   }
 

@@ -6,7 +6,8 @@ import { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 export type BatchSubRequestPathType =
   | 'absolute'
   | 'relativeToService'
-  | 'relativeToEntity';
+  | 'relativeToEntity'
+  | 'relativeToRequestURI';
 
 /**
  * Options to configure batch serialization.

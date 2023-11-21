@@ -76,7 +76,6 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     Object.entries(requestConfiguration).forEach(([key, value]) => {
       this.customRequestConfiguration[key] = value;
     });
-    console.log("test");
     return this;
   }
 
@@ -115,7 +114,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
-      ['post', 'put', 'patch', 'delete'].includes(this.method.toLowerCase());
+      ['post', 'put', 'patch', "delete"].includes(this.method.toLowerCase());
 
     const resolvedDestination = await useOrFetchDestination(destination);
     if (isNullish(destination)) {

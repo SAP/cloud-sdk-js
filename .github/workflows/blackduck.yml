@@ -26,7 +26,6 @@ jobs:
           flags: \
             --version=$PROJECT_VERSION \
             --scanProperties="\
-            --detect.yarn.dependency.types.excluded=NONE \
             --detect.yarn.dependency.types.excluded=NON_PRODUCTION \
             --blackduck.signature.scanner.memory=4096 \
             --detect.timeout=6000 \

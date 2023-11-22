@@ -46,11 +46,6 @@ export function getAuthHeader(
   }
 }
 
-/**
- * Remove me pls.
- */
-export const someChangeForBlackDuck = 'hey';
-
 function toAuthorizationHeader(
   authorization: string
 ): AuthenticationHeaderCloud {

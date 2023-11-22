@@ -25,13 +25,14 @@ jobs:
           command: detectExecuteScan
           flags: \
             --version=$PROJECT_VERSION \
+            --customEnvironmentVariables=MIN_SCAN_INTERVAL \
             --minScanInterval=0 \
             --excludedDirectories=test-packages \
             --scanProperties=" \
             --blackduck.signature.scanner.memory=4096 \
             --detect.timeout=6000 \
-            --blackduck.trust.cert=true \
-            --detect.blackduck.scan.mode=RAPID"
+            --blackduck.trust.cert=true"
         env:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}
+          MIN_SCAN_INTERVAL: 0

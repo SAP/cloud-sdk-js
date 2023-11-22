@@ -30,7 +30,5 @@ jobs:
         env:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}
-          BLACKDUCK_SIGNATURE_SCANNER_MEMORY: 4096
           DETECT_TIMEOUT: 6000
-
-          # BLACKDUCK_TRUST_CERT: true
+          DETECT_YARN_EXCLUDED_WORKSPACES: test-packages/**

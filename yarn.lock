@@ -688,10 +688,10 @@
     typescript "^5.2.2"
     yargs "^17.7.2"
 
-"@definitelytyped/dtslint@^0.0.195":
-  version "0.0.195"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.195.tgz#4422dade3ee411720539e99a03b931cc31cfc9f4"
-  integrity sha512-2Zv2iEz0S5P4ZdCDSSu6hDpWS+KZIJsPbxqtI8VfxGvjH/LXAjvQKrPMeGQEiRxwwoBVmBneU6HjErEdwPPSMQ==
+"@definitelytyped/dtslint@^0.0.196":
+  version "0.0.196"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.196.tgz#849193befc772f1eaefb66e726aba853f36557b3"
+  integrity sha512-gO6fkjrbRs35WePiy66af088xwFW/g/qGYpHsa1HOfZ8hMuH9Z1BeEkVsfYF3NPEYmueM4SDP3zS41S0aBQ4nQ==
   dependencies:
     "@definitelytyped/dts-critic" "0.0.190"
     "@definitelytyped/header-parser" "0.0.189"
@@ -1518,10 +1518,10 @@
     node-cache "^5.1.0"
     verror "1.10.0"
 
-"@sap/xsenv@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-4.1.0.tgz#ae2ddc897b36d8e3042acc24d2aa6fe9f1968769"
-  integrity sha512-eeEneXg84e4X4WSPwjmejpz3YTz+3EX8BWc0u0V30OiVcpHVmN6bCj5x2xmGtauP97v/D9OYEs/4ULF2mx+/Nw==
+"@sap/xsenv@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-4.2.0.tgz#1b8a1a4b84eff5735ec0a73dacd56e338f4aa4a9"
+  integrity sha512-Hu74ezPEKVgzz1XLi4/Ttlv+n2w9CTuLBlR6Vw4y9FK7btLm1wnCViDPufTG7yxniEADw8EQbqRv+krmcFmGLA==
   dependencies:
     debug "4.3.3"
     node-cache "^5.1.0"
@@ -1702,10 +1702,10 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^29.5.8":
-  version "29.5.8"
-  resolved "https://registry.npmjs.org/@types/jest/-/jest-29.5.8.tgz#ed5c256fe2bc7c38b1915ee5ef1ff24a3427e120"
-  integrity sha512-fXEFTxMV2Co8ZF5aYFJv+YeA08RTYJfhtN5c9JSv/mFEMe+xxjufCb+PHL+bJcMs/ebPUsBu+UNTEz+ydXrR6g==
+"@types/jest@^29.5.9":
+  version "29.5.9"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-29.5.9.tgz#eb997ab4a201b7504662ac9ebb84a748e17f95ab"
+  integrity sha512-zJeWhqBwVoPm83sP8h1/SVntwWTu5lZbKQGCvBjxQOyEWnKnsaomt2y7SlV4KfwlrHAHHAn00Sh4IAWaIsGOgQ==
   dependencies:
     expect "^29.0.0"
     pretty-format "^29.0.0"
@@ -1762,9 +1762,9 @@
     "@types/lodash" "*"
 
 "@types/lodash@*", "@types/lodash@>=4.14.200":
-  version "4.14.201"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.201.tgz#76f47cb63124e806824b6c18463daf3e1d480239"
-  integrity sha512-y9euML0cim1JrykNxADLfaG0FgD1g/yTHwUs/Jg9ZIU7WKj2/4IW9Lbb1WZbvck78W/lfGXFfe+u2EGfIJXdLQ==
+  version "4.14.202"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.202.tgz#f09dbd2fb082d507178b2f2a5c7e74bd72ff98f8"
+  integrity sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -1783,10 +1783,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^18.18.10":
-  version "18.18.10"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.18.10.tgz#4971bffdf3a43977c4c8166aa714b2c0b05b3256"
-  integrity sha512-luANqZxPmjTll8bduz4ACs/lNTCLuWssCyjqTY9yLdsv1xnViQp3ISKwsEWOIecO13JWUqjVdig/Vjjc09o8uA==
+"@types/node@*", "@types/node@^18.18.11":
+  version "18.18.11"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.18.11.tgz#d43f6b92671eacfdd1fedb7a897388fb8880323f"
+  integrity sha512-c1vku6qnTeujJneYH94/4aq73XrVcsJe35UPyAsSok1ijiKrkRzK+AxQPSpNMUnC03roWBBwJx/9I8V7lQoxmA==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1866,10 +1866,10 @@
   resolved "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-21.0.0.tgz#0c60e537fa790f5f9472ed2776c2b71ec117351b"
   integrity sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==
 
-"@types/yargs@^17.0.31", "@types/yargs@^17.0.8":
-  version "17.0.31"
-  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.31.tgz#8fd0089803fd55d8a285895a18b88cb71a99683c"
-  integrity sha512-bocYSx4DI8TmdlvxqGpVNXOgCNR1Jj0gNPhhAY+iz1rgKDAaYrAYdFYnhDV1IFuiuVc9HkOwyDcFxaTElF3/wg==
+"@types/yargs@^17.0.32", "@types/yargs@^17.0.8":
+  version "17.0.32"
+  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.32.tgz#030774723a2f7faafebf645f4e5a48371dca6229"
+  integrity sha512-xQ67Yc/laOG5uMfX/093MRlGGCIBzZMarVa+gfNKJxWAIgykYpVGkBdbqEzGDDfCrVUj6Hiff4mTZ5BA6TmAog==
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -6280,10 +6280,10 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.npmjs.org/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
-json-schema-faker@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.3.tgz#92f8a102037acf68e1c8e3a2e7c85726d285512d"
-  integrity sha512-BeIrR0+YSrTbAR9dOMnjbFl1MvHyXnq+Wpdw1FpWZDHWKLzK229hZ5huyPcmzFUfVq1ODwf40WdGVoE266UBUg==
+json-schema-faker@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.4.tgz#48395d17032972755e4703bf5b05fc1e494ec45d"
+  integrity sha512-DdRRnRNSxkQVXEsUUXzAtvBpsROZHvM59/LQcV6+3gQVMvaeMsqfNKN3ivRwaiahTW7pvxa+LJfOaPP+nhFo4g==
   dependencies:
     json-schema-ref-parser "^6.1.0"
     jsonpath-plus "^7.2.0"

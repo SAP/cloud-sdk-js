@@ -88,11 +88,11 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
-    "@types/jest": "^29.5.8",
+    "@types/jest": "^29.5.9",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.4",
-    "@types/node": "^18.18.10",
+    "@types/node": "^18.18.11",
     "@types/prettier": "3.0.0",
     "@types/uuid": "^9.0.7",
     "@types/voca": "^1.4.5",

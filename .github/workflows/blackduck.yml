@@ -19,7 +19,7 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: sudo apt-get install jq
       - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
-      - run: alias --detect.timeout=6000='--detect.timeout=6000 --min-scan-interval=0'
+      - run: alias '--detect.timeout=6000'='--detect.timeout=6000 --min-scan-interval=0'
       - name: Blackduck Scan
         uses: SAP/project-piper-action@27cadf261545552a68660531476c0915a97ee3d8
         with:

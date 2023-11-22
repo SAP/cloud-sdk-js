@@ -31,7 +31,7 @@ jobs:
             --blackduck.signature.scanner.memory=4096 \
             --detect.timeout=6000 \
             --blackduck.trust.cert=true \
-            --detect.blackduck.scan.mode"
+            --detect.blackduck.scan.mode=RAPID"
         env:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}

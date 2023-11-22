@@ -26,7 +26,6 @@ jobs:
           flags: \
             --version=$PROJECT_VERSION \
             --customEnvironmentVariables=MIN_SCAN_INTERVAL \
-            --minScanInterval=0 \
             --excludedDirectories=test-packages \
             --scanProperties=" \
             --blackduck.signature.scanner.memory=4096 \

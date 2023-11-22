@@ -24,13 +24,13 @@ jobs:
         with:
           command: detectExecuteScan
           flags: \
-            --npmDependencyTypesExcluded=DEV \
             --version=$PROJECT_VERSION \
-            --excludedDirectories=test-packages \
-            --scanProperties=" \
-            --blackduck.signature.scanner.memory=4096 \
-            --detect.timeout=6000 \
-            --blackduck.trust.cert=true"
+            --npmDependencyTypesExcluded=DEV \
+            --excludedDirectories=test-packages
         env:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}
+          BLACKDUCK_SIGNATURE_SCANNER_MEMORY: 4096
+          DETECT_TIMEOUT: 6000
+
+          # BLACKDUCK_TRUST_CERT: true

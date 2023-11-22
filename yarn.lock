@@ -1762,9 +1762,9 @@
     "@types/lodash" "*"
 
 "@types/lodash@*", "@types/lodash@>=4.14.200":
-  version "4.14.201"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.201.tgz#76f47cb63124e806824b6c18463daf3e1d480239"
-  integrity sha512-y9euML0cim1JrykNxADLfaG0FgD1g/yTHwUs/Jg9ZIU7WKj2/4IW9Lbb1WZbvck78W/lfGXFfe+u2EGfIJXdLQ==
+  version "4.14.202"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.202.tgz#f09dbd2fb082d507178b2f2a5c7e74bd72ff98f8"
+  integrity sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -6280,10 +6280,10 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.npmjs.org/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
-json-schema-faker@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.3.tgz#92f8a102037acf68e1c8e3a2e7c85726d285512d"
-  integrity sha512-BeIrR0+YSrTbAR9dOMnjbFl1MvHyXnq+Wpdw1FpWZDHWKLzK229hZ5huyPcmzFUfVq1ODwf40WdGVoE266UBUg==
+json-schema-faker@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.4.tgz#48395d17032972755e4703bf5b05fc1e494ec45d"
+  integrity sha512-DdRRnRNSxkQVXEsUUXzAtvBpsROZHvM59/LQcV6+3gQVMvaeMsqfNKN3ivRwaiahTW7pvxa+LJfOaPP+nhFo4g==
   dependencies:
     json-schema-ref-parser "^6.1.0"
     jsonpath-plus "^7.2.0"

@@ -25,10 +25,10 @@ jobs:
           command: detectExecuteScan
           flags: \
             --version=$PROJECT_VERSION \
-            --npmDependencyTypesExcluded=DEV \
             --excludedDirectories=test-packages
         env:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}
           DETECT_TIMEOUT: 6000
           DETECT_YARN_EXCLUDED_WORKSPACES: test-packages/**
+          DETECT_YARN_DEPENDENCY_TYPES_EXCLUDED: NON_PRODUCTION

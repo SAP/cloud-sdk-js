@@ -7,7 +7,7 @@ export type BatchSubRequestPathType =
   | 'absolute'
   | 'relativeToService'
   | 'relativeToEntity'
-  | 'relativeToRequestURI';
+  | 'noPath';
 
 /**
  * Options to configure batch serialization.

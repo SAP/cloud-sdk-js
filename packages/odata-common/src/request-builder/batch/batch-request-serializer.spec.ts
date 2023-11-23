@@ -96,7 +96,7 @@ describe('batch request serializer', () => {
     it('serializes getAll request with entity relative to request URI', () => {
       expect(
         serializeRequest(getAllRequestBuilder(), {
-          subRequestPathType: 'relativeToRequestURI',
+          subRequestPathType: 'noPath',
           destination: { url: 'http://example.com' }
         })
       ).toMatchSnapshot();

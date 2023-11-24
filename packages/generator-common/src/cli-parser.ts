@@ -21,7 +21,7 @@ export function parseCmdArgsBuilder<GeneratorOptionsT>(options: {
       .alias('help', 'h')
       .strict(true)
       .parserConfiguration({
-        "strip-aliased": true,
+        'strip-aliased': true,
         'strip-dashed': true
       })
       .recommendCommands();

@@ -99,6 +99,8 @@ function getUrl<ConfigT extends ODataRequestConfig>(
       return request.url();
     case 'relativeToEntity':
       return `/${request.relativeUrl(false)}`;
+    case 'noPath':
+      return `${request.relativeUrl(false)}`;
     default:
       return `/${request.relativeUrl()}`;
   }

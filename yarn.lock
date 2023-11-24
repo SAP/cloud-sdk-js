@@ -1465,7 +1465,7 @@
     "@sap/hdi-deploy" "^4"
     axios ">=0.27.2"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^7", "@sap/cds@^7.4.0":
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^7", "@sap/cds@^7.4.1":
   version "6.8.4"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.8.4.tgz#c73adb8e61f9efb4eff705f125a717f214f8e49f"
   integrity sha512-CTf6Y732ABTIAQPwtFZpfLUzZgQLOs9ZqBIrHhFJRx3VQvopfBZlbWAhujz092xETM7u4msZudoUprkmRo0+hg==
@@ -1783,10 +1783,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^18.18.12":
-  version "18.18.12"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.18.12.tgz#0c40e52e5ff2569386b160f6f6bb019ff1361cb4"
-  integrity sha512-G7slVfkwOm7g8VqcEF1/5SXiMjP3Tbt+pXDU3r/qhlM2KkGm786DUD4xyMA2QzEElFrv/KZV9gjygv4LnkpbMQ==
+"@types/node@*", "@types/node@^18.18.13":
+  version "18.18.13"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.18.13.tgz#ae0f76c0bfe79d8fad0f910b78ae3e59b333c6e8"
+  integrity sha512-vXYZGRrSCreZmq1rEjMRLXJhiy8MrIeVasx+PCVlP414N7CJLHnMf+juVvjdprHyH+XRy3zKZLHeNueOpJCn0g==
   dependencies:
     undici-types "~5.26.4"
 

@@ -3,17 +3,16 @@ name: auto-lint-fix
 on:
   pull_request: ~
 
-permissions:
-    pull-requests: write
-    contents: write
 jobs:
-  tests:
+  linting:
+    if: github.actor != dependabot
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:
@@ -27,8 +26,8 @@ jobs:
         run: |
           diff=`git diff`
           if [ ! -z "$diff" ]; then
-            git config user.name "${{ github.actor }}"
-            git config user.email "${{ github.actor }}@users.noreply.github.com"
+            git config --global user.email "cloud-sdk-js@github.com"
+            git config --global user.name "cloud-sdk-js"
             git commit -m "Changes from lint:fix" -a
             git push
           fi

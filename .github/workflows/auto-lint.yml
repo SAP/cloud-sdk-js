@@ -13,6 +13,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
+          token: "${{ secrets.GITHUB_TOKEN }}"
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:

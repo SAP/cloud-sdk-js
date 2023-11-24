@@ -6,6 +6,7 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    if: github.actor != dependabot
     steps:
       - uses: actions/checkout@v3
         with:

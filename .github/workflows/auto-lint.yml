@@ -3,16 +3,16 @@ name: auto-lint-fix
 on:
   pull_request: ~
 
+permissions:
+    pull-requests: write
 jobs:
   tests:
     runs-on: ubuntu-latest
-    if: github.actor != dependabot
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
         with:

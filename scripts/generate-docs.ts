@@ -62,17 +62,23 @@ async function adjustSearchJs(paths) {
   }
   
   await transformFile(filtered[0], async file => {
-    const blob = /window.searchData = "data:application\/octet-stream;base64,(.*)"/.exec(file)![1]
+    const dataRegexResult = /window.searchData = "data:application\/octet-stream;base64,(.*)"/.exec(file);
+
+    if(!dataRegexResult) {
+      throw Error(`Cannot adjust links in 'search.js'. File content did not match expected pattern.`)
+    }
+
+    const encodedData = dataRegexResult[1]
   
-    const ungzipped = (await gunzipP(Buffer.from(blob, 'base64'))).toString('utf8')
+    const ungzipped = (await gunzipP(Buffer.from(encodedData, 'base64'))).toString('utf8')
     const searchItems = JSON.parse(ungzipped)
 
     searchItems.rows.forEach(s => {
       s.url = removeUnderlinePrefix(s.url);
     })
 
-    const newData = (await gzipP(JSON.stringify(searchItems))).toString('base64');
-    return `window.searchData = "data:application/octet-stream;base64,${newData}"`
+    const encodedAdjustedData = (await gzipP(JSON.stringify(searchItems))).toString('base64');
+    return `window.searchData = "data:application/octet-stream;base64,${encodedAdjustedData}"`
   })
 }
 
@@ -83,9 +89,15 @@ async function adjustNavigationJs(paths) {
   }
   
   await transformFile(filtered[0], async file => {
-    const blob = /window.navigationData = "data:application\/octet-stream;base64,(.*)"/.exec(file)![1]
+    const dataRegexResult = /window.navigationData = "data:application\/octet-stream;base64,(.*)"/.exec(file);
+    
+    if (!dataRegexResult){
+      throw Error(`Cannot adjust links in 'navigation.js'. File content did not match expected pattern.`)
+    }
+    
+    const encodedData = dataRegexResult[1]
   
-    const ungzipped = (await gunzipP(Buffer.from(blob, 'base64'))).toString('utf8')
+    const ungzipped = (await gunzipP(Buffer.from(encodedData, 'base64'))).toString('utf8')
     const navigationItems = JSON.parse(ungzipped)
 
     navigationItems.forEach(n => {
@@ -95,8 +107,8 @@ async function adjustNavigationJs(paths) {
       })
     })
 
-    const newData = (await gzipP(JSON.stringify(navigationItems))).toString('base64');
-    return `window.navigationData = "data:application/octet-stream;base64,${newData}"`
+    const encodedAdjustedData = (await gzipP(JSON.stringify(navigationItems))).toString('base64');
+    return `window.navigationData = "data:application/octet-stream;base64,${encodedAdjustedData}"`
   })
 }
 

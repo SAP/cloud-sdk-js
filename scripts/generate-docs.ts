@@ -3,10 +3,9 @@ import { lstatSync, readdirSync, renameSync, readFileSync } from 'fs';
 import { resolve, basename, extname } from 'path';
 import execa from 'execa';
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { transformFile, transformFileSync } from './util';
+import { transformFile } from './util';
 import { gunzip, gzip } from 'zlib';
 import { promisify } from 'util';
-import { search } from 'voca';
 
 const gunzipP = promisify(gunzip)
 const gzipP = promisify(gzip)
@@ -47,11 +46,11 @@ async function adjustForGitHubPages() {
   await adjustSearchJs(documentationFilePaths);
   await adjustNavigationJs(documentationFilePaths);
   
-  htmlPaths.forEach(filePath =>
-    transformFileSync(filePath, file =>
+  await Promise.all(htmlPaths.map(filePath =>
+    transformFile(filePath, file =>
       file.replace(/<a href="[^>]*_[^>]*.html[^>]*>/gi, removeUnderlinePrefix)
-    )
-  );
+    )))
+
   htmlPaths.forEach(filePath => removeUnderlinePrefixFromFileName(filePath));
 }
 
@@ -127,11 +126,12 @@ function removeUnderlinePrefixFromFileName(filePath) {
   renameSync(filePath, newPath);
 }
 
-function insertCopyright() {
+async function insertCopyright() {
   const filePaths = flatten(readDir(docPath)).filter(isHtmlFile);
-  filePaths.forEach(filePath => {
+  
+  await Promise.all(filePaths.map(async filePath => {
     const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
-    transformFileSync(filePath, file => {
+    return transformFile(filePath, file => {
       const lines = file.split(unixEOL);
       // Insert the copyright div before the line including </footer> #yikes
       lines.splice(
@@ -141,7 +141,7 @@ function insertCopyright() {
       );
       return lines.join(unixEOL);
     });
-  });
+  }))
 }
 
 function validateLogs(generationLogs: string) {

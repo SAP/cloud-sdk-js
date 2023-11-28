@@ -6,6 +6,7 @@ import { unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile, transformFileSync } from './util';
 import { gunzip, gzip } from 'zlib';
 import { promisify } from 'util';
+import { search } from 'voca';
 
 const gunzipP = promisify(gunzip)
 const gzipP = promisify(gzip)
@@ -66,13 +67,12 @@ async function adjustSearchJs(paths) {
     const ungzipped = (await gunzipP(Buffer.from(blob, 'base64'))).toString('utf8')
     const searchItems = JSON.parse(ungzipped)
 
-    const adjustedSearchItems = searchItems.rows.map(s => {
+    searchItems.rows.forEach(s => {
       s.url = removeUnderlinePrefix(s.url);
-      return s;
     })
 
-    const newData = (await gzipP(JSON.stringify(adjustedSearchItems))).toString('base64');
-    return `window.navigationData = "data:application/octet-stream;base64,${newData}"`
+    const newData = (await gzipP(JSON.stringify(searchItems))).toString('base64');
+    return `window.searchData = "data:application/octet-stream;base64,${newData}"`
   })
 }
 
@@ -88,16 +88,14 @@ async function adjustNavigationJs(paths) {
     const ungzipped = (await gunzipP(Buffer.from(blob, 'base64'))).toString('utf8')
     const navigationItems = JSON.parse(ungzipped)
 
-    const adjustedNavigationItems = navigationItems.map(n => {
+    navigationItems.forEach(n => {
       n.path = removeUnderlinePrefix(n.path)
-      n.children = n.children.map(c => {
+      n.children.forEach(c => {
         c.path = removeUnderlinePrefix(c.path)
-        return c
       })
-      return n
     })
 
-    const newData = (await gzipP(JSON.stringify(adjustedNavigationItems))).toString('base64');
+    const newData = (await gzipP(JSON.stringify(navigationItems))).toString('base64');
     return `window.navigationData = "data:application/octet-stream;base64,${newData}"`
   })
 }

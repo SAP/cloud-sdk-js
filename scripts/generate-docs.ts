@@ -71,7 +71,7 @@ async function adjustSearchJs(paths) {
       return s;
     })
 
-    const newData = (await gzipP(JSON.stringify(searchItems))).toString('base64');
+    const newData = (await gzipP(JSON.stringify(adjustedSearchItems))).toString('base64');
     return `window.navigationData = "data:application/octet-stream;base64,${newData}"`
   })
 }
@@ -97,7 +97,7 @@ async function adjustNavigationJs(paths) {
       return n
     })
 
-    const newData = (await gzipP(JSON.stringify(navigationItems))).toString('base64');
+    const newData = (await gzipP(JSON.stringify(adjustedNavigationItems))).toString('base64');
     return `window.navigationData = "data:application/octet-stream;base64,${newData}"`
   })
 }

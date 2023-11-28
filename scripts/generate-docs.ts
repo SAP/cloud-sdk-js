@@ -4,6 +4,11 @@ import { resolve, basename, extname } from 'path';
 import execa from 'execa';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile } from './util';
+import { gunzip, gzip } from 'zlib';
+import { promisify } from 'util';
+
+const gunzipP = promisify(gunzip)
+const gzipP = promisify(gzip)
 
 const docPath = resolve(
   JSON.parse(readFileSync('tsconfig.typedoc.json', 'utf8')).typedocOptions.out
@@ -27,15 +32,20 @@ const readDir = input =>
 
 const isHtmlFile = fileName => extname(fileName) === '.html';
 const isSearchJs = fileName => basename(fileName) === 'search.js';
+const isNavigationJs = fileName => basename(fileName) === 'navigation.js'
+
 const pipe =
   (...fns) =>
   start =>
     fns.reduce((state, fn) => fn(state), start);
 
-function adjustForGitHubPages() {
-  const documentationFiles = flatten(readDir(resolve(docPath)));
-  const htmlPaths = documentationFiles.filter(isHtmlFile);
-  adjustSearchJs(documentationFiles);
+async function adjustForGitHubPages() {
+  const documentationFilePaths = flatten(readDir(resolve(docPath)));
+  const htmlPaths = documentationFilePaths.filter(isHtmlFile);
+  
+  await adjustSearchJs(documentationFilePaths);
+  await adjustNavigationJs(documentationFilePaths);
+  
   htmlPaths.forEach(filePath =>
     transformFile(filePath, file =>
       file.replace(/<a href="[^>]*_[^>]*.html[^>]*>/gi, removeUnderlinePrefix)
@@ -44,15 +54,55 @@ function adjustForGitHubPages() {
   htmlPaths.forEach(filePath => removeUnderlinePrefixFromFileName(filePath));
 }
 
-function adjustSearchJs(paths) {
+async function adjustSearchJs(paths) {
   const filtered = paths.filter(isSearchJs);
   if (filtered.length !== 1) {
-    throw Error(`Expected one 'search.json', but found: ${filtered.length}.`);
+    throw Error(`Expected one 'search.js', but found: ${filtered.length}.`);
   }
-  transformFile(filtered[0], file =>
-    file.replace(/"[^"]*_[^"]*.html[^"]*"/gi, removeUnderlinePrefix)
-  );
+  
+  await transformFile(filtered[0], async file => {
+    const blob = /window.searchData = "data:application\/octet-stream;base64,(.*)"/.exec(file)![1]
+  
+    const ungzipped = (await gunzipP(Buffer.from(blob, 'base64'))).toString('utf8')
+    const searchItems = JSON.parse(ungzipped)
+
+    const adjustedSearchItems = searchItems.rows.map(s => {
+      s.url = removeUnderlinePrefix(s.url);
+      return s;
+    })
+
+    const newData = (await gzipP(JSON.stringify(searchItems))).toString('base64');
+    return `window.navigationData = "data:application/octet-stream;base64,${newData}"`
+  })
 }
+
+async function adjustNavigationJs(paths) {
+  const filtered = paths.filter(isNavigationJs);
+  if (filtered.length !== 1) {
+    throw Error(`Expected one 'navigation.js', but found: ${filtered.length}.`);
+  }
+  
+  await transformFile(filtered[0], async file => {
+    const blob = /window.navigationData = "data:application\/octet-stream;base64,(.*)"/.exec(file)![1]
+  
+    const ungzipped = (await gunzipP(Buffer.from(blob, 'base64'))).toString('utf8')
+    const navigationItems = JSON.parse(ungzipped)
+
+    const adjustedNavigationItems = navigationItems.map(n => {
+      n.path = removeUnderlinePrefix(n.path)
+      n.children = n.children.map(c => {
+        c.path = removeUnderlinePrefix(c.path)
+        return c
+      })
+      return n
+    })
+
+    const newData = (await gzipP(JSON.stringify(navigationItems))).toString('base64');
+    return `window.navigationData = "data:application/octet-stream;base64,${newData}"`
+  })
+}
+
+
 
 function removeUnderlinePrefix(str) {
   const i = str.indexOf('_');

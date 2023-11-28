@@ -8,12 +8,12 @@ import { inc, ReleaseType } from 'semver';
 
 export const apiDocsDir = resolve('knowledge-base', 'api-reference');
 
-export function transformFile(
+export async function transformFile(
   filePath: string,
   transformFn: CallableFunction
-): void {
+): Promise<void> {
   const file = readFileSync(filePath, { encoding: 'utf8' });
-  const transformedFile = transformFn(file);
+  const transformedFile = await transformFn(file);
   writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
 }
 

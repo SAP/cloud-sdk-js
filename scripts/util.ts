@@ -8,6 +8,15 @@ import { inc, ReleaseType } from 'semver';
 
 export const apiDocsDir = resolve('knowledge-base', 'api-reference');
 
+export function transformFileSync(
+  filePath: string,
+  transformFn: CallableFunction
+): void {
+  const file = readFileSync(filePath, { encoding: 'utf8' });
+  const transformedFile = transformFn(file);
+  writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
+}
+
 export async function transformFile(
   filePath: string,
   transformFn: CallableFunction

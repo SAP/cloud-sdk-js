@@ -3,7 +3,7 @@ import { lstatSync, readdirSync, renameSync, readFileSync } from 'fs';
 import { resolve, basename, extname } from 'path';
 import execa from 'execa';
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { transformFile } from './util';
+import { transformFile, transformFileSync } from './util';
 import { gunzip, gzip } from 'zlib';
 import { promisify } from 'util';
 
@@ -47,7 +47,7 @@ async function adjustForGitHubPages() {
   await adjustNavigationJs(documentationFilePaths);
   
   htmlPaths.forEach(filePath =>
-    transformFile(filePath, file =>
+    transformFileSync(filePath, file =>
       file.replace(/<a href="[^>]*_[^>]*.html[^>]*>/gi, removeUnderlinePrefix)
     )
   );
@@ -121,7 +121,7 @@ function insertCopyright() {
   const filePaths = flatten(readDir(docPath)).filter(isHtmlFile);
   filePaths.forEach(filePath => {
     const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
-    transformFile(filePath, file => {
+    transformFileSync(filePath, file => {
       const lines = file.split(unixEOL);
       // Insert the copyright div before the line including </footer> #yikes
       lines.splice(

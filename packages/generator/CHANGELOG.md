@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/generator
 
+## 3.9.0
+
+### Patch Changes
+
+- Updated dependencies [a87dd7f]
+  - @sap-cloud-sdk/odata-common@3.9.0
+  - @sap-cloud-sdk/generator-common@3.9.0
+  - @sap-cloud-sdk/odata-v2@3.9.0
+  - @sap-cloud-sdk/odata-v4@3.9.0
+  - @sap-cloud-sdk/util@3.9.0
+
 ## 3.8.1
 
 ### Patch Changes

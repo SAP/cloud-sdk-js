@@ -48,9 +48,24 @@ describe('Cloud SDK Logger', () => {
       delete process.env.VCAP_SERVICES;
     });
 
-    it('creates a new default logger', () => {
+    it('creates a new default logger with default log level info', () => {
       logger = createLogger();
       expect(logger).not.toBeUndefined();
+      expect(logger.level).toEqual('info');
+    });
+
+    it('creates logger with log level from env variable, if one is specified', () => {
+      process.env.SAP_CLOUD_SDK_LOG_LEVEL = 'silly';
+
+      logger = createLogger();
+      expect(logger).not.toBeUndefined();
+      expect(logger.level).toEqual('silly');
+
+      const write = spyOnWrite(logger);
+
+      logger.silly(message);
+
+      expect(write).toHaveBeenCalled();
     });
 
     it('creates a new logger for a module', () => {

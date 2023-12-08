@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services-openapi",
-  "version": "3.8.1",
+  "version": "3.9.0",
   "description": "Custom Services for testing",
   "files": [
     "**/*.js",
@@ -21,7 +21,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@sap-cloud-sdk/openapi-generator": "^3.8.1",
-    "@sap-cloud-sdk/util": "^3.8.1"
+    "@sap-cloud-sdk/openapi-generator": "^3.9.0",
+    "@sap-cloud-sdk/util": "^3.9.0"
   }
 }

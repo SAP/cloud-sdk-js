@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/odata-common
 
+## 3.9.0
+
+### Minor Changes
+
+- a87dd7f: [Fixed Issue] Add support for subrequest serialization where a batch request may only contain an entity with no path.
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.9.0
+- @sap-cloud-sdk/http-client@3.9.0
+- @sap-cloud-sdk/util@3.9.0
+
 ## 3.8.1
 
 ### Patch Changes

@@ -66,6 +66,7 @@ describe('Cloud SDK Logger', () => {
       logger.silly(message);
 
       expect(write).toHaveBeenCalled();
+      delete process.env.SAP_CLOUD_SDK_LOG_LEVEL;
     });
 
     it('creates a new logger for a module', () => {

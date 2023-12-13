@@ -675,24 +675,11 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dts-critic@0.0.191":
-  version "0.0.191"
-  resolved "https://registry.npmjs.org/@definitelytyped/dts-critic/-/dts-critic-0.0.191.tgz#a8ac13a475cb2060d72bee58981fa5c711f29a37"
-  integrity sha512-j5HK3pQYiQwSXRLJzyhXJ6KxdzLl4gXXhz3ysCtLnRQkj+zsEfloDkEZ3x2bZMWS0OsKLXmR91JeQ2/c9DFEjg==
+"@definitelytyped/dtslint@^0.0.201":
+  version "0.0.201"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.201.tgz#5e640114d95b354da93acfef3824e42d2e10df3e"
+  integrity sha512-l8a/fkwo3vvfExRw39Vn6LgXuYe8NpG0ZBB9SVyqAY8IPnH3S0nY8RJd55UCwz+Au/3AaMSccLbJCUl4uKZ0zw==
   dependencies:
-    "@definitelytyped/header-parser" "0.0.190"
-    command-exists "^1.2.9"
-    semver "^7.5.4"
-    tmp "^0.2.1"
-    typescript "^5.2.2"
-    yargs "^17.7.2"
-
-"@definitelytyped/dtslint@^0.0.199":
-  version "0.0.199"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.0.199.tgz#66c20d1621e18a99dfc5263915953bbf1b4c19ed"
-  integrity sha512-GlPqLuFhylYSv0twBLaq5U+LyoDDysew99D5/AGxvhyy9vZZFcPyu6pLg4TCcefYE2DbC2qH5Ncw99W/aGMstA==
-  dependencies:
-    "@definitelytyped/dts-critic" "0.0.191"
     "@definitelytyped/header-parser" "0.0.190"
     "@definitelytyped/typescript-versions" "0.0.182"
     "@definitelytyped/utils" "0.0.188"
@@ -3143,11 +3130,6 @@ combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
   dependencies:
     delayed-stream "~1.0.0"
-
-command-exists@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.npmjs.org/command-exists/-/command-exists-1.2.9.tgz#c50725af3808c8ab0260fd60b01fbfa25b954f69"
-  integrity sha512-LTQ/SGc+s0Xc0Fu5WaKnR0YiygZkm9eKFvyS+fRsU7/ZWFF8ykFM6Pc9aCVf1+xasOOZpO3BAVgVrKvsqKHV7w==
 
 commander@2.15.1:
   version "2.15.1"
@@ -8470,7 +8452,7 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rimraf@^3.0.0, rimraf@^3.0.2:
+rimraf@^3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
   integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
@@ -9292,13 +9274,6 @@ tmp@^0.0.33:
   integrity sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==
   dependencies:
     os-tmpdir "~1.0.2"
-
-tmp@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/tmp/-/tmp-0.2.1.tgz#8457fc3037dcf4719c251367a1af6500ee1ccf14"
-  integrity sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==
-  dependencies:
-    rimraf "^3.0.0"
 
 tmpl@1.0.5:
   version "1.0.5"

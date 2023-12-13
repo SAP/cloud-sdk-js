@@ -47,6 +47,6 @@
     "@types/async-retry": "^1.4.8",
     "@types/opossum": "^8.1.6",
     "nock": "^13.4.0",
-    "typescript": "~5.2.2"
+    "typescript": "~5.3.3"
   }
 }

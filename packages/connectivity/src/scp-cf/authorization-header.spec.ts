@@ -54,7 +54,7 @@ describe('buildAuthorizationHeaders', () => {
       ).resolves.not.toThrow();
     });
 
-    it('defaults to NoAuthentication and does not create authentication headers when only url is defined', async () => {
+    it('defaults to NoAuthentication and does not create authentication headers when only URL is defined', async () => {
       const spy = jest.spyOn(destinationImport, 'sanitizeDestination');
       const headerPromise = buildAuthorizationHeaders({
         url: 'https://example.com'
@@ -64,31 +64,6 @@ describe('buildAuthorizationHeaders', () => {
         expect.objectContaining({ authentication: 'NoAuthentication' })
       );
       expect((await headerPromise).authorization).toBeUndefined();
-    });
-
-    it("does not add authentication headers for proxy type 'Internet'", async () => {
-      const headers = await buildAuthorizationHeaders({
-        url: defaultDestination.url,
-        proxyType: 'Internet'
-      });
-      expect(headers.authorization).toBeUndefined();
-    });
-
-    it("adds on premise related headers for authentication type 'NoAuthentication' combined with proxy type 'OnPremise'", async () => {
-      const destination = {
-        url: '',
-        authentication: 'NoAuthentication',
-        proxyType: 'OnPremise',
-        proxyConfiguration: {
-          headers: {
-            'SAP-Connectivity-Authentication': 'someValueDestination',
-            'Proxy-Authorization': 'someProxyValue'
-          }
-        }
-      } as Destination;
-
-      const headers = await buildAuthorizationHeaders(destination);
-      checkHeaders(headers);
     });
   });
 

@@ -179,9 +179,6 @@ async function getAuthenticationRelatedHeaders(
       );
       return;
     case 'NoAuthentication':
-      if (destination.proxyType === 'OnPremise') {
-        return headerForPrincipalPropagation(destination);
-      }
       return;
     case 'ClientCertificateAuthentication':
       return;

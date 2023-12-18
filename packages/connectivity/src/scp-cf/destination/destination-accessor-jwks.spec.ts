@@ -1,13 +1,9 @@
 import nock from 'nock';
 import {
   customSubscriberUserToken,
-  destinationName,
-  destinationSingleResponse,
-  mockInstanceDestinationsCall,
+  mockFindDestinationCalls,
   mockServiceBindings,
   mockServiceToken,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
   oauthMultipleResponse,
   providerServiceToken
 } from '../../../../../test-resources/test/test-util';
@@ -37,18 +33,11 @@ describe('custom JWTs', () => {
     serviceToken: string,
     userJwt: string
   ) {
-    mockInstanceDestinationsCall(nock, [], 200, serviceToken);
-
-    mockSubaccountDestinationsCall(nock, [destination], 200, serviceToken);
-
-    mockSingleDestinationCall(
-      nock,
-      destinationSingleResponse([destination]),
-      200,
-      destinationName,
-      { authorization: `Bearer ${serviceToken}`, 'x-user-token': userJwt },
-      { badheaders: [] }
-    );
+    mockFindDestinationCalls(destination, {
+      serviceToken,
+      badheaders: [],
+      mockAuthCall: { headers: { 'x-user-token': userJwt } }
+    });
   }
 
   it('throws an error if jwks properties are not given in the destination', async () => {

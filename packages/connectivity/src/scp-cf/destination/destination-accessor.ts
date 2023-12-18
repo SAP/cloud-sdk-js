@@ -21,12 +21,9 @@ import {
   DestinationWithoutToken
 } from './destination-accessor-types';
 import { searchRegisteredDestination } from './destination-from-registration';
-import {
-  fetchInstanceDestinations,
-  fetchSubaccountDestinations
-} from './destination-service';
 import { getSubscriberToken } from './get-subscriber-token';
 import { getProviderServiceToken } from './get-provider-token';
+import { fetchDestinations } from './destination-service';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -147,8 +144,18 @@ export async function getAllDestinationsFromDestinationService(
   );
 
   const [instance, subaccount] = await Promise.all([
-    fetchInstanceDestinations(destinationServiceUri, token.encoded, options),
-    fetchSubaccountDestinations(destinationServiceUri, token.encoded, options)
+    fetchDestinations(
+      destinationServiceUri,
+      token.encoded,
+      'instance',
+      options
+    ),
+    fetchDestinations(
+      destinationServiceUri,
+      token.encoded,
+      'subaccount',
+      options
+    )
   ]);
 
   const loggerMessage =

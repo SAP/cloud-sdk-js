@@ -27,8 +27,7 @@ import {
   AuthAndExchangeTokens,
   fetchCertificate,
   fetchDestination,
-  fetchInstanceDestinations,
-  fetchSubaccountDestinations
+  fetchDestinationByToken
 } from './destination-service';
 import {
   assertHttpDestination,
@@ -235,32 +234,10 @@ export class DestinationFromServiceRetriever {
     return destinationSearchResult;
   }
 
-  private async getInstanceAndSubaccountDestinations(
-    accessToken: string
-  ): Promise<DestinationsByType> {
-    const [instance, subaccount] = await Promise.all([
-      fetchInstanceDestinations(
-        getDestinationServiceCredentials().uri,
-        accessToken,
-        this.options
-      ),
-      fetchSubaccountDestinations(
-        getDestinationServiceCredentials().uri,
-        accessToken,
-        this.options
-      )
-    ]);
-
-    return {
-      instance,
-      subaccount
-    };
-  }
-
   private async fetchDestinationByToken(
     jwt: string | AuthAndExchangeTokens
   ): Promise<Destination> {
-    return fetchDestination(
+    return fetchDestinationByToken(
       getDestinationServiceCredentials().uri,
       jwt,
       this.options
@@ -461,22 +438,23 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async getProviderDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
-    const provider = await this.getInstanceAndSubaccountDestinations(
+    const providerDestination = await fetchDestination(
+      this.options.destinationName,
+      getDestinationServiceCredentials().uri,
       this.providerServiceToken.encoded
     );
+
     const destination = this.options.selectionStrategy(
       {
         subscriber: emptyDestinationByType,
-        provider
+        provider: providerDestination
       },
       this.options.destinationName
     );
+
     if (destination) {
-      return {
-        destination,
-        fromCache: false,
-        origin: 'provider'
-      };
+      // TODO: from cache is wrong here
+      return { destination, fromCache: false, origin: 'provider' };
     }
   }
 
@@ -503,18 +481,22 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       );
     }
 
-    const subscriber = await this.getInstanceAndSubaccountDestinations(
+    const subscriberDestination = await fetchDestination(
+      this.options.destinationName,
+      getDestinationServiceCredentials().uri,
       this.subscriberToken.serviceJwt.encoded
     );
+
     const destination = this.options.selectionStrategy(
       {
-        subscriber,
+        subscriber: subscriberDestination,
         provider: emptyDestinationByType
       },
       this.options.destinationName
     );
 
     if (destination) {
+      // TODO: from cache is wrong here
       return { destination, fromCache: false, origin: 'subscriber' };
     }
   }

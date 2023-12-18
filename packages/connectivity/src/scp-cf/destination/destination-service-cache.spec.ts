@@ -11,9 +11,9 @@ import {
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import { decodeJwt } from '../jwt';
-import { fetchSubaccountDestinations } from './destination-service';
 import { Destination } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
+import { fetchDestinations } from './destination-service';
 
 const destinationServiceUrl = 'https://myDestination.service.url';
 
@@ -94,7 +94,7 @@ function getDestinationsFromCache(token: string): Destination[] | undefined {
 }
 
 async function populateCacheDestinations(token): Promise<Destination[]> {
-  return fetchSubaccountDestinations(destinationServiceUrl, token, {
+  return fetchDestinations(destinationServiceUrl, token, 'subaccount', {
     useCache: true
   });
 }

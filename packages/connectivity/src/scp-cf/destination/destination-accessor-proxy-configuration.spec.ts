@@ -10,10 +10,9 @@ import {
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
-  mockInstanceDestinationsCall,
   mockCertificateCall,
-  mockSubaccountDestinationsCall,
-  mockVerifyJwt
+  mockVerifyJwt,
+  mockFindDestinationCalls
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
@@ -93,13 +92,10 @@ describe('get destination with PrivateLink proxy type', () => {
     mockServiceToken();
     mockJwtBearerToken();
 
-    mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-    mockSubaccountDestinationsCall(
-      nock,
-      [privateLinkDest],
-      200,
-      subscriberServiceToken
-    );
+    mockFindDestinationCalls(privateLinkDest, {
+      serviceToken: subscriberServiceToken,
+      mockAuthCall: false
+    });
   });
 
   afterEach(() => {
@@ -112,7 +108,7 @@ describe('get destination with PrivateLink proxy type', () => {
     URL: 'https://subscriber.example',
     Name: 'PrivateLinkDest',
     ProxyType: 'PrivateLink',
-    Authentication: 'NoAuthentication'
+    Authentication: 'NoAuthentication' as const
   };
 
   const receivePrivateLinkDest: Destination = {
@@ -144,7 +140,7 @@ describe('get destination with PrivateLink proxy type', () => {
       jwt: subscriberUserToken,
       cacheVerificationKeys: false
     });
-    expect(debugSpy).toBeCalledWith(
+    expect(debugSpy).toHaveBeenCalledWith(
       'PrivateLink destination proxy settings will be used. This is not supported in local/CI/CD environments.'
     );
   });
@@ -184,13 +180,18 @@ describe('truststore configuration', () => {
     mockServiceToken();
     mockJwtBearerToken();
 
-    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-    mockSubaccountDestinationsCall(
-      nock,
-      [destinationWithTrustStore],
-      200,
-      providerServiceToken
-    );
+    // mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+    // mockSubaccountDestinationsCall(
+    //   nock,
+    //   [destinationWithTrustStore],
+    //   200,
+    //   providerServiceToken
+    // );
+
+    mockFindDestinationCalls(destinationWithTrustStore, {
+      mockAuthCall: false
+    });
+
     const actual = await getDestination({
       destinationName: 'TrustStoreDestination',
       jwt: providerUserToken,
@@ -208,28 +209,21 @@ describe('truststore configuration', () => {
 function mockDestinationCalls(
   destination: Destination
 ): (config: any) => Promise<any> {
-  return async config => {
-    if (
-      config.baseURL?.endsWith('instanceDestinations') ||
-      config.baseURL?.endsWith('subaccountDestinations')
-    ) {
-      return { data: [destination] };
-    }
-    return {
-      data: {
-        destinationConfiguration: destination,
-        authTokens: [
-          {
-            type: 'Bearer',
-            value: 'token',
-            expires_in: '3600',
-            http_header: {
-              key: 'Authorization',
-              value: 'Bearer token'
-            }
+  return async () => ({
+    data: {
+      owner: { SubaccountId: 'subaccount', InstanceId: null },
+      destinationConfiguration: destination,
+      authTokens: [
+        {
+          type: 'Bearer',
+          value: 'token',
+          expires_in: '3600',
+          http_header: {
+            key: 'Authorization',
+            value: 'Bearer token'
           }
-        ]
-      }
-    };
-  };
+        }
+      ]
+    }
+  });
 }

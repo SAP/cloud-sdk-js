@@ -53,21 +53,29 @@ function destinationWithAuthType(
 
 export function destinationSingleResponse(
   multipleResponse: DestinationConfiguration[],
-  type: 'Bearer' | 'SAML2.0' = 'Bearer'
-): DestinationJson {
+  type: 'Bearer' | 'SAML2.0' = 'Bearer',
+  skipTokenRetrieval = false
+): DestinationJson & {
+  owner: {
+    SubaccountId: string | null;
+    InstanceId: string | null;
+  };
+} {
   return {
     owner: {
       SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
       InstanceId: null
     },
     destinationConfiguration: multipleResponse[0],
-    authTokens: [
-      {
-        type,
-        value: 'token',
-        expires_in: '3600'
-      }
-    ]
+    ...(skipTokenRetrieval && {
+      authTokens: [
+        {
+          type,
+          value: 'token',
+          expires_in: '3600'
+        }
+      ]
+    })
   };
 }
 

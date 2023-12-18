@@ -1,10 +1,7 @@
-import nock from 'nock';
 import {
-  mockInstanceDestinationsCall,
   mockServiceBindings,
   mockServiceToken,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
+  mockFindDestinationCalls,
   mockVerifyJwt,
   providerServiceToken
 } from '../../../../../test-resources/test/test-util';
@@ -16,7 +13,6 @@ describe('getDestinationFromDestinationService', () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
-    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
   });
 
   it('adds JWT to destination, when `forwardAuthToken` is set (NoAuthentication)', async () => {
@@ -24,15 +20,13 @@ describe('getDestinationFromDestinationService', () => {
       URL: 'https://example.com',
       Name: 'FORWARD',
       ProxyType: 'Internet',
-      Authentication: 'NoAuthentication',
+      Authentication: 'NoAuthentication' as const,
       forwardAuthToken: 'true'
     };
-    mockSubaccountDestinationsCall(
-      nock,
-      [destination],
-      200,
-      providerServiceToken
-    );
+
+    mockFindDestinationCalls(destination, {
+      mockAuthCall: false
+    });
 
     const retrievedDestination = await getDestinationFromDestinationService({
       destinationName: 'FORWARD',
@@ -49,24 +43,12 @@ describe('getDestinationFromDestinationService', () => {
       URL: 'https://example.com',
       Name: 'FORWARD',
       ProxyType: 'Internet',
-      Authentication: 'OAuth2ClientCredentials',
+      Authentication: 'OAuth2ClientCredentials' as const,
       forwardAuthToken: 'true'
     };
-    mockSubaccountDestinationsCall(
-      nock,
-      [destination],
-      200,
-      providerServiceToken
-    );
 
-    const singleDestinationScope = mockSingleDestinationCall(
-      nock,
-      destination,
-      200,
-      'FORWARD',
-      {},
-      { badheaders: [] }
-    );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, authFlowCall] = mockFindDestinationCalls(destination);
 
     await getDestinationFromDestinationService({
       destinationName: 'FORWARD',
@@ -74,6 +56,6 @@ describe('getDestinationFromDestinationService', () => {
     });
 
     // Without `forwardAuthToken` this test would require an additional single subaccount destination call
-    expect(singleDestinationScope.isDone()).toBe(false);
+    expect(authFlowCall.isDone()).toBe(false);
   });
 });

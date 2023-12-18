@@ -23,7 +23,10 @@ import {
   parseCertificate,
   parseDestination
 } from './destination';
-import { DestinationFetchOptions } from './destination-accessor-types';
+import {
+  DestinationFetchOptions,
+  DestinationsByType
+} from './destination-accessor-types';
 import { destinationServiceCache } from './destination-service-cache';
 import {
   Destination,
@@ -42,38 +45,9 @@ type DestinationServiceOptions = Pick<
 >;
 
 /**
- * Fetches all instance destinations from the given URI.
- * @param destinationServiceUri - The URI of the destination service
- * @param jwt - The access token
- * @param options - Options to use by retrieving destinations
- * @returns A promise resolving to a list of instance destinations
  * @internal
  */
-export function fetchInstanceDestinations(
-  destinationServiceUri: string,
-  jwt: string,
-  options?: DestinationsServiceOptions
-): Promise<Destination[]> {
-  return fetchDestinations(destinationServiceUri, jwt, 'instance', options);
-}
-
-/**
- * Fetches all subaccount destinations from the given URI.
- * @param destinationServiceUri - The URI of the destination service
- * @param jwt - The access token
- * @param options - Options to use by retrieving destinations
- * @returns A promise resolving to a list of subaccount destinations
- * @internal
- */
-export function fetchSubaccountDestinations(
-  destinationServiceUri: string,
-  jwt: string,
-  options?: DestinationsServiceOptions
-): Promise<Destination[]> {
-  return fetchDestinations(destinationServiceUri, jwt, 'subaccount', options);
-}
-
-async function fetchDestinations(
+export async function fetchDestinations(
   destinationServiceUri: string,
   jwt: string,
   type: 'instance' | 'subaccount',
@@ -160,16 +134,50 @@ export interface AuthAndExchangeTokens {
  * @returns A Promise resolving to the destination
  * @internal
  */
-export async function fetchDestination(
+export async function fetchDestinationOld(
   destinationServiceUri: string,
   token: string | AuthAndExchangeTokens,
   options: DestinationServiceOptions
 ): Promise<Destination> {
-  return fetchDestinationByTokens(
+  return fetchDestinationByToken(
     destinationServiceUri,
     typeof token === 'string' ? { authHeaderJwt: token } : token,
     options
   );
+}
+
+/**
+ * @internal
+ */
+export async function fetchDestination(
+  destinationName: string,
+  destinationServiceUri: string,
+  jwt: string
+): Promise<DestinationsByType> {
+  const targetUri = `${removeTrailingSlashes(
+    destinationServiceUri
+  )}/destination-configuration/v1/destinations/${destinationName}?$skipTokenRetrieval=true`;
+
+  const headers = wrapJwtInHeader(jwt).headers;
+  try {
+    const response = await callDestinationEndpoint(
+      { uri: targetUri, tenantId: getTenantFromTokens(jwt) },
+      headers
+    );
+    const destination = parseDestination(
+      response.data.destinationConfiguration
+    );
+
+    return {
+      instance: response.data.owner?.InstanceId ? [destination] : [],
+      subaccount: response.data.owner?.SubaccountId ? [destination] : []
+    };
+  } catch (err) {
+    throw new ErrorWithCause(
+      `Failed to fetch destination.${errorMessageFromResponse(err)}`,
+      err
+    );
+  }
 }
 
 /**
@@ -240,30 +248,43 @@ function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
   return tenant;
 }
 
-async function fetchDestinationByTokens(
+/**
+ * Fetches a specific destination by name from the given URI, including authorization tokens.
+ * For destinations with authenticationType OAuth2SAMLBearerAssertion, this call will trigger the OAuth2SAMLBearerFlow against the target destination.
+ * In this pass the access token as string.
+ * Fetches a specific destination with authenticationType OAuth2UserTokenExchange by name from the given URI, including authorization tokens.
+ * @param destinationServiceUri - The URI of the destination service
+ * @param token - The access token or AuthAndExchangeTokens if you want to include the X-user-token for OAuth2UserTokenExchange.
+ * @param options - Options to use by retrieving destinations
+ * @returns A Promise resolving to the destination
+ * @internal
+ */
+export async function fetchDestinationByToken(
   destinationServiceUri: string,
-  tokens: AuthAndExchangeTokens,
+  token: string | AuthAndExchangeTokens,
   options: DestinationServiceOptions
 ): Promise<Destination> {
   const targetUri = `${removeTrailingSlashes(
     destinationServiceUri
   )}/destination-configuration/v1/destinations/${options.destinationName}`;
 
-  let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
-  authHeader = tokens.exchangeHeaderJwt
-    ? { ...authHeader, 'X-user-token': tokens.exchangeHeaderJwt }
+  token = typeof token === 'string' ? { authHeaderJwt: token } : token;
+
+  let authHeader = wrapJwtInHeader(token.authHeaderJwt).headers;
+  authHeader = token.exchangeHeaderJwt
+    ? { ...authHeader, 'X-user-token': token.exchangeHeaderJwt }
     : authHeader;
 
-  authHeader = tokens.exchangeTenant
-    ? { ...authHeader, 'X-tenant': tokens.exchangeTenant }
+  authHeader = token.exchangeTenant
+    ? { ...authHeader, 'X-tenant': token.exchangeTenant }
     : authHeader;
 
-  authHeader = tokens.refreshToken
-    ? { ...authHeader, 'X-refresh-token': tokens.refreshToken }
+  authHeader = token.refreshToken
+    ? { ...authHeader, 'X-refresh-token': token.refreshToken }
     : authHeader;
 
   return callDestinationEndpoint(
-    { uri: targetUri, tenantId: getTenantFromTokens(tokens) },
+    { uri: targetUri, tenantId: getTenantFromTokens(token) },
     authHeader,
     options
   )

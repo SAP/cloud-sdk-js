@@ -216,7 +216,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
       const requestSpy = jest.spyOn(
         destinationService,
-        'fetchSubaccountDestinations'
+        'fetchDestinations'
       );
       const actual = await fetchDestination(
         subscriberUserToken,
@@ -237,7 +237,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
       const requestSpy = jest.spyOn(
         destinationService,
-        'fetchSubaccountDestinations'
+        'fetchDestinations'
       );
       const actual = await fetchDestination(
         subscriberUserToken,

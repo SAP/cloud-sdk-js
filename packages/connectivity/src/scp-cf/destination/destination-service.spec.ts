@@ -11,9 +11,8 @@ import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { DestinationConfiguration, parseDestination } from './destination';
 import {
   fetchCertificate,
-  fetchDestination,
-  fetchInstanceDestinations,
-  fetchSubaccountDestinations
+  fetchDestinationByToken,
+  fetchDestinations
 } from './destination-service';
 import { Destination } from './destination-service-types';
 
@@ -54,7 +53,7 @@ const oauth2SamlBearerDestination = {
 } satisfies DestinationConfiguration;
 
 describe('destination service', () => {
-  describe('fetchInstanceDestinations', () => {
+  describe('fetchDestinations (instance)', () => {
     it('uses a circuit breaker', async () => {
       const response = [basicDestination];
       const expected: Destination[] = [
@@ -79,8 +78,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/instanceDestinations')
         .reply(200, response);
 
-      const subaccountDestinations: Destination[] =
-        await fetchInstanceDestinations(destinationServiceUri, jwt);
+      const subaccountDestinations: Destination[] = await fetchDestinations(
+        destinationServiceUri,
+        jwt,
+        'instance'
+      );
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
@@ -123,8 +125,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/instanceDestinations')
         .reply(200, response);
 
-      const instanceDestinations: Destination[] =
-        await fetchInstanceDestinations(destinationServiceUri, jwt);
+      const instanceDestinations: Destination[] = await fetchDestinations(
+        destinationServiceUri,
+        jwt,
+        'instance'
+      );
       expected.forEach((e, index) => {
         expect(instanceDestinations[index]).toMatchObject(e);
       });
@@ -144,8 +149,8 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(
-        fetchInstanceDestinations(destinationServiceUri, jwt)
-      ).rejects.toThrowError();
+        fetchDestinations(destinationServiceUri, jwt, 'instance')
+      ).rejects.toThrow();
     });
 
     it('does not fail horribly when an internal server error occurs', async () => {
@@ -158,12 +163,12 @@ describe('destination service', () => {
         .reply(500);
 
       await expect(
-        fetchInstanceDestinations(destinationServiceUri, jwt)
-      ).rejects.toThrowError();
+        fetchDestinations(destinationServiceUri, jwt, 'instance')
+      ).rejects.toThrow();
     });
   });
 
-  describe('fetchSubaccountDestinations', () => {
+  describe('fetchDestinations (subaccount)', () => {
     it('uses a circuit breaker', async () => {
       const response = [basicDestination];
       const expected: Destination[] = [
@@ -188,8 +193,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/subaccountDestinations')
         .reply(200, response);
 
-      const subaccountDestinations: Destination[] =
-        await fetchSubaccountDestinations(destinationServiceUri, jwt);
+      const subaccountDestinations: Destination[] = await fetchDestinations(
+        destinationServiceUri,
+        jwt,
+        'subaccount'
+      );
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
@@ -233,8 +241,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/subaccountDestinations')
         .reply(200, response);
 
-      const subaccountDestinations: Destination[] =
-        await fetchSubaccountDestinations(destinationServiceUri, jwt);
+      const subaccountDestinations: Destination[] = await fetchDestinations(
+        destinationServiceUri,
+        jwt,
+        'subaccount'
+      );
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
@@ -254,8 +265,8 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(
-        fetchSubaccountDestinations(destinationServiceUri, jwt)
-      ).rejects.toThrowError();
+        fetchDestinations(destinationServiceUri, jwt, 'subaccount')
+      ).rejects.toThrow();
     });
   });
 
@@ -332,7 +343,7 @@ describe('destination service', () => {
     });
   });
 
-  describe('fetchDestination', () => {
+  describe('fetchDestinationByToken', () => {
     afterEach(() => {
       jest.restoreAllMocks();
     });
@@ -354,7 +365,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-BASIC')
         .reply(200, response);
 
-      await fetchDestination(destinationServiceUri, jwt, {
+      await fetchDestinationByToken(destinationServiceUri, jwt, {
         destinationName
       });
       expect(
@@ -433,7 +444,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
 
-      const actual = await fetchDestination(destinationServiceUri, jwt, {
+      const actual = await fetchDestinationByToken(destinationServiceUri, jwt, {
         destinationName
       });
       expect(actual).toMatchObject(expected);
@@ -464,7 +475,7 @@ describe('destination service', () => {
       const requestSpy = jest
         .spyOn(axios, 'request')
         .mockResolvedValue({ data: response });
-      await fetchDestination(destinationServiceUri, jwt, {
+      await fetchDestinationByToken(destinationServiceUri, jwt, {
         destinationName
       });
       const expectedConfig: RawAxiosRequestConfig = {
@@ -499,7 +510,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/timeoutTest')
         .reply(200, response);
       const spy = jest.spyOn(resilienceMethods, 'executeWithMiddleware');
-      await fetchDestination(destinationServiceUri, jwt, {
+      await fetchDestinationByToken(destinationServiceUri, jwt, {
         destinationName: 'timeoutTest'
       });
       // Assertion for two anonymous functions in the middleware one of them is timeout the other CB.
@@ -545,7 +556,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(axios, 'request');
-      await fetchDestination(destinationServiceUri, jwt, {
+      await fetchDestinationByToken(destinationServiceUri, jwt, {
         destinationName
       });
       const expectedConfig: RawAxiosRequestConfig = {
@@ -585,7 +596,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-BASIC')
         .reply(200, response);
 
-      const actual = await fetchDestination(destinationServiceUri, jwt, {
+      const actual = await fetchDestinationByToken(destinationServiceUri, jwt, {
         destinationName: 'HTTP-BASIC',
         retry: true
       });
@@ -607,7 +618,7 @@ describe('destination service', () => {
         .reply(200, response);
 
       await expect(
-        fetchDestination(destinationServiceUri, jwt, {
+        fetchDestinationByToken(destinationServiceUri, jwt, {
           destinationName: 'HTTP-BASIC',
           retry: true
         })
@@ -650,7 +661,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, responseValidToken);
 
-      const actual = await fetchDestination(destinationServiceUri, jwt, {
+      const actual = await fetchDestinationByToken(destinationServiceUri, jwt, {
         destinationName: 'HTTP-OAUTH',
         retry: true
       });
@@ -680,7 +691,7 @@ describe('destination service', () => {
         .times(3)
         .reply(200, response);
 
-      const actual = await fetchDestination(destinationServiceUri, jwt, {
+      const actual = await fetchDestinationByToken(destinationServiceUri, jwt, {
         destinationName: 'HTTP-OAUTH',
         retry: true
       });
@@ -756,7 +767,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/FINAL-DESTINATION')
         .reply(200, response);
 
-      const actual = await fetchDestination(
+      const actual = await fetchDestinationByToken(
         destinationServiceUri,
         jwt,
 
@@ -777,7 +788,7 @@ describe('destination service', () => {
         .reply(500);
 
       await expect(
-        fetchDestination(destinationServiceUri, jwt, {
+        fetchDestinationByToken(destinationServiceUri, jwt, {
           destinationName
         })
       ).rejects.toThrowError();
@@ -799,7 +810,7 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(() =>
-        fetchDestination(destinationServiceUri, jwt, {
+        fetchDestinationByToken(destinationServiceUri, jwt, {
           destinationName
         })
       ).rejects.toThrowError();

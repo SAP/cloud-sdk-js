@@ -675,12 +675,12 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.1.0.tgz#0dc60f87d3d940bb1225090fe3c64fc5b477f127"
-  integrity sha512-LCX+oZlEXcnT5lozFKFdrALiWIu4M2yCiB+r66QyHdcHOtDBU/6hzcoza3jUTuYwlcr4WOwC6JRMm+ETdPwWOg==
+"@definitelytyped/dtslint@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.1.1.tgz#f88976e1942781a34df481acab61e729926a0015"
+  integrity sha512-0qekHyFOQnGuGGN9uyrjU6iHVBfE4fBy6sBjz6rHC24/CUhuwJIgqEH5Wfoxg50bdgRiNZ+fyGnvPqRSkWL5+Q==
   dependencies:
-    "@definitelytyped/header-parser" "0.1.0"
+    "@definitelytyped/header-parser" "0.1.1"
     "@definitelytyped/typescript-versions" "0.0.184"
     "@definitelytyped/utils" "0.0.191"
     "@typescript-eslint/eslint-plugin" "^6.11.0"
@@ -692,10 +692,10 @@
     eslint-plugin-import "^2.29.0"
     strip-json-comments "^3.1.1"
 
-"@definitelytyped/header-parser@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.1.0.tgz#ed74a23567231d45a2330c25ea7a27846864828d"
-  integrity sha512-pN5pnRBb2lAWlBaKGEXnCx7+CCR5mDny4mQqWfA7KSGZTHlV3d2bBgc+BrjAaa6LwHWNrW6P/7wZi1emkHCWOg==
+"@definitelytyped/header-parser@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.1.1.tgz#a7b6e33f3b8afa58360065a88db346c391a61051"
+  integrity sha512-2VLz+MPysuV0BuI2HMYwHUapAIJQA43bsFiJrPgFwPu8nNDZZY4DI5EevgaTk8UA1jNBUtcZIzXMUi6kzHjBmA==
   dependencies:
     "@definitelytyped/typescript-versions" "0.0.184"
     "@definitelytyped/utils" "0.0.191"

@@ -1,10 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { decodeJwt } from '../jwt';
 import {
-  mockInstanceDestinationsCall,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
+  mockFindDestinationCalls,
+  mockFindDestinationCallsNotFound,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
@@ -14,10 +13,8 @@ import {
   testTenants
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
-  certificateMultipleResponse,
   certificateSingleResponse,
   destinationName,
-  oauthMultipleResponse,
   oauthSingleResponse,
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
@@ -91,16 +88,21 @@ function mockDestinationsWithSameName() {
   nock.cleanAll();
   mockServiceToken();
 
-  const dest = {
+  const destination = {
     URL: 'https://subscriber.example',
     Name: 'SubscriberDest',
     ProxyType: 'any',
     Authentication: 'NoAuthentication'
   };
-  mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-  mockSubaccountDestinationsCall(nock, [dest], 200, subscriberServiceToken);
-  mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-  mockSubaccountDestinationsCall(nock, [dest], 200, providerServiceToken);
+
+  mockFindDestinationCalls(
+    { destinationConfiguration: destination },
+    { mockAuthCall: false }
+  );
+  mockFindDestinationCalls(
+    { destinationConfiguration: destination },
+    { serviceToken: subscriberServiceToken, mockAuthCall: false }
+  );
 }
 
 describe('destination cache', () => {
@@ -127,35 +129,28 @@ describe('destination cache', () => {
         URL: 'https://subscriber.example',
         Name: 'SubscriberDest',
         ProxyType: 'any',
-        Authentication: 'NoAuthentication'
+        Authentication: 'NoAuthentication' as const
       };
       const subscriberDest2 = {
         URL: 'https://subscriber2.example',
         Name: 'SubscriberDest2',
         ProxyType: 'any',
-        Authentication: 'NoAuthentication'
+        Authentication: 'NoAuthentication' as const
       };
       const providerDest = {
         URL: 'https://provider.example',
         Name: 'ProviderDest',
         ProxyType: 'any',
-        Authentication: 'NoAuthentication'
+        Authentication: 'NoAuthentication' as const
       };
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        [subscriberDest, subscriberDest2],
-        200,
-        subscriberServiceToken
-      );
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        [providerDest],
-        200,
-        providerServiceToken
-      );
+      mockFindDestinationCalls(providerDest);
+      mockFindDestinationCalls(subscriberDest, {
+        serviceToken: subscriberServiceToken
+      });
+      mockFindDestinationCalls(subscriberDest2, {
+        serviceToken: subscriberServiceToken
+      });
     });
 
     it('cache key contains user also for provider tokens', async () => {
@@ -209,7 +204,7 @@ describe('destination cache', () => {
       const c1 = await getSubscriberCache('tenant');
       const c2 = await getProviderCache('tenant');
 
-      expect(c1!.url).toBe('https://subscriber.example');
+      expect(c1?.url).toBe('https://subscriber.example');
       expect(c2).toBeUndefined();
     });
 
@@ -416,22 +411,7 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          certificateMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          certificateSingleResponse,
-          200,
-          'ERNIE-UND-CERT',
-          wrapJwtInHeader(providerServiceToken).headers
-        )
-      ];
+      const httpMocks = mockFindDestinationCalls(certificateSingleResponse);
 
       const retrieveFromCacheSpy = jest.spyOn(
         destinationCache,
@@ -478,30 +458,20 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(
-          nock,
-          oauthMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSingleDestinationCall(
-          nock,
-          oauthSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(providerUserToken).headers
-        )
-      ];
+      const httpMocks = mockFindDestinationCalls(oauthSingleResponse, {
+        mockAuthCall: {
+          headers: { authorization: `Bearer ${providerUserToken}` }
+        }
+      });
 
-      const expected = parseDestination(oauthSingleResponse);
       const destinationFromService = await getDestination({
         destinationName,
         jwt: providerUserToken,
         useCache: true
       });
-      expect(destinationFromService).toMatchObject(expected);
+      expect(destinationFromService).toMatchObject(
+        parseDestination(oauthSingleResponse)
+      );
 
       const retrieveFromCacheSpy = jest.spyOn(
         destinationCache,
@@ -529,7 +499,7 @@ describe('destination cache', () => {
             })
           })
         }),
-        expected.name,
+        oauthSingleResponse.name,
         'tenant-user'
       );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -541,12 +511,11 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        onPremisePrincipalPropagationMultipleResponse,
-        200,
-        providerServiceToken
+      mockFindDestinationCalls(
+        onPremisePrincipalPropagationMultipleResponse[0],
+        {
+          mockAuthCall: false
+        }
       );
 
       const retrieveFromCacheSpy = jest.spyOn(
@@ -681,10 +650,10 @@ describe('destination cache', () => {
         'tenant'
       );
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
-      ];
+      const [httpMock] = mockFindDestinationCallsNotFound('ProviderDest', {
+        serviceToken: subscriberServiceToken,
+        mockAuthCall: false
+      });
 
       const actual = await getDestination({
         destinationName: 'ProviderDest',
@@ -696,7 +665,7 @@ describe('destination cache', () => {
       });
 
       expect(actual).toEqual(parsedDestination);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expect(httpMock.isDone()).toBe(true);
     });
   });
 

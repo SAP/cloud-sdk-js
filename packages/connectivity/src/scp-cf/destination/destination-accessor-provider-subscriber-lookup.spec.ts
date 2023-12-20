@@ -2,8 +2,9 @@ import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
 import nock from 'nock';
 import {
+  mockFindDestinationCalls,
+  mockFindDestinationCallsNotFound,
   mockInstanceDestinationsCall,
-  mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
@@ -13,7 +14,6 @@ import {
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   basicMultipleResponse,
-  certificateMultipleResponse,
   certificateSingleResponse,
   destinationName,
   samlAssertionMultipleResponse,
@@ -26,7 +26,6 @@ import {
   subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
-import { wrapJwtInHeader } from '../jwt';
 import * as identityService from '../identity-service';
 import { DestinationConfiguration, parseDestination } from './destination';
 import {
@@ -44,7 +43,6 @@ import {
   DestinationSelectionStrategy,
   subscriberFirst
 } from './destination-selection-strategies';
-import * as destinationService from './destination-service';
 import { Destination } from './destination-service-types';
 
 const destName = 'DESTINATION';
@@ -91,7 +89,7 @@ const parsedSubscriberDestination: DestinationWithoutToken = {
   url: 'http://subscriber.com'
 };
 
-function mockProvider(returnEmpty: boolean): nock.Scope[] {
+function mockProvider(returnEmpty = false): nock.Scope[] {
   return [
     mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
     mockSubaccountDestinationsCall(
@@ -103,7 +101,7 @@ function mockProvider(returnEmpty: boolean): nock.Scope[] {
   ];
 }
 
-function mockSubscriber(returnEmpty: boolean): nock.Scope[] {
+function mockSubscriber(returnEmpty = false): nock.Scope[] {
   return [
     mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
     mockSubaccountDestinationsCall(
@@ -132,11 +130,6 @@ function mockInternalErrorSubscriber(): nock.Scope[] {
   ];
 }
 
-interface mocks {
-  subscriberMocks: nock.Scope[];
-  providerMocks: nock.Scope[];
-}
-
 async function fetchDestination(
   jwt: string | undefined,
   selectionStrategy: DestinationSelectionStrategy
@@ -150,38 +143,29 @@ async function fetchDestination(
   return getDestination(options);
 }
 
-function mockThingsForCombinations(
-  subscriberEmpty = false,
-  providerEmpty = false
-): mocks {
-  mockServiceBindings();
-  mockVerifyJwt();
-  mockServiceToken();
+function mockDestinationMetadataCalls() {
   return {
-    subscriberMocks: mockSubscriber(subscriberEmpty),
-    providerMocks: mockProvider(providerEmpty)
+    providerMock: mockFindDestinationCalls(providerDestination, {
+      mockAuthCall: false
+    })[0],
+    subscriberMock: mockFindDestinationCalls(subscriberDestination, {
+      serviceToken: subscriberServiceToken,
+      mockAuthCall: false
+    })[0]
   };
 }
 
-function assertSubscriberNotCalledAndProviderFound(
-  mocks: mocks,
-  destination: Destination
-) {
-  mocks.subscriberMocks.forEach(mock => expect(mock.isDone()).toBe(false));
-  mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-  expect(destination.url).toBe(providerDestination.URL);
-}
-
-function assertNothingCalledAndNullFound(
-  mocks: mocks,
-  destination: Destination | null
-) {
-  mocks.subscriberMocks.forEach(mock => expect(mock.isDone()).toBe(false));
-  mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(false));
-  expect(destination).toBe(null);
+function assertMockUsed(mock: nock.Scope, used: boolean) {
+  expect(mock.isDone()).toBe(used);
 }
 
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
+  beforeEach(() => {
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+  });
+
   afterEach(() => {
     nock.cleanAll();
     jest.clearAllMocks();
@@ -189,74 +173,60 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
 
   describe('userToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
     it('alwaysSubscriberToken: should not send a request to retrieve remote provider destination and return subscriber destination.', async () => {
-      const mocks = mockThingsForCombinations();
+      const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
 
-      const actual = await fetchDestination(
+      const destination = await fetchDestination(
         subscriberUserToken,
         alwaysSubscriber
       );
-      expect(actual!.url).toBe(subscriberDestination.URL);
 
-      mocks.subscriberMocks.forEach(mock => expect(mock.isDone()).toBe(true));
-      mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(false));
+      expect(destination?.url).toBe(subscriberDestination.URL);
+      assertMockUsed(subscriberMock, true);
+      assertMockUsed(providerMock, false);
     });
 
     it('alwaysProvider: should not sed a request to retrieve remote subscriber destination and return provider destination', async () => {
-      const mocks = mockThingsForCombinations();
+      const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
 
-      const actual = await fetchDestination(
+      const destination = await fetchDestination(
         subscriberUserToken,
         alwaysProvider
       );
-      assertSubscriberNotCalledAndProviderFound(mocks, actual!);
+
+      expect(destination?.url).toEqual(providerDestination.URL);
+      assertMockUsed(subscriberMock, false);
+      assertMockUsed(providerMock, true);
     });
 
     it('subscriberFirst: should try subscriber first (found something), provider not called and return subscriber destination', async () => {
-      mockThingsForCombinations();
+      const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
 
-      const requestSpy = jest.spyOn(
-        destinationService,
-        'fetchDestinations'
-      );
-      const actual = await fetchDestination(
+      const destination = await fetchDestination(
         subscriberUserToken,
         subscriberFirst
       );
-      expect(requestSpy).toHaveBeenCalledTimes(1);
-      expect(requestSpy).toHaveBeenNthCalledWith(
-        1,
-        'https://destination.example.com',
-        subscriberServiceToken,
-        expect.anything()
-      );
-      expect(actual!.url).toBe(subscriberDestination.URL);
+
+      expect(destination?.url).toBe(subscriberDestination.URL);
+      assertMockUsed(subscriberMock, true);
+      assertMockUsed(providerMock, false);
     });
 
     it('subscriberUserToken && subscriberFirst: should try subscriber first (found nothing), provider called and return provider destination', async () => {
-      mockThingsForCombinations(true, false);
+      const [subscriberMock] = mockFindDestinationCalls(providerDestination);
 
-      const requestSpy = jest.spyOn(
-        destinationService,
-        'fetchDestinations'
+      const [providerMock] = mockFindDestinationCallsNotFound(
+        subscriberDestination.Name!,
+        { serviceToken: subscriberServiceToken }
       );
-      const actual = await fetchDestination(
+
+      const destination = await fetchDestination(
         subscriberUserToken,
         subscriberFirst
       );
-      expect(requestSpy).toHaveBeenCalledTimes(2);
-      expect(requestSpy).toHaveBeenNthCalledWith(
-        1,
-        'https://destination.example.com',
-        subscriberServiceToken,
-        expect.anything()
-      );
-      expect(requestSpy).toHaveBeenNthCalledWith(
-        2,
-        'https://destination.example.com',
-        providerServiceToken,
-        expect.anything()
-      );
-      expect(actual!.url).toBe(providerDestination.URL);
+
+      expect(destination?.url).toBe(providerDestination.URL);
+      assertMockUsed(subscriberMock, true);
+      assertMockUsed(providerMock, true);
     });
   });
 
@@ -265,20 +235,16 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        basicMultipleResponse,
-        200,
-        providerServiceToken
-      );
-
-      const actual = await getDestination({
-        destinationName,
-        cacheVerificationKeys: false
+      mockFindDestinationCalls(basicMultipleResponse[0], {
+        mockAuthCall: false
       });
-      const expected = parseDestination(basicMultipleResponse[0]);
-      expect(actual).toMatchObject(expected);
+
+      expect(
+        await getDestination({
+          destinationName,
+          cacheVerificationKeys: false
+        })
+      ).toMatchObject(parseDestination(basicMultipleResponse[0]));
     });
 
     it('when combining `iss` and `jwt` it should fetch service token with `iss` and set user token to `jwt`', async () => {
@@ -289,99 +255,82 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         .spyOn(identityService, 'exchangeToken')
         .mockImplementationOnce(() => Promise.resolve(subscriberUserToken));
 
-      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        samlAssertionMultipleResponse,
-        200,
-        onlyIssuerServiceToken
-      );
-
-      mockSingleDestinationCall(
-        nock,
-        samlAssertionSingleResponse,
-        200,
-        'FINAL-DESTINATION',
-        {
-          ...wrapJwtInHeader(onlyIssuerServiceToken).headers,
-          'X-user-token': subscriberUserToken
-        },
-        { badheaders: [] }
-      );
-
-      const expected = parseDestination(samlAssertionSingleResponse);
-      const actual = await getDestinationFromDestinationService({
-        destinationName: 'FINAL-DESTINATION',
-        iss: onlyIssuerXsuaaUrl,
-        jwt: subscriberUserToken,
-        cacheVerificationKeys: false
+      mockFindDestinationCalls(samlAssertionMultipleResponse[0], {
+        serviceToken: onlyIssuerServiceToken,
+        mockAuthCall: {
+          headers: { 'x-user-token': subscriberUserToken }
+        }
       });
-      expect(actual).toMatchObject(expected);
+
+      expect(
+        await getDestinationFromDestinationService({
+          destinationName: 'FINAL-DESTINATION',
+          iss: onlyIssuerXsuaaUrl,
+          jwt: subscriberUserToken,
+          cacheVerificationKeys: false
+        })
+      ).toMatchObject(parseDestination(samlAssertionSingleResponse));
     });
 
     it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        certificateMultipleResponse,
-        200,
-        onlyIssuerServiceToken
-      );
-
-      mockSingleDestinationCall(
-        nock,
-        certificateSingleResponse,
-        200,
-        'ERNIE-UND-CERT',
-        wrapJwtInHeader(onlyIssuerServiceToken).headers
-      );
+      mockFindDestinationCalls(certificateSingleResponse, {
+        serviceToken: onlyIssuerServiceToken
+      });
 
       const logger = createLogger({
         package: 'connectivity',
         messageContext: 'destination-accessor-service'
       });
       const debugSpy = jest.spyOn(logger, 'debug');
-      const expected = parseDestination(certificateSingleResponse);
-      const actual = await getDestinationFromDestinationService({
-        destinationName: 'ERNIE-UND-CERT',
-        iss: onlyIssuerXsuaaUrl,
-        cacheVerificationKeys: false
-      });
-      expect(actual).toMatchObject(expected);
+      expect(
+        await getDestinationFromDestinationService({
+          destinationName: 'ERNIE-UND-CERT',
+          iss: onlyIssuerXsuaaUrl,
+          cacheVerificationKeys: false
+        })
+      ).toMatchObject(parseDestination(certificateSingleResponse));
       expect(debugSpy).toHaveBeenCalledWith(
         'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
       );
     });
 
-    it('noUserToken && alwaysSubscriber: should return null since the token does not match subscriber', async () => {
-      const mocks = mockThingsForCombinations();
+    it('no user token && alwaysSubscriber: should return null since the token does not match subscriber', async () => {
+      const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
+      const destination = await fetchDestination(undefined, alwaysSubscriber);
 
-      const actual = await fetchDestination(undefined, alwaysSubscriber);
-      assertNothingCalledAndNullFound(mocks, actual);
+      expect(destination).toBe(null);
+      assertMockUsed(subscriberMock, false);
+      assertMockUsed(providerMock, false);
     });
 
-    it('noUserToken && alwaysProvider: should not sed a request to retrieve remote subscriber destination and return provider destination.', async () => {
-      const mocks = mockThingsForCombinations();
+    it('no user token && alwaysProvider: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
+      const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
+      const destination = await fetchDestination(undefined, alwaysProvider);
 
-      const actual = await fetchDestination(undefined, alwaysProvider);
-      assertSubscriberNotCalledAndProviderFound(mocks, actual!);
+      expect(destination?.url).toEqual(providerDestination.URL);
+      assertMockUsed(subscriberMock, false);
+      assertMockUsed(providerMock, true);
     });
 
-    it('noUserToken && subscriberFirst: should not sed a request to retrieve remote subscriber destination and return provider destination.', async () => {
-      const mocks = mockThingsForCombinations();
+    it('no user token && subscriberFirst: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
+      const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
+      const destination = await fetchDestination(undefined, subscriberFirst);
 
-      const actual = await fetchDestination(undefined, subscriberFirst);
-      assertSubscriberNotCalledAndProviderFound(mocks, actual!);
+      expect(destination?.url).toEqual(providerDestination.URL);
+      assertMockUsed(subscriberMock, false);
+      assertMockUsed(providerMock, true);
     });
   });
 });
 
 describe('call getAllDestinations with and without subscriber token', () => {
   beforeEach(() => {
-    mockThingsForCombinations();
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
   });
 
   afterEach(() => {
@@ -394,6 +343,10 @@ describe('call getAllDestinations with and without subscriber token', () => {
       package: 'connectivity',
       messageContext: 'destination-accessor'
     });
+
+    mockSubscriber();
+    mockProvider();
+
     const debugSpy = jest.spyOn(logger, 'debug');
 
     const allDestinations = await getAllDestinationsFromDestinationService({
@@ -411,14 +364,15 @@ describe('call getAllDestinations with and without subscriber token', () => {
   });
 
   it('should fetch all provider destinations when called without passing a JWT', async () => {
+    mockSubscriber();
+    mockProvider();
     const allDestinations = await getAllDestinationsFromDestinationService();
     expect(allDestinations).toEqual([parsedProviderDestination]);
   });
 
   it('should return an empty array if no destination are present', async () => {
-    nock.cleanAll();
-    jest.clearAllMocks();
-    mockThingsForCombinations(true, true);
+    mockSubscriber(true);
+    mockProvider(true);
 
     const logger = createLogger({
       package: 'connectivity',
@@ -434,12 +388,6 @@ describe('call getAllDestinations with and without subscriber token', () => {
   });
 
   it('should throw an error', async () => {
-    nock.cleanAll();
-    jest.clearAllMocks();
-
-    mockServiceBindings();
-    mockVerifyJwt();
-    mockServiceToken();
     mockInternalErrorSubscriber();
 
     await getAllDestinationsFromDestinationService({

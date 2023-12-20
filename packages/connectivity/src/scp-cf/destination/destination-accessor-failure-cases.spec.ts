@@ -4,7 +4,6 @@ import {
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
-  providerServiceToken,
   subscriberServiceToken,
   subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
@@ -13,8 +12,9 @@ import {
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
+  mockFindDestinationCalls,
+  mockFindDestinationCallsNotFound,
   mockInstanceDestinationsCall,
-  mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
@@ -24,9 +24,10 @@ import {
   oauthMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import * as jwt from '../jwt';
-import { getDestination } from './destination-accessor';
-
-const { wrapJwtInHeader } = jwt;
+import {
+  getAllDestinationsFromDestinationService,
+  getDestination
+} from './destination-accessor';
 
 describe('Failure cases', () => {
   it('fails if no destination service is bound', async () => {
@@ -87,8 +88,7 @@ describe('Failure cases', () => {
     ];
 
     try {
-      await getDestination({
-        destinationName,
+      await getAllDestinationsFromDestinationService({
         jwt: subscriberServiceToken,
         cacheVerificationKeys: false
       });
@@ -106,28 +106,16 @@ describe('Failure cases', () => {
     mockServiceToken();
     mockJwtBearerToken();
 
-    const httpMocks = [
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-      mockSubaccountDestinationsCall(
-        nock,
-        oauthMultipleResponse,
-        200,
-        subscriberServiceToken
-      ),
-      mockSingleDestinationCall(
-        nock,
-        {
+    const httpMocks = mockFindDestinationCalls(oauthMultipleResponse[0], {
+      serviceToken: subscriberServiceToken,
+      mockAuthCall: {
+        responseCode: 401,
+        response: {
           ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
         },
-        401,
-        destinationName,
-        {
-          ...wrapJwtInHeader(subscriberServiceToken).headers,
-          'x-user-token': subscriberUserToken
-        },
-        { badheaders: [] }
-      )
-    ];
+        headers: { 'x-user-token': subscriberUserToken }
+      }
+    });
 
     try {
       await getDestination({
@@ -152,19 +140,22 @@ describe('Failure cases', () => {
     mockServiceToken();
 
     const httpMocks = [
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-      mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken)
+      ...mockFindDestinationCallsNotFound(destinationName, {
+        mockAuthCall: false
+      }),
+      ...mockFindDestinationCallsNotFound(destinationName, {
+        serviceToken: subscriberServiceToken,
+        mockAuthCall: false
+      })
     ];
 
-    const expected = null;
-    const actual = await getDestination({
-      destinationName,
-      jwt: subscriberUserToken,
-      cacheVerificationKeys: false
-    });
-    expect(actual).toEqual(expected);
+    expect(
+      await getDestination({
+        destinationName,
+        jwt: subscriberUserToken,
+        cacheVerificationKeys: false
+      })
+    ).toEqual(null);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });
 
@@ -173,18 +164,9 @@ describe('Failure cases', () => {
     mockVerifyJwt();
     mockServiceToken();
 
-    const instanceDestinationCallMock = mockInstanceDestinationsCall(
-      nock,
-      oauthMultipleResponse,
-      200,
-      providerServiceToken
-    );
-    const subaccountDestinationCallMock = mockSubaccountDestinationsCall(
-      nock,
-      [],
-      200,
-      providerServiceToken
-    );
+    const [httpMock] = mockFindDestinationCalls(oauthMultipleResponse[0], {
+      mockAuthCall: false
+    });
 
     await expect(
       getDestination({
@@ -194,7 +176,6 @@ describe('Failure cases', () => {
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"No user token (JWT) has been provided. This is strictly necessary for \'OAuth2SAMLBearerAssertion\'."'
     );
-    expect(instanceDestinationCallMock.isDone()).toBe(true);
-    expect(subaccountDestinationCallMock.isDone()).toBe(true);
+    expect(httpMock.isDone()).toBe(true);
   });
 });

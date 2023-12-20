@@ -35,7 +35,6 @@ describe('custom JWTs', () => {
   ) {
     mockFindDestinationCalls(destination, {
       serviceToken,
-      badheaders: [],
       mockAuthCall: { headers: { 'x-user-token': userJwt } }
     });
   }

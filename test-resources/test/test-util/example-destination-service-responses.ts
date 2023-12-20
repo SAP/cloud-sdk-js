@@ -145,7 +145,7 @@ export const onPremiseBasicMultipleResponse: DestinationConfiguration[] = [
   getOnPremDestination('BasicAuthentication')
 ];
 export const onPremiseBasicSingleResponse: DestinationJson =
-  destinationSingleResponse(oauthMultipleResponse);
+  destinationSingleResponse(onPremiseBasicMultipleResponse);
 
 export const onPremisePrincipalPropagationMultipleResponse: DestinationConfiguration[] =
   [getOnPremDestination('PrincipalPropagation')];

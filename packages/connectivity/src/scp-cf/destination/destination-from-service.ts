@@ -248,7 +248,7 @@ export class DestinationFromServiceRetriever {
     if (destination.authentication !== 'OAuth2ClientCredentials') {
       return undefined;
     }
-    if (destination.originalProperties!['tokenServiceURLType'] !== 'Common') {
+    if (destination.originalProperties?.['tokenServiceURLType'] !== 'Common') {
       return undefined;
     }
     const subdomainSubscriber = getIssuerSubdomain(

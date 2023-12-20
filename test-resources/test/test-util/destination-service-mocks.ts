@@ -64,50 +64,56 @@ export function mockSubaccountDestinationsCall(
     .get('/destination-configuration/v1/subaccountDestinations')
     .reply(responseCode, response);
 }
-export function mockFindDestinationCalls(
-  destination:
-    | (DestinationJson & {
-        owner: {
-          SubaccountId: string | null;
-          InstanceId: string | null;
-        };
-      })
-    | DestinationConfiguration,
-  options: {
-    responseCode?: number;
-    headers?: Record<string, any>;
-    destinationServiceUri?: string;
-    serviceToken?: string;
-    badheaders?: string[];
-    /**
-     * Mock a destination call with $skipTokenRetrieval. Defaults to `true`.
-     */
-    mockMetadataCall?: boolean;
 
-    /**
-     * Mock a destination call that includes the auth flow. If set to `true`, the metadata configuration will be reused.
-     * If a configuration is given, it overwrites the default.
-     */
-    mockAuthCall?:
-      | boolean
-      | {
-          response?: any;
-          responseCode?: number;
-          headers?: Record<string, any>;
-          badheaders?: string[];
-        };
-  } = {}
-): nock.Scope[] {
+type MockedDestinationConfiguration =
+  | (DestinationJson & {
+      owner: {
+        SubaccountId: string | null;
+        InstanceId: string | null;
+      };
+    })
+  | DestinationConfiguration;
+
+interface FindDestinationOptions {
+  response?: any;
+  responseCode?: number;
+  headers?: Record<string, any>;
+  destinationServiceUri?: string;
+  serviceToken?: string;
+  /**
+   * Mock a destination call with $skipTokenRetrieval. Defaults to `true`.
+   */
+  mockMetadataCall?: boolean;
+
+  /**
+   * Mock a destination call that includes the auth flow. If set to `true`, the metadata configuration will be reused.
+   * If a configuration is given, it overwrites the default.
+   */
+  mockAuthCall?:
+    | boolean
+    | {
+        response?: any;
+        responseCode?: number;
+        headers?: Record<string, any>;
+      };
+}
+
+function parseFindDestinationOptions(
+  options: FindDestinationOptions,
+  destination?: MockedDestinationConfiguration
+) {
   const {
     responseCode,
     destinationServiceUri,
     badheaders,
     serviceToken,
-    mockMetadataCall
+    mockMetadataCall,
+    response
   } = {
+    response: destination,
     responseCode: 200,
     destinationServiceUri: defaultDestinationServiceUri,
-    badheaders: ['X-tenant', 'X-user-token'], // X-tenant only allowed for OAuth2ClientCredentials flow
+    badheaders: ['x-tenant', 'x-user-token'], // X-tenant only allowed for OAuth2ClientCredentials flow
     serviceToken: providerServiceToken,
     mockMetadataCall: true,
     ...options
@@ -120,46 +126,96 @@ export function mockFindDestinationCalls(
     ...options.headers
   };
 
-  const mockAuthCall: Record<string, any> | false =
+  const defaultMockAuthCall: Record<string, any> | false =
     typeof options.mockAuthCall === 'object' || options.mockAuthCall === false
       ? options.mockAuthCall
       : {};
 
-  const response = isDestinationConfiguration(destination)
-    ? destinationSingleResponse([destination])
-    : destination;
-  const destinationName = response.destinationConfiguration.Name;
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { authTokens, ...metadataRespose } = response;
 
+  const mockAuthCall = defaultMockAuthCall
+    ? {
+        response,
+        responseCode,
+        headers: { ...defaultMockAuthCall.headers, ...headers },
+        badheaders: badheaders.filter(
+          badheader =>
+            !Object.keys({
+              ...defaultMockAuthCall.headers,
+              ...headers
+            }).includes(badheader)
+        ),
+        ...defaultMockAuthCall
+      }
+    : (false as const);
+
+  return {
+    responseCode,
+    destinationServiceUri,
+    badheaders,
+    serviceToken,
+    mockMetadataCall,
+    mockAuthCall,
+    headers,
+    metadataRespose
+  };
+}
+
+function parseDestination(destination: MockedDestinationConfiguration) {
+  return isDestinationConfiguration(destination)
+    ? destinationSingleResponse([destination])
+    : destination;
+}
+
+export function mockFindDestinationCallsNotFound(
+  destination: string,
+  options: FindDestinationOptions = {}
+) {
+  return mockFindDestinationCalls(destination, {
+    response: {
+      ErrorMessage: 'Configuration with the specified name was not found'
+    },
+    responseCode: 404,
+    ...options
+  });
+}
+
+export function mockFindDestinationCalls(
+  destination: MockedDestinationConfiguration | string,
+  options: FindDestinationOptions = {}
+): nock.Scope[] {
+  const parsedDestination =
+    typeof destination === 'string'
+      ? { destinationConfiguration: { Name: destination } }
+      : parseDestination(destination);
+  const destinationName = parsedDestination.destinationConfiguration.Name;
+
+  const parsedOptions = parseFindDestinationOptions(options, parsedDestination);
+
   const nockScopes: nock.Scope[] = [];
-  if (mockMetadataCall) {
+  if (parsedOptions.mockMetadataCall) {
     nockScopes.push(
-      nock(destinationServiceUri, {
-        reqheaders: headers,
-        badheaders
+      nock(parsedOptions.destinationServiceUri, {
+        reqheaders: parsedOptions.headers,
+        badheaders: parsedOptions.badheaders
       })
         .get(`/destination-configuration/v1/destinations/${destinationName}`)
         .query({ $skipTokenRetrieval: true })
-        .reply(responseCode, metadataRespose)
+        .reply(parsedOptions.responseCode, parsedOptions.metadataRespose)
     );
   }
-  if (mockAuthCall) {
-    const mockAuthCallOptions = {
-      response,
-      responseCode,
-      headers: { ...headers, ...mockAuthCall.headers },
-      badheaders,
-      ...mockAuthCall
-    };
+  if (parsedOptions.mockAuthCall) {
     nockScopes.push(
-      nock(destinationServiceUri, {
-        reqheaders: mockAuthCallOptions.headers,
-        badheaders: mockAuthCallOptions.badheaders
+      nock(parsedOptions.destinationServiceUri, {
+        reqheaders: parsedOptions.mockAuthCall.headers,
+        badheaders: parsedOptions.mockAuthCall.badheaders
       })
         .get(`/destination-configuration/v1/destinations/${destinationName}`)
-        .reply(mockAuthCallOptions.responseCode, mockAuthCallOptions.response)
+        .reply(
+          parsedOptions.mockAuthCall.responseCode,
+          parsedOptions.mockAuthCall.response
+        )
     );
   }
   return nockScopes;

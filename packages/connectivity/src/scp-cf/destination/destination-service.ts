@@ -173,6 +173,16 @@ export async function fetchDestination(
       subaccount: response.data.owner?.SubaccountId ? [destination] : []
     };
   } catch (err) {
+    if (
+      err.response?.status === 404 &&
+      err.response?.data?.ErrorMessage ===
+        'Configuration with the specified name was not found'
+    ) {
+      return {
+        instance: [],
+        subaccount: []
+      };
+    }
     throw new ErrorWithCause(
       `Failed to fetch destination.${errorMessageFromResponse(err)}`,
       err

@@ -106,7 +106,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-jsdoc": "^46.9.1",
-    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-prettier": "^5.1.0",
     "eslint-plugin-regex": "^1.10.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "execa": "^5.0.0",

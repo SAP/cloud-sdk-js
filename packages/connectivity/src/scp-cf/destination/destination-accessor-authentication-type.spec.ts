@@ -191,8 +191,7 @@ describe('authentication types', () => {
           mockAuthCall: { headers: { 'x-tenant': testTenants.subscriber } }
         }),
         ...mockFindDestinationCallsNotFound(destinationName, {
-          serviceToken: subscriberServiceToken,
-          mockAuthCall: false
+          serviceToken: subscriberServiceToken
         })
       ];
 
@@ -216,8 +215,7 @@ describe('authentication types', () => {
           mockAuthCall: { headers: { 'x-user-token': subscriberUserToken } }
         }),
         ...mockFindDestinationCallsNotFound(destinationName, {
-          serviceToken: subscriberServiceToken,
-          mockAuthCall: false
+          serviceToken: subscriberServiceToken
         })
       ];
 

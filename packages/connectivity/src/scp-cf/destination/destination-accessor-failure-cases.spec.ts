@@ -140,12 +140,9 @@ describe('Failure cases', () => {
     mockServiceToken();
 
     const httpMocks = [
+      ...mockFindDestinationCallsNotFound(destinationName),
       ...mockFindDestinationCallsNotFound(destinationName, {
-        mockAuthCall: false
-      }),
-      ...mockFindDestinationCallsNotFound(destinationName, {
-        serviceToken: subscriberServiceToken,
-        mockAuthCall: false
+        serviceToken: subscriberServiceToken
       })
     ];
 

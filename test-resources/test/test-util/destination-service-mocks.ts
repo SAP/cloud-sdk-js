@@ -177,6 +177,7 @@ export function mockFindDestinationCallsNotFound(
       ErrorMessage: 'Configuration with the specified name was not found'
     },
     responseCode: 404,
+    mockAuthCall: false,
     ...options
   });
 }

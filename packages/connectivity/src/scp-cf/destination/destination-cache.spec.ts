@@ -655,8 +655,7 @@ describe('destination cache', () => {
       );
 
       const [httpMock] = mockFindDestinationCallsNotFound('ProviderDest', {
-        serviceToken: subscriberServiceToken,
-        mockAuthCall: false
+        serviceToken: subscriberServiceToken
       });
 
       const actual = await getDestination({

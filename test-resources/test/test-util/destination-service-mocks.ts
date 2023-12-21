@@ -8,10 +8,7 @@ import { destinationServiceUri as defaultDestinationServiceUri } from './environ
 import { providerServiceToken } from './mocked-access-tokens';
 import { destinationSingleResponse } from './example-destination-service-responses';
 
-type nockFunction = (a: string, b: nock.Options) => nock.Scope;
-
 export function mockCertificateCall(
-  nockRef: nockFunction,
   certificateName: string,
   token: string,
   type: 'subaccount' | 'instance'
@@ -33,13 +30,12 @@ export function mockCertificateCall(
 }
 
 export function mockInstanceDestinationsCall(
-  nockRef: nockFunction,
   response: any,
   responseCode: number,
   accessToken: string,
   uri: string = defaultDestinationServiceUri
 ) {
-  return nockRef(uri, {
+  return nock(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`
     }
@@ -49,13 +45,12 @@ export function mockInstanceDestinationsCall(
 }
 
 export function mockSubaccountDestinationsCall(
-  nockRef: nockFunction,
   response: any,
   responseCode: number,
   accessToken: string,
   uri: string = defaultDestinationServiceUri
 ) {
-  return nockRef(uri, {
+  return nock(uri, {
     reqheaders: {
       Authorization: `Bearer ${accessToken}`
     }

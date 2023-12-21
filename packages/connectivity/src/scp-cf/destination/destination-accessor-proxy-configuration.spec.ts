@@ -169,24 +169,11 @@ describe('truststore configuration', () => {
       URL: 'some.example',
       TrustStoreLocation: 'my-cert.pem'
     };
-    mockCertificateCall(
-      nock,
-      'my-cert.pem',
-      providerServiceToken,
-      'subaccount'
-    );
+    mockCertificateCall('my-cert.pem', providerServiceToken, 'subaccount');
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
     mockJwtBearerToken();
-
-    // mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-    // mockSubaccountDestinationsCall(
-    //   nock,
-    //   [destinationWithTrustStore],
-    //   200,
-    //   providerServiceToken
-    // );
 
     mockFindDestinationCalls(destinationWithTrustStore, {
       mockAuthCall: false

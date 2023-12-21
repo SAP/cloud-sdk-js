@@ -272,7 +272,7 @@ describe('destination service', () => {
 
   describe('fetchCertificate', () => {
     it('fetches the subaccount certificate', async () => {
-      mockCertificateCall(nock, 'server-public-cert.pem', jwt, 'subaccount');
+      mockCertificateCall('server-public-cert.pem', jwt, 'subaccount');
 
       const actual = await fetchCertificate(
         destinationServiceUri,
@@ -287,7 +287,7 @@ describe('destination service', () => {
     });
 
     it('fetches the instance certificate', async () => {
-      mockCertificateCall(nock, 'server-public-cert.pem', jwt, 'instance');
+      mockCertificateCall('server-public-cert.pem', jwt, 'instance');
 
       const actual = await fetchCertificate(
         destinationServiceUri,
@@ -302,9 +302,8 @@ describe('destination service', () => {
     });
 
     it('fetches the subaccount first', async () => {
-      mockCertificateCall(nock, 'server-public-cert.pem', jwt, 'subaccount');
+      mockCertificateCall('server-public-cert.pem', jwt, 'subaccount');
       const mockInstance = mockCertificateCall(
-        nock,
         'server-public-cert.pem',
         jwt,
         'instance'
@@ -319,7 +318,7 @@ describe('destination service', () => {
     });
 
     it('returns undefined for non pem files', async () => {
-      mockCertificateCall(nock, 'server-public-cert.jks', jwt, 'subaccount');
+      mockCertificateCall('server-public-cert.jks', jwt, 'subaccount');
 
       const actual = await fetchCertificate(
         destinationServiceUri,

@@ -89,11 +89,10 @@ const parsedSubscriberDestination: DestinationWithoutToken = {
   url: 'http://subscriber.com'
 };
 
-function mockProvider(returnEmpty = false): nock.Scope[] {
+function mockGetAllProvider(returnEmpty = false): nock.Scope[] {
   return [
-    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+    mockInstanceDestinationsCall([], 200, providerServiceToken),
     mockSubaccountDestinationsCall(
-      nock,
       returnEmpty ? [] : [providerDestination],
       200,
       providerServiceToken
@@ -101,11 +100,10 @@ function mockProvider(returnEmpty = false): nock.Scope[] {
   ];
 }
 
-function mockSubscriber(returnEmpty = false): nock.Scope[] {
+function mockGetAllSubscriber(returnEmpty = false): nock.Scope[] {
   return [
-    mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+    mockInstanceDestinationsCall([], 200, subscriberServiceToken),
     mockSubaccountDestinationsCall(
-      nock,
       returnEmpty ? [] : [subscriberDestination],
       200,
       subscriberServiceToken
@@ -113,16 +111,14 @@ function mockSubscriber(returnEmpty = false): nock.Scope[] {
   ];
 }
 
-function mockInternalErrorSubscriber(): nock.Scope[] {
+function mockGetAllInternalErrorSubscriber(): nock.Scope[] {
   return [
     mockInstanceDestinationsCall(
-      nock,
       'Internal Server Error',
       500,
       subscriberServiceToken
     ),
     mockSubaccountDestinationsCall(
-      nock,
       'Internal Server Error',
       500,
       subscriberServiceToken
@@ -344,8 +340,8 @@ describe('call getAllDestinations with and without subscriber token', () => {
       messageContext: 'destination-accessor'
     });
 
-    mockSubscriber();
-    mockProvider();
+    mockGetAllSubscriber();
+    mockGetAllProvider();
 
     const debugSpy = jest.spyOn(logger, 'debug');
 
@@ -364,15 +360,15 @@ describe('call getAllDestinations with and without subscriber token', () => {
   });
 
   it('should fetch all provider destinations when called without passing a JWT', async () => {
-    mockSubscriber();
-    mockProvider();
+    mockGetAllSubscriber();
+    mockGetAllProvider();
     const allDestinations = await getAllDestinationsFromDestinationService();
     expect(allDestinations).toEqual([parsedProviderDestination]);
   });
 
   it('should return an empty array if no destination are present', async () => {
-    mockSubscriber(true);
-    mockProvider(true);
+    mockGetAllSubscriber(true);
+    mockGetAllProvider(true);
 
     const logger = createLogger({
       package: 'connectivity',
@@ -388,7 +384,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
   });
 
   it('should throw an error', async () => {
-    mockInternalErrorSubscriber();
+    mockGetAllInternalErrorSubscriber();
 
     await getAllDestinationsFromDestinationService({
       jwt: subscriberUserToken

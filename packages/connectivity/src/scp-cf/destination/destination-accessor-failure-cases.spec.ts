@@ -1,4 +1,3 @@
-import nock from 'nock';
 import {
   mockServiceBindings,
   xsuaaBindingMock
@@ -72,7 +71,6 @@ describe('Failure cases', () => {
 
     const httpMocks = [
       mockInstanceDestinationsCall(
-        nock,
         {
           ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
         },
@@ -80,7 +78,6 @@ describe('Failure cases', () => {
         subscriberServiceToken
       ),
       mockSubaccountDestinationsCall(
-        nock,
         basicMultipleResponse,
         200,
         subscriberServiceToken

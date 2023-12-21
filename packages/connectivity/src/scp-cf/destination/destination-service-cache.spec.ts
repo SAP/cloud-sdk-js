@@ -43,21 +43,18 @@ describe('DestinationServiceCache', () => {
     mockServiceToken();
 
     mockSubaccountDestinationsCall(
-      nock,
       [subscriberDest, subscriberDest2],
       200,
       subscriberServiceToken,
       destinationServiceUrl
     );
     mockSubaccountDestinationsCall(
-      nock,
       [subscriberDest, subscriberDest2],
       200,
       subscriberUserToken,
       destinationServiceUrl
     );
     mockSubaccountDestinationsCall(
-      nock,
       [providerDest],
       200,
       providerServiceToken,

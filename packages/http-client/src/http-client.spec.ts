@@ -27,9 +27,8 @@ import {
   destinationBindingClientSecretMock,
   jku,
   mockClientCredentialsGrantCall,
-  mockInstanceDestinationsCall,
+  mockFindDestinationCalls,
   mockServiceBindings,
-  mockSubaccountDestinationsCall,
   mockUserTokenGrantCall,
   privateKey,
   providerServiceToken,
@@ -277,16 +276,6 @@ describe('generic http client', () => {
       );
     }
 
-    function mockDestinationService() {
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        basicMultipleResponse,
-        200,
-        subscriberServiceToken
-      );
-    }
-
     it('passes the context properties to the middleware', async () => {
       const showContextMiddleware: HttpMiddleware =
         (opt: HttpMiddlewareOptions) => () =>
@@ -296,7 +285,10 @@ describe('generic http client', () => {
       // Inside connectivity package we can use jest to mock jwtVerify and tokenAccessor
       // Between modules this is not possible and done via HTTP mocks instead
       mockJwtValidationAndServiceToken();
-      mockDestinationService();
+      mockFindDestinationCalls(basicMultipleResponse[0], {
+        serviceToken: subscriberServiceToken,
+        mockAuthCall: false
+      });
 
       const response = await executeHttpRequest(
         {

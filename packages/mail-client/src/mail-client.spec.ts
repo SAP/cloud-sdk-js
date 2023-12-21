@@ -1,4 +1,3 @@
-import nock from 'nock';
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
 import {
@@ -8,9 +7,8 @@ import {
 import { DestinationConfiguration } from '@sap-cloud-sdk/connectivity/internal';
 import * as tokenAccessor from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
 import {
-  mockInstanceDestinationsCall,
+  mockFindDestinationCalls,
   mockServiceBindings,
-  mockSubaccountDestinationsCall,
   providerServiceToken
 } from '../../../test-resources/test/test-util';
 import {
@@ -60,36 +58,29 @@ describe('mail client', () => {
       }
     };
 
-    const mailDestinationResponse: DestinationConfiguration[] = [
-      {
-        Name: 'MyMailDestination',
-        Type: 'MAIL',
-        Authentication: 'BasicAuthentication',
-        ProxyType: 'Internet',
-        User: 'user',
-        Password: 'password',
-        'mail.password': 'password',
-        'mail.user': 'user',
-        'mail.smtp.host': 'smtp.gmail.com',
-        'mail.smtp.port': '587'
-      }
-    ];
+    const mailDestinationResponse: DestinationConfiguration = {
+      Name: 'MyMailDestination',
+      Type: 'MAIL',
+      Authentication: 'BasicAuthentication',
+      ProxyType: 'Internet',
+      User: 'user',
+      Password: 'password',
+      'mail.password': 'password',
+      'mail.user': 'user',
+      'mail.smtp.host': 'smtp.gmail.com',
+      'mail.smtp.port': '587'
+    };
+
     mockServiceBindings();
     // the mockServiceToken() method does not work outside connectivity module.
     jest
       .spyOn(tokenAccessor, 'serviceToken')
       .mockImplementation(() => Promise.resolve(providerServiceToken));
-    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-    mockSubaccountDestinationsCall(
-      nock,
-      mailDestinationResponse,
-      200,
-      providerServiceToken
-    );
+    mockFindDestinationCalls(mailDestinationResponse);
 
     await expect(
       sendMail(
-        { destinationName: 'MyMailDestination' },
+        { destinationName: mailDestinationResponse.Name },
         [mailOptions1],
         mailClientOptions
       )
@@ -114,36 +105,30 @@ describe('mail client', () => {
       }
     };
 
-    const mailDestinationResponse: DestinationConfiguration[] = [
-      {
-        Name: 'MyMailDestination',
-        Type: 'MAIL',
-        Authentication: 'BasicAuthentication',
-        ProxyType: 'OnPremise',
-        User: 'user',
-        Password: 'password',
-        'mail.password': 'password',
-        'mail.user': 'user',
-        'mail.smtp.host': 'smtp.gmail.com',
-        'mail.smtp.port': '587'
-      }
-    ];
+    const mailDestinationResponse: DestinationConfiguration = {
+      Name: 'MyMailDestination',
+      Type: 'MAIL',
+      Authentication: 'BasicAuthentication',
+      ProxyType: 'OnPremise',
+      User: 'user',
+      Password: 'password',
+      'mail.password': 'password',
+      'mail.user': 'user',
+      'mail.smtp.host': 'smtp.gmail.com',
+      'mail.smtp.port': '587'
+    };
+
     mockServiceBindings();
     // the mockServiceToken() method does not work outside connectivity module.
     jest
       .spyOn(tokenAccessor, 'serviceToken')
       .mockImplementation(() => Promise.resolve(providerServiceToken));
-    mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-    mockSubaccountDestinationsCall(
-      nock,
-      mailDestinationResponse,
-      200,
-      providerServiceToken
-    );
+
+    mockFindDestinationCalls(mailDestinationResponse);
 
     await expect(
       sendMail(
-        { destinationName: 'MyMailDestination' },
+        { destinationName: mailDestinationResponse.Name },
         [mailOptions1],
         mailClientOptions
       )

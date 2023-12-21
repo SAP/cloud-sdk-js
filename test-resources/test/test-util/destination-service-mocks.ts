@@ -4,7 +4,6 @@ import {
   DestinationConfiguration,
   DestinationJson
 } from '@sap-cloud-sdk/connectivity';
-import { isDestinationConfiguration } from '@sap-cloud-sdk/connectivity/internal';
 import { destinationServiceUri as defaultDestinationServiceUri } from './environment-mocks';
 import { providerServiceToken } from './mocked-access-tokens';
 import { destinationSingleResponse } from './example-destination-service-responses';
@@ -160,6 +159,13 @@ function parseFindDestinationOptions(
     headers,
     metadataRespose
   };
+}
+
+// This function is needed to identify destination configurations for destinations of type HTTP as well as MAIL.
+function isDestinationConfiguration(
+  destination: any
+): destination is DestinationConfiguration {
+  return 'Name' in destination;
 }
 
 function parseDestination(destination: MockedDestinationConfiguration) {

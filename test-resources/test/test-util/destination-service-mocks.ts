@@ -228,30 +228,6 @@ export function mockFindDestinationCalls(
   return nockScopes;
 }
 
-export function mockSingleDestinationCall(
-  nockRef: nockFunction,
-  response: any,
-  responseCode: number,
-  destName: string,
-  headers: Record<string, any> = {},
-  options?: {
-    uri?: string;
-    badheaders?: string[];
-  }
-) {
-  const { uri, badheaders } = {
-    uri: defaultDestinationServiceUri,
-    badheaders: ['X-tenant', 'X-user-token'],
-    ...options
-  };
-  return nockRef(uri || defaultDestinationServiceUri, {
-    reqheaders: headers,
-    badheaders: badheaders || ['X-tenant', 'X-user-token'] // X-tenant only allowed for OAuth2ClientCredentials flow
-  })
-    .get(`/destination-configuration/v1/destinations/${destName}`)
-    .reply(responseCode, response);
-}
-
 export function mockVerifyJwt() {
   return jest
     .spyOn(sdkJwt, 'verifyJwt')

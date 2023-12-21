@@ -1,14 +1,7 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import {
-  basicHeader,
-  wrapJwtInHeader
-} from '@sap-cloud-sdk/connectivity/internal';
-import {
-  mockInstanceDestinationsCall,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall
-} from '../../../../test-resources/test/test-util/destination-service-mocks';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
+import { mockFindDestinationCalls } from '../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
   destinationBindingClientSecretMock,
@@ -17,7 +10,6 @@ import {
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../test-resources/test/test-util/keys';
 import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
-import { destinationName } from '../../../../test-resources/test/test-util/example-destination-service-responses';
 import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
@@ -161,8 +153,10 @@ describe('Request Builder', () => {
       destinationBindingClientSecretMock.credentials
     );
 
-    mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
-    mockSubaccountDestinationsCall(nock, [], 200, providerToken);
+    mockFindDestinationCalls(destination, {
+      serviceToken: providerToken,
+      mockAuthCall: false
+    });
 
     nock(destination.URL, {
       reqheaders: {
@@ -586,12 +580,22 @@ describe('Request Builder', () => {
   it('should retrieve access token for OAuth2ClientCredentials authentication and set it in request header', async () => {
     mockServiceBindings();
     destination = {
-      Name: 'FINAL-DESTINATION',
-      Password: password,
-      User: username,
-      ProxyType: 'Internet',
-      sapclient: null,
-      URL: url,
+      owner: {
+        SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+        InstanceId: null
+      },
+      destinationConfiguration: {
+        Name: 'FINAL-DESTINATION',
+        Password: password,
+        User: username,
+        ProxyType: 'Internet',
+        sapclient: null,
+        URL: url,
+        Authentication: 'OAuth2ClientCredentials',
+        tokenServiceURL: 'https://token.example.com/some/token/endpoint',
+        clientId: 'TokenClientId',
+        clientSecret: 'TokenClientSecret'
+      },
       authTokens: [
         {
           type: 'Bearer',
@@ -603,11 +607,7 @@ describe('Request Builder', () => {
             value: 'Bearer some.token'
           }
         }
-      ],
-      Authentication: 'OAuth2ClientCredentials',
-      tokenServiceURL: 'https://token.example.com/some/token/endpoint',
-      clientId: 'TokenClientId',
-      clientSecret: 'TokenClientSecret'
+      ]
     };
 
     mockClientCredentialsGrantCall(
@@ -617,18 +617,11 @@ describe('Request Builder', () => {
       destinationBindingClientSecretMock.credentials
     );
 
-    mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
-    mockSubaccountDestinationsCall(nock, [], 200, providerToken);
+    mockFindDestinationCalls(destination, {
+      serviceToken: providerToken
+    });
 
-    mockSingleDestinationCall(
-      nock,
-      destination,
-      200,
-      destinationName,
-      wrapJwtInHeader(providerToken).headers
-    );
-
-    nock(destination.URL, {
+    nock(destination.destinationConfiguration.URL, {
       reqheaders: {
         authorization: 'Bearer some.token',
         accept: 'application/json',
@@ -639,7 +632,7 @@ describe('Request Builder', () => {
       .reply(200, {});
 
     const request = testEntityApi.requestBuilder().getAll().execute({
-      destinationName: 'FINAL-DESTINATION'
+      destinationName: destination.destinationConfiguration.Name
     });
 
     await expect(request).resolves.not.toThrow();

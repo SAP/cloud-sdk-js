@@ -124,29 +124,6 @@ export interface AuthAndExchangeTokens {
 }
 
 /**
- * Fetches a specific destination by name from the given URI, including authorization tokens.
- * For destinations with authenticationType OAuth2SAMLBearerAssertion, this call will trigger the OAuth2SAMLBearerFlow against the target destination.
- * In this pass the access token as string.
- * Fetches a specific destination with authenticationType OAuth2UserTokenExchange by name from the given URI, including authorization tokens.
- * @param destinationServiceUri - The URI of the destination service
- * @param token - The access token or AuthAndExchangeTokens if you want to include the X-user-token for OAuth2UserTokenExchange.
- * @param options - Options to use by retrieving destinations
- * @returns A Promise resolving to the destination
- * @internal
- */
-export async function fetchDestinationOld(
-  destinationServiceUri: string,
-  token: string | AuthAndExchangeTokens,
-  options: DestinationServiceOptions
-): Promise<Destination> {
-  return fetchDestinationByToken(
-    destinationServiceUri,
-    typeof token === 'string' ? { authHeaderJwt: token } : token,
-    options
-  );
-}
-
-/**
  * @internal
  */
 export async function fetchDestination(

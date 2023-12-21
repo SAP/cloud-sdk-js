@@ -75,6 +75,7 @@ async function getSubscriberCache(
     isolationStrategy
   );
 }
+
 async function getProviderCache(isolationStrategy: IsolationStrategy) {
   const decodedProviderJwt = decodeJwt(providerUserToken);
   return destinationCache.retrieveDestinationFromCache(
@@ -92,31 +93,28 @@ function mockDestinationsWithSameName() {
     URL: 'https://subscriber.example',
     Name: 'SubscriberDest',
     ProxyType: 'any',
-    Authentication: 'NoAuthentication'
+    Authentication: 'NoAuthentication' as const
   };
 
-  mockFindDestinationCalls(
-    { destinationConfiguration: destination },
-    { mockAuthCall: false }
-  );
-  mockFindDestinationCalls(
-    { destinationConfiguration: destination },
-    { serviceToken: subscriberServiceToken, mockAuthCall: false }
-  );
+  mockFindDestinationCalls(destination, { mockAuthCall: false });
+  mockFindDestinationCalls(destination, {
+    serviceToken: subscriberServiceToken,
+    mockAuthCall: false
+  });
 }
 
 describe('destination cache', () => {
-  afterAll(async () => {
-    await destinationCache.clear();
-    destinationServiceCache.clear();
-    nock.cleanAll();
-  });
-
   beforeEach(async () => {
     await destinationCache.clear();
     destinationServiceCache.clear();
     nock.cleanAll();
     jest.restoreAllMocks();
+  });
+
+  afterAll(async () => {
+    await destinationCache.clear();
+    destinationServiceCache.clear();
+    nock.cleanAll();
   });
 
   describe('caching', () => {
@@ -193,6 +191,7 @@ describe('destination cache', () => {
 
     it('caches only subscriber if the destination names are the same and subscriber first', async () => {
       mockDestinationsWithSameName();
+
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
@@ -245,6 +244,11 @@ describe('destination cache', () => {
 
     it('caches nothing if the destination is not found', async () => {
       mockVerifyJwt();
+      mockFindDestinationCallsNotFound('ANY', {
+        serviceToken: subscriberServiceToken,
+        mockAuthCall: false
+      });
+
       await getDestination({
         destinationName: 'ANY',
         jwt: subscriberUserToken,
@@ -297,7 +301,7 @@ describe('destination cache', () => {
       );
       await expect(
         getDestination({ destinationName: destName })
-      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+      ).rejects.toThrow('Failed to fetch destination.');
     }, 15000);
 
     it("uses cache with isolation strategy 'tenant' if no JWT is provided", async () => {
@@ -379,7 +383,7 @@ describe('destination cache', () => {
         'tenant'
       );
 
-      expect(warn).toBeCalledWith(
+      expect(warn).toHaveBeenCalledWith(
         "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant ID is undefined in JWT."
       );
       expect(
@@ -397,8 +401,8 @@ describe('destination cache', () => {
           isolationStrategy: 'tenant-user',
           jwt: subscriberServiceToken
         })
-      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
-      expect(warn).toBeCalledWith(
+      ).rejects.toThrow('Failed to fetch destination.');
+      expect(warn).toHaveBeenCalledWith(
         "Could not build destination cache key. Isolation strategy 'tenant-user' is used, but tenant id or user id is undefined in JWT."
       );
     }, 15000);
@@ -499,7 +503,7 @@ describe('destination cache', () => {
             })
           })
         }),
-        oauthSingleResponse.name,
+        oauthSingleResponse.destinationConfiguration.Name,
         'tenant-user'
       );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -842,7 +846,7 @@ describe('get destination cache key', () => {
     const warn = jest.spyOn(logger, 'warn');
 
     getDestinationCacheKey({ zid: 'tenant' }, 'dest');
-    expect(warn).toBeCalledWith(
+    expect(warn).toHaveBeenCalledWith(
       "Could not build destination cache key. Isolation strategy 'tenant-user' is used, but tenant id or user id is undefined in JWT."
     );
   });

@@ -453,7 +453,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     );
 
     if (destination) {
-      // TODO: from cache is wrong here
       return { destination, fromCache: false, origin: 'provider' };
     }
   }
@@ -496,7 +495,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     );
 
     if (destination) {
-      // TODO: from cache is wrong here
       return { destination, fromCache: false, origin: 'subscriber' };
     }
   }

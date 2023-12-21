@@ -5,21 +5,17 @@ import {
   parseDestination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
-import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { retry, timeout } from '@sap-cloud-sdk/resilience';
 import {
   expectAllMocksUsed,
-  certificateMultipleResponse,
   certificateSingleResponse,
-  mockInstanceDestinationsCall,
   mockServiceBindings,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
-  providerServiceToken
+  providerServiceToken,
+  mockFindDestinationCalls
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
@@ -169,7 +165,7 @@ describe('openapi-request-builder', () => {
   it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
     mockServiceBindings();
 
-    const nocks = [
+    const httpMocks = [
       nock(onlyIssuerXsuaaUrl)
         .post('/oauth/token')
         .times(1)
@@ -178,20 +174,9 @@ describe('openapi-request-builder', () => {
         .post('/oauth/token')
         .times(1)
         .reply(200, { access_token: providerServiceToken }),
-      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-      mockSubaccountDestinationsCall(
-        nock,
-        certificateMultipleResponse,
-        200,
-        onlyIssuerServiceToken
-      ),
-      mockSingleDestinationCall(
-        nock,
-        certificateSingleResponse,
-        200,
-        'ERNIE-UND-CERT',
-        wrapJwtInHeader(onlyIssuerServiceToken).headers
-      ),
+      ...mockFindDestinationCalls(certificateSingleResponse, {
+        serviceToken: onlyIssuerServiceToken
+      }),
       nock(certificateSingleResponse.destinationConfiguration.URL!)
         .get(/.*/)
         .reply(200, 'iss token used on the way')
@@ -205,7 +190,7 @@ describe('openapi-request-builder', () => {
       destinationName: 'ERNIE-UND-CERT',
       iss: onlyIssuerXsuaaUrl
     });
-    expectAllMocksUsed(nocks);
+    expectAllMocksUsed(httpMocks);
     expect(httpSpy).toHaveBeenLastCalledWith(
       sanitizeDestination(parseDestination(certificateSingleResponse)),
       {

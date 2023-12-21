@@ -4,7 +4,6 @@ import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import { timeout } from '@sap-cloud-sdk/resilience';
-import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
   mockCountRequest,
@@ -14,17 +13,14 @@ import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   expectAllMocksUsed,
-  certificateMultipleResponse,
   certificateSingleResponse,
-  mockInstanceDestinationsCall,
   mockServiceBindings,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken,
-  createOriginalTestEntityDataWithLinks
+  createOriginalTestEntityDataWithLinks,
+  mockFindDestinationCalls
 } from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import {
@@ -329,7 +325,7 @@ describe('GetAllRequestBuilder', () => {
       mockServiceBindings();
       jest.clearAllMocks();
 
-      const nocks = [
+      const httpMocks = [
         nock(onlyIssuerXsuaaUrl)
           .post('/oauth/token')
           .times(1)
@@ -338,20 +334,9 @@ describe('GetAllRequestBuilder', () => {
           .post('/oauth/token')
           .times(1)
           .reply(200, { access_token: providerServiceToken }),
-        mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          certificateMultipleResponse,
-          200,
-          onlyIssuerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          certificateSingleResponse,
-          200,
-          'ERNIE-UND-CERT',
-          wrapJwtInHeader(onlyIssuerServiceToken).headers
-        ),
+        ...mockFindDestinationCalls(certificateSingleResponse, {
+          serviceToken: onlyIssuerServiceToken
+        }),
         nock(certificateSingleResponse.destinationConfiguration.URL!)
           .get(/.*/)
           .reply(200, 'iss token used on the way')
@@ -361,7 +346,7 @@ describe('GetAllRequestBuilder', () => {
         destinationName: 'ERNIE-UND-CERT',
         iss: onlyIssuerXsuaaUrl
       });
-      expectAllMocksUsed(nocks);
+      expectAllMocksUsed(httpMocks);
       expect(spy).toHaveBeenCalledWith(
         parseDestination(certificateSingleResponse),
         {

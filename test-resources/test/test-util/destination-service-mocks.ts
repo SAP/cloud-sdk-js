@@ -228,27 +228,6 @@ export function mockFindDestinationCalls(
   return nockScopes;
 }
 
-export function mockSingleDestinationCallNew(
-  response: any,
-  token: string,
-  options?: {
-    uri?: string;
-    badheaders?: string[];
-  }
-) {
-  const { uri, badheaders } = {
-    uri: defaultDestinationServiceUri,
-    badheaders: ['X-tenant', 'X-user-token'],
-    ...options
-  };
-  return nock(uri, {
-    reqheaders: { authorization: `Bearer ${token}` },
-    badheaders
-  })
-    .get(`/destination-configuration/v1/destinations/${response.Name}`)
-    .reply(200, response);
-}
-
 export function mockSingleDestinationCall(
   nockRef: nockFunction,
   response: any,

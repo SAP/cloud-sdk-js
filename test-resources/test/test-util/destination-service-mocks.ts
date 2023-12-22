@@ -77,13 +77,13 @@ interface FindDestinationOptions {
   /**
    * Mock a destination call with $skipTokenRetrieval. Defaults to `true`.
    */
-  mockMetadataCall?: boolean;
+  mockWithoutTokenRetrievalCall?: boolean;
 
   /**
    * Mock a destination call that includes the auth flow. If set to `true`, the metadata configuration will be reused.
    * If a configuration is given, it overwrites the default.
    */
-  mockAuthCall?:
+  mockWithTokenRetrievalCall?:
     | boolean
     | {
         response?: any;
@@ -101,7 +101,7 @@ function parseFindDestinationOptions(
     destinationServiceUri,
     badheaders,
     serviceToken,
-    mockMetadataCall,
+    mockWithoutTokenRetrievalCall: mockWithoutTokenRetrievalCall,
     response
   } = {
     response: destination,
@@ -109,7 +109,7 @@ function parseFindDestinationOptions(
     destinationServiceUri: defaultDestinationServiceUri,
     badheaders: ['x-tenant', 'x-user-token'], // X-tenant only allowed for OAuth2ClientCredentials flow
     serviceToken: providerServiceToken,
-    mockMetadataCall: true,
+    mockWithoutTokenRetrievalCall: true,
     ...options
   };
 
@@ -120,37 +120,44 @@ function parseFindDestinationOptions(
     ...options.headers
   };
 
-  const defaultMockAuthCall: Record<string, any> | false =
-    typeof options.mockAuthCall === 'object' || options.mockAuthCall === false
-      ? options.mockAuthCall
+  const defaultMockFetchDestinationWithTokenRetrieval:
+    | Record<string, any>
+    | false =
+    typeof options.mockWithTokenRetrievalCall === 'object' ||
+    options.mockWithTokenRetrievalCall === false
+      ? options.mockWithTokenRetrievalCall
       : {};
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { authTokens, ...metadataRespose } = response;
 
-  const mockAuthCall = defaultMockAuthCall
-    ? {
-        response,
-        responseCode,
-        headers: { ...defaultMockAuthCall.headers, ...headers },
-        badheaders: badheaders.filter(
-          badheader =>
-            !Object.keys({
-              ...defaultMockAuthCall.headers,
-              ...headers
-            }).includes(badheader)
-        ),
-        ...defaultMockAuthCall
-      }
-    : (false as const);
+  const mockWithTokenRetrievalCall =
+    defaultMockFetchDestinationWithTokenRetrieval
+      ? {
+          response,
+          responseCode,
+          headers: {
+            ...defaultMockFetchDestinationWithTokenRetrieval.headers,
+            ...headers
+          },
+          badheaders: badheaders.filter(
+            badheader =>
+              !Object.keys({
+                ...defaultMockFetchDestinationWithTokenRetrieval.headers,
+                ...headers
+              }).includes(badheader)
+          ),
+          ...defaultMockFetchDestinationWithTokenRetrieval
+        }
+      : (false as const);
 
   return {
     responseCode,
     destinationServiceUri,
     badheaders,
     serviceToken,
-    mockMetadataCall,
-    mockAuthCall,
+    mockWithoutTokenRetrievalCall,
+    mockWithTokenRetrievalCall,
     headers,
     metadataRespose
   };
@@ -169,21 +176,21 @@ function parseDestination(destination: MockedDestinationConfiguration) {
     : destination;
 }
 
-export function mockFindDestinationCallsNotFound(
+export function mockFetchDestinationCallsNotFound(
   destination: string,
   options: FindDestinationOptions = {}
 ) {
-  return mockFindDestinationCalls(destination, {
+  return mockFetchDestinationCalls(destination, {
     response: {
       ErrorMessage: 'Configuration with the specified name was not found'
     },
     responseCode: 404,
-    mockAuthCall: false,
+    mockWithTokenRetrievalCall: false,
     ...options
   });
 }
 
-export function mockFindDestinationCalls(
+export function mockFetchDestinationCalls(
   destination: MockedDestinationConfiguration | string,
   options: FindDestinationOptions = {}
 ): nock.Scope[] {
@@ -196,7 +203,7 @@ export function mockFindDestinationCalls(
   const parsedOptions = parseFindDestinationOptions(options, parsedDestination);
 
   const nockScopes: nock.Scope[] = [];
-  if (parsedOptions.mockMetadataCall) {
+  if (parsedOptions.mockWithoutTokenRetrievalCall) {
     nockScopes.push(
       nock(parsedOptions.destinationServiceUri, {
         reqheaders: parsedOptions.headers,
@@ -207,16 +214,16 @@ export function mockFindDestinationCalls(
         .reply(parsedOptions.responseCode, parsedOptions.metadataRespose)
     );
   }
-  if (parsedOptions.mockAuthCall) {
+  if (parsedOptions.mockWithTokenRetrievalCall) {
     nockScopes.push(
       nock(parsedOptions.destinationServiceUri, {
-        reqheaders: parsedOptions.mockAuthCall.headers,
-        badheaders: parsedOptions.mockAuthCall.badheaders
+        reqheaders: parsedOptions.mockWithTokenRetrievalCall.headers,
+        badheaders: parsedOptions.mockWithTokenRetrievalCall.badheaders
       })
         .get(`/destination-configuration/v1/destinations/${destinationName}`)
         .reply(
-          parsedOptions.mockAuthCall.responseCode,
-          parsedOptions.mockAuthCall.response
+          parsedOptions.mockWithTokenRetrievalCall.responseCode,
+          parsedOptions.mockWithTokenRetrievalCall.response
         )
     );
   }

@@ -1,7 +1,7 @@
 import nock from 'nock';
 import {
   customSubscriberUserToken,
-  mockFindDestinationCalls,
+  mockFetchDestinationCalls,
   mockServiceBindings,
   mockServiceToken,
   oauthMultipleResponse,
@@ -33,9 +33,11 @@ describe('custom JWTs', () => {
     serviceToken: string,
     userJwt: string
   ) {
-    mockFindDestinationCalls(destination, {
+    mockFetchDestinationCalls(destination, {
       serviceToken,
-      mockAuthCall: { headers: { 'x-user-token': userJwt } }
+      mockWithTokenRetrievalCall: {
+        headers: { 'x-user-token': userJwt }
+      }
     });
   }
 

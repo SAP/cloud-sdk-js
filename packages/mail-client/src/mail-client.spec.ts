@@ -7,7 +7,7 @@ import {
 import { DestinationConfiguration } from '@sap-cloud-sdk/connectivity/internal';
 import * as tokenAccessor from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
 import {
-  mockFindDestinationCalls,
+  mockFetchDestinationCalls,
   mockServiceBindings,
   providerServiceToken
 } from '../../../test-resources/test/test-util';
@@ -76,7 +76,7 @@ describe('mail client', () => {
     jest
       .spyOn(tokenAccessor, 'serviceToken')
       .mockImplementation(() => Promise.resolve(providerServiceToken));
-    mockFindDestinationCalls(mailDestinationResponse);
+    mockFetchDestinationCalls(mailDestinationResponse);
 
     await expect(
       sendMail(
@@ -124,7 +124,7 @@ describe('mail client', () => {
       .spyOn(tokenAccessor, 'serviceToken')
       .mockImplementation(() => Promise.resolve(providerServiceToken));
 
-    mockFindDestinationCalls(mailDestinationResponse);
+    mockFetchDestinationCalls(mailDestinationResponse);
 
     await expect(
       sendMail(

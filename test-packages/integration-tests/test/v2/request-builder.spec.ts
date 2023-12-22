@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { mockFindDestinationCalls } from '../../../../test-resources/test/test-util/destination-service-mocks';
+import { mockFetchDestinationCalls } from '../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
   destinationBindingClientSecretMock,
@@ -153,9 +153,9 @@ describe('Request Builder', () => {
       destinationBindingClientSecretMock.credentials
     );
 
-    mockFindDestinationCalls(destination, {
+    mockFetchDestinationCalls(destination, {
       serviceToken: providerToken,
-      mockAuthCall: false
+      mockFetchDestinationWithTokenRetrieval: false
     });
 
     nock(destination.URL, {
@@ -617,7 +617,7 @@ describe('Request Builder', () => {
       destinationBindingClientSecretMock.credentials
     );
 
-    mockFindDestinationCalls(destination, {
+    mockFetchDestinationCalls(destination, {
       serviceToken: providerToken
     });
 

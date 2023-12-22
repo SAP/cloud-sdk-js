@@ -1,7 +1,7 @@
 import {
   mockServiceBindings,
   mockServiceToken,
-  mockFindDestinationCalls,
+  mockFetchDestinationCalls,
   mockVerifyJwt,
   providerServiceToken
 } from '../../../../../test-resources/test/test-util';
@@ -24,8 +24,8 @@ describe('getDestinationFromDestinationService', () => {
       forwardAuthToken: 'true'
     };
 
-    mockFindDestinationCalls(destination, {
-      mockAuthCall: false
+    mockFetchDestinationCalls(destination, {
+      mockWithTokenRetrievalCall: false
     });
 
     const retrievedDestination = await getDestinationFromDestinationService({
@@ -48,7 +48,7 @@ describe('getDestinationFromDestinationService', () => {
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, authFlowCall] = mockFindDestinationCalls(destination);
+    const [_, authFlowCall] = mockFetchDestinationCalls(destination);
 
     await getDestinationFromDestinationService({
       destinationName: 'FORWARD',

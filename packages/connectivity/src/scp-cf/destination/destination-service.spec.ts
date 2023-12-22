@@ -11,7 +11,7 @@ import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { DestinationConfiguration, parseDestination } from './destination';
 import {
   fetchCertificate,
-  fetchDestinationByToken,
+  fetchDestinationWithTokenRetrieval,
   fetchDestinations
 } from './destination-service';
 import { Destination } from './destination-service-types';
@@ -364,7 +364,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-BASIC')
         .reply(200, response);
 
-      await fetchDestinationByToken(destinationServiceUri, jwt, {
+      await fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
         destinationName
       });
       expect(
@@ -443,9 +443,13 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
 
-      const actual = await fetchDestinationByToken(destinationServiceUri, jwt, {
-        destinationName
-      });
+      const actual = await fetchDestinationWithTokenRetrieval(
+        destinationServiceUri,
+        jwt,
+        {
+          destinationName
+        }
+      );
       expect(actual).toMatchObject(expected);
     });
 
@@ -474,7 +478,7 @@ describe('destination service', () => {
       const requestSpy = jest
         .spyOn(axios, 'request')
         .mockResolvedValue({ data: response });
-      await fetchDestinationByToken(destinationServiceUri, jwt, {
+      await fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
         destinationName
       });
       const expectedConfig: RawAxiosRequestConfig = {
@@ -509,7 +513,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/timeoutTest')
         .reply(200, response);
       const spy = jest.spyOn(resilienceMethods, 'executeWithMiddleware');
-      await fetchDestinationByToken(destinationServiceUri, jwt, {
+      await fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
         destinationName: 'timeoutTest'
       });
       // Assertion for two anonymous functions in the middleware one of them is timeout the other CB.
@@ -555,7 +559,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(axios, 'request');
-      await fetchDestinationByToken(destinationServiceUri, jwt, {
+      await fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
         destinationName
       });
       const expectedConfig: RawAxiosRequestConfig = {
@@ -595,10 +599,14 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-BASIC')
         .reply(200, response);
 
-      const actual = await fetchDestinationByToken(destinationServiceUri, jwt, {
-        destinationName: 'HTTP-BASIC',
-        retry: true
-      });
+      const actual = await fetchDestinationWithTokenRetrieval(
+        destinationServiceUri,
+        jwt,
+        {
+          destinationName: 'HTTP-BASIC',
+          retry: true
+        }
+      );
       expect(actual).toEqual(parseDestination(response));
     });
 
@@ -617,7 +625,7 @@ describe('destination service', () => {
         .reply(200, response);
 
       await expect(
-        fetchDestinationByToken(destinationServiceUri, jwt, {
+        fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
           destinationName: 'HTTP-BASIC',
           retry: true
         })
@@ -660,10 +668,14 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, responseValidToken);
 
-      const actual = await fetchDestinationByToken(destinationServiceUri, jwt, {
-        destinationName: 'HTTP-OAUTH',
-        retry: true
-      });
+      const actual = await fetchDestinationWithTokenRetrieval(
+        destinationServiceUri,
+        jwt,
+        {
+          destinationName: 'HTTP-OAUTH',
+          retry: true
+        }
+      );
       expect(actual).toMatchObject(parseDestination(responseValidToken));
     });
 
@@ -690,10 +702,14 @@ describe('destination service', () => {
         .times(3)
         .reply(200, response);
 
-      const actual = await fetchDestinationByToken(destinationServiceUri, jwt, {
-        destinationName: 'HTTP-OAUTH',
-        retry: true
-      });
+      const actual = await fetchDestinationWithTokenRetrieval(
+        destinationServiceUri,
+        jwt,
+        {
+          destinationName: 'HTTP-OAUTH',
+          retry: true
+        }
+      );
       expect(actual.authTokens![0].error).toEqual('ERROR');
       expect(mock.isDone()).toBe(true);
     }, 10000);
@@ -766,7 +782,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/FINAL-DESTINATION')
         .reply(200, response);
 
-      const actual = await fetchDestinationByToken(
+      const actual = await fetchDestinationWithTokenRetrieval(
         destinationServiceUri,
         jwt,
 
@@ -787,7 +803,7 @@ describe('destination service', () => {
         .reply(500);
 
       await expect(
-        fetchDestinationByToken(destinationServiceUri, jwt, {
+        fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
           destinationName
         })
       ).rejects.toThrowError();
@@ -809,7 +825,7 @@ describe('destination service', () => {
         .reply(400, response);
 
       await expect(() =>
-        fetchDestinationByToken(destinationServiceUri, jwt, {
+        fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
           destinationName
         })
       ).rejects.toThrowError();

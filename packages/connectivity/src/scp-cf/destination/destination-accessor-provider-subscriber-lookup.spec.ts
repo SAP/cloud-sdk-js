@@ -2,8 +2,8 @@ import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
 import nock from 'nock';
 import {
-  mockFindDestinationCalls,
-  mockFindDestinationCallsNotFound,
+  mockFetchDestinationCalls,
+  mockFetchDestinationCallsNotFound,
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
@@ -141,12 +141,12 @@ async function fetchDestination(
 
 function mockDestinationMetadataCalls() {
   return {
-    providerMock: mockFindDestinationCalls(providerDestination, {
-      mockAuthCall: false
+    providerMock: mockFetchDestinationCalls(providerDestination, {
+      mockWithTokenRetrievalCall: false
     })[0],
-    subscriberMock: mockFindDestinationCalls(subscriberDestination, {
+    subscriberMock: mockFetchDestinationCalls(subscriberDestination, {
       serviceToken: subscriberServiceToken,
-      mockAuthCall: false
+      mockWithTokenRetrievalCall: false
     })[0]
   };
 }
@@ -208,9 +208,9 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     });
 
     it('subscriberUserToken && subscriberFirst: should try subscriber first (found nothing), provider called and return provider destination', async () => {
-      const [subscriberMock] = mockFindDestinationCalls(providerDestination);
+      const [subscriberMock] = mockFetchDestinationCalls(providerDestination);
 
-      const [providerMock] = mockFindDestinationCallsNotFound(
+      const [providerMock] = mockFetchDestinationCallsNotFound(
         subscriberDestination.Name!,
         { serviceToken: subscriberServiceToken }
       );
@@ -231,8 +231,8 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       mockServiceBindings();
       mockServiceToken();
 
-      mockFindDestinationCalls(basicMultipleResponse[0], {
-        mockAuthCall: false
+      mockFetchDestinationCalls(basicMultipleResponse[0], {
+        mockWithTokenRetrievalCall: false
       });
 
       expect(
@@ -251,9 +251,9 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         .spyOn(identityService, 'exchangeToken')
         .mockImplementationOnce(() => Promise.resolve(subscriberUserToken));
 
-      mockFindDestinationCalls(samlAssertionMultipleResponse[0], {
+      mockFetchDestinationCalls(samlAssertionMultipleResponse[0], {
         serviceToken: onlyIssuerServiceToken,
-        mockAuthCall: {
+        mockWithTokenRetrievalCall: {
           headers: { 'x-user-token': subscriberUserToken }
         }
       });
@@ -272,7 +272,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       mockServiceBindings();
       mockServiceToken();
 
-      mockFindDestinationCalls(certificateSingleResponse, {
+      mockFetchDestinationCalls(certificateSingleResponse, {
         serviceToken: onlyIssuerServiceToken
       });
 

@@ -2,8 +2,8 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import { decodeJwt } from '../jwt';
 import {
-  mockFindDestinationCalls,
-  mockFindDestinationCallsNotFound,
+  mockFetchDestinationCalls,
+  mockFetchDestinationCallsNotFound,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
@@ -96,10 +96,12 @@ function mockDestinationsWithSameName() {
     Authentication: 'NoAuthentication' as const
   };
 
-  mockFindDestinationCalls(destination, { mockAuthCall: false });
-  mockFindDestinationCalls(destination, {
+  mockFetchDestinationCalls(destination, {
+    mockWithTokenRetrievalCall: false
+  });
+  mockFetchDestinationCalls(destination, {
     serviceToken: subscriberServiceToken,
-    mockAuthCall: false
+    mockWithTokenRetrievalCall: false
   });
 }
 
@@ -142,11 +144,11 @@ describe('destination cache', () => {
         Authentication: 'NoAuthentication' as const
       };
 
-      mockFindDestinationCalls(providerDest);
-      mockFindDestinationCalls(subscriberDest, {
+      mockFetchDestinationCalls(providerDest);
+      mockFetchDestinationCalls(subscriberDest, {
         serviceToken: subscriberServiceToken
       });
-      mockFindDestinationCalls(subscriberDest2, {
+      mockFetchDestinationCalls(subscriberDest2, {
         serviceToken: subscriberServiceToken
       });
     });
@@ -244,9 +246,9 @@ describe('destination cache', () => {
 
     it('caches nothing if the destination is not found', async () => {
       mockVerifyJwt();
-      mockFindDestinationCallsNotFound('ANY', {
+      mockFetchDestinationCallsNotFound('ANY', {
         serviceToken: subscriberServiceToken,
-        mockAuthCall: false
+        mockWithTokenRetrievalCall: false
       });
 
       await getDestination({
@@ -415,7 +417,7 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = mockFindDestinationCalls(certificateSingleResponse);
+      const httpMocks = mockFetchDestinationCalls(certificateSingleResponse);
 
       const retrieveFromCacheSpy = jest.spyOn(
         destinationCache,
@@ -462,8 +464,8 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = mockFindDestinationCalls(oauthSingleResponse, {
-        mockAuthCall: {
+      const httpMocks = mockFetchDestinationCalls(oauthSingleResponse, {
+        mockWithTokenRetrievalCall: {
           headers: { authorization: `Bearer ${providerUserToken}` }
         }
       });
@@ -515,10 +517,10 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      mockFindDestinationCalls(
+      mockFetchDestinationCalls(
         onPremisePrincipalPropagationMultipleResponse[0],
         {
-          mockAuthCall: false
+          mockWithTokenRetrievalCall: false
         }
       );
 
@@ -654,7 +656,7 @@ describe('destination cache', () => {
         'tenant'
       );
 
-      const [httpMock] = mockFindDestinationCallsNotFound('ProviderDest', {
+      const [httpMock] = mockFetchDestinationCallsNotFound('ProviderDest', {
         serviceToken: subscriberServiceToken
       });
 

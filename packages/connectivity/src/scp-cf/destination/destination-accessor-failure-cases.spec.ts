@@ -11,8 +11,8 @@ import {
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
-  mockFindDestinationCalls,
-  mockFindDestinationCallsNotFound,
+  mockFetchDestinationCalls,
+  mockFetchDestinationCallsNotFound,
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
@@ -103,9 +103,9 @@ describe('Failure cases', () => {
     mockServiceToken();
     mockJwtBearerToken();
 
-    const httpMocks = mockFindDestinationCalls(oauthMultipleResponse[0], {
+    const httpMocks = mockFetchDestinationCalls(oauthMultipleResponse[0], {
       serviceToken: subscriberServiceToken,
-      mockAuthCall: {
+      mockWithTokenRetrievalCall: {
         responseCode: 401,
         response: {
           ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
@@ -137,8 +137,8 @@ describe('Failure cases', () => {
     mockServiceToken();
 
     const httpMocks = [
-      ...mockFindDestinationCallsNotFound(destinationName),
-      ...mockFindDestinationCallsNotFound(destinationName, {
+      ...mockFetchDestinationCallsNotFound(destinationName),
+      ...mockFetchDestinationCallsNotFound(destinationName, {
         serviceToken: subscriberServiceToken
       })
     ];
@@ -158,8 +158,8 @@ describe('Failure cases', () => {
     mockVerifyJwt();
     mockServiceToken();
 
-    const [httpMock] = mockFindDestinationCalls(oauthMultipleResponse[0], {
-      mockAuthCall: false
+    const [httpMock] = mockFetchDestinationCalls(oauthMultipleResponse[0], {
+      mockWithTokenRetrievalCall: false
     });
 
     await expect(

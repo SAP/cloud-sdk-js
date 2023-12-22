@@ -15,7 +15,7 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken,
-  mockFindDestinationCalls
+  mockFetchDestinationCalls
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
@@ -174,7 +174,7 @@ describe('openapi-request-builder', () => {
         .post('/oauth/token')
         .times(1)
         .reply(200, { access_token: providerServiceToken }),
-      ...mockFindDestinationCalls(certificateSingleResponse, {
+      ...mockFetchDestinationCalls(certificateSingleResponse, {
         serviceToken: onlyIssuerServiceToken
       }),
       nock(certificateSingleResponse.destinationConfiguration.URL!)

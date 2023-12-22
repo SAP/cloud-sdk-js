@@ -46,10 +46,16 @@ type DestinationServiceOptions = Pick<
 
 /**
  * @internal
+ * Fetch either subaccount or instance destinations (no token retrieval).
+ * @param destinationServiceUri - The URI of the destination service
+ * @param serviceToken - The service token for the destination service.
+ * @param type - Either 'instance' or 'subaccount', depending on what destinations should be fetched.
+ * @param options - Options to use for retrieving destinations.
+ * @returns A promise resolving to a list of destinations of the requested type.
  */
 export async function fetchDestinations(
   destinationServiceUri: string,
-  jwt: string,
+  serviceToken: string,
   type: 'instance' | 'subaccount',
   options?: DestinationsServiceOptions
 ): Promise<Destination[]> {
@@ -61,7 +67,7 @@ export async function fetchDestinations(
     const destinationsFromCache =
       destinationServiceCache.retrieveDestinationsFromCache(
         targetUri,
-        decodeJwt(jwt)
+        decodeJwt(serviceToken)
       );
     if (destinationsFromCache) {
       logger.debug(
@@ -71,10 +77,10 @@ export async function fetchDestinations(
     }
   }
 
-  const headers = wrapJwtInHeader(jwt).headers;
+  const headers = wrapJwtInHeader(serviceToken).headers;
 
   return callDestinationEndpoint(
-    { uri: targetUri, tenantId: getTenantFromTokens(jwt) },
+    { uri: targetUri, tenantId: getTenantFromTokens(serviceToken) },
     headers
   )
     .then(response => {
@@ -85,7 +91,7 @@ export async function fetchDestinations(
       if (options?.useCache) {
         destinationServiceCache.cacheRetrievedDestinations(
           targetUri,
-          decodeJwt(jwt),
+          decodeJwt(serviceToken),
           destinations
         );
       }
@@ -125,21 +131,25 @@ export interface AuthAndExchangeTokens {
 
 /**
  * @internal
+ * Fetch a destination from the destination find API (`/destinations`) and skip the automatic token retrieval.
+ * @param destinationName - Name of the destination.
+ * @param destinationServiceUri - The URI of the destination service.
+ * @param serviceToken - The service token for the destination service.
+ * @returns A promise resolving to the requested destination.
  */
-export async function fetchDestination(
+export async function fetchDestinationWithoutTokenRetrieval(
   destinationName: string,
   destinationServiceUri: string,
-  jwt: string
+  serviceToken: string
 ): Promise<DestinationsByType> {
   const targetUri = `${removeTrailingSlashes(
     destinationServiceUri
   )}/destination-configuration/v1/destinations/${destinationName}?$skipTokenRetrieval=true`;
 
-  const headers = wrapJwtInHeader(jwt).headers;
   try {
     const response = await callDestinationEndpoint(
-      { uri: targetUri, tenantId: getTenantFromTokens(jwt) },
-      headers
+      { uri: targetUri, tenantId: getTenantFromTokens(serviceToken) },
+      { Authorization: `Bearer ${serviceToken}` }
     );
     const destination = parseDestination(
       response.data.destinationConfiguration
@@ -236,17 +246,15 @@ function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
 }
 
 /**
- * Fetches a specific destination by name from the given URI, including authorization tokens.
- * For destinations with authenticationType OAuth2SAMLBearerAssertion, this call will trigger the OAuth2SAMLBearerFlow against the target destination.
- * In this pass the access token as string.
- * Fetches a specific destination with authenticationType OAuth2UserTokenExchange by name from the given URI, including authorization tokens.
- * @param destinationServiceUri - The URI of the destination service
- * @param token - The access token or AuthAndExchangeTokens if you want to include the X-user-token for OAuth2UserTokenExchange.
- * @param options - Options to use by retrieving destinations
- * @returns A Promise resolving to the destination
  * @internal
+ * Fetches a specific destination including authorization tokens from the given URI.
+ * For destinations with authenticationType `OAuth2SAMLBearerAssertion`, this call will trigger the `OAuth2SAMLBearer` flow against the target destination.
+ * @param destinationServiceUri - The URI of the destination service
+ * @param token - The access token or `AuthAndExchangeTokens` if you want to include other token headers for e.g. `OAuth2UserTokenExchange`.
+ * @param options - Options to use for retrieving destinations.
+ * @returns A promise resolving to the destination.
  */
-export async function fetchDestinationByToken(
+export async function fetchDestinationWithTokenRetrieval(
   destinationServiceUri: string,
   token: string | AuthAndExchangeTokens,
   options: DestinationServiceOptions

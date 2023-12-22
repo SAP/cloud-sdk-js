@@ -27,7 +27,7 @@ import {
   destinationBindingClientSecretMock,
   jku,
   mockClientCredentialsGrantCall,
-  mockFindDestinationCalls,
+  mockFetchDestinationCalls,
   mockServiceBindings,
   mockUserTokenGrantCall,
   privateKey,
@@ -285,9 +285,9 @@ describe('generic http client', () => {
       // Inside connectivity package we can use jest to mock jwtVerify and tokenAccessor
       // Between modules this is not possible and done via HTTP mocks instead
       mockJwtValidationAndServiceToken();
-      mockFindDestinationCalls(basicMultipleResponse[0], {
+      mockFetchDestinationCalls(basicMultipleResponse[0], {
         serviceToken: subscriberServiceToken,
-        mockAuthCall: false
+        mockWithTokenRetrievalCall: false
       });
 
       const response = await executeHttpRequest(

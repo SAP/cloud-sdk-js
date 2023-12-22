@@ -20,7 +20,7 @@ import {
   providerXsuaaUrl,
   providerServiceToken,
   createOriginalTestEntityDataWithLinks,
-  mockFindDestinationCalls
+  mockFetchDestinationCalls
 } from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import {
@@ -334,7 +334,7 @@ describe('GetAllRequestBuilder', () => {
           .post('/oauth/token')
           .times(1)
           .reply(200, { access_token: providerServiceToken }),
-        ...mockFindDestinationCalls(certificateSingleResponse, {
+        ...mockFetchDestinationCalls(certificateSingleResponse, {
           serviceToken: onlyIssuerServiceToken
         }),
         nock(certificateSingleResponse.destinationConfiguration.URL!)

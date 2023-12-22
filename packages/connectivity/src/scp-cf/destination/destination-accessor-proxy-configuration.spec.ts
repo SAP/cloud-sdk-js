@@ -12,7 +12,7 @@ import {
 import {
   mockCertificateCall,
   mockVerifyJwt,
-  mockFindDestinationCalls
+  mockFetchDestinationCalls
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
@@ -92,9 +92,9 @@ describe('get destination with PrivateLink proxy type', () => {
     mockServiceToken();
     mockJwtBearerToken();
 
-    mockFindDestinationCalls(privateLinkDest, {
+    mockFetchDestinationCalls(privateLinkDest, {
       serviceToken: subscriberServiceToken,
-      mockAuthCall: false
+      mockWithTokenRetrievalCall: false
     });
   });
 
@@ -175,8 +175,8 @@ describe('truststore configuration', () => {
     mockServiceToken();
     mockJwtBearerToken();
 
-    mockFindDestinationCalls(destinationWithTrustStore, {
-      mockAuthCall: false
+    mockFetchDestinationCalls(destinationWithTrustStore, {
+      mockWithTokenRetrievalCall: false
     });
 
     const actual = await getDestination({

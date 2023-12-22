@@ -155,7 +155,7 @@ describe('Request Builder', () => {
 
     mockFetchDestinationCalls(destination, {
       serviceToken: providerToken,
-      mockFetchDestinationWithTokenRetrieval: false
+      mockWithTokenRetrievalCall: false
     });
 
     nock(destination.URL, {

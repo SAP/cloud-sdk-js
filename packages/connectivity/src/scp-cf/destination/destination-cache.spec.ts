@@ -1,10 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { decodeJwt } from '../jwt';
 import {
-  mockInstanceDestinationsCall,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
+  mockFetchDestinationCalls,
+  mockFetchDestinationCallsNotFound,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
@@ -14,10 +13,8 @@ import {
   testTenants
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
-  certificateMultipleResponse,
   certificateSingleResponse,
   destinationName,
-  oauthMultipleResponse,
   oauthSingleResponse,
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
@@ -78,6 +75,7 @@ async function getSubscriberCache(
     isolationStrategy
   );
 }
+
 async function getProviderCache(isolationStrategy: IsolationStrategy) {
   const decodedProviderJwt = decodeJwt(providerUserToken);
   return destinationCache.retrieveDestinationFromCache(
@@ -91,30 +89,34 @@ function mockDestinationsWithSameName() {
   nock.cleanAll();
   mockServiceToken();
 
-  const dest = {
+  const destination = {
     URL: 'https://subscriber.example',
     Name: 'SubscriberDest',
     ProxyType: 'any',
-    Authentication: 'NoAuthentication'
+    Authentication: 'NoAuthentication' as const
   };
-  mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-  mockSubaccountDestinationsCall(nock, [dest], 200, subscriberServiceToken);
-  mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-  mockSubaccountDestinationsCall(nock, [dest], 200, providerServiceToken);
+
+  mockFetchDestinationCalls(destination, {
+    mockWithTokenRetrievalCall: false
+  });
+  mockFetchDestinationCalls(destination, {
+    serviceToken: subscriberServiceToken,
+    mockWithTokenRetrievalCall: false
+  });
 }
 
 describe('destination cache', () => {
-  afterAll(async () => {
-    await destinationCache.clear();
-    destinationServiceCache.clear();
-    nock.cleanAll();
-  });
-
   beforeEach(async () => {
     await destinationCache.clear();
     destinationServiceCache.clear();
     nock.cleanAll();
     jest.restoreAllMocks();
+  });
+
+  afterAll(async () => {
+    await destinationCache.clear();
+    destinationServiceCache.clear();
+    nock.cleanAll();
   });
 
   describe('caching', () => {
@@ -127,35 +129,28 @@ describe('destination cache', () => {
         URL: 'https://subscriber.example',
         Name: 'SubscriberDest',
         ProxyType: 'any',
-        Authentication: 'NoAuthentication'
+        Authentication: 'NoAuthentication' as const
       };
       const subscriberDest2 = {
         URL: 'https://subscriber2.example',
         Name: 'SubscriberDest2',
         ProxyType: 'any',
-        Authentication: 'NoAuthentication'
+        Authentication: 'NoAuthentication' as const
       };
       const providerDest = {
         URL: 'https://provider.example',
         Name: 'ProviderDest',
         ProxyType: 'any',
-        Authentication: 'NoAuthentication'
+        Authentication: 'NoAuthentication' as const
       };
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        [subscriberDest, subscriberDest2],
-        200,
-        subscriberServiceToken
-      );
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        [providerDest],
-        200,
-        providerServiceToken
-      );
+      mockFetchDestinationCalls(providerDest);
+      mockFetchDestinationCalls(subscriberDest, {
+        serviceToken: subscriberServiceToken
+      });
+      mockFetchDestinationCalls(subscriberDest2, {
+        serviceToken: subscriberServiceToken
+      });
     });
 
     it('cache key contains user also for provider tokens', async () => {
@@ -198,6 +193,7 @@ describe('destination cache', () => {
 
     it('caches only subscriber if the destination names are the same and subscriber first', async () => {
       mockDestinationsWithSameName();
+
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
@@ -209,7 +205,7 @@ describe('destination cache', () => {
       const c1 = await getSubscriberCache('tenant');
       const c2 = await getProviderCache('tenant');
 
-      expect(c1!.url).toBe('https://subscriber.example');
+      expect(c1?.url).toBe('https://subscriber.example');
       expect(c2).toBeUndefined();
     });
 
@@ -250,6 +246,11 @@ describe('destination cache', () => {
 
     it('caches nothing if the destination is not found', async () => {
       mockVerifyJwt();
+      mockFetchDestinationCallsNotFound('ANY', {
+        serviceToken: subscriberServiceToken,
+        mockWithTokenRetrievalCall: false
+      });
+
       await getDestination({
         destinationName: 'ANY',
         jwt: subscriberUserToken,
@@ -302,7 +303,7 @@ describe('destination cache', () => {
       );
       await expect(
         getDestination({ destinationName: destName })
-      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
+      ).rejects.toThrow('Failed to fetch destination.');
     }, 15000);
 
     it("uses cache with isolation strategy 'tenant' if no JWT is provided", async () => {
@@ -384,7 +385,7 @@ describe('destination cache', () => {
         'tenant'
       );
 
-      expect(warn).toBeCalledWith(
+      expect(warn).toHaveBeenCalledWith(
         "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant ID is undefined in JWT."
       );
       expect(
@@ -402,8 +403,8 @@ describe('destination cache', () => {
           isolationStrategy: 'tenant-user',
           jwt: subscriberServiceToken
         })
-      ).rejects.toThrowError(/Failed to fetch \w+ destinations./);
-      expect(warn).toBeCalledWith(
+      ).rejects.toThrow('Failed to fetch destination.');
+      expect(warn).toHaveBeenCalledWith(
         "Could not build destination cache key. Isolation strategy 'tenant-user' is used, but tenant id or user id is undefined in JWT."
       );
     }, 15000);
@@ -416,22 +417,7 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          certificateMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          certificateSingleResponse,
-          200,
-          'ERNIE-UND-CERT',
-          wrapJwtInHeader(providerServiceToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(certificateSingleResponse);
 
       const retrieveFromCacheSpy = jest.spyOn(
         destinationCache,
@@ -478,30 +464,20 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(
-          nock,
-          oauthMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSingleDestinationCall(
-          nock,
-          oauthSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(providerUserToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(oauthSingleResponse, {
+        mockWithTokenRetrievalCall: {
+          headers: { authorization: `Bearer ${providerUserToken}` }
+        }
+      });
 
-      const expected = parseDestination(oauthSingleResponse);
       const destinationFromService = await getDestination({
         destinationName,
         jwt: providerUserToken,
         useCache: true
       });
-      expect(destinationFromService).toMatchObject(expected);
+      expect(destinationFromService).toMatchObject(
+        parseDestination(oauthSingleResponse)
+      );
 
       const retrieveFromCacheSpy = jest.spyOn(
         destinationCache,
@@ -529,7 +505,7 @@ describe('destination cache', () => {
             })
           })
         }),
-        expected.name,
+        oauthSingleResponse.destinationConfiguration.Name,
         'tenant-user'
       );
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -541,12 +517,11 @@ describe('destination cache', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        onPremisePrincipalPropagationMultipleResponse,
-        200,
-        providerServiceToken
+      mockFetchDestinationCalls(
+        onPremisePrincipalPropagationMultipleResponse[0],
+        {
+          mockWithTokenRetrievalCall: false
+        }
       );
 
       const retrieveFromCacheSpy = jest.spyOn(
@@ -681,10 +656,9 @@ describe('destination cache', () => {
         'tenant'
       );
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
-      ];
+      const [httpMock] = mockFetchDestinationCallsNotFound('ProviderDest', {
+        serviceToken: subscriberServiceToken
+      });
 
       const actual = await getDestination({
         destinationName: 'ProviderDest',
@@ -696,7 +670,7 @@ describe('destination cache', () => {
       });
 
       expect(actual).toEqual(parsedDestination);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expect(httpMock.isDone()).toBe(true);
     });
   });
 
@@ -873,7 +847,7 @@ describe('get destination cache key', () => {
     const warn = jest.spyOn(logger, 'warn');
 
     getDestinationCacheKey({ zid: 'tenant' }, 'dest');
-    expect(warn).toBeCalledWith(
+    expect(warn).toHaveBeenCalledWith(
       "Could not build destination cache key. Isolation strategy 'tenant-user' is used, but tenant id or user id is undefined in JWT."
     );
   });

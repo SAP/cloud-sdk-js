@@ -26,9 +26,8 @@ import {
 import {
   AuthAndExchangeTokens,
   fetchCertificate,
-  fetchDestination,
-  fetchInstanceDestinations,
-  fetchSubaccountDestinations
+  fetchDestinationWithTokenRetrieval,
+  fetchDestinationWithoutTokenRetrieval
 } from './destination-service';
 import {
   assertHttpDestination,
@@ -235,43 +234,11 @@ export class DestinationFromServiceRetriever {
     return destinationSearchResult;
   }
 
-  private async getInstanceAndSubaccountDestinations(
-    accessToken: string
-  ): Promise<DestinationsByType> {
-    const [instance, subaccount] = await Promise.all([
-      fetchInstanceDestinations(
-        getDestinationServiceCredentials().uri,
-        accessToken,
-        this.options
-      ),
-      fetchSubaccountDestinations(
-        getDestinationServiceCredentials().uri,
-        accessToken,
-        this.options
-      )
-    ]);
-
-    return {
-      instance,
-      subaccount
-    };
-  }
-
-  private async fetchDestinationByToken(
-    jwt: string | AuthAndExchangeTokens
-  ): Promise<Destination> {
-    return fetchDestination(
-      getDestinationServiceCredentials().uri,
-      jwt,
-      this.options
-    );
-  }
-
   private getExchangeTenant(destination: Destination): string | undefined {
     if (destination.authentication !== 'OAuth2ClientCredentials') {
       return undefined;
     }
-    if (destination.originalProperties!['tokenServiceURLType'] !== 'Common') {
+    if (destination.originalProperties?.['tokenServiceURLType'] !== 'Common') {
       return undefined;
     }
     const subdomainSubscriber = getIssuerSubdomain(
@@ -287,13 +254,13 @@ export class DestinationFromServiceRetriever {
     destinationResult: DestinationSearchResult
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
-    // This covers the X-Tenant case https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+    // This covers the x-tenant case https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     const exchangeTenant = this.getExchangeTenant(destination);
     const clientGrant = await serviceToken('destination', {
       jwt:
         origin === 'provider'
           ? this.providerServiceToken.decoded
-          : this.subscriberToken!.serviceJwt!.decoded
+          : this.subscriberToken?.serviceJwt?.decoded
     });
     return { authHeaderJwt: clientGrant, exchangeTenant };
   }
@@ -397,7 +364,11 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     const token =
       await this.getAuthTokenForOAuth2ClientCredentials(destinationResult);
 
-    return this.fetchDestinationByToken(token);
+    return fetchDestinationWithTokenRetrieval(
+      getDestinationServiceCredentials().uri,
+      token,
+      this.options
+    );
   }
 
   private async fetchDestinationWithUserExchangeFlows(
@@ -407,7 +378,12 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
         destinationResult
       );
-    return this.fetchDestinationByToken(token);
+
+    return fetchDestinationWithTokenRetrieval(
+      getDestinationServiceCredentials().uri,
+      token,
+      this.options
+    );
   }
 
   private async fetchDestinationWithRefreshTokenFlow(
@@ -415,7 +391,12 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   ): Promise<Destination> {
     const token =
       await this.getAuthTokenForOAuth2RefreshToken(destinationResult);
-    return this.fetchDestinationByToken(token);
+
+    return fetchDestinationWithTokenRetrieval(
+      getDestinationServiceCredentials().uri,
+      token,
+      this.options
+    );
   }
 
   private async addProxyConfiguration(
@@ -461,22 +442,22 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async getProviderDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
-    const provider = await this.getInstanceAndSubaccountDestinations(
+    const providerDestination = await fetchDestinationWithoutTokenRetrieval(
+      this.options.destinationName,
+      getDestinationServiceCredentials().uri,
       this.providerServiceToken.encoded
     );
+
     const destination = this.options.selectionStrategy(
       {
         subscriber: emptyDestinationByType,
-        provider
+        provider: providerDestination
       },
       this.options.destinationName
     );
+
     if (destination) {
-      return {
-        destination,
-        fromCache: false,
-        origin: 'provider'
-      };
+      return { destination, fromCache: false, origin: 'provider' };
     }
   }
 
@@ -503,12 +484,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       );
     }
 
-    const subscriber = await this.getInstanceAndSubaccountDestinations(
+    const subscriberDestination = await fetchDestinationWithoutTokenRetrieval(
+      this.options.destinationName,
+      getDestinationServiceCredentials().uri,
       this.subscriberToken.serviceJwt.encoded
     );
+
     const destination = this.options.selectionStrategy(
       {
-        subscriber,
+        subscriber: subscriberDestination,
         provider: emptyDestinationByType
       },
       this.options.destinationName

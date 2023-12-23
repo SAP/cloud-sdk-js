@@ -8,7 +8,7 @@ import {
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../test-resources/test/test-util/keys';
 import { getClientCredentialsToken } from './xsuaa-service';
-import { fetchDestination } from './destination';
+import { fetchDestinationWithTokenRetrieval } from './destination';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -30,7 +30,7 @@ describe('circuit breaker', () => {
 
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for destination service', async () => {
     const request = () =>
-      fetchDestination(destinationServiceUri, jwt, {
+      fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
         destinationName: 'FINAL-DESTINATION'
       });
 

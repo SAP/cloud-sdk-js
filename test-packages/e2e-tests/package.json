@@ -43,7 +43,7 @@
     "http-proxy-middleware": "^2.0.6",
     "json-schema-faker": "^0.5.4",
     "mock-fs": "^5.2.0",
-    "moment": "^2.29.4",
+    "moment": "^2.30.0",
     "openapi-backend": "^5.10.5",
     "pm2": "^5.3.0",
     "smtp-server": "3.13.0",

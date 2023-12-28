@@ -22,7 +22,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "bignumber.js": "^9.1.2",
-    "moment": "^2.29.4"
+    "moment": "^2.30.1"
   },
   "peerDependencies": {
     "@sap-cloud-sdk/generator": "^3.0.0",

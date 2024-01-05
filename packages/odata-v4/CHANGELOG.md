@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/odata-v4
 
+## 3.10.0
+
+### Patch Changes
+
+- Updated dependencies [c721bbd]
+- Updated dependencies [c721bbd]
+- Updated dependencies [28c9cb7]
+- Updated dependencies [4d2b49b]
+- Updated dependencies [28c9cb7]
+  - @sap-cloud-sdk/connectivity@3.10.0
+  - @sap-cloud-sdk/util@3.10.0
+  - @sap-cloud-sdk/http-client@3.10.0
+  - @sap-cloud-sdk/odata-common@3.10.0
+
 ## 3.9.0
 
 ### Patch Changes

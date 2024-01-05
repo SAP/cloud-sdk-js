@@ -28,6 +28,28 @@
 
 - 
 
+# 3.10.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.10.0
+
+## Compatibility Notes
+
+- [connectivity] The SAP Cloud SDK used to get all subaccount and instance destinations, that are available with your JWT (without potentially required token retrieval), through two requests to the destination service (`/subaccountDestinations` and `/instanceDestinations`). While this approach can have advantages when caching, it can cause severe performance issues without caching. Therefore, from now on, only one destination is retrieved per requested destination through `/destinations`.
+  You can no longer rely on the SDK to automatically cache all destinations on the first request. If needed, you can call `getAllDestinationsFromDestinationService()` with cache enabled instead. (c721bbd)
+- [connectivity] Using Principal Propagation through authentication type `NoAuthentication` is no longer supported. This resulted in erroneous behavior for destinations with authentication type `NoAuthentication`. If you need to use Principal Propagation use authentication type `PrincipalPropagation`. (28c9cb7)
+
+## New Functionalities
+
+- [util] Add support for setting log level for newly created logger using environment variable `SAP_CLOUD_SDK_LOG_LEVEL`. (4d2b49b)
+
+## Improvements
+
+- [connectivity] Retrieve only one destination per requested destination instead of all subaccount and instance destinations. (See compatibility notes.) (c721bbd)
+
+## Fixed Issues
+
+- [connectivity] Allow the use of authentication type `NoAuthentication` with proxy type `OnPremise` without requiring the `SAP-Connectivity-Authentication` header. (28c9cb7)
+
 # 3.9.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.9.0

@@ -1,5 +1,7 @@
 # @sap-cloud-sdk/eslint-config
 
+## 3.10.0
+
 ## 3.9.0
 
 ## 3.8.1

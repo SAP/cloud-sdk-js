@@ -158,19 +158,17 @@ function createTransport(
     auth: {
       user: mailDestination.username,
       pass: mailDestination.password
-    }
+    },
+    host: mailDestination.host,
+    port: mailDestination.port
   };
+
   if (mailDestination.proxyType === 'OnPremise' && socket) {
-    return nodemailer.createTransport({
-      ...baseOptions,
-      connection: socket,
-      ...mailClientOptions
-    });
+    baseOptions.connection = socket;
   }
+
   return nodemailer.createTransport({
     ...baseOptions,
-    host: mailDestination.host,
-    port: mailDestination.port,
     ...mailClientOptions
   });
 }

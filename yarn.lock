@@ -675,10 +675,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.1.2.tgz#1e01e9a8fad8ad1a2a991a8957f9a9f299bcb991"
-  integrity sha512-XWGBsoFSXCSFlDasyW3R/rYDw9EHglNirUZ1jUlwdgeKwAOjBiWZln5m1ccfb+cT0KVaZ4NBkf5dUvAbaG0qZw==
+"@definitelytyped/dtslint@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.1.3.tgz#1fe3c5da4c9ff023ed1efd6de4912e9617fc194e"
+  integrity sha512-Fx6cPu7heEiq97g80RvyRVRce9qHPPZlFDVRqDFTd4hVOSFFhvTfoMGcveyEHaIpJCaeitHoRC4LnBlUwYa4EQ==
   dependencies:
     "@definitelytyped/header-parser" "0.1.1"
     "@definitelytyped/typescript-versions" "0.0.184"

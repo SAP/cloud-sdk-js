@@ -675,10 +675,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.1.2.tgz#1e01e9a8fad8ad1a2a991a8957f9a9f299bcb991"
-  integrity sha512-XWGBsoFSXCSFlDasyW3R/rYDw9EHglNirUZ1jUlwdgeKwAOjBiWZln5m1ccfb+cT0KVaZ4NBkf5dUvAbaG0qZw==
+"@definitelytyped/dtslint@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.1.4.tgz#aa384474ce84ae03934207a765e0e67c9cdd23f7"
+  integrity sha512-DA+KZopuiyVkd67SaP0nLTw4vR6RH4lvb8vjF0wWPbe2q6WfUimSucrF/NnaUJx1cJSrFB9R8HCDaJvvtki0iQ==
   dependencies:
     "@definitelytyped/header-parser" "0.1.1"
     "@definitelytyped/typescript-versions" "0.0.184"
@@ -4077,10 +4077,10 @@ eslint-plugin-import@^2.29.0, eslint-plugin-import@^2.29.1:
     semver "^6.3.1"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jest@^27.6.2:
-  version "27.6.2"
-  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-27.6.2.tgz#8e69404fcd5dfeac03cac478f0ebb9bf2d8db56b"
-  integrity sha512-CI1AlKrsNhYFoP48VU8BVWOi7+qHTq4bRxyUlGjeU8SfFt8abjXhjOuDzUoMp68DoXIx17KpNpIkMrl4s4ZW0g==
+eslint-plugin-jest@^27.6.3:
+  version "27.6.3"
+  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-27.6.3.tgz#8acb8b1e45597fe1f4d4cf25163d90119efc12be"
+  integrity sha512-+YsJFVH6R+tOiO3gCJon5oqn4KWc+mDq2leudk8mrp8RFubLOo9CVyi3cib4L7XMpxExmkmBZQTPDYVBzgpgOA==
   dependencies:
     "@typescript-eslint/utils" "^5.10.0"
 
@@ -6202,10 +6202,10 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.npmjs.org/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
-json-schema-faker@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.4.tgz#48395d17032972755e4703bf5b05fc1e494ec45d"
-  integrity sha512-DdRRnRNSxkQVXEsUUXzAtvBpsROZHvM59/LQcV6+3gQVMvaeMsqfNKN3ivRwaiahTW7pvxa+LJfOaPP+nhFo4g==
+json-schema-faker@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.5.tgz#007e21127312bf18e473e6c6664fddf75a0c58cf"
+  integrity sha512-MlnBqcsM1t8jdHs00ltae0rlSwWI2nrd1IfnAF+UcHsqKFrlAhrbDFVKiA8C0E860PuspKoV4oImJdvtF7aqwg==
   dependencies:
     json-schema-ref-parser "^6.1.0"
     jsonpath-plus "^7.2.0"
@@ -7007,10 +7007,10 @@ neo-async@^2.6.0:
   resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
-nock@^13.4.0:
-  version "13.4.0"
-  resolved "https://registry.npmjs.org/nock/-/nock-13.4.0.tgz#60aa3f7a4afa9c12052e74d8fb7550f682ef0115"
-  integrity sha512-W8NVHjO/LCTNA64yxAPHV/K47LpGYcVzgKd3Q0n6owhwvD0Dgoterc25R4rnZbckJEb6Loxz1f5QMuJpJnbSyQ==
+nock@^13.5.0:
+  version "13.5.0"
+  resolved "https://registry.npmjs.org/nock/-/nock-13.5.0.tgz#82cd33b0dba6095d3f5a28d0ff2edac970fa05ec"
+  integrity sha512-9hc1eCS2HtOz+sE9W7JQw/tXJktg0zoPSu48s/pYe73e25JW9ywiowbqnUSd7iZPeVawLcVpPZeZS312fwSY+g==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"

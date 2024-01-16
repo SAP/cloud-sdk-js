@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2021",
+    "module": "commonjs",
+    "lib": ["esnext"],
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": true,
+    "diagnostics": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "inlineSources": false,
+    "strict": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"]
+}

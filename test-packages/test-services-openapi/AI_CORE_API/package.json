@@ -1,0 +1,26 @@
+{
+  "name": "ai_core_api",
+  "version": "1.0.0",
+  "description": "SAP Cloud SDK for JavaScript: Generated client for service AI_CORE_API",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "files": ["**/*.js", "**/*.js.map", "**/*.d.ts", "**/d.ts.map"],
+  "scripts": {
+    "compile": "npx tsc"
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/openapi": "^3.10.0"
+  },
+  "devDependencies": {
+    "typescript": "~4.1.2"
+  }
+}

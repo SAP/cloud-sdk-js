@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@definitelytyped/dtslint": "^0.1.4",
-    "tsd": "^0.30.3",
+    "tsd": "^0.30.4",
     "madge": "^6.1.0"
   }
 }

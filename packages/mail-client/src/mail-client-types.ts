@@ -313,7 +313,7 @@ export interface SmtpTransportOptions {
    */
   socketTimeout?: number | undefined;
   /**
-   * If set to true then logs to console. If value is not set or is false then nothing is logged
+   * If set to true then logs to console. If value is not set or is false then nothing is logged.
    */
   logger?: boolean | undefined;
   /**

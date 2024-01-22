@@ -313,6 +313,10 @@ export interface SmtpTransportOptions {
    */
   socketTimeout?: number | undefined;
   /**
+   * If set to true then logs to console. If value is not set or is false then nothing is logged.
+   */
+  logger?: boolean | undefined;
+  /**
    * If set to `true`, then logs SMTP traffic and message content, otherwise logs only transaction events.
    */
   debug?: boolean | undefined;

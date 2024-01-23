@@ -675,14 +675,14 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.0.tgz#c86fa3453ee51a3c98df31c176e77aa55618cc79"
-  integrity sha512-kxl9NjPElnsu/s796nEy1CgAsWc+AziiYwsYCAlothf7biJHGXSO2BmMYP6Ffm4dJQm7NGGFULr02BsBrIRNjQ==
+"@definitelytyped/dtslint@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.1.tgz#752eddf58323e6777a45c8a653ff26286231cd03"
+  integrity sha512-cYeaOLVchRWvY9rHocenKAnxtU41N5WoK8xNBPo+5dDa1JZZw2lKYmsUILM7KHitHkgaNPVnw9Q0YQmwmVC28A==
   dependencies:
-    "@definitelytyped/header-parser" "0.2.0"
+    "@definitelytyped/header-parser" "0.2.1"
     "@definitelytyped/typescript-versions" "0.1.0"
-    "@definitelytyped/utils" "0.1.0"
+    "@definitelytyped/utils" "0.1.1"
     "@typescript-eslint/eslint-plugin" "^6.19.0"
     "@typescript-eslint/parser" "^6.19.0"
     "@typescript-eslint/types" "^6.19.0"
@@ -692,13 +692,13 @@
     eslint-plugin-import "^2.29.1"
     strip-json-comments "^3.1.1"
 
-"@definitelytyped/header-parser@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.0.tgz#4598ab696133051ea2ce29082ce35c29b063e4f7"
-  integrity sha512-TD10p6rkc0HzP/G4mBM+UCrgVp8l/BVYwRlTUaCpsyD4Bx5Wg7fwYEWQfmFYyZ22kVlGnbo3H6M7ZtMfvAU1pA==
+"@definitelytyped/header-parser@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.1.tgz#f7ebaea948f6ee2307d3e935d100f7969f92fbef"
+  integrity sha512-EupvDd023Ro0ulkI8BMQF6VXHUvReiCyycuMwBgnriMxudp2/CcDHm0Ee4KYYp39wgxJMswnbW8H9BdwUtryeA==
   dependencies:
     "@definitelytyped/typescript-versions" "0.1.0"
-    "@definitelytyped/utils" "0.1.0"
+    "@definitelytyped/utils" "0.1.1"
     semver "^7.5.4"
 
 "@definitelytyped/typescript-packages@0.1.0":
@@ -722,15 +722,16 @@
   resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.1.0.tgz#f55066afe6b49fd484a72f304a052d857a4a6478"
   integrity sha512-AR1R4oqlbtspNidSMPg5YIFpc37thVXeKxNIhWkYV4ZsZq3zFyBCvsTETZ9lqn0uxFO52B25A1y3xf1aWEIlWA==
 
-"@definitelytyped/utils@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.1.0.tgz#80d37741910aa49dcf79a50081a1ca61d876ab58"
-  integrity sha512-lmQX0/FZwP8qc1kf4DPDixBDsXtbkGRPAxtwt/7ED3BibtNRL/Vvi8gDDWX6BN03heH+pbXKEhCN5NQ0g7x7sQ==
+"@definitelytyped/utils@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.1.1.tgz#0e79e150dc2d69e854898d30d0d12a33ce929fec"
+  integrity sha512-VCamUy7vNS4x4ZkSTMs/YpyvwDOoPSfJ6OzoHM2PrArGRpvP34z7Au5yauiGGlAOpW3S6JjLQKZaF91sHVUTEg==
   dependencies:
     "@definitelytyped/typescript-packages" "0.1.0"
     "@definitelytyped/typescript-versions" "0.1.0"
     "@qiwi/npm-registry-client" "^8.9.1"
     "@types/node" "^18.19.7"
+    cachedir "^2.0.0"
     charm "^1.0.2"
     minimatch "^9.0.3"
     tar "^6.2.0"
@@ -2807,6 +2808,11 @@ cacache@^15.2.0:
     ssri "^8.0.1"
     tar "^6.0.2"
     unique-filename "^1.1.1"
+
+cachedir@^2.0.0:
+  version "2.4.0"
+  resolved "https://registry.npmjs.org/cachedir/-/cachedir-2.4.0.tgz#7fef9cf7367233d7c88068fe6e34ed0d355a610d"
+  integrity sha512-9EtFOZR8g22CL7BWjJ9BUx1+A/djkofnyW3aOXZORNW2kxoUpx2h+uN2cOqwPmFhnpVmxg+KW2OjOSgChTEvsQ==
 
 call-bind@^1.0.0, call-bind@^1.0.2:
   version "1.0.2"

@@ -28,6 +28,20 @@
 
 - 
 
+# 3.11.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.11.0
+
+## Improvements
+
+- [mail-client] Add optional `logger` property to enable console logs. Defaults to `false`. (7ec62fa)
+
+## Fixed Issues
+
+- [mail-client] Fix "Hostname/IP does not match certificate's altnames" issues with "localhost" when sending e-mails OnPremise. Always pass the host and port of the MAIL destination explicitly to the underlying `nodemailer` instead of falling back to the default.
+  - @sap-cloud-sdk/connectivity@3.11.0
+  - @sap-cloud-sdk/util@3.11.0 (62f31fb)
+
 # 3.10.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.10.0

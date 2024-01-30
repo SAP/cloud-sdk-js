@@ -80,6 +80,13 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: yarn test:e2e
+      - if: failure()
+        name: Slack Notify
+        uses: rtCamp/action-slack-notify@v2.2.1
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: SDK Pipeline Bot
+          SLACK_TITLE: E2E Tests Failed
   dependabot:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}

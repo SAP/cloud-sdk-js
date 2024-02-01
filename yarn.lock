@@ -710,10 +710,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.5.tgz#da41f989e7a9ef8a9680b8253d24f07370fdea18"
-  integrity sha512-d6aEZMBc9CkpLg8EjldkfU9HQTU6I/NVLJId+ewm7I4oaS4XYDQUOBu3RRkBTuxcujze5VHEc6Re1XcmQOPn9A==
+"@definitelytyped/dtslint@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.6.tgz#12eda95e3af5e871c4c7535dbcdbeb3adbb22b51"
+  integrity sha512-9tBv+0/89y3r0W8CKPCFL8djeO24gxEWbG68OTMR0Rl+Fh8bmZ+06WahDB32zUVRfRvGhCAVTPnBHlN1JhC4hQ==
   dependencies:
     "@arethetypeswrong/cli" "^0.13.6"
     "@arethetypeswrong/core" "^0.13.6"

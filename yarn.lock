@@ -710,10 +710,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.5.tgz#da41f989e7a9ef8a9680b8253d24f07370fdea18"
-  integrity sha512-d6aEZMBc9CkpLg8EjldkfU9HQTU6I/NVLJId+ewm7I4oaS4XYDQUOBu3RRkBTuxcujze5VHEc6Re1XcmQOPn9A==
+"@definitelytyped/dtslint@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.6.tgz#12eda95e3af5e871c4c7535dbcdbeb3adbb22b51"
+  integrity sha512-9tBv+0/89y3r0W8CKPCFL8djeO24gxEWbG68OTMR0Rl+Fh8bmZ+06WahDB32zUVRfRvGhCAVTPnBHlN1JhC4hQ==
   dependencies:
     "@arethetypeswrong/cli" "^0.13.6"
     "@arethetypeswrong/core" "^0.13.6"
@@ -1441,10 +1441,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@7.5.1":
-  version "7.5.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.5.1.tgz#8611183d38606e326bdb600940db75a484a02f37"
-  integrity sha512-kszcgVWJ5VNxXxz4+Yh6OZtoAWi6NiBu4KBkKLVcrr9QyL8pDf2XtJ0Xi3uK8cSpUvJxSuro8cqAR8vW19UMKA==
+"@sap/cds-dk@7.6.0":
+  version "7.6.0"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.6.0.tgz#1c750a43a2c60ece3cde9781898d597b4e8452e7"
+  integrity sha512-6aRBpLe1KSxkVhLgMYBGLzjie+gApErmd37LO+uERee3wr0j7L8i6KVsRT+O84ODX5IMvIKrce36EmvvgIyNGA==
   dependencies:
     "@sap/cds" "^7"
     "@sap/cds-foss" "^5.0.0"
@@ -1492,7 +1492,7 @@
     "@sap/hdi-deploy" "^4"
     axios ">=0.27.2"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^7", "@sap/cds@^7.5.3":
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^7", "@sap/cds@^7.6.1":
   version "6.8.4"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.8.4.tgz#c73adb8e61f9efb4eff705f125a717f214f8e49f"
   integrity sha512-CTf6Y732ABTIAQPwtFZpfLUzZgQLOs9ZqBIrHhFJRx3VQvopfBZlbWAhujz092xETM7u4msZudoUprkmRo0+hg==

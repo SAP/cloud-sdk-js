@@ -89,6 +89,9 @@
     "treatWarningsAsErrors": true,
     "validation": {
       "invalidLink": true
+    },
+    "navigation": {
+      "includeFolders": false
     }
   }
 }

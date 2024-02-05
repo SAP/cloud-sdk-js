@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/test-util
 
+## 3.11.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.11.0
+- @sap-cloud-sdk/util@3.11.0
+
 ## 3.10.0
 
 ### Patch Changes

@@ -39,7 +39,7 @@
     "logform": "^2.6.0",
     "voca": "^1.4.1",
     "winston": "^3.11.0",
-    "winston-transport": "^4.6.0"
+    "winston-transport": "^4.7.0"
   },
   "devDependencies": {
     "nock": "^13.5.1",

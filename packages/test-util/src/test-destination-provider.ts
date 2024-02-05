@@ -167,7 +167,7 @@ function readCredentialsOrFail(
 function mergeSystemsAndCredentials(systems, credentials) {
   return systems.map(system => ({
     ...system,
-    ...credentials.find(cred => cred.alias === system.alias)
+    ...credentials.find(({ alias }) => alias === system.alias)
   }));
 }
 
@@ -244,7 +244,7 @@ function readCredentials(filePath: string): CredentialsFile {
 function readJson(filePath: string): { [key: string]: any } {
   let content;
   try {
-    content = readFileSync(filePath, 'utf8');
+    content = readFileSync(filePath, 'utf-8');
   } catch (error) {
     throw new Error(
       `Failed to read file at path: ${filePath}.

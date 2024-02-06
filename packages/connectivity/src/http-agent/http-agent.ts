@@ -114,24 +114,29 @@ function getTrustStoreOptions(destination: HttpDestination): {
 
 /**
  * @internal
- * The http agents (proxy and default) use node tls for the certificate handling. This method creates the options with the pfx and passphrase.
+ * The http agent uses node tls for the certificate handling. This method creates the options with the pfx and passphrase or key, cert and passphrase, depending on the format of the certificate.
  * https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options
- * @param destination - Destination object
+ * @param destination - Destination object.
  * @returns Options, which can be used later by tls.createSecureContext() e.g. pfx and passphrase or an empty object, if the protocol is not 'https:' or no client information are in the definition.
  */
-function getKeyStoreOptions(destination: Destination): {
-  pfx?: Buffer;
-  passphrase?: string;
-} {
+function getKeyStoreOptions(destination: Destination):
+  | {
+      pfx?: Buffer;
+      passphrase?: string;
+    }
+  | {
+      cert?: Buffer;
+      key?: Buffer;
+      passphrase?: string;
+    } {
   if (
-    // Only add certificates, when using MTLS (https://github.com/SAP/cloud-sdk-js/issues/3544)
+    // Only add certificates, when using ClientCertificateAuthentication (https://github.com/SAP/cloud-sdk-js/issues/3544)
     destination.authentication === 'ClientCertificateAuthentication' &&
-    // pfx is an alternative to providing key and cert individually
-    // For mTLS we provide key and cert, in non-mTLS cases we provide pfx
     !mtlsIsEnabled(destination) &&
     destination.keyStoreName
   ) {
     const certificate = selectCertificate(destination);
+    validateFormat(certificate);
 
     logger.debug(`Certificate with name "${certificate.name}" selected.`);
 
@@ -140,8 +145,21 @@ function getKeyStoreOptions(destination: Destination): {
         `Destination '${destination.name}' does not have a keystore password.`
       );
     }
+
+    const certBuffer = Buffer.from(certificate.content, 'base64');
+
+    // if the format is pem, the key and certificate needs to be passed separately
+    // it could be required to separate the string into two parts, but this seems to work as well
+    if (getFormat(certificate) === 'pem') {
+      return {
+        cert: certBuffer,
+        key: certBuffer,
+        passphrase: destination.keyStorePassword
+      };
+    }
+    // pfx is a format that combines key and cert
     return {
-      pfx: Buffer.from(certificate.content, 'base64'),
+      pfx: certBuffer,
       passphrase: destination.keyStorePassword
     };
   }
@@ -169,7 +187,10 @@ export interface MtlsOptions {
 async function getMtlsOptions(
   destination: Destination
 ): Promise<MtlsOptions | Record<string, never>> {
-  if (!mtlsIsEnabled(destination) && destination.mtls) {
+  if (
+    destination.mtls &&
+    !(process.env.CF_INSTANCE_CERT && process.env.CF_INSTANCE_KEY)
+  ) {
     logger.warn(
       `Destination ${
         destination.name ? destination.name : ''
@@ -202,14 +223,10 @@ function mtlsIsEnabled(destination: Destination) {
 /*
  The node client supports only these store formats https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions.
  */
-const supportedCertificateFormats = ['p12', 'pfx'];
+const supportedCertificateFormats = ['p12', 'pfx', 'pem'];
 
-function hasSupportedFormat(certificate: DestinationCertificate): boolean {
-  const certificateFormat = last(certificate.name.split('.'));
-  if (certificateFormat) {
-    return supportedCertificateFormats.includes(certificateFormat);
-  }
-  return false;
+function isSupportedFormat(format: string | undefined): boolean {
+  return !!format && supportedCertificateFormats.includes(format);
 }
 
 function selectCertificate(destination): DestinationCertificate {
@@ -223,8 +240,16 @@ function selectCertificate(destination): DestinationCertificate {
     );
   }
 
-  if (!hasSupportedFormat(certificate)) {
-    const format: string | undefined = last(certificate.name.split('.'));
+  return certificate;
+}
+
+function getFormat(certificate: DestinationCertificate): string | undefined {
+  return last(certificate.name.split('.'));
+}
+
+function validateFormat(certificate: DestinationCertificate) {
+  const format = getFormat(certificate);
+  if (!isSupportedFormat(format)) {
     throw Error(
       `The format of the provided certificate '${
         certificate.name
@@ -237,8 +262,6 @@ function selectCertificate(destination): DestinationCertificate {
       }`
     );
   }
-
-  return certificate;
 }
 
 /**

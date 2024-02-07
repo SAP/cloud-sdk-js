@@ -142,8 +142,8 @@ export function buildHttpRequestConfigWithOrigin(
 }
 
 /**
- * This method does nothing and is only there to indicated that the call was made by Odata or OpenApi client and encoding is already done on filter and key parameters.
- * @param params - Parameters which are returned
+ * This method does nothing and is only there to indicate that the call was made by an OData or OpenApi client and encoding is already done on filter and key parameters.
+ * @param params - Parameters which are returned.
  * @returns The parameters as they are without encoding.
  * @internal
  */

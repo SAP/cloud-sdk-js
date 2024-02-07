@@ -73,7 +73,7 @@ describe('createAgent', () => {
     ).toMatchObject(expectedOptions);
   });
 
-  it('returns an agent with certificate and passphrase set for a destination with authentication type ClientCertificateAuthentication', async () => {
+  it('returns an agent with pfx certificate and passphrase set for a destination with authentication type ClientCertificateAuthentication', async () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
@@ -99,7 +99,7 @@ describe('createAgent', () => {
     ).toMatchObject(expectedOptions);
   });
 
-  it('returns an agent with certificate and no passphrase for authentication type ClientCertificateAuthentication', async () => {
+  it('returns an agent with pfx certificate and no passphrase for authentication type ClientCertificateAuthentication', async () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
@@ -116,6 +116,33 @@ describe('createAgent', () => {
     const expectedOptions = {
       rejectUnauthorized: true,
       pfx: Buffer.from('base64string', 'base64')
+    };
+
+    expect(
+      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+    ).toMatchObject(expectedOptions);
+  });
+
+  it('returns an agent with certificate, private key and passphrase set for a destination with authentication type ClientCertificateAuthentication and a PEM certificate', async () => {
+    const destination: HttpDestination = {
+      url: 'https://destination.example.com',
+      authentication: 'ClientCertificateAuthentication',
+      keyStoreName: 'cert.pem',
+      keyStorePassword: 'password',
+      certificates: [
+        {
+          name: 'cert.pem',
+          content: 'base64string',
+          type: 'CERTIFICATE'
+        }
+      ]
+    };
+
+    const expectedOptions = {
+      rejectUnauthorized: true,
+      passphrase: 'password',
+      cert: Buffer.from('base64string', 'base64'),
+      key: Buffer.from('base64string', 'base64')
     };
 
     expect(

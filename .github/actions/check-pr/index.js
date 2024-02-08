@@ -127,7 +127,8 @@ function getAllowedBumps(preamble, isBreaking) {
 function hasMatchingChangeset(allowedBumps, changedFileContents) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            console.log('allowedBumps', allowedBumps);
+            (0, core_1.info)('allowedBumps');
+            (0, core_1.info)(allowedBumps.join('\n'));
             if (allowedBumps.length) {
                 return [2 /*return*/, changedFileContents.some(function (fileContent) {
                         return allowedBumps.some(function (bump) {
@@ -147,7 +148,7 @@ function extractChangedFilesContents() {
                 case 0:
                     changedFilesStr = (0, core_1.getInput)('changed-files').trim();
                     changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
-                    console.log(changedFiles);
+                    (0, core_1.info)(changedFiles.join('\n'));
                     return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
                 case 1:
                     fileContents = _a.sent();

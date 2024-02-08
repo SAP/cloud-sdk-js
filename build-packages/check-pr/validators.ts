@@ -83,7 +83,8 @@ async function hasMatchingChangeset(
   allowedBumps: string[],
   changedFileContents: string[]
 ): Promise<boolean> {
-  console.log('allowedBumps', allowedBumps);
+  info('allowedBumps');
+  info(allowedBumps.join('\n'));
   if (allowedBumps.length) {
     return changedFileContents.some(fileContent =>
       allowedBumps.some(bump =>
@@ -98,7 +99,7 @@ async function hasMatchingChangeset(
 async function extractChangedFilesContents(): Promise<string[]> {
   const changedFilesStr = getInput('changed-files').trim();
   const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
-  console.log(changedFiles);
+  info(changedFiles.join('\n'));
 
   const fileContents = await Promise.all(
     changedFiles.map(file => readFile(file, 'utf-8'))

@@ -5,8 +5,8 @@ import {
   parseDestination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
-import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { retry, timeout } from '@sap-cloud-sdk/resilience';
+import * as resilienceInternal from '@sap-cloud-sdk/resilience/internal';
 import {
   expectAllMocksUsed,
   certificateSingleResponse,
@@ -31,6 +31,7 @@ describe('openapi-request-builder', () => {
     nock(destination.url).get(/.*/).reply(200, dummyResponse);
     nock(destination.url).post(/.*/).reply(200);
   });
+
   afterEach(() => {
     httpSpy.mockClear();
   });
@@ -46,8 +47,7 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        data: undefined,
-        parameterEncoder: encodeTypedClientRequest
+        data: undefined
       },
       { fetchCsrfToken: false }
     );
@@ -69,8 +69,7 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: { limit: 100 } },
-        data: undefined,
-        parameterEncoder: encodeTypedClientRequest
+        data: undefined
       },
       { fetchCsrfToken: false }
     );
@@ -92,7 +91,6 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeTypedClientRequest,
         data: {
           limit: 100
         }
@@ -199,7 +197,6 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeTypedClientRequest,
         data: {
           limit: 100
         }
@@ -224,7 +221,6 @@ describe('openapi-request-builder', () => {
         method: 'get',
         middleware: [],
         url: '/test',
-        parameterEncoder: encodeTypedClientRequest,
         headers: {
           custom: { authorization: 'custom-header' },
           requestConfig: {}
@@ -250,12 +246,27 @@ describe('openapi-request-builder', () => {
         url: '/test/%5Etest',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeTypedClientRequest,
         data: undefined
       },
       { fetchCsrfToken: false }
     );
     expect(response.data).toBe(dummyResponse);
+  });
+
+  it('encodes query parameters', async () => {
+    jest.spyOn(resilienceInternal, 'executeWithMiddleware');
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test', {
+      queryParameters: { id: '^test' }
+    });
+
+    await requestBuilder.executeRaw(destination);
+
+    expect(resilienceInternal.executeWithMiddleware).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        fnArgument: expect.objectContaining({ params: { id: '%5Etest' } })
+      })
+    );
   });
 
   it('addCustomRequestConfig', async () => {
@@ -272,7 +283,6 @@ describe('openapi-request-builder', () => {
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
         data: undefined,
-        parameterEncoder: encodeTypedClientRequest,
         responseType: 'arraybuffer'
       },
       { fetchCsrfToken: false }
@@ -294,7 +304,6 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeTypedClientRequest,
         data: undefined
       },
       { fetchCsrfToken: false }

@@ -148,7 +148,7 @@ export function buildHttpRequestConfigWithOrigin(
  * @returns The parameters as they are without encoding.
  * @internal
  */
-export const odataTypedClientParameterEncoder: ParameterEncoder = (
+export const oDataTypedClientParameterEncoder: ParameterEncoder = (
   params: Record<string, any>
 ) => params;
 
@@ -169,8 +169,8 @@ function encodeQueryParameters(options: {
 
 function isOdataTypedClientParameterEncoder(
   parameterEncoder: ParameterEncoder
-): parameterEncoder is typeof odataTypedClientParameterEncoder {
-  return parameterEncoder.name === odataTypedClientParameterEncoder.name;
+): parameterEncoder is typeof oDataTypedClientParameterEncoder {
+  return parameterEncoder.name === oDataTypedClientParameterEncoder.name;
 }
 
 function getEncodedParameters(

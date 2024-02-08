@@ -256,7 +256,7 @@ describe('openapi-request-builder', () => {
   it('encodes query parameters', async () => {
     jest.spyOn(resilienceInternal, 'executeWithMiddleware');
     const requestBuilder = new OpenApiRequestBuilder('get', '/test', {
-      queryParameters: { id: '^test' }
+      queryParameters: { 'id^': '^test' }
     });
 
     await requestBuilder.executeRaw(destination);
@@ -264,7 +264,7 @@ describe('openapi-request-builder', () => {
     expect(resilienceInternal.executeWithMiddleware).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({
-        fnArgument: expect.objectContaining({ params: { id: '%5Etest' } })
+        fnArgument: expect.objectContaining({ params: { 'id%5E': '%5Etest' } })
       })
     );
   });

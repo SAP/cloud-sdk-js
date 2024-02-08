@@ -66,16 +66,27 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
     return 'Record<string, any>';
   }
 
-  const serializedProperties = schema.properties.map(property =>
-    serializePropertyWithDocumentation(property)
-  );
+  const types: string[] = [];
+  if (schema.properties.length) {
+    types.push(serializeObjectSchemaForProperties(schema.properties));
+  }
+
   if (schema.additionalProperties) {
-    serializedProperties.push(
-      `[key: string]: ${serializeSchema(schema.additionalProperties)};`
+    types.push(
+      `Record<string, ${serializeSchema(schema.additionalProperties)}>`
     );
   }
+
+  return types.join(' | ');
+}
+
+function serializeObjectSchemaForProperties(
+  properties: OpenApiObjectSchemaProperty[]
+): string {
   return codeBlock`{
-      ${serializedProperties.join(unixEOL)}
+      ${properties
+        .map(property => serializePropertyWithDocumentation(property))
+        .join(unixEOL)}
     }`;
 }
 

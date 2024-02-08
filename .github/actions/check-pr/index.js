@@ -127,17 +127,15 @@ function getAllowedBumps(preamble, isBreaking) {
 function hasMatchingChangeset(allowedBumps, changedFileContents) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!allowedBumps.length) return [3 /*break*/, 2];
-                    return [4 /*yield*/, changedFileContents];
-                case 1: return [2 /*return*/, (_a.sent()).some(function (fileContent) {
+            console.log('allowedBumps', allowedBumps);
+            if (allowedBumps.length) {
+                return [2 /*return*/, changedFileContents.some(function (fileContent) {
                         return allowedBumps.some(function (bump) {
                             return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump)).test(fileContent);
                         });
                     })];
-                case 2: return [2 /*return*/, true];
             }
+            return [2 /*return*/, true];
         });
     });
 }
@@ -149,6 +147,7 @@ function extractChangedFilesContents() {
                 case 0:
                     changedFilesStr = (0, core_1.getInput)('changed-files').trim();
                     changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
+                    console.log(changedFiles);
                     return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
                 case 1:
                     fileContents = _a.sent();

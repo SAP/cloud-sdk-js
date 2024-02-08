@@ -77,7 +77,7 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
     );
   }
 
-  return types.join(' | ');
+  return types.join(' & ');
 }
 
 function serializeObjectSchemaForProperties(

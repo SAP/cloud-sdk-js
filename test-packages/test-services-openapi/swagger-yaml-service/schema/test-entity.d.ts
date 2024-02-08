@@ -6,15 +6,13 @@
 /**
  * Representation of the 'TestEntity' schema.
  */
-export type TestEntity =
-  | {
-      /**
-       * A string property
-       */
-      stringProperty?: string;
-      /**
-       * An integer property
-       */
-      integerProperty?: number;
-    }
-  | Record<string, any>;
+export type TestEntity = {
+  /**
+   * A string property
+   */
+  stringProperty?: string;
+  /**
+   * An integer property
+   */
+  integerProperty?: number;
+} & Record<string, any>;

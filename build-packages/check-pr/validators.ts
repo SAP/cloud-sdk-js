@@ -83,15 +83,12 @@ async function hasMatchingChangeset(
   allowedBumps: string[],
   changedFileContents: string[]
 ): Promise<boolean> {
-  info('allowedBumps');
-  info(allowedBumps.join('\n'));
   if (allowedBumps.length) {
-    return changedFileContents.some(fileContent => {
-      info(fileContent);
-      return allowedBumps.some(bump =>
-        new RegExp(`"@sap-cloud-sdk/.*": ${bump}`).test(fileContent)
-      );
-    });
+    return changedFileContents.some(fileContent =>
+      allowedBumps.some(bump =>
+        new RegExp(`("|')@sap-cloud-sdk/.*("|'): ${bump}`).test(fileContent)
+      )
+    );
   }
 
   return true;
@@ -100,8 +97,6 @@ async function hasMatchingChangeset(
 async function extractChangedFilesContents(): Promise<string[]> {
   const changedFilesStr = getInput('changed-files').trim();
   const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
-  info(changedFiles.join('\n'));
-
   const fileContents = await Promise.all(
     changedFiles.map(file => readFile(file, 'utf-8'))
   );

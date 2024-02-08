@@ -22,7 +22,8 @@ export abstract class ODataRequestConfig {
     accept: 'application/json'
   };
 
-  readonly parameterEncoder: ParameterEncoder = oDataTypedClientParameterEncoder;
+  readonly parameterEncoder: ParameterEncoder =
+    oDataTypedClientParameterEncoder;
 
   private _customHeaders: Record<string, string> = {};
   private _customQueryParameters: Record<string, string> = {};

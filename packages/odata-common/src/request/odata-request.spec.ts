@@ -13,7 +13,9 @@ import { ODataRequest } from './odata-request';
 describe('OData Request', () => {
   it('should be noParamEncoder', async () => {
     const request = createRequest(ODataGetAllRequestConfig);
-    expect(request.config.parameterEncoder).toBe(oDataTypedClientParameterEncoder);
+    expect(request.config.parameterEncoder).toBe(
+      oDataTypedClientParameterEncoder
+    );
   });
 
   describe('serviceUrl', () => {

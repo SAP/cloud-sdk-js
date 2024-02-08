@@ -7,11 +7,9 @@
 /**
  * SimpleTestEntity schema
  */
-export type SimpleTestEntity =
-  | {
-      /**
-       * @example "Example string"
-       */
-      stringProperty: string;
-    }
-  | Record<string, any>;
+export type SimpleTestEntity = {
+  /**
+   * @example "Example string"
+   */
+  stringProperty: string;
+} & Record<string, any>;

@@ -7,8 +7,6 @@ import type { CyclicParent } from './cyclic-parent';
 /**
  * Representation of the 'CyclicChild' schema.
  */
-export type CyclicChild =
-  | {
-      parent?: CyclicParent;
-    }
-  | Record<string, any>;
+export type CyclicChild = {
+  parent?: CyclicParent;
+} & Record<string, any>;

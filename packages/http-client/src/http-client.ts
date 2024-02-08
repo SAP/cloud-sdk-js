@@ -143,7 +143,7 @@ export function buildHttpRequestConfigWithOrigin(
 }
 
 /**
- * This method does nothing and is only there to indicate that the call was made by an typed OData client and encoding already happened on in the client.
+ * This method does nothing and is only there to indicate that the call was made by a typed OData client and encoding already happened in the client.
  * @param params - Parameters which are returned.
  * @returns The parameters as they are without encoding.
  * @internal

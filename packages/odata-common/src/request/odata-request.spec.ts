@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/internal';
+import { oDataTypedClientParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
 import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   CommonEntity,
@@ -13,7 +13,7 @@ import { ODataRequest } from './odata-request';
 describe('OData Request', () => {
   it('should be noParamEncoder', async () => {
     const request = createRequest(ODataGetAllRequestConfig);
-    expect(request.config.parameterEncoder).toBe(encodeTypedClientRequest);
+    expect(request.config.parameterEncoder).toBe(oDataTypedClientParameterEncoder);
   });
 
   describe('serviceUrl', () => {

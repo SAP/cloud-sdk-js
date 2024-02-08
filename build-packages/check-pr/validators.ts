@@ -89,7 +89,7 @@ async function hasMatchingChangeset(
     return changedFileContents.some(fileContent => {
       info(fileContent);
       return allowedBumps.some(bump =>
-        new RegExp(`'@sap-cloud-sdk/.*': ${bump}`).test(fileContent)
+        new RegExp(`"@sap-cloud-sdk/.*": ${bump}`).test(fileContent)
       );
     });
   }

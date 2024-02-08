@@ -133,7 +133,7 @@ function hasMatchingChangeset(allowedBumps, changedFileContents) {
                 return [2 /*return*/, changedFileContents.some(function (fileContent) {
                         (0, core_1.info)(fileContent);
                         return allowedBumps.some(function (bump) {
-                            return new RegExp("'@sap-cloud-sdk/.*': ".concat(bump)).test(fileContent);
+                            return new RegExp("\"@sap-cloud-sdk/.*\": ".concat(bump)).test(fileContent);
                         });
                     })];
             }

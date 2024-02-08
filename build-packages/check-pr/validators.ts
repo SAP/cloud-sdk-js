@@ -99,6 +99,7 @@ async function extractChangedFilesContents(): Promise<string[]> {
   const changedFilesStr = getInput('changed-files').trim();
   const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
   console.log(changedFiles);
+
   const fileContents = await Promise.all(
     changedFiles.map(file => readFile(file, 'utf-8'))
   );

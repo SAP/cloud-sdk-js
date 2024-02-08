@@ -80,5 +80,11 @@ describe('check-pr', () => {
       await validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(0);
     });
+
+    it('should validate with matched changesets in double quotes', async () => {
+      const fileContents = ['"@sap-cloud-sdk/generator": major'];
+      await validateChangesets('chore!', '', true, fileContents);
+      expect(process.exitCode).toEqual(0);
+    });
   });
 });

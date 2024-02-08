@@ -84,9 +84,9 @@ async function hasMatchingChangeset(
   changedFileContents: string[]
 ): Promise<boolean> {
   if (allowedBumps.length) {
-    return (await changedFileContents).some(fileContent =>
+    return changedFileContents.some(fileContent =>
       allowedBumps.some(bump =>
-        new RegExp(`'@sap-cloud-sdk\/.*': ${bump}`).test(fileContent)
+        new RegExp(`("|')@sap-cloud-sdk/.*("|'): ${bump}`).test(fileContent)
       )
     );
   }

@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/openapi
 
+## 3.12.0
+
+### Patch Changes
+
+- d6b1c5b: [Fixed Issue] Fix incorrect encoding of query parameters in OpenAPI requests. Query parameters (except for additional custom parameters) are now encoded by default. To change this behavior overwrite the `parameterEncoder` in the request options.
+- Updated dependencies [36be489]
+  - @sap-cloud-sdk/connectivity@3.12.0
+  - @sap-cloud-sdk/http-client@3.12.0
+  - @sap-cloud-sdk/resilience@3.12.0
+  - @sap-cloud-sdk/util@3.12.0
+
 ## 3.11.0
 
 ### Patch Changes

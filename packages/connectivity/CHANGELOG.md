@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.12.0
+
+### Minor Changes
+
+- 36be489: [New Functionality] Support certificates in PEM format for `ClientCertificateAuthentication`.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.12.0
+- @sap-cloud-sdk/util@3.12.0
+
 ## 3.11.0
 
 ### Patch Changes

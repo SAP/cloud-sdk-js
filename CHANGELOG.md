@@ -28,6 +28,19 @@
 
 - 
 
+# 3.12.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.12.0
+
+## New Functionalities
+
+- [connectivity] Support certificates in PEM format for `ClientCertificateAuthentication`. (36be489)
+
+## Fixed Issues
+
+- [openapi] Fix incorrect encoding of query parameters in OpenAPI requests. Query parameters (except for additional custom parameters) are now encoded by default. To change this behavior overwrite the `parameterEncoder` in the request options. (d6b1c5b)
+- [openapi-generator] Fix types in generated OpenAPI schemas to have proper types instead of type `any`. (6bbdd4d)
+
 # 3.11.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.11.0

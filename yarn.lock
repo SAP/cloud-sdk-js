@@ -89,10 +89,10 @@
     ajv-draft-04 "^1.0.0"
     call-me-maybe "^1.0.1"
 
-"@arethetypeswrong/cli@^0.13.6":
-  version "0.13.6"
-  resolved "https://registry.npmjs.org/@arethetypeswrong/cli/-/cli-0.13.6.tgz#f10ae145dff11412dd87c341452bd97ae51d527c"
-  integrity sha512-rNiAcz/kLdqqfA3NvUjtLCPV933MEo+K5dMJDA7afdOPmH5iS13pCiZyeZ21MDBQrxMpx6t5G/7OyRf+OcsoPA==
+"@arethetypeswrong/cli@0.13.8":
+  version "0.13.8"
+  resolved "https://registry.npmjs.org/@arethetypeswrong/cli/-/cli-0.13.8.tgz#e54a15780f5c83f2ac50f2dfb5ddf502e1eba4f0"
+  integrity sha512-tQCXVBLuSfFlXdQLl17ZlBuHB1zo03H7uTLDFumoOl/dibXw1osYJ+Fd9Oju34buFDzI1DuFS2vba/Bsk95E5Q==
   dependencies:
     "@arethetypeswrong/core" "0.13.6"
     chalk "^4.1.2"
@@ -102,7 +102,7 @@
     marked-terminal "^6.0.0"
     semver "^7.5.4"
 
-"@arethetypeswrong/core@0.13.6", "@arethetypeswrong/core@^0.13.6":
+"@arethetypeswrong/core@0.13.6":
   version "0.13.6"
   resolved "https://registry.npmjs.org/@arethetypeswrong/core/-/core-0.13.6.tgz#17c30f9b07c3002bfda4b2938c6d9c3797a87ebc"
   integrity sha512-e3CHQUK1aIIk8VOUavXPu3aVie3ZpxSGQHQoeBabzy81T4xWfQDrc68CqFmfGIEr8Apug47Yq+pYkCG2lsS10w==
@@ -710,16 +710,16 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.6.tgz#12eda95e3af5e871c4c7535dbcdbeb3adbb22b51"
-  integrity sha512-9tBv+0/89y3r0W8CKPCFL8djeO24gxEWbG68OTMR0Rl+Fh8bmZ+06WahDB32zUVRfRvGhCAVTPnBHlN1JhC4hQ==
+"@definitelytyped/dtslint@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.7.tgz#11be85f89ebdd8b0efb11c323d872fc399e3a228"
+  integrity sha512-y+u2ZqXeFySDSIpCh1xDc+ceSMeTVRJ4trCpCawhTw/Yy2G2IkewHCuiKwjY+vOBk6DIxyRw4qXMKP3bHTSnnA==
   dependencies:
-    "@arethetypeswrong/cli" "^0.13.6"
-    "@arethetypeswrong/core" "^0.13.6"
-    "@definitelytyped/header-parser" "0.2.2"
+    "@arethetypeswrong/cli" "0.13.8"
+    "@arethetypeswrong/core" "0.13.6"
+    "@definitelytyped/header-parser" "0.2.3"
     "@definitelytyped/typescript-versions" "0.1.0"
-    "@definitelytyped/utils" "0.1.1"
+    "@definitelytyped/utils" "0.1.2"
     "@typescript-eslint/eslint-plugin" "^6.19.0"
     "@typescript-eslint/parser" "^6.19.0"
     "@typescript-eslint/types" "^6.19.0"
@@ -729,17 +729,14 @@
     eslint-plugin-import "^2.29.1"
     semver "^7.5.4"
     strip-json-comments "^3.1.1"
-    tar "^6.2.0"
-    tmp "^0.2.1"
-    which "^4.0.0"
 
-"@definitelytyped/header-parser@0.2.2":
-  version "0.2.2"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.2.tgz#0a030df5ff68b94089a7365531ed51ce4392aa6d"
-  integrity sha512-j2HNFFHb8dqlzwsD2bmawwqjdlNZ2/4+7igF34JwsBtfhk9ve0ynUKVyB5W4V4gAvrhVOuQv8avfBMMaKDnefA==
+"@definitelytyped/header-parser@0.2.3":
+  version "0.2.3"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.3.tgz#a48f79cc9f43aa626078b78d94baae847dc316bf"
+  integrity sha512-+Aqor10pJj+U8Dc+mG/2TXSw2xCvrQZAkEvB66L8k9ttUXjn/79Ne57HS7zwav1Qs3NEh75abugBUregtLBVUg==
   dependencies:
     "@definitelytyped/typescript-versions" "0.1.0"
-    "@definitelytyped/utils" "0.1.1"
+    "@definitelytyped/utils" "0.1.2"
     semver "^7.5.4"
 
 "@definitelytyped/typescript-packages@0.1.0":
@@ -763,10 +760,10 @@
   resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.1.0.tgz#f55066afe6b49fd484a72f304a052d857a4a6478"
   integrity sha512-AR1R4oqlbtspNidSMPg5YIFpc37thVXeKxNIhWkYV4ZsZq3zFyBCvsTETZ9lqn0uxFO52B25A1y3xf1aWEIlWA==
 
-"@definitelytyped/utils@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.1.1.tgz#0e79e150dc2d69e854898d30d0d12a33ce929fec"
-  integrity sha512-VCamUy7vNS4x4ZkSTMs/YpyvwDOoPSfJ6OzoHM2PrArGRpvP34z7Au5yauiGGlAOpW3S6JjLQKZaF91sHVUTEg==
+"@definitelytyped/utils@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.1.2.tgz#2419516f7ca84239473c0db178c9b4b6949d44a1"
+  integrity sha512-US2EZ26bkNEcrZsRQ8o3y8WG7pTvv/7ttRdP7TrzW3GI7oYRo2XGKO75DM7wX/9/13v9p3daha8AskwdYzos0Q==
   dependencies:
     "@definitelytyped/typescript-packages" "0.1.0"
     "@definitelytyped/typescript-versions" "0.1.0"
@@ -8536,7 +8533,7 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rimraf@^3.0.0, rimraf@^3.0.2:
+rimraf@^3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
   integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
@@ -9413,13 +9410,6 @@ tmp@^0.0.33:
   integrity sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==
   dependencies:
     os-tmpdir "~1.0.2"
-
-tmp@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/tmp/-/tmp-0.2.1.tgz#8457fc3037dcf4719c251367a1af6500ee1ccf14"
-  integrity sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==
-  dependencies:
-    rimraf "^3.0.0"
 
 tmpl@1.0.5:
   version "1.0.5"

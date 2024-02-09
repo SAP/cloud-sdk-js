@@ -1,6 +1,6 @@
 import { mergeIgnoreCase } from '@sap-cloud-sdk/util';
 import {
-  encodeTypedClientRequest,
+  oDataTypedClientParameterEncoder,
   HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
 import type { ParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
@@ -22,7 +22,8 @@ export abstract class ODataRequestConfig {
     accept: 'application/json'
   };
 
-  readonly parameterEncoder: ParameterEncoder = encodeTypedClientRequest;
+  readonly parameterEncoder: ParameterEncoder =
+    oDataTypedClientParameterEncoder;
 
   private _customHeaders: Record<string, string> = {};
   private _customQueryParameters: Record<string, string> = {};

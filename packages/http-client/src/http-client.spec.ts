@@ -53,7 +53,7 @@ import {
   buildRequestWithMergedHeadersAndQueryParameters,
   encodeAllParameters,
   executeHttpRequest,
-  encodeTypedClientRequest,
+  oDataTypedClientParameterEncoder,
   executeHttpRequestWithOrigin,
   buildHttpRequestConfigWithOrigin
 } from './http-client';
@@ -1082,7 +1082,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         {
           ...requestWithParameters,
-          parameterEncoder: encodeTypedClientRequest
+          parameterEncoder: oDataTypedClientParameterEncoder
         },
         destinationWithParameters,
         {} as DestinationHttpRequestConfig
@@ -1091,7 +1091,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         method: 'get',
         url: '/api/entity',
         headers: {},
-        parameterEncoder: encodeTypedClientRequest,
+        parameterEncoder: oDataTypedClientParameterEncoder,
         params: {
           customParam: 'a/b',
           requestParam: 'a/b',

@@ -20,6 +20,7 @@ import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   createLogger,
   ErrorWithCause,
+  isNullish,
   sanitizeRecord,
   unixEOL
 } from '@sap-cloud-sdk/util';
@@ -142,12 +143,12 @@ export function buildHttpRequestConfigWithOrigin(
 }
 
 /**
- * This method does nothing and is only there to indicate that the call was made by an OData or OpenApi client and encoding is already done on filter and key parameters.
+ * This method does nothing and is only there to indicate that the call was made by a typed OData client and encoding already happened in the client.
  * @param params - Parameters which are returned.
  * @returns The parameters as they are without encoding.
  * @internal
  */
-export const encodeTypedClientRequest: ParameterEncoder = (
+export const oDataTypedClientParameterEncoder: ParameterEncoder = (
   params: Record<string, any>
 ) => params;
 
@@ -166,16 +167,10 @@ function encodeQueryParameters(options: {
   );
 }
 
-function isGenericClientDefault(
-  parameterEncoder: ParameterEncoder | undefined
-): parameterEncoder is undefined {
-  return !parameterEncoder;
-}
-
-function isTypedClient(
+function isOdataTypedClientParameterEncoder(
   parameterEncoder: ParameterEncoder
-): parameterEncoder is typeof encodeTypedClientRequest {
-  return parameterEncoder.name === encodeTypedClientRequest.name;
+): parameterEncoder is typeof oDataTypedClientParameterEncoder {
+  return parameterEncoder.name === oDataTypedClientParameterEncoder.name;
 }
 
 function getEncodedParameters(
@@ -183,7 +178,7 @@ function getEncodedParameters(
   requestConfig: HttpRequestConfigWithOrigin
 ): OriginOptionsInternal {
   const { parameterEncoder } = requestConfig;
-  if (isGenericClientDefault(parameterEncoder)) {
+  if (isNullish(parameterEncoder)) {
     return encodeQueryParameters({
       parameters,
       parameterEncoder: encodeAllParameters,
@@ -191,7 +186,7 @@ function getEncodedParameters(
     });
   }
 
-  if (isTypedClient(parameterEncoder)) {
+  if (isOdataTypedClientParameterEncoder(parameterEncoder)) {
     return encodeQueryParameters({
       parameters,
       parameterEncoder: encodeAllParameters,
@@ -199,7 +194,7 @@ function getEncodedParameters(
     });
   }
 
-  // Custom encoder provided for generic client -> use it for all origins
+  // Custom encoder provided by user -> use it for all origins
   return encodeQueryParameters({ parameters, parameterEncoder, exclude: [] });
 }
 

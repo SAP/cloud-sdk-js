@@ -1,7 +1,7 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
 import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
+import { oDataTypedClientParameterEncoder } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import { timeout } from '@sap-cloud-sdk/resilience';
 import {
@@ -356,7 +356,7 @@ describe('GetAllRequestBuilder', () => {
               'content-type': 'application/json'
             }
           },
-          parameterEncoder: encodeTypedClientRequest,
+          parameterEncoder: oDataTypedClientParameterEncoder,
           params: {
             requestConfig: {}
           },

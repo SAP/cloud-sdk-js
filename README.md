@@ -20,7 +20,7 @@ Please share your ideas, suggestions or improvements in our [GitHub discussion](
 
 ## Looking for documentation?
 
-Check our [API documentation](https://sap.github.io/cloud-sdk/api/3.0.0/) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
+Check our [API documentation](https://sap.github.io/cloud-sdk/api/latest/) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
 
 ### Table of Contents
 

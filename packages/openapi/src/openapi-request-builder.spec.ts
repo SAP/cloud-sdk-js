@@ -273,8 +273,8 @@ describe('openapi-request-builder', () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     const response = await requestBuilder
       .addCustomRequestConfiguration({
-         responseType: 'arraybuffer',
-         timeout: 1000
+        responseType: 'arraybuffer',
+        timeout: 1000
       })
       .executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(

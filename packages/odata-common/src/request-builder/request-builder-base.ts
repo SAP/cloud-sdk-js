@@ -102,7 +102,7 @@ export abstract class MethodRequestBuilder<
    * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomRequestConfiguration(
-    requestConfiguration: Record<string, string>
+    requestConfiguration: Record<string, any>
   ): this {
     this.requestConfig.addCustomRequestConfiguration(requestConfiguration);
     return this;

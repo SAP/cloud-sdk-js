@@ -16,7 +16,7 @@
     "directory": "test-test"
   },
   "devDependencies": {
-    "@definitelytyped/dtslint": "^0.2.7",
+    "@definitelytyped/dtslint": "^0.2.9",
     "tsd": "^0.30.4",
     "madge": "^6.1.0"
   }

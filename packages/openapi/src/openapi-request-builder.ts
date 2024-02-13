@@ -66,7 +66,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomRequestConfiguration(
-    requestConfiguration: Record<string, string>
+    requestConfiguration: Record<string, any>
   ): this {
     Object.entries(requestConfiguration).forEach(([key, value]) => {
       this.customRequestConfiguration[key] = value;

@@ -272,7 +272,10 @@ describe('openapi-request-builder', () => {
   it('addCustomRequestConfig', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     const response = await requestBuilder
-      .addCustomRequestConfiguration({ responseType: 'arraybuffer' })
+      .addCustomRequestConfiguration({
+         responseType: 'arraybuffer',
+         timeout: 1000
+      })
       .executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
       sanitizeDestination(destination),
@@ -283,7 +286,8 @@ describe('openapi-request-builder', () => {
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
         data: undefined,
-        responseType: 'arraybuffer'
+        responseType: 'arraybuffer',
+        timeout: 1000
       },
       { fetchCsrfToken: false }
     );

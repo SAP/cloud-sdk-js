@@ -119,7 +119,7 @@ export abstract class ODataRequestConfig {
    * @param requestConfiguration - Key-value pairs where the key is the name of a request configuration and the value is the respective value.
    */
   addCustomRequestConfiguration(
-    requestConfiguration: Record<string, string>
+    requestConfiguration: Record<string, any>
   ): void {
     Object.entries(requestConfiguration).forEach(([key, value]) => {
       this.customRequestConfiguration[key] = value;

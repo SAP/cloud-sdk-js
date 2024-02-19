@@ -12,6 +12,7 @@ import { DestinationConfiguration, parseDestination } from './destination';
 import {
   fetchCertificate,
   fetchDestinationWithTokenRetrieval,
+  fetchDestinationWithoutTokenRetrieval,
   fetchDestinations
 } from './destination-service';
 import { Destination } from './destination-service-types';
@@ -829,6 +830,42 @@ describe('destination service', () => {
           destinationName
         })
       ).rejects.toThrowError();
+    });
+  });
+
+  describe('fetchDestinationWithoutTokenRetrieval', () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it('returns correct destination by type based on owner property in response', async () => {
+      const destinationName = 'HTTP-BASIC';
+      const response = {
+        owner: {
+          SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+          InstanceId: '60f1cc00-6c94-4ada-ba16-495325060b54'
+        },
+        destinationConfiguration: basicDestination
+      };
+      nock(destinationServiceUri, {
+        reqheaders: {
+          authorization: `Bearer ${jwt}`
+        }
+      })
+        .get(
+          '/destination-configuration/v1/destinations/HTTP-BASIC?$skipTokenRetrieval=true'
+        )
+        .reply(200, response);
+
+      const actual = await fetchDestinationWithoutTokenRetrieval(
+        destinationName,
+        destinationServiceUri,
+        jwt
+      );
+      expect(actual).toMatchObject({
+        subaccount: [],
+        instance: [parseDestination(response.destinationConfiguration)]
+      });
     });
   });
 });

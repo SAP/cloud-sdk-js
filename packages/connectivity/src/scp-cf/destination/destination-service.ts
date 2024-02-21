@@ -157,7 +157,10 @@ export async function fetchDestinationWithoutTokenRetrieval(
 
     return {
       instance: response.data.owner?.InstanceId ? [destination] : [],
-      subaccount: response.data.owner?.SubaccountId ? [destination] : []
+      subaccount:
+        !response.data.owner?.InstanceId && response.data.owner?.SubaccountId
+          ? [destination]
+          : []
     };
   } catch (err) {
     if (

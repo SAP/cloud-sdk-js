@@ -710,16 +710,16 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.2.12":
-  version "0.2.12"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.12.tgz#b67dd14b63f64283e6e854b38d645e9417db48f4"
-  integrity sha512-cayXcjY3R8wULt6F0gU8LaqUfboLmwzBLRd1gGckdIIl+XEYpQ/XExWG9jV/QSk3yVtND6dl7eQwSDk1OSex/w==
+"@definitelytyped/dtslint@^0.2.13":
+  version "0.2.13"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.13.tgz#e8f6c383ef76d62ef525fd4c3b9e555f9ab5c6fc"
+  integrity sha512-G6UaObz+9eAFpWLBe1T0MbFAT/QxTh2/JBFucTYMPx5dKSyKqXD19tMmkfCSdsWEA958ifT9czj/457aH0tD/A==
   dependencies:
     "@arethetypeswrong/cli" "0.14.1"
     "@arethetypeswrong/core" "0.14.1"
-    "@definitelytyped/header-parser" "0.2.4"
+    "@definitelytyped/header-parser" "0.2.5"
     "@definitelytyped/typescript-versions" "0.1.0"
-    "@definitelytyped/utils" "0.1.3"
+    "@definitelytyped/utils" "0.1.4"
     "@typescript-eslint/eslint-plugin" "^6.19.0"
     "@typescript-eslint/parser" "^6.19.0"
     "@typescript-eslint/types" "^6.19.0"
@@ -730,13 +730,13 @@
     semver "^7.5.4"
     strip-json-comments "^3.1.1"
 
-"@definitelytyped/header-parser@0.2.4":
-  version "0.2.4"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.4.tgz#0991930e3c8eeba87def18efa540fce634b9f4af"
-  integrity sha512-YZFDYtMi/ZKm7U2AMe2jU/DdQcS4W4v5z5BUhycFvmqcxpJTSD1mnTs+w+i0N1Djx6T9yv2TOksxzqqiMLdv7A==
+"@definitelytyped/header-parser@0.2.5":
+  version "0.2.5"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.5.tgz#0687cdce5e87b5e5338c67281cce4849eb622a62"
+  integrity sha512-RcDffnhMN8DOse52X/SuhCatTz5xmdAcFBvgOfmfs1qMoPJJ4hCozTZrSgWIFGI976WG/TuTRpM7tt3cL9q3ag==
   dependencies:
     "@definitelytyped/typescript-versions" "0.1.0"
-    "@definitelytyped/utils" "0.1.3"
+    "@definitelytyped/utils" "0.1.4"
     semver "^7.5.4"
 
 "@definitelytyped/typescript-packages@0.1.0":
@@ -760,10 +760,10 @@
   resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.1.0.tgz#f55066afe6b49fd484a72f304a052d857a4a6478"
   integrity sha512-AR1R4oqlbtspNidSMPg5YIFpc37thVXeKxNIhWkYV4ZsZq3zFyBCvsTETZ9lqn0uxFO52B25A1y3xf1aWEIlWA==
 
-"@definitelytyped/utils@0.1.3":
-  version "0.1.3"
-  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.1.3.tgz#92e2e18fc1c0837adf8b5cd6cfe700ab976292cc"
-  integrity sha512-bXb0GO3zx2Dpdb4l+ISdAHMLZD2BiNr/BDur4NjDBzMV3VhRf4+oanApCvsrU8I904t6f0MlPNvm8sirdr8eoQ==
+"@definitelytyped/utils@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.1.4.tgz#fe5d4738f224974ecb94ded6bfa02aab5643977c"
+  integrity sha512-vDmkePbFRJuDw0mlmiGdqiIj1SbN8LqBud5GX6wne2ErKO4RQm+Foc8ufKJ8AAotxaIS7b46km6KUbL0ZbDpUA==
   dependencies:
     "@definitelytyped/typescript-packages" "0.1.0"
     "@definitelytyped/typescript-versions" "0.1.0"

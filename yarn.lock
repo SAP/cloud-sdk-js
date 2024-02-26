@@ -9668,10 +9668,10 @@ tsconfig-paths@^3.10.1, tsconfig-paths@^3.15.0:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tsd@^0.30.5:
-  version "0.30.5"
-  resolved "https://registry.npmjs.org/tsd/-/tsd-0.30.5.tgz#a3734d82186da9663ee6d6701f16dcfb82d0af18"
-  integrity sha512-HV/gRtw7TrQ8dfDoqcUIOaU1kGoVPx7gMSPJ9ECaf2tjKKtAAskQMl9HGUNa1Lc9BppslENykd0YhfXdjES6rg==
+tsd@^0.30.7:
+  version "0.30.7"
+  resolved "https://registry.npmjs.org/tsd/-/tsd-0.30.7.tgz#319a0403073df6d3f572c4089378901662554ae5"
+  integrity sha512-oTiJ28D6B/KXoU3ww/Eji+xqHJojiuPVMwA12g4KYX1O72N93Nb6P3P3h2OAhhf92Xl8NIhb/xFmBZd5zw/xUw==
   dependencies:
     "@tsd/typescript" "~5.3.3"
     eslint-formatter-pretty "^4.1.0"
@@ -10404,9 +10404,9 @@ yallist@^4.0.0:
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
 yaml@>=2.2.2, yaml@^1.10.0, yaml@^2.2.2:
-  version "2.3.4"
-  resolved "https://registry.npmjs.org/yaml/-/yaml-2.3.4.tgz#53fc1d514be80aabf386dc6001eb29bf3b7523b2"
-  integrity sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==
+  version "2.4.0"
+  resolved "https://registry.npmjs.org/yaml/-/yaml-2.4.0.tgz#2376db1083d157f4b3a452995803dbcf43b08140"
+  integrity sha512-j9iR8g+/t0lArF4V6NE/QCfT+CO7iLqrXAHZbJdo+LfjqP1vR8Fg5bSiaq6Q2lOD1AUEVrEVIgABvBFYojJVYQ==
 
 yamljs@0.3.0:
   version "0.3.0"

@@ -7353,10 +7353,10 @@ nodemailer@6.9.11:
   resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.11.tgz#900703bd6dc62855d9cea962acf261926841f825"
   integrity sha512-UiAkgiERuG94kl/3bKfE8o10epvDnl0vokNEtZDPTq9BWzIl6EFT9336SbIT4oaTBD8NmmUTLsQyXHV82eXSWg==
 
-nodemailer@6.9.9:
-  version "6.9.9"
-  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.9.tgz#4549bfbf710cc6addec5064dd0f19874d24248d9"
-  integrity sha512-dexTll8zqQoVJEZPwQAKzxxtFn0qTnjdQTchoU6Re9BUUGBJiOy3YMn/0ShTW6J5M0dfQ1NeDeRTTl4oIWgQMA==
+nodemailer@6.9.11:
+  version "6.9.11"
+  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.11.tgz#900703bd6dc62855d9cea962acf261926841f825"
+  integrity sha512-UiAkgiERuG94kl/3bKfE8o10epvDnl0vokNEtZDPTq9BWzIl6EFT9336SbIT4oaTBD8NmmUTLsQyXHV82eXSWg==
 
 nopt@^4.0.1:
   version "4.0.3"
@@ -8995,14 +8995,14 @@ smartwrap@^2.0.2:
     wcwidth "^1.0.1"
     yargs "^15.1.0"
 
-smtp-server@3.13.2:
-  version "3.13.2"
-  resolved "https://registry.npmjs.org/smtp-server/-/smtp-server-3.13.2.tgz#0cab8a9533db8e4afef638fd2592c0136bdfba70"
-  integrity sha512-MWHAmsIlrfffQ75RDruOr5DhOJF8sPeG4iSW8a0euhOjaV107OGaRo30RXmmnmoKxS1mvaL+dtSEKbgev/9YeQ==
+smtp-server@3.13.3:
+  version "3.13.3"
+  resolved "https://registry.npmjs.org/smtp-server/-/smtp-server-3.13.3.tgz#2a6e5d9d67a3e208fc427975b271d7ea8484001b"
+  integrity sha512-a5lGUfh0GkXGKHlDK/F6ErqIDOOGUGhcVnAiBB3a5iGQXPO95vY7LIceKsPYy96N8Aqsl4JZFANil46qh5m2mg==
   dependencies:
     base32.js "0.1.0"
     ipv6-normalize "1.0.1"
-    nodemailer "6.9.9"
+    nodemailer "6.9.11"
     punycode "2.3.1"
 
 socks-proxy-agent@5, socks-proxy-agent@^5.0.0:

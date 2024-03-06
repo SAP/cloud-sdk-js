@@ -1,4 +1,4 @@
-import { assoc, Xor } from '@sap-cloud-sdk/util';
+import { Xor } from '@sap-cloud-sdk/util';
 import {
   DestinationFetchOptions,
   isDestinationFetchOptions
@@ -207,7 +207,10 @@ function setOriginalProperties(destination: Destination): Destination {
   const originalProperties = destination.originalProperties
     ? destination.originalProperties
     : destination;
-  return assoc('originalProperties', originalProperties, destination);
+  return {
+    ...destination,
+    originalProperties
+  };
 }
 
 function setDefaultAuthenticationFallback(
@@ -215,7 +218,10 @@ function setDefaultAuthenticationFallback(
 ): Destination {
   return destination.authentication
     ? destination
-    : assoc('authentication', getAuthenticationType(destination), destination);
+    : {
+        ...destination,
+        authentication: getAuthenticationType(destination)
+      };
 }
 
 /**
@@ -237,10 +243,12 @@ export function parseCertificate(
 function parseCertificates(
   destination: Record<string, any>
 ): Record<string, any> {
-  const certificates = destination.certificates
-    ? destination.certificates.map(parseCertificate)
-    : [];
-  return assoc('certificates', certificates, destination);
+  return {
+    ...destination,
+    certificates: (destination.certificates || []).map(certificate =>
+      parseCertificate(certificate)
+    )
+  };
 }
 
 function parseAuthToken(authToken: Record<string, any>): DestinationAuthToken {
@@ -256,18 +264,21 @@ function parseAuthToken(authToken: Record<string, any>): DestinationAuthToken {
 function parseAuthTokens(
   destination: Record<string, any>
 ): Record<string, any> {
-  const authTokens = destination.authTokens
-    ? destination.authTokens.map(parseAuthToken)
-    : [];
-  return assoc('authTokens', authTokens, destination);
+  return {
+    ...destination,
+    authTokens: (destination.authTokens || []).map(token =>
+      parseAuthToken(token)
+    )
+  };
 }
 
 function setTrustAll(destination: Destination): Destination {
-  return assoc(
-    'isTrustingAllCertificates',
-    parseTrustAll(destination.isTrustingAllCertificates),
-    destination
-  );
+  return {
+    ...destination,
+    isTrustingAllCertificates: parseTrustAll(
+      destination.isTrustingAllCertificates
+    )
+  };
 }
 
 function parseTrustAll(isTrustingAllCertificates?: string | boolean): boolean {

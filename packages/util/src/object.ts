@@ -88,6 +88,7 @@ export const exclude = <T extends Record<string, unknown>>(
  * @param value - Value to be added.
  * @param obj - Object the key value pair is added to.
  * @returns The object with the key value pair added.
+ * @deprecated  Since v3.12.1. Will not be replaced.
  */
 export const assoc = <T>(
   key: string,

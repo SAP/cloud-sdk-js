@@ -28,6 +28,127 @@
 
 - 
 
+# 3.12.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.12.0
+
+## New Functionalities
+
+- [connectivity] Support certificates in PEM format for `ClientCertificateAuthentication`. (36be489)
+
+## Fixed Issues
+
+- [openapi] Fix incorrect encoding of query parameters in OpenAPI requests. Query parameters (except for additional custom parameters) are now encoded by default. To change this behavior overwrite the `parameterEncoder` in the request options. (d6b1c5b)
+- [openapi-generator] Fix types in generated OpenAPI schemas to have proper types instead of type `any`. (6bbdd4d)
+
+# 3.11.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.11.0
+
+## Improvements
+
+- [mail-client] Add optional `logger` property to enable console logs. Defaults to `false`. (7ec62fa)
+
+## Fixed Issues
+
+- [mail-client] Fix "Hostname/IP does not match certificate's altnames" issues with "localhost" when sending e-mails OnPremise. Always pass the host and port of the MAIL destination explicitly to the underlying `nodemailer` instead of falling back to the default.
+  - @sap-cloud-sdk/connectivity@3.11.0
+  - @sap-cloud-sdk/util@3.11.0 (62f31fb)
+
+# 3.10.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.10.0
+
+## Compatibility Notes
+
+- [connectivity] The SAP Cloud SDK used to get all subaccount and instance destinations, that are available with your JWT (without potentially required token retrieval), through two requests to the destination service (`/subaccountDestinations` and `/instanceDestinations`). While this approach can have advantages when caching, it can cause severe performance issues without caching. Therefore, from now on, only one destination is retrieved per requested destination through `/destinations`.
+  You can no longer rely on the SDK to automatically cache all destinations on the first request. If needed, you can call `getAllDestinationsFromDestinationService()` with cache enabled instead. (c721bbd)
+- [connectivity] Using Principal Propagation through authentication type `NoAuthentication` is no longer supported. This resulted in erroneous behavior for destinations with authentication type `NoAuthentication`. If you need to use Principal Propagation use authentication type `PrincipalPropagation`. (28c9cb7)
+
+## New Functionalities
+
+- [util] Add support for setting log level for newly created logger using environment variable `SAP_CLOUD_SDK_LOG_LEVEL`. (4d2b49b)
+
+## Improvements
+
+- [connectivity] Retrieve only one destination per requested destination instead of all subaccount and instance destinations. (See compatibility notes.) (c721bbd)
+
+## Fixed Issues
+
+- [connectivity] Allow the use of authentication type `NoAuthentication` with proxy type `OnPremise` without requiring the `SAP-Connectivity-Authentication` header. (28c9cb7)
+
+# 3.9.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.9.0
+
+## Fixed Issues
+
+- [odata-common] Add support for subrequest serialization where a batch request may only contain an entity with no path. (a87dd7f)
+
+# 3.8.1
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.8.1
+
+## Improvements
+
+- [eslint-config] Update eslint plugins (d6bbd3210)
+
+# 3.8.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.8.0
+
+## Compatibility Notes
+
+- [connectivity] Remove unused internal functionality around JWT property access, like `userFromJwt` (removed) and `audiences` (changed). (693cd655f)
+
+## New Functionalities
+
+- [mail-client] Add Support for `Location ID` in destinations of type `MAIL` (8516b7f04)
+
+## Fixed Issues
+
+- [generator] Don't generate `delete()`, `update()`, and `getByKey()` methods in the RequestBuilder of an entity without keys.
+  - @sap-cloud-sdk/generator-common@3.8.0
+  - @sap-cloud-sdk/odata-common@3.8.0
+  - @sap-cloud-sdk/odata-v2@3.8.0
+  - @sap-cloud-sdk/odata-v4@3.8.0
+  - @sap-cloud-sdk/util@3.8.0 (34ef77a1c)
+
+# 3.7.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.7.0
+
+## Fixed Issues
+
+- [odata-common, odata-v2, odata-v4, generator, generator-common] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+  [Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`. (bdcf14f85)
+
+# 3.6.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.6.0
+
+## Compatibility Notes
+
+- [connectivity] Proxy configuration is no longer realized through a proxy agent, but with the native axios proxy setting instead. (025b6aa2c)
+
+## Fixed Issues
+
+- [connectivity] Use axios native proxy, instead of proxy agent, which causes connection issues for write requests on SAP Cloud Connector. (025b6aa2c)
+- [http-client] Fix CSRF token fetching against OnPremise systems. (c2a2987c5)
+
+# 3.5.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.5.0
+
+## Fixed Issues
+
+- [connectivity] Compare `selectionStrategy` in `DestinationFetchOptions` based on value instead of reference. (7ed5ceb52)
+- [connectivity] Fix destination caching for destinations from service bindings. The destinations are not cached repeatedly. The function `getDestinationFromServiceBinding()` returns `undefined` for destinations which have expired JWTs. (bf54df09b)
+- [connectivity] Support destinations of type `ClientCertificateAuthentication` without password.
+  - @sap-cloud-sdk/resilience@3.5.0
+  - @sap-cloud-sdk/util@3.5.0 (2277f9443)
+- [odata-common, odata-v2, odata-v4] Fix OData v2 serialization for `Edm.Decimal` to serialize to `string`. (ee7477ce2)
+
 # 3.4.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.4.0

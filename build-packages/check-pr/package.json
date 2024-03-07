@@ -15,15 +15,15 @@
     "all": "yarn && yarn run lint && yarn run compile"
   },
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1"
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.36.1",
-    "depcheck": "^1.4.3",
-    "eslint": "^8.47.0",
+    "@vercel/ncc": "^0.38.1",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.57.0",
     "mock-fs": "^5.2.0",
-    "prettier": "^2.8.8",
-    "typescript": "^5.1.6"
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
   }
 }

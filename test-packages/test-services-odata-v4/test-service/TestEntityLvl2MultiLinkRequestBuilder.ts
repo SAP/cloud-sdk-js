@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 
@@ -22,20 +22,6 @@ import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 export class TestEntityLvl2MultiLinkRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityLvl2MultiLink<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityLvl2MultiLink` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityLvl2MultiLink.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityLvl2MultiLink` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityLvl2MultiLink<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntityLvl2MultiLink<T>, T>(
-      this.entityApi,
-      { KeyProperty: keyProperty }
-    );
-  }
-
   /**
    * Returns a request builder for querying all `TestEntityLvl2MultiLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityLvl2MultiLink` entities.
@@ -57,6 +43,20 @@ export class TestEntityLvl2MultiLinkRequestBuilder<
     return new CreateRequestBuilder<TestEntityLvl2MultiLink<T>, T>(
       this.entityApi,
       entity
+    );
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntityLvl2MultiLink` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityLvl2MultiLink.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityLvl2MultiLink` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityLvl2MultiLink<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntityLvl2MultiLink<T>, T>(
+      this.entityApi,
+      { KeyProperty: keyProperty }
     );
   }
 

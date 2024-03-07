@@ -43,7 +43,7 @@ describe('Mail', () => {
         ({
           ...defaultMailOptions,
           subject: `mail ${mailIndex}`
-        } as MailConfig)
+        }) as MailConfig
     );
     const responses = await sendTestMail(mailOptions);
 

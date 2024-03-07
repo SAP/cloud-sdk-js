@@ -2,7 +2,9 @@ import {
   mockServiceToken,
   providerUserPayload,
   providerUserToken,
-  signedJwt
+  signedJwt,
+  signedJwtForVerification,
+  testTenants
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
 import { Service } from '../environment-accessor/environment-accessor-types';
@@ -149,13 +151,35 @@ describe('vcap-service-destination', () => {
       useCache: true,
       jwt: providerUserToken
     });
-
     expect(serviceTokenSpy).toBeCalledTimes(1);
     expect(
       destinationCache
         .getCacheInstance()
         .get(`${providerUserPayload.zid}::my-destination`)
     ).toBeDefined();
+  });
+
+  it('returns undefined if cached destination JWT has expired', async () => {
+    const jwtPayload = {
+      iat: 1692273899,
+      exp: 1692317098,
+      zid: testTenants.provider,
+      user_id: 'user-prov',
+      ext_attr: { enhancer: 'XSUAA' }
+    };
+    const jwt = signedJwtForVerification(jwtPayload);
+    jest.useFakeTimers();
+    await getDestinationFromServiceBinding({
+      destinationName: 'my-destination-service',
+      useCache: true,
+      jwt
+    });
+    jest.advanceTimersByTime(720 * 60 * 1000 + 1);
+    await expect(
+      destinationCache
+        .getCacheInstance()
+        .get(`${jwtPayload.zid}::my-destination-service`)
+    ).resolves.toBeUndefined();
   });
 
   it('creates a destination using a custom transformation function', async () => {

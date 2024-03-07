@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEntityLinkRequestBuilder = void 0;
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -12,18 +12,6 @@ const TestEntityLink_1 = require("./TestEntityLink");
  * Request builder class for operations supported on the {@link TestEntityLink} entity.
  */
 class TestEntityLinkRequestBuilder extends odata_v4_1.RequestBuilder {
-    /**
-     * Returns a request builder for retrieving one `TestEntityLink` entity based on its keys.
-     * @param keyTestEntityLink Key property. See {@link TestEntityLink.keyTestEntityLink}.
-     * @param keyToTestEntity Key property. See {@link TestEntityLink.keyToTestEntity}.
-     * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
-     */
-    getByKey(keyTestEntityLink, keyToTestEntity) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
-            KeyTestEntityLink: keyTestEntityLink,
-            KeyToTestEntity: keyToTestEntity
-        });
-    }
     /**
      * Returns a request builder for querying all `TestEntityLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityLink` entities.
@@ -38,6 +26,18 @@ class TestEntityLinkRequestBuilder extends odata_v4_1.RequestBuilder {
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `TestEntityLink` entity based on its keys.
+     * @param keyTestEntityLink Key property. See {@link TestEntityLink.keyTestEntityLink}.
+     * @param keyToTestEntity Key property. See {@link TestEntityLink.keyToTestEntity}.
+     * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
+     */
+    getByKey(keyTestEntityLink, keyToTestEntity) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+            KeyTestEntityLink: keyTestEntityLink,
+            KeyToTestEntity: keyToTestEntity
+        });
     }
     /**
      * Returns a request builder for updating an entity of type `TestEntityLink`.

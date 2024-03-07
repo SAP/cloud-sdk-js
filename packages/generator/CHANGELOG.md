@@ -1,5 +1,105 @@
 # @sap-cloud-sdk/generator
 
+## 3.12.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.12.0
+- @sap-cloud-sdk/odata-common@3.12.0
+- @sap-cloud-sdk/odata-v2@3.12.0
+- @sap-cloud-sdk/odata-v4@3.12.0
+- @sap-cloud-sdk/util@3.12.0
+
+## 3.11.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.11.0
+- @sap-cloud-sdk/odata-common@3.11.0
+- @sap-cloud-sdk/odata-v2@3.11.0
+- @sap-cloud-sdk/odata-v4@3.11.0
+- @sap-cloud-sdk/util@3.11.0
+
+## 3.10.0
+
+### Patch Changes
+
+- Updated dependencies [4d2b49b]
+  - @sap-cloud-sdk/util@3.10.0
+  - @sap-cloud-sdk/generator-common@3.10.0
+  - @sap-cloud-sdk/odata-common@3.10.0
+  - @sap-cloud-sdk/odata-v2@3.10.0
+  - @sap-cloud-sdk/odata-v4@3.10.0
+
+## 3.9.0
+
+### Patch Changes
+
+- Updated dependencies [a87dd7f]
+  - @sap-cloud-sdk/odata-common@3.9.0
+  - @sap-cloud-sdk/generator-common@3.9.0
+  - @sap-cloud-sdk/odata-v2@3.9.0
+  - @sap-cloud-sdk/odata-v4@3.9.0
+  - @sap-cloud-sdk/util@3.9.0
+
+## 3.8.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.8.1
+- @sap-cloud-sdk/odata-common@3.8.1
+- @sap-cloud-sdk/odata-v2@3.8.1
+- @sap-cloud-sdk/odata-v4@3.8.1
+- @sap-cloud-sdk/util@3.8.1
+
+## 3.8.0
+
+### Patch Changes
+
+- 34ef77a1c: [Fixed Issue] Don't generate `delete()`, `update()`, and `getByKey()` methods in the RequestBuilder of an entity without keys.
+  - @sap-cloud-sdk/generator-common@3.8.0
+  - @sap-cloud-sdk/odata-common@3.8.0
+  - @sap-cloud-sdk/odata-v2@3.8.0
+  - @sap-cloud-sdk/odata-v4@3.8.0
+  - @sap-cloud-sdk/util@3.8.0
+
+## 3.7.0
+
+### Minor Changes
+
+- bdcf14f85: [Fixed Issue] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+  [Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`.
+
+### Patch Changes
+
+- Updated dependencies [bdcf14f85]
+  - @sap-cloud-sdk/generator-common@3.7.0
+  - @sap-cloud-sdk/odata-common@3.7.0
+  - @sap-cloud-sdk/odata-v2@3.7.0
+  - @sap-cloud-sdk/odata-v4@3.7.0
+  - @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.6.0
+- @sap-cloud-sdk/odata-common@3.6.0
+- @sap-cloud-sdk/odata-v2@3.6.0
+- @sap-cloud-sdk/odata-v4@3.6.0
+- @sap-cloud-sdk/util@3.6.0
+
+## 3.5.0
+
+### Patch Changes
+
+- Updated dependencies [ee7477ce2]
+  - @sap-cloud-sdk/odata-common@3.5.0
+  - @sap-cloud-sdk/odata-v2@3.5.0
+  - @sap-cloud-sdk/odata-v4@3.5.0
+  - @sap-cloud-sdk/generator-common@3.5.0
+  - @sap-cloud-sdk/util@3.5.0
+
 ## 3.4.0
 
 ### Patch Changes

@@ -1,21 +1,16 @@
-import { fail } from 'assert';
 import mock from 'mock-fs';
 import { credentials, systems } from '../test/test-util/test-destinations';
 import {
   getTestDestinationByAlias,
   getTestDestinations
 } from './test-destination-provider';
-// This replaces the fs module with the mocked one defined in __mock__/fs.js
-jest.mock('fs');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const fs = require('fs');
 
 describe('test-destination-provider', () => {
-  describe('getDestinations', () => {
-    afterEach(() => {
-      mock.restore();
-    });
+  afterEach(() => {
+    mock.restore();
+  });
 
+  describe('getDestinations', () => {
     it('returns a list of destinations taken from the first matching file(s) found by recursively traversing the file hierarchy upwards starting at "./"', () => {
       mock({
         'systems.json': JSON.stringify(systems),
@@ -183,22 +178,20 @@ describe('test-destination-provider', () => {
     });
 
     it('throws a reasonable error when the JSON file cannot be found', () => {
-      fs.switchMockOn();
-      expect(() => getTestDestinations()).toThrowError(
+      mock();
+      expect(() => getTestDestinations()).toThrow(
         /^No systems.json could be found when searching in directory.*/
       );
-      fs.switchMockOff();
     });
 
     it('throws a reasonable error when the file does not contain proper JSON', () => {
-      fs.switchMockOn();
-      fs.setReadDirSync(['systems.json']);
-      fs.setReadFileSync('not proper JSON');
-      expect(() => getTestDestinations()).toThrowError(
+      mock({
+        'systems.json': 'not proper JSON'
+      });
+
+      expect(() => getTestDestinations()).toThrow(
         /^File read from path.*is not valid JSON./
       );
-
-      fs.switchMockOff();
     });
   });
 
@@ -207,14 +200,9 @@ describe('test-destination-provider', () => {
       'systems.json': '{"systems":[{"alias":"Foo"}]}'
     });
 
-    try {
-      getTestDestinations();
-      fail('Expected an error to be thrown, but none has been.');
-    } catch (error) {
-      expect(error.message).toMatch(
-        /A system in .* is not valid - Mandatory alias or url missing./
-      );
-    }
+    expect(() => getTestDestinations()).toThrow(
+      /A system in .* is not valid - Mandatory alias or url missing./
+    );
   });
 });
 

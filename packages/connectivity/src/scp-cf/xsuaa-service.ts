@@ -8,9 +8,8 @@ import {
 } from './environment-accessor/environment-accessor-types';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { resolveServiceBinding } from './environment-accessor';
-import { tenantId } from './tenant';
 import { getIssuerSubdomain } from './subdomain-replacer';
-import { decodeJwt } from './jwt';
+import { decodeJwt, tenantId } from './jwt';
 
 interface XsuaaParameters {
   subdomain: string | null;
@@ -43,8 +42,11 @@ export async function getClientCredentialsToken(
         arg.serviceCredentials,
         null,
         arg.zoneId,
-        (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
-          err ? reject(err) : resolve(tokenResponse)
+        (
+          err: Error,
+          token: string,
+          tokenResponse: ClientCredentialsResponse
+        ) => (err ? reject(err) : resolve(tokenResponse))
       );
     });
   };

@@ -23,21 +23,24 @@ export function requestBuilderClass(entity: VdmEntity): string {
 }
 
 function requestBuilderMethods(entity: VdmEntity): string[] {
-  const methods = [
-    getByKeyRequestBuilder(entity),
-    getAllRequestBuilder(entity)
-  ];
+  const methods = [getAllRequestBuilder(entity)];
+
   if (entity.creatable) {
     methods.push(createRequestBuilder(entity));
   }
 
-  if (entity.updatable) {
-    methods.push(updateRequestBuilder(entity));
+  if (entity.keys.length) {
+    methods.push(getByKeyRequestBuilder(entity));
+
+    if (entity.updatable) {
+      methods.push(updateRequestBuilder(entity));
+    }
+
+    if (entity.deletable) {
+      methods.push(deleteRequestBuilder(entity));
+    }
   }
 
-  if (entity.deletable) {
-    methods.push(deleteRequestBuilder(entity));
-  }
   return methods;
 }
 
@@ -175,8 +178,8 @@ function deleteRequestBuilder(entity: VdmEntity): string {
       }
     )}`}
     delete(entity: ${entity.className}<T>): DeleteRequestBuilder<${
-    entity.className
-  }<T>, T>;
+      entity.className
+    }<T>, T>;
     delete(
       ${deleteRequestBuilderParameters(entity)
         .map(p => `${p.name}${p.hasQuestionToken ? '?' : ''}: ${p.type}`)

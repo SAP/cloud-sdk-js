@@ -1,5 +1,4 @@
-import nock from 'nock';
-import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { decodeJwt } from '../jwt';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
@@ -11,38 +10,31 @@ import {
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
-  mockInstanceDestinationsCall,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
+  mockFetchDestinationCalls,
+  mockFetchDestinationCallsNotFound,
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   onlyIssuerServiceToken,
-  providerServiceToken,
   providerUserToken,
   subscriberServiceToken,
   subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
-  certificateMultipleResponse,
   certificateSingleResponse,
   destinationName,
-  oauthClientCredentialsMultipleResponse,
   oauthClientCredentialsSingleResponse,
-  oauthJwtBearerResponse,
   oauthJwtBearerSingleResponse,
-  oauthMultipleResponse,
-  oauthPasswordMultipleResponse,
   oauthPasswordSingleResponse,
   oauthRefreshTokenMultipleResponse,
   oauthRefreshTokenSingleResponse,
   oauthSingleResponse,
-  oauthUserTokenExchangeMultipleResponse,
   oauthUserTokenExchangeSingleResponse,
   onPremiseBasicMultipleResponse,
   onPremiseBasicSingleResponse,
-  onPremisePrincipalPropagationMultipleResponse
+  onPremisePrincipalPropagationMultipleResponse,
+  samlAssertionSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { parseDestination } from './destination';
@@ -54,6 +46,12 @@ import {
 } from './destination-selection-strategies';
 
 describe('authentication types', () => {
+  beforeEach(() => {
+    mockServiceBindings();
+    mockVerifyJwt();
+    mockServiceToken();
+  });
+
   afterEach(() => {
     clientCredentialsTokenCache.clear();
     destinationCache.clear();
@@ -61,564 +59,355 @@ describe('authentication types', () => {
 
   describe('authentication type OAuth2SAMLBearerFlow', () => {
     it('returns a destination with authTokens if its authenticationType is OAuth2SAMLBearerFlow, subscriber tenant', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthMultipleResponse,
-          200,
-          subscriberServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthSingleResponse,
-          200,
-          destinationName,
-          {
-            ...wrapJwtInHeader(subscriberServiceToken).headers,
-            'X-user-token': subscriberUserToken
-          },
-          { badheaders: [] }
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(oauthSingleResponse, {
+        serviceToken: subscriberServiceToken,
+        mockWithTokenRetrievalCall: {
+          headers: { 'x-user-token': subscriberUserToken }
+        }
+      });
 
-      const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         jwt: subscriberUserToken
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(parseDestination(oauthSingleResponse));
       expectAllMocksUsed(httpMocks);
     });
 
     it('returns a destination with authTokens if its authenticationType is OAuth2SAMLBearerFlow, provider tenant', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(
-          nock,
-          oauthMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSingleDestinationCall(
-          nock,
-          oauthSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(providerUserToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(oauthSingleResponse, {
+        mockWithTokenRetrievalCall: {
+          headers: { authorization: `Bearer ${providerUserToken}` }
+        }
+      });
 
-      const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         jwt: providerUserToken,
         cacheVerificationKeys: false
       });
 
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(parseDestination(oauthSingleResponse));
       expectAllMocksUsed(httpMocks);
     });
 
     it('should use provider client credentials token for SystemUser exists in provider destination', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
-
-      const samlDestinationsWithSystemUser = { ...oauthMultipleResponse[0] };
       // Insert SystemUser in the retrieved OAuth2SAMLBearer destination to trigger principle propagation workflow
-      samlDestinationsWithSystemUser['SystemUser'] = 'defined';
+      const samlDestinationWithSystemUser = {
+        ...oauthSingleResponse,
+        destinationConfiguration: {
+          ...oauthSingleResponse.destinationConfiguration,
+          SystemUser: 'defined'
+        }
+      };
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(
-          nock,
-          [samlDestinationsWithSystemUser],
-          200,
-          providerServiceToken
-        ),
-        mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken),
-        // This single destination call is the one triggered by the OAuth2SAMLBearerAssertion flow
-        mockSingleDestinationCall(
-          nock,
-          oauthSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(providerServiceToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(
+        samlDestinationWithSystemUser
+      );
 
-      const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         cacheVerificationKeys: false
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(parseDestination(oauthSingleResponse));
       expectAllMocksUsed(httpMocks);
     });
 
     it('should use subscriber client credentials token for SystemUser exists in subscriber destination', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
-
-      const samlDestinationsWithSystemUser = { ...oauthMultipleResponse[0] };
       // Insert SystemUser in the retrieved OAuth2SAMLBearer destination to trigger principle propagation workflow
-      samlDestinationsWithSystemUser['SystemUser'] = 'defined';
+      const samlDestinationWithSystemUser = {
+        ...oauthSingleResponse,
+        destinationConfiguration: {
+          ...oauthSingleResponse.destinationConfiguration,
+          SystemUser: 'defined'
+        }
+      };
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(
-          nock,
-          [samlDestinationsWithSystemUser],
-          200,
-          subscriberServiceToken
-        ),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
-        // This single destination call is the one triggered by the OAuth2SAMLBearerAssertion flow
-        mockSingleDestinationCall(
-          nock,
-          oauthSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(subscriberServiceToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(
+        samlDestinationWithSystemUser,
+        {
+          serviceToken: subscriberServiceToken
+        }
+      );
 
-      const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         cacheVerificationKeys: false,
         jwt: subscriberUserToken
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(parseDestination(oauthSingleResponse));
       expectAllMocksUsed(httpMocks);
     });
   });
 
   describe('authentication type OAuth2ClientCredentials', () => {
     it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, subscriber tenant', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthClientCredentialsMultipleResponse,
-          200,
-          subscriberServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthClientCredentialsSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(subscriberServiceToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(
+        oauthClientCredentialsSingleResponse,
+        { serviceToken: subscriberServiceToken }
+      );
 
-      const expected = parseDestination(oauthClientCredentialsSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         jwt: subscriberUserToken
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(
+        parseDestination(oauthClientCredentialsSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
 
     it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, provider tenant', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthClientCredentialsMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthClientCredentialsSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(providerServiceToken).headers
-        )
-      ];
-      const expected = parseDestination(oauthClientCredentialsSingleResponse);
-      const actual = await getDestination({ destinationName });
-      expect(actual).toMatchObject(expected);
+      const httpMocks = mockFetchDestinationCalls(
+        oauthClientCredentialsSingleResponse
+      );
+
+      const destination = await getDestination({ destinationName });
+      expect(destination).toMatchObject(
+        parseDestination(oauthClientCredentialsSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
 
-    it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, tokenServiceUrlType common and sets X-token header.', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
+    it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, tokenServiceUrlType common and sets x-tenant header.', async () => {
       mockJwtBearerToken();
 
-      const withTokenServiceType = {
+      const destinationWithTokenServiceType = {
         ...oauthClientCredentialsSingleResponse,
-        tokenServiceURLType: 'Common'
+        destinationConfiguration: {
+          ...oauthClientCredentialsSingleResponse.destinationConfiguration,
+          tokenServiceURLType: 'Common'
+        }
       };
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          [withTokenServiceType],
-          200,
-          providerServiceToken
-        ),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSingleDestinationCall(
-          nock,
-          withTokenServiceType,
-          200,
-          destinationName,
-          {
-            ...wrapJwtInHeader(providerServiceToken).headers,
-            'X-tenant': testTenants.subscriber
-          },
-          { badheaders: [] }
-        )
+        ...mockFetchDestinationCalls(destinationWithTokenServiceType, {
+          mockWithTokenRetrievalCall: {
+            headers: { 'x-tenant': testTenants.subscriber }
+          }
+        }),
+        ...mockFetchDestinationCallsNotFound(destinationName, {
+          serviceToken: subscriberServiceToken
+        })
       ];
 
-      const expected = parseDestination(oauthClientCredentialsSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         jwt: subscriberUserToken
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(
+        parseDestination(oauthClientCredentialsSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
   });
 
   describe('authentication type OAuth2JWTBearer', () => {
     it('should use provider service token subscriber x-user-token for provider destination and subscriber jwt', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
       const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthJwtBearerResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthJwtBearerSingleResponse,
-          200,
-          destinationName,
-          {
-            ...wrapJwtInHeader(providerServiceToken).headers,
-            'x-user-token': subscriberUserToken
-          },
-          { badheaders: [] }
-        )
+        ...mockFetchDestinationCalls(oauthJwtBearerSingleResponse, {
+          mockWithTokenRetrievalCall: {
+            headers: { 'x-user-token': subscriberUserToken }
+          }
+        }),
+        ...mockFetchDestinationCallsNotFound(destinationName, {
+          serviceToken: subscriberServiceToken
+        })
       ];
 
-      const expected = parseDestination(oauthJwtBearerSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         jwt: subscriberUserToken
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(
+        parseDestination(oauthJwtBearerSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
   });
 
   describe('authentication type OAuth2RefreshToken', () => {
     it('returns a destination with auth token if authentication type is OAuth2RefreshToken', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
+      const httpMocks = mockFetchDestinationCalls(
+        oauthRefreshTokenSingleResponse,
+        {
+          serviceToken: subscriberServiceToken,
+          mockWithTokenRetrievalCall: {
+            headers: { 'x-refresh-token': 'dummy-refresh-token' }
+          }
+        }
+      );
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthRefreshTokenMultipleResponse,
-          200,
-          subscriberServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthRefreshTokenSingleResponse,
-          200,
-          destinationName,
-          {
-            ...wrapJwtInHeader(subscriberServiceToken).headers,
-            'X-refresh-token': 'dummy-refresh-token'
-          },
-          { badheaders: [] }
-        )
-      ];
-
-      const expected = parseDestination(oauthRefreshTokenSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         jwt: subscriberUserToken,
         refreshToken: 'dummy-refresh-token'
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(
+        parseDestination(oauthRefreshTokenSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
 
     it('fails if refresh token is not provided', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
+      const httpMocks = mockFetchDestinationCalls(
+        oauthRefreshTokenMultipleResponse[0],
+        {
+          serviceToken: subscriberServiceToken,
+          mockWithTokenRetrievalCall: false
+        }
+      );
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthRefreshTokenMultipleResponse,
-          200,
-          subscriberServiceToken
-        )
-      ];
       await expect(
         getDestination({
           destinationName,
           jwt: subscriberUserToken
         })
-      ).rejects.toThrowError(/No refresh token has been provided./);
+      ).rejects.toThrow(/No refresh token has been provided./);
       expectAllMocksUsed(httpMocks);
     });
   });
+
   describe('authentication type OAuth2UserTokenExchange', () => {
     it('should use the user provider token as auth header and no exchange header for provider destination and provider jwt', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthUserTokenExchangeMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthUserTokenExchangeSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(providerUserToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(
+        oauthUserTokenExchangeSingleResponse,
+        {
+          mockWithTokenRetrievalCall: {
+            headers: { authorization: `Bearer ${providerUserToken}` }
+          }
+        }
+      );
 
-      const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         jwt: providerUserToken
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(
+        parseDestination(oauthUserTokenExchangeSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
 
     it('should use the provider access token as auth header and subscriber jwt as exchange header for provider destination and provider jwt', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthUserTokenExchangeMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthUserTokenExchangeSingleResponse,
-          200,
-          destinationName,
-          {
-            ...wrapJwtInHeader(providerServiceToken).headers,
-            'X-user-token': subscriberUserToken
-          },
-          { badheaders: [] }
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(
+        oauthUserTokenExchangeSingleResponse,
+        {
+          mockWithTokenRetrievalCall: {
+            headers: { 'x-user-token': subscriberUserToken }
+          }
+        }
+      );
 
-      const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         selectionStrategy: alwaysProvider,
         jwt: subscriberUserToken
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(
+        parseDestination(oauthUserTokenExchangeSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
 
     it('should use the subscriber access token as auth header and subscriber jwt as exchange header for provider destination and provider jwt', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthUserTokenExchangeMultipleResponse,
-          200,
-          subscriberServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthUserTokenExchangeSingleResponse,
-          200,
-          destinationName,
-          {
-            ...wrapJwtInHeader(subscriberServiceToken).headers,
-            'X-user-token': subscriberUserToken
-          },
-          { badheaders: [] }
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(
+        oauthUserTokenExchangeSingleResponse,
+        {
+          serviceToken: subscriberServiceToken,
+          mockWithTokenRetrievalCall: {
+            headers: { 'x-user-token': subscriberUserToken }
+          }
+        }
+      );
 
-      const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         selectionStrategy: alwaysSubscriber,
         jwt: subscriberUserToken
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(
+        parseDestination(oauthUserTokenExchangeSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
   });
 
   describe('authentication type ClientCertificateAuthentication', () => {
     it('returns a destination with certificates if the authentication type is ClientCertificateAuthentication, subscriber tenant', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          certificateMultipleResponse,
-          200,
-          subscriberServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          certificateSingleResponse,
-          200,
-          'ERNIE-UND-CERT',
-          wrapJwtInHeader(subscriberServiceToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(certificateSingleResponse, {
+        serviceToken: subscriberServiceToken
+      });
 
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName: 'ERNIE-UND-CERT',
         jwt: subscriberUserToken,
         cacheVerificationKeys: false
       });
-      expect(actual!.certificates!.length).toBe(1);
-      expect(actual!.keyStoreName).toBe('key.p12');
-      expect(actual!.keyStorePassword).toBe('password');
+      expect(destination?.certificates?.length).toBe(1);
+      expect(destination?.keyStoreName).toBe('key.p12');
+      expect(destination?.keyStorePassword).toBe('password');
       expectAllMocksUsed(httpMocks);
     });
 
     it('returns a destination with certificates if the authentication type is ClientCertificateAuthentication, provider tenant', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          certificateMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          certificateSingleResponse,
-          200,
-          'ERNIE-UND-CERT',
-          wrapJwtInHeader(providerServiceToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(certificateSingleResponse);
 
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName: 'ERNIE-UND-CERT',
         cacheVerificationKeys: false
       });
-      expect(actual!.certificates!.length).toBe(1);
-      expect(actual!.keyStoreName).toBe('key.p12');
-      expect(actual!.keyStorePassword).toBe('password');
+      expect(destination?.certificates!.length).toBe(1);
+      expect(destination?.keyStoreName).toBe('key.p12');
+      expect(destination?.keyStorePassword).toBe('password');
       expectAllMocksUsed(httpMocks);
     });
   });
 
   describe('authentication type BasicAuthentication', () => {
     it('returns a destination with OnPrem connectivity and basic auth', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
-
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        onPremiseBasicMultipleResponse,
-        200,
-        subscriberServiceToken
-      );
-      mockSingleDestinationCall(
-        nock,
+      const httpMocks = mockFetchDestinationCalls(
         onPremiseBasicSingleResponse,
-        200,
-        destinationName,
-        wrapJwtInHeader(subscriberServiceToken).headers
+        {
+          serviceToken: subscriberServiceToken,
+          mockWithTokenRetrievalCall: false
+        }
       );
 
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName: 'OnPremise',
         jwt: subscriberUserToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });
-      expect(actual?.proxyConfiguration).toMatchObject({
+
+      expect(destination?.proxyConfiguration).toMatchObject({
         host: 'proxy.example.com',
         port: 12345,
         protocol: 'http',
         headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) }
       });
+      expectAllMocksUsed(httpMocks);
     });
 
     it('returns a destination without authTokens if its authenticationType is Basic', async () => {
@@ -626,23 +415,19 @@ describe('authentication types', () => {
       mockVerifyJwt();
       const serviceTokenSpy = mockServiceToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          basicMultipleResponse,
-          200,
-          subscriberServiceToken
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(basicMultipleResponse[0], {
+        serviceToken: subscriberServiceToken,
+        mockWithTokenRetrievalCall: false
+      });
 
-      const expected = parseDestination(basicMultipleResponse[0]);
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName,
         jwt: subscriberUserToken,
         cacheVerificationKeys: false
       });
-      expect(actual).toMatchObject(expected);
+      expect(destination).toMatchObject(
+        parseDestination(basicMultipleResponse[0])
+      );
       expect(serviceTokenSpy).toHaveBeenCalled();
       expectAllMocksUsed(httpMocks);
     });
@@ -650,27 +435,21 @@ describe('authentication types', () => {
 
   describe('authentication type Principal Propagation', () => {
     it('returns a destination with onPrem connectivity and principal propagation', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
+      const httpMocks = mockFetchDestinationCalls(
+        onPremisePrincipalPropagationMultipleResponse[0],
+        {
+          serviceToken: subscriberServiceToken,
+          mockWithTokenRetrievalCall: false
+        }
+      );
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          onPremisePrincipalPropagationMultipleResponse,
-          200,
-          subscriberServiceToken
-        )
-      ];
-
-      const actual = await getDestination({
+      const destination = await getDestination({
         destinationName: 'OnPremise',
         jwt: subscriberUserToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });
-      expect(actual?.proxyConfiguration).toMatchObject({
+      expect(destination?.proxyConfiguration).toMatchObject({
         host: 'proxy.example.com',
         port: 12345,
         protocol: 'http',
@@ -683,49 +462,36 @@ describe('authentication types', () => {
     });
 
     it('fails for Principal Propagation and no user JWT', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
-
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          onPremisePrincipalPropagationMultipleResponse,
-          200,
-          providerServiceToken
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(
+        onPremisePrincipalPropagationMultipleResponse[0],
+        {
+          mockWithTokenRetrievalCall: false
+        }
+      );
 
       await expect(
         getDestination({ destinationName: 'OnPremise' })
-      ).rejects.toThrowError(
+      ).rejects.toThrow(
         "No user token (JWT) has been provided. This is strictly necessary for 'PrincipalPropagation'."
       );
       expectAllMocksUsed(httpMocks);
     });
 
     it('fails for Principal Propagation and issuer JWT', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
-
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          onPremisePrincipalPropagationMultipleResponse,
-          200,
-          onlyIssuerServiceToken
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(
+        onPremisePrincipalPropagationMultipleResponse[0],
+        {
+          serviceToken: onlyIssuerServiceToken,
+          mockWithTokenRetrievalCall: false
+        }
+      );
 
       await expect(
         getDestination({
           destinationName: 'OnPremise',
           iss: onlyIssuerXsuaaUrl
         })
-      ).rejects.toThrowError(
+      ).rejects.toThrow(
         "No user token (JWT) has been provided. This is strictly necessary for 'PrincipalPropagation'."
       );
       expectAllMocksUsed(httpMocks);
@@ -737,80 +503,61 @@ describe('authentication types', () => {
     mockVerifyJwt();
     mockServiceToken();
 
-    const httpMocks = [
-      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-      mockSubaccountDestinationsCall(
-        nock,
-        onPremiseBasicMultipleResponse,
-        200,
-        onlyIssuerServiceToken
-      )
-    ];
+    const httpMocks = mockFetchDestinationCalls(
+      onPremiseBasicMultipleResponse[0],
+      {
+        serviceToken: onlyIssuerServiceToken,
+        mockWithTokenRetrievalCall: false
+      }
+    );
 
-    const dest = await getDestination({
+    const destination = await getDestination({
       destinationName: 'OnPremise',
       iss: onlyIssuerXsuaaUrl
     });
 
     const proxyToken =
-      dest?.proxyConfiguration!.headers!['Proxy-Authorization'].split(' ')[1];
+      destination?.proxyConfiguration!.headers!['Proxy-Authorization'].split(
+        ' '
+      )[1];
     expect(decodeJwt(proxyToken!).zid).toEqual(testTenants.subscriberOnlyIss);
     expectAllMocksUsed(httpMocks);
   });
 
   describe('authentication type SamlAssertion', () => {
-    it('receives the saml assertion in the destination', async () => {
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthPasswordMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthPasswordSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(providerServiceToken).headers
-        )
-      ];
+    it('receives the SAML assertion in the destination', async () => {
+      mockJwtBearerToken();
 
-      const expected = parseDestination(oauthPasswordSingleResponse);
-      const actual = await getDestination({ destinationName });
-      expect(actual).toMatchObject(expected);
+      const httpMocks = mockFetchDestinationCalls(samlAssertionSingleResponse, {
+        serviceToken: subscriberServiceToken,
+        mockWithTokenRetrievalCall: {
+          headers: {
+            'x-user-token': subscriberUserToken
+          }
+        }
+      });
+
+      const destination = await getDestination({
+        destinationName,
+        jwt: subscriberUserToken
+      });
+      expect(destination).toMatchObject(
+        parseDestination(samlAssertionSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
   });
 
   describe('authentication type OAuth2Password', () => {
     it('returns a destination with auth token if authentication type is OAuth2Password', async () => {
-      mockServiceBindings();
-      mockVerifyJwt();
-      mockServiceToken();
       mockJwtBearerToken();
 
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          oauthPasswordMultipleResponse,
-          200,
-          providerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          oauthPasswordSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(providerServiceToken).headers
-        )
-      ];
+      const httpMocks = mockFetchDestinationCalls(oauthPasswordSingleResponse);
 
-      const expected = parseDestination(oauthPasswordSingleResponse);
-      const actual = await getDestination({ destinationName });
-      expect(actual).toMatchObject(expected);
+      const destination = await getDestination({ destinationName });
+      expect(destination).toMatchObject(
+        parseDestination(oauthPasswordSingleResponse)
+      );
       expectAllMocksUsed(httpMocks);
     });
   });

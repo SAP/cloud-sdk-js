@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 export * from './TestEntity';
 export * from './TestEntityWithEnumKey';
+export * from './TestEntityWithNoKeys';
 export * from './TestEntityWithSharedEntityType1';
 export * from './TestEntityWithSharedEntityType2';
 export * from './TestEntityMultiLink';
@@ -19,6 +20,7 @@ export * from './TestEntityEndsWith';
 export * from './TestEntityEndsWithSomethingElse';
 export * from './TestEntityRequestBuilder';
 export * from './TestEntityWithEnumKeyRequestBuilder';
+export * from './TestEntityWithNoKeysRequestBuilder';
 export * from './TestEntityWithSharedEntityType1RequestBuilder';
 export * from './TestEntityWithSharedEntityType2RequestBuilder';
 export * from './TestEntityMultiLinkRequestBuilder';

@@ -22,7 +22,6 @@ import {
 import {
   filterCustomRequestConfig,
   OriginOptions,
-  encodeTypedClientRequest,
   HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
 
@@ -31,10 +30,6 @@ import {
  * @typeParam ResponseT - Type of the response for the request.
  */
 export class OpenApiRequestBuilder<ResponseT = any> {
-  private static isPlaceholder(pathPart: string): boolean {
-    return /^\{.+\}$/.test(pathPart);
-  }
-
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: Record<string, string> = {};
   private _fetchCsrfToken = true;
@@ -71,7 +66,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomRequestConfiguration(
-    requestConfiguration: Record<string, string>
+    requestConfiguration: Record<string, any>
   ): this {
     Object.entries(requestConfiguration).forEach(([key, value]) => {
       this.customRequestConfiguration[key] = value;
@@ -155,7 +150,6 @@ export class OpenApiRequestBuilder<ResponseT = any> {
       headers: this.getHeaders(),
       params: this.getParameters(),
       middleware: this._middlewares,
-      parameterEncoder: encodeTypedClientRequest,
       data: this.parameters?.body
     };
     return {
@@ -165,7 +159,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private getHeaders(): OriginOptions {
-    if (Object.keys(this.customHeaders).length > 0) {
+    if (Object.keys(this.customHeaders).length) {
       return { custom: this.customHeaders, requestConfig: {} };
     }
     return { requestConfig: {} };

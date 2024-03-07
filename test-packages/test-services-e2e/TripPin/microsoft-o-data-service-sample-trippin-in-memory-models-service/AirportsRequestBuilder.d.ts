@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { Airports } from './Airports';
 /**
@@ -21,14 +21,6 @@ import { Airports } from './Airports';
 export declare class AirportsRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Airports<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `Airports` entity based on its keys.
-   * @param icaoCode Key property. See {@link Airports.icaoCode}.
-   * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
-   */
-  getByKey(
-    icaoCode: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<Airports<T>, T>;
   /**
    * Returns a request builder for querying all `Airports` entities.
    * @returns A request builder for creating requests to retrieve all `Airports` entities.
@@ -40,6 +32,14 @@ export declare class AirportsRequestBuilder<
    * @returns A request builder for creating requests that create an entity of type `Airports`.
    */
   create(entity: Airports<T>): CreateRequestBuilder<Airports<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `Airports` entity based on its keys.
+   * @param icaoCode Key property. See {@link Airports.icaoCode}.
+   * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
+   */
+  getByKey(
+    icaoCode: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Airports<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `Airports`.
    * @param entity The entity to be updated

@@ -15,7 +15,6 @@ export * from './protocol';
 export * from './subdomain-replacer';
 export * from './tenant';
 export * from './token-accessor';
-export * from './user';
 export * from './xsuaa-service-types';
 export * from './xsuaa-service';
 export * from './async-cache';

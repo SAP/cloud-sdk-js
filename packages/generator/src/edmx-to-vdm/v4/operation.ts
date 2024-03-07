@@ -303,8 +303,7 @@ function generateOperations(
         entities,
         complexTypes,
         extractResponse,
-        serviceName,
-        operation.IsBound
+        serviceName
       ),
       entityClassName: className
     };

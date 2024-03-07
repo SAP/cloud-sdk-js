@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -44,18 +44,18 @@ export class TestEntityWithMultipleKeys<
   /**
    * Key Test Entity With Multiple Keys.
    */
-  keyTestEntityWithMultipleKeys!: DeserializedType<T, 'Edm.Int32'>;
+  declare keyTestEntityWithMultipleKeys: DeserializedType<T, 'Edm.Int32'>;
   /**
    * String Property With Multiple Keys.
    * Maximum length: 111.
    */
-  stringPropertyWithMultipleKeys!: DeserializedType<T, 'Edm.String'>;
+  declare stringPropertyWithMultipleKeys: DeserializedType<T, 'Edm.String'>;
   /**
    * Boolean Property With Multiple Keys.
    */
-  booleanPropertyWithMultipleKeys!: DeserializedType<T, 'Edm.Boolean'>;
+  declare booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>;
 
-  constructor(readonly _entityApi: TestEntityWithMultipleKeysApi<T>) {
+  constructor(_entityApi: TestEntityWithMultipleKeysApi<T>) {
     super(_entityApi);
   }
 
@@ -66,7 +66,7 @@ export class TestEntityWithMultipleKeys<
    */
   boundFunctionWithoutArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithoutArgumentsWithMultipleKeysParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
@@ -81,14 +81,10 @@ export class TestEntityWithMultipleKeys<
       'boundFunctionWithoutArgumentsWithMultipleKeys',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(
-            val.value,
-            'Edm.String',
-            deSerializers || defaultDeSerializers
-          )
+          edmToTs(val.value, 'Edm.String', deSerializers)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'function'
     );
   }
@@ -100,7 +96,7 @@ export class TestEntityWithMultipleKeys<
    */
   boundFunctionWithArgumentsWithMultipleKeys(
     parameters: BoundFunctionWithArgumentsWithMultipleKeysParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
@@ -118,14 +114,10 @@ export class TestEntityWithMultipleKeys<
       'boundFunctionWithArgumentsWithMultipleKeys',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(
-            val.value,
-            'Edm.String',
-            deSerializers || defaultDeSerializers
-          )
+          edmToTs(val.value, 'Edm.String', deSerializers)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'function'
     );
   }
@@ -137,7 +129,7 @@ export class TestEntityWithMultipleKeys<
    */
   boundActionWithoutArgumentsWithMultipleKeys(
     parameters: BoundActionWithoutArgumentsWithMultipleKeysParameters<T>,
-    deSerializers?: T
+    deSerializers: T = defaultDeSerializers as T
   ): BoundOperationRequestBuilder<
     TestEntityWithMultipleKeys<T>,
     T,
@@ -152,14 +144,10 @@ export class TestEntityWithMultipleKeys<
       'boundActionWithoutArgumentsWithMultipleKeys',
       data =>
         transformReturnValueForEdmType(data, val =>
-          edmToTs(
-            val.value,
-            'Edm.String',
-            deSerializers || defaultDeSerializers
-          )
+          edmToTs(val.value, 'Edm.String', deSerializers)
         ),
       params,
-      deSerializers || defaultDeSerializers,
+      deSerializers,
       'action'
     );
   }

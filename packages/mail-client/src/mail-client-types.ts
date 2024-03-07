@@ -252,6 +252,11 @@ export interface MailDestination {
    * Based on the additional destination property 'mail.password'.
    */
   password?: string;
+  /**
+   * Location ID of the Cloud Connector to be used for connection to an On-Premise system. Optional.
+   * Corresponds to property "CloudConnectorLocationId" in the additional properties of a destination.
+   */
+  cloudConnectorLocationId?: string;
 }
 
 /**
@@ -307,6 +312,10 @@ export interface SmtpTransportOptions {
    * How many milliseconds of inactivity to allow.
    */
   socketTimeout?: number | undefined;
+  /**
+   * If set to true then logs to console. If value is not set or is false then nothing is logged.
+   */
+  logger?: boolean | undefined;
   /**
    * If set to `true`, then logs SMTP traffic and message content, otherwise logs only transaction events.
    */

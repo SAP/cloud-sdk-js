@@ -86,14 +86,17 @@ function getOperationsByApis(document: OpenAPIV3.Document) {
     );
   }
 
-  return allOperations.reduce((apiMap, operationInfo) => {
-    const apiName = getApiNameForOperation(operationInfo, document);
-    if (!apiMap[apiName]) {
-      apiMap[apiName] = [];
-    }
-    apiMap[apiName].push(operationInfo);
-    return apiMap;
-  }, {} as Record<string, OperationInfo[]>);
+  return allOperations.reduce(
+    (apiMap, operationInfo) => {
+      const apiName = getApiNameForOperation(operationInfo, document);
+      if (!apiMap[apiName]) {
+        apiMap[apiName] = [];
+      }
+      apiMap[apiName].push(operationInfo);
+      return apiMap;
+    },
+    {} as Record<string, OperationInfo[]>
+  );
 }
 
 function getAllOperations(

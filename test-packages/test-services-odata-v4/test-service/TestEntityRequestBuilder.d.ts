@@ -1,19 +1,19 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { Moment } from 'moment';
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 /**
@@ -22,6 +22,17 @@ import { TestEntity } from './TestEntity';
 export declare class TestEntityRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity<T>, T> {
+  /**
+   * Returns a request builder for querying all `TestEntity` entities.
+   * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
+   */
+  getAll(): GetAllRequestBuilder<TestEntity<T>, T>;
+  /**
+   * Returns a request builder for creating a `TestEntity` entity.
+   * @param entity The entity to be created
+   * @returns A request builder for creating requests that create an entity of type `TestEntity`.
+   */
+  create(entity: TestEntity<T>): CreateRequestBuilder<TestEntity<T>, T>;
   /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
    * @param keyPropertyGuid Key property. See {@link TestEntity.keyPropertyGuid}.
@@ -34,17 +45,6 @@ export declare class TestEntityRequestBuilder<
     keyPropertyString: DeserializedType<T, 'Edm.String'>,
     keyDateProperty: DeserializedType<T, 'Edm.Date'>
   ): GetByKeyRequestBuilder<TestEntity<T>, T>;
-  /**
-   * Returns a request builder for querying all `TestEntity` entities.
-   * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
-   */
-  getAll(): GetAllRequestBuilder<TestEntity<T>, T>;
-  /**
-   * Returns a request builder for creating a `TestEntity` entity.
-   * @param entity The entity to be created
-   * @returns A request builder for creating requests that create an entity of type `TestEntity`.
-   */
-  create(entity: TestEntity<T>): CreateRequestBuilder<TestEntity<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntity`.
    * @param entity The entity to be updated

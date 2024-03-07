@@ -5,21 +5,17 @@ import {
   parseDestination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
-import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { encodeTypedClientRequest } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { retry, timeout } from '@sap-cloud-sdk/resilience';
+import * as resilienceInternal from '@sap-cloud-sdk/resilience/internal';
 import {
   expectAllMocksUsed,
-  certificateMultipleResponse,
   certificateSingleResponse,
-  mockInstanceDestinationsCall,
   mockServiceBindings,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
-  providerServiceToken
+  providerServiceToken,
+  mockFetchDestinationCalls
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
@@ -35,6 +31,7 @@ describe('openapi-request-builder', () => {
     nock(destination.url).get(/.*/).reply(200, dummyResponse);
     nock(destination.url).post(/.*/).reply(200);
   });
+
   afterEach(() => {
     httpSpy.mockClear();
   });
@@ -50,8 +47,7 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        data: undefined,
-        parameterEncoder: encodeTypedClientRequest
+        data: undefined
       },
       { fetchCsrfToken: false }
     );
@@ -73,8 +69,7 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: { limit: 100 } },
-        data: undefined,
-        parameterEncoder: encodeTypedClientRequest
+        data: undefined
       },
       { fetchCsrfToken: false }
     );
@@ -96,7 +91,6 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeTypedClientRequest,
         data: {
           limit: 100
         }
@@ -169,7 +163,7 @@ describe('openapi-request-builder', () => {
   it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
     mockServiceBindings();
 
-    const nocks = [
+    const httpMocks = [
       nock(onlyIssuerXsuaaUrl)
         .post('/oauth/token')
         .times(1)
@@ -178,20 +172,9 @@ describe('openapi-request-builder', () => {
         .post('/oauth/token')
         .times(1)
         .reply(200, { access_token: providerServiceToken }),
-      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-      mockSubaccountDestinationsCall(
-        nock,
-        certificateMultipleResponse,
-        200,
-        onlyIssuerServiceToken
-      ),
-      mockSingleDestinationCall(
-        nock,
-        certificateSingleResponse,
-        200,
-        'ERNIE-UND-CERT',
-        wrapJwtInHeader(onlyIssuerServiceToken).headers
-      ),
+      ...mockFetchDestinationCalls(certificateSingleResponse, {
+        serviceToken: onlyIssuerServiceToken
+      }),
       nock(certificateSingleResponse.destinationConfiguration.URL!)
         .get(/.*/)
         .reply(200, 'iss token used on the way')
@@ -205,7 +188,7 @@ describe('openapi-request-builder', () => {
       destinationName: 'ERNIE-UND-CERT',
       iss: onlyIssuerXsuaaUrl
     });
-    expectAllMocksUsed(nocks);
+    expectAllMocksUsed(httpMocks);
     expect(httpSpy).toHaveBeenLastCalledWith(
       sanitizeDestination(parseDestination(certificateSingleResponse)),
       {
@@ -214,7 +197,6 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeTypedClientRequest,
         data: {
           limit: 100
         }
@@ -239,7 +221,6 @@ describe('openapi-request-builder', () => {
         method: 'get',
         middleware: [],
         url: '/test',
-        parameterEncoder: encodeTypedClientRequest,
         headers: {
           custom: { authorization: 'custom-header' },
           requestConfig: {}
@@ -265,7 +246,6 @@ describe('openapi-request-builder', () => {
         url: '/test/%5Etest',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeTypedClientRequest,
         data: undefined
       },
       { fetchCsrfToken: false }
@@ -273,10 +253,29 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe(dummyResponse);
   });
 
+  it('encodes query parameters', async () => {
+    jest.spyOn(resilienceInternal, 'executeWithMiddleware');
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test', {
+      queryParameters: { 'id^': '^test' }
+    });
+
+    await requestBuilder.executeRaw(destination);
+
+    expect(resilienceInternal.executeWithMiddleware).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        fnArgument: expect.objectContaining({ params: { 'id%5E': '%5Etest' } })
+      })
+    );
+  });
+
   it('addCustomRequestConfig', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     const response = await requestBuilder
-      .addCustomRequestConfiguration({ responseType: 'arraybuffer' })
+      .addCustomRequestConfiguration({
+        responseType: 'arraybuffer',
+        timeout: 1000
+      })
       .executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
       sanitizeDestination(destination),
@@ -287,8 +286,8 @@ describe('openapi-request-builder', () => {
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
         data: undefined,
-        parameterEncoder: encodeTypedClientRequest,
-        responseType: 'arraybuffer'
+        responseType: 'arraybuffer',
+        timeout: 1000
       },
       { fetchCsrfToken: false }
     );
@@ -309,7 +308,6 @@ describe('openapi-request-builder', () => {
         url: '/test',
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
-        parameterEncoder: encodeTypedClientRequest,
         data: undefined
       },
       { fetchCsrfToken: false }

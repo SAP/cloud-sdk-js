@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -35,9 +35,9 @@ export class TestEntityEndsWithSomethingElse<
   /**
    * Key Property.
    */
-  keyProperty!: DeserializedType<T, 'Edm.String'>;
+  declare keyProperty: DeserializedType<T, 'Edm.String'>;
 
-  constructor(readonly _entityApi: TestEntityEndsWithSomethingElseApi<T>) {
+  constructor(_entityApi: TestEntityEndsWithSomethingElseApi<T>) {
     super(_entityApi);
   }
 }

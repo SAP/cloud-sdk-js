@@ -165,5 +165,5 @@ function matchesAudience(
   credentials: ServiceCredentials,
   token: JwtPayload
 ): boolean {
-  return audiences(token).has(credentials.xsappname);
+  return audiences(token).includes(credentials.xsappname);
 }

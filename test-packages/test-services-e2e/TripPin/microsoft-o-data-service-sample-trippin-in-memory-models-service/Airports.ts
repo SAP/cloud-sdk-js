@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -35,21 +35,21 @@ export class Airports<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Icao Code.
    */
-  icaoCode!: DeserializedType<T, 'Edm.String'>;
+  declare icaoCode: DeserializedType<T, 'Edm.String'>;
   /**
    * Name.
    */
-  name!: DeserializedType<T, 'Edm.String'>;
+  declare name: DeserializedType<T, 'Edm.String'>;
   /**
    * Iata Code.
    */
-  iataCode!: DeserializedType<T, 'Edm.String'>;
+  declare iataCode: DeserializedType<T, 'Edm.String'>;
   /**
    * Location.
    */
-  location!: AirportLocation<T>;
+  declare location: AirportLocation<T>;
 
-  constructor(readonly _entityApi: AirportsApi<T>) {
+  constructor(_entityApi: AirportsApi<T>) {
     super(_entityApi);
   }
 }

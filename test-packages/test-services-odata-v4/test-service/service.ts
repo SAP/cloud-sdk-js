@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityApi } from './TestEntityApi';
 import { TestEntityWithEnumKeyApi } from './TestEntityWithEnumKeyApi';
+import { TestEntityWithNoKeysApi } from './TestEntityWithNoKeysApi';
 import { TestEntityWithSharedEntityType1Api } from './TestEntityWithSharedEntityType1Api';
 import { TestEntityWithSharedEntityType2Api } from './TestEntityWithSharedEntityType2Api';
 import { TestEntityMultiLinkApi } from './TestEntityMultiLinkApi';
@@ -163,6 +164,10 @@ class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
 
   get testEntityWithEnumKeyApi(): TestEntityWithEnumKeyApi<DeSerializersT> {
     return this.initApi('testEntityWithEnumKeyApi', TestEntityWithEnumKeyApi);
+  }
+
+  get testEntityWithNoKeysApi(): TestEntityWithNoKeysApi<DeSerializersT> {
+    return this.initApi('testEntityWithNoKeysApi', TestEntityWithNoKeysApi);
   }
 
   get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<DeSerializersT> {

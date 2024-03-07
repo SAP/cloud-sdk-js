@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { Casetest_1 } from './Casetest_1';
 
@@ -22,19 +22,6 @@ import { Casetest_1 } from './Casetest_1';
 export class Casetest_1RequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<Casetest_1<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `Casetest_1` entity based on its keys.
-   * @param keyPropertyString Key property. See {@link Casetest_1.keyPropertyString}.
-   * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
-   */
-  getByKey(
-    keyPropertyString: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<Casetest_1<T>, T> {
-    return new GetByKeyRequestBuilder<Casetest_1<T>, T>(this.entityApi, {
-      KeyPropertyString: keyPropertyString
-    });
-  }
-
   /**
    * Returns a request builder for querying all `Casetest_1` entities.
    * @returns A request builder for creating requests to retrieve all `Casetest_1` entities.
@@ -50,6 +37,19 @@ export class Casetest_1RequestBuilder<
    */
   create(entity: Casetest_1<T>): CreateRequestBuilder<Casetest_1<T>, T> {
     return new CreateRequestBuilder<Casetest_1<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `Casetest_1` entity based on its keys.
+   * @param keyPropertyString Key property. See {@link Casetest_1.keyPropertyString}.
+   * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
+   */
+  getByKey(
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Casetest_1<T>, T> {
+    return new GetByKeyRequestBuilder<Casetest_1<T>, T>(this.entityApi, {
+      KeyPropertyString: keyPropertyString
+    });
   }
 
   /**

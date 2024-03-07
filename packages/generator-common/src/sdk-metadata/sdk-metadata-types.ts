@@ -81,7 +81,6 @@ export interface ServiceStatus {
    * `verified`: generation tested and succeeded.
    * `unknown`: generation not tested.
    * `failed`: generation tested and failed.
-   *
    */
   status: 'certified' | 'verified' | 'unknown' | 'failed';
   /**

@@ -1,5 +1,89 @@
 # @sap-cloud-sdk/mail-client
 
+## 3.12.0
+
+### Patch Changes
+
+- Updated dependencies [36be489]
+  - @sap-cloud-sdk/connectivity@3.12.0
+  - @sap-cloud-sdk/util@3.12.0
+
+## 3.11.0
+
+### Minor Changes
+
+- 7ec62fa: [Improvement] Add optional `logger` property to enable console logs. Defaults to `false`.
+
+### Patch Changes
+
+- 62f31fb: [Fixed Issue] Fix "Hostname/IP does not match certificate's altnames" issues with "localhost" when sending e-mails OnPremise. Always pass the host and port of the MAIL destination explicitly to the underlying `nodemailer` instead of falling back to the default.
+  - @sap-cloud-sdk/connectivity@3.11.0
+  - @sap-cloud-sdk/util@3.11.0
+
+## 3.10.0
+
+### Patch Changes
+
+- Updated dependencies [c721bbd]
+- Updated dependencies [c721bbd]
+- Updated dependencies [28c9cb7]
+- Updated dependencies [4d2b49b]
+- Updated dependencies [28c9cb7]
+  - @sap-cloud-sdk/connectivity@3.10.0
+  - @sap-cloud-sdk/util@3.10.0
+
+## 3.9.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.9.0
+- @sap-cloud-sdk/util@3.9.0
+
+## 3.8.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.8.1
+- @sap-cloud-sdk/util@3.8.1
+
+## 3.8.0
+
+### Minor Changes
+
+- 8516b7f04: [New Functionality] Add Support for `Location ID` in destinations of type `MAIL`
+
+### Patch Changes
+
+- Updated dependencies [693cd655f]
+  - @sap-cloud-sdk/connectivity@3.8.0
+  - @sap-cloud-sdk/util@3.8.0
+
+## 3.7.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.7.0
+- @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Patch Changes
+
+- Updated dependencies [025b6aa2c]
+- Updated dependencies [025b6aa2c]
+  - @sap-cloud-sdk/connectivity@3.6.0
+  - @sap-cloud-sdk/util@3.6.0
+
+## 3.5.0
+
+### Patch Changes
+
+- Updated dependencies [7ed5ceb52]
+- Updated dependencies [2277f9443]
+- Updated dependencies [bf54df09b]
+  - @sap-cloud-sdk/connectivity@3.5.0
+  - @sap-cloud-sdk/util@3.5.0
+
 ## 3.4.0
 
 ### Patch Changes

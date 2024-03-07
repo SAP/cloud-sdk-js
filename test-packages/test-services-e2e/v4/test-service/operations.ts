@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -44,7 +44,7 @@ export function concatStrings<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: ConcatStringsParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   ConcatStringsParameters<DeSerializersT>,
@@ -82,7 +82,7 @@ export function getAll<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: GetAllParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   GetAllParameters<DeSerializersT>,
@@ -123,7 +123,7 @@ export function getByKey<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: GetByKeyParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   GetByKeyParameters<DeSerializersT>,
@@ -176,7 +176,7 @@ export function getByKeyWithMultipleKeys<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: GetByKeyWithMultipleKeysParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   GetByKeyWithMultipleKeysParameters<DeSerializersT>,
@@ -235,7 +235,7 @@ export function returnCollection<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: ReturnCollectionParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   ReturnCollectionParameters<DeSerializersT>,
@@ -277,7 +277,7 @@ export function returnInt<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: ReturnIntParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   ReturnIntParameters<DeSerializersT>,
@@ -316,7 +316,7 @@ export function returnSapCloudSdk<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: ReturnSapCloudSdkParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   ReturnSapCloudSdkParameters<DeSerializersT>,
@@ -358,7 +358,7 @@ export function createTestEntityById<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: CreateTestEntityByIdParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   CreateTestEntityByIdParameters<DeSerializersT>,
@@ -403,7 +403,7 @@ export function createTestEntityByIdReturnId<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 >(
   parameters: CreateTestEntityByIdReturnIdParameters<DeSerializersT>,
-  deSerializers: DeSerializersT = defaultDeSerializers as any
+  deSerializers: DeSerializersT = defaultDeSerializers as DeSerializersT
 ): OperationRequestBuilder<
   DeSerializersT,
   CreateTestEntityByIdReturnIdParameters<DeSerializersT>,

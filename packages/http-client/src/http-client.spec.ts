@@ -18,16 +18,17 @@ import {
   HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
+import { ProxyConfiguration } from '@sap-cloud-sdk/connectivity/src';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,
   defaultDestination,
   destinationBindingClientSecretMock,
+  jku,
   mockClientCredentialsGrantCall,
-  mockInstanceDestinationsCall,
+  mockFetchDestinationCalls,
   mockServiceBindings,
-  mockSubaccountDestinationsCall,
   mockUserTokenGrantCall,
   privateKey,
   providerServiceToken,
@@ -35,6 +36,7 @@ import {
   subscriberServiceToken,
   subscriberUserToken,
   subscriberXsuaaUrl,
+  testTenants,
   xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
 import * as csrf from './csrf-token-middleware';
@@ -51,7 +53,7 @@ import {
   buildRequestWithMergedHeadersAndQueryParameters,
   encodeAllParameters,
   executeHttpRequest,
-  encodeTypedClientRequest,
+  oDataTypedClientParameterEncoder,
   executeHttpRequestWithOrigin,
   buildHttpRequestConfigWithOrigin
 } from './http-client';
@@ -94,26 +96,34 @@ describe('generic http client', () => {
   };
 
   describe('buildHttpRequest', () => {
-    it('provides a baseURL, headers, and either an httpAgent or an httpsAgent', async () => {
+    it('creates an https request', async () => {
       const expectedHttps: DestinationHttpRequestConfig = {
         baseURL: 'https://example.com',
         headers: {
           authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
           'sap-client': '001'
-        }
+        },
+        proxy: false
       };
 
       const actualHttps = await buildHttpRequest(httpsDestination);
 
       expect(actualHttps).toMatchObject(expectedHttps);
       expect(actualHttps.httpsAgent).toBeDefined();
+    });
 
+    it('creates an http request with a proxy configuration', async () => {
       const expectedProxy: DestinationHttpRequestConfig = {
         baseURL: 'http://example.com',
         headers: {
           authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
           'sap-client': '001',
           'Proxy-Authorization': proxyAuthorization
+        },
+        proxy: {
+          host: 'proxy.host',
+          port: 1234,
+          protocol: 'http'
         }
       };
 
@@ -236,8 +246,14 @@ describe('generic http client', () => {
     });
 
     function mockJwtValidationAndServiceToken() {
-      const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
-      nock(jku).get('/').reply(200, responseWithPublicKey());
+      nock(jku)
+        .get('')
+        .query({ zid: testTenants.subscriber })
+        .reply(200, responseWithPublicKey());
+      nock(jku)
+        .get('')
+        .query({ zid: testTenants.provider })
+        .reply(200, responseWithPublicKey());
       mockUserTokenGrantCall(
         providerXsuaaUrl,
         1,
@@ -255,30 +271,24 @@ describe('generic http client', () => {
         subscriberXsuaaUrl,
         { access_token: subscriberServiceToken },
         200,
-        destinationBindingClientSecretMock.credentials
-      );
-    }
-
-    function mockDestinationService() {
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        basicMultipleResponse,
-        200,
-        subscriberServiceToken
+        destinationBindingClientSecretMock.credentials,
+        testTenants.subscriber
       );
     }
 
     it('passes the context properties to the middleware', async () => {
       const showContextMiddleware: HttpMiddleware =
         (opt: HttpMiddlewareOptions) => () =>
-          ({ data: opt.context } as any);
+          ({ data: opt.context }) as any;
 
       mockServiceBindings();
       // Inside connectivity package we can use jest to mock jwtVerify and tokenAccessor
       // Between modules this is not possible and done via HTTP mocks instead
       mockJwtValidationAndServiceToken();
-      mockDestinationService();
+      mockFetchDestinationCalls(basicMultipleResponse[0], {
+        serviceToken: subscriberServiceToken,
+        mockWithTokenRetrievalCall: false
+      });
 
       const response = await executeHttpRequest(
         {
@@ -678,13 +688,14 @@ sap-client:001`);
     }, 60000);
 
     it('overwrites the default axios config with destination related request config', async () => {
+      const proxyConfiguration: ProxyConfiguration = {
+        host: 'dummy',
+        port: 1234,
+        protocol: 'http'
+      };
       const destination: HttpDestination = {
         url: 'https://destinationUrl',
-        proxyConfiguration: {
-          host: 'dummy',
-          port: 1234,
-          protocol: 'http'
-        }
+        proxyConfiguration
       };
 
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);
@@ -693,10 +704,7 @@ sap-client:001`);
       ).resolves.not.toThrow();
       expect(requestSpy).toHaveBeenCalledWith(
         expect.objectContaining({
-          proxy: false,
-          httpsAgent: expect.objectContaining({
-            proxy: expect.objectContaining({ hostname: 'dummy', port: '1234' })
-          })
+          proxy: proxyConfiguration
         })
       );
     });
@@ -1074,7 +1082,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       const actual = await buildRequestWithMergedHeadersAndQueryParameters(
         {
           ...requestWithParameters,
-          parameterEncoder: encodeTypedClientRequest
+          parameterEncoder: oDataTypedClientParameterEncoder
         },
         destinationWithParameters,
         {} as DestinationHttpRequestConfig
@@ -1083,7 +1091,7 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
         method: 'get',
         url: '/api/entity',
         headers: {},
-        parameterEncoder: encodeTypedClientRequest,
+        parameterEncoder: oDataTypedClientParameterEncoder,
         params: {
           customParam: 'a/b',
           requestParam: 'a/b',

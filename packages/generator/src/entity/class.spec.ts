@@ -39,7 +39,7 @@ describe('entity class generator generates a class', () => {
     );
     expect(instanceProperties.map(prop => [prop.name, prop.type])).toEqual([
       [
-        `${entityName.instancePropertyName}!`,
+        `${entityName.instancePropertyName}`,
         "DeserializedType<T, 'Edm.String'>"
       ],
       [
@@ -47,7 +47,7 @@ describe('entity class generator generates a class', () => {
         "DeserializedType<T, 'Edm.Decimal'> | null"
       ],
       [
-        `${breakfastTime.instancePropertyName}!`,
+        `${breakfastTime.instancePropertyName}`,
         "DeserializedType<T, 'Edm.DateTime'>"
       ],
       [`${toBrunch.instancePropertyName}?`, 'Brunch<T> | null']

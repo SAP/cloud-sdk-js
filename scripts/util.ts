@@ -1,6 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import { readFileSync, writeFileSync } from 'fs';
+import { readFile, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 import getReleasePlan from '@changesets/get-release-plan';
 import { getPackageVersion } from './get-package-version';
@@ -8,13 +8,13 @@ import { inc, ReleaseType } from 'semver';
 
 export const apiDocsDir = resolve('knowledge-base', 'api-reference');
 
-export function transformFile(
+export async function transformFile(
   filePath: string,
   transformFn: CallableFunction
-): void {
-  const file = readFileSync(filePath, { encoding: 'utf8' });
-  const transformedFile = transformFn(file);
-  writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
+): Promise<void> {
+  const file = await readFile(filePath, { encoding: 'utf8' });
+  const transformedFile = await transformFn(file);
+  await writeFile(filePath, transformedFile, { encoding: 'utf8' });
 }
 
 const versionOrder = ['major', 'minor', 'patch'];

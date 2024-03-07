@@ -1,5 +1,60 @@
 # @sap-cloud-sdk/resilience
 
+## 3.12.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.12.0
+
+## 3.11.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.11.0
+
+## 3.10.0
+
+### Patch Changes
+
+- Updated dependencies [4d2b49b]
+  - @sap-cloud-sdk/util@3.10.0
+
+## 3.9.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.9.0
+
+## 3.8.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.8.1
+
+## 3.8.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.8.0
+
+## 3.7.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.6.0
+
+## 3.5.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.5.0
+
 ## 3.4.0
 
 ### Patch Changes

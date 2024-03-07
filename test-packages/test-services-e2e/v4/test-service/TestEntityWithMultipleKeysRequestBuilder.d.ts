@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
 /**
@@ -21,18 +21,6 @@ import { TestEntityWithMultipleKeys } from './TestEntityWithMultipleKeys';
 export declare class TestEntityWithMultipleKeysRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityWithMultipleKeys<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityWithMultipleKeys` entity based on its keys.
-   * @param keyTestEntityWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.keyTestEntityWithMultipleKeys}.
-   * @param stringPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.stringPropertyWithMultipleKeys}.
-   * @param booleanPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.booleanPropertyWithMultipleKeys}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityWithMultipleKeys` entity based on its keys.
-   */
-  getByKey(
-    keyTestEntityWithMultipleKeys: DeserializedType<T, 'Edm.Int32'>,
-    stringPropertyWithMultipleKeys: DeserializedType<T, 'Edm.String'>,
-    booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>
-  ): GetByKeyRequestBuilder<TestEntityWithMultipleKeys<T>, T>;
   /**
    * Returns a request builder for querying all `TestEntityWithMultipleKeys` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithMultipleKeys` entities.
@@ -46,6 +34,18 @@ export declare class TestEntityWithMultipleKeysRequestBuilder<
   create(
     entity: TestEntityWithMultipleKeys<T>
   ): CreateRequestBuilder<TestEntityWithMultipleKeys<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntityWithMultipleKeys` entity based on its keys.
+   * @param keyTestEntityWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.keyTestEntityWithMultipleKeys}.
+   * @param stringPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.stringPropertyWithMultipleKeys}.
+   * @param booleanPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.booleanPropertyWithMultipleKeys}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityWithMultipleKeys` entity based on its keys.
+   */
+  getByKey(
+    keyTestEntityWithMultipleKeys: DeserializedType<T, 'Edm.Int32'>,
+    stringPropertyWithMultipleKeys: DeserializedType<T, 'Edm.String'>,
+    booleanPropertyWithMultipleKeys: DeserializedType<T, 'Edm.Boolean'>
+  ): GetByKeyRequestBuilder<TestEntityWithMultipleKeys<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityWithMultipleKeys`.
    * @param entity The entity to be updated

@@ -46,11 +46,6 @@ export function getAuthHeader(
   }
 }
 
-function toAuthorizationHeader(
-  authorization: string
-): AuthenticationHeaderCloud {
-  return { authorization };
-}
 function headerFromTokens(
   authenticationType: AuthenticationType,
   authTokens?: DestinationAuthToken[] | null
@@ -75,7 +70,7 @@ function headerFromTokens(
   }
   const authToken = usableTokens[0];
   // The value property of the destination service has already the pattern e.g. "Bearer Token" so it can be used directly.
-  return toAuthorizationHeader(authToken.http_header.value);
+  return { authorization: authToken.http_header.value };
 }
 
 function headerFromBasicAuthDestination(
@@ -87,9 +82,9 @@ function headerFromBasicAuthDestination(
     );
   }
 
-  return toAuthorizationHeader(
-    basicHeader(destination.username, destination.password)
-  );
+  return {
+    authorization: basicHeader(destination.username, destination.password)
+  };
 }
 
 /**
@@ -175,13 +170,10 @@ async function getAuthenticationRelatedHeaders(
     case null:
     case undefined:
       logger.warn(
-        'No authentication type is specified on the destination! Assuming "NoAuthentication".'
+        'No authentication type is specified on the destination. Assuming "NoAuthentication".'
       );
       return;
     case 'NoAuthentication':
-      if (destination.proxyType === 'OnPremise') {
-        return headerForPrincipalPropagation(destination);
-      }
       return;
     case 'ClientCertificateAuthentication':
       return;

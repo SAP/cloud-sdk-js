@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -40,13 +40,13 @@ export class TestEntityCircularLinkChild<
    * Key Property.
    * Maximum length: 10.
    */
-  keyProperty!: DeserializedType<T, 'Edm.String'>;
+  declare keyProperty: DeserializedType<T, 'Edm.String'>;
   /**
    * One-to-one navigation property to the {@link TestEntityCircularLinkParent} entity.
    */
-  toParent?: TestEntityCircularLinkParent<T> | null;
+  declare toParent?: TestEntityCircularLinkParent<T> | null;
 
-  constructor(readonly _entityApi: TestEntityCircularLinkChildApi<T>) {
+  constructor(_entityApi: TestEntityCircularLinkChildApi<T>) {
     super(_entityApi);
   }
 }

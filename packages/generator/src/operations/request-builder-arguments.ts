@@ -16,7 +16,7 @@ export function getRequestBuilderArguments(
       'this',
       `'${operation.originalName}'`,
       ...sharedParameters,
-      'deSerializers || defaultDeSerializers',
+      'deSerializers',
       `'${operation.type}'`
     ];
   }

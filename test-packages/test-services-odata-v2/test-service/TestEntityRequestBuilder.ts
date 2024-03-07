@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { TestEntity } from './TestEntity';
 
@@ -22,22 +22,6 @@ import { TestEntity } from './TestEntity';
 export class TestEntityRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
-   * @param keyPropertyGuid Key property. See {@link TestEntity.keyPropertyGuid}.
-   * @param keyPropertyString Key property. See {@link TestEntity.keyPropertyString}.
-   * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
-   */
-  getByKey(
-    keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>,
-    keyPropertyString: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntity<T>, T> {
-    return new GetByKeyRequestBuilder<TestEntity<T>, T>(this.entityApi, {
-      KeyPropertyGuid: keyPropertyGuid,
-      KeyPropertyString: keyPropertyString
-    });
-  }
-
   /**
    * Returns a request builder for querying all `TestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
@@ -53,6 +37,22 @@ export class TestEntityRequestBuilder<
    */
   create(entity: TestEntity<T>): CreateRequestBuilder<TestEntity<T>, T> {
     return new CreateRequestBuilder<TestEntity<T>, T>(this.entityApi, entity);
+  }
+
+  /**
+   * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
+   * @param keyPropertyGuid Key property. See {@link TestEntity.keyPropertyGuid}.
+   * @param keyPropertyString Key property. See {@link TestEntity.keyPropertyString}.
+   * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
+   */
+  getByKey(
+    keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>,
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntity<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntity<T>, T>(this.entityApi, {
+      KeyPropertyGuid: keyPropertyGuid,
+      KeyPropertyString: keyPropertyString
+    });
   }
 
   /**

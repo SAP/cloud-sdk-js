@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -36,9 +36,9 @@ export class TestEntityWithEnumKey<
   /**
    * Key Property Enum 1.
    */
-  keyPropertyEnum1!: TestEnumType;
+  declare keyPropertyEnum1: TestEnumType;
 
-  constructor(readonly _entityApi: TestEntityWithEnumKeyApi<T>) {
+  constructor(_entityApi: TestEntityWithEnumKeyApi<T>) {
     super(_entityApi);
   }
 }

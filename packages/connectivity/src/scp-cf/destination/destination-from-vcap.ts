@@ -49,14 +49,31 @@ export async function getDestinationFromServiceBinding(
   const decodedJwt = options.iss
     ? { iss: options.iss }
     : options.jwt
-    ? decodeJwt(options.jwt)
-    : undefined;
+      ? decodeJwt(options.jwt)
+      : undefined;
 
   const retrievalOptions = { ...options, jwt: decodedJwt };
-  const destination =
-    (await retrieveDestinationFromCache(retrievalOptions)) ||
-    (await retrieveDestinationWithoutCache(retrievalOptions));
+  let destination;
+  if (options.useCache) {
+    destination = await destinationCache.retrieveDestinationFromCache(
+      decodeOrMakeJwt(retrievalOptions.jwt),
+      retrievalOptions.destinationName,
+      'tenant'
+    );
+  }
 
+  if (!destination) {
+    destination = await retrieveDestinationWithoutCache(retrievalOptions);
+
+    if (options.useCache) {
+      // As the grant type is clientCredential, isolation strategy is 'tenant'.
+      await destinationCache.cacheRetrievedDestination(
+        decodeOrMakeJwt(options.jwt),
+        destination,
+        'tenant'
+      );
+    }
+  }
   const destWithProxy =
     destination &&
     isHttpDestination(destination) &&
@@ -64,32 +81,11 @@ export async function getDestinationFromServiceBinding(
       ? addProxyConfigurationInternet(destination)
       : destination;
 
-  if (options.useCache) {
-    // As the grant type is clientCredential, isolation strategy is 'tenant'.
-    await destinationCache.cacheRetrievedDestination(
-      decodeOrMakeJwt(options.jwt),
-      destWithProxy,
-      'tenant'
-    );
+  if (destWithProxy) {
+    setForwardedAuthTokenIfNeeded(destWithProxy, options.jwt);
   }
-
-  setForwardedAuthTokenIfNeeded(destWithProxy, options.jwt);
 
   return destWithProxy;
-}
-
-async function retrieveDestinationFromCache(
-  options: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
-    jwt?: JwtPayload;
-  }
-) {
-  if (options.useCache) {
-    return destinationCache.retrieveDestinationFromCache(
-      decodeOrMakeJwt(options.jwt),
-      options.destinationName,
-      'tenant'
-    );
-  }
 }
 
 async function retrieveDestinationWithoutCache({

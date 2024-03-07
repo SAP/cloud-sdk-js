@@ -1,5 +1,65 @@
 # @sap-cloud-sdk/generator-common
 
+## 3.12.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.12.0
+
+## 3.11.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.11.0
+
+## 3.10.0
+
+### Patch Changes
+
+- Updated dependencies [4d2b49b]
+  - @sap-cloud-sdk/util@3.10.0
+
+## 3.9.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.9.0
+
+## 3.8.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.8.1
+
+## 3.8.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.8.0
+
+## 3.7.0
+
+### Minor Changes
+
+- bdcf14f85: [Fixed Issue] Do not send `null` values in the request payload for properties that are not set while creating or updating an entity.
+  [Fixed Issue] Fix `RangeError: Maximum call stack size exceeded` error that occurs when updating an entity after calling `getByKey`.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.6.0
+
+## 3.5.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.5.0
+
 ## 3.4.0
 
 ### Patch Changes

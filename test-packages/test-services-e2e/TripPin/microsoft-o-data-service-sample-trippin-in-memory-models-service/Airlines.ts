@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -34,13 +34,13 @@ export class Airlines<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Airline Code.
    */
-  airlineCode!: DeserializedType<T, 'Edm.String'>;
+  declare airlineCode: DeserializedType<T, 'Edm.String'>;
   /**
    * Name.
    */
-  name!: DeserializedType<T, 'Edm.String'>;
+  declare name: DeserializedType<T, 'Edm.String'>;
 
-  constructor(readonly _entityApi: AirlinesApi<T>) {
+  constructor(_entityApi: AirlinesApi<T>) {
     super(_entityApi);
   }
 }

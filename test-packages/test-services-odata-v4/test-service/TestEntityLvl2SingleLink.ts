@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -37,29 +37,29 @@ export class TestEntityLvl2SingleLink<
    * Maximum length: 10.
    * @nullable
    */
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Boolean Property.
    * @nullable
    */
-  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  declare booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Guid Property.
    * @nullable
    */
-  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  declare guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Int 16 Property.
    * @nullable
    */
-  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+  declare int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   /**
    * Key Property.
    * Maximum length: 10.
    */
-  keyProperty!: DeserializedType<T, 'Edm.String'>;
+  declare keyProperty: DeserializedType<T, 'Edm.String'>;
 
-  constructor(readonly _entityApi: TestEntityLvl2SingleLinkApi<T>) {
+  constructor(_entityApi: TestEntityLvl2SingleLinkApi<T>) {
     super(_entityApi);
   }
 }

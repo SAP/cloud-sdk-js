@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEntitySingleLinkRequestBuilder = void 0;
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -12,14 +12,6 @@ const TestEntitySingleLink_1 = require("./TestEntitySingleLink");
  * Request builder class for operations supported on the {@link TestEntitySingleLink} entity.
  */
 class TestEntitySingleLinkRequestBuilder extends odata_v4_1.RequestBuilder {
-    /**
-     * Returns a request builder for retrieving one `TestEntitySingleLink` entity based on its keys.
-     * @param keyProperty Key property. See {@link TestEntitySingleLink.keyProperty}.
-     * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
-     */
-    getByKey(keyProperty) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, { KeyProperty: keyProperty });
-    }
     /**
      * Returns a request builder for querying all `TestEntitySingleLink` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntitySingleLink` entities.
@@ -34,6 +26,14 @@ class TestEntitySingleLinkRequestBuilder extends odata_v4_1.RequestBuilder {
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `TestEntitySingleLink` entity based on its keys.
+     * @param keyProperty Key property. See {@link TestEntitySingleLink.keyProperty}.
+     * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
+     */
+    getByKey(keyProperty) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, { KeyProperty: keyProperty });
     }
     /**
      * Returns a request builder for updating an entity of type `TestEntitySingleLink`.

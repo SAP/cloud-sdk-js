@@ -20,8 +20,8 @@ export function schemaFile(namedSchema: OpenApiPersistedSchema): string {
     ${imports}
     ${schemaDocumentation(namedSchema)}
     export type ${namedSchema.schemaName} = ${serializeSchema(
-    namedSchema.schema
-  )};
+      namedSchema.schema
+    )};
   `;
 }
 

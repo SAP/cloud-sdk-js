@@ -1,5 +1,27 @@
 # @sap-cloud-sdk/util
 
+## 3.12.0
+
+## 3.11.0
+
+## 3.10.0
+
+### Minor Changes
+
+- 4d2b49b: [New Functionality] Add support for setting log level for newly created logger using environment variable `SAP_CLOUD_SDK_LOG_LEVEL`.
+
+## 3.9.0
+
+## 3.8.1
+
+## 3.8.0
+
+## 3.7.0
+
+## 3.6.0
+
+## 3.5.0
+
 ## 3.4.0
 
 ## 3.3.0

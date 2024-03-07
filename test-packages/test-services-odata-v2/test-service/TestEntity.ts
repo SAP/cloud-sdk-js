@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -46,111 +46,114 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Property Guid.
    */
-  keyPropertyGuid!: DeserializedType<T, 'Edm.Guid'>;
+  declare keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>;
   /**
    * Key Property String.
    */
-  keyPropertyString!: DeserializedType<T, 'Edm.String'>;
+  declare keyPropertyString: DeserializedType<T, 'Edm.String'>;
   /**
    * String Property.
    * Maximum length: 10.
    * @nullable
    */
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Boolean Property.
    * @nullable
    */
-  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  declare booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Guid Property.
    * @nullable
    */
-  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  declare guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Int 16 Property.
    * @nullable
    */
-  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+  declare int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   /**
    * Int 32 Property.
    * @nullable
    */
-  int32Property?: DeserializedType<T, 'Edm.Int32'> | null;
+  declare int32Property?: DeserializedType<T, 'Edm.Int32'> | null;
   /**
    * Int 64 Property.
    * @nullable
    */
-  int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
+  declare int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
   /**
    * Decimal Property.
    * @nullable
    */
-  decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
+  declare decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
   /**
    * Single Property.
    * @nullable
    */
-  singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
+  declare singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
   /**
    * Double Property.
    * @nullable
    */
-  doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
+  declare doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
   /**
    * Float Property.
    * @nullable
    */
-  floatProperty?: DeserializedType<T, 'Edm.Float'> | null;
+  declare floatProperty?: DeserializedType<T, 'Edm.Float'> | null;
   /**
    * Time Property.
    * @nullable
    */
-  timeProperty?: DeserializedType<T, 'Edm.Time'> | null;
+  declare timeProperty?: DeserializedType<T, 'Edm.Time'> | null;
   /**
    * Date Time Property.
    * @nullable
    */
-  dateTimeProperty?: DeserializedType<T, 'Edm.DateTime'> | null;
+  declare dateTimeProperty?: DeserializedType<T, 'Edm.DateTime'> | null;
   /**
    * Date Time Off Set Property.
    * @nullable
    */
-  dateTimeOffSetProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  declare dateTimeOffSetProperty?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * Byte Property.
    * @nullable
    */
-  byteProperty?: DeserializedType<T, 'Edm.Byte'> | null;
+  declare byteProperty?: DeserializedType<T, 'Edm.Byte'> | null;
   /**
    * S Byte Property.
    * @nullable
    */
-  sByteProperty?: DeserializedType<T, 'Edm.SByte'> | null;
+  declare sByteProperty?: DeserializedType<T, 'Edm.SByte'> | null;
   /**
    * Something The Sdk Does Not Support.
    * @nullable
    */
-  somethingTheSdkDoesNotSupport?: DeserializedType<T, 'Edm.Any'> | null;
+  declare somethingTheSdkDoesNotSupport?: DeserializedType<T, 'Edm.Any'> | null;
   /**
    * Complex Type Property.
    * @nullable
    */
-  complexTypeProperty?: TestComplexType<T> | null;
+  declare complexTypeProperty?: TestComplexType<T> | null;
   /**
    * One-to-many navigation property to the {@link TestEntityMultiLink} entity.
    */
-  toMultiLink!: TestEntityMultiLink<T>[];
+  declare toMultiLink: TestEntityMultiLink<T>[];
   /**
    * One-to-many navigation property to the {@link TestEntityOtherMultiLink} entity.
    */
-  toOtherMultiLink!: TestEntityOtherMultiLink<T>[];
+  declare toOtherMultiLink: TestEntityOtherMultiLink<T>[];
   /**
    * One-to-one navigation property to the {@link TestEntitySingleLink} entity.
    */
-  toSingleLink?: TestEntitySingleLink<T> | null;
+  declare toSingleLink?: TestEntitySingleLink<T> | null;
 
-  constructor(readonly _entityApi: TestEntityApi<T>) {
+  constructor(_entityApi: TestEntityApi<T>) {
     super(_entityApi);
   }
 }

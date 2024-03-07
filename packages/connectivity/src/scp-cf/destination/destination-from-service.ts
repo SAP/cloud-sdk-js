@@ -26,9 +26,8 @@ import {
 import {
   AuthAndExchangeTokens,
   fetchCertificate,
-  fetchDestination,
-  fetchInstanceDestinations,
-  fetchSubaccountDestinations
+  fetchDestinationWithTokenRetrieval,
+  fetchDestinationWithoutTokenRetrieval
 } from './destination-service';
 import {
   assertHttpDestination,
@@ -130,9 +129,8 @@ export class DestinationFromServiceRetriever {
         (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
           !da.usesSystemUser(destination))
       ) {
-        destination = await da.fetchDestinationWithUserExchangeFlows(
-          destinationResult
-        );
+        destination =
+          await da.fetchDestinationWithUserExchangeFlows(destinationResult);
       }
 
       if (destination.authentication === 'PrincipalPropagation') {
@@ -147,15 +145,13 @@ export class DestinationFromServiceRetriever {
         destination.authentication === 'OAuth2ClientCredentials' ||
         da.usesSystemUser(destination)
       ) {
-        destination = await da.fetchDestinationWithNonUserExchangeFlows(
-          destinationResult
-        );
+        destination =
+          await da.fetchDestinationWithNonUserExchangeFlows(destinationResult);
       }
 
       if (destination.authentication === 'OAuth2RefreshToken') {
-        destination = await da.fetchDestinationWithRefreshTokenFlow(
-          destinationResult
-        );
+        destination =
+          await da.fetchDestinationWithRefreshTokenFlow(destinationResult);
       }
     }
 
@@ -238,43 +234,11 @@ export class DestinationFromServiceRetriever {
     return destinationSearchResult;
   }
 
-  private async getInstanceAndSubaccountDestinations(
-    accessToken: string
-  ): Promise<DestinationsByType> {
-    const [instance, subaccount] = await Promise.all([
-      fetchInstanceDestinations(
-        getDestinationServiceCredentials().uri,
-        accessToken,
-        this.options
-      ),
-      fetchSubaccountDestinations(
-        getDestinationServiceCredentials().uri,
-        accessToken,
-        this.options
-      )
-    ]);
-
-    return {
-      instance,
-      subaccount
-    };
-  }
-
-  private async fetchDestinationByToken(
-    jwt: string | AuthAndExchangeTokens
-  ): Promise<Destination> {
-    return fetchDestination(
-      getDestinationServiceCredentials().uri,
-      jwt,
-      this.options
-    );
-  }
-
   private getExchangeTenant(destination: Destination): string | undefined {
     if (destination.authentication !== 'OAuth2ClientCredentials') {
       return undefined;
     }
-    if (destination.originalProperties!['tokenServiceURLType'] !== 'Common') {
+    if (destination.originalProperties?.['tokenServiceURLType'] !== 'Common') {
       return undefined;
     }
     const subdomainSubscriber = getIssuerSubdomain(
@@ -290,13 +254,13 @@ export class DestinationFromServiceRetriever {
     destinationResult: DestinationSearchResult
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
-    // This covers the X-Tenant case https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+    // This covers the x-tenant case https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     const exchangeTenant = this.getExchangeTenant(destination);
     const clientGrant = await serviceToken('destination', {
       jwt:
         origin === 'provider'
           ? this.providerServiceToken.decoded
-          : this.subscriberToken!.serviceJwt!.decoded
+          : this.subscriberToken?.serviceJwt?.decoded
     });
     return { authHeaderJwt: clientGrant, exchangeTenant };
   }
@@ -397,29 +361,42 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async fetchDestinationWithNonUserExchangeFlows(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token = await this.getAuthTokenForOAuth2ClientCredentials(
-      destinationResult
-    );
+    const token =
+      await this.getAuthTokenForOAuth2ClientCredentials(destinationResult);
 
-    return this.fetchDestinationByToken(token);
+    return fetchDestinationWithTokenRetrieval(
+      getDestinationServiceCredentials().uri,
+      token,
+      this.options
+    );
   }
 
   private async fetchDestinationWithUserExchangeFlows(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token = await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
-      destinationResult
+    const token =
+      await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
+        destinationResult
+      );
+
+    return fetchDestinationWithTokenRetrieval(
+      getDestinationServiceCredentials().uri,
+      token,
+      this.options
     );
-    return this.fetchDestinationByToken(token);
   }
 
   private async fetchDestinationWithRefreshTokenFlow(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token = await this.getAuthTokenForOAuth2RefreshToken(
-      destinationResult
+    const token =
+      await this.getAuthTokenForOAuth2RefreshToken(destinationResult);
+
+    return fetchDestinationWithTokenRetrieval(
+      getDestinationServiceCredentials().uri,
+      token,
+      this.options
     );
-    return this.fetchDestinationByToken(token);
   }
 
   private async addProxyConfiguration(
@@ -465,22 +442,22 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async getProviderDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
-    const provider = await this.getInstanceAndSubaccountDestinations(
+    const providerDestination = await fetchDestinationWithoutTokenRetrieval(
+      this.options.destinationName,
+      getDestinationServiceCredentials().uri,
       this.providerServiceToken.encoded
     );
+
     const destination = this.options.selectionStrategy(
       {
         subscriber: emptyDestinationByType,
-        provider
+        provider: providerDestination
       },
       this.options.destinationName
     );
+
     if (destination) {
-      return {
-        destination,
-        fromCache: false,
-        origin: 'provider'
-      };
+      return { destination, fromCache: false, origin: 'provider' };
     }
   }
 
@@ -494,7 +471,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     );
 
     if (destination) {
-      return { destination, fromCache: true, origin: 'subscriber' };
+      return { destination, fromCache: true, origin: 'provider' };
     }
   }
 
@@ -507,12 +484,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       );
     }
 
-    const subscriber = await this.getInstanceAndSubaccountDestinations(
+    const subscriberDestination = await fetchDestinationWithoutTokenRetrieval(
+      this.options.destinationName,
+      getDestinationServiceCredentials().uri,
       this.subscriberToken.serviceJwt.encoded
     );
+
     const destination = this.options.selectionStrategy(
       {
-        subscriber,
+        subscriber: subscriberDestination,
         provider: emptyDestinationByType
       },
       this.options.destinationName
@@ -540,12 +520,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private isProviderNeeded(
     resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
-    if (this.options.selectionStrategy === alwaysSubscriber) {
+    if (
+      this.options.selectionStrategy.toString() === alwaysSubscriber.toString()
+    ) {
       return false;
     }
 
     if (
-      this.options.selectionStrategy === subscriberFirst &&
+      this.options.selectionStrategy.toString() ===
+        subscriberFirst.toString() &&
       resultFromSubscriber
     ) {
       return false;
@@ -563,7 +546,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       return false;
     }
 
-    if (this.options.selectionStrategy === alwaysProvider) {
+    if (
+      this.options.selectionStrategy.toString() === alwaysProvider.toString()
+    ) {
       return false;
     }
 

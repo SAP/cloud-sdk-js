@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEntityWithMultipleKeysRequestBuilder = void 0;
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -12,20 +12,6 @@ const TestEntityWithMultipleKeys_1 = require("./TestEntityWithMultipleKeys");
  * Request builder class for operations supported on the {@link TestEntityWithMultipleKeys} entity.
  */
 class TestEntityWithMultipleKeysRequestBuilder extends odata_v4_1.RequestBuilder {
-    /**
-     * Returns a request builder for retrieving one `TestEntityWithMultipleKeys` entity based on its keys.
-     * @param keyTestEntityWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.keyTestEntityWithMultipleKeys}.
-     * @param stringPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.stringPropertyWithMultipleKeys}.
-     * @param booleanPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.booleanPropertyWithMultipleKeys}.
-     * @returns A request builder for creating requests to retrieve one `TestEntityWithMultipleKeys` entity based on its keys.
-     */
-    getByKey(keyTestEntityWithMultipleKeys, stringPropertyWithMultipleKeys, booleanPropertyWithMultipleKeys) {
-        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
-            KeyTestEntityWithMultipleKeys: keyTestEntityWithMultipleKeys,
-            StringPropertyWithMultipleKeys: stringPropertyWithMultipleKeys,
-            BooleanPropertyWithMultipleKeys: booleanPropertyWithMultipleKeys
-        });
-    }
     /**
      * Returns a request builder for querying all `TestEntityWithMultipleKeys` entities.
      * @returns A request builder for creating requests to retrieve all `TestEntityWithMultipleKeys` entities.
@@ -40,6 +26,20 @@ class TestEntityWithMultipleKeysRequestBuilder extends odata_v4_1.RequestBuilder
      */
     create(entity) {
         return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
+    }
+    /**
+     * Returns a request builder for retrieving one `TestEntityWithMultipleKeys` entity based on its keys.
+     * @param keyTestEntityWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.keyTestEntityWithMultipleKeys}.
+     * @param stringPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.stringPropertyWithMultipleKeys}.
+     * @param booleanPropertyWithMultipleKeys Key property. See {@link TestEntityWithMultipleKeys.booleanPropertyWithMultipleKeys}.
+     * @returns A request builder for creating requests to retrieve one `TestEntityWithMultipleKeys` entity based on its keys.
+     */
+    getByKey(keyTestEntityWithMultipleKeys, stringPropertyWithMultipleKeys, booleanPropertyWithMultipleKeys) {
+        return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+            KeyTestEntityWithMultipleKeys: keyTestEntityWithMultipleKeys,
+            StringPropertyWithMultipleKeys: stringPropertyWithMultipleKeys,
+            BooleanPropertyWithMultipleKeys: booleanPropertyWithMultipleKeys
+        });
     }
     /**
      * Returns a request builder for updating an entity of type `TestEntityWithMultipleKeys`.

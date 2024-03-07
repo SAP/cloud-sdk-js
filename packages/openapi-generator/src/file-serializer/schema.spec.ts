@@ -102,7 +102,7 @@ describe('serializeSchema for object schemas', () => {
     ).toMatchInlineSnapshot(`
       "{
             'simpleProperty': number;
-          } | Record<string, string>"
+          } & Record<string, string>"
     `);
   });
 });

@@ -16,9 +16,7 @@
     "./packages/test-util/**/*",
     "./packages/temporal-de-serializers/**/*"
   ],
-  "exclude": [
-    "**/*.spec.ts"
-  ],
+  "exclude": ["**/*.spec.ts"],
   "references": [
     {
       "path": "./packages/util"
@@ -91,6 +89,9 @@
     "treatWarningsAsErrors": true,
     "validation": {
       "invalidLink": true
+    },
+    "navigation": {
+      "includeFolders": false
     }
   }
 }

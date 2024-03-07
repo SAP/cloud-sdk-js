@@ -1,5 +1,96 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.12.0
+
+### Minor Changes
+
+- 36be489: [New Functionality] Support certificates in PEM format for `ClientCertificateAuthentication`.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.12.0
+- @sap-cloud-sdk/util@3.12.0
+
+## 3.11.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.11.0
+- @sap-cloud-sdk/util@3.11.0
+
+## 3.10.0
+
+### Minor Changes
+
+- c721bbd: [Compatibility Note] The SAP Cloud SDK used to get all subaccount and instance destinations, that are available with your JWT (without potentially required token retrieval), through two requests to the destination service (`/subaccountDestinations` and `/instanceDestinations`). While this approach can have advantages when caching, it can cause severe performance issues without caching. Therefore, from now on, only one destination is retrieved per requested destination through `/destinations`.
+  You can no longer rely on the SDK to automatically cache all destinations on the first request. If needed, you can call `getAllDestinationsFromDestinationService()` with cache enabled instead.
+- c721bbd: [Improvement] Retrieve only one destination per requested destination instead of all subaccount and instance destinations. (See compatibility notes.)
+- 28c9cb7: [Fixed Issue] Allow the use of authentication type `NoAuthentication` with proxy type `OnPremise` without requiring the `SAP-Connectivity-Authentication` header.
+- 28c9cb7: [Compatibility Note] Using Principal Propagation through authentication type `NoAuthentication` is no longer supported. This resulted in erroneous behavior for destinations with authentication type `NoAuthentication`. If you need to use Principal Propagation use authentication type `PrincipalPropagation`.
+
+### Patch Changes
+
+- Updated dependencies [4d2b49b]
+  - @sap-cloud-sdk/util@3.10.0
+  - @sap-cloud-sdk/resilience@3.10.0
+
+## 3.9.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.9.0
+- @sap-cloud-sdk/util@3.9.0
+
+## 3.8.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.8.1
+- @sap-cloud-sdk/util@3.8.1
+
+## 3.8.0
+
+### Minor Changes
+
+- 693cd655f: [Compatibility Note] Remove unused internal functionality around JWT property access, like `userFromJwt` (removed) and `audiences` (changed).
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.8.0
+- @sap-cloud-sdk/util@3.8.0
+
+## 3.7.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.7.0
+- @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Minor Changes
+
+- 025b6aa2c: [Fixed Issue] Use axios native proxy, instead of proxy agent, which causes connection issues for write requests on SAP Cloud Connector.
+- 025b6aa2c: [Compatibility Note] Proxy configuration is no longer realized through a proxy agent, but with the native axios proxy setting instead.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.6.0
+- @sap-cloud-sdk/util@3.6.0
+
+## 3.5.0
+
+### Minor Changes
+
+- 7ed5ceb52: [Fixed Issue] Compare `selectionStrategy` in `DestinationFetchOptions` based on value instead of reference.
+- bf54df09b: [Fixed Issue] Fix destination caching for destinations from service bindings. The destinations are not cached repeatedly. The function `getDestinationFromServiceBinding()` returns `undefined` for destinations which have expired JWTs.
+
+### Patch Changes
+
+- 2277f9443: [Fixed Issue] Support destinations of type `ClientCertificateAuthentication` without password.
+  - @sap-cloud-sdk/resilience@3.5.0
+  - @sap-cloud-sdk/util@3.5.0
+
 ## 3.4.0
 
 ### Minor Changes

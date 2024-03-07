@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -17,7 +17,6 @@ export declare class Casetest_1<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements Casetest_1Type<T>
 {
-  readonly _entityApi: Casetest_1Api<T>;
   /**
    * Technical entity name for Casetest_1.
    */

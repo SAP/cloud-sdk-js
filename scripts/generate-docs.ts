@@ -4,6 +4,11 @@ import { resolve, basename, extname } from 'path';
 import execa from 'execa';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile } from './util';
+import { gunzip, gzip } from 'zlib';
+import { promisify } from 'util';
+
+const gunzipP = promisify(gunzip);
+const gzipP = promisify(gzip);
 
 const docPath = resolve(
   JSON.parse(readFileSync('tsconfig.typedoc.json', 'utf8')).typedocOptions.out
@@ -27,31 +32,106 @@ const readDir = input =>
 
 const isHtmlFile = fileName => extname(fileName) === '.html';
 const isSearchJs = fileName => basename(fileName) === 'search.js';
+const isNavigationJs = fileName => basename(fileName) === 'navigation.js';
+
 const pipe =
   (...fns) =>
   start =>
     fns.reduce((state, fn) => fn(state), start);
 
-function adjustForGitHubPages() {
-  const documentationFiles = flatten(readDir(resolve(docPath)));
-  const htmlPaths = documentationFiles.filter(isHtmlFile);
-  adjustSearchJs(documentationFiles);
-  htmlPaths.forEach(filePath =>
-    transformFile(filePath, file =>
-      file.replace(/<a href="[^>]*_[^>]*.html[^>]*>/gi, removeUnderlinePrefix)
+async function adjustForGitHubPages() {
+  const documentationFilePaths = flatten(readDir(resolve(docPath)));
+  const htmlPaths = documentationFilePaths.filter(isHtmlFile);
+
+  await adjustSearchJs(documentationFilePaths);
+  await adjustNavigationJs(documentationFilePaths);
+
+  await Promise.all(
+    htmlPaths.map(filePath =>
+      transformFile(filePath, file =>
+        file.replace(/<a href="[^>]*_[^>]*.html[^>]*>/gi, removeUnderlinePrefix)
+      )
     )
   );
+
   htmlPaths.forEach(filePath => removeUnderlinePrefixFromFileName(filePath));
 }
 
-function adjustSearchJs(paths) {
+async function adjustSearchJs(paths) {
   const filtered = paths.filter(isSearchJs);
   if (filtered.length !== 1) {
-    throw Error(`Expected one 'search.json', but found: ${filtered.length}.`);
+    throw Error(`Expected one 'search.js', but found: ${filtered.length}.`);
   }
-  transformFile(filtered[0], file =>
-    file.replace(/"[^"]*_[^"]*.html[^"]*"/gi, removeUnderlinePrefix)
-  );
+
+  await transformFile(filtered[0], async file => {
+    const dataRegexResult =
+      /window.searchData = "data:application\/octet-stream;base64,(.*)"/.exec(
+        file
+      );
+
+    if (!dataRegexResult) {
+      throw Error(
+        `Cannot adjust links in 'search.js'. File content did not match expected pattern.`
+      );
+    }
+
+    const encodedData = dataRegexResult[1];
+
+    const ungzipped = (
+      await gunzipP(Buffer.from(encodedData, 'base64'))
+    ).toString('utf8');
+    const searchItems = JSON.parse(ungzipped);
+
+    searchItems.rows.forEach(s => {
+      s.url = removeUnderlinePrefix(s.url);
+    });
+
+    const encodedAdjustedData = (
+      await gzipP(JSON.stringify(searchItems))
+    ).toString('base64');
+    return `window.searchData = "data:application/octet-stream;base64,${encodedAdjustedData}"`;
+  });
+}
+
+async function adjustNavigationJs(paths) {
+  const filtered = paths.filter(isNavigationJs);
+  if (filtered.length !== 1) {
+    throw Error(`Expected one 'navigation.js', but found: ${filtered.length}.`);
+  }
+
+  await transformFile(filtered[0], async file => {
+    const dataRegexResult =
+      /window.navigationData = "data:application\/octet-stream;base64,(.*)"/.exec(
+        file
+      );
+
+    if (!dataRegexResult) {
+      throw Error(
+        `Cannot adjust links in 'navigation.js'. File content did not match expected pattern.`
+      );
+    }
+
+    const encodedData = dataRegexResult[1];
+
+    const ungzipped = (
+      await gunzipP(Buffer.from(encodedData, 'base64'))
+    ).toString('utf8');
+    const navigationItems = JSON.parse(ungzipped);
+
+    navigationItems
+      .filter(n => n.path)
+      .forEach(n => {
+        n.path = removeUnderlinePrefix(n.path);
+        n.children.forEach(c => {
+          c.path = removeUnderlinePrefix(c.path);
+        });
+      });
+
+    const encodedAdjustedData = (
+      await gzipP(JSON.stringify(navigationItems))
+    ).toString('base64');
+    return `window.navigationData = "data:application/octet-stream;base64,${encodedAdjustedData}"`;
+  });
 }
 
 function removeUnderlinePrefix(str) {
@@ -67,28 +147,24 @@ function removeUnderlinePrefixFromFileName(filePath) {
   renameSync(filePath, newPath);
 }
 
-function insertCopyrightAndTracking() {
+async function insertCopyright() {
   const filePaths = flatten(readDir(docPath)).filter(isHtmlFile);
-  filePaths.forEach(filePath => {
-    const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
-    const trackingTag =
-      '<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>';
-    transformFile(filePath, file => {
-      const lines = file.split(unixEOL);
-      // Insert the copyright div before the line including </footer> #yikes
-      lines.splice(
-        lines.findIndex(line => line.includes('</footer>')),
-        0,
-        copyrightDiv
-      );
-      lines.splice(
-        lines.findIndex(line => line.includes('</head>')),
-        0,
-        trackingTag
-      );
-      return lines.join(unixEOL);
-    });
-  });
+
+  await Promise.all(
+    filePaths.map(async filePath => {
+      const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
+      return transformFile(filePath, file => {
+        const lines = file.split(unixEOL);
+        // Insert the copyright div before the line including </footer> #yikes
+        lines.splice(
+          lines.findIndex(line => line.includes('</footer>')),
+          0,
+          copyrightDiv
+        );
+        return lines.join(unixEOL);
+      });
+    })
+  );
 }
 
 function validateLogs(generationLogs: string) {
@@ -110,7 +186,7 @@ async function generateDocs() {
   );
   validateLogs(generationLogs.stdout);
   adjustForGitHubPages();
-  insertCopyrightAndTracking();
+  insertCopyright();
 }
 
 process.on('unhandledRejection', reason => {

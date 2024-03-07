@@ -4,6 +4,7 @@ import type {
   Middleware,
   MiddlewareOptions
 } from '@sap-cloud-sdk/resilience';
+import { BasicProxyConfiguration } from '@sap-cloud-sdk/connectivity';
 
 /**
  * Context for HttpRequests of the middleware.
@@ -43,25 +44,29 @@ export type HttpMiddleware = Middleware<
  */
 export interface DestinationHttpRequestConfig {
   /**
-   * `baseURL` will be prepended to {@link HttpRequestConfigBase#url} unless `url` is absolute.
+   * Will be prepended to {@link HttpRequestConfigBase#url} unless `url` is absolute.
    */
   baseURL: string;
   /**
-   * `headers` are custom headers to be sent.
+   * Additional headers to be sent.
    */
   headers: Record<string, string>;
   /**
-   * `params` are the URL parameters to be sent with the request.
+   * URL parameters to be sent with the request.
    */
   params?: Record<string, string>;
   /**
-   * `httpAgent` defines a custom agent to be used when performing http requests.
+   * Agent to be used when performing HTTP requests.
    */
   httpAgent?: http.Agent;
   /**
-   * `httpsAgent` defines a custom agent to be used when performing https requests.
+   * Agent to be used when performing HTTPS requests.
    */
   httpsAgent?: http.Agent;
+  /**
+   * Proxy configuration, when going through a proxy like the SAP Cloud Connector.
+   */
+  proxy?: BasicProxyConfiguration | false;
 }
 
 /**
@@ -135,8 +140,8 @@ export interface HttpRequestConfigBase {
    */
   maxContentLength?: number;
   /**
-   * `proxy` of axios is disabled in http-client.
-   * Proxy can be set with {@link @sap-cloud-sdk/connectivity!ProxyConfiguration}.
+   * Set this to `false` to disable the proxy.
+   * To configure the proxy you can add a {@link @sap-cloud-sdk/connectivity!ProxyConfiguration} to your destination.
    */
   proxy?: false;
   /**

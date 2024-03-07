@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -17,6 +17,7 @@ import {
 import {
   TestEntity,
   TestEntityWithEnumKey,
+  TestEntityWithNoKeys,
   TestEntityWithSharedEntityType1,
   TestEntityWithSharedEntityType2,
   TestEntityMultiLink,
@@ -83,6 +84,7 @@ export type ReadTestServiceRequestBuilder<
 > =
   | GetAllRequestBuilder<TestEntity<DeSerializersT>, DeSerializersT>
   | GetAllRequestBuilder<TestEntityWithEnumKey<DeSerializersT>, DeSerializersT>
+  | GetAllRequestBuilder<TestEntityWithNoKeys<DeSerializersT>, DeSerializersT>
   | GetAllRequestBuilder<
       TestEntityWithSharedEntityType1<DeSerializersT>,
       DeSerializersT
@@ -127,6 +129,7 @@ export type ReadTestServiceRequestBuilder<
       TestEntityWithEnumKey<DeSerializersT>,
       DeSerializersT
     >
+  | GetByKeyRequestBuilder<TestEntityWithNoKeys<DeSerializersT>, DeSerializersT>
   | GetByKeyRequestBuilder<
       TestEntityWithSharedEntityType1<DeSerializersT>,
       DeSerializersT
@@ -236,6 +239,9 @@ export type WriteTestServiceRequestBuilder<
   | CreateRequestBuilder<TestEntityWithEnumKey<DeSerializersT>, DeSerializersT>
   | UpdateRequestBuilder<TestEntityWithEnumKey<DeSerializersT>, DeSerializersT>
   | DeleteRequestBuilder<TestEntityWithEnumKey<DeSerializersT>, DeSerializersT>
+  | CreateRequestBuilder<TestEntityWithNoKeys<DeSerializersT>, DeSerializersT>
+  | UpdateRequestBuilder<TestEntityWithNoKeys<DeSerializersT>, DeSerializersT>
+  | DeleteRequestBuilder<TestEntityWithNoKeys<DeSerializersT>, DeSerializersT>
   | CreateRequestBuilder<
       TestEntityWithSharedEntityType1<DeSerializersT>,
       DeSerializersT

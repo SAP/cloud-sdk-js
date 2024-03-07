@@ -1,12 +1,7 @@
 import { X509Certificate } from 'node:crypto';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
-  proxyAgent,
-  ProxyConfiguration,
-  DestinationCertificate
-} from '../scp-cf';
-import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
+import { DestinationCertificate } from '../scp-cf';
 import { HttpDestination } from '../scp-cf/destination';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
@@ -18,37 +13,19 @@ describe('createAgent', () => {
     authentication: 'NoAuthentication'
   };
 
-  const proxyDestination: HttpDestination = {
-    ...baseDestination,
-    proxyConfiguration: {
-      ...connectivityProxyConfigMock,
-      headers: {
-        'Proxy-Authorization': 'Bearer jwt'
-      }
-    }
-  };
-
   const trustAllDestination: HttpDestination = {
     ...baseDestination,
     isTrustingAllCertificates: true
   };
 
-  it('returns the default agent if neither a proxy configuration is present nor TrustAll is set', async () => {
+  it('returns the default agent if TrustAll is not set', async () => {
     const agentConfig = (await getAgentConfigAsync(baseDestination))[
       'httpsAgent'
     ];
     expect(agentConfig.options.rejectUnauthorized).toBe(true);
   });
 
-  it('returns a proxy agent if there is a proxy setting on the destination', async () => {
-    const agentConfig = (await getAgentConfigAsync(proxyDestination))[
-      'httpsAgent'
-    ];
-    expect(agentConfig.proxy.protocol).toEqual('http:');
-    expect(agentConfig.connectOpts.rejectUnauthorized).toBe(true);
-  });
-
-  it('returns a trustAll agent if TrustAll is configured', async () => {
+  it('disables rejectUnauthorized agent if TrustAll is configured', async () => {
     const agentConfig = (await getAgentConfigAsync(trustAllDestination))[
       'httpsAgent'
     ];
@@ -70,47 +47,6 @@ describe('createAgent', () => {
     };
     expect((await getAgentConfigAsync(destHttp))['httpAgent']).toHaveProperty(
       'protocol',
-      'http:'
-    );
-  });
-
-  it('returns a proxy agent if a proxy setting and TrustAll are BOTH configured', async () => {
-    const agentConfig = (
-      await getAgentConfigAsync({
-        ...proxyDestination,
-        ...trustAllDestination
-      })
-    )['httpsAgent'];
-    expect(agentConfig.proxy.protocol).toEqual('http:');
-    expect(agentConfig.connectOpts.rejectUnauthorized).toEqual(false);
-  });
-
-  it('should return a proxy-agent with the same protocol as the destination (https).', () => {
-    const proxyConfiguration: ProxyConfiguration = {
-      host: 'some.host.com',
-      port: 4711,
-      protocol: 'https'
-    };
-    const destHttpWithProxy: HttpDestination = {
-      url: 'http://example.com',
-      proxyConfiguration
-    };
-    expect(proxyAgent(destHttpWithProxy)['httpAgent'].proxy.protocol).toEqual(
-      'https:'
-    );
-  });
-
-  it('should return a proxy-agent with the same protocol as the destination (http).', () => {
-    const proxyConfiguration: ProxyConfiguration = {
-      host: 'some.host.com',
-      port: 4711,
-      protocol: 'http'
-    };
-    const destHttpsWithProxy: HttpDestination = {
-      url: 'https://example.com',
-      proxyConfiguration
-    };
-    expect(proxyAgent(destHttpsWithProxy)['httpsAgent'].proxy.protocol).toEqual(
       'http:'
     );
   });
@@ -137,7 +73,7 @@ describe('createAgent', () => {
     ).toMatchObject(expectedOptions);
   });
 
-  it('returns an agent with certificate and passphrase set for a destination with authentication type ClientCertificateAuthentication', async () => {
+  it('returns an agent with pfx certificate and passphrase set for a destination with authentication type ClientCertificateAuthentication', async () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
@@ -163,7 +99,7 @@ describe('createAgent', () => {
     ).toMatchObject(expectedOptions);
   });
 
-  it('returns an agent with certificate and no passphrase for authentication type ClientCertificateAuthentication', async () => {
+  it('returns an agent with pfx certificate and no passphrase for authentication type ClientCertificateAuthentication', async () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
@@ -180,6 +116,33 @@ describe('createAgent', () => {
     const expectedOptions = {
       rejectUnauthorized: true,
       pfx: Buffer.from('base64string', 'base64')
+    };
+
+    expect(
+      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+    ).toMatchObject(expectedOptions);
+  });
+
+  it('returns an agent with certificate, private key and passphrase set for a destination with authentication type ClientCertificateAuthentication and a PEM certificate', async () => {
+    const destination: HttpDestination = {
+      url: 'https://destination.example.com',
+      authentication: 'ClientCertificateAuthentication',
+      keyStoreName: 'cert.pem',
+      keyStorePassword: 'password',
+      certificates: [
+        {
+          name: 'cert.pem',
+          content: 'base64string',
+          type: 'CERTIFICATE'
+        }
+      ]
+    };
+
+    const expectedOptions = {
+      rejectUnauthorized: true,
+      passphrase: 'password',
+      cert: Buffer.from('base64string', 'base64'),
+      key: Buffer.from('base64string', 'base64')
     };
 
     expect(

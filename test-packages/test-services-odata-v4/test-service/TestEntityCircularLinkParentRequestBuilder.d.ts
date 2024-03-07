@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
   CreateRequestBuilder,
-  UpdateRequestBuilder,
+  DeSerializers,
+  DefaultDeSerializers,
   DeleteRequestBuilder,
   DeserializedType,
-  RequestBuilder
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  RequestBuilder,
+  UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 /**
@@ -21,14 +21,6 @@ import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 export declare class TestEntityCircularLinkParentRequestBuilder<
   T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntityCircularLinkParent<T>, T> {
-  /**
-   * Returns a request builder for retrieving one `TestEntityCircularLinkParent` entity based on its keys.
-   * @param keyProperty Key property. See {@link TestEntityCircularLinkParent.keyProperty}.
-   * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkParent` entity based on its keys.
-   */
-  getByKey(
-    keyProperty: DeserializedType<T, 'Edm.String'>
-  ): GetByKeyRequestBuilder<TestEntityCircularLinkParent<T>, T>;
   /**
    * Returns a request builder for querying all `TestEntityCircularLinkParent` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityCircularLinkParent` entities.
@@ -42,6 +34,14 @@ export declare class TestEntityCircularLinkParentRequestBuilder<
   create(
     entity: TestEntityCircularLinkParent<T>
   ): CreateRequestBuilder<TestEntityCircularLinkParent<T>, T>;
+  /**
+   * Returns a request builder for retrieving one `TestEntityCircularLinkParent` entity based on its keys.
+   * @param keyProperty Key property. See {@link TestEntityCircularLinkParent.keyProperty}.
+   * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkParent` entity based on its keys.
+   */
+  getByKey(
+    keyProperty: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntityCircularLinkParent<T>, T>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityCircularLinkParent`.
    * @param entity The entity to be updated

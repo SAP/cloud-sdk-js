@@ -2,12 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.testService = void 0;
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntityApi_1 = require("./TestEntityApi");
 const TestEntityWithEnumKeyApi_1 = require("./TestEntityWithEnumKeyApi");
+const TestEntityWithNoKeysApi_1 = require("./TestEntityWithNoKeysApi");
 const TestEntityWithSharedEntityType1Api_1 = require("./TestEntityWithSharedEntityType1Api");
 const TestEntityWithSharedEntityType2Api_1 = require("./TestEntityWithSharedEntityType2Api");
 const TestEntityMultiLinkApi_1 = require("./TestEntityMultiLinkApi");
@@ -50,6 +51,9 @@ class TestService {
     }
     get testEntityWithEnumKeyApi() {
         return this.initApi('testEntityWithEnumKeyApi', TestEntityWithEnumKeyApi_1.TestEntityWithEnumKeyApi);
+    }
+    get testEntityWithNoKeysApi() {
+        return this.initApi('testEntityWithNoKeysApi', TestEntityWithNoKeysApi_1.TestEntityWithNoKeysApi);
     }
     get testEntityWithSharedEntityType1Api() {
         return this.initApi('testEntityWithSharedEntityType1Api', TestEntityWithSharedEntityType1Api_1.TestEntityWithSharedEntityType1Api);

@@ -11,6 +11,7 @@ import {
   DestinationConfiguration,
   getAdditionalHeaders,
   getAdditionalQueryParameters,
+  getProxyConfig,
   getTenantIdWithFallback,
   HttpDestination,
   resolveDestination
@@ -19,6 +20,7 @@ import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
   createLogger,
   ErrorWithCause,
+  isNullish,
   sanitizeRecord,
   unixEOL
 } from '@sap-cloud-sdk/util';
@@ -81,9 +83,9 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
     const resolvedDestination = await resolveDestination(destination);
     assertHttpDestination(resolvedDestination);
 
-    const destinationRequestConfig = await buildHttpRequest(
-      resolvedDestination
-    );
+    const destinationRequestConfig =
+      await buildHttpRequest(resolvedDestination);
+
     logCustomHeadersWarning(requestConfig.headers);
     const request = await buildRequestWithMergedHeadersAndQueryParameters(
       requestConfig,
@@ -141,12 +143,12 @@ export function buildHttpRequestConfigWithOrigin(
 }
 
 /**
- * This method does nothing and is only there to indicated that the call was made by Odata or OpenApi client and encoding is already done on filter and key parameters.
- * @param params - Parameters which are returned
+ * This method does nothing and is only there to indicate that the call was made by a typed OData client and encoding already happened in the client.
+ * @param params - Parameters which are returned.
  * @returns The parameters as they are without encoding.
  * @internal
  */
-export const encodeTypedClientRequest: ParameterEncoder = (
+export const oDataTypedClientParameterEncoder: ParameterEncoder = (
   params: Record<string, any>
 ) => params;
 
@@ -165,16 +167,10 @@ function encodeQueryParameters(options: {
   );
 }
 
-function isGenericClientDefault(
-  parameterEncoder: ParameterEncoder | undefined
-): parameterEncoder is undefined {
-  return !parameterEncoder;
-}
-
-function isTypedClient(
+function isOdataTypedClientParameterEncoder(
   parameterEncoder: ParameterEncoder
-): parameterEncoder is typeof encodeTypedClientRequest {
-  return parameterEncoder.name === encodeTypedClientRequest.name;
+): parameterEncoder is typeof oDataTypedClientParameterEncoder {
+  return parameterEncoder.name === oDataTypedClientParameterEncoder.name;
 }
 
 function getEncodedParameters(
@@ -182,7 +178,7 @@ function getEncodedParameters(
   requestConfig: HttpRequestConfigWithOrigin
 ): OriginOptionsInternal {
   const { parameterEncoder } = requestConfig;
-  if (isGenericClientDefault(parameterEncoder)) {
+  if (isNullish(parameterEncoder)) {
     return encodeQueryParameters({
       parameters,
       parameterEncoder: encodeAllParameters,
@@ -190,7 +186,7 @@ function getEncodedParameters(
     });
   }
 
-  if (isTypedClient(parameterEncoder)) {
+  if (isOdataTypedClientParameterEncoder(parameterEncoder)) {
     return encodeQueryParameters({
       parameters,
       parameterEncoder: encodeAllParameters,
@@ -198,7 +194,7 @@ function getEncodedParameters(
     });
   }
 
-  // Custom encoder provided for generic client -> use it for all origins
+  // Custom encoder provided by user -> use it for all origins
   return encodeQueryParameters({ parameters, parameterEncoder, exclude: [] });
 }
 
@@ -400,6 +396,7 @@ async function buildDestinationHttpRequestConfig(
     baseURL: destination.url,
     headers,
     params: destination.queryParameters,
+    proxy: getProxyConfig(destination),
     ...(await getAgentConfigAsync(destination))
   };
 }
@@ -456,7 +453,6 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   'method'
 > {
   return {
-    proxy: false,
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config

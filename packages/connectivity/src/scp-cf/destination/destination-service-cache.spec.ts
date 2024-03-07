@@ -11,9 +11,9 @@ import {
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import { decodeJwt } from '../jwt';
-import { fetchSubaccountDestinations } from './destination-service';
 import { Destination } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
+import { fetchDestinations } from './destination-service';
 
 const destinationServiceUrl = 'https://myDestination.service.url';
 
@@ -43,21 +43,18 @@ describe('DestinationServiceCache', () => {
     mockServiceToken();
 
     mockSubaccountDestinationsCall(
-      nock,
       [subscriberDest, subscriberDest2],
       200,
       subscriberServiceToken,
       destinationServiceUrl
     );
     mockSubaccountDestinationsCall(
-      nock,
       [subscriberDest, subscriberDest2],
       200,
       subscriberUserToken,
       destinationServiceUrl
     );
     mockSubaccountDestinationsCall(
-      nock,
       [providerDest],
       200,
       providerServiceToken,
@@ -75,9 +72,8 @@ describe('DestinationServiceCache', () => {
     );
     expect(directCallSubscriber.length).toEqual(2);
 
-    const directCallProvider = await populateCacheDestinations(
-      providerServiceToken
-    );
+    const directCallProvider =
+      await populateCacheDestinations(providerServiceToken);
 
     const cacheSubscriber = getDestinationsFromCache(subscriberServiceToken);
     expect(cacheSubscriber).toEqual(directCallSubscriber);
@@ -95,7 +91,7 @@ function getDestinationsFromCache(token: string): Destination[] | undefined {
 }
 
 async function populateCacheDestinations(token): Promise<Destination[]> {
-  return fetchSubaccountDestinations(destinationServiceUrl, token, {
+  return fetchDestinations(destinationServiceUrl, token, 'subaccount', {
     useCache: true
   });
 }

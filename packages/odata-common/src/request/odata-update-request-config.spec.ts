@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
+import { updateRequestConfig } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import {
   CommonEntity,
   commonEntityApi
@@ -11,11 +11,24 @@ import { ODataUpdateRequestConfig } from './odata-update-request-config';
 describe('ODataUpdateRequestConfig', () => {
   let config: ODataUpdateRequestConfig<CommonEntity, DefaultDeSerializers>;
   beforeEach(() => {
-    config = new ODataUpdateRequestConfig(commonEntityApi, commonODataUri);
+    config = updateRequestConfig({
+      payload: commonEntityApi
+        .entityBuilder()
+        .stringProperty('test')
+        .int16Property(12)
+        .build()
+    });
   });
 
   it('method is patch as default', () => {
     expect(config.method).toBe('patch');
+  });
+
+  it('should only contain properties set using the builder in the payload', () => {
+    expect(config.payload).toMatchObject({
+      StringProperty: 'test',
+      Int16Property: 12
+    });
   });
 
   it('method is put when configured', () => {

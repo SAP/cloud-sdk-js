@@ -8,15 +8,15 @@ describe('imports', () => {
       {
         moduleIdentifier: '@sap-cloud-sdk/odata-v2',
         names: [
-          'DefaultDeSerializers',
+          'CreateRequestBuilder',
           'DeSerializers',
+          'DefaultDeSerializers',
+          'DeserializedType',
           'GetAllRequestBuilder',
           'GetByKeyRequestBuilder',
-          'CreateRequestBuilder',
-          'UpdateRequestBuilder',
-          'DeserializedType',
           'RequestBuilder',
-          'Time'
+          'Time',
+          'UpdateRequestBuilder'
         ]
       },
       {

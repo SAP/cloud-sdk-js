@@ -1,5 +1,81 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 3.12.0
+
+### Patch Changes
+
+- 6bbdd4d: [Fixed Issue] Fix types in generated OpenAPI schemas to have proper types instead of type `any`.
+- Updated dependencies [d6b1c5b]
+  - @sap-cloud-sdk/openapi@3.12.0
+  - @sap-cloud-sdk/generator-common@3.12.0
+  - @sap-cloud-sdk/util@3.12.0
+
+## 3.11.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.11.0
+- @sap-cloud-sdk/openapi@3.11.0
+- @sap-cloud-sdk/util@3.11.0
+
+## 3.10.0
+
+### Patch Changes
+
+- Updated dependencies [4d2b49b]
+  - @sap-cloud-sdk/util@3.10.0
+  - @sap-cloud-sdk/generator-common@3.10.0
+  - @sap-cloud-sdk/openapi@3.10.0
+
+## 3.9.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.9.0
+- @sap-cloud-sdk/openapi@3.9.0
+- @sap-cloud-sdk/util@3.9.0
+
+## 3.8.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.8.1
+- @sap-cloud-sdk/openapi@3.8.1
+- @sap-cloud-sdk/util@3.8.1
+
+## 3.8.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.8.0
+- @sap-cloud-sdk/openapi@3.8.0
+- @sap-cloud-sdk/util@3.8.0
+
+## 3.7.0
+
+### Patch Changes
+
+- Updated dependencies [bdcf14f85]
+  - @sap-cloud-sdk/generator-common@3.7.0
+  - @sap-cloud-sdk/openapi@3.7.0
+  - @sap-cloud-sdk/util@3.7.0
+
+## 3.6.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.6.0
+- @sap-cloud-sdk/openapi@3.6.0
+- @sap-cloud-sdk/util@3.6.0
+
+## 3.5.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.5.0
+- @sap-cloud-sdk/openapi@3.5.0
+- @sap-cloud-sdk/util@3.5.0
+
 ## 3.4.0
 
 ### Patch Changes

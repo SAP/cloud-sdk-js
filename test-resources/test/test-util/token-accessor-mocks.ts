@@ -10,9 +10,9 @@ import {
   subscriberUserToken
 } from './mocked-access-tokens';
 
-export function expectAllMocksUsed(nocks: nock.Scope[]) {
-  nocks.forEach(nock1 => {
-    expect(nock1.isDone()).toBe(true);
+export function expectAllMocksUsed(scopes: nock.Scope[]) {
+  scopes.forEach(scope => {
+    expect(scope.isDone()).toBe(true);
   });
 }
 

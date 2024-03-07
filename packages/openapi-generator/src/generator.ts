@@ -46,6 +46,7 @@ const logger = createLogger('openapi-generator');
  * Main entry point for the OpenAPI client generation.
  * Generates models and API files.
  * @param options - Options to configure generation.
+ * @returns A promise to void.
  */
 export async function generate(
   options: GeneratorOptions & { config?: string }

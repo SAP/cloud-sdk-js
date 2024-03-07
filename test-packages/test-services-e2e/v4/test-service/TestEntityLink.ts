@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -33,19 +33,19 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Key Test Entity Link.
    */
-  keyTestEntityLink!: DeserializedType<T, 'Edm.Int32'>;
+  declare keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>;
   /**
    * Key To Test Entity.
    */
-  keyToTestEntity!: DeserializedType<T, 'Edm.Int32'>;
+  declare keyToTestEntity: DeserializedType<T, 'Edm.Int32'>;
   /**
    * String Property.
    * Maximum length: 111.
    * @nullable
    */
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  declare stringProperty?: DeserializedType<T, 'Edm.String'> | null;
 
-  constructor(readonly _entityApi: TestEntityLinkApi<T>) {
+  constructor(_entityApi: TestEntityLinkApi<T>) {
     super(_entityApi);
   }
 }

@@ -116,6 +116,7 @@ export function createLogger(
       : { ...messageContext };
   const logger = container.get(customFields.messageContext, {
     level:
+      process.env.SAP_CLOUD_SDK_LOG_LEVEL ||
       customLogLevels[customFields.messageContext] ||
       customFields.level ||
       container.options.level ||
@@ -150,7 +151,6 @@ export function getLogger(
   if (container.has(messageContext)) {
     return container.get(messageContext);
   }
-  return undefined;
 }
 
 /**

@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/test-util
 
+## 3.12.1
+
+### Patch Changes
+
+- Updated dependencies [4ecd86f]
+  - @sap-cloud-sdk/connectivity@3.12.1
+  - @sap-cloud-sdk/util@3.12.1
+
 ## 3.12.0
 
 ### Patch Changes

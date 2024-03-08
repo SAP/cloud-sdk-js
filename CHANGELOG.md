@@ -28,6 +28,17 @@
 
 - 
 
+# 3.12.1
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.12.1
+
+## Fixed Issues
+
+- [connectivity] Fix `fetchDestinationWithoutTokenRetrieval` to correctly return instance and subaccount destinations.
+  - @sap-cloud-sdk/resilience@3.12.1
+  - @sap-cloud-sdk/util@3.12.1 (60fdc04)
+- [openapi, odata-common] Fix type in `addCustomRequestConfiguration` method to accept values of type `any`. (60fdc04)
+
 # 3.12.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.12.0

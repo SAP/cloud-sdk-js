@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/odata-common
 
+## 3.12.1
+
+### Patch Changes
+
+- 60fdc04: [Fixed Issue] Fix type in `addCustomRequestConfiguration` method to accept values of type `any`.
+- Updated dependencies [60fdc04]
+  - @sap-cloud-sdk/connectivity@3.12.1
+  - @sap-cloud-sdk/http-client@3.12.1
+  - @sap-cloud-sdk/util@3.12.1
+
 ## 3.12.0
 
 ### Patch Changes

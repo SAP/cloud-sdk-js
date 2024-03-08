@@ -15,9 +15,16 @@ on:
         description: 'Canary release after build'
         type: boolean
         required: false
+        default: false
+      skip-checks:
+        description: 'Run tests and checks'
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   tests:
+    if: ${{ github.event.inputs.skip-checks == 'false' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -42,6 +49,7 @@ jobs:
       - run: yarn test:build-packages
       - run: yarn test:type
   checks:
+    if: ${{ github.event.inputs.skip-checks == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -70,6 +78,7 @@ jobs:
       - run: yarn check:license
         name: License Check
   e2e-tests:
+    if: ${{ github.event.inputs.skip-checks == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

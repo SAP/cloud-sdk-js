@@ -1,16 +1,5 @@
 # @sap-cloud-sdk/openapi
 
-## 3.12.1
-
-### Patch Changes
-
-- 4ecd86f: [Fixed Issue] Fix type in `addCustomRequestConfiguration` method to accept values of type `any`.
-- Updated dependencies [4ecd86f]
-  - @sap-cloud-sdk/connectivity@3.12.1
-  - @sap-cloud-sdk/http-client@3.12.1
-  - @sap-cloud-sdk/resilience@3.12.1
-  - @sap-cloud-sdk/util@3.12.1
-
 ## 3.12.0
 
 ### Patch Changes

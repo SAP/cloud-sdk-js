@@ -1,13 +1,5 @@
 # @sap-cloud-sdk/connectivity
 
-## 3.12.1
-
-### Patch Changes
-
-- 4ecd86f: [Fixed Issue] Fix `fetchDestinationWithoutTokenRetrieval` to correctly return instance and subaccount destinations.
-  - @sap-cloud-sdk/resilience@3.12.1
-  - @sap-cloud-sdk/util@3.12.1
-
 ## 3.12.0
 
 ### Minor Changes

@@ -113,7 +113,7 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   canary-release-pre-check:
-    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name == 'schedule' }}
+    if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name == 'schedule') || (always() && github.event.inputs.skip-checks == 'true')  }}
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.date-check.outputs.skip }}

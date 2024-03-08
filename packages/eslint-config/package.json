@@ -27,12 +27,12 @@
     "eslint-config-prettier": "^9.1.0"
   },
   "peerDependencies": {
-    "@typescript-eslint/parser": "^5.21.0",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
     "eslint-plugin-regex": "^1.10.0",
     "eslint": "^8.0.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-unused-imports": "^2.0.0",
-    "eslint-plugin-jsdoc": "^46.9.0"
+    "eslint-plugin-import": "^2.0.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "eslint-plugin-jsdoc": "^48.0.0"
   }
 }

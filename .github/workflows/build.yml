@@ -17,7 +17,7 @@ on:
         required: false
         default: false
       skip-checks:
-        description: 'Run tests and checks'
+        description: 'Skip tests and checks'
         type: boolean
         required: false
         default: false

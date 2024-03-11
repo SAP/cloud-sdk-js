@@ -9918,10 +9918,10 @@ typedarray@^0.0.6:
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typedoc@^0.25.11:
-  version "0.25.11"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.25.11.tgz#75080c594c1e26b7676f90faebb367fb5a32dc8d"
-  integrity sha512-5MbI1W/FOG6oXsd8bdssQidSTeKh8Kt3xA5uKVzI+K99uzP8EGN45uPnPvQesyaWdD+89s4wCQdtWEd8QUbiRg==
+typedoc@^0.25.12:
+  version "0.25.12"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.25.12.tgz#f73f0a8d3731d418cc604d4230f95a857799e27a"
+  integrity sha512-F+qhkK2VoTweDXd1c42GS/By2DvI2uDF4/EpG424dTexSHdtCH52C6IcAvMA6jR3DzAWZjHpUOW+E02kyPNUNw==
   dependencies:
     lunr "^2.3.9"
     marked "^4.3.0"

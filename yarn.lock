@@ -89,12 +89,12 @@
     ajv-draft-04 "^1.0.0"
     call-me-maybe "^1.0.1"
 
-"@arethetypeswrong/cli@0.14.1":
-  version "0.14.1"
-  resolved "https://registry.npmjs.org/@arethetypeswrong/cli/-/cli-0.14.1.tgz#e28a582f9fe8dedd8fc4fd15bea0f7fae4b7c407"
-  integrity sha512-JB9jHVrrlF45NPJjjVYvmxz8011Nvwl74tVKr3muD/vVIcb9cn2ibdSbYjThjG5h1BHTHMwzCBoxjIue+NDQ1g==
+"@arethetypeswrong/cli@0.15.1":
+  version "0.15.1"
+  resolved "https://registry.npmjs.org/@arethetypeswrong/cli/-/cli-0.15.1.tgz#ec478b76d9493dad26b5db764d7c50b8cd0c43b7"
+  integrity sha512-c4+MVbhktzLDnUFpvWvVkGRAb7zwd9b9ZW4eG62PkBsRRsTM6TKUNR23mLhz6tyYTalyqe8E6v09q4k0KuN3eQ==
   dependencies:
-    "@arethetypeswrong/core" "0.14.1"
+    "@arethetypeswrong/core" "0.15.1"
     chalk "^4.1.2"
     cli-table3 "^0.6.3"
     commander "^10.0.1"
@@ -102,10 +102,10 @@
     marked-terminal "^6.0.0"
     semver "^7.5.4"
 
-"@arethetypeswrong/core@0.14.1":
-  version "0.14.1"
-  resolved "https://registry.npmjs.org/@arethetypeswrong/core/-/core-0.14.1.tgz#32e2a341b3ed2949e4e25cd20311a6b120c44305"
-  integrity sha512-B5cjaC9BQLhdSNQmG9dbcam8UFcXprgvY1YMxAfw/utCpUgPlKXK3wR3WphNr9CFlgcBaZL7NTuH/I7T17Kstw==
+"@arethetypeswrong/core@0.15.1":
+  version "0.15.1"
+  resolved "https://registry.npmjs.org/@arethetypeswrong/core/-/core-0.15.1.tgz#b01b2d73ffa9d341fcc1c1ccc23bb30d2e64cf0e"
+  integrity sha512-FYp6GBAgsNz81BkfItRz8RLZO03w5+BaeiPma1uCfmxTnxbtuMrI/dbzGiOk8VghO108uFI0oJo0OkewdSHw7g==
   dependencies:
     "@andrewbranch/untar.js" "^1.0.3"
     fflate "^0.8.2"
@@ -710,14 +710,14 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.2.16":
-  version "0.2.16"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.16.tgz#35d0b35c9eafbb1bed54e0612135731c7e007c90"
-  integrity sha512-So9S1SdsMRrE6ZfeJTlPQPzC+g47MBPbhBFSPkGDmrvuLTXlFIXJU79dgjo6qhIVhX2AgsuoKdImai5hPhOvow==
+"@definitelytyped/dtslint@^0.2.18":
+  version "0.2.18"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.18.tgz#eef8ef631112bed0515dc536aba0b956f592eb86"
+  integrity sha512-8CX1PHRS7aaM6tDW0CE9Wx5vUKXEu642Xt782Is/Oihui8+ms1J2JGkzYOFp1CIQ5it4GplO9vxN8sC579pJWQ==
   dependencies:
-    "@arethetypeswrong/cli" "0.14.1"
-    "@arethetypeswrong/core" "0.14.1"
-    "@definitelytyped/header-parser" "0.2.7"
+    "@arethetypeswrong/cli" "0.15.1"
+    "@arethetypeswrong/core" "0.15.1"
+    "@definitelytyped/header-parser" "0.2.8"
     "@definitelytyped/typescript-packages" "0.1.1"
     "@definitelytyped/typescript-versions" "0.1.1"
     "@definitelytyped/utils" "0.1.5"
@@ -731,10 +731,10 @@
     semver "^7.5.4"
     strip-json-comments "^3.1.1"
 
-"@definitelytyped/header-parser@0.2.7":
-  version "0.2.7"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.7.tgz#44e1d18546f292553e80a01abb6765baf5883a89"
-  integrity sha512-bfey0RYDAAzabneDjkQviP5MB8A/5wV9d42s2MNgQS+Ptj26P8ve19s6nbylHlXcRfTtpBF3haZMbsKRpYKMKQ==
+"@definitelytyped/header-parser@0.2.8":
+  version "0.2.8"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.8.tgz#3d1b942b73f729633c0d5238d5fb39570165d038"
+  integrity sha512-EbwPQxkjJ2dG5F+kZy/D5eMvFeM3FBJ+A8oXy6eOr+8aoRBzS94PiSyfHStZHJzruHDG/Lo2v9+0nSGsPJiOdw==
   dependencies:
     "@definitelytyped/typescript-versions" "0.1.1"
     "@definitelytyped/utils" "0.1.5"
@@ -1595,10 +1595,10 @@
   resolved "https://registry.npmjs.org/@tootallnate/quickjs-emscripten/-/quickjs-emscripten-0.23.0.tgz#db4ecfd499a9765ab24002c3b696d02e6d32a12c"
   integrity sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==
 
-"@ts-morph/common@~0.22.0":
-  version "0.22.0"
-  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.22.0.tgz#8951d451622a26472fbc3a227d6c3a90e687a683"
-  integrity sha512-HqNBuV/oIlMKdkLshXd1zKBqNQCsuPEsgQOkfFQ/eUKjRlwndXW1AjN9LVkBEIukm00gGXSRmfkl0Wv5VXLnlw==
+"@ts-morph/common@~0.23.0":
+  version "0.23.0"
+  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.23.0.tgz#bd4ddbd3f484f29476c8bd985491592ae5fc147e"
+  integrity sha512-m7Lllj9n/S6sOkCkRftpM7L24uvmfXQFedlW/4hENcuJH1HHm9u5EgxZb9uVjQSCGrbBWBkOGgcTxNg36r6ywA==
   dependencies:
     fast-glob "^3.3.2"
     minimatch "^9.0.3"
@@ -3221,10 +3221,10 @@ co@^4.6.0:
   resolved "https://registry.npmjs.org/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==
 
-code-block-writer@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.npmjs.org/code-block-writer/-/code-block-writer-12.0.0.tgz#4dd58946eb4234105aff7f0035977b2afdc2a770"
-  integrity sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==
+code-block-writer@^13.0.1:
+  version "13.0.1"
+  resolved "https://registry.npmjs.org/code-block-writer/-/code-block-writer-13.0.1.tgz#52ac60ca6076d8700b88a45bd71e06a577158405"
+  integrity sha512-c5or4P6erEA69TxaxTNcHUNcIn+oyxSRTOWV+pSYF+z4epXqNvwvJ70XPGjPNgue83oAFAPBRQYwpAJ/Hpe/Sg==
 
 code-point-at@^1.0.0:
   version "1.1.0"
@@ -7364,6 +7364,11 @@ nodemailer@6.9.11:
   resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.11.tgz#900703bd6dc62855d9cea962acf261926841f825"
   integrity sha512-UiAkgiERuG94kl/3bKfE8o10epvDnl0vokNEtZDPTq9BWzIl6EFT9336SbIT4oaTBD8NmmUTLsQyXHV82eXSWg==
 
+nodemailer@6.9.12:
+  version "6.9.12"
+  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.12.tgz#48560eaf3575f8b0215eb38a45ca9025ffad2314"
+  integrity sha512-pnLo7g37Br3jXbF0bl5DekBJihm2q+3bB3l2o/B060sWmb5l+VqeScAQCBqaQ+5ezRZFzW5SciZNGdRDEbq89w==
+
 nopt@^4.0.1:
   version "4.0.3"
   resolved "https://registry.npmjs.org/nopt/-/nopt-4.0.3.tgz#a375cad9d02fd921278d954c2254d5aa57e15e48"
@@ -8291,10 +8296,10 @@ punycode@2.3.1, punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-puppeteer-core@22.4.0:
-  version "22.4.0"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-22.4.0.tgz#26ea98c7392da0c617d587398e345c0013f2228f"
-  integrity sha512-MZttAbttrxi6O/B//rY6zQihjFe/vXeCLb5YvKH2xG6yrcVESo0Hc5/Cv49omwZyZzAJ1BK8BnDeatDsj+3hMw==
+puppeteer-core@22.4.1:
+  version "22.4.1"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-22.4.1.tgz#b7c8b4041dac8d49e409a6130f3fa2a39395298a"
+  integrity sha512-l9nf8NcirYOHdID12CIMWyy7dqcJCVtgVS+YAiJuUJHg8+9yjgPiG2PcNhojIEEpCkvw3FxvnyITVfKVmkWpjA==
   dependencies:
     "@puppeteer/browsers" "2.1.0"
     chromium-bidi "0.5.12"
@@ -8303,14 +8308,14 @@ puppeteer-core@22.4.0:
     devtools-protocol "0.0.1249869"
     ws "8.16.0"
 
-puppeteer@^22.4.0:
-  version "22.4.0"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-22.4.0.tgz#9713a291fbeb0733b3732b3b8be759e688e1f544"
-  integrity sha512-tR+JsDbA2qD1DqRX4F9k9SxQhk6UzcaCN+Qux7+WrDceS7wcR7tlFmMNB8+g8zE4Fmr/iRTOtf5wNnTW9cGUFQ==
+puppeteer@^22.4.1:
+  version "22.4.1"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-22.4.1.tgz#00ce84a05d644d891657943d4f4c6669914a2f8b"
+  integrity sha512-Mag1wRLanzwS4yEUyrDRBUgsKlH3dpL6oAfVwNHG09oxd0+ySsatMvYj7HwjynWy/S+Hg+XHLgjyC/F6CsL/lg==
   dependencies:
     "@puppeteer/browsers" "2.1.0"
     cosmiconfig "9.0.0"
-    puppeteer-core "22.4.0"
+    puppeteer-core "22.4.1"
 
 pure-rand@^6.0.0:
   version "6.0.0"
@@ -9646,13 +9651,13 @@ ts-jest@^29.1.2:
     semver "^7.5.3"
     yargs-parser "^21.0.1"
 
-ts-morph@^21.0.1:
-  version "21.0.1"
-  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-21.0.1.tgz#712302a0f6e9dbf1aa8d9cf33a4386c4b18c2006"
-  integrity sha512-dbDtVdEAncKctzrVZ+Nr7kHpHkv+0JDJb2MjjpBaj8bFeCkePU9rHfMklmhuLFnpeq/EJZk2IhStY6NzqgjOkg==
+ts-morph@^22.0.0:
+  version "22.0.0"
+  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-22.0.0.tgz#5532c592fb6dddae08846f12c9ab0fc590b1d42e"
+  integrity sha512-M9MqFGZREyeb5fTl6gNHKZLqBQA0TjA1lea+CR48R8EBTDuWrNqW6ccC5QvjNR4s6wDumD3LTCjOFSp9iwlzaw==
   dependencies:
-    "@ts-morph/common" "~0.22.0"
-    code-block-writer "^12.0.0"
+    "@ts-morph/common" "~0.23.0"
+    code-block-writer "^13.0.1"
 
 ts-node@^10.9.2:
   version "10.9.2"
@@ -9913,10 +9918,10 @@ typedarray@^0.0.6:
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typedoc@^0.25.11:
-  version "0.25.11"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.25.11.tgz#75080c594c1e26b7676f90faebb367fb5a32dc8d"
-  integrity sha512-5MbI1W/FOG6oXsd8bdssQidSTeKh8Kt3xA5uKVzI+K99uzP8EGN45uPnPvQesyaWdD+89s4wCQdtWEd8QUbiRg==
+typedoc@^0.25.12:
+  version "0.25.12"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.25.12.tgz#f73f0a8d3731d418cc604d4230f95a857799e27a"
+  integrity sha512-F+qhkK2VoTweDXd1c42GS/By2DvI2uDF4/EpG424dTexSHdtCH52C6IcAvMA6jR3DzAWZjHpUOW+E02kyPNUNw==
   dependencies:
     lunr "^2.3.9"
     marked "^4.3.0"

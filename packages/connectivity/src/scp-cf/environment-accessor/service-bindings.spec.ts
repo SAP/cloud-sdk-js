@@ -5,6 +5,7 @@ import {
   getServiceBindings,
   resolveServiceBinding
 } from './service-bindings';
+import exp from 'constants';
 
 const logger = createLogger('environment-accessor');
 
@@ -44,12 +45,25 @@ const services = {
     }
   ]
 };
+const userProvidedServices = {
+  "user-provided": [
+    {
+      credentials: {
+        blerg: true,
+        key: "value",
+        otherkey: 5
+      },
+      label: "user-provided",
+      name: "demo-user-provided-service",
+      tags: [
+        "destination",
+        "other-tag"
+      ],
+    }
+  ],
+}
 
 describe('service bindings', () => {
-  beforeEach(() => {
-    process.env.VCAP_SERVICES = JSON.stringify(services);
-  });
-
   afterEach(() => {
     jest.resetAllMocks();
     delete process.env.VCAP_SERVICES;
@@ -57,16 +71,35 @@ describe('service bindings', () => {
 
   describe('getServiceBindings()', () => {
     it('gets a list of services for the given label', () => {
+      process.env.VCAP_SERVICES = JSON.stringify(services);
+
       expect(getServiceBindings('destination')).toEqual(services.destination);
     });
 
     it('is empty for unknown label', () => {
+      process.env.VCAP_SERVICES = JSON.stringify(services);
+
       expect(getServiceBindings('unknown')).toEqual([]);
+    });
+
+    it('returns a list of services by matching tags if no match is found by label', () => {
+      process.env.VCAP_SERVICES = JSON.stringify(userProvidedServices);
+
+      expect(getServiceBindings('destination')).toEqual(userProvidedServices['user-provided']);
+    });
+
+    it('matching by label has precedence over matching by tag', () => {
+      process.env.VCAP_SERVICES = JSON.stringify({ ...services, ...userProvidedServices });
+
+      const actualServices = getServiceBindings('destination');
+      expect(actualServices).toEqual(services.destination);
     });
   });
 
   describe('getServiceBinding()', () => {
     it('gets service and warns if multiple bindings are found', () => {
+      process.env.VCAP_SERVICES = JSON.stringify(services);
+
       const warnSpy = jest.spyOn(logger, 'warn');
       const service = getServiceBinding('destination');
       expect(service).toEqual(services.destination[0]);
@@ -79,6 +112,8 @@ Selecting the first one.`
     });
 
     it('warns if service does not exist', () => {
+      process.env.VCAP_SERVICES = JSON.stringify(services);
+
       const warnSpy = jest.spyOn(logger, 'warn');
       const service = getServiceBinding('unknown');
       expect(service).toBeUndefined();
@@ -86,9 +121,27 @@ Selecting the first one.`
         "Could not find service binding of type 'unknown'. This might cause errors in other parts of the application."
       );
     });
+
+    it('return a service by matching tags if no match is found by label', () => {
+      process.env.VCAP_SERVICES = JSON.stringify(userProvidedServices);
+
+      const service = getServiceBinding('destination');
+      expect(service).toEqual(userProvidedServices['user-provided'][0]);      
+    });
+
+    it('matching by label has precedence over matching by tag', () => {
+      process.env.VCAP_SERVICES = JSON.stringify({ ...services, ...userProvidedServices });
+
+      const service = getServiceBinding('destination');
+      expect(service).toEqual(services.destination[0]);
+    });
   });
 
   describe('resolveServiceBinding()', () => {
+    beforeEach(() => {
+      process.env.VCAP_SERVICES = JSON.stringify(services);
+    });
+
     it('returns the service if it is a service instance already', () => {
       const service = services.destination[0];
       expect(resolveServiceBinding(service)).toEqual(service);
@@ -110,6 +163,10 @@ Selecting the first one.`
   });
 
   describe('getServiceBindingByInstanceName()', () => {
+    beforeEach(() => {
+      process.env.VCAP_SERVICES = JSON.stringify(services);
+    });
+
     it('resolves service by instance name', () => {
       expect(
         getServiceBindingByInstanceName('my-destination-service2')

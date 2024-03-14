@@ -8,23 +8,37 @@ const logger = createLogger({
 });
 
 /**
- * Services getter for a given service.
+ * Returns a list of service instances for the given service type by label.
+ * If no services are found, it matches by tag instead to support user-provided services.
  * @param service - Service name.
  * @returns List of service bindings of the given type. Returns an empty array if no service binding exists for the given type.
  * @internal
  */
 export function getServiceBindings(service: string): Service[] {
-  return xsenv.filterServices({ label: service });
+  const servicesByLabel = xsenv.filterServices({ label: service });
+
+  if (servicesByLabel.length) {
+    return servicesByLabel
+  }
+  
+  logger.debug('Found no service bindings for "%s" by label. Trying to match by tag instead.', service)
+  return xsenv.filterServices({ tag: service });
 }
 
 /**
- * Returns the first found instance for the given service type.
+ * Returns the first found instance for the given service type by label.
+ * If no service is found, it matches by tag instead to support user-provided services.
  * @param service - The service type.
  * @returns The first found service.
  * @internal
  */
 export function getServiceBinding(service: string): Service | undefined {
-  const services: Service[] = xsenv.filterServices({ label: service });
+  let services: Service[] = xsenv.filterServices({ label: service });
+
+  if (!services.length) {
+    logger.debug('Found no service binding for "%s" by label. Trying to match by tag instead.', service)
+    services = xsenv.filterServices({ tag: service });
+  }
 
   if (!services.length) {
     logger.warn(

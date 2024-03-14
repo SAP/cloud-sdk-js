@@ -21,7 +21,7 @@ export const serviceToDestinationTransformers: Record<
   workflow: workflowBindingToDestination,
   'service-manager': serviceManagerBindingToDestination,
   xsuaa: xsuaaToDestination,
-  'aicore': aicoreToDestiation,
+  aicore: aicoreToDestiation
 };
 
 async function aicoreToDestiation(

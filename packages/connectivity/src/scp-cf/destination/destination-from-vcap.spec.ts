@@ -340,16 +340,15 @@ function mockServiceBindings() {
 }
 
 const serviceBindings = {
-  'aicore': [
+  aicore: [
     {
       name: 'my-aicore',
       label: 'aicore',
-      tags: [
-        'aicore'
-      ],
+      tags: ['aicore'],
       credentials: {
         serviceurls: {
-          AI_API_URL: 'https://https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com'
+          AI_API_URL:
+            'https://https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com'
         },
         clientid: 'clientIdAicore',
         clientsecret: 'secretAicore',

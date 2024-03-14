@@ -24,7 +24,7 @@ on:
 
 jobs:
   tests:
-    if: ${{ github.event.inputs.skip-checks == 'false' }}
+    if: ${{ github.event.inputs.skip-checks == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -49,7 +49,7 @@ jobs:
       - run: yarn test:build-packages
       - run: yarn test:type
   checks:
-    if: ${{ github.event.inputs.skip-checks == 'false' }}
+    if: ${{ github.event.inputs.skip-checks == false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -78,7 +78,7 @@ jobs:
       - run: yarn check:license
         name: License Check
   e2e-tests:
-    if: ${{ github.event.inputs.skip-checks == 'false' }}
+    if: ${{ github.event.inputs.skip-checks == false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

@@ -20,8 +20,21 @@ export const serviceToDestinationTransformers: Record<
   'saas-registry': saasRegistryBindingToDestination,
   workflow: workflowBindingToDestination,
   'service-manager': serviceManagerBindingToDestination,
-  xsuaa: xsuaaToDestination
+  xsuaa: xsuaaToDestination,
+  aicore: aicoreToDestiation
 };
+
+async function aicoreToDestiation(
+  service: Service,
+  options?: ServiceBindingTransformOptions
+): Promise<Destination> {
+  const token = await serviceToken(service, options);
+  return buildClientCredentialsDestination(
+    token,
+    service.credentials.serviceurls.AI_API_URL,
+    service.name
+  );
+}
 
 async function xsuaaToDestination(
   service: Service,

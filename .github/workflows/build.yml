@@ -116,6 +116,7 @@ jobs:
     if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name == 'schedule') || (always() && github.event.inputs.skip-checks == 'true')  }}
     runs-on: ubuntu-latest
     outputs:
+      type: boolean
       skip: ${{ steps.date-check.outputs.skip }}
     needs: [tests, checks, e2e-tests]
     steps:
@@ -137,7 +138,7 @@ jobs:
               echo "skip=false" >> $GITHUB_OUTPUT
           fi
   canary-release:
-    if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' || ((always() && github.event.inputs.skip-checks == 'true') && needs.canary-release-pre-check.outputs.skip == 'false') }}
+    if: ${{ needs.canary-release-pre-check.outputs.skip == false || ((always() && github.event.inputs.skip-checks == 'true') && needs.canary-release-pre-check.outputs.skip == false) }}
     runs-on: ubuntu-latest
     needs: [canary-release-pre-check]
     steps:

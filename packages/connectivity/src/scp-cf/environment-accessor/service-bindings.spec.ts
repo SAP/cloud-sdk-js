@@ -5,7 +5,6 @@ import {
   getServiceBindings,
   resolveServiceBinding
 } from './service-bindings';
-import exp from 'constants';
 
 const logger = createLogger('environment-accessor');
 
@@ -46,22 +45,19 @@ const services = {
   ]
 };
 const userProvidedServices = {
-  "user-provided": [
+  'user-provided': [
     {
       credentials: {
         blerg: true,
-        key: "value",
+        key: 'value',
         otherkey: 5
       },
-      label: "user-provided",
-      name: "demo-user-provided-service",
-      tags: [
-        "destination",
-        "other-tag"
-      ],
+      label: 'user-provided',
+      name: 'demo-user-provided-service',
+      tags: ['destination', 'other-tag']
     }
-  ],
-}
+  ]
+};
 
 describe('service bindings', () => {
   afterEach(() => {
@@ -85,11 +81,16 @@ describe('service bindings', () => {
     it('returns a list of services by matching tags if no match is found by label', () => {
       process.env.VCAP_SERVICES = JSON.stringify(userProvidedServices);
 
-      expect(getServiceBindings('destination')).toEqual(userProvidedServices['user-provided']);
+      expect(getServiceBindings('destination')).toEqual(
+        userProvidedServices['user-provided']
+      );
     });
 
     it('matching by label has precedence over matching by tag', () => {
-      process.env.VCAP_SERVICES = JSON.stringify({ ...services, ...userProvidedServices });
+      process.env.VCAP_SERVICES = JSON.stringify({
+        ...services,
+        ...userProvidedServices
+      });
 
       const actualServices = getServiceBindings('destination');
       expect(actualServices).toEqual(services.destination);
@@ -126,11 +127,14 @@ Selecting the first one.`
       process.env.VCAP_SERVICES = JSON.stringify(userProvidedServices);
 
       const service = getServiceBinding('destination');
-      expect(service).toEqual(userProvidedServices['user-provided'][0]);      
+      expect(service).toEqual(userProvidedServices['user-provided'][0]);
     });
 
     it('matching by label has precedence over matching by tag', () => {
-      process.env.VCAP_SERVICES = JSON.stringify({ ...services, ...userProvidedServices });
+      process.env.VCAP_SERVICES = JSON.stringify({
+        ...services,
+        ...userProvidedServices
+      });
 
       const service = getServiceBinding('destination');
       expect(service).toEqual(services.destination[0]);

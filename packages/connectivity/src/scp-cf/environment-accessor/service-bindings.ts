@@ -18,10 +18,13 @@ export function getServiceBindings(service: string): Service[] {
   const servicesByLabel = xsenv.filterServices({ label: service });
 
   if (servicesByLabel.length) {
-    return servicesByLabel
+    return servicesByLabel;
   }
-  
-  logger.debug('Found no service bindings for "%s" by label. Trying to match by tag instead.', service)
+
+  logger.debug(
+    'Found no service bindings for "%s" by label. Trying to match by tag instead.',
+    service
+  );
   return xsenv.filterServices({ tag: service });
 }
 
@@ -36,7 +39,10 @@ export function getServiceBinding(service: string): Service | undefined {
   let services: Service[] = xsenv.filterServices({ label: service });
 
   if (!services.length) {
-    logger.debug('Found no service binding for "%s" by label. Trying to match by tag instead.', service)
+    logger.debug(
+      'Found no service binding for "%s" by label. Trying to match by tag instead.',
+      service
+    );
     services = xsenv.filterServices({ tag: service });
   }
 

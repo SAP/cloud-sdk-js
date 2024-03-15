@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show input from dispatch event
-        run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
+        run: echo "Canary release flag ${{ inputs.canary-release }}"
   tests:
     if: inputs.canary-release == 'false'
     runs-on: ubuntu-latest

@@ -12,12 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       canary-release:
-        description: 'Canary release after build'
-        type: boolean
-        required: false
-        default: false
-      skip-checks:
-        description: 'Skip tests and checks'
+        description: 'Release canary version (skips tests and checks)'
         type: boolean
         required: false
         default: false
@@ -28,10 +23,8 @@ jobs:
     steps:
       - name: Show input from dispatch event
         run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
-      - name: Show input from dispatch event
-        run: echo "Skip checks flag ${{ github.event.inputs.skip-checks }}"
   tests:
-    if: ${{ github.event.inputs.skip-checks == false }}
+    if: fromJson(github.event.inputs.canary-release) == false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -56,7 +49,7 @@ jobs:
       - run: yarn test:build-packages
       - run: yarn test:type
   checks:
-    if: github.event.inputs.skip-checks == false
+    if: github.event.inputs.canary-release == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -85,7 +78,7 @@ jobs:
       - run: yarn check:license
         name: License Check
   e2e-tests:
-    if: github.event.inputs.skip-checks == false
+    if: github.event.inputs.canary-release == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

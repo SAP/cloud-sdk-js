@@ -15,7 +15,8 @@ on:
         description: 'Release canary version (skips tests and checks)'
         type: boolean
         required: false
-        default: false
+        # This looks like a boolean, but it's actually a string
+        default: 'false'
 
 jobs:
   log:
@@ -24,7 +25,7 @@ jobs:
       - name: Show input from dispatch event
         run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
   tests:
-    if: fromJson(github.event.inputs.canary-release) == false
+    if: github.event.inputs.canary-release == 'false'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:

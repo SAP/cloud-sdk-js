@@ -25,7 +25,7 @@ jobs:
       - name: Show input from dispatch event
         run: echo "Canary release flag ${{ inputs.canary-release }}"
   tests:
-    if: inputs.canary-release == 'false'
+    if: inputs.canary-release == true
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:

@@ -31,7 +31,7 @@ jobs:
       - name: Show input from dispatch event
         run: echo "Skip checks flag ${{ github.event.inputs.skip-checks }}"
   tests:
-    if: github.event.inputs.skip-checks == 'false'
+    if: ${{ github.event.inputs.skip-checks == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:

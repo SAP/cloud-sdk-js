@@ -23,6 +23,13 @@ on:
         default: false
 
 jobs:
+  log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show input from dispatch event
+        run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
+      - name: Show input from dispatch event
+        run: echo "Skip checks flag ${{ github.event.inputs.skip-checks }}"
   tests:
     if: github.event.inputs.skip-checks == false
     runs-on: ubuntu-latest

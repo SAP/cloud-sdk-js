@@ -24,7 +24,7 @@ on:
 
 jobs:
   tests:
-    if: ${{ github.event.inputs.skip-checks == 'false' }}
+    if: github.event.inputs.skip-checks == false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -49,7 +49,7 @@ jobs:
       - run: yarn test:build-packages
       - run: yarn test:type
   checks:
-    if: ${{ github.event.inputs.skip-checks == 'false' }}
+    if: github.event.inputs.skip-checks == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -78,7 +78,7 @@ jobs:
       - run: yarn check:license
         name: License Check
   e2e-tests:
-    if: ${{ github.event.inputs.skip-checks == 'false' }}
+    if: github.event.inputs.skip-checks == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -113,10 +113,10 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   canary-release-pre-check:
-    if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name == 'schedule') || (always() && github.event.inputs.skip-checks == 'true')  }}
+    if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
     outputs:
-      skip: ${{ steps.date-check.outputs.skip }}
+      skip-release: ${{ steps.date-check.outputs.skip-release }}
     needs: [tests, checks, e2e-tests]
     steps:
       - uses: actions/checkout@v3
@@ -132,12 +132,17 @@ jobs:
           if [[ $dateDiff -gt 86400 ]]
           then
               echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
-              echo "skip=true" >> $GITHUB_OUTPUT
+              echo "skip-release=true" >> $GITHUB_OUTPUT
           else
-              echo "skip=false" >> $GITHUB_OUTPUT
+              echo "skip-release=false" >> $GITHUB_OUTPUT
           fi
   canary-release:
-    if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' || ((always() && github.event.inputs.skip-checks == 'true') && needs.canary-release-pre-check.outputs.skip == 'false') }}
+    # execute canary release if:
+    # either the canary-release was scheduled and the canary-pre-check step resulted in skip-release=false
+    # or the canary-release input is true
+    if: |
+      needs.canary-release-pre-check.outputs.skip-release == 'false' ||
+      always() && github.event.inputs.canary-release == true
     runs-on: ubuntu-latest
     needs: [canary-release-pre-check]
     steps:

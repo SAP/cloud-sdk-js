@@ -22,7 +22,7 @@ export function getServiceBindings(service: string): Service[] {
   }
 
   logger.debug(
-    'Found no service bindings for "%s" by label. Trying to match by tag instead.',
+    'Could not find service bindings for "%s" by label. Trying to match by tag instead.',
     service
   );
   return xsenv.filterServices({ tag: service });

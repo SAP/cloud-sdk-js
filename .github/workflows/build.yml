@@ -15,7 +15,6 @@ on:
         description: 'Release canary version (skips tests and checks)'
         type: boolean
         required: false
-        # This looks like a boolean, but it's actually a string
         default: false
 
 jobs:

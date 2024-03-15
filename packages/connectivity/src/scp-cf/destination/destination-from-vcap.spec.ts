@@ -35,6 +35,22 @@ describe('vcap-service-destination', () => {
     return spyInstance.mock.calls[0][0]['credentials']['clientid'];
   }
 
+  it('creates a destination for the aicore service', async () => {
+    await expect(
+      getDestinationFromServiceBinding({
+        destinationName: 'my-aicore',
+        jwt: providerUserToken
+      })
+    ).resolves.toEqual({
+      url: 'https://https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com',
+      authentication: 'OAuth2ClientCredentials',
+      name: 'my-aicore',
+      authTokens: [expect.objectContaining({ value: expect.any(String) })]
+    });
+
+    expect(getActualClientId(serviceTokenSpy)).toBe('clientIdAicore');
+  });
+
   it('creates a destination for the business logging service', async () => {
     await expect(
       getDestinationFromServiceBinding({
@@ -324,6 +340,22 @@ function mockServiceBindings() {
 }
 
 const serviceBindings = {
+  aicore: [
+    {
+      name: 'my-aicore',
+      label: 'aicore',
+      tags: ['aicore'],
+      credentials: {
+        serviceurls: {
+          AI_API_URL:
+            'https://https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com'
+        },
+        clientid: 'clientIdAicore',
+        clientsecret: 'secretAicore',
+        url: 'https://subaccount.authentication.sap.hana.ondemand.com'
+      }
+    }
+  ],
   'business-logging': [
     {
       name: 'my-business-logging',

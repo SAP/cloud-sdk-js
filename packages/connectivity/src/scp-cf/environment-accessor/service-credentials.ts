@@ -12,11 +12,11 @@ const logger = createLogger({
 /**
  * @internal
  * Retrieves a service binding of the given type and tries to match it based on the JWT, if given.
- * Returns `undefined` if no match is found.
- * If no JWT is given, returns the first binding of the given service type, if available.
+ * If no match was found or no JWT is given, the first binding is returned.
+ * Throws an error if there are no bindings of the given type.
  * @param service - The service type.
  * @param token - Either an encoded or decoded JWT.
- * @returns The service credentials, otherwise `undefined`.
+ * @returns The credentials for a match, otherwise `null`.
  */
 export function getServiceCredentials<
   ServiceCredentialsT extends ServiceCredentials
@@ -40,9 +40,16 @@ export function getServiceCredentials<
       typeof token === 'string' ? decodeJwt(token) : token
     );
 
-    return credentials;
+    if (credentials) {
+      return credentials;
+    }
+
+    logger.debug(
+      'Could not match binding service instance using JWT client id or audience.'
+    );
+  } else {
+    logger.debug(`No JWT given to select binding to service '${service}.`);
   }
-  logger.debug(`No JWT given to select binding to service '${service}'.`);
 
   return getCredentialsWithoutJwt(service, credentialsList);
 }
@@ -116,10 +123,6 @@ function logResult<ServiceCredentialsT extends ServiceCredentials>(
       )}. ${appNames(credentials)}\nChoosing first one ('${
         credentials[0].xsappname
       }').`
-    );
-  } else if (usedToken) {
-    logger.warn(
-      `Found no service binding for service '${service}' matching either the token's client id or audience.`
     );
   }
 }

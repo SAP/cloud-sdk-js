@@ -48,7 +48,7 @@ describe('vcap-service-destination', () => {
       authTokens: [expect.objectContaining({ value: expect.any(String) })]
     });
 
-    expect(getActualClientId(serviceTokenSpy)).toBe('clientIdBusinessLogging');
+    expect(getActualClientId(serviceTokenSpy)).toBe('clientIdAicore');
   });
 
   it('creates a destination for the business logging service', async () => {

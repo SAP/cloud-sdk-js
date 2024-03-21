@@ -40,7 +40,7 @@
   "dependencies": {
     "@sap-cloud-sdk/connectivity": "^3.13.0",
     "@sap-cloud-sdk/util": "^3.13.0",
-    "nodemailer": "6.9.12",
+    "nodemailer": "6.9.13",
     "socks": "2.8.1"
   },
   "devDependencies": {

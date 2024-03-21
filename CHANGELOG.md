@@ -28,6 +28,14 @@
 
 - 
 
+# 3.13.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.13.0
+
+## New Functionalities
+
+- [connectivity] Support the AI Core Service Binding when creating destinations from service bindings (f72986a)
+
 # 3.12.1
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.12.1

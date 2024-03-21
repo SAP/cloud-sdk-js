@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.13.0
+
+### Minor Changes
+
+- f72986a: [New Functionality] Support the AI Core Service Binding when creating destinations from service bindings
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.13.0
+- @sap-cloud-sdk/util@3.13.0
+
 ## 3.12.1
 
 ### Patch Changes

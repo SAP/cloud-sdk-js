@@ -1,5 +1,7 @@
 # @sap-cloud-sdk/test-services-odata-v2
 
+## 3.13.0
+
 ## 3.12.1
 
 ## 3.12.0

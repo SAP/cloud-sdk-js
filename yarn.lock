@@ -1805,10 +1805,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^18.19.22", "@types/node@^18.19.7":
-  version "18.19.22"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.19.22.tgz#f622f92514b897e6b09903e97c16a0db8e94689f"
-  integrity sha512-p3pDIfuMg/aXBmhkyanPshdfJuX5c5+bQjYLIikPLXAUycEogij/c50n/C+8XOA5L93cU4ZRXtn+dNQGi0IZqQ==
+"@types/node@*", "@types/node@^18.19.26", "@types/node@^18.19.7":
+  version "18.19.26"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.19.26.tgz#18991279d0a0e53675285e8cf4a0823766349729"
+  integrity sha512-+wiMJsIwLOYCvUqSdKTrfkS8mpTp+MPINe6+Np4TAGFWWRWiBQ5kSq9nZGCSPkzx9mvT+uEukzpX4MOSCydcvw==
   dependencies:
     undici-types "~5.26.4"
 

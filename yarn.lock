@@ -3128,10 +3128,10 @@ chownr@^2.0.0:
   resolved "https://registry.npmjs.org/chownr/-/chownr-2.0.0.tgz#15bfbe53d2eab4cf70f18a8cd68ebe5b3cb1dece"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
-chromium-bidi@0.5.13:
-  version "0.5.13"
-  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-0.5.13.tgz#e16512d77b161f2f92da91a48ea2ec4185668549"
-  integrity sha512-OHbYCetDxdW/xmlrafgOiLsIrw4Sp1BEeolbZ1UGJO5v/nekQOJBj/Kzyw6sqKcAVabUTo0GS3cTYgr6zIf00g==
+chromium-bidi@0.5.14:
+  version "0.5.14"
+  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-0.5.14.tgz#0edd73fe91bdb3c7a1d6c890e5c68520cbf97eb9"
+  integrity sha512-zm4mX61/U4KXs+S/0WIBHpOWqtpW6FPv1i7n4UZqDDc5LOQ9/Y1MAnB95nO7i/lFFuijLjpe1XMdNcqDqwlH5w==
   dependencies:
     mitt "3.0.1"
     urlpattern-polyfill "10.0.0"
@@ -8288,26 +8288,26 @@ punycode@2.3.1, punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-puppeteer-core@22.6.0:
-  version "22.6.0"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-22.6.0.tgz#544cf9ee5cb3259f9e74f7364c13c132a04bb48f"
-  integrity sha512-xclyGFhxHfZ9l62uXFm+JpgtJHLIZ1qHc7iR4eaIqBNKA5Dg2sDr8yvylfCx5bMN89QWIaxpV6IHsy0qUynK/g==
+puppeteer-core@22.6.1:
+  version "22.6.1"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-22.6.1.tgz#a6e7922a86fe9fdd3cdcbf73076332d8aefa1435"
+  integrity sha512-rShSd0xtyDSEJYys5nnzQnnwtrafQWg/lWCppyjZIIbYadWP8B1u0XJD/Oe+Xgw8v1hLHX0loNoA0ItRmNLnBg==
   dependencies:
     "@puppeteer/browsers" "2.2.0"
-    chromium-bidi "0.5.13"
+    chromium-bidi "0.5.14"
     debug "4.3.4"
     devtools-protocol "0.0.1262051"
     ws "8.16.0"
 
-puppeteer@^22.6.0:
-  version "22.6.0"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-22.6.0.tgz#1e916e1b6bcffd00ca05766e7fbab0c3c8a1ccd2"
-  integrity sha512-TYeza4rl1YXfxqUVw/0hWUWYX5cicnf6qu5kkDV+t7QrESCjMoSNnva4ZA/MRGQ03HnB9BOFw9nxs/SKek5KDA==
+puppeteer@^22.6.1:
+  version "22.6.1"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-22.6.1.tgz#070c2463d71f3a26fd07aeb8e38a8d0289345513"
+  integrity sha512-736QHNKtPD4tPeFbIn73E4l0CWsLzvRFlm0JsLG/VsyM8Eh0FRFNmMp+M3+GSMwdmYxqOVpTgzB6VQDxWxu8xQ==
   dependencies:
     "@puppeteer/browsers" "2.2.0"
     cosmiconfig "9.0.0"
     devtools-protocol "0.0.1262051"
-    puppeteer-core "22.6.0"
+    puppeteer-core "22.6.1"
 
 pure-rand@^6.0.0:
   version "6.0.0"

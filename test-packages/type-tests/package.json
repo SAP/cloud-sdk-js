@@ -15,7 +15,7 @@
     "directory": "test"
   },
   "devDependencies": {
-    "tsd": "^0.30.7",
+    "tsd": "^0.31.0",
     "@sap-cloud-sdk/connectivity": "^3.13.0",
     "@sap-cloud-sdk/generator": "^3.13.0",
     "@sap-cloud-sdk/http-client": "^3.13.0",

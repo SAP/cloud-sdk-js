@@ -41,7 +41,7 @@
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.12",
-    "typescript": "~5.3.3",
+    "typescript": "~5.4.4",
     "prettier": "^3.2.5",
     "yargs": "^17.7.2",
     "voca": "^1.4.1"

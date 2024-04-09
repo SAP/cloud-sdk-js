@@ -72,25 +72,25 @@ function validateTitle(title) {
 }
 exports.validateTitle = validateTitle;
 function validatePreamble(preamble) {
-    var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var groups, commitType, isBreaking, _b, _c;
+        var groups, commitType, isBreaking, _a, _b;
+        var _c;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
-                    groups = (_a = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)) === null || _a === void 0 ? void 0 : _a.groups;
+                    groups = (_c = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)) === null || _c === void 0 ? void 0 : _c.groups;
                     if (!groups) {
                         return [2 /*return*/, (0, core_1.setFailed)('Could not parse preamble. Ensure it follows the conventional commit guidelines.')];
                     }
                     commitType = groups.commitType, isBreaking = groups.isBreaking;
                     validateCommitType(commitType);
-                    _b = validateChangesets;
-                    _c = [preamble,
+                    _a = validateChangesets;
+                    _b = [preamble,
                         commitType,
                         !!isBreaking];
                     return [4 /*yield*/, extractChangedFilesContents()];
                 case 1:
-                    _b.apply(void 0, _c.concat([_d.sent()]));
+                    _a.apply(void 0, _b.concat([_d.sent()]));
                     return [2 /*return*/];
             }
         });

@@ -9018,10 +9018,10 @@ socks-proxy-agent@^8.0.2:
     debug "^4.3.4"
     socks "^2.7.1"
 
-socks@2.8.1, socks@^2.3.3, socks@^2.6.2, socks@^2.7.1:
-  version "2.8.1"
-  resolved "https://registry.npmjs.org/socks/-/socks-2.8.1.tgz#22c7d9dd7882649043cba0eafb49ae144e3457af"
-  integrity sha512-B6w7tkwNid7ToxjZ08rQMT8M9BJAf8DKx8Ft4NivzH0zBUfd6jldGcisJn/RLgxcX3FPNDdNQCUEMMT79b+oCQ==
+socks@2.8.2, socks@^2.3.3, socks@^2.6.2, socks@^2.7.1:
+  version "2.8.2"
+  resolved "https://registry.npmjs.org/socks/-/socks-2.8.2.tgz#568443367cd28d87caa19ae86c7c9d9337f6e6c7"
+  integrity sha512-5Hvyu6Md91ooZzdrN/bSn/zlulFaRHrk2/6IY6qQNa3oVHTiG+CKxBV5PynKCGf31ar+3/hyPvlHFAYaBEOa3A==
   dependencies:
     ip-address "^9.0.5"
     smart-buffer "^4.2.0"

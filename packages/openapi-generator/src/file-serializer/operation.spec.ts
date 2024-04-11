@@ -122,7 +122,7 @@ describe('serializeOperation', () => {
         additionalProperties: { type: 'any' },
         properties: []
       },
-      pathPattern: 'test(\'{id}\')'
+      pathPattern: "test('{id}')"
     };
 
     expect(serializeOperation(operation)).toMatchSnapshot();

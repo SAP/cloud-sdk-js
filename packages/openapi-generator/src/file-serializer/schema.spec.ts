@@ -108,13 +108,22 @@ describe('serializeSchema for object schemas', () => {
 });
 
 describe('serializeSchema for array schemas', () => {
+  it('serializes array schema', () => {
+    expect(
+      serializeSchema({
+        uniqueItems: false,
+        items: { type: 'string' }
+      })
+    ).toEqual('string[]');
+  });
+
   it('serializes array schema with nested array', () => {
     expect(
       serializeSchema({
         uniqueItems: false,
         items: { items: { type: 'string' } }
       })
-    ).toEqual('((string)[])[]');
+    ).toEqual('string[][]');
   });
 
   it('serializes array schema with unique items', () => {

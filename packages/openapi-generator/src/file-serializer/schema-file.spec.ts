@@ -106,7 +106,7 @@ describe('schemaFile', () => {
           /**
            * Representation of the 'MySchema' schema.
            */
-          export type MySchema = (any)[];"
+          export type MySchema = any[];"
     `);
   });
 

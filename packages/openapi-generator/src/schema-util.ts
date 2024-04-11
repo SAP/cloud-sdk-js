@@ -81,7 +81,11 @@ export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
  * @internal
  */
 export function isArraySchema(obj: any): obj is OpenApiArraySchema {
-  return obj?.items;
+  return obj?.items && !obj?.items.properties;
+}
+
+export function isNestedArraySchema(obj: any): obj is OpenApiArraySchema {
+  return obj?.items && obj?.items?.properties;
 }
 
 /**

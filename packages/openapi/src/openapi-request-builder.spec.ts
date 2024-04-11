@@ -234,9 +234,13 @@ describe('openapi-request-builder', () => {
   });
 
   it('encodes path parameters', async () => {
-    const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
-      pathParameters: { id: '^test' }
-    });
+    const requestBuilder = new OpenApiRequestBuilder(
+      'get',
+      "/test('{someId}')/{id}",
+      {
+        pathParameters: { someId: 'value', id: '^test' }
+      }
+    );
     const response = await requestBuilder.executeRaw(destination);
     expect(httpSpy).toHaveBeenCalledWith(
       sanitizeDestination(destination),

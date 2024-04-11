@@ -101,6 +101,33 @@ describe('serializeOperation', () => {
     `);
   });
 
+  it('serializes operation with path parameters inside ()', () => {
+    const operation: OpenApiOperation = {
+      operationId: 'getFn',
+      method: 'get',
+      tags: [],
+      pathParameters: [
+        {
+          in: 'path',
+          name: 'id',
+          originalName: 'id',
+          schema: { type: 'string' },
+          required: true,
+          schemaProperties: {}
+        }
+      ],
+      queryParameters: [],
+      responses: { 200: { description: 'some response description' } },
+      response: {
+        additionalProperties: { type: 'any' },
+        properties: []
+      },
+      pathPattern: 'test(\'{id}\')'
+    };
+
+    expect(serializeOperation(operation)).toMatchSnapshot();
+  });
+
   it('serializes operation with only query parameters', () => {
     const operation: OpenApiOperation = {
       operationId: 'getFn',

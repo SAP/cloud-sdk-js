@@ -28,14 +28,17 @@ export function serializeSchema(schema: OpenApiSchema): string {
   if (isReferenceObject(schema)) {
     return schema.schemaName;
   }
+
   if (isArraySchema(schema)) {
     const type = serializeSchema(schema.items);
     return schema.uniqueItems ? `Set<${type}>` : `${type}[]`;
   }
+
   if (isNestedArraySchema(schema)) {
     const type = serializeSchema(schema.items);
     return schema.uniqueItems ? `Set<${type}>` : `(${type})[]`;
   }
+
   if (isObjectSchema(schema)) {
     return serializeObjectSchema(schema);
   }

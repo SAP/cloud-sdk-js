@@ -156,7 +156,7 @@ describe('serializeOperation', () => {
        */
       getFn: (queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
         'get',
-        'test',
+        "test",
         {
               queryParameters
             }
@@ -200,7 +200,7 @@ describe('serializeOperation', () => {
        */
       createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
         'post',
-        'test/{id}',
+        "test/{id}",
         {
               pathParameters: { id },
               body
@@ -236,7 +236,7 @@ describe('serializeOperation', () => {
        */
       fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
         'post',
-        'test',
+        "test",
         {
               body
             }

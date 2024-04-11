@@ -52,7 +52,7 @@ describe('serializeOperation', () => {
        */
       getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
         'get',
-        'test/{id}/{subId}',
+        "test/{id}/{subId}",
         {
               pathParameters: { id, subId },
               queryParameters
@@ -93,7 +93,7 @@ describe('serializeOperation', () => {
        */
       deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
         'delete',
-        'test/{id}',
+        "test/{id}",
         {
               pathParameters: { id }
             }

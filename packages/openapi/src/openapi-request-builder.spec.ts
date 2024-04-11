@@ -247,7 +247,7 @@ describe('openapi-request-builder', () => {
       {
         method: 'get',
         middleware: [],
-        url: '/test/%5Etest',
+        url: "/test('value')/%5Etest",
         headers: { requestConfig: {} },
         params: { requestConfig: {} },
         data: undefined

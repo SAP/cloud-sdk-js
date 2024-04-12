@@ -8,7 +8,6 @@ import { getType } from '../parser/type-mapping';
 import {
   isReferenceObject,
   isArraySchema,
-  isNestedArraySchema,
   isObjectSchema,
   isEnumSchema,
   isOneOfSchema,
@@ -31,12 +30,9 @@ export function serializeSchema(schema: OpenApiSchema): string {
 
   if (isArraySchema(schema)) {
     const type = serializeSchema(schema.items);
-    return schema.uniqueItems ? `Set<${type}>` : `${type}[]`;
-  }
-
-  if (isNestedArraySchema(schema)) {
-    const type = serializeSchema(schema.items);
-    return schema.uniqueItems ? `Set<${type}>` : `(${type})[]`;
+    if ('properties' in schema.items) {
+      return schema.uniqueItems ? `Set<${type}>` : `(${type})[]`;
+    } return schema.uniqueItems ? `Set<${type}>` : `${type}[]`;
   }
 
   if (isObjectSchema(schema)) {

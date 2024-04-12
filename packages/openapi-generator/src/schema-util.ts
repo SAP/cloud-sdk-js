@@ -81,17 +81,7 @@ export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
  * @internal
  */
 export function isArraySchema(obj: any): obj is OpenApiArraySchema {
-  return obj?.items && !obj?.items.properties;
-}
-
-/**
- * Type guard to check whether an object is of type `OpenApiArraySchema`.
- * @param obj - Object to check.
- * @returns `true` if the object is a nested array schema, `false` otherwise.
- * @internal
- */
-export function isNestedArraySchema(obj: any): obj is OpenApiArraySchema {
-  return obj?.items && obj?.items?.properties;
+  return obj?.items;
 }
 
 /**

@@ -123,7 +123,7 @@ describe('serializeSchema for array schemas', () => {
         uniqueItems: false,
         items: { items: { type: 'string' } }
       })
-    ).toEqual('(string)[][]');
+    ).toEqual('string[][]');
   });
 
   it('serializes array schema with unique items', () => {

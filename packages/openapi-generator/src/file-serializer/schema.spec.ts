@@ -121,9 +121,22 @@ describe('serializeSchema for array schemas', () => {
     expect(
       serializeSchema({
         uniqueItems: false,
-        items: { items: { type: 'string' } }
+        items: {
+          properties: [
+            {
+              name: 'name',
+              required: true,
+              schema: { type: 'string' },
+              schemaProperties: {}
+            }
+          ]
+         }
       })
-    ).toEqual('string[][]');
+    ).toMatchInlineSnapshot(`
+      "({
+            'name': string;
+          })[]"
+    `);
   });
 
   it('serializes array schema with unique items', () => {

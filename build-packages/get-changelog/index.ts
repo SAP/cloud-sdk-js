@@ -3,6 +3,6 @@ import { getChangelog } from '../../scripts/get-changelog';
 
 try {
   setOutput('changelog', getChangelog());
-} catch (error) {
+} catch (error)  {
   setFailed(error.message);
 }

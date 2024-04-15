@@ -41,7 +41,7 @@ describe('apiFile', () => {
          */
         getFn: (id: string) => new OpenApiRequestBuilder<any>(
           'get',
-          'test/{id}',
+          "test/{id}",
           {
                 pathParameters: { id }
               }
@@ -126,7 +126,7 @@ describe('apiFile', () => {
          */
         getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}) => new OpenApiRequestBuilder<string>(
           'get',
-          'test/{id}',
+          "test/{id}",
           {
                 pathParameters: { id },
                 queryParameters
@@ -139,7 +139,7 @@ describe('apiFile', () => {
          */
         createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
           'post',
-          'test',
+          "test",
           {
                 body
               }
@@ -178,7 +178,7 @@ describe('apiFile', () => {
          */
         getFn: () => new OpenApiRequestBuilder<any>(
           'get',
-          'test'
+          "test"
         )
       };"
     `);

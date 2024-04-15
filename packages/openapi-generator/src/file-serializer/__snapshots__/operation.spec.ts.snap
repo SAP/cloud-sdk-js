@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`serializeOperation serializes operation with path parameters inside () 1`] = `
+"/**
+ * Create a request builder for execution of get requests to the 'test('{id}')' endpoint.
+ * @param id - Path parameter.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+getFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
+  'get',
+  "test('{id}')",
+  {
+        pathParameters: { id }
+      }
+)"
+`;

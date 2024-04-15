@@ -52,7 +52,7 @@ describe('serializeOperation', () => {
        */
       getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
         'get',
-        'test/{id}/{subId}',
+        "test/{id}/{subId}",
         {
               pathParameters: { id, subId },
               queryParameters
@@ -93,12 +93,39 @@ describe('serializeOperation', () => {
        */
       deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
         'delete',
-        'test/{id}',
+        "test/{id}",
         {
               pathParameters: { id }
             }
       )"
     `);
+  });
+
+  it('serializes operation with path parameters inside ()', () => {
+    const operation: OpenApiOperation = {
+      operationId: 'getFn',
+      method: 'get',
+      tags: [],
+      pathParameters: [
+        {
+          in: 'path',
+          name: 'id',
+          originalName: 'id',
+          schema: { type: 'string' },
+          required: true,
+          schemaProperties: {}
+        }
+      ],
+      queryParameters: [],
+      responses: { 200: { description: 'some response description' } },
+      response: {
+        additionalProperties: { type: 'any' },
+        properties: []
+      },
+      pathPattern: "test('{id}')"
+    };
+
+    expect(serializeOperation(operation)).toMatchSnapshot();
   });
 
   it('serializes operation with only query parameters', () => {
@@ -129,7 +156,7 @@ describe('serializeOperation', () => {
        */
       getFn: (queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
         'get',
-        'test',
+        "test",
         {
               queryParameters
             }
@@ -173,7 +200,7 @@ describe('serializeOperation', () => {
        */
       createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
         'post',
-        'test/{id}',
+        "test/{id}",
         {
               pathParameters: { id },
               body
@@ -209,7 +236,7 @@ describe('serializeOperation', () => {
        */
       fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
         'post',
-        'test',
+        "test",
         {
               body
             }

@@ -15,7 +15,7 @@ import { serializeSchema } from './schema';
 export function serializeOperation(operation: OpenApiOperation): string {
   const requestBuilderParams = [
     `'${operation.method}'`,
-    `'${operation.pathPattern}'`
+    `"${operation.pathPattern}"`
   ];
 
   const bodyAndQueryParams = serializeParamsForRequestBuilder(operation);

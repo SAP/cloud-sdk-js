@@ -130,7 +130,7 @@ describe('serializeSchema for array schemas', () => {
               schemaProperties: {}
             }
           ]
-         }
+        }
       })
     ).toMatchInlineSnapshot(`
       "({

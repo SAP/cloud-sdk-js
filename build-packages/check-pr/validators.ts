@@ -8,7 +8,7 @@ const validCommitTypes = ['feat', 'fix', 'chore'];
 
 // Expected format: preamble(topic)!: Title text
 export async function validateTitle(title: string): Promise<void> {
-  if (!title.includes(':'))  {
+  if (!title.includes(':')) {
     return setFailed(
       'PR title does not adhere to conventional commit guidelines. No preamble found.'
     );

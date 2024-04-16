@@ -105,9 +105,53 @@ describe('serializeSchema for object schemas', () => {
           } & Record<string, string>"
     `);
   });
+
+  it('serializes object schema with array items and no additional properties', () => {
+    expect(
+      serializeSchema({
+        properties: [
+          {
+            name: 'objectArrayProp',
+            required: true,
+            schema: {
+              uniqueItems: false,
+              items: {
+                properties: [
+                  {
+                    name: 'name',
+                    required: true,
+                    schema: { type: 'string' },
+                    schemaProperties: {}
+                  }
+                ],
+                additionalProperties: { type: 'any' }
+              }
+            },
+            schemaProperties: {}
+          }
+        ],
+        additionalProperties: { type: 'any' }
+      })
+    ).toMatchInlineSnapshot(`
+    "{
+          'objectArrayProp': ({
+                'name': string;
+              } & Record<string, any>)[];
+        } & Record<string, any>"
+    `);
+  });
 });
 
 describe('serializeSchema for array schemas', () => {
+  it('serializes array schema', () => {
+    expect(
+      serializeSchema({
+        uniqueItems: false,
+        items: { type: 'string' }
+      })
+    ).toEqual('string[]');
+  });
+
   it('serializes array schema with nested array', () => {
     expect(
       serializeSchema({

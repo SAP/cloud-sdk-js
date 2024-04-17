@@ -1,5 +1,14 @@
 # @sap-cloud-sdk/openapi
 
+## 3.14.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.14.0
+- @sap-cloud-sdk/http-client@3.14.0
+- @sap-cloud-sdk/resilience@3.14.0
+- @sap-cloud-sdk/util@3.14.0
+
 ## 3.13.0
 
 ### Patch Changes

@@ -28,6 +28,15 @@
 
 - 
 
+# 3.14.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.14.0
+
+## Fixed Issues
+
+- [openapi-generator] Fix nested array type in generated OpenAPI schemas such that array wraps the whole object. (ff3ede6)
+- [openapi-generator] Fix serialization of path params that contain quotes to avoid syntax error and failing client generation (b4bc9ad)
+
 # 3.13.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.13.0

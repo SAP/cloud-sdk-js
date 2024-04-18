@@ -18,6 +18,7 @@ import {
   mockFetchDestinationCalls
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
+import { CustomRequestConfig } from './types';
 
 const destination: HttpDestination = {
   url: 'http://example.com'
@@ -322,10 +323,18 @@ describe('openapi-request-builder', () => {
     it('should overwrite default request config with filtered custom request config', async () => {
       const requestBuilder = new OpenApiRequestBuilder('get', '/test');
       requestBuilder.addCustomRequestConfiguration({
-        method: 'merge'
+        timeout: 100
       });
       const requestConfig = await requestBuilder['requestConfig']();
-      expect(requestConfig['method']).toBe('merge');
+      expect(requestConfig['timeout']).toBe(100);
+    });
+    it('test the exposed type from SDK', async () => {
+      const reusedConfig: CustomRequestConfig = { timeout: 2000 };
+      const requestBuilder = new OpenApiRequestBuilder('get', '/test');
+      const response = await requestBuilder
+        .addCustomRequestConfiguration(reusedConfig)
+        .execute(destination);
+      expect(response).toBe(dummyResponse);
     });
   });
 });

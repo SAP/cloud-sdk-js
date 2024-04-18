@@ -1,4 +1,5 @@
 import { createLogger, exclude, mergeIgnoreCase } from '@sap-cloud-sdk/util';
+import { CustomRequestConfig } from '@sap-cloud-sdk/openapi/src/types';
 import { OriginOptionsInternal } from './http-client-types';
 
 const logger = createLogger({
@@ -14,7 +15,7 @@ const logger = createLogger({
  * @internal
  */
 export function filterCustomRequestConfig(
-  customRequestConfig: Record<string, string>,
+  customRequestConfig: CustomRequestConfig,
   disallowedKeys = defaultDisallowedKeys
 ): Record<string, string> {
   const removedKeys = Object.keys(customRequestConfig).filter(key =>

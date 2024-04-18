@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 /**
  * Type of the parameters of a given function
@@ -47,3 +47,12 @@ export type UnPromisify<T> = T extends Promise<infer U> ? U : T;
  * @internal
  */
 export type ConstructorType<T> = new (...args: any[]) => T;
+
+/**
+ * The type for parameter in Custom Request Configuration.
+ * @internal
+ */
+export type CustomRequestConfig = Omit<
+  AxiosRequestConfig<unknown>,
+  'method' | 'url' | 'baseURL' | 'data' | 'headers' | 'params'
+>;

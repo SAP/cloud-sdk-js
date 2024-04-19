@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/named
-import { AxiosResponse, AxiosRequestConfig } from 'axios';
+import { AxiosResponse } from 'axios';
+import { HttpRequestConfig } from '@sap-cloud-sdk/http-client/src/http-client-types';
 
 /**
  * Type of the parameters of a given function
@@ -53,6 +54,6 @@ export type ConstructorType<T> = new (...args: any[]) => T;
  * @internal
  */
 export type CustomRequestConfig = Omit<
-  AxiosRequestConfig<unknown>,
-  'method' | 'url' | 'baseURL' | 'data' | 'headers' | 'params'
+  HttpRequestConfig,
+  'url' | 'baseURL' | 'data' | 'headers' | 'params'
 >;

@@ -323,10 +323,10 @@ describe('openapi-request-builder', () => {
     it('should overwrite default request config with filtered custom request config', async () => {
       const requestBuilder = new OpenApiRequestBuilder('get', '/test');
       requestBuilder.addCustomRequestConfiguration({
-        timeout: 100
+        method: 'merge'
       });
       const requestConfig = await requestBuilder['requestConfig']();
-      expect(requestConfig['timeout']).toBe(100);
+      expect(requestConfig['method']).toBe('merge');
     });
     it('test the exposed type from SDK', async () => {
       const reusedConfig: CustomRequestConfig = { timeout: 2000 };

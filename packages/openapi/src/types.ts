@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/named
 import { AxiosResponse } from 'axios';
-import { HttpRequestConfig } from '@sap-cloud-sdk/http-client/src/http-client-types';
 
 /**
  * Type of the parameters of a given function
@@ -48,12 +47,3 @@ export type UnPromisify<T> = T extends Promise<infer U> ? U : T;
  * @internal
  */
 export type ConstructorType<T> = new (...args: any[]) => T;
-
-/**
- * The type for parameter in Custom Request Configuration.
- * @internal
- */
-export type CustomRequestConfig = Omit<
-  HttpRequestConfig,
-  'url' | 'baseURL' | 'data' | 'headers' | 'params'
->;

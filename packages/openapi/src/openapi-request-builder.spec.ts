@@ -7,6 +7,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { retry, timeout } from '@sap-cloud-sdk/resilience';
 import * as resilienceInternal from '@sap-cloud-sdk/resilience/internal';
+import { CustomRequestConfig } from '@sap-cloud-sdk/http-client/src/http-client-types';
 import {
   expectAllMocksUsed,
   certificateSingleResponse,
@@ -18,7 +19,6 @@ import {
   mockFetchDestinationCalls
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
-import { CustomRequestConfig } from './types';
 
 const destination: HttpDestination = {
   url: 'http://example.com'

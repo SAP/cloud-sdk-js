@@ -9,7 +9,7 @@
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "test": "yarn tsd",
-    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"
   },
   "tsd": {
     "directory": "test"

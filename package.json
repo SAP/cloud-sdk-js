@@ -114,7 +114,7 @@
     "typescript": "~5.4.5"
   },
   "resolutions": {
-    "jackspeak": "2.1.1",
+    "strip-ansi": "^6.0.0",
     "@sap/cds": "^6.1.1",
     "color-string": ">=1.5.5",
     "detective-postcss": "^6.1.0",

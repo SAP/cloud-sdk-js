@@ -17,7 +17,7 @@
     "generate": "ts-node generate-e2e-services.ts",
     "check:dependencies": "depcheck .",
     "lint": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
-    "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
+    "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"
   },
   "license": "Apache-2.0",
   "dependencies": {

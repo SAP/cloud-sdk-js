@@ -24,7 +24,7 @@ import {
   OriginOptions,
   HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
-import { CustomRequestConfig } from '@sap-cloud-sdk/http-client/src/http-client-types';
+import { CustomRequestConfig } from '@sap-cloud-sdk/http-client';
 
 /**
  * Request builder for OpenAPI requests.

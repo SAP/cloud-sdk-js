@@ -199,7 +199,6 @@ export interface HttpRequestOptions {
 
 /**
  * The type for parameter in Custom Request Configuration.
- * @internal
  */
 export type CustomRequestConfig = Omit<
   HttpRequestConfig,

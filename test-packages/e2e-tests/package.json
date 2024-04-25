@@ -19,7 +19,7 @@
     "test": "yarn test:e2e",
     "test:e2e": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
-    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'",
     "generate-edmx": "cds compile srv -s TestService -2 edmx > TestService.edmx"
   },

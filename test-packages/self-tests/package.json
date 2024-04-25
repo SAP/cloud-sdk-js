@@ -10,7 +10,7 @@
   "scripts": {
     "test": "yarn test:madge-test",
     "test:madge-test": "yarn ts-node madge-test/check-if-madge-is-working.ts",
-    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"
   },
   "tsd": {
     "directory": "test-test"

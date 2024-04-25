@@ -4,7 +4,7 @@ import {
   HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
 import type { ParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
-import { CustomRequestConfig } from '@sap-cloud-sdk/http-client/src/http-client-types';
+import { CustomRequestConfig } from '@sap-cloud-sdk/http-client';
 
 /**
  * Set of possible request methods.

@@ -17,14 +17,14 @@ import {
   Method,
   HttpResponse,
   HttpRequestConfigWithOrigin,
-  executeHttpRequest
+  executeHttpRequest,
+  CustomRequestConfig
 } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
   OriginOptions,
   HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
-import { CustomRequestConfig } from '@sap-cloud-sdk/http-client';
 
 /**
  * Request builder for OpenAPI requests.

@@ -40,7 +40,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      - run: yarn install --ignore-engines --frozen-lockfile
+      - run: |
+          yarn policies set-version
+          yarn install --ignore-engines --frozen-lockfile
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
@@ -60,7 +62,9 @@ jobs:
           cache: 'yarn'
       - name: REUSE Compliance Check
         uses: fsfe/reuse-action@v1.1
-      - run: yarn install --frozen-lockfile
+      - run:  |
+          yarn policies set-version
+          yarn install --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
       - run: yarn check:test-service
@@ -87,7 +91,9 @@ jobs:
         with:
           node-version: 18
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+      - run: |
+          yarn policies set-version
+          yarn install --frozen-lockfile
       - run: yarn test:e2e
   dependabot:
     runs-on: ubuntu-latest

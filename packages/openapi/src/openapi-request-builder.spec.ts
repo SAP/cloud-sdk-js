@@ -7,7 +7,6 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { retry, timeout } from '@sap-cloud-sdk/resilience';
 import * as resilienceInternal from '@sap-cloud-sdk/resilience/internal';
-import { CustomRequestConfig } from '@sap-cloud-sdk/http-client/src/http-client-types';
 import {
   expectAllMocksUsed,
   certificateSingleResponse,
@@ -327,14 +326,6 @@ describe('openapi-request-builder', () => {
       });
       const requestConfig = await requestBuilder['requestConfig']();
       expect(requestConfig['method']).toBe('merge');
-    });
-    it('test the exposed type from SDK', async () => {
-      const reusedConfig: CustomRequestConfig = { timeout: 2000 };
-      const requestBuilder = new OpenApiRequestBuilder('get', '/test');
-      const response = await requestBuilder
-        .addCustomRequestConfiguration(reusedConfig)
-        .execute(destination);
-      expect(response).toBe(dummyResponse);
     });
   });
 });

@@ -16,11 +16,6 @@ const flatConfig = [
         },
         languageOptions: {
             parser: tseslint.parser,
-            parserOptions: {
-                project: ['./tsconfig.json'],
-                include: ['**/*.ts'],
-                exclude: ['**/*.d.ts', '**/dist/**/*', '**/node_modules/**/*']
-            },
             sourceType: 'module'
         },
         files: ['**/*.ts'],

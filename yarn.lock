@@ -7917,7 +7917,7 @@ puppeteer-core@22.7.1:
     devtools-protocol "0.0.1273771"
     ws "8.16.0"
 
-puppeteer@^22.7.0:
+puppeteer@^22.7.1:
   version "22.7.1"
   resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-22.7.1.tgz#a703d986069c1a383429da1ac9c68a99ae0940aa"
   integrity sha512-JBCBCwQ9+dyPp5haqeecgv0N0vgWFx44woUeKJaPeJT8CU3RXrd8F/tqJQbuAmcWlbMhYJSlTJkIFrwVAs6BNA==
@@ -9369,7 +9369,7 @@ turbo-windows-arm64@1.13.3:
   resolved "https://registry.npmjs.org/turbo-windows-arm64/-/turbo-windows-arm64-1.13.3.tgz#327b8c87d8a01533deb3b7c3a108855aa7b6611d"
   integrity sha512-ouJCgsVLd3icjRLmRvHQDDZnmGzT64GBupM1Y+TjtYn2LVaEBoV6hicFy8x5DUpnqdLy+YpCzRMkWlwhmkX7sQ==
 
-turbo@^1.13.2:
+turbo@^1.13.3:
   version "1.13.3"
   resolved "https://registry.npmjs.org/turbo/-/turbo-1.13.3.tgz#afb7bee4fa9f5b6041dac5b4a7d35fb98f279827"
   integrity sha512-n17HJv4F4CpsYTvKzUJhLbyewbXjq1oLCi90i5tW1TiWDz16ML1eDG7wi5dHaKxzh5efIM56SITnuVbMq5dk4g==

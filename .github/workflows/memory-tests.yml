@@ -36,3 +36,15 @@ jobs:
         working-directory: test-packages/memory-tests/sdk-canary/
       - run: yarn ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v2/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
         name: compare v2 and canary
+      - if: failure() || cancelled()
+        name: Slack Notify
+        uses: rtCamp/action-slack-notify@v2.2.1
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: SDK Pipeline Bot
+          SLACK_TITLE: Memory tests ${{ job.status }}
+          SLACK_MESSAGE: ' '
+          MSG_MINIMAL: event,actions url
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MSG_AUTHOR: ' '
+          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png

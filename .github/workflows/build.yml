@@ -54,7 +54,7 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot
-          SLACK_TITLE: Build Tests ${{ job.status }} (${{ matrix.version }})
+          SLACK_TITLE: Build tests ${{ job.status }} (${{ matrix.version }})
           SLACK_MESSAGE: ' '
           MSG_MINIMAL: event,actions url
           SLACK_COLOR: ${{ job.status }}

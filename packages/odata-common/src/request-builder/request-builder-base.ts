@@ -11,6 +11,7 @@ import {
   noDestinationErrorMessage
 } from '@sap-cloud-sdk/connectivity/internal';
 import { HttpMiddleware } from '@sap-cloud-sdk/http-client/internal';
+import { CustomRequestConfig } from '@sap-cloud-sdk/http-client';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
 
@@ -102,7 +103,7 @@ export abstract class MethodRequestBuilder<
    * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomRequestConfiguration(
-    requestConfiguration: Record<string, any>
+    requestConfiguration: CustomRequestConfig
   ): this {
     this.requestConfig.addCustomRequestConfiguration(requestConfiguration);
     return this;

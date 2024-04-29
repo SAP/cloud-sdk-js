@@ -23,6 +23,7 @@ export {
 export type {
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
+  CustomRequestConfig,
   Method,
   ParameterEncoder
 } from './http-client-types';

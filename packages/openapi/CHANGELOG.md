@@ -1,5 +1,18 @@
 # @sap-cloud-sdk/openapi
 
+## 3.15.0
+
+### Minor Changes
+
+- 4b3ebfd: [Improvement] Expose custom type for addCustomRequestConfiguration method of Openapi Request Builder
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.15.0
+- @sap-cloud-sdk/http-client@3.15.0
+- @sap-cloud-sdk/resilience@3.15.0
+- @sap-cloud-sdk/util@3.15.0
+
 ## 3.14.0
 
 ### Patch Changes

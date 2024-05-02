@@ -28,6 +28,15 @@
 
 - 
 
+# 3.15.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.15.0
+
+## Improvements
+
+- [openapi] Expose custom type for addCustomRequestConfiguration method of Openapi Request Builder (4b3ebfd)
+- [eslint-config] Add a config based on the new Eslint flat config format. The new config can be used inside a `eslint.config.js` file. (7760692)
+
 # 3.14.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.14.0

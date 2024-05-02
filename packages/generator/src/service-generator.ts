@@ -69,10 +69,7 @@ class ServiceGenerator {
       ...vdmServiceEntities,
       serviceOptions: {
         ...serviceOptions,
-        basePath: getBasePath(
-          serviceMetadata,
-          serviceOptions
-        )
+        basePath: getBasePath(serviceMetadata, serviceOptions)
       }
     };
   }

@@ -16,7 +16,7 @@ export function getBasePath(
   metadata: ServiceMetadata,
   optionsPerServiceIn: ServiceOptions
 ): string {
-  let basePath =
+  const basePath =
     optionsPerServiceIn?.basePath ||
     basePathFromSelfLink(metadata.edmx.selfLink) ||
     basePathFromSwagger(metadata.swagger);

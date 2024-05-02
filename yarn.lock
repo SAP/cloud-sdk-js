@@ -1349,15 +1349,15 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@7.8.2":
-  version "7.8.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.8.2.tgz#cdb096e438b167513cb94fdad3581c53c9860802"
-  integrity sha512-nR55IsZTXAZGNvkDhMqjZvw+MyKfFZVdwpN6+dSpQi1OCd7QAW+xo6Tjp3pcOex2hrUv9UG9YHgDrYefjvl++w==
+"@sap/cds-dk@7.9.1":
+  version "7.9.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.9.1.tgz#2e636a1da41e7c99ed45efcef08dbdd716e6aba8"
+  integrity sha512-U7b123N5Z2IGy3q9F/KIerc5Q1T5w2LJofLEHtOtyvF8CuynLP6mDhxHgheL3Al7S9LFPCtPJfIhEDK+Kot5Fg==
   dependencies:
     "@sap/cds" "^7"
     "@sap/cds-foss" "^5.0.0"
     "@sap/cds-mtxs" "^1.9.0"
-    "@sap/eslint-plugin-cds" "^2.6.0"
+    "@sap/eslint-plugin-cds" "^3.0.1"
     "@sap/hdi-deploy" "^4.8.0"
     axios "^1"
     eslint "^8"
@@ -1408,10 +1408,10 @@
     "@sap/cds-compiler" "^3.2.0"
     "@sap/cds-foss" "^4"
 
-"@sap/eslint-plugin-cds@^2.6.0":
-  version "2.7.0"
-  resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-2.7.0.tgz#abd947414780c78a2a2321336fd1b904f63bfb21"
-  integrity sha512-7jsue6S19+mCJWTaUrvpRq7asiTrCg56uUlhQuf4f2dU5Ldhncy3uWog1A3QzadeTEh4n5MVsXGn3NwKNLSHlg==
+"@sap/eslint-plugin-cds@^3.0.1":
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-3.0.2.tgz#c35d364fbd5a09287ea900e03db2ef5bb23aab0b"
+  integrity sha512-T4jxs5QF+YFaItYh7d6KZxCHnZvT+M+NRNSYIyJbtaltJexmYax3JI0SeEQXv5IktKXok42YZvhYOKJKWW56Rg==
   dependencies:
     "@sap/cds" ">=5.6.0"
     semver "^7.3.4"

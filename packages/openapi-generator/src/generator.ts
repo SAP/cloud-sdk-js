@@ -34,8 +34,10 @@ import { convertOpenApiSpec } from './document-converter';
 import { sdkMetadata } from './sdk-metadata';
 import {
   cliOptions,
+  GenerationHookHandler,
   GeneratorOptions,
   ParsedGeneratorOptions,
+  ProgrammaticOptions,
   tsconfigJson
 } from './options';
 
@@ -68,7 +70,7 @@ export async function generate(
  * @internal
  */
 export async function generateWithParsedOptions(
-  options: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions & ProgrammaticOptions
 ): Promise<void> {
   if (!options.input.length || options.outputDir === '') {
     throw new Error('Either input or outputDir were not set.');
@@ -85,13 +87,15 @@ export async function generateWithParsedOptions(
 
   const optionsPerService = await getOptionsPerService(inputFilePaths, options);
   const tsConfig = await tsconfigJson(options);
+  const generationHook = options.generationHook;
 
   const promises = inputFilePaths.map(inputFilePath =>
     generateService(
       inputFilePath,
       options,
       optionsPerService[getRelPathWithPosixSeparator(inputFilePath)],
-      tsConfig
+      tsConfig,
+      generationHook
     )
   );
 
@@ -142,17 +146,24 @@ async function getFileCreationOptions(
  * @param inputFilePath - Path to the input file.
  * @param tsConfig - File content for the `tsconfig.json`.
  * @param options - Generation options.
+ * @param generationHook - Generation hoook function.
  */
 async function generateSources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
   tsConfig: string | undefined,
-  options: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions,
+  generationHook?: GenerationHookHandler
 ): Promise<void> {
   await mkdir(serviceDir, { recursive: true });
 
-  await generateMandatorySources(serviceDir, openApiDocument, options);
+  await generateMandatorySources(
+    serviceDir,
+    openApiDocument,
+    options,
+    generationHook
+  );
 
   if (options.metadata) {
     await generateMetadata(openApiDocument, inputFilePath, options);
@@ -188,7 +199,8 @@ async function generateSources(
 async function generateMandatorySources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions,
+  generationHook?: GenerationHookHandler
 ): Promise<void> {
   const createFileOptions = await getFileCreationOptions(options);
   if (openApiDocument.schemas.length) {
@@ -202,7 +214,12 @@ async function generateMandatorySources(
     );
   }
 
-  await createApis(serviceDir, openApiDocument, createFileOptions);
+  await createApis(
+    serviceDir,
+    openApiDocument,
+    createFileOptions,
+    generationHook
+  );
   await createFile(
     serviceDir,
     'index.ts',
@@ -214,17 +231,28 @@ async function generateMandatorySources(
 async function createApis(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: CreateFileOptions
+  options: CreateFileOptions,
+  generationHook?: GenerationHookHandler
 ): Promise<void> {
   await Promise.all(
-    openApiDocument.apis.map(api =>
+    openApiDocument.apis.map(api => {
+      if (generationHook) {
+        generationHook(
+          serviceDir,
+          openApiDocument.serviceName,
+          api.name,
+          api,
+          options
+        );
+      }
+
       createFile(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
         apiFile(api, openApiDocument.serviceName),
         options
-      )
-    )
+      );
+    })
   );
 }
 
@@ -252,12 +280,14 @@ async function createSchemaFiles(
  * @param options - Options to configure generation.
  * @param serviceOptions - Service options as defined in the options per service.
  * @param tsConfig - File content for the `tsconfig.json`.
+ * @param generationHook - Generation hoook function.
  */
 async function generateService(
   inputFilePath: string,
   options: ParsedGeneratorOptions,
   serviceOptions: ServiceOptions,
-  tsConfig: string | undefined
+  tsConfig: string | undefined,
+  generationHook?: GenerationHookHandler
 ): Promise<void> {
   const openApiDocument = await convertOpenApiSpec(inputFilePath);
   const parsedOpenApiDocument = await parseOpenApiDocument(
@@ -272,7 +302,8 @@ async function generateService(
     parsedOpenApiDocument,
     inputFilePath,
     tsConfig,
-    options
+    options,
+    generationHook
   );
   logger.info(`Successfully generated client for '${inputFilePath}'`);
 }

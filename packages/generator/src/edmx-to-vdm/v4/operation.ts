@@ -124,13 +124,18 @@ export function filterAndTransformOperations(
     operation => (operation.IsBound.toLowerCase() === 'true') === isBound
   );
 
-  const [withoutOperation, withOperation] = splitMissingOperation(
+  const [withoutOperation] = splitMissingOperation(
+    operationImports,
+    operations
+  );
+
+  const [, boundWithOperation] = splitMissingOperation(
     operationImports,
     filteredByBoundOperations
   );
 
   const [validOperations, operationsWithoutRequiredParameters] =
-    splitMissingParameter(withOperation);
+    splitMissingParameter(boundWithOperation);
 
   if (operationsWithoutRequiredParameters.length) {
     logger.warn(

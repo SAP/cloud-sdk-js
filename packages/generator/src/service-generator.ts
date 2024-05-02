@@ -71,7 +71,6 @@ class ServiceGenerator {
         ...serviceOptions,
         basePath: getBasePath(
           serviceMetadata,
-          this.options.skipValidation,
           serviceOptions
         )
       }

@@ -38,7 +38,7 @@ describe('getXsuaaServiceCredentials', () => {
     expect(() =>
       getXsuaaServiceCredentials()
     ).toThrowErrorMatchingInlineSnapshot(
-      '"Could not find binding to the XSUAA service."'
+      '"Could not find XSUAA service binding."'
     );
   });
 

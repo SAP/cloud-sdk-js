@@ -12,19 +12,19 @@ on:
   workflow_dispatch:
     inputs:
       canary-release:
-        description: 'Canary release after build'
-        type: boolean
-        required: false
-        default: false
-      skip-checks:
-        description: 'Skip tests and checks'
+        description: 'Release canary version (skips tests and checks)'
         type: boolean
         required: false
         default: false
 
 jobs:
+  log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show input from dispatch event
+        run: echo "Canary release flag ${{ inputs.canary-release }}"
   tests:
-    if: github.event.inputs.skip-checks == false
+    if: inputs.canary-release == false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -33,7 +33,7 @@ jobs:
         node-version: [18]
     steps:
       - name: Show input from dispatch event
-        run: echo "Canary release flag ${{ github.event.inputs.canary-release }}"
+        run: echo "Canary release flag ${{ inputs.canary-release }}"
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
       - uses: actions/setup-node@v3
@@ -48,8 +48,21 @@ jobs:
       - run: yarn test:self
       - run: yarn test:build-packages
       - run: yarn test:type
+      - if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
+        name: Slack Notify
+        uses: rtCamp/action-slack-notify@v2.2.1
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: SDK Pipeline Bot
+          SLACK_TITLE: Build tests ${{ job.status }} (${{ matrix.version }})
+          SLACK_MESSAGE: ' '
+          MSG_MINIMAL: event,actions url
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MSG_AUTHOR: ' '
+          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
+
   checks:
-    if: github.event.inputs.skip-checks == false
+    if: inputs.canary-release == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -77,8 +90,21 @@ jobs:
         name: API Doc Check
       - run: yarn check:license
         name: License Check
+      - if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
+        name: Slack Notify
+        uses: rtCamp/action-slack-notify@v2.2.1
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: SDK Pipeline Bot
+          SLACK_TITLE: Build checks ${{ job.status }} (${{ matrix.version }})
+          SLACK_MESSAGE: ' '
+          MSG_MINIMAL: event,actions url
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MSG_AUTHOR: ' '
+          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
+
   e2e-tests:
-    if: github.event.inputs.skip-checks == false
+    if: inputs.canary-release == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -140,9 +166,7 @@ jobs:
     # execute canary release if:
     # either the canary-release was scheduled and the canary-pre-check step resulted in skip-release=false
     # or the canary-release input is true
-    if: |
-      needs.canary-release-pre-check.outputs.skip-release == 'false' ||
-      always() && github.event.inputs.canary-release == true
+    if: always() && (needs.canary-release-pre-check.outputs.skip-release == 'false' || inputs.canary-release == true)
     runs-on: ubuntu-latest
     needs: [canary-release-pre-check]
     steps:

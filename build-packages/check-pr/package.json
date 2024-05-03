@@ -9,8 +9,8 @@
     "postcompile": "ncc build lib/index.js --out ../../.github/actions/check-pr/",
     "test": "yarn test:unit",
     "test:unit": "jest",
-    "lint": "eslint --ignore-pattern '!index.ts' && prettier --check '**/*.ts'",
-    "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write '**/*.ts'",
+    "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
+    "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",
     "all": "yarn && yarn run lint && yarn run compile"
   },
@@ -24,6 +24,6 @@
     "eslint": "^8.57.0",
     "mock-fs": "^5.2.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   }
 }

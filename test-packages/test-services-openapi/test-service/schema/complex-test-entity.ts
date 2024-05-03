@@ -10,9 +10,9 @@ import type { TestEntity } from './test-entity';
  */
 export type ComplexTestEntity = {
   referenceProperty?: SimpleTestEntity;
-  arrayProperty?: {
+  arrayProperty?: ({
     item?: string;
-  } & Record<string, any>[];
+  } & Record<string, any>)[];
   uniqueItemsProperty?: Set<string>;
   requiredPropertiesProperty?: {
     optionalProperty?: string;

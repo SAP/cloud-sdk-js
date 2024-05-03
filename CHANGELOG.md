@@ -28,6 +28,32 @@
 
 - 
 
+# 3.15.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.15.0
+
+## Improvements
+
+- [openapi] Expose custom type for addCustomRequestConfiguration method of Openapi Request Builder (4b3ebfd)
+- [eslint-config] Add a config based on the new Eslint flat config format. The new config can be used inside a `eslint.config.js` file. (7760692)
+
+# 3.14.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.14.0
+
+## Fixed Issues
+
+- [openapi-generator] Fix nested array type in generated OpenAPI schemas such that array wraps the whole object. (ff3ede6)
+- [openapi-generator] Fix serialization of path params that contain quotes to avoid syntax error and failing client generation (b4bc9ad)
+
+# 3.13.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.13.0
+
+## New Functionalities
+
+- [connectivity] Support the AI Core Service Binding when creating destinations from service bindings (f72986a)
+
 # 3.12.1
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.12.1

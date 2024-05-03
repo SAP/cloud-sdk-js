@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/http-client",
-  "version": "3.12.1",
+  "version": "3.15.0",
   "description": "SAP Cloud SDK for JavaScript http-client",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -31,21 +31,21 @@
     "test:unit": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
-    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck .",
     "check:public-api": "ts-node ../../scripts/check-public-api-cli.ts",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^3.12.1",
-    "@sap-cloud-sdk/resilience": "^3.12.1",
-    "@sap-cloud-sdk/util": "^3.12.1",
-    "axios": "^1.6.7"
+    "@sap-cloud-sdk/connectivity": "^3.15.0",
+    "@sap-cloud-sdk/resilience": "^3.15.0",
+    "@sap-cloud-sdk/util": "^3.15.0",
+    "axios": "^1.6.8"
   },
   "devDependencies": {
     "https-proxy-agent": "^7.0.4",
     "nock": "^13.5.4",
-    "typescript": "~5.3.3",
+    "typescript": "~5.4.5",
     "jsonwebtoken": "^9.0.2"
   }
 }

@@ -8,7 +8,7 @@ on:
         required: false
 
 env:
-  INPUT_MAJOR_VERSION: ${{ github.event.inputs.majorVersion }}
+  INPUT_MAJOR_VERSION: ${{ inputs.majorVersion }}
 
 jobs:
   bump:

@@ -7,8 +7,8 @@
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/build-packages/get-changelog/index.js --out ../../.github/actions/get-changelog/",
-    "lint": "eslint --ignore-pattern '!index.ts' && prettier --check '**/*.ts'",
-    "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write '**/*.ts'",
+    "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
+    "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",
     
     "all": "yarn && yarn run lint && yarn run compile"
@@ -21,6 +21,6 @@
     "depcheck": "^1.4.7",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   }
 }

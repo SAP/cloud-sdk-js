@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/eslint-config",
-  "version": "3.12.1",
+  "version": "3.15.0",
   "description": "eslint config for the SAP Cloud SDK",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -17,22 +17,24 @@
     "access": "public"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "flat-config.js"
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "eslint-config-prettier": "^9.1.0"
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsdoc": "^48.2.3",
+    "eslint-plugin-regex": "^1.10.0",
+    "eslint-plugin-unused-imports": "^3.2.0",
+    "typescript-eslint": "^7.8.0",
+    "@eslint/js": "^9.0.0"
   },
   "peerDependencies": {
-    "@typescript-eslint/parser": "^7.0.0",
-    "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "eslint-plugin-regex": "^1.10.0",
-    "eslint": "^8.0.0",
-    "eslint-plugin-import": "^2.0.0",
-    "eslint-plugin-unused-imports": "^3.0.0",
-    "eslint-plugin-jsdoc": "^48.0.0"
+    "eslint": "^8.0.0"
   }
 }

@@ -10,7 +10,19 @@ jobs:
     name: 'Security rating'
     steps:
       - uses: actions/checkout@v3
-      - uses: SAP/fosstars-rating-core-action@v1.10.0
+      - uses: SAP/fosstars-rating-core-action@v1.14.0
         with:
           report-branch: fosstars-report
           token: '${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}'
+      - if: failure() || cancelled()
+        name: Slack Notify
+        uses: rtCamp/action-slack-notify@v2.2.1
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: SDK Pipeline Bot
+          SLACK_TITLE: Fosstars scan ${{ job.status }}
+          SLACK_MESSAGE: ' '
+          MSG_MINIMAL: event,actions url
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MSG_AUTHOR: ' '
+          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png

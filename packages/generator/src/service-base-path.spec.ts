@@ -55,7 +55,7 @@ describe('options-per-service', () => {
       getBasePath(metadata, { basePath: undefined } as ServiceOptions)
     ).toEqual('/');
     expect(warnSpy).toHaveBeenCalledWith(
-      '[ file ] No base path could be determined from available metadata! Setting "basePath" to "/" as default value. Consider using \'optionsPerService\' configuration to explicitly set a value.'
+      '[ file ] No base path could be determined from available metadata! Setting "basePath" to "/" as default value. Consider the "optionsPerService" configuration to explicitly set a value.'
     );
   });
 });

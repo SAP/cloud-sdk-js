@@ -24,7 +24,7 @@ export function getBasePath(
     logger.warn(
       `[ ${
         parse(metadata.edmx.path.toString()).name
-      } ] No base path could be determined from available metadata! Setting "basePath" to "/" as default value. Consider using 'optionsPerService' configuration to explicitly set a value.`
+      } ] No base path could be determined from available metadata! Setting "basePath" to "/" as default value. Consider using the "optionsPerService" configuration to explicitly set a value.`
     );
   }
   return basePath ?? '/';

@@ -2,4 +2,4 @@
 "@sap-cloud-sdk/generator": minor
 ---
 
-[Fix] Filter for operations without OperationImport. Unnecessay warning logs are no longer generated.
+[Fix] Fix incorrect warning logs for operation imports that do have a matching operation in the service specification.

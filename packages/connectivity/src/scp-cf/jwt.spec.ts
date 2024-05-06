@@ -23,8 +23,9 @@ const jwtPayload = {
   name: 'John Doe',
   iat: 1516239022,
   ext_attr: { enhancer: 'XSUAA' },
-  aud: ['clientid'],
-  zid: 'my-zone'
+  aud: ['xsapp-myapp!123.clientid'],
+  zid: 'my-zone',
+  client_id: 'clientid'
 };
 
 export function responseWithPublicKey(key = publicKey) {

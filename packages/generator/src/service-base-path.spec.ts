@@ -18,7 +18,7 @@ describe('options-per-service', () => {
       basePath: '/options-test-service'
     } as ServiceOptions;
 
-    expect(getBasePath(metadata, false, optionsPerServiceIn)).toEqual(
+    expect(getBasePath(metadata, optionsPerServiceIn)).toEqual(
       '/options-test-service'
     );
   });
@@ -34,11 +34,11 @@ describe('options-per-service', () => {
     };
 
     expect(
-      getBasePath(metadata, false, { basePath: undefined } as ServiceOptions)
+      getBasePath(metadata, { basePath: undefined } as ServiceOptions)
     ).toEqual('/swagger-test-service-path');
   });
 
-  it('should return "/" if skipValidation is true and basePath cannot be determined from options-per-service, self link and swagger', () => {
+  it('should return "/" if basePath cannot be determined from options-per-service, self link and swagger', () => {
     const metadata = {
       edmx: {
         path: 'test/path/file.edmx'
@@ -52,22 +52,10 @@ describe('options-per-service', () => {
     });
     const warnSpy = jest.spyOn(logger, 'warn');
     expect(
-      getBasePath(metadata, true, { basePath: undefined } as ServiceOptions)
+      getBasePath(metadata, { basePath: undefined } as ServiceOptions)
     ).toEqual('/');
     expect(warnSpy).toHaveBeenCalledWith(
-      '[ file ] No base path could be determined from available metadata! Setting "basePath" to "/" as default value. Consider using \'optionsPerService\' configuration to explicitly set a value.'
+      '[ file ] No base path could be determined from available metadata! Setting "basePath" to "/" as default value. Consider using the "optionsPerService" configuration to explicitly set a value.'
     );
-  });
-
-  it('should throw if skipValidation is false and basePath cannot be determined from options-per-service, self link and swagger', () => {
-    const metadata = {
-      edmx: {
-        path: 'test/path/file.edmx'
-      } as any,
-      swagger: {} as any
-    };
-    expect(() =>
-      getBasePath(metadata, false, { basePath: undefined } as ServiceOptions)
-    ).toThrowError(/No base path could be determined from available metadata!/);
   });
 });

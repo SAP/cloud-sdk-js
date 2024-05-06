@@ -14,30 +14,20 @@ const logger = createLogger({
  */
 export function getBasePath(
   metadata: ServiceMetadata,
-  skipValidation: boolean,
   optionsPerServiceIn: ServiceOptions
 ): string {
-  let basePath =
+  const basePath =
     optionsPerServiceIn?.basePath ||
     basePathFromSelfLink(metadata.edmx.selfLink) ||
     basePathFromSwagger(metadata.swagger);
   if (!basePath) {
-    if (skipValidation) {
-      logger.warn(
-        `[ ${
-          parse(metadata.edmx.path.toString()).name
-        } ] No base path could be determined from available metadata! Setting "basePath" to "/" as default value. Consider using 'optionsPerService' configuration to explicitly set a value.`
-      );
-      basePath = '/';
-    } else {
-      throw new Error(
-        `[ ${
-          parse(metadata.edmx.path.toString()).name
-        } ] No base path could be determined from available metadata! Enable '--skipValidation' to use "/" as a default value. Alternatively use the 'optionsPerService' configuration to explicitly set a value.`
-      );
-    }
+    logger.warn(
+      `[ ${
+        parse(metadata.edmx.path.toString()).name
+      } ] No base path could be determined from available metadata! Setting "basePath" to "/" as default value. Consider using the "optionsPerService" configuration to explicitly set a value.`
+    );
   }
-  return basePath;
+  return basePath ?? '/';
 }
 
 function basePathFromSelfLink(

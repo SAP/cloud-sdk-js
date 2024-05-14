@@ -29,20 +29,20 @@ const logger = createLogger({
 
 const extractResponse = (response: string) => `${response}.value`;
 
-function splitMissingOperation(
+function splitOperationsByMissingImports(
   operationImports: EdmxOperationImport[],
   operations: EdmxOperation[]
-): [EdmxJoinedOperation[], EdmxOperationImport[]] {
+): [EdmxOperationImport[], EdmxJoinedOperation[]] {
   return operationImports.reduce<
-    [EdmxJoinedOperation[], EdmxOperationImport[]]
+    [EdmxOperationImport[], EdmxJoinedOperation[]]
   >(
-    ([withOperation, withoutOperation], curr) => {
+    ([withoutOperations, withOperations], curr) => {
       const operation = findOperationByImportName(
         operations,
         curr.operationName
       );
       if (operation) {
-        withOperation.push({
+        withOperations.push({
           Name: curr.Name,
           operationName: curr.operationName,
           Parameter: operation.Parameter,
@@ -51,9 +51,9 @@ function splitMissingOperation(
           operationType: curr.operationType
         });
       } else {
-        withoutOperation.push(curr);
+        withoutOperations.push(curr);
       }
-      return [withOperation, withoutOperation];
+      return [withoutOperations, withOperations];
     },
     [[], []]
   );
@@ -120,35 +120,31 @@ export function filterAndTransformOperations(
   operations: EdmxOperation[],
   isBound: boolean
 ): EdmxJoinedOperation[] {
-  const filteredByBoundOperations = operations.filter(
-    operation => (operation.IsBound.toLowerCase() === 'true') === isBound
-  );
-
-  const withoutOperation = operationImports.filter(
-    operation => !findOperationByImportName(operations, operation.operationName)
-  );
-
-  const [boundWithOperation] = splitMissingOperation(
+  const [withoutOperations, withOperations] = splitOperationsByMissingImports(
     operationImports,
-    filteredByBoundOperations
+    operations
+  );
+
+  const relevantOperations = withOperations.filter(
+    operation => operation.IsBound === isBound
   );
 
   const validBoundOperations =
-    validateBoundOperationParameters(boundWithOperation);
+    validateBoundOperationParameters(relevantOperations);
 
   validateOperationImports(
-    withoutOperation,
-    withoutOperation[0]?.operationType
+    withoutOperations,
+    withoutOperations[0]?.operationType
   );
 
   return validBoundOperations;
 }
 
 function validateBoundOperationParameters(
-  boundWithOperations: EdmxJoinedOperation[]
+  relevantOperations: EdmxJoinedOperation[]
 ): EdmxJoinedOperation[] {
   const [validOperations, operationsWithoutRequiredParameters] =
-    splitMissingParameter(boundWithOperations);
+    splitMissingParameter(relevantOperations);
 
   if (operationsWithoutRequiredParameters.length) {
     logger.warn(

@@ -75,7 +75,7 @@ function buildBoundOperation(
   };
 }
 
-function splitMissingParameter(
+function splitBoundOperationsByMissingParameters(
   operations: EdmxJoinedOperation[]
 ): [EdmxJoinedOperation[], EdmxJoinedOperation[]] {
   return operations.reduce<[EdmxJoinedOperation[], EdmxJoinedOperation[]]>(
@@ -129,22 +129,23 @@ export function filterAndTransformOperations(
     operation => operation.IsBound === isBound
   );
 
-  const validBoundOperations =
-    validateBoundOperationParameters(relevantOperations);
-
   validateOperationImports(
     withoutOperations,
     withoutOperations[0]?.operationType
   );
 
-  return validBoundOperations;
+  if (isBound) {
+    return validateBoundOperationParameters(relevantOperations);
+  }
+
+  return relevantOperations;
 }
 
 function validateBoundOperationParameters(
   relevantOperations: EdmxJoinedOperation[]
 ): EdmxJoinedOperation[] {
   const [validOperations, operationsWithoutRequiredParameters] =
-    splitMissingParameter(relevantOperations);
+    splitBoundOperationsByMissingParameters(relevantOperations);
 
   if (operationsWithoutRequiredParameters.length) {
     logger.warn(

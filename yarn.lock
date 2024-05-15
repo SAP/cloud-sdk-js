@@ -1352,10 +1352,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@7.9.1":
-  version "7.9.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.9.1.tgz#2e636a1da41e7c99ed45efcef08dbdd716e6aba8"
-  integrity sha512-U7b123N5Z2IGy3q9F/KIerc5Q1T5w2LJofLEHtOtyvF8CuynLP6mDhxHgheL3Al7S9LFPCtPJfIhEDK+Kot5Fg==
+"@sap/cds-dk@7.9.2":
+  version "7.9.2"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-7.9.2.tgz#53489f6b76248eed3da18e65439aebf85aa4601b"
+  integrity sha512-QdzTW/f9HxiKJXTBI+Nyucg7Uovf2YzdVCnYW/M0kB09M3bqST6rVhoBMl/9oQGl1aTbjRqvp3lpEw21nAApiw==
   dependencies:
     "@sap/cds" "^7"
     "@sap/cds-foss" "^5.0.0"
@@ -9975,7 +9975,7 @@ write-file-atomic@^4.0.2:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.7"
 
-ws@8.17.0:
+ws@8.17.0, ws@^8.4.2:
   version "8.17.0"
   resolved "https://registry.npmjs.org/ws/-/ws-8.17.0.tgz#d145d18eca2ed25aaf791a183903f7be5e295fea"
   integrity sha512-uJq6108EgZMAl20KagGkzCKfMEjxmKvZHG7Tlq0Z6nOky7YF7aq4mOx6xK8TJ/i1LeK4Qus7INktacctDgY8Ow==
@@ -9984,11 +9984,6 @@ ws@^7.0.0:
   version "7.5.9"
   resolved "https://registry.npmjs.org/ws/-/ws-7.5.9.tgz#54fa7db29f4c7cec68b1ddd3a89de099942bb591"
   integrity sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==
-
-ws@^8.4.2:
-  version "8.16.0"
-  resolved "https://registry.npmjs.org/ws/-/ws-8.16.0.tgz#d1cd774f36fbc07165066a60e40323eab6446fd4"
-  integrity sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==
 
 ws@~7.4.0:
   version "7.4.6"

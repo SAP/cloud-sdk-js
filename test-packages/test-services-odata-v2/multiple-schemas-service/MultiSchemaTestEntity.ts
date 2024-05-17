@@ -23,11 +23,11 @@ export class MultiSchemaTestEntity<
   /**
    * Technical entity name for MultiSchemaTestEntity.
    */
-  static _entityName = 'MultiSchemaTestEntity';
+  static override _entityName = 'MultiSchemaTestEntity';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/';
+  static override _defaultBasePath = '/';
   /**
    * All key fields of the MultiSchemaTestEntity entity
    */

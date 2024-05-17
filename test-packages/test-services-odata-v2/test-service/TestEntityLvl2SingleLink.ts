@@ -23,11 +23,11 @@ export class TestEntityLvl2SingleLink<
   /**
    * Technical entity name for TestEntityLvl2SingleLink.
    */
-  static _entityName = 'A_TestEntityLvl2SingleLink';
+  static override _entityName = 'A_TestEntityLvl2SingleLink';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntityLvl2SingleLink entity
    */

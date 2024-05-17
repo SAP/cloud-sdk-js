@@ -28,11 +28,11 @@ export class TestEntityWithMultipleKeys<
   /**
    * Technical entity name for TestEntityWithMultipleKeys.
    */
-  static _entityName = 'TestEntityWithMultipleKeys';
+  static override _entityName = 'TestEntityWithMultipleKeys';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/odata/test-service';
+  static override _defaultBasePath = '/odata/test-service';
   /**
    * All key fields of the TestEntityWithMultipleKeys entity
    */

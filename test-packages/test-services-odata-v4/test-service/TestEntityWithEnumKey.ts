@@ -24,11 +24,11 @@ export class TestEntityWithEnumKey<
   /**
    * Technical entity name for TestEntityWithEnumKey.
    */
-  static _entityName = 'A_TestEntityWithEnumKey';
+  static override _entityName = 'A_TestEntityWithEnumKey';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntityWithEnumKey entity
    */

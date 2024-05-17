@@ -78,8 +78,8 @@ function adjustCustomField(str: string): string {
 }
 
 function addODataVersion(str: string): string {
-  if (str.match(/static _entityName =.*/)) {
-    const nameString = str.match(/static _entityName =.*/)![0];
+  if (str.match(/static override _entityName =.*/)) {
+    const nameString = str.match(/static override _entityName =.*/)![0];
     return str.replace(
       nameString,
       [nameString, 'readonly _oDataVersion: any;'].join(unixEOL)

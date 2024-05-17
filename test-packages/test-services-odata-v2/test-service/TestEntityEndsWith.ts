@@ -21,11 +21,11 @@ export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Technical entity name for TestEntityEndsWith.
    */
-  static _entityName = 'A_TestEntityEndsWithCollection';
+  static override _entityName = 'A_TestEntityEndsWithCollection';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntityEndsWith entity
    */

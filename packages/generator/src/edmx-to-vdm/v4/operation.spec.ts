@@ -248,7 +248,7 @@ describe('action-import', () => {
   });
 
   it('should not log with warning message, when all actions referenced by action imports are found', () => {
-    const logger = createLogger('action-import');
+    const logger = createLogger('operation');
     const warnSpy = jest.spyOn(logger, 'warn');
 
     const formatter = getFormatter();

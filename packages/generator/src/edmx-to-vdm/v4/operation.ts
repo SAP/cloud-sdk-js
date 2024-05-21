@@ -80,13 +80,6 @@ function splitBoundOperationsByMissingParameters(
 ): [EdmxJoinedOperation[], EdmxJoinedOperation[]] {
   return operations.reduce<[EdmxJoinedOperation[], EdmxJoinedOperation[]]>(
     ([validOperations, operationsWithoutRequiredParameters], curr) => {
-      if (!curr.IsBound) {
-        return [
-          [...validOperations, curr],
-          operationsWithoutRequiredParameters
-        ];
-      }
-
       if (!curr.Parameter.length) {
         return [
           validOperations,

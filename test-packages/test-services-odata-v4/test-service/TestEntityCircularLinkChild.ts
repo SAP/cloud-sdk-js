@@ -27,11 +27,11 @@ export class TestEntityCircularLinkChild<
   /**
    * Technical entity name for TestEntityCircularLinkChild.
    */
-  static _entityName = 'A_TestEntityCircularLinkChild';
+  static override _entityName = 'A_TestEntityCircularLinkChild';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntityCircularLinkChild entity
    */

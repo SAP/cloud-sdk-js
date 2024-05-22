@@ -30,11 +30,11 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Technical entity name for TestEntity.
    */
-  static _entityName = 'TestEntity';
+  static override _entityName = 'TestEntity';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/odata/test-service';
+  static override _defaultBasePath = '/odata/test-service';
   /**
    * All key fields of the TestEntity entity
    */

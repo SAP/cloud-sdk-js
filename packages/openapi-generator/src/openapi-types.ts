@@ -93,6 +93,11 @@ export interface OpenApiOperation
    * Query parameters available for this operation.
    */
   queryParameters: OpenApiParameter[];
+
+  /**
+   * Header parameters available for this operation.
+   */
+  headerParameters: OpenApiParameter[];
 }
 
 const supportedMethods = {

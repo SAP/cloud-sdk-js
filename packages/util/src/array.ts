@@ -138,6 +138,35 @@ export function partition<T>(
 }
 
 /**
+ * Split an array into three based on two conditions.
+ * @param arr - Array to partition.
+ * @param condition1 - Function to determine where to put items that satisfy the first condition.
+ * @param condition2 - Function to determine where to put items that satisfy the second condition.
+ * @returns A three dimensional array containing three arrays:
+ *          - The first array includes all items where the first condition was met.
+ *          - The second array includes all items where the second condition was met.
+ *          - The third array includes all items where neither condition was met.
+ */
+export function partitionThree<T>(
+  arr: T[], 
+  condition1: (item: T) => boolean, 
+  condition2: (item: T) => boolean
+): [T[], T[], T[]] {
+  return arr.reduce(
+    ([part1, part2, part3]: [T[], T[], T[]], item) => {
+      if (condition1(item)) {
+        return [[...part1, item], part2, part3];
+      } else if (condition2(item)) {
+        return [part1, [...part2, item], part3];
+      } else {
+        return [part1, part2, [...part3, item]];
+      }
+    },
+    [[], [], []]
+  );
+}
+
+/**
  * Filter an array by removing duplicates and keeping the left most occurrence. By default this compares by identity.
  * @param arr - Array to remove duplicates from.
  * @param comparator - Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.

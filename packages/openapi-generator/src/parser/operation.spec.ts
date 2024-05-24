@@ -10,18 +10,13 @@ import {
 
 const defaultOptions = { strictNaming: true };
 describe('getRelevantParameters', () => {
-  it('ignores cookie and header parameters', async () => {
+  it('ignores cookie parameters', async () => {
     expect(
       getRelevantParameters(
         [
           {
             name: 'param1',
             in: 'cookie',
-            schema: { type: 'string' }
-          },
-          {
-            name: 'param2',
-            in: 'header',
             schema: { type: 'string' }
           }
         ],

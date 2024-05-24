@@ -21,6 +21,7 @@ describe('apiFile', () => {
             }
           ],
           queryParameters: [],
+          headerParameters: [],
           response: { type: 'any' },
           responses: { 200: { description: 'some response description' } },
           pathPattern: 'test/{id}'
@@ -85,6 +86,7 @@ describe('apiFile', () => {
               schemaProperties: {}
             }
           ],
+          headerParameters: [],
           pathPattern: 'test/{id}',
           response: { type: 'string' }
         },
@@ -95,6 +97,7 @@ describe('apiFile', () => {
           tags: [],
           pathParameters: [],
           queryParameters: [],
+          headerParameters: [],
           requestBody: {
             required: true,
             schema: {
@@ -159,6 +162,7 @@ describe('apiFile', () => {
           tags: [],
           pathParameters: [],
           queryParameters: [],
+          headerParameters: [],
           response: { type: 'any' },
           pathPattern: 'test'
         }

@@ -160,10 +160,11 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private getHeaders(): OriginOptions {
-    if (Object.keys(this.customHeaders).length) {
-      return { custom: this.customHeaders, requestConfig: {} };
-    }
-    return { requestConfig: {} };
+    // if (Object.keys(this.customHeaders).length) {
+    //   return { custom: this.customHeaders, requestConfig: {} };
+    // }
+    // return { requestConfig: {} };
+    return { requestConfig: this.parameters?.headerParameters || {} };
   }
 
   private getParameters(): OriginOptions {
@@ -197,6 +198,10 @@ export interface OpenApiRequestParameters {
    * Collection of query parameters.
    */
   queryParameters?: Record<string, any>;
+  /**
+   * Collection of header parameters.
+   */
+  headerParameters?: Record<string, any>;
   /**
    * Request body typically used with "create" and "update" operations (POST, PUT, PATCH).
    */

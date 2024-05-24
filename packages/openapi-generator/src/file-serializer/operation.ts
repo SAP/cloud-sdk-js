@@ -36,9 +36,10 @@ ${operation.operationId}: (${serializeOperationSignature(
 function serializeOperationSignature(operation: OpenApiOperation): string {
   const pathParams = serializePathParamsForSignature(operation);
   const requestBodyParam = serializeRequestBodyParamForSignature(operation);
+  const headerParams = serializeHeaderParamsForSignature(operation);
   const queryParams = serializeQueryParamsForSignature(operation);
 
-  return [pathParams, requestBodyParam, queryParams]
+  return [pathParams, requestBodyParam, headerParams, queryParams]
     .filter(params => params)
     .join(', ');
 }
@@ -83,6 +84,26 @@ function serializeQueryParamsForSignature(
   }
 }
 
+function serializeHeaderParamsForSignature(
+  operation: OpenApiOperation
+): string | undefined {
+  if (operation.headerParameters.length) {
+    const allOptional = operation.headerParameters.every(
+      param => !param.required
+    );
+    const headerParams = operation.headerParameters
+      .map(
+        param =>
+          `'${param.name}'${param.required ? '' : '?'}: ${serializeSchema(
+            param.schema
+          )}`
+      )
+      .join(',\n');
+
+    return `headerParameters${allOptional ? '?' : ''}: {${headerParams}}`;
+  }
+}
+
 function serializeParamsForRequestBuilder(
   operation: OpenApiOperation
 ): string | undefined {
@@ -99,6 +120,9 @@ function serializeParamsForRequestBuilder(
   }
   if (operation.queryParameters.length) {
     params.push('queryParameters');
+  }
+  if (operation.headerParameters.length) {
+    params.push('headerParameters');
   }
   if (params.length) {
     return codeBlock`{

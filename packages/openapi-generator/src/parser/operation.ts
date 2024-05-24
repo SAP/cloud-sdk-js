@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { filterDuplicatesRight, partition } from '@sap-cloud-sdk/util';
+import { filterDuplicatesRight, partitionThree } from '@sap-cloud-sdk/util';
 import { reservedJsKeywords } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { parseRequestBody } from './request-body';
@@ -30,9 +30,10 @@ export function parseOperation(
     refs
   );
 
-  const [pathParams, queryParams] = partition(
+  const [pathParams, headerParams, queryParams] = partitionThree(
     relevantParameters,
-    parameter => parameter.in === 'path'
+    parameter => parameter.in === 'path',
+    parameter => parameter.in === 'header'
   );
 
   const pathParameters = parsePathParameters(pathParams, refs, options);
@@ -43,6 +44,7 @@ export function parseOperation(
     requestBody,
     response,
     queryParameters: parseParameters(queryParams, refs, options),
+    headerParameters: parseParameters(headerParams, refs, options),
     pathParameters,
     pathPattern: parsePathPattern(pathPattern, pathParameters),
     operationId: operation.operationId!,
@@ -59,8 +61,8 @@ export function getRelevantParameters(
 ): OpenAPIV3.ParameterObject[] {
   const resolvedParameters = parameters
     .map(param => refs.resolveObject(param))
-    // Filter cookie and header parameters
-    .filter(param => param.in === 'path' || param.in === 'query');
+    // Filter cookie parameters
+    .filter(param => param.in === 'path' || param.in === 'query' || param.in === 'header');
   return filterDuplicatesRight(
     resolvedParameters,
     (left, right) => left.name === right.name && left.in === right.in
@@ -129,7 +131,7 @@ export function parsePathParameters(
     parsedParameters.map(({ originalName }) => originalName),
     options,
     {
-      reservedWords: ['body', 'queryParameters', ...reservedJsKeywords]
+      reservedWords: ['body', 'queryParameters', 'headerParameters', ...reservedJsKeywords]
     }
   );
 

@@ -24,11 +24,11 @@ export class People<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Technical entity name for People.
    */
-  static _entityName = 'People';
+  static override _entityName = 'People';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath =
+  static override _defaultBasePath =
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * All key fields of the People entity

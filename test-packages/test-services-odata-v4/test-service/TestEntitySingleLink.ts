@@ -31,11 +31,11 @@ export class TestEntitySingleLink<
   /**
    * Technical entity name for TestEntitySingleLink.
    */
-  static _entityName = 'A_TestEntitySingleLink';
+  static override _entityName = 'A_TestEntitySingleLink';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntitySingleLink entity
    */

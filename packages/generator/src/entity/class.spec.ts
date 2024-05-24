@@ -24,13 +24,17 @@ describe('entity class generator generates a class', () => {
     const staticProperties = classDeclaration.properties!.filter(
       prop => prop.isStatic
     );
-    expect(staticProperties.map(prop => [prop.name, prop.initializer])).toEqual(
-      [
-        ['_entityName', `'${breakfastEntity.entitySetName}'`],
-        ['_defaultBasePath', `'${foodService.serviceOptions.basePath}'`],
-        ['_keys', "['EntityName','BreakfastTime']"]
-      ]
-    );
+    expect(
+      staticProperties.map(prop => [
+        prop.name,
+        prop.initializer,
+        prop.hasOverrideKeyword
+      ])
+    ).toEqual([
+      ['_entityName', `'${breakfastEntity.entitySetName}'`, true],
+      ['_defaultBasePath', `'${foodService.serviceOptions.basePath}'`, true],
+      ['_keys', "['EntityName','BreakfastTime']"]
+    ]);
   });
 
   it('has expected instance properties', () => {

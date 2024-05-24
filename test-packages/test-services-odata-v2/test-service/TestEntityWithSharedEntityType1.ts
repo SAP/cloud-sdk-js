@@ -23,11 +23,11 @@ export class TestEntityWithSharedEntityType1<
   /**
    * Technical entity name for TestEntityWithSharedEntityType1.
    */
-  static _entityName = 'A_TestEntityWithSharedEntityType1';
+  static override _entityName = 'A_TestEntityWithSharedEntityType1';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntityWithSharedEntityType1 entity
    */

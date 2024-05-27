@@ -18,7 +18,8 @@ export const defaultTsConfig = {
     moduleResolution: 'node',
     esModuleInterop: true,
     inlineSources: false,
-    strict: true
+    strict: true,
+    noImplicitOverride: true
   },
   include: ['**/*.ts'],
   exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']

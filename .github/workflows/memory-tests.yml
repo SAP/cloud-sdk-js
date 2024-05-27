@@ -38,13 +38,12 @@ jobs:
         name: compare v2 and canary
       - if: failure() || cancelled()
         name: Slack Notify
-        uses: rtCamp/action-slack-notify@v2.2.1
+        uses: rtCamp/action-slack-notify@v2.3.0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot
           SLACK_TITLE: Memory tests ${{ job.status }}
-          SLACK_MESSAGE: ' '
+          SLACK_MESSAGE: 'Test failed'
           MSG_MINIMAL: event,actions url
           SLACK_COLOR: ${{ job.status }}
-          SLACK_MSG_AUTHOR: ' '
           SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png

@@ -30,9 +30,15 @@ export function parseOperation(
     refs
   );
 
-  const pathParams = relevantParameters.filter(parameter => parameter.in === 'path');
-  const headerParams = relevantParameters.filter(parameter => parameter.in === 'header');
-  const queryParams = relevantParameters.filter(parameter => parameter.in === 'query');
+  const pathParams = relevantParameters.filter(
+    parameter => parameter.in === 'path'
+  );
+  const headerParams = relevantParameters.filter(
+    parameter => parameter.in === 'header'
+  );
+  const queryParams = relevantParameters.filter(
+    parameter => parameter.in === 'query'
+  );
 
   const pathParameters = parsePathParameters(pathParams, refs, options);
 
@@ -60,7 +66,10 @@ export function getRelevantParameters(
   const resolvedParameters = parameters
     .map(param => refs.resolveObject(param))
     // Filter cookie parameters
-    .filter(param => param.in === 'path' || param.in === 'query' || param.in === 'header');
+    .filter(
+      param =>
+        param.in === 'path' || param.in === 'query' || param.in === 'header'
+    );
   return filterDuplicatesRight(
     resolvedParameters,
     (left, right) => left.name === right.name && left.in === right.in
@@ -129,7 +138,12 @@ export function parsePathParameters(
     parsedParameters.map(({ originalName }) => originalName),
     options,
     {
-      reservedWords: ['body', 'queryParameters', 'headerParameters', ...reservedJsKeywords]
+      reservedWords: [
+        'body',
+        'queryParameters',
+        'headerParameters',
+        ...reservedJsKeywords
+      ]
     }
   );
 

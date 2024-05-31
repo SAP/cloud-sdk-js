@@ -36,8 +36,14 @@ ${operation.operationId}: (${serializeOperationSignature(
 function serializeOperationSignature(operation: OpenApiOperation): string {
   const pathParams = serializePathParamsForSignature(operation);
   const requestBodyParam = serializeRequestBodyParamForSignature(operation);
-  const headerParams = serializeOtherParamsForSignature(operation, 'headerParameters');
-  const queryParams = serializeOtherParamsForSignature(operation, 'queryParameters');
+  const headerParams = serializeOtherParamsForSignature(
+    operation,
+    'headerParameters'
+  );
+  const queryParams = serializeOtherParamsForSignature(
+    operation,
+    'queryParameters'
+  );
 
   return [pathParams, requestBodyParam, headerParams, queryParams]
     .filter(params => params)

@@ -86,7 +86,15 @@ describe('apiFile', () => {
               schemaProperties: {}
             }
           ],
-          headerParameters: [],
+          headerParameters: [
+            {
+              in: 'header',
+              name: 'resource-group',
+              originalName: 'resource-group',
+              schema: { type: 'string' },
+              schemaProperties: {}
+            }
+          ],
           pathPattern: 'test/{id}',
           response: { type: 'string' }
         },
@@ -127,12 +135,13 @@ describe('apiFile', () => {
          * @param queryParameters - Object containing the following keys: queryParam.
          * @returns The request builder, use the \`execute()\` method to trigger the request.
          */
-        getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}) => new OpenApiRequestBuilder<string>(
+        getFn: (id: string, headerParameters?: {'resource-group'?: string}, queryParameters: {'queryParam': QueryParameterType}) => new OpenApiRequestBuilder<string>(
           'get',
           "test/{id}",
           {
                 pathParameters: { id },
-                queryParameters
+                queryParameters,
+                headerParameters
               }
         ),
         /**

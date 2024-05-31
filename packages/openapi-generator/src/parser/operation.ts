@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { filterDuplicatesRight, partitionThree } from '@sap-cloud-sdk/util';
+import { filterDuplicatesRight } from '@sap-cloud-sdk/util';
 import { reservedJsKeywords } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { parseRequestBody } from './request-body';
@@ -30,11 +30,9 @@ export function parseOperation(
     refs
   );
 
-  const [pathParams, headerParams, queryParams] = partitionThree(
-    relevantParameters,
-    parameter => parameter.in === 'path',
-    parameter => parameter.in === 'header'
-  );
+  const pathParams = relevantParameters.filter(parameter => parameter.in === 'path');
+  const headerParams = relevantParameters.filter(parameter => parameter.in === 'header');
+  const queryParams = relevantParameters.filter(parameter => parameter.in === 'query');
 
   const pathParameters = parsePathParameters(pathParams, refs, options);
 

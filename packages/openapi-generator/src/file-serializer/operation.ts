@@ -36,8 +36,8 @@ ${operation.operationId}: (${serializeOperationSignature(
 function serializeOperationSignature(operation: OpenApiOperation): string {
   const pathParams = serializePathParamsForSignature(operation);
   const requestBodyParam = serializeRequestBodyParamForSignature(operation);
-  const headerParams = serializeHeaderParamsForSignature(operation);
-  const queryParams = serializeQueryParamsForSignature(operation);
+  const headerParams = serializeOtherParamsForSignature(operation, 'headerParameters');
+  const queryParams = serializeOtherParamsForSignature(operation, 'queryParameters');
 
   return [pathParams, requestBodyParam, headerParams, queryParams]
     .filter(params => params)
@@ -64,14 +64,14 @@ function serializeRequestBodyParamForSignature(
   }
 }
 
-function serializeQueryParamsForSignature(
-  operation: OpenApiOperation
+function serializeOtherParamsForSignature(
+  operation: OpenApiOperation,
+  paramType: 'queryParameters' | 'headerParameters'
 ): string | undefined {
-  if (operation.queryParameters.length) {
-    const allOptional = operation.queryParameters.every(
-      param => !param.required
-    );
-    const queryParams = operation.queryParameters
+  const parameters = operation[paramType];
+  if (parameters.length) {
+    const allOptional = parameters.every(param => !param.required);
+    const paramsString = parameters
       .map(
         param =>
           `'${param.name}'${param.required ? '' : '?'}: ${serializeSchema(
@@ -80,27 +80,7 @@ function serializeQueryParamsForSignature(
       )
       .join(',\n');
 
-    return `queryParameters${allOptional ? '?' : ''}: {${queryParams}}`;
-  }
-}
-
-function serializeHeaderParamsForSignature(
-  operation: OpenApiOperation
-): string | undefined {
-  if (operation.headerParameters.length) {
-    const allOptional = operation.headerParameters.every(
-      param => !param.required
-    );
-    const headerParams = operation.headerParameters
-      .map(
-        param =>
-          `'${param.name}'${param.required ? '' : '?'}: ${serializeSchema(
-            param.schema
-          )}`
-      )
-      .join(',\n');
-
-    return `headerParameters${allOptional ? '?' : ''}: {${headerParams}}`;
+    return `${paramType}${allOptional ? '?' : ''}: {${paramsString}}`;
   }
 }
 

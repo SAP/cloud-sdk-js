@@ -160,11 +160,11 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private getHeaders(): OriginOptions {
-    // if (Object.keys(this.customHeaders).length) {
-    //   return { custom: this.customHeaders, requestConfig: {} };
-    // }
-    // return { requestConfig: {} };
-    return { requestConfig: this.parameters?.headerParameters || {} };
+    const options = { requestConfig: this.parameters?.headerParameters || {} };
+    if (Object.keys(this.customHeaders).length) {
+      return { custom: this.customHeaders, ...options };
+    }
+    return options;
   }
 
   private getParameters(): OriginOptions {

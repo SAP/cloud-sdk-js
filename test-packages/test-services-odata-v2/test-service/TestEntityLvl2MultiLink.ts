@@ -23,11 +23,11 @@ export class TestEntityLvl2MultiLink<
   /**
    * Technical entity name for TestEntityLvl2MultiLink.
    */
-  static _entityName = 'A_TestEntityLvl2MultiLink';
+  static override _entityName = 'A_TestEntityLvl2MultiLink';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntityLvl2MultiLink entity
    */

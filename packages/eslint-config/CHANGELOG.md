@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/eslint-config
 
+## 3.15.0
+
+### Minor Changes
+
+- 7760692: [Improvement] Add a config based on the new Eslint flat config format. The new config can be used inside a `eslint.config.js` file.
+
 ## 3.14.0
 
 ## 3.13.0

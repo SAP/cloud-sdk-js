@@ -66,6 +66,7 @@ function entityName(entity: VdmEntity): PropertyDeclarationStructure {
     kind: StructureKind.Property,
     name: prependPrefix('entityName'),
     isStatic: true,
+    hasOverrideKeyword: true,
     initializer: `'${entity.entitySetName}'`,
     docs: [addLeadingNewline(`Technical entity name for ${entity.className}.`)]
   };
@@ -78,6 +79,7 @@ function defaultBasePath(
     kind: StructureKind.Property,
     name: prependPrefix('defaultBasePath'),
     isStatic: true,
+    hasOverrideKeyword: true,
     initializer: `'${service.serviceOptions.basePath}'`,
     docs: [addLeadingNewline('Default url path for the according service.')]
   };

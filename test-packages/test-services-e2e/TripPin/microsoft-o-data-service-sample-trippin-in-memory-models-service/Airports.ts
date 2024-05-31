@@ -22,11 +22,11 @@ export class Airports<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Technical entity name for Airports.
    */
-  static _entityName = 'Airports';
+  static override _entityName = 'Airports';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath =
+  static override _defaultBasePath =
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * All key fields of the Airports entity

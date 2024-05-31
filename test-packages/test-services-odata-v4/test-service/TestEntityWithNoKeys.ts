@@ -23,11 +23,11 @@ export class TestEntityWithNoKeys<
   /**
    * Technical entity name for TestEntityWithNoKeys.
    */
-  static _entityName = 'A_TestEntityWithNoKeys';
+  static override _entityName = 'A_TestEntityWithNoKeys';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntityWithNoKeys entity
    */

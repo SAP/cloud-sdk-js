@@ -63,7 +63,8 @@ export const subscriberUserPayload = {
   user_id: 'user-sub',
   // The client and audience are necessary if XSSEC validates the token
   azp: xsuaaBindingMock.credentials.clientid, // Becomes clientId in XSSEC
-  aud: [xsuaaBindingMock.credentials.clientid], // Becomes audience in XSSEC
+  client_id: xsuaaBindingMock.credentials.clientid, // Client_ID of the subscriber token has to match the XSUAA credentials
+  aud: [xsuaaBindingMock.credentials.xsappname], // Becomes audience in XSSEC
   ext_attr: { enhancer: 'XSUAA' }
 };
 

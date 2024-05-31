@@ -21,11 +21,11 @@ export class TestEntity2<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Technical entity name for TestEntity2.
    */
-  static _entityName = 'A_TestEntity2';
+  static override _entityName = 'A_TestEntity2';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
+  static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All key fields of the TestEntity2 entity
    */

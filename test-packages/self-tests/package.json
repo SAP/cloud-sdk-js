@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/self-tests",
-  "version": "3.14.0",
+  "version": "3.15.0",
   "description": "Self tests to ensure test tools are working in the SAP Cloud SDK for JavaScript.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -10,13 +10,13 @@
   "scripts": {
     "test": "yarn test:madge-test",
     "test:madge-test": "yarn ts-node madge-test/check-if-madge-is-working.ts",
-    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error"
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"
   },
   "tsd": {
     "directory": "test-test"
   },
   "devDependencies": {
-    "@definitelytyped/dtslint": "^0.2.19",
+    "@definitelytyped/dtslint": "^0.2.20",
     "tsd": "^0.31.0",
     "madge": "^6.1.0"
   }

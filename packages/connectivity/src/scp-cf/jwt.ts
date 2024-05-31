@@ -276,7 +276,7 @@ export function decodeOrMakeJwt(
     }
   }
 
-  const providerTenantId = getServiceCredentials('xsuaa', jwt)?.subaccountid;
+  const providerTenantId = getServiceCredentials('xsuaa')?.subaccountid;
 
   if (providerTenantId) {
     return { zid: providerTenantId };

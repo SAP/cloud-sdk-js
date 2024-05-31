@@ -29,20 +29,20 @@ const logger = createLogger({
 
 const extractResponse = (response: string) => `${response}.value`;
 
-function splitMissingOperation(
+function splitOperationsByMissingImports(
   operationImports: EdmxOperationImport[],
   operations: EdmxOperation[]
 ): [EdmxOperationImport[], EdmxJoinedOperation[]] {
   return operationImports.reduce<
     [EdmxOperationImport[], EdmxJoinedOperation[]]
   >(
-    ([withoutOperation, withOperation], curr) => {
+    ([withoutOperations, withOperations], curr) => {
       const operation = findOperationByImportName(
         operations,
         curr.operationName
       );
       if (operation) {
-        withOperation.push({
+        withOperations.push({
           Name: curr.Name,
           operationName: curr.operationName,
           Parameter: operation.Parameter,
@@ -51,9 +51,9 @@ function splitMissingOperation(
           operationType: curr.operationType
         });
       } else {
-        withoutOperation.push(curr);
+        withoutOperations.push(curr);
       }
-      return [withoutOperation, withOperation];
+      return [withoutOperations, withOperations];
     },
     [[], []]
   );
@@ -75,18 +75,11 @@ function buildBoundOperation(
   };
 }
 
-function splitMissingParameter(
+function splitBoundOperationsByMissingParameters(
   operations: EdmxJoinedOperation[]
 ): [EdmxJoinedOperation[], EdmxJoinedOperation[]] {
   return operations.reduce<[EdmxJoinedOperation[], EdmxJoinedOperation[]]>(
     ([validOperations, operationsWithoutRequiredParameters], curr) => {
-      if (!curr.IsBound) {
-        return [
-          [...validOperations, curr],
-          operationsWithoutRequiredParameters
-        ];
-      }
-
       if (!curr.Parameter.length) {
         return [
           validOperations,
@@ -120,17 +113,32 @@ export function filterAndTransformOperations(
   operations: EdmxOperation[],
   isBound: boolean
 ): EdmxJoinedOperation[] {
-  const filteredByBoundOperations = operations.filter(
-    operation => (operation.IsBound.toLowerCase() === 'true') === isBound
-  );
-
-  const [withoutOperation, withOperation] = splitMissingOperation(
+  const [withoutOperations, withOperations] = splitOperationsByMissingImports(
     operationImports,
-    filteredByBoundOperations
+    operations
   );
 
+  const relevantOperations = withOperations.filter(
+    operation => operation.IsBound === isBound
+  );
+
+  validateOperationImports(
+    withoutOperations,
+    withoutOperations[0]?.operationType
+  );
+
+  if (isBound) {
+    return validateBoundOperationParameters(relevantOperations);
+  }
+
+  return relevantOperations;
+}
+
+function validateBoundOperationParameters(
+  relevantOperations: EdmxJoinedOperation[]
+): EdmxJoinedOperation[] {
   const [validOperations, operationsWithoutRequiredParameters] =
-    splitMissingParameter(withOperation);
+    splitBoundOperationsByMissingParameters(relevantOperations);
 
   if (operationsWithoutRequiredParameters.length) {
     logger.warn(
@@ -140,9 +148,14 @@ export function filterAndTransformOperations(
     );
   }
 
-  if (withoutOperation.length) {
-    const operationType = withoutOperation[0].operationType;
+  return validOperations;
+}
 
+function validateOperationImports(
+  withoutOperation: EdmxOperationImport[],
+  operationType: string
+): void {
+  if (withoutOperation.length) {
     logger.warn(
       `Could not find ${operationType}s referenced by the following ${operationType} imports. Skipping code generation: ${withoutOperation
         .map(
@@ -152,8 +165,6 @@ export function filterAndTransformOperations(
         .join(', \n')}`
     );
   }
-
-  return validOperations;
 }
 
 /**

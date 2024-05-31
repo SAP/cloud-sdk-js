@@ -69,11 +69,7 @@ class ServiceGenerator {
       ...vdmServiceEntities,
       serviceOptions: {
         ...serviceOptions,
-        basePath: getBasePath(
-          serviceMetadata,
-          this.options.skipValidation,
-          serviceOptions
-        )
+        basePath: getBasePath(serviceMetadata, serviceOptions)
       }
     };
   }

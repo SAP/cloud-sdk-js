@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/util",
-  "version": "3.14.0",
+  "version": "3.15.0",
   "description": "SAP Cloud SDK for JavaScript general utilities",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -29,12 +29,12 @@
     "test:unit": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
-    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --loglevel error",
+    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck .",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "axios": "^1.6.8",
+    "axios": "^1.7.2",
     "chalk": "^4.1.0",
     "logform": "^2.6.0",
     "voca": "^1.4.1",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "nock": "^13.5.4",
-    "typescript": "~5.4.4",
+    "typescript": "~5.4.5",
     "mock-fs": "^5.2.0"
   }
 }

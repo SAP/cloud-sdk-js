@@ -1,6 +1,10 @@
 import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
 import { codeBlock, pascalCase } from '@sap-cloud-sdk/util';
-import { OpenApiApi, OpenApiOperation } from '../openapi-types';
+import {
+  OpenApiApi,
+  OpenApiOperation,
+  OpenApiParameter
+} from '../openapi-types';
 
 /**
  * @internal
@@ -113,15 +117,23 @@ export function getOperationParamCode(operation: OpenApiOperation): string {
     paramSignature.push(reqBody);
   }
 
-  if (operation.queryParameters) {
-    const queryParams = operation.queryParameters
-      .filter(queryParam => queryParam.required)
-      .map(
-        queryParam => `${queryParam.name}: 'my${pascalCase(queryParam.name)}'`
-      );
+  const formatParams = (params: OpenApiParameter[]) =>
+    params
+      .filter(param => param.required)
+      .map(param => `${param.name}: 'my${pascalCase(param.name)}'`)
+      .join(', ');
 
-    if (queryParams.length > 0) {
-      paramSignature.push(`{ ${queryParams.join(', ')} }`);
+  if (operation.queryParameters) {
+    const queryParams = formatParams(operation.queryParameters);
+    if (queryParams) {
+      paramSignature.push(`{ ${queryParams} }`);
+    }
+  }
+
+  if (operation.headerParameters) {
+    const headerParams = formatParams(operation.headerParameters);
+    if (headerParams) {
+      paramSignature.push(`{ ${headerParams} }`);
     }
   }
 

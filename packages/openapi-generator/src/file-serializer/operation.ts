@@ -135,6 +135,13 @@ export function operationDocumentation(operation: OpenApiOperation): string {
         .join(', ')}.`
     );
   }
+  if (operation.headerParameters?.length > 0) {
+    signature.push(
+      `@param headerParameters - Object containing the following keys: ${operation.headerParameters
+        .map(param => `${param.name}`)
+        .join(', ')}.`
+    );
+  }
   signature.push(
     '@returns The request builder, use the `execute()` method to trigger the request.'
   );

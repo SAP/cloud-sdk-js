@@ -57,6 +57,7 @@ describe('serializeOperation', () => {
        * @param id - Path parameter.
        * @param subId - Path parameter.
        * @param queryParameters - Object containing the following keys: limit.
+       * @param headerParameters - Object containing the following keys: resource-group.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */
       getFn: (id: string, subId: string, headerParameters?: {'resource-group'?: string}, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
@@ -108,6 +109,7 @@ describe('serializeOperation', () => {
       "/**
        * Create a request builder for execution of delete requests to the 'test/{id}' endpoint.
        * @param id - Path parameter.
+       * @param headerParameters - Object containing the following keys: resource-group.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */
       deleteFn: (id: string, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<Record<string, any>>(
@@ -223,6 +225,7 @@ describe('serializeOperation', () => {
       "/**
        * Create a request builder for execution of get requests to the 'test' endpoint.
        * @param queryParameters - Object containing the following keys: limit.
+       * @param headerParameters - Object containing the following keys: resource-group.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */
       getFn: (headerParameters?: {'resource-group'?: string}, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(

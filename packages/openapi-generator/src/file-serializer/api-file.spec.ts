@@ -89,8 +89,8 @@ describe('apiFile', () => {
           headerParameters: [
             {
               in: 'header',
-              name: 'resource-group',
-              originalName: 'resource-group',
+              name: 'headerParam',
+              originalName: 'headerParam',
               schema: { type: 'string' },
               schemaProperties: {}
             }
@@ -133,9 +133,10 @@ describe('apiFile', () => {
          * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
          * @param id - Path parameter.
          * @param queryParameters - Object containing the following keys: queryParam.
+         * @param headerParameters - Object containing the following keys: headerParam.
          * @returns The request builder, use the \`execute()\` method to trigger the request.
          */
-        getFn: (id: string, headerParameters?: {'resource-group'?: string}, queryParameters: {'queryParam': QueryParameterType}) => new OpenApiRequestBuilder<string>(
+        getFn: (id: string, headerParameters?: {'headerParam'?: string}, queryParameters: {'queryParam': QueryParameterType}) => new OpenApiRequestBuilder<string>(
           'get',
           "test/{id}",
           {

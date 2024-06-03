@@ -36,16 +36,13 @@ ${operation.operationId}: (${serializeOperationSignature(
 function serializeOperationSignature(operation: OpenApiOperation): string {
   const pathParams = serializePathParamsForSignature(operation);
   const requestBodyParam = serializeRequestBodyParamForSignature(operation);
-  const headerParams = serializeOtherParamsForSignature(
+  const queryParams = serializeParamsForSignature(operation, 'queryParameters');
+  const headerParams = serializeParamsForSignature(
     operation,
     'headerParameters'
   );
-  const queryParams = serializeOtherParamsForSignature(
-    operation,
-    'queryParameters'
-  );
 
-  return [pathParams, requestBodyParam, headerParams, queryParams]
+  return [pathParams, requestBodyParam, queryParams, headerParams]
     .filter(params => params)
     .join(', ');
 }
@@ -70,7 +67,7 @@ function serializeRequestBodyParamForSignature(
   }
 }
 
-function serializeOtherParamsForSignature(
+function serializeParamsForSignature(
   operation: OpenApiOperation,
   paramType: 'queryParameters' | 'headerParameters'
 ): string | undefined {
@@ -84,7 +81,7 @@ function serializeOtherParamsForSignature(
             param.schema
           )}`
       )
-      .join(',\n');
+      .join(', ');
 
     return `${paramType}${allOptional ? '?' : ''}: {${paramsString}}`;
   }

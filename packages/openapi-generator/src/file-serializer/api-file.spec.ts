@@ -136,7 +136,7 @@ describe('apiFile', () => {
          * @param headerParameters - Object containing the following keys: headerParam.
          * @returns The request builder, use the \`execute()\` method to trigger the request.
          */
-        getFn: (id: string, headerParameters?: {'headerParam'?: string}, queryParameters: {'queryParam': QueryParameterType}) => new OpenApiRequestBuilder<string>(
+        getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}, headerParameters?: {'headerParam'?: string}) => new OpenApiRequestBuilder<string>(
           'get',
           "test/{id}",
           {

@@ -60,7 +60,7 @@ describe('serializeOperation', () => {
        * @param headerParameters - Object containing the following keys: resource-group.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */
-      getFn: (id: string, subId: string, headerParameters?: {'resource-group'?: string}, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
+      getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<string>(
         'get',
         "test/{id}/{subId}",
         {
@@ -204,7 +204,16 @@ describe('serializeOperation', () => {
           name: 'limit',
           originalName: 'limit',
           schema: { type: 'number' },
-          schemaProperties: {}
+          schemaProperties: {},
+          required: true
+        },
+        {
+          in: 'query',
+          name: 'page',
+          originalName: 'page',
+          schema: { type: 'number' },
+          schemaProperties: {},
+          required: false
         }
       ],
       headerParameters: [
@@ -213,7 +222,8 @@ describe('serializeOperation', () => {
           name: 'resource-group',
           originalName: 'resource-group',
           schema: { type: 'string' },
-          schemaProperties: {}
+          schemaProperties: {},
+          required: true
         }
       ],
       responses: { 200: { description: 'some response description' } },
@@ -224,11 +234,11 @@ describe('serializeOperation', () => {
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of get requests to the 'test' endpoint.
-       * @param queryParameters - Object containing the following keys: limit.
+       * @param queryParameters - Object containing the following keys: limit, page.
        * @param headerParameters - Object containing the following keys: resource-group.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */
-      getFn: (headerParameters?: {'resource-group'?: string}, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
+      getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {'resource-group': string}) => new OpenApiRequestBuilder<any>(
         'get',
         "test",
         {
@@ -415,16 +425,20 @@ describe('serializeOperation', () => {
     );
   });
 
-  it('creates documentation with query parameters object', () => {
+  it('creates documentation with query and header parameters objects', () => {
     const operation = getOperation();
     operation.queryParameters = [
       { name: 'queryParameter1' },
       { name: 'queryParameter2' }
     ] as OpenApiParameter[];
+    operation.headerParameters = [
+      { name: 'headerParameter1' }
+    ] as OpenApiParameter[];
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
        * @param queryParameters - Object containing the following keys: queryParameter1, queryParameter2.
+       * @param headerParameters - Object containing the following keys: headerParameter1.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */"
     `);

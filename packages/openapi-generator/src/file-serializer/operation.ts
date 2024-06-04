@@ -36,10 +36,14 @@ ${operation.operationId}: (${serializeOperationSignature(
 function serializeOperationSignature(operation: OpenApiOperation): string {
   const pathParams = serializePathParamsForSignature(operation);
   const requestBodyParam = serializeRequestBodyParamForSignature(operation);
-  const queryParams = serializeParamsForSignature(operation, 'queryParameters');
   const headerParams = serializeParamsForSignature(
     operation,
     'headerParameters'
+  );
+  const queryParams = serializeParamsForSignature(
+    operation,
+    'queryParameters',
+    headerParams === undefined
   );
 
   return [pathParams, requestBodyParam, queryParams, headerParams]
@@ -69,11 +73,11 @@ function serializeRequestBodyParamForSignature(
 
 function serializeParamsForSignature(
   operation: OpenApiOperation,
-  paramType: 'queryParameters' | 'headerParameters'
+  paramType: 'queryParameters' | 'headerParameters',
+  isHeaderParamsUndefined: boolean = false
 ): string | undefined {
   const parameters = operation[paramType];
   if (parameters.length) {
-    const allOptional = parameters.every(param => !param.required);
     const paramsString = parameters
       .map(
         param =>
@@ -83,7 +87,16 @@ function serializeParamsForSignature(
       )
       .join(', ');
 
-    return `${paramType}${allOptional ? '?' : ''}: {${paramsString}}`;
+    const allOptional = parameters.every(param => !param.required);
+    const optionalModifier =
+      (paramType === 'headerParameters' && allOptional) ||
+      (paramType === 'queryParameters' &&
+        isHeaderParamsUndefined &&
+        allOptional)
+        ? '?'
+        : '';
+
+    return `${paramType}${optionalModifier}: {${paramsString}}`;
   }
 }
 

@@ -1,5 +1,6 @@
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
+import { createPublicKey } from 'node:crypto';
 import nock from 'nock';
 import {
   jku,
@@ -28,17 +29,30 @@ const jwtPayload = {
   client_id: 'clientid'
 };
 
-export function responseWithPublicKey(key = publicKey) {
+export function responseWithPublicKey(key: string = publicKey) {
+  // const { publicKey, privateKey } = generateKeyPairSync('rsa', {
+  //   modulusLength: 4096,
+  //   publicKeyEncoding: {
+  //     type: 'pkcs1',
+  //     format: 'pem'
+  //   },
+  //   privateKeyEncoding: {
+  //     type: 'pkcs1',
+  //     format: 'pem'
+  //   }
+  // });
+  // const p = createPublicKey(publicKey);
+  // const pk = createPrivateKey(publicKey);
+  // console.log(pk.export({ format: 'jwk' }));
+  // console.log(p.export({ format: 'jwk' }));
   return {
     keys: [
       {
-        kty: 'RSA',
-        e: 'AQAB',
         use: 'sig',
         kid: 'key-id-1',
         alg: 'RS256',
         value: key,
-        n: 'AMf4zeb9Zqf01Z_Z00KGFSFHwrFAx2t1Ka-bQ2Qu5s5U6zdj58K7s8ku8NSXfkrasFuP75_O7mtmJWc1PDm9I0eJWzjwimhyItJMjbSV0L0Oy2TxvHqUC28dCCD_1i1VVbQfGy-Tlrh5mt6VJ4m25gE7WzoeS5LENsyzJ4BI1BediUMs06Y6EJGoadATXv3a5QKjtud5HomOtxS-m3pSoyRpkqnZ6LUl8Qdspvh0NEoWjb0xSxL4tvjm5MoxloBaUGqAnBqtCl9MtJj8zr3RbDU_qwRXZB4iviZet_Em4ptc_XyLRWx_YYlcGN-0fay7R9WCotz7gEzI3_wye5lJbg0'
+        ...createPublicKey(key).export({ format: 'jwk' })
       }
     ]
   };

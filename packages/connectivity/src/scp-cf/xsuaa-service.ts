@@ -1,4 +1,4 @@
-import * as xssec from '@sap/xssec';
+import { XsuaaService } from '@sap/xssec';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience, MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import { JwtPayload } from './jsonwebtoken-type';
@@ -36,20 +36,10 @@ export async function getClientCredentialsToken(
   };
 
   const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
-    return new Promise((resolve, reject) => {
-      xssec.requests.requestClientCredentialsToken(
-        arg.subdomain,
-        arg.serviceCredentials,
-        null,
-        arg.zoneId,
-        (
-          err: Error,
-          token: string,
-          tokenResponse: ClientCredentialsResponse
-        ) => (err ? reject(err) : resolve(tokenResponse))
-      );
-    });
+    const xsuaaService = new XsuaaService(arg.serviceCredentials);
+    return xsuaaService.fetchClientCredentialsToken({ tenantId: arg.zoneId });
   };
+
   return executeWithMiddleware<
     XsuaaParameters,
     ClientCredentialsResponse,
@@ -89,17 +79,11 @@ export function getUserToken(
   };
 
   const xssecPromise = function (arg: XsuaaParameters): Promise<string> {
-    return new Promise((resolve: (token: string) => void, reject) =>
-      xssec.requests.requestUserToken(
-        arg.userJwt,
-        arg.serviceCredentials,
-        null,
-        null,
-        arg.subdomain,
-        arg.zoneId,
-        (err: Error, token: string) => (err ? reject(err) : resolve(token))
-      )
-    );
+    const xsuaaService = new XsuaaService(arg.serviceCredentials);
+    return xsuaaService.fetchJwtBearerToken({
+      tenantId: arg.zoneId,
+      jwt: arg.userJwt
+    });
   };
 
   return executeWithMiddleware<

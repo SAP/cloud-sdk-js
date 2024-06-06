@@ -1,3 +1,4 @@
+import { XsuaaService } from '@sap/xssec';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { getServiceCredentials } from './service-credentials';
@@ -25,4 +26,23 @@ export function getXsuaaServiceCredentials(
     );
   }
   return credentials;
+}
+
+// FIXME: this is just a poc to check that the cache is really hanging at one instance.
+// xsuaa services need to be cached per service name or similar (property in binding)
+let xsuaaService;
+
+export function getXsuaaService(
+  disableCache: boolean,
+  jwt?: JwtPayload | string
+) {
+  if (!xsuaaService) {
+    const credentials = getXsuaaServiceCredentials(jwt);
+    xsuaaService = new XsuaaService(credentials, {
+      // when disabling set the expiration time to 0 otherwise use the default 30 mins of xssec
+      validation: { jwks: { expirationTime: disableCache ? 0 : 1800000 } }
+    });
+  }
+
+  return xsuaaService;
 }

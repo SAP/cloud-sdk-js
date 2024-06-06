@@ -6947,12 +6947,11 @@ neo-async@^2.6.0:
   resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
-nock@^13.5.4:
-  version "13.5.4"
-  resolved "https://registry.npmjs.org/nock/-/nock-13.5.4.tgz#8918f0addc70a63736170fef7106a9721e0dc479"
-  integrity sha512-yAyTfdeNJGGBFxWdzSKCBYxs5FxLbCg5X5Q4ets974hcQzG1+qCxvIyOo4j2Ry6MUlhWVMX4OoYDefAIIwupjw==
+nock@^14.0.0-beta.6:
+  version "14.0.0-beta.7"
+  resolved "https://registry.npmjs.org/nock/-/nock-14.0.0-beta.7.tgz#bdb3f3cfa2276659c87412f6dff2aea9ee69a7fc"
+  integrity sha512-+EQMm5W9K8YnBE2Ceg4hnJynaCZmvK8ZlFXQ2fxGwtkOkBUq8GpQLTks2m1jpvse9XDxMDDOHgOWpiznFuh0bA==
   dependencies:
-    debug "^4.1.0"
     json-stringify-safe "^5.0.1"
     propagate "^2.0.0"
 

@@ -21,11 +21,11 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Technical entity name for TestEntityLink.
    */
-  static _entityName = 'TestEntityLink';
+  static override _entityName = 'TestEntityLink';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/odata/test-service';
+  static override _defaultBasePath = '/odata/test-service';
   /**
    * All key fields of the TestEntityLink entity
    */

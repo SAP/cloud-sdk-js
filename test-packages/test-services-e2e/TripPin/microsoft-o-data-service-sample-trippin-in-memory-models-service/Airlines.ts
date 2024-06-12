@@ -21,11 +21,11 @@ export class Airlines<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Technical entity name for Airlines.
    */
-  static _entityName = 'Airlines';
+  static override _entityName = 'Airlines';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath =
+  static override _defaultBasePath =
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * All key fields of the Airlines entity

@@ -21,11 +21,11 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
   /**
    * Technical entity name for TestEntity50Prop.
    */
-  static _entityName = 'TestEntity50Prop';
+  static override _entityName = 'TestEntity50Prop';
   /**
    * Default url path for the according service.
    */
-  static _defaultBasePath = '/odata/test-service';
+  static override _defaultBasePath = '/odata/test-service';
   /**
    * All key fields of the TestEntity50Prop entity
    */

@@ -155,12 +155,6 @@ export async function verifyJwt(
   const disableCache = !{ ...defaultVerifyJwtOptions, ...options }
     .cacheVerificationKeys;
 
-  // const credentials = getXsuaaServiceCredentials(jwt);
-  // const xsuaaService = new XsuaaService(credentials, {
-  //   // when disabling set the expiration time to 0 otherwise use the default 30 mins of xssec
-  //   validation: { jwks: { expirationTime: disableCache ? 0 : 1800000 } }
-  // });
-
   const xsuaaService = getXsuaaService(disableCache, jwt);
 
   const { token } = await createSecurityContext(xsuaaService, {

@@ -34,7 +34,8 @@ export const xsuaaBindingMock: Service = {
     uaadomain: uaaDomain,
     subaccountid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
     tenantid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
-    zoneid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24'
+    zoneid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+    serviceInstanceId: '7f58b7bc-c4e3-4f58-8bc6-fb473942817f'
   }
 };
 

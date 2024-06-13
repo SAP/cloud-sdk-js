@@ -1,3 +1,4 @@
+import { XsuaaService } from '@sap/xssec';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { getServiceCredentials } from './service-credentials';
@@ -25,4 +26,34 @@ export function getXsuaaServiceCredentials(
     );
   }
   return credentials;
+}
+
+const xsuaaServices: Record<string, XsuaaService> = {};
+
+/**
+ * @internal
+ * @param disableCache - Value to enable or disable JWKS cache in xssec library.
+ * @param token - Either a JWT payload or an encoded JWT.
+ * @returns An instance of the xsuaa service that the application is bound to.
+ */
+export function getXsuaaService(
+  disableCache: boolean,
+  jwt?: JwtPayload | string
+): any {
+  const credentials = getXsuaaServiceCredentials(jwt);
+  if (!xsuaaServices[credentials.serviceInstanceId]) {
+    xsuaaServices[credentials.serviceInstanceId] = new XsuaaService(
+      credentials,
+      {
+        // when disabling set the expiration time to 0 otherwise use the default 30 mins of xssec
+        validation: {
+          jwks: {
+            expirationTime: disableCache ? 0 : 1800000,
+            refreshPeriod: disableCache ? 0 : 900000
+          }
+        }
+      }
+    );
+  }
+  return xsuaaServices[credentials.serviceInstanceId];
 }

@@ -1,4 +1,4 @@
-import * as xssec from '@sap/xssec';
+import { createSecurityContext, XsuaaService } from '@sap/xssec';
 import { DestinationOptions } from './destination';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { decodeJwtComplete, isXsuaaToken } from './jwt';
@@ -13,14 +13,11 @@ export async function exchangeToken(
   options: DestinationOptions
 ): Promise<string> {
   const xsuaaServiceCredentials = getXsuaaServiceCredentials();
-  return new Promise((resolve: (p: string) => void, reject) => {
-    xssec.createSecurityContext(
-      options.jwt,
-      xsuaaServiceCredentials,
-      (err: Error, context, tokenInfo) =>
-        err ? reject(err) : resolve(tokenInfo.getTokenValue())
-    );
+  const xsuaaService = new XsuaaService(xsuaaServiceCredentials);
+  const { token } = await createSecurityContext(xsuaaService, {
+    jwt: options.jwt
   });
+  return token.getTokenValue();
 }
 
 /**

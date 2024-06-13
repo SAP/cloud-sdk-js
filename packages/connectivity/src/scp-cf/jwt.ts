@@ -4,12 +4,13 @@ import {
   ErrorWithCause,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import * as xssec from '@sap/xssec';
+import { createSecurityContext, v3 } from '@sap/xssec';
 import { decode } from 'jsonwebtoken';
 import { Cache } from './cache';
 import {
   getServiceCredentials,
-  getXsuaaServiceCredentials
+  getXsuaaServiceCredentials,
+  getXsuaaService
 } from './environment-accessor';
 import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
 import { TokenKey } from './xsuaa-service-types';
@@ -142,23 +143,48 @@ function validateAuthHeader(header: string | undefined): boolean {
 
 /**
  * Verifies the given JWT and returns the decoded payload.
- * @param token - JWT to be verified
+ * @param jwt - JWT to be verified
  * @param options - Options to control certain aspects of JWT verification behavior.
  * @returns A Promise to the decoded and verified JWT.
  * @internal
  */
 export async function verifyJwt(
-  token: string,
+  jwt: string,
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
   const disableCache = !{ ...defaultVerifyJwtOptions, ...options }
     .cacheVerificationKeys;
 
-  const credentials = getXsuaaServiceCredentials(token);
+  const xsuaaService = getXsuaaService(disableCache, jwt);
+
+  const { token } = await createSecurityContext(xsuaaService, {
+    jwt
+  }).catch(e => {
+    throw new ErrorWithCause('Failed to verify JWT.', e);
+  });
+
+  return token.payload;
+}
+
+/**
+ * Verifies the given JWT and returns the decoded payload.
+ * @param jwt - JWT to be verified
+ * @param options - Options to control certain aspects of JWT verification behavior.
+ * @returns A Promise to the decoded and verified JWT.
+ * @internal
+ */
+export async function verifyJwtOld(
+  jwt: string,
+  options?: VerifyJwtOptions
+): Promise<JwtPayload> {
+  const disableCache = !{ ...defaultVerifyJwtOptions, ...options }
+    .cacheVerificationKeys;
+
+  const credentials = getXsuaaServiceCredentials(jwt);
 
   const promise = new Promise<JwtPayload>((resolve, reject) => {
-    xssec.createSecurityContext(
-      token,
+    v3.createSecurityContext(
+      jwt,
       { disableCache, credentials },
       function (error, securityContext, tokenInfo) {
         if (error) {

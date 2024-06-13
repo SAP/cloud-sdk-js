@@ -6878,6 +6878,14 @@ nock@^13.5.4:
     json-stringify-safe "^5.0.1"
     propagate "^2.0.0"
 
+nock@^14.0.0-beta.6:
+  version "14.0.0-beta.7"
+  resolved "https://registry.npmjs.org/nock/-/nock-14.0.0-beta.7.tgz#bdb3f3cfa2276659c87412f6dff2aea9ee69a7fc"
+  integrity sha512-+EQMm5W9K8YnBE2Ceg4hnJynaCZmvK8ZlFXQ2fxGwtkOkBUq8GpQLTks2m1jpvse9XDxMDDOHgOWpiznFuh0bA==
+  dependencies:
+    json-stringify-safe "^5.0.1"
+    propagate "^2.0.0"
+
 node-abi@^3.3.0:
   version "3.62.0"
   resolved "https://registry.npmjs.org/node-abi/-/node-abi-3.62.0.tgz#017958ed120f89a3a14a7253da810f5d724e3f36"

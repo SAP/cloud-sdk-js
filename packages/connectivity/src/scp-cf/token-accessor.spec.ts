@@ -7,7 +7,8 @@ import {
   providerXsuaaCertUrl,
   providerXsuaaUrl,
   subscriberXsuaaUrl,
-  testTenants
+  testTenants,
+  uaaDomain
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import { signedJwt } from '../../../../test-resources/test/test-util/keys';
 import {
@@ -58,7 +59,7 @@ describe('token accessor', () => {
         iss: 'https://testeroni.example.com'
       });
       mockClientCredentialsGrantCall(
-        'https://testeroni.example.com',
+        `https://testeroni.${uaaDomain}`,
         { access_token: 'testValue' },
         200,
         destinationBindingClientSecretMock.credentials
@@ -77,7 +78,7 @@ describe('token accessor', () => {
       });
 
       mockClientCredentialsGrantCall(
-        'https://testeroni.example.com',
+        `https://testeroni.${uaaDomain}`,
         { access_token: expected },
         200,
         destinationBindingClientSecretMock.credentials

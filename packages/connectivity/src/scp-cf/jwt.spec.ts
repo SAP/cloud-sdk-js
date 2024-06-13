@@ -1,5 +1,6 @@
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
+import { createPublicKey } from 'node:crypto';
 import nock from 'nock';
 import {
   jku,
@@ -28,17 +29,16 @@ const jwtPayload = {
   client_id: 'clientid'
 };
 
-export function responseWithPublicKey(key = publicKey) {
+export function responseWithPublicKey(key: string = publicKey) {
+  const pubKey = createPublicKey(key);
+  const jwk = pubKey.export({ format: 'jwk' });
   return {
     keys: [
       {
-        kty: 'RSA',
-        e: 'AQAB',
         use: 'sig',
         kid: 'key-id-1',
         alg: 'RS256',
-        value: key,
-        n: 'AMf4zeb9Zqf01Z_Z00KGFSFHwrFAx2t1Ka-bQ2Qu5s5U6zdj58K7s8ku8NSXfkrasFuP75_O7mtmJWc1PDm9I0eJWzjwimhyItJMjbSV0L0Oy2TxvHqUC28dCCD_1i1VVbQfGy-Tlrh5mt6VJ4m25gE7WzoeS5LENsyzJ4BI1BediUMs06Y6EJGoadATXv3a5QKjtud5HomOtxS-m3pSoyRpkqnZ6LUl8Qdspvh0NEoWjb0xSxL4tvjm5MoxloBaUGqAnBqtCl9MtJj8zr3RbDU_qwRXZB4iviZet_Em4ptc_XyLRWx_YYlcGN-0fay7R9WCotz7gEzI3_wye5lJbg0'
+        ...jwk
       }
     ]
   };
@@ -135,7 +135,7 @@ describe('jwt', () => {
       nock(jku)
         .get('')
         .query({ zid: jwtPayload.zid })
-        .reply(200, responseWithPublicKey(publicKey.split('\n').join('')));
+        .reply(200, responseWithPublicKey(publicKey));
 
       await expect(
         verifyJwt(signedJwtForVerification(jwtPayload), {
@@ -154,7 +154,7 @@ describe('jwt', () => {
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT.',
         cause: {
-          message: 'JWKS does not contain JWK with kid key-id-1.'
+          message: 'JWKS does not contain a key for kid=key-id-1'
         }
       });
     });
@@ -171,12 +171,12 @@ describe('jwt', () => {
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT.',
         cause: {
-          message: 'JWKS does not contain JWK with kid key-id-1.'
+          message: 'JWKS does not contain a key for kid=key-id-1'
         }
       });
     });
 
-    it('fails for jku URL and xsuaa different domain', async () => {
+    it('fails if jku URL and xsuaa have different domains', async () => {
       await expect(() =>
         verifyJwt(
           signedJwtForVerification(
@@ -191,7 +191,7 @@ describe('jwt', () => {
         });
     });
 
-    it('fails if the verification key is not conform with the signed JWT', async () => {
+    it('fails if the verification key does not conform with the signed JWT', async () => {
       nock(jku)
         .get('')
         .query({ zid: jwtPayload.zid })
@@ -244,7 +244,7 @@ describe('jwt', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot('"Failed to verify JWT."');
     });
 
-    it('caches per default', async () => {
+    it('caches by default', async () => {
       nock(jku)
         .get('')
         .query({ zid: jwtPayload.zid })
@@ -257,7 +257,7 @@ describe('jwt', () => {
       await verifyJwt(jwt);
     });
 
-    it('fetches a new key when a the cache has been disabled', async () => {
+    it('fetches a new key when the cache has been disabled', async () => {
       nock(jku)
         .get('')
         .query({ zid: jwtPayload.zid })

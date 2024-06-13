@@ -39,7 +39,7 @@ const xsuaaServices: Record<string, XsuaaService> = {};
 export function getXsuaaService(
   disableCache: boolean,
   jwt?: JwtPayload | string
-): XsuaaService {
+): any {
   const credentials = getXsuaaServiceCredentials(jwt);
   if (!xsuaaServices[credentials.serviceInstanceId]) {
     xsuaaServices[credentials.serviceInstanceId] = new XsuaaService(

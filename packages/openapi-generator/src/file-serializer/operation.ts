@@ -40,10 +40,11 @@ function serializeOperationSignature(operation: OpenApiOperation): string {
     operation,
     'headerParameters'
   );
+  const isHeaderParamsAllOptional = !headerParams || headerParams.includes('?');
   const queryParams = serializeParamsForSignature(
     operation,
     'queryParameters',
-    headerParams === undefined
+    isHeaderParamsAllOptional
   );
 
   return [pathParams, requestBodyParam, queryParams, headerParams]
@@ -74,7 +75,7 @@ function serializeRequestBodyParamForSignature(
 function serializeParamsForSignature(
   operation: OpenApiOperation,
   paramType: 'queryParameters' | 'headerParameters',
-  isHeaderParamsUndefined: boolean = false
+  isHeaderParamsAllOptional: boolean = false
 ): string | undefined {
   const parameters = operation[paramType];
   if (parameters.length) {
@@ -91,7 +92,7 @@ function serializeParamsForSignature(
     const optionalModifier =
       (paramType === 'headerParameters' && allOptional) ||
       (paramType === 'queryParameters' &&
-        isHeaderParamsUndefined &&
+        isHeaderParamsAllOptional &&
         allOptional)
         ? '?'
         : '';

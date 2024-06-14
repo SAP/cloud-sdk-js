@@ -51,7 +51,8 @@ export function getXsuaaService(
       }
     };
     xsuaaServices[credentials.serviceInstanceId] = new XsuaaService(
-      credentials, serviceConfig
+      credentials,
+      serviceConfig
     );
   }
   return xsuaaServices[credentials.serviceInstanceId];

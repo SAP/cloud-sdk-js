@@ -234,6 +234,33 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe('iss token used on the way');
   });
 
+  it('addCustomHeaders', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test');
+    const destinationWithAuth = {
+      ...destination,
+      headers: { authorization: 'destAuth' }
+    };
+    const response = await requestBuilder
+      .addCustomHeaders({ authorization: 'custom-header' })
+      .executeRaw(destinationWithAuth);
+    expect(httpSpy).toHaveBeenCalledWith(
+      sanitizeDestination(destinationWithAuth),
+      {
+        method: 'get',
+        middleware: [],
+        url: '/test',
+        headers: {
+          custom: { authorization: 'custom-header' },
+          requestConfig: {}
+        },
+        params: { requestConfig: {} },
+        data: undefined
+      },
+      { fetchCsrfToken: false }
+    );
+    expect(response.data).toBe(dummyResponse);
+  });
+
   it('encodes path parameters', async () => {
     const requestBuilder = new OpenApiRequestBuilder(
       'get',

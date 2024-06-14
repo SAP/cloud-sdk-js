@@ -90,12 +90,10 @@ function serializeParamsForSignature(
 
     const allOptional = parameters.every(param => !param.required);
     const optionalModifier =
-      (paramType === 'headerParameters' && allOptional) ||
-      (paramType === 'queryParameters' &&
-        isHeaderParamsAllOptional &&
-        allOptional)
-        ? '?'
-        : '';
+      allOptional && (
+        (paramType === 'headerParameters') ||
+        (paramType === 'queryParameters' && isHeaderParamsAllOptional)
+      ) ? '?' : '';
 
     return `${paramType}${optionalModifier}: {${paramsString}}`;
   }

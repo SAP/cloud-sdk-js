@@ -4086,10 +4086,10 @@ eslint-plugin-import@^2.29.1:
     semver "^6.3.1"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsdoc@^48.2.11:
-  version "48.2.11"
-  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-48.2.11.tgz#04d7ef9941983e202e39089972f4a351e647513e"
-  integrity sha512-mM4RSR1hBPwdtI+boITfDZTxvEYTANSWr3y/D+YR8OshtU3pMgYXC8LrjudhYf0O0g67A7QwlT1gZzhmNy1S4Q==
+eslint-plugin-jsdoc@^48.2.12:
+  version "48.2.12"
+  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-48.2.12.tgz#e8411c87e55db3f21a288e04bf7e1fb5fa62dfa9"
+  integrity sha512-sO9sKkJx5ovWoRk9hV0YiNzXQ4Z6j27CqE/po2E3wddZVuy9wvKPSTiIhpxMTrP/qURvKayJIDB2+o9kyCW1Fw==
   dependencies:
     "@es-joy/jsdoccomment" "~0.43.1"
     are-docs-informative "^0.0.2"

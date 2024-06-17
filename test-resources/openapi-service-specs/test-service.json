@@ -414,6 +414,109 @@
         }
       }
     },
+    "/test-cases/parameters": {
+      "get": {
+        "tags": ["test case"],
+        "operationId": "testCaseRequiredQueryOptionalHeader",
+        "parameters": [
+          {
+            "name": "requiredQueryParam",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "optionalHeaderParam",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "post": {
+        "tags": ["test case"],
+        "operationId": "testCaseOptionalQueryRequiredHeader",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleTestEntity"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "optionalQueryParam",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requiredHeaderParam",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["test case"],
+        "operationId": "testCaseOptionalQueryOptionalHeader",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleTestEntity"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "optionalQueryParam",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "optionalHeaderParam",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
     "/test-cases/parameters/{duplicateParam}": {
       "get": {
         "tags": ["test case"],

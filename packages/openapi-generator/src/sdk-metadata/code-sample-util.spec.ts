@@ -20,6 +20,8 @@ describe('code-sample-util api', () => {
   const queryParam2 = { name: 'query-Param2', required: false };
   const queryParam3 = { name: 'query-Param3', required: true };
 
+  const headerParam = { name: 'header-Param', required: true };
+
   const api_1: OpenApiApi = {
     name: 'DummyApi',
     operations: [
@@ -30,6 +32,7 @@ describe('code-sample-util api', () => {
         tags: [],
         pathParameters: [],
         queryParameters: [],
+        headerParameters: [],
         response: { type: 'any' },
         pathPattern: ''
       }
@@ -46,6 +49,7 @@ describe('code-sample-util api', () => {
         tags: [],
         pathParameters: [],
         queryParameters: [],
+        headerParameters: [],
         response: { type: 'any' },
         pathPattern: ''
       },
@@ -56,6 +60,7 @@ describe('code-sample-util api', () => {
         tags: [],
         pathParameters: [],
         queryParameters: [],
+        headerParameters: [],
         response: { type: 'any' },
         pathPattern: ''
       }
@@ -80,6 +85,7 @@ describe('code-sample-util api', () => {
             tags: [],
             pathParameters: [],
             queryParameters: [],
+            headerParameters: [],
             response: { type: 'any' },
             pathPattern: '',
             responses: {
@@ -94,6 +100,7 @@ describe('code-sample-util api', () => {
             tags: [],
             pathParameters: [],
             queryParameters: [],
+            headerParameters: [],
             response: { type: 'any' },
             pathPattern: '',
             responses: {
@@ -146,7 +153,8 @@ describe('code-sample-util api', () => {
     const operation = {
       operationId: 'getAll',
       pathParameters: [] as OpenApiParameter[],
-      queryParameters: [] as OpenApiParameter[]
+      queryParameters: [] as OpenApiParameter[],
+      headerParameters: [] as OpenApiParameter[]
     } as OpenApiOperation;
     expect(getOperationParamCode(operation)).toEqual('');
   });
@@ -159,6 +167,18 @@ describe('code-sample-util api', () => {
 
     expect(getOperationParamCode(operation)).toMatchInlineSnapshot(
       '"path-Param1, Path-Param2"'
+    );
+  });
+
+  it('generates param string with path, mandatory query params and header params', () => {
+    const operation = {
+      pathParameters: [pathParam1],
+      queryParameters: [queryParam1, queryParam3],
+      headerParameters: [headerParam]
+    } as OpenApiOperation;
+
+    expect(getOperationParamCode(operation)).toMatchInlineSnapshot(
+      "\"path-Param1, { query-Param1: 'myQueryParam1', query-Param3: 'myQueryParam3' }, { header-Param: 'myHeaderParam' }\""
     );
   });
 

@@ -133,14 +133,14 @@ export function operationDocumentation(operation: OpenApiOperation): string {
   if (operation.requestBody) {
     signature.push(getSignatureOfBody(operation.requestBody));
   }
-  if (operation.queryParameters.length > 0) {
+  if (operation.queryParameters.length) {
     signature.push(
       `@param queryParameters - Object containing the following keys: ${operation.queryParameters
         .map(param => `${param.name}`)
         .join(', ')}.`
     );
   }
-  if (operation.headerParameters?.length > 0) {
+  if (operation.headerParameters?.length) {
     signature.push(
       `@param headerParameters - Object containing the following keys: ${operation.headerParameters
         .map(param => `${param.name}`)

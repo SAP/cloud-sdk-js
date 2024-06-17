@@ -21,10 +21,39 @@ export const serviceToDestinationTransformers: Record<
   workflow: workflowBindingToDestination,
   'service-manager': serviceManagerBindingToDestination,
   xsuaa: xsuaaToDestination,
-  aicore: aicoreToDestiation
+  aicore: aicoreToDestination
 };
 
-async function aicoreToDestiation(
+/**
+ * Creates a OAuth2ClientCredentials destination from the provided service binding.
+ * If a JWT is provided, the tenant in the JWT is used for client credentials grant, else the provider tenant is used.
+ * 
+ * Supported service types are:
+ * - business-logging
+ * - s4-hana-cloud
+ * - destination
+ * - saas-registry
+ * - workflow
+ * - service-manager
+ * - xsuaa
+ * - aicore
+ * 
+ * Throws an error if the provided service binding is not supported.
+ * @param serviceBinding - The service binding to transform. 
+ * @param options - Options used during fetching destinations;includes a JWT payload {@link JwtPayload} and options to influence caching behavior (see {@link CachingOptions}) 
+ * @returns 
+ */
+export async function transformServiceBindingToDestination(
+  serviceBinding: Service,
+  options?: ServiceBindingTransformOptions
+): Promise<Destination> {
+  if (serviceToDestinationTransformers[serviceBinding.label]) {
+    return serviceToDestinationTransformers[serviceBinding.label](serviceBinding, options);
+  }
+  throw new Error(`The provided service binding of type ${serviceBinding.label} is not supported out of the box for destination transformation.`);
+}
+
+async function aicoreToDestination(
   service: Service,
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {

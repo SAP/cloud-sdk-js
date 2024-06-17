@@ -21,7 +21,7 @@ export function getServiceBindings(service: string): Service[] {
  * Returns the first found instance for the given service type.
  * @param service - The service type.
  * @returns The first found service.
- * @internal
+ * 
  */
 export function getServiceBinding(service: string): Service | undefined {
   const services: Service[] = xsenv.filterServices({ label: service });

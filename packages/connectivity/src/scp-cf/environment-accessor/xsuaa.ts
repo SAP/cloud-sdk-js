@@ -1,6 +1,9 @@
 import { XsuaaService } from '@sap/xssec';
 import { JwtPayload } from '../jsonwebtoken-type';
-import { XsuaaServiceCredentials } from './environment-accessor-types';
+import {
+  ServiceCredentials,
+  XsuaaServiceCredentials
+} from './environment-accessor-types';
 import { getServiceCredentials } from './service-credentials';
 
 /**
@@ -41,7 +44,7 @@ const xsuaaServices: Record<string, XsuaaService> = {};
 export function getXsuaaService(options?: {
   disableCache?: boolean;
   jwt?: JwtPayload | string;
-  credentials?: XsuaaServiceCredentials;
+  credentials?: ServiceCredentials;
 }): any {
   const credentials =
     options?.credentials || getXsuaaServiceCredentials(options?.jwt);

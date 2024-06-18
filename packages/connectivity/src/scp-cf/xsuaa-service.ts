@@ -1,20 +1,19 @@
-import { XsuaaService } from '@sap/xssec';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience, MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import { JwtPayload } from './jsonwebtoken-type';
 import {
   Service,
-  ServiceCredentials
+  XsuaaServiceCredentials
 } from './environment-accessor/environment-accessor-types';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
-import { resolveServiceBinding } from './environment-accessor';
+import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
 import { getIssuerSubdomain } from './subdomain-replacer';
 import { decodeJwt, tenantId } from './jwt';
 
 interface XsuaaParameters {
   subdomain: string | null;
   zoneId: string | null;
-  serviceCredentials: ServiceCredentials;
+  serviceCredentials: XsuaaServiceCredentials;
   userJwt?: string;
 }
 
@@ -32,11 +31,14 @@ export async function getClientCredentialsToken(
   const fnArgument: XsuaaParameters = {
     subdomain: getIssuerSubdomain(jwt) || null,
     zoneId: tenantId(jwt) || null,
-    serviceCredentials: resolveServiceBinding(service).credentials
+    serviceCredentials: resolveServiceBinding(service)
+      .credentials as XsuaaServiceCredentials
   };
 
   const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
-    const xsuaaService = new XsuaaService(arg.serviceCredentials);
+    const xsuaaService = getXsuaaService({
+      credentials: arg.serviceCredentials
+    });
     return xsuaaService.fetchClientCredentialsToken({
       tenant: arg.zoneId || arg.subdomain
     });
@@ -81,7 +83,9 @@ export function getUserToken(
   };
 
   const xssecPromise = function (arg: XsuaaParameters): Promise<string> {
-    const xsuaaService = new XsuaaService(arg.serviceCredentials);
+    const xsuaaService = getXsuaaService({
+      credentials: arg.serviceCredentials
+    });
     return xsuaaService.fetchJwtBearerToken({
       tenant: arg.zoneId,
       jwt: arg.userJwt

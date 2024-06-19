@@ -141,7 +141,7 @@ module.exports = {
     'import/export': 'error',
     'import/order': 'error',
     'import/no-duplicates': 'error',
-    'unused-imports/no-unused-imports-ts': 'error',
+    'unused-imports/no-unused-imports': 'error',
     'arrow-body-style': 'error',
     curly: 'error',
     'eol-last': 'error',

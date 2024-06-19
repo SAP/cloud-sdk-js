@@ -1,5 +1,5 @@
 // import { businessPartnerService } from '@sap/cloud-sdk-vdm-business-partner-service';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports-ts
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports
 import * as xssec from '@sap/xssec';
 // import {
 //   Destination,

@@ -200,7 +200,7 @@ const flatConfig = [
       ],
       'jsdoc/check-syntax': 'error',
       'jsdoc/multiline-blocks': 'error',
-      'jsdoc/tag-lines': ['error', { 'tag-lines': 0 }],
+      'jsdoc/tag-lines': ['error', 'always', { count: 0 }],
       'jsdoc/no-bad-blocks': 'error',
       'jsdoc/no-defaults': 'error',
       'jsdoc/no-types': 'error',

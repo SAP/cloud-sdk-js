@@ -200,6 +200,7 @@ const flatConfig = [
       ],
       'jsdoc/check-syntax': 'error',
       'jsdoc/multiline-blocks': 'error',
+      'jsdoc/tag-lines': ['error', { 'tag-lines': 0 }],
       'jsdoc/no-bad-blocks': 'error',
       'jsdoc/no-defaults': 'error',
       'jsdoc/no-types': 'error',
@@ -229,8 +230,7 @@ const flatConfig = [
       'jsdoc/require-param': ['error', { enableFixer: false }],
       'jsdoc/require-returns-check': 'error',
       'jsdoc/require-returns-description': 'error',
-      'jsdoc/require-returns': 'error',
-      'jsdoc/tag-lines': ['error', 'never']
+      'jsdoc/require-returns': 'error'
     },
     settings: {
       jsdoc: {

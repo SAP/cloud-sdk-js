@@ -32,7 +32,9 @@ module.exports = {
       [
         {
           id: 'regexLowerCaseInternal',
+          // eslint-disable-next-line regex/invalid
           regex: '\\@Internal',
+          // eslint-disable-next-line regex/invalid
           message: 'You are not allowed to use @Internal. Please use @internal.'
         }
       ]
@@ -225,8 +227,7 @@ module.exports = {
     'jsdoc/require-param': ['error', { enableFixer: false }],
     'jsdoc/require-returns-check': 'error',
     'jsdoc/require-returns-description': 'error',
-    'jsdoc/require-returns': 'error',
-    'jsdoc/tag-lines': ['error', 'never']
+    'jsdoc/require-returns': 'error'
   },
   settings: {
     jsdoc: {

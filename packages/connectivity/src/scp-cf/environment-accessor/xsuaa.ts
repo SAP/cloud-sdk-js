@@ -35,6 +35,16 @@ const xsuaaServices: Record<string, XsuaaService> = {};
 
 /**
  * @internal
+ * Clears the cache of XSUAA services.
+ * Should only be used for testing purposes.
+ */
+export function clearXsuaaServices(): void {
+  debugger;
+  Object.keys(xsuaaServices).forEach(key => delete xsuaaServices[key]);
+}
+
+/**
+ * @internal
  * @param options - Options on how to configure the XSUAA service.
  * @param options.disableCache - Value to enable or disable JWKS cache in xssec library. Defaults to false.
  * @param options.jwt - Either a JWT payload or an encoded JWT. Will be ignored if `credentials` are provided. If not provided, the first XSUAA service binding is used.
@@ -49,19 +59,22 @@ export function getXsuaaService(options?: {
   const credentials =
     options?.credentials || getXsuaaServiceCredentials(options?.jwt);
   const disableCache = !!options?.disableCache;
-  if (!xsuaaServices[credentials.serviceInstanceId]) {
-    const serviceConfig = {
-      validation: {
-        jwks: {
-          expirationTime: disableCache ? 0 : 1800000,
-          refreshPeriod: disableCache ? 0 : 900000
+
+  const serviceConfig = disableCache
+    ? {
+        validation: {
+          jwks: {
+            expirationTime: 0,
+            refreshPeriod: 0
+          }
         }
       }
-    };
-    xsuaaServices[credentials.serviceInstanceId] = new XsuaaService(
-      credentials,
-      serviceConfig
-    );
+    : undefined;
+
+  const cacheKey = `${credentials.serviceInstanceId}:${disableCache}`;
+
+  if (!xsuaaServices[cacheKey]) {
+    xsuaaServices[cacheKey] = new XsuaaService(credentials, serviceConfig);
   }
-  return xsuaaServices[credentials.serviceInstanceId];
+  return xsuaaServices[cacheKey];
 }

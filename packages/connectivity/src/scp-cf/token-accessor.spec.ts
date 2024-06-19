@@ -25,6 +25,7 @@ import {
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { jwtBearerToken, serviceToken } from './token-accessor';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
+import { clearXsuaaServices } from './environment-accessor';
 
 describe('token accessor', () => {
   describe('serviceToken()', () => {
@@ -36,6 +37,7 @@ describe('token accessor', () => {
       nock.cleanAll();
       clientCredentialsTokenCache.clear();
       jest.restoreAllMocks();
+      clearXsuaaServices();
     });
 
     it('uses the provider tenant if no JWT is provided', async () => {

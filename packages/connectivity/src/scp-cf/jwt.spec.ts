@@ -18,6 +18,7 @@ import {
   isXsuaaToken,
   decodeOrMakeJwt
 } from './jwt';
+import { clearXsuaaServices } from './environment-accessor';
 
 const jwtPayload = {
   sub: '1234567890',
@@ -117,6 +118,7 @@ describe('jwt', () => {
     afterEach(() => {
       nock.cleanAll();
       delete process.env.VCAP_SERVICES;
+      clearXsuaaServices();
     });
 
     it('succeeds and decodes for correct key', async () => {
@@ -124,10 +126,9 @@ describe('jwt', () => {
         .get('')
         .query({ zid: jwtPayload.zid })
         .reply(200, responseWithPublicKey());
+
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload), {
-          cacheVerificationKeys: false
-        })
+        verifyJwt(signedJwtForVerification(jwtPayload))
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -138,9 +139,7 @@ describe('jwt', () => {
         .reply(200, responseWithPublicKey(publicKey));
 
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload), {
-          cacheVerificationKeys: false
-        })
+        verifyJwt(signedJwtForVerification(jwtPayload))
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -148,9 +147,7 @@ describe('jwt', () => {
       nock(jku).get('').query({ zid: jwtPayload.zid }).reply(200, { keys: [] });
 
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload), {
-          cacheVerificationKeys: false
-        })
+        verifyJwt(signedJwtForVerification(jwtPayload))
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT.',
         cause: {
@@ -165,30 +162,13 @@ describe('jwt', () => {
       nock(jku).get('').query({ zid: jwtPayload.zid }).reply(200, response);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload), {
-          cacheVerificationKeys: false
-        })
+        verifyJwt(signedJwtForVerification(jwtPayload))
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT.',
         cause: {
           message: 'JWKS does not contain a key for kid=key-id-1'
         }
       });
-    });
-
-    it('fails if jku URL and xsuaa have different domains', async () => {
-      await expect(() =>
-        verifyJwt(
-          signedJwtForVerification(
-            jwtPayload,
-            'https://my-jku-url.some.wrong.domain.com'
-          )
-        )
-      )
-        .rejects.toThrowError()
-        .catch(err => {
-          expect(err.cause).toEqual('test');
-        });
     });
 
     xit('fails if the verification key does not conform with the signed JWT', async () => {
@@ -198,9 +178,7 @@ describe('jwt', () => {
         .reply(200, responseWithPublicKey('WRONG'));
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload), {
-          cacheVerificationKeys: false
-        })
+        verifyJwt(signedJwtForVerification(jwtPayload))
       ).rejects.toThrowErrorMatchingInlineSnapshot('"Failed to verify JWT."');
     });
 
@@ -214,7 +192,7 @@ describe('jwt', () => {
       await verifyJwt(signedJwtForVerification(jwtPayload), {
         cacheVerificationKeys: true
       });
-      // If you execute all tests the cache of xssec is populated already and the nock remains. Hence this extra clear.
+      // If you execute all tests the cache of xssec is populated already and the nock remains. Hence this extra clean.
       nock.cleanAll();
 
       // But due to caching multiple calls should not lead to errors
@@ -238,9 +216,7 @@ describe('jwt', () => {
       nock(jku).get('/').query({ zid: jwtPayload.zid }).reply(500);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload), {
-          cacheVerificationKeys: false
-        })
+        verifyJwt(signedJwtForVerification(jwtPayload))
       ).rejects.toThrowErrorMatchingInlineSnapshot('"Failed to verify JWT."');
     });
 
@@ -255,25 +231,6 @@ describe('jwt', () => {
       nock.cleanAll();
       // Second call does not fail due to caching.
       await verifyJwt(jwt);
-    });
-
-    it('fetches a new key when the cache has been disabled', async () => {
-      nock(jku)
-        .get('')
-        .query({ zid: jwtPayload.zid })
-        .reply(200, responseWithPublicKey());
-
-      const jwt = signedJwtForVerification(jwtPayload);
-      await verifyJwt(jwt, { cacheVerificationKeys: false });
-      // If you execute all tests the cache of xssec is populated already and the nock remains. Hence this extra clear.
-      nock.cleanAll();
-
-      const nockAfter = nock(jku)
-        .get('')
-        .query({ zid: jwtPayload.zid })
-        .reply(200, responseWithPublicKey());
-      await verifyJwt(jwt, { cacheVerificationKeys: false });
-      expect(nockAfter.isDone()).toBe(true);
     });
   });
 

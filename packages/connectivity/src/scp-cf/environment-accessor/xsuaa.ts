@@ -39,7 +39,6 @@ const xsuaaServices: Record<string, XsuaaService> = {};
  * Should only be used for testing purposes.
  */
 export function clearXsuaaServices(): void {
-  debugger;
   Object.keys(xsuaaServices).forEach(key => delete xsuaaServices[key]);
 }
 

@@ -16,9 +16,7 @@ export function mockClientCredentialsGrantCall(
     .post('/oauth/token', {
       grant_type: 'client_credentials',
       client_id: serviceCredentials.clientid,
-      client_secret: serviceCredentials.clientsecret,
-      app_tid: zoneId,
-      response_type: 'token'
+      client_secret: serviceCredentials.clientsecret
     })
     .delay(delay)
     .reply(responseCode, response);
@@ -36,9 +34,7 @@ export function mockClientCredentialsGrantWithCertCall(
   })
     .post('/oauth/token', {
       grant_type: 'client_credentials',
-      client_id: serviceCredentials.clientid,
-      app_tid: zoneId,
-      response_type: 'token'
+      client_id: serviceCredentials.clientid
     })
     .reply(responseCode, function () {
       const agentOptions = (this.req as any).options.agent.options;
@@ -90,7 +86,6 @@ export function mockRefreshTokenGrantCall(
 
 function xsuaaRequestHeaders(additionalHeaders: Record<string, string> = {}) {
   return {
-    'Content-Type': 'application/x-www-form-urlencoded',
     Accept: 'application/json',
     ...additionalHeaders
   };

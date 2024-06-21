@@ -4,13 +4,10 @@ import {
   ErrorWithCause,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import * as xssec from '@sap/xssec';
+import { createSecurityContext } from '@sap/xssec';
 import { decode } from 'jsonwebtoken';
 import { Cache } from './cache';
-import {
-  getServiceCredentials,
-  getXsuaaServiceCredentials
-} from './environment-accessor';
+import { getServiceCredentials, getXsuaaService } from './environment-accessor';
 import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
 import { TokenKey } from './xsuaa-service-types';
 
@@ -142,37 +139,27 @@ function validateAuthHeader(header: string | undefined): boolean {
 
 /**
  * Verifies the given JWT and returns the decoded payload.
- * @param token - JWT to be verified
+ * @param jwt - JWT to be verified
  * @param options - Options to control certain aspects of JWT verification behavior.
  * @returns A Promise to the decoded and verified JWT.
  * @internal
  */
 export async function verifyJwt(
-  token: string,
+  jwt: string,
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
   const disableCache = !{ ...defaultVerifyJwtOptions, ...options }
     .cacheVerificationKeys;
 
-  const credentials = getXsuaaServiceCredentials(token);
+  const xsuaaService = getXsuaaService({ disableCache, jwt });
 
-  const promise = new Promise<JwtPayload>((resolve, reject) => {
-    xssec.createSecurityContext(
-      token,
-      { disableCache, credentials },
-      function (error, securityContext, tokenInfo) {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(tokenInfo.getPayload());
-      }
-    );
+  const { token } = await createSecurityContext(xsuaaService, {
+    jwt
+  }).catch(e => {
+    throw new ErrorWithCause('Failed to verify JWT.', e);
   });
-  return promise
-    .then(data => data)
-    .catch(e => {
-      throw new ErrorWithCause('Failed to verify JWT.', e);
-    });
+
+  return token.payload;
 }
 
 /**

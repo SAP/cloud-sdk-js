@@ -1,5 +1,9 @@
+import { XsuaaService } from '@sap/xssec';
 import { JwtPayload } from '../jsonwebtoken-type';
-import { XsuaaServiceCredentials } from './environment-accessor-types';
+import {
+  ServiceCredentials,
+  XsuaaServiceCredentials
+} from './environment-accessor-types';
 import { getServiceCredentials } from './service-credentials';
 
 /**
@@ -25,4 +29,51 @@ export function getXsuaaServiceCredentials(
     );
   }
   return credentials;
+}
+
+const xsuaaServices: Record<string, XsuaaService> = {};
+
+/**
+ * @internal
+ * Clears the cache of XSUAA services.
+ * Should only be used for testing purposes.
+ */
+export function clearXsuaaServices(): void {
+  Object.keys(xsuaaServices).forEach(key => delete xsuaaServices[key]);
+}
+
+/**
+ * @internal
+ * @param options - Options on how to configure the XSUAA service.
+ * @param options.disableCache - Value to enable or disable JWKS cache in xssec library. Defaults to false.
+ * @param options.jwt - Either a JWT payload or an encoded JWT. Will be ignored if `credentials` are provided. If not provided, the first XSUAA service binding is used.
+ * @param options.credentials - Xsuaa service credentials. If not provided, the credentials are fetched based on the JWT
+ * @returns An instance of the xsuaa service that the application is bound to.
+ */
+export function getXsuaaService(options?: {
+  disableCache?: boolean;
+  jwt?: JwtPayload | string;
+  credentials?: ServiceCredentials;
+}): any {
+  const credentials =
+    options?.credentials || getXsuaaServiceCredentials(options?.jwt);
+  const disableCache = !!options?.disableCache;
+
+  const serviceConfig = disableCache
+    ? {
+        validation: {
+          jwks: {
+            expirationTime: 0,
+            refreshPeriod: 0
+          }
+        }
+      }
+    : undefined;
+
+  const cacheKey = `${credentials.serviceInstanceId}:${disableCache}`;
+
+  if (!xsuaaServices[cacheKey]) {
+    xsuaaServices[cacheKey] = new XsuaaService(credentials, serviceConfig);
+  }
+  return xsuaaServices[cacheKey];
 }

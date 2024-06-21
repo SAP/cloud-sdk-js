@@ -7,7 +7,7 @@
     ".gitignore",
     "tsconfig.json"
   ],
-  "pipeline": {
+  "tasks": {
     "compile": {
       "dependsOn": ["^compile"]
     },

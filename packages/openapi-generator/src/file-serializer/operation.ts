@@ -36,9 +36,18 @@ ${operation.operationId}: (${serializeOperationSignature(
 function serializeOperationSignature(operation: OpenApiOperation): string {
   const pathParams = serializePathParamsForSignature(operation);
   const requestBodyParam = serializeRequestBodyParamForSignature(operation);
-  const queryParams = serializeQueryParamsForSignature(operation);
+  const headerParams = serializeParamsForSignature(
+    operation,
+    'headerParameters'
+  );
 
-  return [pathParams, requestBodyParam, queryParams]
+  const queryParams = serializeParamsForSignature(
+    operation,
+    'queryParameters',
+    headerParams?.includes('?')
+  );
+
+  return [pathParams, requestBodyParam, queryParams, headerParams]
     .filter(params => params)
     .join(', ');
 }
@@ -63,23 +72,26 @@ function serializeRequestBodyParamForSignature(
   }
 }
 
-function serializeQueryParamsForSignature(
-  operation: OpenApiOperation
+function serializeParamsForSignature(
+  operation: OpenApiOperation,
+  paramType: 'queryParameters' | 'headerParameters',
+  canBeAllOptional = true
 ): string | undefined {
-  if (operation.queryParameters.length) {
-    const allOptional = operation.queryParameters.every(
-      param => !param.required
-    );
-    const queryParams = operation.queryParameters
+  const parameters = operation[paramType];
+  if (parameters.length) {
+    const paramsString = parameters
       .map(
         param =>
           `'${param.name}'${param.required ? '' : '?'}: ${serializeSchema(
             param.schema
           )}`
       )
-      .join(',\n');
+      .join(', ');
 
-    return `queryParameters${allOptional ? '?' : ''}: {${queryParams}}`;
+    const allOptional = parameters.every(param => !param.required);
+    const optionalModifier = allOptional && canBeAllOptional ? '?' : '';
+
+    return `${paramType}${optionalModifier}: {${paramsString}}`;
   }
 }
 
@@ -100,6 +112,9 @@ function serializeParamsForRequestBuilder(
   if (operation.queryParameters.length) {
     params.push('queryParameters');
   }
+  if (operation.headerParameters.length) {
+    params.push('headerParameters');
+  }
   if (params.length) {
     return codeBlock`{
       ${params.join(',\n')}
@@ -118,9 +133,16 @@ export function operationDocumentation(operation: OpenApiOperation): string {
   if (operation.requestBody) {
     signature.push(getSignatureOfBody(operation.requestBody));
   }
-  if (operation.queryParameters.length > 0) {
+  if (operation.queryParameters.length) {
     signature.push(
       `@param queryParameters - Object containing the following keys: ${operation.queryParameters
+        .map(param => `${param.name}`)
+        .join(', ')}.`
+    );
+  }
+  if (operation.headerParameters?.length) {
+    signature.push(
+      `@param headerParameters - Object containing the following keys: ${operation.headerParameters
         .map(param => `${param.name}`)
         .join(', ')}.`
     );

@@ -6,7 +6,7 @@ import {
 import { operationDocumentation, serializeOperation } from './operation';
 
 describe('serializeOperation', () => {
-  it('serializes operation with path and query parameters', () => {
+  it('serializes operation with path, query and header parameters', () => {
     const operation: OpenApiOperation = {
       operationId: 'getFn',
       method: 'get',
@@ -38,6 +38,15 @@ describe('serializeOperation', () => {
           schemaProperties: {}
         }
       ],
+      headerParameters: [
+        {
+          in: 'header',
+          name: 'resource-group',
+          originalName: 'resource-group',
+          schema: { type: 'string' },
+          schemaProperties: {}
+        }
+      ],
       responses: { 200: { description: 'some response description' } },
       response: { type: 'string' },
       pathPattern: 'test/{id}/{subId}'
@@ -48,14 +57,67 @@ describe('serializeOperation', () => {
        * @param id - Path parameter.
        * @param subId - Path parameter.
        * @param queryParameters - Object containing the following keys: limit.
+       * @param headerParameters - Object containing the following keys: resource-group.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */
-      getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
+      getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<string>(
         'get',
         "test/{id}/{subId}",
         {
               pathParameters: { id, subId },
-              queryParameters
+              queryParameters,
+              headerParameters
+            }
+      )"
+    `);
+  });
+
+  it('serializes operation with path and header parameters', () => {
+    const operation: OpenApiOperation = {
+      operationId: 'deleteFn',
+      method: 'delete',
+      tags: [],
+      pathParameters: [
+        {
+          in: 'path',
+          name: 'id',
+          originalName: 'id',
+          schema: { type: 'string' },
+          required: true,
+          schemaProperties: {}
+        }
+      ],
+      queryParameters: [],
+      headerParameters: [
+        {
+          in: 'header',
+          name: 'resource-group',
+          originalName: 'resource-group',
+          schema: { type: 'string' },
+          schemaProperties: {}
+        }
+      ],
+      responses: { 200: { description: 'some response description' } },
+      response: {
+        additionalProperties: { type: 'any' },
+        properties: []
+      },
+      pathPattern: 'test/{id}'
+    };
+
+    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+      "/**
+       * Create a request builder for execution of delete requests to the 'test/{id}' endpoint.
+       * @param id - Path parameter.
+       * @param headerParameters - Object containing the following keys: resource-group.
+       * @returns The request builder, use the \`execute()\` method to trigger the request.
+       */
+      deleteFn: (id: string, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<Record<string, any>>(
+        'delete',
+        "test/{id}",
+        {
+              pathParameters: { id },
+              headerParameters
             }
       )"
     `);
@@ -77,6 +139,7 @@ describe('serializeOperation', () => {
         }
       ],
       queryParameters: [],
+      headerParameters: [],
       responses: { 200: { description: 'some response description' } },
       response: {
         additionalProperties: { type: 'any' },
@@ -117,6 +180,7 @@ describe('serializeOperation', () => {
         }
       ],
       queryParameters: [],
+      headerParameters: [],
       responses: { 200: { description: 'some response description' } },
       response: {
         additionalProperties: { type: 'any' },
@@ -126,6 +190,169 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation)).toMatchSnapshot();
+  });
+
+  it('serializes operation with optional query and required header parameters', () => {
+    const operation: OpenApiOperation = {
+      operationId: 'getFn',
+      method: 'get',
+      tags: [],
+      pathParameters: [],
+      queryParameters: [
+        {
+          in: 'query',
+          name: 'limit',
+          originalName: 'limit',
+          schema: { type: 'number' },
+          schemaProperties: {},
+          required: false
+        },
+        {
+          in: 'query',
+          name: 'page',
+          originalName: 'page',
+          schema: { type: 'number' },
+          schemaProperties: {},
+          required: false
+        }
+      ],
+      headerParameters: [
+        {
+          in: 'header',
+          name: 'resource-group',
+          originalName: 'resource-group',
+          schema: { type: 'string' },
+          schemaProperties: {},
+          required: true
+        }
+      ],
+      responses: { 200: { description: 'some response description' } },
+      response: { type: 'any' },
+      pathPattern: 'test'
+    };
+
+    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+      "/**
+       * Create a request builder for execution of get requests to the 'test' endpoint.
+       * @param queryParameters - Object containing the following keys: limit, page.
+       * @param headerParameters - Object containing the following keys: resource-group.
+       * @returns The request builder, use the \`execute()\` method to trigger the request.
+       */
+      getFn: (queryParameters: {'limit'?: number, 'page'?: number}, headerParameters: {'resource-group': string}) => new OpenApiRequestBuilder<any>(
+        'get',
+        "test",
+        {
+              queryParameters,
+              headerParameters
+            }
+      )"
+    `);
+  });
+
+  it('serializes operation with required query and optional header parameters', () => {
+    const operation: OpenApiOperation = {
+      operationId: 'getFn',
+      method: 'get',
+      tags: [],
+      pathParameters: [],
+      queryParameters: [
+        {
+          in: 'query',
+          name: 'limit',
+          originalName: 'limit',
+          schema: { type: 'number' },
+          schemaProperties: {},
+          required: true
+        }
+      ],
+      headerParameters: [
+        {
+          in: 'header',
+          name: 'resource-group',
+          originalName: 'resource-group',
+          schema: { type: 'string' },
+          schemaProperties: {},
+          required: false
+        }
+      ],
+      responses: { 200: { description: 'some response description' } },
+      response: { type: 'any' },
+      pathPattern: 'test'
+    };
+
+    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+      "/**
+       * Create a request builder for execution of get requests to the 'test' endpoint.
+       * @param queryParameters - Object containing the following keys: limit.
+       * @param headerParameters - Object containing the following keys: resource-group.
+       * @returns The request builder, use the \`execute()\` method to trigger the request.
+       */
+      getFn: (queryParameters: {'limit': number}, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<any>(
+        'get',
+        "test",
+        {
+              queryParameters,
+              headerParameters
+            }
+      )"
+    `);
+  });
+
+  it('serializes operation with required query and required header parameters', () => {
+    const operation: OpenApiOperation = {
+      operationId: 'getFn',
+      method: 'get',
+      tags: [],
+      pathParameters: [],
+      queryParameters: [
+        {
+          in: 'query',
+          name: 'limit',
+          originalName: 'limit',
+          schema: { type: 'number' },
+          schemaProperties: {},
+          required: true
+        },
+        {
+          in: 'query',
+          name: 'page',
+          originalName: 'page',
+          schema: { type: 'number' },
+          schemaProperties: {},
+          required: false
+        }
+      ],
+      headerParameters: [
+        {
+          in: 'header',
+          name: 'resource-group',
+          originalName: 'resource-group',
+          schema: { type: 'string' },
+          schemaProperties: {},
+          required: true
+        }
+      ],
+      responses: { 200: { description: 'some response description' } },
+      response: { type: 'any' },
+      pathPattern: 'test'
+    };
+
+    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+      "/**
+       * Create a request builder for execution of get requests to the 'test' endpoint.
+       * @param queryParameters - Object containing the following keys: limit, page.
+       * @param headerParameters - Object containing the following keys: resource-group.
+       * @returns The request builder, use the \`execute()\` method to trigger the request.
+       */
+      getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {'resource-group': string}) => new OpenApiRequestBuilder<any>(
+        'get',
+        "test",
+        {
+              queryParameters,
+              headerParameters
+            }
+      )"
+    `);
   });
 
   it('serializes operation with only query parameters', () => {
@@ -143,6 +370,7 @@ describe('serializeOperation', () => {
           schemaProperties: {}
         }
       ],
+      headerParameters: [],
       responses: { 200: { description: 'some response description' } },
       response: { type: 'any' },
       pathPattern: 'test'
@@ -180,6 +408,7 @@ describe('serializeOperation', () => {
         }
       ],
       queryParameters: [],
+      headerParameters: [],
       requestBody: {
         required: true,
         schema: {
@@ -216,6 +445,7 @@ describe('serializeOperation', () => {
       tags: [],
       pathParameters: [],
       queryParameters: [],
+      headerParameters: [],
       responses: { 200: { description: 'some response description' } },
       requestBody: {
         required: false,
@@ -301,16 +531,20 @@ describe('serializeOperation', () => {
     );
   });
 
-  it('creates documentation with query parameters object', () => {
+  it('creates documentation with query and header parameters objects', () => {
     const operation = getOperation();
     operation.queryParameters = [
       { name: 'queryParameter1' },
       { name: 'queryParameter2' }
     ] as OpenApiParameter[];
+    operation.headerParameters = [
+      { name: 'headerParameter1' }
+    ] as OpenApiParameter[];
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
        * @param queryParameters - Object containing the following keys: queryParameter1, queryParameter2.
+       * @param headerParameters - Object containing the following keys: headerParameter1.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */"
     `);

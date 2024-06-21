@@ -10,7 +10,8 @@ import {
   connectivityProxyConfigMock,
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
-  testTenants
+  testTenants,
+  uaaDomain
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   certificateSingleResponse,
@@ -446,7 +447,7 @@ describe('destination cache', () => {
         expect.objectContaining({
           userJwt: expect.objectContaining({
             decoded: expect.objectContaining({
-              iss: 'https://provider.example.com',
+              iss: `https://provider.${uaaDomain}`,
               user_id: 'user-prov',
               zid: 'provider'
             })
@@ -499,7 +500,7 @@ describe('destination cache', () => {
         expect.objectContaining({
           userJwt: expect.objectContaining({
             decoded: expect.objectContaining({
-              iss: 'https://provider.example.com',
+              iss: `https://provider.${uaaDomain}`,
               user_id: 'user-prov',
               zid: 'provider'
             })
@@ -564,7 +565,7 @@ describe('destination cache', () => {
         expect.objectContaining({
           userJwt: expect.objectContaining({
             decoded: expect.objectContaining({
-              iss: 'https://provider.example.com',
+              iss: `https://provider.${uaaDomain}`,
               user_id: 'user-prov',
               zid: 'provider'
             })

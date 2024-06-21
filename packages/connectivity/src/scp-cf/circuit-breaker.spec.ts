@@ -19,11 +19,12 @@ const jwt = jwt123.sign(
 );
 
 describe('circuit breaker', () => {
-  afterEach(() => {
+  beforeEach(() => {
     Object.values(circuitBreakers).forEach(cb => cb.close());
     nock.cleanAll();
   });
-  beforeEach(() => {
+
+  afterEach(() => {
     Object.values(circuitBreakers).forEach(cb => cb.close());
     nock.cleanAll();
   });
@@ -87,7 +88,7 @@ describe('circuit breaker', () => {
         await request();
         await sleep(50);
       } catch (e) {
-        if (e.message.match(/Request failed with status code 500/)) {
+        if (e.message.match(/500/)) {
           failedCalls++;
         }
         if (e.message.match(/Breaker is open/)) {

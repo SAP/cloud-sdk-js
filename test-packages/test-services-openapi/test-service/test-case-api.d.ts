@@ -50,6 +50,52 @@ export declare const TestCaseApi: {
     }
   ) => OpenApiRequestBuilder<any>;
   /**
+   * Create a request builder for execution of get requests to the '/test-cases/parameters' endpoint.
+   * @param queryParameters - Object containing the following keys: requiredQueryParam.
+   * @param headerParameters - Object containing the following keys: optionalHeaderParam.
+   * @returns The request builder, use the `execute()` method to trigger the request.
+   */
+  testCaseRequiredQueryOptionalHeader: (
+    queryParameters: {
+      requiredQueryParam: string;
+    },
+    headerParameters?: {
+      optionalHeaderParam?: string;
+    }
+  ) => OpenApiRequestBuilder<any>;
+  /**
+   * Create a request builder for execution of post requests to the '/test-cases/parameters' endpoint.
+   * @param body - Request body.
+   * @param queryParameters - Object containing the following keys: optionalQueryParam.
+   * @param headerParameters - Object containing the following keys: requiredHeaderParam.
+   * @returns The request builder, use the `execute()` method to trigger the request.
+   */
+  testCaseOptionalQueryRequiredHeader: (
+    body: SimpleTestEntity,
+    queryParameters: {
+      optionalQueryParam?: string;
+    },
+    headerParameters: {
+      requiredHeaderParam: string;
+    }
+  ) => OpenApiRequestBuilder<any>;
+  /**
+   * Create a request builder for execution of patch requests to the '/test-cases/parameters' endpoint.
+   * @param body - Request body.
+   * @param queryParameters - Object containing the following keys: optionalQueryParam.
+   * @param headerParameters - Object containing the following keys: optionalHeaderParam.
+   * @returns The request builder, use the `execute()` method to trigger the request.
+   */
+  testCaseOptionalQueryOptionalHeader: (
+    body: SimpleTestEntity,
+    queryParameters?: {
+      optionalQueryParam?: string;
+    },
+    headerParameters?: {
+      optionalHeaderParam?: string;
+    }
+  ) => OpenApiRequestBuilder<any>;
+  /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters/{duplicateParam}' endpoint.
    * @param duplicateParam - Path parameter.
    * @param queryParameters - Object containing the following keys: duplicateParam.

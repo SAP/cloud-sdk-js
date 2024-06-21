@@ -32,7 +32,9 @@ module.exports = {
       [
         {
           id: 'regexLowerCaseInternal',
+          // eslint-disable-next-line regex/invalid
           regex: '\\@Internal',
+          // eslint-disable-next-line regex/invalid
           message: 'You are not allowed to use @Internal. Please use @internal.'
         }
       ]
@@ -141,7 +143,7 @@ module.exports = {
     'import/export': 'error',
     'import/order': 'error',
     'import/no-duplicates': 'error',
-    'unused-imports/no-unused-imports-ts': 'error',
+    'unused-imports/no-unused-imports': 'error',
     'arrow-body-style': 'error',
     curly: 'error',
     'eol-last': 'error',
@@ -195,7 +197,7 @@ module.exports = {
     ],
     'jsdoc/check-syntax': 'error',
     'jsdoc/multiline-blocks': 'error',
-    'jsdoc/tag-lines': ['error', { 'tag-lines': 0 }],
+    'jsdoc/tag-lines': ['error', 'always', { count: 0 }],
     'jsdoc/no-bad-blocks': 'error',
     'jsdoc/no-defaults': 'error',
     'jsdoc/no-types': 'error',
@@ -225,8 +227,7 @@ module.exports = {
     'jsdoc/require-param': ['error', { enableFixer: false }],
     'jsdoc/require-returns-check': 'error',
     'jsdoc/require-returns-description': 'error',
-    'jsdoc/require-returns': 'error',
-    'jsdoc/tag-lines': ['error', 'never']
+    'jsdoc/require-returns': 'error'
   },
   settings: {
     jsdoc: {

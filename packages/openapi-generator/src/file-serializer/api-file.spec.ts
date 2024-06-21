@@ -21,6 +21,7 @@ describe('apiFile', () => {
             }
           ],
           queryParameters: [],
+          headerParameters: [],
           response: { type: 'any' },
           responses: { 200: { description: 'some response description' } },
           pathPattern: 'test/{id}'
@@ -85,6 +86,15 @@ describe('apiFile', () => {
               schemaProperties: {}
             }
           ],
+          headerParameters: [
+            {
+              in: 'header',
+              name: 'headerParam',
+              originalName: 'headerParam',
+              schema: { type: 'string' },
+              schemaProperties: {}
+            }
+          ],
           pathPattern: 'test/{id}',
           response: { type: 'string' }
         },
@@ -95,6 +105,7 @@ describe('apiFile', () => {
           tags: [],
           pathParameters: [],
           queryParameters: [],
+          headerParameters: [],
           requestBody: {
             required: true,
             schema: {
@@ -122,14 +133,16 @@ describe('apiFile', () => {
          * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
          * @param id - Path parameter.
          * @param queryParameters - Object containing the following keys: queryParam.
+         * @param headerParameters - Object containing the following keys: headerParam.
          * @returns The request builder, use the \`execute()\` method to trigger the request.
          */
-        getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}) => new OpenApiRequestBuilder<string>(
+        getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}, headerParameters?: {'headerParam'?: string}) => new OpenApiRequestBuilder<string>(
           'get',
           "test/{id}",
           {
                 pathParameters: { id },
-                queryParameters
+                queryParameters,
+                headerParameters
               }
         ),
         /**
@@ -159,6 +172,7 @@ describe('apiFile', () => {
           tags: [],
           pathParameters: [],
           queryParameters: [],
+          headerParameters: [],
           response: { type: 'any' },
           pathPattern: 'test'
         }

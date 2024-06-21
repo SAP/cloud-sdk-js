@@ -9,9 +9,9 @@ const logger = createLogger({
 
 /**
  * Services getter for a given service.
+ * Internally uses, xsenv library to read configurations from VCAP_SERVICES.
  * @param service - Service name.
  * @returns List of service bindings of the given type. Returns an empty array if no service binding exists for the given type.
- * @internal
  */
 export function getServiceBindings(service: string): Service[] {
   return xsenv.filterServices({ label: service });
@@ -19,9 +19,9 @@ export function getServiceBindings(service: string): Service[] {
 
 /**
  * Returns the first found instance for the given service type.
+ * Internally uses, xsenv library to read configurations from VCAP_SERVICES.
  * @param service - The service type.
  * @returns The first found service.
- * 
  */
 export function getServiceBinding(service: string): Service | undefined {
   const services: Service[] = xsenv.filterServices({ label: service });
@@ -48,7 +48,6 @@ export function getServiceBinding(service: string): Service | undefined {
  * Throws an error when no service can be found for the given type.
  * @param service - A string representing the service type or a {@link Service} instance.
  * @returns A {@link Service} instance.
- * @internal
  */
 export function resolveServiceBinding(service: string | Service): Service {
   if (typeof service === 'string') {
@@ -64,8 +63,11 @@ export function resolveServiceBinding(service: string | Service): Service {
 }
 
 /**
- * Filters services based on service instance name. Throws an error if no or multiple services exist.
- * @internal
+ * Filters services based on service instance name.
+ *
+ * Throws an error if no or multiple services exist.
+ * @param serviceInstanceName - A string represeting the service instance name.
+ * @returns A {@link Service} instance.
  */
 export function getServiceBindingByInstanceName(
   serviceInstanceName: string

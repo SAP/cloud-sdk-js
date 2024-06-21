@@ -80,6 +80,23 @@ const services = {
         uri: 'some-service-uri'
       }
     }
+  ],
+  workflow: [
+    {
+      label: 'workflow',
+      name: 'my-workflow',
+      tags: [],
+      credentials: {
+        endpoints: {
+          workflow_odata_url: 'workflow-odata-url',
+          workflow_rest_url: 'workflow-rest-url'
+        },
+        uaa: {
+          clientid: 'workflow-clientid',
+          clientsecret: 'workflow-client-secret'
+        }
+      }
+    }
   ]
 };
 
@@ -103,7 +120,7 @@ describe('service binding to destination', () => {
     delete process.env.VCAP_SERVICES;
   });
 
-  it('transform aicore service binding to destination', async () => {
+  it('transforms aicore service binding', async () => {
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('aicore')
     );
@@ -122,7 +139,7 @@ describe('service binding to destination', () => {
     );
   });
 
-  it('transform xsuaa service binding to destination', async () => {
+  it('transforms xsuaa service binding', async () => {
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('xsuaa')
     );
@@ -141,7 +158,26 @@ describe('service binding to destination', () => {
     );
   });
 
-  it('transform the first destination service binding from multiple to destination', async () => {
+  it('transforms workflow service binding', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('workflow')
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'workflow-odata-url',
+        name: 'my-workflow',
+        authentication: 'OAuth2ClientCredentials',
+        authTokens: expect.arrayContaining([
+          expect.objectContaining({
+            value: 'access-token',
+            type: 'bearer'
+          })
+        ])
+      })
+    );
+  });
+
+  it('transforms the first destination service binding from multiple ones available', async () => {
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('destination')
     );
@@ -160,7 +196,7 @@ describe('service binding to destination', () => {
     );
   });
 
-  it('transform the s4-hana-cloud service binding into basic auth destination', async () => {
+  it('transforms the s4-hana-cloud service binding into basic auth destination', async () => {
     const warnSpy = jest.spyOn(logger, 'warn');
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('s4-hana-cloud')

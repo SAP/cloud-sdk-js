@@ -32,7 +32,7 @@ export const serviceToDestinationTransformers: Record<
 
 /**
  * Convenience function to create an OAuth2ClientCredentials destination from the provided service binding.
- * If a JWT is provided(as part of @param options), the tenant in the JWT is used for client credentials grant, else the provider tenant is used.
+ * If a JWT is provided as part of options, the tenant in the JWT is used for client credentials grant, else the provider tenant is used.
  * Supported service types are:
  * - business-logging
  * - destination

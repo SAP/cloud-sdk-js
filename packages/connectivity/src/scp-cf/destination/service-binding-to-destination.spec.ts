@@ -52,9 +52,9 @@ const services = {
       credentials: {
         clientid: 'aicore-clientid',
         clientsecret: 'aicore-clientsecret',
-          serviceurls: {
-            AI_API_URL: 'aicore-url'
-          }
+        serviceurls: {
+          AI_API_URL: 'aicore-url'
+        }
       }
     }
   ],
@@ -69,7 +69,7 @@ const services = {
       }
     }
   ],
-  "some-service": [
+  'some-service': [
     {
       name: 'some-service1',
       label: 'some-service',
@@ -177,7 +177,12 @@ describe('service binding to destination', () => {
   });
 
   it('transforming unsupported service type throws', async () => {
-    await expect(()=>  transformServiceBindingToDestination(resolveServiceBinding('some-service')
-    )).rejects.toThrowErrorMatchingInlineSnapshot('"The provided service binding of type some-service is not supported out of the box for destination transformation."')
+    await expect(() =>
+      transformServiceBindingToDestination(
+        resolveServiceBinding('some-service')
+      )
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"The provided service binding of type some-service is not supported out of the box for destination transformation."'
+    );
   });
 });

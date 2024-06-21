@@ -12,3 +12,5 @@ The following service bindings are supported:
 - service-manager
 - xsuaa
 - aicore
+
+[Improvements] Expose `getServiceBindings`, `getServiceBinding`, `resolveServiceBinding` and `getServiceBindingByInstanceName` from `environment-accessor`. These were previously internal functions.

@@ -4,6 +4,7 @@
 
 [New Functionality] Add convenience function `transformServiceBindingToDestination` to create OAuth2ClientCredentials destination from service bindings.
 The following service bindings are supported:
+
 - business-logging
 - destination
 - s4-hana-cloud (falls back to basic authentication for this service type)
@@ -12,5 +13,3 @@ The following service bindings are supported:
 - service-manager
 - xsuaa
 - aicore
-
-[Improvements] Expose `getServiceBindings`, `getServiceBinding`, `resolveServiceBinding` and `getServiceBindingByInstanceName` from `environment-accessor`. These were previously internal functions.

@@ -41,7 +41,7 @@ export const serviceToDestinationTransformers: Record<
  * - workflow
  * - service-manager
  * - xsuaa
- * - aicore
+ * - aicore.
  *
  * Throws an error if the provided service binding is not supported.
  * @param serviceBinding - The service binding to transform.

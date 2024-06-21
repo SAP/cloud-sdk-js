@@ -3,6 +3,7 @@ import { Socket } from 'net';
 import { createPublicKey } from 'node:crypto';
 import nock from 'nock';
 import {
+  destinationBindingClientSecretMock,
   jku,
   mockServiceBindings,
   publicKey,
@@ -46,10 +47,6 @@ export function responseWithPublicKey(key: string = publicKey) {
 }
 
 describe('jwt', () => {
-  beforeAll(() => {
-    mockServiceBindings({ xsuaaBinding: false });
-  });
-
   describe('isXsuaaToken()', () => {
     it('returns true if the token was issued by XSUAA', () => {
       const jwt = decodeJwtComplete(
@@ -269,12 +266,21 @@ describe('jwt', () => {
   });
 
   describe('decodeOrMakeJwt', () => {
-    it('returns decoded JWT, if JWT has `zid` ', () => {
+    afterEach(() => {
+      delete process.env.VCAP_SERVICES;
+    });
+
+    it('returns decoded JWT, if JWT has `zid` (XSUAA)', () => {
       const payload = { zid: 'test', iat: 123 };
       expect(decodeOrMakeJwt(signedJwt(payload))).toEqual(payload);
     });
 
-    it('returns undefined, if JWT has no `zid`', () => {
+    it('returns decoded JWT, if JWT has `app_tid` (IAS)', () => {
+      const payload = { app_tid: 'test', iat: 123 };
+      expect(decodeOrMakeJwt(signedJwt(payload))).toEqual(payload);
+    });
+
+    it('returns undefined, if JWT has no `zid` nor `app_tid`', () => {
       expect(decodeOrMakeJwt(signedJwt({ user_id: 'test' }))).toBeUndefined();
     });
 
@@ -282,10 +288,17 @@ describe('jwt', () => {
       expect(() => decodeOrMakeJwt(undefined)).not.toThrow();
     });
 
-    it("returns the XSUAA binding's subaccount as `zid`, if JWT is not present and binding is present", () => {
+    it("returns the XSUAA service binding's tenant ID as `zid`, if JWT is not present and binding is present", () => {
       mockServiceBindings({ xsuaaBinding: true });
       expect(decodeOrMakeJwt(undefined)).toEqual({
-        zid: xsuaaBindingMock.credentials.subaccountid
+        zid: xsuaaBindingMock.credentials.tenantid
+      });
+    });
+
+    it("returns the destination service binding's tenant ID, if JWT, XSUAA and identity service bindings are missing", () => {
+      mockServiceBindings({ xsuaaBinding: false });
+      expect(decodeOrMakeJwt(undefined)).toEqual({
+        zid: destinationBindingClientSecretMock.credentials.tenantid
       });
     });
   });

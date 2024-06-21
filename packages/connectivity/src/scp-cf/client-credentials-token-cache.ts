@@ -10,15 +10,18 @@ const logger = createLogger({
 const ClientCredentialsTokenCache = (
   cache: Cache<ClientCredentialsResponse>
 ) => ({
-  getToken: (url, clientId: string): ClientCredentialsResponse | undefined =>
-    cache.get(getCacheKey(url, clientId)),
+  getToken: (
+    tenantId: string,
+    clientId: string
+  ): ClientCredentialsResponse | undefined =>
+    cache.get(getCacheKey(tenantId, clientId)),
 
   cacheToken: (
-    url,
+    tenantId: string,
     clientId: string,
     token: ClientCredentialsResponse
   ): void => {
-    cache.set(getCacheKey(url, clientId), {
+    cache.set(getCacheKey(tenantId, clientId), {
       entry: token,
       expires: token.expires_in
         ? Date.now() + token.expires_in * 1000
@@ -33,20 +36,27 @@ const ClientCredentialsTokenCache = (
 
 /** *
  * @internal
- * @param url - URL from where the token is fetched
+ * @param tenantId - URL from where the token is fetched
  * @param clientId - ClientId to fetch the token
  * @returns the token
  */
-export function getCacheKey(url: string, clientId: string): string | undefined {
-  if (!url) {
-    logger.warn('Cannot get cache key. The url was undefined.');
+export function getCacheKey(
+  tenantId: string,
+  clientId: string
+): string | undefined {
+  if (!tenantId) {
+    logger.warn(
+      'Cannot create cache key for client credentials token cache. The given tenant ID is undefined.'
+    );
     return;
   }
   if (!clientId) {
-    logger.warn('Cannot get cache key. The ClientId was undefined.');
+    logger.warn(
+      'Cannot create cache key for client credentials token cache. The given client ID is undefined.'
+    );
     return;
   }
-  return [url, clientId].join(':');
+  return [tenantId, clientId].join(':');
 }
 
 /**

@@ -16,7 +16,7 @@ describe('ClientCredentialsTokenCache', () => {
     };
 
     clientCredentialsTokenCache.cacheToken(
-      'https://url_valid',
+      'subscriber-tenant',
       'clientid',
       validToken
     );
@@ -24,7 +24,7 @@ describe('ClientCredentialsTokenCache', () => {
     jest.advanceTimersByTime(oneHourInSeconds * 2 * 1000);
 
     const valid = clientCredentialsTokenCache.getToken(
-      'https://url_valid',
+      'subscriber-tenant',
       'clientid'
     );
 
@@ -43,14 +43,14 @@ describe('ClientCredentialsTokenCache', () => {
     };
 
     clientCredentialsTokenCache.cacheToken(
-      'https://url_expired',
+      'subscriber-tenant',
       'clientid',
       expiredToken
     );
     jest.advanceTimersByTime(oneHourInSeconds * 2 * 1000);
 
     const expired = clientCredentialsTokenCache.getToken(
-      'https://url_expired',
+      'subscriber-tenant',
       'clientid'
     );
 
@@ -70,7 +70,7 @@ describe('ClientCredentialsTokenCache', () => {
     };
 
     clientCredentialsTokenCache.cacheToken(
-      'https://url_valid',
+      'subscriber-tenant',
       'clientid',
       validToken
     );
@@ -78,13 +78,13 @@ describe('ClientCredentialsTokenCache', () => {
     jest.advanceTimersByTime(oneHourInSeconds * 2 * 1000);
 
     const invalid = clientCredentialsTokenCache.getToken(
-      'https://url_valid',
+      'subscriber-tenant',
       undefined as any
     );
 
     expect(invalid).toBeUndefined();
-    expect(warn).toBeCalledWith(
-      'Cannot get cache key. The ClientId was undefined.'
+    expect(warn).toHaveBeenCalledWith(
+      'Cannot create cache key for client credentials token cache. The given client ID is undefined.'
     );
   });
 });

@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Service } from '../environment-accessor/environment-accessor-types';
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
@@ -6,6 +7,11 @@ import type {
   ServiceBindingTransformOptions
 } from './destination-from-vcap';
 import { Destination } from './destination-service-types';
+
+const logger = createLogger({
+  package: 'connectivity',
+  messageContext: 'destination'
+});
 
 /**
  * @internal
@@ -25,22 +31,21 @@ export const serviceToDestinationTransformers: Record<
 };
 
 /**
- * Creates a OAuth2ClientCredentials destination from the provided service binding.
- * If a JWT is provided, the tenant in the JWT is used for client credentials grant, else the provider tenant is used.
- * 
+ * Convenience function to create an OAuth2ClientCredentials destination from the provided service binding.
+ * If a JWT is provided(as part of @param options), the tenant in the JWT is used for client credentials grant, else the provider tenant is used.
  * Supported service types are:
  * - business-logging
- * - s4-hana-cloud
  * - destination
+ * - s4-hana-cloud (falls back to basic authentication for this service type)
  * - saas-registry
  * - workflow
  * - service-manager
  * - xsuaa
  * - aicore
- * 
+ *
  * Throws an error if the provided service binding is not supported.
- * @param serviceBinding - The service binding to transform. 
- * @param options - Options used during fetching destinations;includes a JWT payload {@link JwtPayload} and options to influence caching behavior (see {@link CachingOptions}) 
+ * @param serviceBinding - The service binding to transform.
+ * @param options - Options used during fetching destinations;includes a JWT payload {@link JwtPayload} and options to influence caching behavior (see {@link CachingOptions}).
  * @returns A promise returning the transformed OAuth2ClientCredentials destination on success.
  */
 export async function transformServiceBindingToDestination(
@@ -48,9 +53,19 @@ export async function transformServiceBindingToDestination(
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
   if (serviceToDestinationTransformers[serviceBinding.label]) {
-    return serviceToDestinationTransformers[serviceBinding.label](serviceBinding, options);
+    if (serviceBinding.label === 's4-hana-cloud') {
+      logger.warn(
+        `For service binding of type ${serviceBinding.label} falling back to creating destination with basic authentication.`
+      );
+    }
+    return serviceToDestinationTransformers[serviceBinding.label](
+      serviceBinding,
+      options
+    );
   }
-  throw new Error(`The provided service binding of type ${serviceBinding.label} is not supported out of the box for destination transformation.`);
+  throw new Error(
+    `The provided service binding of type ${serviceBinding.label} is not supported out of the box for destination transformation.`
+  );
 }
 
 async function aicoreToDestination(

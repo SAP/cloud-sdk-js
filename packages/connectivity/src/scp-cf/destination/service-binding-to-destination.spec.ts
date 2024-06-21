@@ -1,7 +1,13 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { serviceToken } from '../token-accessor';
 import { resolveServiceBinding } from '../environment-accessor/service-bindings';
 import { decodeJwt } from '../jwt';
 import { transformServiceBindingToDestination } from './service-binding-to-destination';
+
+const logger = createLogger({
+  package: 'connectivity',
+  messageContext: 'destination'
+});
 
 const services = {
   destination: [
@@ -46,9 +52,9 @@ const services = {
       credentials: {
         clientid: 'aicore-clientid',
         clientsecret: 'aicore-clientsecret',
-        serviceurls: {
-          AI_API_URL: 'aicore-url'
-        }
+          serviceurls: {
+            AI_API_URL: 'aicore-url'
+          }
       }
     }
   ],
@@ -60,6 +66,18 @@ const services = {
         User: 'username',
         Password: 'password',
         URL: 's4-hana-cloud-url'
+      }
+    }
+  ],
+  "some-service": [
+    {
+      name: 'some-service1',
+      label: 'some-service',
+      tags: ['some-service'],
+      credentials: {
+        clientid: 'some-service-clientid',
+        clientsecret: 'some-service-clientsecret',
+        uri: 'some-service-uri'
       }
     }
   ]
@@ -82,6 +100,7 @@ describe('service binding to destination', () => {
 
   afterAll(() => {
     jest.clearAllMocks();
+    delete process.env.VCAP_SERVICES;
   });
 
   it('transform aicore service binding to destination', async () => {
@@ -142,8 +161,12 @@ describe('service binding to destination', () => {
   });
 
   it('transform the s4-hana-cloud service binding into basic auth destination', async () => {
+    const warnSpy = jest.spyOn(logger, 'warn');
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('s4-hana-cloud')
+    );
+    expect(warnSpy).toHaveBeenCalledWith(
+      'For service binding of type s4-hana-cloud falling back to creating destination with basic authentication.'
     );
     expect(destination).toEqual({
       url: 's4-hana-cloud-url',
@@ -151,5 +174,10 @@ describe('service binding to destination', () => {
       username: 'username',
       password: 'password'
     });
+  });
+
+  it('transforming unsupported service type throws', async () => {
+    await expect(()=>  transformServiceBindingToDestination(resolveServiceBinding('some-service')
+    )).rejects.toThrowErrorMatchingInlineSnapshot('"The provided service binding of type some-service is not supported out of the box for destination transformation."')
   });
 });

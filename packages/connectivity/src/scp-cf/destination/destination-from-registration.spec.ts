@@ -252,7 +252,7 @@ describe('register-destination', () => {
       expect(registeredDestination).toEqual(testDestination);
 
       expect(logger.error).toHaveBeenCalledWith(
-        'Could neither determine tenant from JWT nor XSUAA, identity or destination service binding. Destination is registered without tenant information.'
+        'Could not determine tenant from JWT nor XSUAA, identity or destination service binding. Destination is registered without tenant information.'
       );
     });
 

@@ -8,7 +8,7 @@ import {
 import { exchangeToken, shouldExchangeToken } from '../identity-service';
 import { JwtPair } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
-import { jwtBearerToken, serviceToken } from '../token-accessor';
+import { jwtBearerToken } from '../token-accessor';
 import { getIssuerSubdomain } from '../subdomain-replacer';
 import {
   DestinationFetchOptions,
@@ -256,13 +256,17 @@ export class DestinationFromServiceRetriever {
     const { destination, origin } = destinationResult;
     // This covers the x-tenant case https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     const exchangeTenant = this.getExchangeTenant(destination);
-    const clientGrant = await serviceToken('destination', {
-      jwt:
-        origin === 'provider'
-          ? this.providerServiceToken.decoded
-          : this.subscriberToken?.serviceJwt?.decoded
-    });
-    return { authHeaderJwt: clientGrant, exchangeTenant };
+    const authHeaderJwt =
+      origin === 'provider'
+        ? this.providerServiceToken.encoded
+        : this.subscriberToken?.serviceJwt?.encoded;
+
+    if (!authHeaderJwt) {
+      throw Error(
+        'Could not retrieve service token for the destination service.'
+      );
+    }
+    return { authHeaderJwt, exchangeTenant };
   }
 
   // This covers the two technical user propagation https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
@@ -318,12 +322,14 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         )
       };
     }
+
     // Case 2 Subscriber and provider account not the same OR custom JWT -> x-user-token header passed to determine user and tenant in token service URL and service token to get the destination
     const serviceJwt =
       origin === 'provider'
         ? this.providerServiceToken
         : // TODO: What is the meaning of this? Why do we assume this is defined. Technically, it might not be.
           this.subscriberToken.serviceJwt!;
+
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`
     );

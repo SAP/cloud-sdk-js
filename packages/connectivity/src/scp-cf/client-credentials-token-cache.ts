@@ -36,7 +36,7 @@ const ClientCredentialsTokenCache = (
 
 /** *
  * @internal
- * @param tenantId - URL from where the token is fetched
+ * @param tenantId - The ID of the tenant to cache the token for.
  * @param clientId - ClientId to fetch the token
  * @returns the token
  */

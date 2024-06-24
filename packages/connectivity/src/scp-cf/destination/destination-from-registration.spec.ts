@@ -242,7 +242,7 @@ describe('register-destination', () => {
       const logger = createLogger('register-destination');
       jest.spyOn(logger, 'error');
 
-      const dummyTenantId = 'tenant_id';
+      const dummyTenantId = 'provider-tenant';
 
       await registerDestination(testDestination, { jwt: signedJwt({}) });
       const registeredDestination = await registerDestinationCache.destination
@@ -252,7 +252,7 @@ describe('register-destination', () => {
       expect(registeredDestination).toEqual(testDestination);
 
       expect(logger.error).toHaveBeenCalledWith(
-        'Could neither determine tenant from JWT nor XSUAA, identity or destination service binding, although a JWT was passed. Destination is registered without tenant information.'
+        'Could neither determine tenant from JWT nor XSUAA, identity or destination service binding. Destination is registered without tenant information.'
       );
     });
 
@@ -261,7 +261,7 @@ describe('register-destination', () => {
       const logger = createLogger('register-destination');
       jest.spyOn(logger, 'debug');
 
-      const dummyTenantId = 'tenant_id';
+      const dummyTenantId = 'provider-tenant';
 
       await registerDestination(testDestination);
       const registeredDestination = await registerDestinationCache.destination

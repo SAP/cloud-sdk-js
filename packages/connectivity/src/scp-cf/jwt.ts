@@ -271,8 +271,11 @@ export function decodeOrMakeJwt(
     return { zid: providerTenantId };
   }
 }
-
-function getTenantIdFromBinding(): string {
+/**
+ * @internal
+ * @returns The tenant identifier from the XSUAA, identity or destination service binding.
+ */
+export function getTenantIdFromBinding(): string | undefined {
   return (
     getServiceCredentials('xsuaa')?.tenantid ||
     getServiceCredentials('identity')?.app_tid ||

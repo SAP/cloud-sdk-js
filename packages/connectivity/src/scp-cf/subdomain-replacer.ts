@@ -4,27 +4,6 @@ import { JwtPayload } from './jsonwebtoken-type';
 /**
  * @internal
  */
-export function replaceWithIssuerSubdomain(
-  xsuaaUrl: string,
-  decodedJwt: JwtPayload
-): string {
-  const subdomain = getIssuerSubdomain(decodedJwt);
-  if (!subdomain) {
-    throw new Error(
-      `Could not retrieve issuer subdomain from "iss" property: "${decodedJwt.iss}".`
-    );
-  }
-  if (!isValidUrl(xsuaaUrl)) {
-    throw new Error(`XSUAA URL is not a valid URL: "${xsuaaUrl}".`);
-  }
-
-  const xsuaaDomain = xsuaaUrl.slice(xsuaaUrl.indexOf('.'));
-  return new URL(xsuaaUrl).protocol + '//' + subdomain + xsuaaDomain;
-}
-
-/**
- * @internal
- */
 export function getIssuerSubdomain(
   decodedJwt: JwtPayload | undefined
 ): string | undefined {

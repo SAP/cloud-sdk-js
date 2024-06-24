@@ -13,8 +13,10 @@ import {
 import { signedJwt } from '../../../../test-resources/test/test-util/keys';
 import {
   providerServiceToken,
+  providerUserPayload,
   providerUserToken,
   subscriberServiceToken,
+  subscriberUserPayload,
   subscriberUserToken
 } from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
@@ -181,11 +183,11 @@ describe('token accessor', () => {
       });
 
       const providerTokenFromCache = clientCredentialsTokenCache.getToken(
-        providerXsuaaUrl,
+        providerUserPayload.zid,
         destinationBindingClientSecretMock.credentials.clientid
       );
       const subscriberTokenFromCache = clientCredentialsTokenCache.getToken(
-        subscriberXsuaaUrl,
+        subscriberUserPayload.zid,
         destinationBindingClientSecretMock.credentials.clientid
       );
 
@@ -297,7 +299,7 @@ describe('token accessor', () => {
       const token = signedJwt({ dummy: 'content' });
 
       clientCredentialsTokenCache.cacheToken(
-        destinationBindingClientSecretMock.credentials.url,
+        destinationBindingClientSecretMock.credentials.tenantid,
         destinationBindingClientSecretMock.credentials.clientid,
         { access_token: token } as ClientCredentialsResponse
       );
@@ -326,7 +328,7 @@ describe('token accessor', () => {
 
       expect(
         clientCredentialsTokenCache.getToken(
-          destinationBindingClientSecretMock.credentials.url,
+          destinationBindingClientSecretMock.credentials.tenantid,
           destinationBindingClientSecretMock.credentials.clientid
         )
       ).toEqual(token);
@@ -339,16 +341,6 @@ describe('token accessor', () => {
         serviceToken('destination')
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Could not find service binding of type \'destination\'."'
-      );
-    });
-
-    it('throws an error if the issuer is missing in the JWT', async () => {
-      const jwt = signedJwt({ NOiss: 'https://testeroni.example.com' });
-
-      await expect(
-        serviceToken('destination', { jwt })
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Could not retrieve issuer subdomain from "iss" property: "undefined"."'
       );
     });
   });

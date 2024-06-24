@@ -21,7 +21,7 @@ const logger = createLogger({
 /**
  * @internal
  */
-const defaultTenantId = 'tenant_id';
+const defaultTenantId = 'provider-tenant';
 
 /**
  * Represents options to configure how a destination should be registered.
@@ -66,7 +66,7 @@ function getJwtForCaching(options: RegisterDestinationOptions | undefined) {
   if (!jwt?.zid) {
     if (options?.jwt) {
       logger.error(
-        'Could neither determine tenant from JWT nor XSUAA, identity or destination service binding, although a JWT was passed. Destination is registered without tenant information.'
+        'Could neither determine tenant from JWT nor XSUAA, identity or destination service binding. Destination is registered without tenant information.'
       );
     } else {
       logger.debug(

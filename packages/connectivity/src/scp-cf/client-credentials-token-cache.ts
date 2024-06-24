@@ -11,13 +11,13 @@ const ClientCredentialsTokenCache = (
   cache: Cache<ClientCredentialsResponse>
 ) => ({
   getToken: (
-    tenantId: string,
+    tenantId: string | undefined,
     clientId: string
   ): ClientCredentialsResponse | undefined =>
     cache.get(getCacheKey(tenantId, clientId)),
 
   cacheToken: (
-    tenantId: string,
+    tenantId: string | undefined,
     clientId: string,
     token: ClientCredentialsResponse
   ): void => {
@@ -41,7 +41,7 @@ const ClientCredentialsTokenCache = (
  * @returns the token
  */
 export function getCacheKey(
-  tenantId: string,
+  tenantId: string | undefined,
   clientId: string
 ): string | undefined {
   if (!tenantId) {

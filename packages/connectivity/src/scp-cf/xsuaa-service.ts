@@ -38,8 +38,10 @@ export async function getClientCredentialsToken(
     const xsuaaService = getXsuaaService({
       credentials: arg.serviceCredentials
     });
+
     return xsuaaService.fetchClientCredentialsToken({
-      tenant: arg.zoneId || arg.subdomain
+      // tenant is the subdomain, not tenant ID
+      tenant: arg.subdomain
     });
   };
 
@@ -86,7 +88,8 @@ export function getUserToken(
       credentials: arg.serviceCredentials
     });
     return xsuaaService.fetchJwtBearerToken({
-      tenant: arg.zoneId,
+      // tenant is the subdomain, not tenant ID
+      tenant: arg.subdomain,
       jwt: arg.userJwt
     });
   };

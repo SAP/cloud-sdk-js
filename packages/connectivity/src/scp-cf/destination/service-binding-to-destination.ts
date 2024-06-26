@@ -45,7 +45,7 @@ export const serviceToDestinationTransformers: Record<
  *
  * Throws an error if the provided service binding is not supported.
  * @param serviceBinding - The service binding to transform.
- * @param options - Options used during fetching destinations;includes a JWT payload {@link JwtPayload} and options to influence caching behavior see {@link CachingOptions}.
+ * @param options - Options used for fetching the destination.
  * @returns A promise returning the transformed OAuth2ClientCredentials destination on success.
  */
 export async function transformServiceBindingToDestination(

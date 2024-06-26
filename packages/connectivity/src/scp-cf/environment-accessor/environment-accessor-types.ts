@@ -26,6 +26,7 @@ export interface Service {
  */
 export type ServiceCredentials = {
   [other: string]: any;
+  url: string;
   clientid: string;
 } & (
   | {

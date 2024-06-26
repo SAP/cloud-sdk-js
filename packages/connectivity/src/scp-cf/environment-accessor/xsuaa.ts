@@ -73,7 +73,10 @@ export function getXsuaaService(options?: {
   const cacheKey = `${credentials.clientid}:${disableCache}`;
 
   if (!xsuaaServices[cacheKey]) {
-    xsuaaServices[cacheKey] = new XsuaaService(credentials, serviceConfig);
+    xsuaaServices[cacheKey] = new XsuaaService(
+      credentials as XsuaaServiceCredentials,
+      serviceConfig
+    );
   }
   return xsuaaServices[cacheKey];
 }

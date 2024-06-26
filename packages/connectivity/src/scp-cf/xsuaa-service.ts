@@ -87,11 +87,12 @@ export function getUserToken(
     const xsuaaService = getXsuaaService({
       credentials: arg.serviceCredentials
     });
-    return xsuaaService.fetchJwtBearerToken({
-      // tenant is the subdomain, not tenant ID
-      tenant: arg.subdomain,
-      jwt: arg.userJwt
-    });
+    return xsuaaService
+      .fetchJwtBearerToken(arg.userJwt, {
+        // tenant is the subdomain, not tenant ID
+        tenant: arg.subdomain
+      })
+      .then(token => token.access_token);
   };
 
   return executeWithMiddleware<

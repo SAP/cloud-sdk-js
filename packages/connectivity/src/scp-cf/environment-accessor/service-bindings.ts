@@ -9,7 +9,7 @@ const logger = createLogger({
 
 /**
  * Services getter for a given service.
- * Internally uses, xsenv library to read configurations from VCAP_SERVICES.
+ * Internally uses xsenv library to read configurations from VCAP_SERVICES.
  * @param service - Service name.
  * @returns List of service bindings of the given type. Returns an empty array if no service binding exists for the given type.
  */

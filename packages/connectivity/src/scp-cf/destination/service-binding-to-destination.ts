@@ -28,19 +28,18 @@ export const serviceToDestinationTransformers: Record<
  * Convenience function to create a destination from the provided service binding.
  * If a JWT is provided as part of options, the tenant in the JWT is used for client credentials grant, else the provider tenant is used, wherever applicable.
  * Supported service types are:
- * - business-logging
- * - destination
- * - s4-hana-cloud
- * - saas-registry
- * - workflow
- * - service-manager
- * - xsuaa
- * - aicore.
- *
+ * - business-logging (OAuth2ClientCredentials)
+ * - destination (OAuth2ClientCredentials)
+ * - s4-hana-cloud (BasicAuthentication)
+ * - saas-registry (OAuth2ClientCredentials)
+ * - workflow (OAuth2ClientCredentials)
+ * - service-manager (OAuth2ClientCredentials)
+ * - xsuaa (OAuth2ClientCredentials)
+ * - aicore (OAuth2ClientCredentials)
  * Throws an error if the provided service binding is not supported.
  * @param serviceBinding - The service binding to transform.
  * @param options - Options used for fetching the destination.
- * @returns A promise returning the transformed OAuth2ClientCredentials destination on success.
+ * @returns A promise returning the transformed destination on success.
  */
 export async function transformServiceBindingToDestination(
   serviceBinding: Service,

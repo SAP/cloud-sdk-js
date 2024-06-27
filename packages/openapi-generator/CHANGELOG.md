@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 3.16.0
+
+### Minor Changes
+
+- aa0b849: [Improvement] Generate OpenAPI clients with header parameters.
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.16.0
+- @sap-cloud-sdk/openapi@3.16.0
+- @sap-cloud-sdk/util@3.16.0
+
 ## 3.15.0
 
 ### Patch Changes

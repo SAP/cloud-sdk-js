@@ -1,5 +1,22 @@
 # @sap-cloud-sdk/generator
 
+## 3.16.0
+
+### Minor Changes
+
+- 022adae: [Improvement] Generated clients support `noImplicitOverride` config option in `tsconfig.json`.
+- 9efe37e: [Fixed Issue] Fix incorrect warning logs for operation imports that have a matching operation in the service specification.
+- 28ab1a4: [Improvement] If `basePath` cannot be determined, it is set to `/`, and generation no longer fails.
+- ef3a800: [Compatibility Note] Generation of OData clients does no longer fail if `basePath` value cannot be determined. It will be set to `/` by default.
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.16.0
+- @sap-cloud-sdk/odata-common@3.16.0
+- @sap-cloud-sdk/odata-v2@3.16.0
+- @sap-cloud-sdk/odata-v4@3.16.0
+- @sap-cloud-sdk/util@3.16.0
+
 ## 3.15.0
 
 ### Patch Changes

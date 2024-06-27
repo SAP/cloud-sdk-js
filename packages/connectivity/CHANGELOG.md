@@ -1,5 +1,29 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.16.0
+
+### Minor Changes
+
+- efa75d3: [New Functionality] Add convenience function `transformServiceBindingToDestination()` to create destination from service bindings.
+  The following service bindings are supported:
+
+  - business-logging
+  - destination
+  - s4-hana-cloud
+  - saas-registry
+  - workflow
+  - service-manager
+  - xsuaa
+  - aicore
+
+- efa75d3: [Improvement] Expose `getServiceBinding()`. This was previously an internal function.
+- 4f29615: [Compatibility Note] The JKU header in JWTs is no longer verified. Instead the signature of the JWT is verified, which is more secure.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.16.0
+- @sap-cloud-sdk/util@3.16.0
+
 ## 3.15.0
 
 ### Patch Changes

@@ -19,7 +19,7 @@ export function getServiceBindings(service: string): Service[] {
 
 /**
  * Returns the first found instance for the given service type.
- * Internally uses, xsenv library to read configurations from VCAP_SERVICES.
+ * Internally uses xsenv library to read configurations from VCAP_SERVICES.
  * @param service - The service type.
  * @returns The first found service.
  */

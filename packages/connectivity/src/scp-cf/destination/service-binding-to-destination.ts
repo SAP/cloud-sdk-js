@@ -1,4 +1,3 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import { Service } from '../environment-accessor/environment-accessor-types';
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
@@ -7,11 +6,6 @@ import type {
   ServiceBindingTransformOptions
 } from './destination-from-vcap';
 import { Destination } from './destination-service-types';
-
-const logger = createLogger({
-  package: 'connectivity',
-  messageContext: 'destination'
-});
 
 /**
  * @internal
@@ -31,17 +25,17 @@ export const serviceToDestinationTransformers: Record<
 };
 
 /**
- * Convenience function to create an OAuth2ClientCredentials destination from the provided service binding.
- * If a JWT is provided as part of options, the tenant in the JWT is used for client credentials grant, else the provider tenant is used.
+ * Convenience function to create a destination from the provided service binding.
+ * If a JWT is provided as part of options, the tenant in the JWT is used for client credentials grant, else the provider tenant is used, wherever applicable.
  * Supported service types are:
  * - business-logging
  * - destination
- * - s4-hana-cloud (falls back to basic authentication for this service type)
+ * - s4-hana-cloud
  * - saas-registry
  * - workflow
  * - service-manager
  * - xsuaa
- * - aicore.
+ * - aicore
  *
  * Throws an error if the provided service binding is not supported.
  * @param serviceBinding - The service binding to transform.
@@ -53,11 +47,6 @@ export async function transformServiceBindingToDestination(
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
   if (serviceToDestinationTransformers[serviceBinding.label]) {
-    if (serviceBinding.label === 's4-hana-cloud') {
-      logger.warn(
-        `For service binding of type ${serviceBinding.label} falling back to creating destination with basic authentication.`
-      );
-    }
     return serviceToDestinationTransformers[serviceBinding.label](
       serviceBinding,
       options

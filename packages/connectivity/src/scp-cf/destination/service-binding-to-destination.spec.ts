@@ -1,13 +1,7 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import { serviceToken } from '../token-accessor';
 import { resolveServiceBinding } from '../environment-accessor/service-bindings';
 import { decodeJwt } from '../jwt';
 import { transformServiceBindingToDestination } from './service-binding-to-destination';
-
-const logger = createLogger({
-  package: 'connectivity',
-  messageContext: 'destination'
-});
 
 const services = {
   destination: [
@@ -197,12 +191,8 @@ describe('service binding to destination', () => {
   });
 
   it('transforms the s4-hana-cloud service binding into basic auth destination', async () => {
-    const warnSpy = jest.spyOn(logger, 'warn');
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('s4-hana-cloud')
-    );
-    expect(warnSpy).toHaveBeenCalledWith(
-      'For service binding of type s4-hana-cloud falling back to creating destination with basic authentication.'
     );
     expect(destination).toEqual({
       url: 's4-hana-cloud-url',

@@ -19,9 +19,9 @@ export function getServiceBindings(service: string): Service[] {
 
 /**
  * Returns the first found instance for the given service type.
+ * Internally uses xsenv library to read configurations from VCAP_SERVICES.
  * @param service - The service type.
  * @returns The first found service.
- * @internal
  */
 export function getServiceBinding(service: string): Service | undefined {
   const services: Service[] = xsenv.filterServices({ label: service });
@@ -64,7 +64,11 @@ export function resolveServiceBinding(service: string | Service): Service {
 }
 
 /**
- * Filters services based on service instance name. Throws an error if no or multiple services exist.
+ * Filters services based on service instance name.
+ *
+ * Throws an error if no or multiple services exist.
+ * @param serviceInstanceName - A string representing the service instance name.
+ * @returns A {@link Service} instance.
  * @internal
  */
 export function getServiceBindingByInstanceName(

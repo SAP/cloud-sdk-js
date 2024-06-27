@@ -332,7 +332,12 @@ function retryDestination(
         } catch (error) {
           const status = error?.response?.status;
           if (status.toString().startsWith('4')) {
-            bail(new Error(`Request failed with status code ${status}`));
+            bail(
+              new ErrorWithCause(
+                `Request failed with status code ${status}`,
+                error
+              )
+            );
             // We need to return something here but the actual value does not matter
             return undefined as any;
           }

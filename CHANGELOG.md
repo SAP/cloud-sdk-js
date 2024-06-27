@@ -28,6 +28,40 @@
 
 - 
 
+# 3.16.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.16.0
+
+## Compatibility Notes
+
+- [connectivity] The JKU header in JWTs is no longer verified. Instead the signature of the JWT is verified, which is more secure. (4f29615)
+- [generator] Generation of OData clients does no longer fail if `basePath` value cannot be determined. It will be set to `/` by default. (ef3a800)
+
+## New Functionalities
+
+- [connectivity] Add convenience function `transformServiceBindingToDestination()` to create destination from service bindings.
+  The following service bindings are supported:
+
+  - business-logging
+  - destination
+  - s4-hana-cloud
+  - saas-registry
+  - workflow
+  - service-manager
+  - xsuaa
+  - aicore (efa75d3)
+
+## Improvements
+
+- [connectivity] Expose `getServiceBinding()`. This was previously an internal function. (efa75d3)
+- [generator] Generated clients support `noImplicitOverride` config option in `tsconfig.json`. (022adae)
+- [generator] If `basePath` cannot be determined, it is set to `/`, and generation no longer fails. (28ab1a4)
+- [openapi-generator] Generate OpenAPI clients with header parameters. (aa0b849)
+
+## Fixed Issues
+
+- [generator] Fix incorrect warning logs for operation imports that have a matching operation in the service specification. (9efe37e)
+
 # 3.15.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.15.0

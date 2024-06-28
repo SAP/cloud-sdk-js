@@ -196,13 +196,16 @@ describe('openapi-request-builder', () => {
         .post('/oauth/token')
         .times(1)
         .reply(200, { access_token: onlyIssuerServiceToken }),
+
       nock(providerXsuaaUrl)
         .post('/oauth/token')
         .times(1)
         .reply(200, { access_token: providerServiceToken }),
+
       ...mockFetchDestinationCalls(certificateSingleResponse, {
         serviceToken: onlyIssuerServiceToken
       }),
+
       nock(certificateSingleResponse.destinationConfiguration.URL!)
         .get(/.*/)
         .reply(200, 'iss token used on the way')

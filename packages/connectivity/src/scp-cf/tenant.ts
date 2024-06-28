@@ -9,7 +9,7 @@ import { getIssuerSubdomain } from './subdomain-replacer';
  * @internal
  */
 export function getTenantIdWithFallback(
-  token: string | undefined
+  token: string | JwtPayload | undefined
 ): string | undefined {
   const decodedJwt = token ? decodeJwt(token) : {};
   return tenantId(decodedJwt) || getIssuerSubdomain(decodedJwt) || undefined;

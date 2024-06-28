@@ -1,16 +1,15 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { JwtPayload } from './jsonwebtoken-type';
-import { decodeJwt } from './jwt';
+import { getTenantIdFromBinding } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
 import {
   Service,
-  ServiceCredentials,
   XsuaaServiceCredentials
 } from './environment-accessor/environment-accessor-types';
-import { replaceWithIssuerSubdomain } from './subdomain-replacer';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
+import { getTenantIdWithFallback } from './tenant';
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -39,12 +38,13 @@ export async function serviceToken(
 
   const serviceBinding = resolveServiceBinding(service);
   const serviceCredentials = serviceBinding.credentials;
+  const tenant = options?.jwt
+    ? getTenantIdWithFallback(options?.jwt)
+    : getTenantIdFromBinding();
 
   if (opts.useCache) {
-    const xsuaaUrl = getMultiTenantXsuaaUrl(serviceCredentials, options?.jwt);
-
     const cachedToken = clientCredentialsTokenCache.getToken(
-      xsuaaUrl,
+      tenant,
       serviceCredentials.clientid
     );
     if (cachedToken) {
@@ -56,10 +56,8 @@ export async function serviceToken(
     const token = await getClientCredentialsToken(serviceBinding, options?.jwt);
 
     if (opts.useCache) {
-      const xsuaaUrl = getMultiTenantXsuaaUrl(serviceCredentials, options?.jwt);
-
       clientCredentialsTokenCache.cacheToken(
-        xsuaaUrl,
+        tenant,
         serviceCredentials.clientid,
         token
       );
@@ -88,15 +86,5 @@ export async function jwtBearerToken(
   service: string | Service
 ): Promise<string> {
   const resolvedService = resolveServiceBinding(service);
-
   return getUserToken(resolvedService, jwt);
-}
-
-function getMultiTenantXsuaaUrl(
-  credentials: ServiceCredentials,
-  jwt?: string | JwtPayload
-): string {
-  return jwt
-    ? replaceWithIssuerSubdomain(credentials.url, decodeJwt(jwt))
-    : credentials.url;
 }

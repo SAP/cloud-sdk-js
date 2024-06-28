@@ -24,7 +24,7 @@ const url = 'https://example.com';
 const getAllResponse = testEntityCollectionResponse();
 
 const providerToken = jwt.sign(
-  { zid: 'provider_token', iss: providerXsuaaUrl },
+  { zid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24', iss: providerXsuaaUrl },
   privateKey,
   {
     algorithm: 'RS512'

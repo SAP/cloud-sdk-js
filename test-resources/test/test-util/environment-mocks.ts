@@ -49,7 +49,8 @@ export const destinationBindingClientSecretMock: Service = {
     uri: destinationServiceUri,
     url: providerXsuaaUrl,
     uaadomain: uaaDomain,
-    xsappname: 'myapp'
+    xsappname: 'myapp',
+    tenantid: 'app-tenant-id'
   }
 };
 

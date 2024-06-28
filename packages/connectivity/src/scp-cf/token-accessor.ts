@@ -38,13 +38,13 @@ export async function serviceToken(
 
   const serviceBinding = resolveServiceBinding(service);
   const serviceCredentials = serviceBinding.credentials;
-  const tenant = options?.jwt
+  const tenantId = options?.jwt
     ? getTenantIdWithFallback(options?.jwt)
     : getTenantIdFromBinding();
 
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getToken(
-      tenant,
+      tenantId,
       serviceCredentials.clientid
     );
     if (cachedToken) {
@@ -57,7 +57,7 @@ export async function serviceToken(
 
     if (opts.useCache) {
       clientCredentialsTokenCache.cacheToken(
-        tenant,
+        tenantId,
         serviceCredentials.clientid,
         token
       );

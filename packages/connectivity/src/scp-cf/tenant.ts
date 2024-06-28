@@ -1,6 +1,5 @@
 import { JwtPayload } from './jsonwebtoken-type';
-import { decodeJwt, tenantId } from './jwt';
-import { getIssuerSubdomain } from './subdomain-replacer';
+import { decodeJwt, getSubdomain, tenantId } from './jwt';
 
 /**
  * Get the tenant ID of a decoded JWT, based on its `zid` property or, if not available, the `iss` subdomain.
@@ -12,7 +11,7 @@ export function getTenantIdWithFallback(
   token: string | JwtPayload | undefined
 ): string | undefined {
   const decodedJwt = token ? decodeJwt(token) : {};
-  return tenantId(decodedJwt) || getIssuerSubdomain(decodedJwt) || undefined;
+  return tenantId(decodedJwt) || getSubdomain(decodedJwt) || undefined;
 }
 
 /**

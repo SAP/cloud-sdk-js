@@ -1,7 +1,7 @@
 import { createSecurityContext } from '@sap/xssec';
 import { DestinationOptions } from './destination';
 import { getXsuaaService } from './environment-accessor';
-import { decodeJwtComplete, isXsuaaToken } from './jwt';
+import { decodeJwt, isXsuaaToken } from './jwt';
 
 /**
  * @internal
@@ -32,6 +32,6 @@ export function shouldExchangeToken(options: DestinationOptions): boolean {
   return (
     options.iasToXsuaaTokenExchange !== false &&
     !!options.jwt &&
-    !isXsuaaToken(decodeJwtComplete(options.jwt))
+    !isXsuaaToken(decodeJwt(options.jwt))
   );
 }

@@ -1,12 +1,14 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { JwtPayload } from 'jsonwebtoken';
 import {
-  decodeJwtComplete,
+  decodeJwt,
   getJwtPair,
   isXsuaaToken,
   JwtPair,
   verifyJwt
 } from '../jwt';
 import { serviceToken } from '../token-accessor';
+import { getIssuerSubdomain } from '../subdomain-replacer';
 import { DestinationOptions } from './destination-accessor-types';
 
 const logger = createLogger({
@@ -49,12 +51,12 @@ export function isSubscriberToken(token: any): token is SubscriberToken {
 export async function getSubscriberToken(
   options: DestinationOptions
 ): Promise<SubscriberToken> {
-  const isXsuaaJwt =
-    !!options.jwt && isXsuaaToken(decodeJwtComplete(options.jwt));
+  const isXsuaaJwt = !!options.jwt && isXsuaaToken(decodeJwt(options.jwt));
+  const userJwt = await retrieveUserToken(options, isXsuaaJwt);
 
   return {
-    userJwt: await retrieveUserToken(options, isXsuaaJwt),
-    serviceJwt: await retrieveServiceToken(options, isXsuaaJwt)
+    userJwt,
+    serviceJwt: await retrieveServiceToken(options, userJwt?.decoded)
   };
 }
 
@@ -72,34 +74,40 @@ async function retrieveUserToken(
 
 async function retrieveServiceToken(
   options: DestinationOptions,
-  isXsuaaJwt: boolean
+  decodedUserJwt: JwtPayload | undefined
 ): Promise<JwtPair | undefined> {
-  const jwt = getJwtForServiceToken(options, isXsuaaJwt);
+  const jwt = getJwtForServiceToken(options?.iss, decodedUserJwt);
 
   if (jwt) {
-    return getJwtPair(
-      await serviceToken('destination', {
-        ...options,
-        jwt
-      })
-    );
+    try {
+      return getJwtPair(
+        await serviceToken('destination', {
+          ...options,
+          jwt
+        })
+      );
+    } catch (err) {
+      logger.warn(
+        'Failed to fetch subscriber service token for destination. This is only relevant if you are using subscriber destinations.'
+      );
+    }
   }
 }
 
 function getJwtForServiceToken(
-  options: DestinationOptions,
-  isXsuaaJwt: boolean
+  iss: string | undefined,
+  decodedUserJwt: JwtPayload | undefined
 ) {
-  if (options.iss) {
+  if (iss) {
     logger.debug(
       'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
     );
 
-    return { iss: options.iss };
+    return { ext_attr: { zdn: getIssuerSubdomain({ iss }) } };
   }
 
-  if (options.jwt && isXsuaaJwt) {
-    return options.jwt;
+  if (decodedUserJwt?.zid || decodedUserJwt?.app_tid) {
+    return decodedUserJwt;
   }
 }
 

@@ -6,10 +6,9 @@ import {
   getServiceBinding
 } from '../environment-accessor';
 import { exchangeToken, shouldExchangeToken } from '../identity-service';
-import { JwtPair } from '../jwt';
+import { JwtPair, getSubdomain, isXsuaaToken } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken } from '../token-accessor';
-import { getIssuerSubdomain } from '../subdomain-replacer';
 import {
   DestinationFetchOptions,
   DestinationsByType
@@ -241,12 +240,10 @@ export class DestinationFromServiceRetriever {
     if (destination.originalProperties?.['tokenServiceURLType'] !== 'Common') {
       return undefined;
     }
-    const subdomainSubscriber = getIssuerSubdomain(
-      this.subscriberToken?.userJwt?.decoded
-    );
-    const subdomainProvider = getIssuerSubdomain(
-      this.providerServiceToken?.decoded
-    );
+    const subdomainSubscriber =
+      getSubdomain(this.subscriberToken?.userJwt?.decoded) ||
+      getSubdomain(this.subscriberToken?.serviceJwt?.decoded);
+    const subdomainProvider = getSubdomain(this.providerServiceToken?.decoded);
     return subdomainSubscriber || subdomainProvider || undefined;
   }
 
@@ -299,14 +296,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     // This covers OAuth to user-dependent auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     // Which is the same for: OAuth2UserTokenExchange, OAuth2JWTBearer and OAuth2SAMLBearerAssertion
 
-    // If subscriber token does not include service JWT (aka. originally passed JWT was not an XSUAA JWT) enforce the JWKS properties are there - destination service would do that as well. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
-    if (!this.subscriberToken.serviceJwt) {
+    const isXsuaaUserJwt = isXsuaaToken(this.subscriberToken.userJwt.decoded);
+    // If subscriber user token was not issued by XSUAA enforce the JWKS properties are there - destination service would do that as well. https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/d81e1683bd434823abf3ceefc4ff157f.html
+    if (!isXsuaaUserJwt) {
       DestinationFromServiceRetriever.checkDestinationForCustomJwt(destination);
     }
 
     // Case 1 Destination in provider and JWT issued for provider account, but no custom JWT given -> no extra x-user-token header needed
     if (
-      this.subscriberToken.serviceJwt &&
+      isXsuaaUserJwt &&
       isIdenticalTenant(
         this.subscriberToken.userJwt.decoded,
         this.providerServiceToken.decoded
@@ -544,21 +542,13 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private isSubscriberNeeded(): boolean {
-    if (!this.subscriberToken) {
+    if (!this.subscriberToken?.serviceJwt) {
       return false;
     }
 
-    if (!this.subscriberToken.serviceJwt) {
-      return false;
-    }
-
-    if (
-      this.options.selectionStrategy.toString() === alwaysProvider.toString()
-    ) {
-      return false;
-    }
-
-    return true;
+    return (
+      this.options.selectionStrategy.toString() !== alwaysProvider.toString()
+    );
   }
 
   private async searchProviderAccountForDestination(): Promise<

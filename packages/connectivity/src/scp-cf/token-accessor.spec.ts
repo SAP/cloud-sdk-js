@@ -10,7 +10,10 @@ import {
   testTenants,
   uaaDomain
 } from '../../../../test-resources/test/test-util/environment-mocks';
-import { signedJwt } from '../../../../test-resources/test/test-util/keys';
+import {
+  signedJwt,
+  signedXsuaaJwt
+} from '../../../../test-resources/test/test-util/keys';
 import {
   providerServiceToken,
   providerUserPayload,
@@ -59,9 +62,10 @@ describe('token accessor', () => {
     it('considers default resilience middlewares for client credentials token', async () => {
       const spy = jest.spyOn(resilience, 'resilience');
 
-      const jwt = signedJwt({
+      const jwt = signedXsuaaJwt({
         iss: 'https://testeroni.example.com'
       });
+
       mockClientCredentialsGrantCall(
         `https://testeroni.${uaaDomain}`,
         { access_token: 'testValue' },
@@ -75,21 +79,38 @@ describe('token accessor', () => {
       expect(spy).toHaveBeenCalledWith();
     });
 
-    it("uses the JWT's issuer as tenant", async () => {
-      const expected = signedJwt({ dummy: 'content' });
-      const jwt = signedJwt({
-        iss: 'https://testeroni.example.com'
+    it('uses the subdomain of the JWT as tenant', async () => {
+      const accessToken = signedJwt({ dummy: 'content' });
+      const jwt = signedXsuaaJwt({
+        ext_attr: { zdn: 'testeroni' }
       });
 
       mockClientCredentialsGrantCall(
         `https://testeroni.${uaaDomain}`,
-        { access_token: expected },
+        { access_token: accessToken },
         200,
         destinationBindingClientSecretMock.credentials
       );
 
       const actual = await serviceToken('destination', { jwt });
-      expect(actual).toBe(expected);
+      expect(actual).toBe(accessToken);
+    });
+
+    it('uses the issuer of the XSUAA JWT as tenant', async () => {
+      const accessToken = signedJwt({ dummy: 'content' });
+      const jwt = signedXsuaaJwt({
+        iss: 'https://testeroni.example.com'
+      });
+
+      mockClientCredentialsGrantCall(
+        `https://testeroni.${uaaDomain}`,
+        { access_token: accessToken },
+        200,
+        destinationBindingClientSecretMock.credentials
+      );
+
+      const actual = await serviceToken('destination', { jwt });
+      expect(actual).toBe(accessToken);
     });
 
     it('authenticates with certificate', async () => {

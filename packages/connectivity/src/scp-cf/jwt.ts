@@ -50,12 +50,13 @@ export function tenantId(
 
 /**
  * Retrieve the subdomain from the decoded XSUAA JWT. If the JWT is not in XSUAA format, returns undefined.
- * @param decodedJwt - Decoded JWT to retrieve the subdomain from.
+ * @param jwt - JWT to retrieve the subdomain from.
  * @returns The subdomain, if available.
  */
 export function getSubdomain(
-  decodedJwt: JwtPayload | undefined
+  jwt: JwtPayload | string | undefined
 ): string | undefined {
+  const decodedJwt = jwt ? decodeJwt(jwt) : {};
   return (
     decodedJwt?.ext_attr?.zdn ||
     (isXsuaaToken(decodedJwt) ? getIssuerSubdomain(decodedJwt) : undefined)

@@ -1,6 +1,7 @@
 import nock from 'nock';
 import * as tokenAccessor from '@sap-cloud-sdk/connectivity/src/scp-cf/token-accessor';
 import { decodeJwt } from '@sap-cloud-sdk/connectivity';
+import { isXsuaaToken } from '@sap-cloud-sdk/connectivity/internal';
 import { onlyIssuerXsuaaUrl, testTenants } from './environment-mocks';
 import {
   onlyIssuerServiceToken,
@@ -26,7 +27,10 @@ export function mockServiceToken() {
       const userJwt =
         typeof options.jwt === 'string' ? decodeJwt(options.jwt) : options.jwt;
 
-      if (userJwt.iss === onlyIssuerXsuaaUrl) {
+      if (
+        userJwt.ext_attr.zdn === testTenants.subscriberOnlyIss ||
+        (isXsuaaToken(userJwt) && userJwt.iss === onlyIssuerXsuaaUrl)
+      ) {
         return Promise.resolve(onlyIssuerServiceToken);
       }
 

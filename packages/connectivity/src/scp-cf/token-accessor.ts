@@ -1,6 +1,6 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { JwtPayload } from './jsonwebtoken-type';
-import { getTenantIdFromBinding } from './jwt';
+import { getSubdomain, getTenantIdFromBinding, tenantId } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
@@ -9,7 +9,6 @@ import {
   XsuaaServiceCredentials
 } from './environment-accessor/environment-accessor-types';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
-import { getTenantIdWithFallback } from './tenant';
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -38,13 +37,13 @@ export async function serviceToken(
 
   const serviceBinding = resolveServiceBinding(service);
   const serviceCredentials = serviceBinding.credentials;
-  const tenantId = options?.jwt
-    ? getTenantIdWithFallback(options?.jwt)
+  const tenantIdForCaching = options?.jwt
+    ? tenantId(options.jwt) || getSubdomain(options.jwt) || undefined
     : getTenantIdFromBinding();
 
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getToken(
-      tenantId,
+      tenantIdForCaching,
       serviceCredentials.clientid
     );
     if (cachedToken) {
@@ -57,7 +56,7 @@ export async function serviceToken(
 
     if (opts.useCache) {
       clientCredentialsTokenCache.cacheToken(
-        tenantId,
+        tenantIdForCaching,
         serviceCredentials.clientid,
         token
       );

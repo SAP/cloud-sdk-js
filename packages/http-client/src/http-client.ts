@@ -12,9 +12,9 @@ import {
   getAdditionalHeaders,
   getAdditionalQueryParameters,
   getProxyConfig,
-  getTenantIdWithFallback,
   HttpDestination,
-  resolveDestination
+  resolveDestination,
+  tenantId
 } from '@sap-cloud-sdk/connectivity/internal';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
@@ -108,7 +108,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
         jwt: destination.jwt,
         uri: resolvedDestination.url,
         destinationName: resolvedDestination.name ?? undefined,
-        tenantId: getTenantIdWithFallback(destination.jwt)
+        tenantId: tenantId(destination.jwt)
       }
     });
   };

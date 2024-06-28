@@ -321,12 +321,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       };
     }
 
-    // Case 2 Subscriber and provider account not the same OR custom JWT -> x-user-token header passed to determine user and tenant in token service URL and service token to get the destination
-    const serviceJwt =
-      origin === 'provider'
-        ? this.providerServiceToken
-        : // TODO: What is the meaning of this? Why do we assume this is defined. Technically, it might not be.
-          this.subscriberToken.serviceJwt!;
+    // Case 2a: subscriber and provider account not the same
+    // Case 2b: user token is not an XSUAA token
+    // x-user-token needed
+    let serviceJwt;
+    if (origin === 'provider') {
+      serviceJwt = this.providerServiceToken;
+    } else if (this.subscriberToken.serviceJwt) {
+      serviceJwt = this.subscriberToken.serviceJwt;
+    }
 
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`

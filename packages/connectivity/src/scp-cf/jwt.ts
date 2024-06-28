@@ -49,6 +49,7 @@ export function tenantId(
 }
 
 /**
+ * @internal
  * Retrieve the subdomain from the decoded XSUAA JWT. If the JWT is not in XSUAA format, returns undefined.
  * @param jwt - JWT to retrieve the subdomain from.
  * @returns The subdomain, if available.

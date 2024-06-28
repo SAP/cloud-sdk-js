@@ -241,8 +241,8 @@ export class DestinationFromServiceRetriever {
       return undefined;
     }
     const subdomainSubscriber =
-      getSubdomain(this.subscriberToken?.userJwt?.decoded) ||
-      getSubdomain(this.subscriberToken?.serviceJwt?.decoded);
+      getSubdomain(this.subscriberToken?.serviceJwt?.decoded) ||
+      getSubdomain(this.subscriberToken?.userJwt?.decoded);
     const subdomainProvider = getSubdomain(this.providerServiceToken?.decoded);
     return subdomainSubscriber || subdomainProvider || undefined;
   }

@@ -302,7 +302,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       DestinationFromServiceRetriever.checkDestinationForCustomJwt(destination);
     }
 
-    // Case 1: subscriber account is the provider accound, user JWT is from XSUAA
+    // Case 1: subscriber account is the provider account, user JWT is from XSUAA
     // x-user-token header not needed
     if (
       isXsuaaUserJwt &&

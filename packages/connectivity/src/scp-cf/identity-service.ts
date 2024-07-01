@@ -1,6 +1,9 @@
 import { createSecurityContext } from '@sap/xssec';
 import { DestinationOptions } from './destination';
-import { getXsuaaService } from './environment-accessor';
+import {
+  getDestinationServiceCredentials,
+  getXsuaaService
+} from './environment-accessor';
 import { decodeJwt, isXsuaaToken } from './jwt';
 
 /**
@@ -13,7 +16,8 @@ export async function exchangeToken(
   options: DestinationOptions
 ): Promise<string> {
   const xsuaaService = getXsuaaService({
-    disableCache: !options.cacheVerificationKeys
+    disableCache: !options.cacheVerificationKeys,
+    credentials: getDestinationServiceCredentials()
   });
   const { token } = await createSecurityContext(xsuaaService, {
     jwt: options.jwt

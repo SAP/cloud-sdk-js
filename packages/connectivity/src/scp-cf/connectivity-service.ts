@@ -71,10 +71,7 @@ export function httpProxyHostAndPort(): HostAndPort {
  */
 export async function socksProxyHostAndPort(): Promise<ProxyConfiguration> {
   const service = readConnectivityServiceBinding();
-  const connectivityServiceCredentials = service.credentials;
-  const connectivityServiceToken = await serviceToken(service, {
-    xsuaaCredentials: connectivityServiceCredentials
-  } as any);
+  const connectivityServiceToken = await serviceToken(service);
   return {
     host: service.credentials.onpremise_proxy_host,
     port: parseInt(service.credentials.onpremise_socks5_proxy_port),

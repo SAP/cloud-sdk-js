@@ -87,7 +87,7 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.6",
+    "@changesets/cli": "^2.27.7",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/license-checker": "^25.0.6",
@@ -109,7 +109,7 @@
     "semver": "^7.6.2",
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2",
-    "turbo": "^2.0.5",
+    "turbo": "^2.0.6",
     "typedoc": "^0.25.13",
     "typescript": "~5.4.5"
   },

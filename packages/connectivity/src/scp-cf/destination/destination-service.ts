@@ -13,10 +13,9 @@ import {
   MiddlewareContext
 } from '@sap-cloud-sdk/resilience';
 import * as asyncRetry from 'async-retry';
-import { decodeJwt, wrapJwtInHeader } from '../jwt';
+import { decodeJwt, tenantId, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { buildAuthorizationHeaders } from '../authorization-header';
-import { getTenantIdWithFallback } from '../tenant';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -80,7 +79,7 @@ export async function fetchDestinations(
   const headers = wrapJwtInHeader(serviceToken).headers;
 
   return callDestinationEndpoint(
-    { uri: targetUri, tenantId: getTenantFromTokens(serviceToken) },
+    { uri: targetUri, tenantId: getTenantIdFromTokens(serviceToken) },
     headers
   )
     .then(response => {
@@ -148,7 +147,7 @@ export async function fetchDestinationWithoutTokenRetrieval(
 
   try {
     const response = await callDestinationEndpoint(
-      { uri: targetUri, tenantId: getTenantFromTokens(serviceToken) },
+      { uri: targetUri, tenantId: getTenantIdFromTokens(serviceToken) },
       { Authorization: `Bearer ${serviceToken}` }
     );
     const destination = parseDestination(
@@ -211,13 +210,13 @@ export async function fetchCertificate(
 
   try {
     const response = await callCertificateEndpoint(
-      { uri: accountUri, tenantId: getTenantFromTokens(token) },
+      { uri: accountUri, tenantId: getTenantIdFromTokens(token) },
       header
     ).catch(() =>
       callCertificateEndpoint(
         {
           uri: instanceUri,
-          tenantId: getTenantFromTokens(token)
+          tenantId: getTenantIdFromTokens(token)
         },
         header
       )
@@ -231,15 +230,16 @@ export async function fetchCertificate(
   }
 }
 
-function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
+function getTenantIdFromTokens(token: AuthAndExchangeTokens | string): string {
   let tenant: string | undefined;
   if (typeof token === 'string') {
-    tenant = getTenantIdWithFallback(token);
+    // TODO: subdomain !== tenantID, the fallback is probably incorrect and should be removed or replaced with subdomain explicitly (in middlewarecontext)
+    tenant = tenantId(token);
   } else {
     tenant =
       token.exchangeTenant || // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
-      getTenantIdWithFallback(token.exchangeHeaderJwt) ||
-      getTenantIdWithFallback(token.authHeaderJwt);
+      tenantId(token.exchangeHeaderJwt) ||
+      tenantId(token.authHeaderJwt);
   }
 
   if (!tenant) {
@@ -282,7 +282,7 @@ export async function fetchDestinationWithTokenRetrieval(
     : authHeader;
 
   return callDestinationEndpoint(
-    { uri: targetUri, tenantId: getTenantFromTokens(token) },
+    { uri: targetUri, tenantId: getTenantIdFromTokens(token) },
     authHeader,
     options
   )

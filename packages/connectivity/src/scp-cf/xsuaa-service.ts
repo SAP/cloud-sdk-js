@@ -7,12 +7,11 @@ import {
 } from './environment-accessor/environment-accessor-types';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
-import { getIssuerSubdomain } from './subdomain-replacer';
-import { decodeJwt, tenantId } from './jwt';
+import { decodeJwt, getSubdomain, tenantId } from './jwt';
 
 interface XsuaaParameters {
-  subdomain: string | null;
-  zoneId: string | null;
+  subdomain: string | undefined;
+  zoneId: string | undefined;
   serviceCredentials: ServiceCredentials;
   userJwt?: string;
 }
@@ -20,17 +19,17 @@ interface XsuaaParameters {
 /**
  * Make a client credentials request against the XSUAA service.
  * @param service - Service as it is defined in the environment variable.
- * @param userJwt - User JWT.
+ * @param jwt - User JWT or object containing the `iss` property.
  * @returns Client credentials token.
  */
 export async function getClientCredentialsToken(
   service: string | Service,
-  userJwt?: string | JwtPayload
+  jwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
-  const jwt = userJwt ? decodeJwt(userJwt) : {};
+  const decodedJwt = jwt ? decodeJwt(jwt) : {};
   const fnArgument: XsuaaParameters = {
-    subdomain: getIssuerSubdomain(jwt) || null,
-    zoneId: tenantId(jwt) || null,
+    subdomain: getSubdomain(decodedJwt),
+    zoneId: tenantId(decodedJwt),
     serviceCredentials: resolveServiceBinding(service).credentials
   };
 
@@ -75,10 +74,10 @@ export function getUserToken(
   service: Service,
   userJwt: string
 ): Promise<string> {
-  const jwt = decodeJwt(userJwt);
+  const decodedUserJwt = decodeJwt(userJwt);
   const fnArgument: XsuaaParameters = {
-    subdomain: getIssuerSubdomain(jwt) || null,
-    zoneId: tenantId(jwt) || null,
+    subdomain: getSubdomain(decodedUserJwt),
+    zoneId: tenantId(decodedUserJwt),
     serviceCredentials: service.credentials,
     userJwt
   };

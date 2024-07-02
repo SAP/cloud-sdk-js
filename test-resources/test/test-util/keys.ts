@@ -1,5 +1,5 @@
-import { Algorithm, JwtHeader, sign } from 'jsonwebtoken';
 import { generateKeyPairSync } from 'node:crypto';
+import { Algorithm, JwtHeader, sign } from 'jsonwebtoken';
 
 export const { publicKey, privateKey } = generateKeyPairSync('rsa', {
   modulusLength: 4096,
@@ -20,6 +20,16 @@ export function signedJwt(payload, algorithm: Algorithm = 'RS512') {
   return sign(payload, privateKey, {
     algorithm
   });
+}
+
+export function signedXsuaaJwt(payload, algorithm: Algorithm = 'RS512') {
+  return sign(
+    { ...payload, ext_attr: { ...payload.ext_attr, enhancer: 'XSUAA' } },
+    privateKey,
+    {
+      algorithm
+    }
+  );
 }
 
 export function signedJwtForVerification(

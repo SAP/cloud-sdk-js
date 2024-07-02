@@ -70,7 +70,7 @@ describe('getSubscriberToken()', () => {
     expect(serviceTokenSpy).toHaveBeenCalledWith(
       'destination',
       expect.objectContaining({
-        jwt: { iss: onlyIssuerXsuaaUrl }
+        jwt: { ext_attr: { zdn: 'subscriber-only-iss' } }
       })
     );
     expect(verifyJwtSpy).not.toHaveBeenCalled();

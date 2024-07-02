@@ -155,7 +155,7 @@ function assertMockUsed(mock: nock.Scope, used: boolean) {
   expect(mock.isDone()).toBe(used);
 }
 
-describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
+describe('JWT type and selection strategies', () => {
   beforeEach(() => {
     mockServiceBindings();
     mockVerifyJwt();
@@ -167,8 +167,8 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     jest.clearAllMocks();
   });
 
-  describe('userToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
-    it('alwaysSubscriberToken: should not send a request to retrieve remote provider destination and return subscriber destination.', async () => {
+  describe('user token', () => {
+    it('alwaysSubscriber: should not send a request to retrieve remote provider destination and return subscriber destination.', async () => {
       const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
 
       const destination = await fetchDestination(
@@ -207,7 +207,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       assertMockUsed(providerMock, false);
     });
 
-    it('subscriberUserToken && subscriberFirst: should try subscriber first (found nothing), provider called and return provider destination', async () => {
+    it('subscriber user token && subscriberFirst: should try subscriber first (found nothing), provider called and return provider destination', async () => {
       const [subscriberMock] = mockFetchDestinationCalls(providerDestination);
 
       const [providerMock] = mockFetchDestinationCallsNotFound(
@@ -226,7 +226,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     });
   });
 
-  describe('no UserToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
+  describe('no user token', () => {
     it('retrieves destination without specifying userJwt', async () => {
       mockServiceBindings();
       mockServiceToken();
@@ -268,10 +268,9 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       ).toMatchObject(parseDestination(samlAssertionSingleResponse));
     });
 
-    it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
+    it('gets a non-principal propagation destination when providing `iss` and no JWT', async () => {
       mockServiceBindings();
       mockServiceToken();
-
       mockFetchDestinationCalls(certificateSingleResponse, {
         serviceToken: onlyIssuerServiceToken
       });
@@ -281,6 +280,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         messageContext: 'destination-accessor-service'
       });
       const debugSpy = jest.spyOn(logger, 'debug');
+
       expect(
         await getDestinationFromDestinationService({
           destinationName: 'ERNIE-UND-CERT',
@@ -288,12 +288,13 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
           cacheVerificationKeys: false
         })
       ).toMatchObject(parseDestination(certificateSingleResponse));
+
       expect(debugSpy).toHaveBeenCalledWith(
         'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
       );
     });
 
-    it('no user token && alwaysSubscriber: should return null since the token does not match subscriber', async () => {
+    it('alwaysSubscriber: should return null since the token does not match subscriber', async () => {
       const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
       const destination = await fetchDestination(undefined, alwaysSubscriber);
 
@@ -302,7 +303,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       assertMockUsed(providerMock, false);
     });
 
-    it('no user token && alwaysProvider: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
+    it('alwaysProvider: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
       const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
       const destination = await fetchDestination(undefined, alwaysProvider);
 
@@ -311,7 +312,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       assertMockUsed(providerMock, true);
     });
 
-    it('no user token && subscriberFirst: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
+    it('subscriberFirst: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
       const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
       const destination = await fetchDestination(undefined, subscriberFirst);
 

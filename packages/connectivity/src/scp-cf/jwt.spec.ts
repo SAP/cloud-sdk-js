@@ -13,11 +13,11 @@ import {
 } from '../../../../test-resources/test/test-util';
 import {
   audiences,
-  decodeJwtComplete,
   retrieveJwt,
   verifyJwt,
   isXsuaaToken,
-  decodeOrMakeJwt
+  decodeOrMakeJwt,
+  decodeJwt
 } from './jwt';
 import { clearXsuaaServices } from './environment-accessor';
 
@@ -49,14 +49,14 @@ export function responseWithPublicKey(key: string = publicKey) {
 describe('jwt', () => {
   describe('isXsuaaToken()', () => {
     it('returns true if the token was issued by XSUAA', () => {
-      const jwt = decodeJwtComplete(
+      const jwt = decodeJwt(
         signedJwtForVerification({ ext_attr: { enhancer: 'XSUAA' } })
       );
       expect(isXsuaaToken(jwt)).toBe(true);
     });
 
     it('returns false if the token was not issued XSUAA', () => {
-      const jwt = decodeJwtComplete(
+      const jwt = decodeJwt(
         signedJwtForVerification({ ext_attr: { enhancer: 'IAS' } })
       );
       mockServiceBindings({ xsuaaBinding: false });
@@ -64,7 +64,7 @@ describe('jwt', () => {
     });
 
     it('returns false if no enhancer is set', () => {
-      const jwt = decodeJwtComplete(signedJwtForVerification({}));
+      const jwt = decodeJwt(signedJwtForVerification({}));
       expect(isXsuaaToken(jwt)).toBe(false);
     });
   });

@@ -31,17 +31,17 @@ export function userId({ user_id }: JwtPayload): string {
   return user_id;
 }
 
+/* eslint-disable jsdoc/check-param-names, jsdoc/require-param */
 /**
  * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` property.
  * @param jwtPayload - Token payload to read the tenant ID from.
- * @param jwtPayload.zid - The zone ID, representing the tenant in the XSUAA token.
- * @param jwtPayload.app_tid - The app tenant ID, representing the tenant in the IAS token.
  * @returns The tenant ID, if available.
  */
 export function getTenantId({ zid, app_tid }: JwtPayload): string {
   logger.debug(`JWT zid is: ${zid}, app_tid is: ${app_tid}.`);
   return zid ?? app_tid;
 }
+/* eslint-enable jsdoc/check-param-names, jsdoc/require-param */
 
 /**
  * @internal

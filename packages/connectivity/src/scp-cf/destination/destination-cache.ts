@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { userId } from '../jwt';
+import { getTenantId, userId } from '../jwt';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { AsyncCache, AsyncCacheInterface } from '../async-cache';
 import { Destination } from './destination-service-types';

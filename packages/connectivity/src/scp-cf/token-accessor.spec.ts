@@ -189,7 +189,7 @@ describe('token accessor', () => {
       );
 
       mockClientCredentialsGrantCall(
-        subscriberXsuaaUrl,
+        providerXsuaaUrl,
         { access_token: subscriberServiceToken },
         200,
         destinationBindingClientSecretMock.credentials,

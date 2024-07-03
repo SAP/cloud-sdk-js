@@ -11,7 +11,7 @@ export function mockClientCredentialsGrantCall(
   delay = 0
 ) {
   return nock(uri, {
-    reqheaders: xsuaaRequestHeaders()
+    reqheaders: xsuaaRequestHeaders(zoneId ? { 'x-zid': zoneId } : {})
   })
     .post('/oauth/token', {
       grant_type: 'client_credentials',
@@ -30,7 +30,7 @@ export function mockClientCredentialsGrantWithCertCall(
   zoneId?: string
 ) {
   return nock(uri, {
-    reqheaders: xsuaaRequestHeaders()
+    reqheaders: xsuaaRequestHeaders(zoneId ? { zid: zoneId } : {})
   })
     .post('/oauth/token', {
       grant_type: 'client_credentials',

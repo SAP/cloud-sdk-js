@@ -8,7 +8,7 @@ import {
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
 import { getIssuerSubdomain } from './subdomain-replacer';
-import { decodeJwt } from './jwt';
+import { decodeJwt, getTenantId } from './jwt';
 
 interface XsuaaParameters {
   subdomain: string | null;

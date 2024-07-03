@@ -1,6 +1,5 @@
-import { getTenantId } from '..';
 import { JwtPayload } from './jsonwebtoken-type';
-import { decodeJwt } from './jwt';
+import { decodeJwt, getTenantId } from './jwt';
 import { getIssuerSubdomain } from './subdomain-replacer';
 
 /**

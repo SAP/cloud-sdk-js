@@ -38,7 +38,7 @@ export function userId({ user_id }: JwtPayload): string {
  * @param jwtPayload.app_tid - The app tenant ID, representing the tenant in the IAS token.
  * @returns The tenant ID, if available.
  */
-export function getgetTenantId({ zid, app_tid }: JwtPayload): string {
+export function getTenantId({ zid, app_tid }: JwtPayload): string {
   logger.debug(`JWT zid is: ${zid}, app_tid is: ${app_tid}.`);
   return zid ?? app_tid;
 }

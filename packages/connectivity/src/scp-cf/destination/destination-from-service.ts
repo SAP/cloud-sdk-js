@@ -325,13 +325,11 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     // Case 2a: subscriber and provider account not the same
     // Case 2b: user token is not an XSUAA token
     // x-user-token needed
-    let serviceJwt: JwtPair | undefined;
-    if (origin === 'provider') {
-      serviceJwt = this.providerServiceToken;
-    } else if (this.subscriberToken.serviceJwt) {
-      // on type level this is possible, but logically again it is not
-      serviceJwt = this.subscriberToken.serviceJwt;
-    }
+    const serviceJwt =
+      origin === 'provider'
+        ? this.providerServiceToken
+        : // on type level this could be undefined, but logically if the origin is subscriber, it must be defined.
+          this.subscriberToken.serviceJwt!;
 
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`

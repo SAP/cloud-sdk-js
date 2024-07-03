@@ -303,6 +303,7 @@ describe('generic http client', () => {
           method: 'get'
         }
       );
+
       delete process.env['VCAP_SERVICES'];
       nock.cleanAll();
       jest.clearAllMocks();

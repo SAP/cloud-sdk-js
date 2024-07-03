@@ -32,12 +32,13 @@ export function userId({ user_id }: JwtPayload): string {
 }
 
 /**
- * @internal
  * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` property.
  * @param jwtPayload - Token payload to read the tenant ID from.
+ * @param jwtPayload.zid - The zone ID, representing the tenant in the XSUAA token.
+ * @param jwtPayload.app_tid - The app tenant ID, representing the tenant in the IAS token.
  * @returns The tenant ID, if available.
  */
-export function tenantId({ zid, app_tid }: JwtPayload): string {
+export function getgetTenantId({ zid, app_tid }: JwtPayload): string {
   logger.debug(`JWT zid is: ${zid}, app_tid is: ${app_tid}.`);
   return zid ?? app_tid;
 }
@@ -258,7 +259,7 @@ export function decodeOrMakeJwt(
 ): JwtPayload | undefined {
   if (jwt) {
     const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
-    if (tenantId(decodedJwt)) {
+    if (getTenantId(decodedJwt)) {
       return decodedJwt;
     }
   }

@@ -164,12 +164,12 @@ export function getDestinationCacheKey(
   isolationStrategy: IsolationStrategy = 'tenant-user'
 ): string | undefined {
   if (isolationStrategy === 'tenant') {
-    return getTenantCacheKey(destinationName, tenantId(getJwtForTenant(token)));
+    return getTenantCacheKey(destinationName, getTenantId(getJwtForTenant(token)));
   }
   if (isolationStrategy === 'tenant-user') {
     return getTenantUserCacheKey(
       destinationName,
-      tenantId(getJwtForTenant(token)),
+      getTenantId(getJwtForTenant(token)),
       userId(getJwtForUser(token))
     );
   }

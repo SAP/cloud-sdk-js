@@ -8,7 +8,7 @@ import {
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
 import { getIssuerSubdomain } from './subdomain-replacer';
-import { decodeJwt, tenantId } from './jwt';
+import { decodeJwt } from './jwt';
 
 interface XsuaaParameters {
   subdomain: string | null;
@@ -30,7 +30,7 @@ export async function getClientCredentialsToken(
   const jwt = userJwt ? decodeJwt(userJwt) : {};
   const fnArgument: XsuaaParameters = {
     subdomain: getIssuerSubdomain(jwt) || null,
-    zoneId: tenantId(jwt) || null,
+    zoneId: getTenantId(jwt) || null,
     serviceCredentials: resolveServiceBinding(service).credentials
   };
 
@@ -78,7 +78,7 @@ export function getUserToken(
   const jwt = decodeJwt(userJwt);
   const fnArgument: XsuaaParameters = {
     subdomain: getIssuerSubdomain(jwt) || null,
-    zoneId: tenantId(jwt) || null,
+    zoneId: getTenantId(jwt) || null,
     serviceCredentials: service.credentials,
     userJwt
   };

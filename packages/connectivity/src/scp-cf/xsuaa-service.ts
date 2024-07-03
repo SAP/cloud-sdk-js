@@ -54,7 +54,8 @@ export async function getClientCredentialsToken(
     fnArgument,
     context: {
       uri: fnArgument.serviceCredentials.url,
-      getTenantId: fnArgument.zoneId ?? fnArgument.serviceCredentials.getTenantId
+      getTenantId:
+        fnArgument.zoneId ?? fnArgument.serviceCredentials.getTenantId
     }
   }).catch(err => {
     throw new Error(

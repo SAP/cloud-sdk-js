@@ -28,7 +28,9 @@ describe('tenant builder from JWT', () => {
 
     it('returns the `zid` from am encoded JWT', () => {
       expect(
-        getgetTenantIdWithFallback(signedJwt({ user_id: 'user', zid: 'tenant' }))
+        getgetTenantIdWithFallback(
+          signedJwt({ user_id: 'user', zid: 'tenant' })
+        )
       ).toEqual('tenant');
     });
   });

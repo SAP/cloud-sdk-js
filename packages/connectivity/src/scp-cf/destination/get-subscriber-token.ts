@@ -53,11 +53,9 @@ export async function getSubscriberToken(
 ): Promise<SubscriberToken> {
   const isXsuaaJwt = !!options.jwt && isXsuaaToken(decodeJwt(options.jwt));
   const userJwt = await retrieveUserToken(options, isXsuaaJwt);
+  const serviceJwt = await retrieveServiceToken(options, userJwt?.decoded);
 
-  return {
-    userJwt,
-    serviceJwt: await retrieveServiceToken(options, userJwt?.decoded)
-  };
+  return { userJwt, serviceJwt };
 }
 
 async function retrieveUserToken(
@@ -76,7 +74,7 @@ async function retrieveServiceToken(
   options: DestinationOptions,
   decodedUserJwt: JwtPayload | undefined
 ): Promise<JwtPair | undefined> {
-  const jwt = getJwtForServiceToken(options?.iss, decodedUserJwt);
+  const jwt = getJwtForServiceToken(options.iss, decodedUserJwt);
 
   if (jwt) {
     try {

@@ -325,10 +325,11 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     // Case 2a: subscriber and provider account not the same
     // Case 2b: user token is not an XSUAA token
     // x-user-token needed
-    let serviceJwt;
+    let serviceJwt: JwtPair | undefined;
     if (origin === 'provider') {
       serviceJwt = this.providerServiceToken;
     } else if (this.subscriberToken.serviceJwt) {
+      // on type level this is possible, but logically again it is not
       serviceJwt = this.subscriberToken.serviceJwt;
     }
 
@@ -337,7 +338,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     );
 
     return {
-      authHeaderJwt: serviceJwt.encoded, // token to get destination from service
+      authHeaderJwt: serviceJwt?.encoded, // token to get destination from service
       exchangeHeaderJwt: this.subscriberToken.userJwt.encoded // token considered for user and tenant
     };
   }

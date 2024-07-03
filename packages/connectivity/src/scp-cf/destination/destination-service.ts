@@ -16,7 +16,7 @@ import * as asyncRetry from 'async-retry';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { buildAuthorizationHeaders } from '../authorization-header';
-import { getTenantIdWithFallback } from '../tenant';
+import { getgetTenantIdWithFallback } from '../tenant';
 import {
   DestinationConfiguration,
   DestinationJson,
@@ -80,7 +80,7 @@ export async function fetchDestinations(
   const headers = wrapJwtInHeader(serviceToken).headers;
 
   return callDestinationEndpoint(
-    { uri: targetUri, tenantId: getTenantFromTokens(serviceToken) },
+    { uri: targetUri, getTenantId: getTenantFromTokens(serviceToken) },
     headers
   )
     .then(response => {
@@ -148,7 +148,7 @@ export async function fetchDestinationWithoutTokenRetrieval(
 
   try {
     const response = await callDestinationEndpoint(
-      { uri: targetUri, tenantId: getTenantFromTokens(serviceToken) },
+      { uri: targetUri, getTenantId: getTenantFromTokens(serviceToken) },
       { Authorization: `Bearer ${serviceToken}` }
     );
     const destination = parseDestination(
@@ -211,13 +211,13 @@ export async function fetchCertificate(
 
   try {
     const response = await callCertificateEndpoint(
-      { uri: accountUri, tenantId: getTenantFromTokens(token) },
+      { uri: accountUri, getTenantId: getTenantFromTokens(token) },
       header
     ).catch(() =>
       callCertificateEndpoint(
         {
           uri: instanceUri,
-          tenantId: getTenantFromTokens(token)
+          getTenantId: getTenantFromTokens(token)
         },
         header
       )
@@ -234,12 +234,12 @@ export async function fetchCertificate(
 function getTenantFromTokens(token: AuthAndExchangeTokens | string): string {
   let tenant: string | undefined;
   if (typeof token === 'string') {
-    tenant = getTenantIdWithFallback(token);
+    tenant = getgetTenantIdWithFallback(token);
   } else {
     tenant =
       token.exchangeTenant || // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
-      getTenantIdWithFallback(token.exchangeHeaderJwt) ||
-      getTenantIdWithFallback(token.authHeaderJwt);
+      getgetTenantIdWithFallback(token.exchangeHeaderJwt) ||
+      getgetTenantIdWithFallback(token.authHeaderJwt);
   }
 
   if (!tenant) {
@@ -282,7 +282,7 @@ export async function fetchDestinationWithTokenRetrieval(
     : authHeader;
 
   return callDestinationEndpoint(
-    { uri: targetUri, tenantId: getTenantFromTokens(token) },
+    { uri: targetUri, getTenantId: getTenantFromTokens(token) },
     authHeader,
     options
   )

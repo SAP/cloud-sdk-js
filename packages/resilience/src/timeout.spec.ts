@@ -25,7 +25,7 @@ describe('timeout', () => {
       executeWithMiddleware([timeout(delayInResponse * 0.5)], {
         context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant'
+          getTenantId: 'dummy-tenant'
         },
         fnArgument: requestConfig,
         fn: request
@@ -40,7 +40,7 @@ describe('timeout', () => {
         {
           context: {
             uri: 'https://example.com',
-            tenantId: 'dummy-tenant'
+            getTenantId: 'dummy-tenant'
           },
           fnArgument: requestConfig,
           fn: request
@@ -69,7 +69,7 @@ describe('timeout', () => {
     const response = await executeWithMiddleware([timeout()], {
       context: {
         uri: 'https://example.com',
-        tenantId: 'dummy-tenant'
+        getTenantId: 'dummy-tenant'
       },
       fnArgument: requestConfig,
       fn: request
@@ -81,7 +81,7 @@ describe('timeout', () => {
       executeWithMiddleware([timeout()], {
         context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant',
+          getTenantId: 'dummy-tenant',
           fnArgument: requestConfig
         },
         fnArgument: requestConfig,

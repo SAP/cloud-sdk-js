@@ -32,7 +32,7 @@ export const xsuaaBindingMock: Service = {
     verificationkey: publicKey,
     uaadomain: uaaDomain,
     subaccountid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
-    tenantid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+    getTenantId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
     zoneid: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
     serviceInstanceId: '7f58b7bc-c4e3-4f58-8bc6-fb473942817f'
   }
@@ -50,7 +50,7 @@ export const destinationBindingClientSecretMock: Service = {
     url: providerXsuaaUrl,
     uaadomain: uaaDomain,
     xsappname: 'myapp',
-    tenantid: 'app-tenant-id'
+    getTenantId: 'app-tenant-id'
   }
 };
 

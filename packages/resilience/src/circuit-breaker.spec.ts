@@ -26,7 +26,7 @@ describe('circuit-breaker', () => {
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
       uri: host,
-      tenantId: 'myTestTenant'
+      getTenantId: 'myTestTenant'
     };
     const keepCalling = true;
     while (keepCalling) {
@@ -78,7 +78,7 @@ describe('circuit-breaker', () => {
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
       uri: host,
-      tenantId: 'myTestTenant'
+      getTenantId: 'myTestTenant'
     };
 
     let keepCalling = !mock.isDone();
@@ -110,7 +110,7 @@ describe('circuit-breaker', () => {
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
       uri: host,
-      tenantId: 'tenant1'
+      getTenantId: 'tenant1'
     };
 
     await executeWithMiddleware<
@@ -127,7 +127,7 @@ describe('circuit-breaker', () => {
       AxiosResponse,
       MiddlewareContext<RawAxiosRequestConfig>
     >([circuitBreaker()], {
-      context: { ...context, tenantId: 'tenant2' },
+      context: { ...context, getTenantId: 'tenant2' },
       fn: request,
       fnArgument: requestConfig
     });
@@ -160,7 +160,7 @@ describe('circuit-breaker', () => {
     ) => MiddlewareContext<RawAxiosRequestConfig> = requestConfig => ({
       fnArgument: requestConfig,
       uri: host,
-      tenantId: 'tenant1'
+      getTenantId: 'tenant1'
     });
 
     await executeWithMiddleware<
@@ -203,7 +203,7 @@ describe('circuit-breaker', () => {
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
       uri: host,
-      tenantId: 'myTestTenant'
+      getTenantId: 'myTestTenant'
     };
 
     let keepCalling = !mock.isDone();

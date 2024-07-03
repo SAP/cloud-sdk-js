@@ -7,7 +7,7 @@ import {
 
 describe('middleware', () => {
   const logger = createLogger('middleware');
-  const context = { uri: 'dummyUri', tenantId: 'dummyTenant' };
+  const context = { uri: 'dummyUri', getTenantId: 'dummyTenant' };
 
   const beforeMiddlewareBuilder = appendString =>
     function (

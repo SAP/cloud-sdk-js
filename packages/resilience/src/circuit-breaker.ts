@@ -38,8 +38,8 @@ function httpErrorFilter(error: AxiosError): boolean {
 function circuitBreakerKeyBuilder<
   ArgumentT,
   ContextT extends MiddlewareContext<ArgumentT>
->({ uri, tenantId = 'tenant_id' }: ContextT): string {
-  return `${uri}::${tenantId}`;
+>({ uri, getTenantId = 'tenant_id' }: ContextT): string {
+  return `${uri}::${getTenantId}`;
 }
 
 /**

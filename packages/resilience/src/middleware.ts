@@ -28,7 +28,7 @@ export interface MiddlewareContext<ArgumentT> {
   /**
    * Tenant identifier.
    */
-  readonly tenantId: string | undefined;
+  readonly getTenantId: string | undefined;
 }
 
 /**

@@ -32,12 +32,13 @@ export function userId({ user_id }: JwtPayload): string {
 }
 
 /**
- * @internal
  * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` property.
  * @param jwtPayload - Token payload to read the tenant ID from.
+ * @param jwtPayload.zid - The zone ID, representing the tenant in the XSUAA token.
+ * @param jwtPayload.app_tid - The app tenant ID, representing the tenant in the IAS token.
  * @returns The tenant ID, if available.
  */
-export function tenantId({ zid, app_tid }: JwtPayload): string {
+export function getTenantId({ zid, app_tid }: JwtPayload): string {
   logger.debug(`JWT zid is: ${zid}, app_tid is: ${app_tid}.`);
   return zid ?? app_tid;
 }
@@ -258,27 +259,27 @@ export function decodeOrMakeJwt(
 ): JwtPayload | undefined {
   if (jwt) {
     const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
-    if (tenantId(decodedJwt)) {
+    if (getTenantId(decodedJwt)) {
       return decodedJwt;
     }
   }
 
-  const providerTenantId = getTenantIdFromBinding();
+  const providergetTenantId = getgetTenantIdFromBinding();
 
   // This is returning a JWT with an XSUAA style zid.
   // It might make sense to check whether the binding was IAS and then rather return app_tid, as it would be in a IAS token.
-  if (providerTenantId) {
-    return { zid: providerTenantId };
+  if (providergetTenantId) {
+    return { zid: providergetTenantId };
   }
 }
 /**
  * @internal
  * @returns The tenant identifier from the XSUAA, identity or destination service binding.
  */
-export function getTenantIdFromBinding(): string | undefined {
+export function getgetTenantIdFromBinding(): string | undefined {
   return (
-    getServiceCredentials('xsuaa')?.tenantid ||
+    getServiceCredentials('xsuaa')?.getTenantId ||
     getServiceCredentials('identity')?.app_tid ||
-    getServiceCredentials('destination')?.tenantid
+    getServiceCredentials('destination')?.getTenantId
   );
 }

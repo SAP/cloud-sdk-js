@@ -242,12 +242,12 @@ describe('register-destination', () => {
       const logger = createLogger('register-destination');
       jest.spyOn(logger, 'error');
 
-      const dummyTenantId = 'provider-tenant';
+      const dummygetTenantId = 'provider-tenant';
 
       await registerDestination(testDestination, { jwt: signedJwt({}) });
       const registeredDestination = await registerDestinationCache.destination
         .getCacheInstance()
-        .get(`${dummyTenantId}::${testDestination.name}`);
+        .get(`${dummygetTenantId}::${testDestination.name}`);
 
       expect(registeredDestination).toEqual(testDestination);
 
@@ -261,12 +261,12 @@ describe('register-destination', () => {
       const logger = createLogger('register-destination');
       jest.spyOn(logger, 'debug');
 
-      const dummyTenantId = 'provider-tenant';
+      const dummygetTenantId = 'provider-tenant';
 
       await registerDestination(testDestination);
       const registeredDestination = await registerDestinationCache.destination
         .getCacheInstance()
-        .get(`${dummyTenantId}::${testDestination.name}`);
+        .get(`${dummygetTenantId}::${testDestination.name}`);
 
       expect(registeredDestination).toEqual(testDestination);
 

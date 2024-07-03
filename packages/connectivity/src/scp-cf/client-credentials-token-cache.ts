@@ -11,17 +11,17 @@ const ClientCredentialsTokenCache = (
   cache: Cache<ClientCredentialsResponse>
 ) => ({
   getToken: (
-    tenantId: string | undefined,
+    getTenantId: string | undefined,
     clientId: string
   ): ClientCredentialsResponse | undefined =>
-    cache.get(getCacheKey(tenantId, clientId)),
+    cache.get(getCacheKey(getTenantId, clientId)),
 
   cacheToken: (
-    tenantId: string | undefined,
+    getTenantId: string | undefined,
     clientId: string,
     token: ClientCredentialsResponse
   ): void => {
-    cache.set(getCacheKey(tenantId, clientId), {
+    cache.set(getCacheKey(getTenantId, clientId), {
       entry: token,
       expires: token.expires_in
         ? Date.now() + token.expires_in * 1000
@@ -36,15 +36,15 @@ const ClientCredentialsTokenCache = (
 
 /** *
  * @internal
- * @param tenantId - The ID of the tenant to cache the token for.
+ * @param getTenantId - The ID of the tenant to cache the token for.
  * @param clientId - ClientId to fetch the token
  * @returns the token
  */
 export function getCacheKey(
-  tenantId: string | undefined,
+  getTenantId: string | undefined,
   clientId: string
 ): string | undefined {
-  if (!tenantId) {
+  if (!getTenantId) {
     logger.warn(
       'Cannot create cache key for client credentials token cache. The given tenant ID is undefined.'
     );
@@ -56,7 +56,7 @@ export function getCacheKey(
     );
     return;
   }
-  return [tenantId, clientId].join(':');
+  return [getTenantId, clientId].join(':');
 }
 
 /**

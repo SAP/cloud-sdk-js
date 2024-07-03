@@ -299,7 +299,7 @@ describe('token accessor', () => {
       const token = signedJwt({ dummy: 'content' });
 
       clientCredentialsTokenCache.cacheToken(
-        destinationBindingClientSecretMock.credentials.tenantid,
+        destinationBindingClientSecretMock.credentials.getTenantId,
         destinationBindingClientSecretMock.credentials.clientid,
         { access_token: token } as ClientCredentialsResponse
       );
@@ -328,7 +328,7 @@ describe('token accessor', () => {
 
       expect(
         clientCredentialsTokenCache.getToken(
-          destinationBindingClientSecretMock.credentials.tenantid,
+          destinationBindingClientSecretMock.credentials.getTenantId,
           destinationBindingClientSecretMock.credentials.clientid
         )
       ).toEqual(token);

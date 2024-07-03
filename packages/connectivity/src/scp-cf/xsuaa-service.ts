@@ -8,7 +8,7 @@ import {
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
 import { getIssuerSubdomain } from './subdomain-replacer';
-import { decodeJwt, tenantId } from './jwt';
+import { decodeJwt, getTenantId } from './jwt';
 
 interface XsuaaParameters {
   subdomain: string | null;
@@ -30,7 +30,7 @@ export async function getClientCredentialsToken(
   const jwt = userJwt ? decodeJwt(userJwt) : {};
   const fnArgument: XsuaaParameters = {
     subdomain: getIssuerSubdomain(jwt) || null,
-    zoneId: tenantId(jwt) || null,
+    zoneId: getTenantId(jwt) || null,
     serviceCredentials: resolveServiceBinding(service).credentials
   };
 
@@ -54,7 +54,7 @@ export async function getClientCredentialsToken(
     fnArgument,
     context: {
       uri: fnArgument.serviceCredentials.url,
-      tenantId: fnArgument.zoneId ?? fnArgument.serviceCredentials.tenantid
+      getTenantId: fnArgument.zoneId ?? fnArgument.serviceCredentials.getTenantId
     }
   }).catch(err => {
     throw new Error(
@@ -78,7 +78,7 @@ export function getUserToken(
   const jwt = decodeJwt(userJwt);
   const fnArgument: XsuaaParameters = {
     subdomain: getIssuerSubdomain(jwt) || null,
-    zoneId: tenantId(jwt) || null,
+    zoneId: getTenantId(jwt) || null,
     serviceCredentials: service.credentials,
     userJwt
   };
@@ -104,7 +104,7 @@ export function getUserToken(
     fnArgument,
     context: {
       uri: service.credentials.url,
-      tenantId: fnArgument.zoneId ?? service.credentials.tenantid
+      getTenantId: fnArgument.zoneId ?? service.credentials.getTenantId
     }
   }).catch(err => {
     throw new Error(

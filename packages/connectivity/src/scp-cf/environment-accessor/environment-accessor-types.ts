@@ -44,7 +44,7 @@ export type ServiceCredentials = {
 export type DestinationServiceCredentials = ServiceCredentials & {
   identityzone: string;
   instanceid: string;
-  tenantid: string;
+  getTenantId: string;
   tenantmode: string;
   uaadomain: string;
   uri: string;
@@ -60,7 +60,7 @@ export type XsuaaServiceCredentials = ServiceCredentials & {
   identityzone: string;
   identityzoneid: string;
   sburl: string;
-  tenantid: string;
+  getTenantId: string;
   tenantmode: string;
   uaadomain: string;
   url: string;

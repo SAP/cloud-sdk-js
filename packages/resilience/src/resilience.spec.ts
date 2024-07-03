@@ -42,7 +42,7 @@ describe('combined resilience features', () => {
       executeWithMiddleware([retry(2), timeout(600)], {
         context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant'
+          getTenantId: 'dummy-tenant'
         },
         fnArgument: requestConfig,
         fn: request
@@ -68,7 +68,7 @@ describe('combined resilience features', () => {
     const response = await executeWithMiddleware([retry(2), timeout(200)], {
       context: {
         uri: 'https://example.com',
-        tenantId: 'dummy-tenant'
+        getTenantId: 'dummy-tenant'
       },
       fnArgument: config,
       fn: request
@@ -92,7 +92,7 @@ describe('combined resilience features', () => {
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
       uri: host,
-      tenantId: 'myTestTenant'
+      getTenantId: 'myTestTenant'
     };
 
     const keepCalling = true;
@@ -144,7 +144,7 @@ describe('combined resilience features', () => {
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
       uri: host,
-      tenantId: 'myTestTenant'
+      getTenantId: 'myTestTenant'
     };
     await expect(
       executeWithMiddleware<
@@ -177,7 +177,7 @@ describe('combined resilience features', () => {
     };
     const context: MiddlewareContext<RawAxiosRequestConfig> = {
       uri: host,
-      tenantId: 'myTestTenant'
+      getTenantId: 'myTestTenant'
     };
     await expect(
       executeWithMiddleware<

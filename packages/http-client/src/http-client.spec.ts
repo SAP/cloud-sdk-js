@@ -307,7 +307,7 @@ describe('generic http client', () => {
       expect(response.data).toEqual({
         destinationName: 'FINAL-DESTINATION',
         jwt: subscriberUserToken,
-        tenantId: 'subscriber',
+        getTenantId: 'subscriber',
         uri: 'https://my.system.example.com'
       });
     });

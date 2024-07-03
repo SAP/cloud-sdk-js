@@ -521,7 +521,7 @@ describe('destination service', () => {
       expect(spy).toHaveBeenCalledWith(
         [expect.any(Function), expect.any(Function)],
         {
-          context: expect.objectContaining({ tenantId: 'tenant' }),
+          context: expect.objectContaining({ getTenantId: 'tenant' }),
           fn: expect.any(Function),
           fnArgument: expect.objectContaining({ baseURL: expect.any(String) })
         }

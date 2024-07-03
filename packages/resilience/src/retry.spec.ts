@@ -30,7 +30,7 @@ describe('retry', () => {
       executeWithMiddleware([retry(0)], {
         context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant'
+          getTenantId: 'dummy-tenant'
         },
         fnArgument: requestConfig,
         fn: request
@@ -53,7 +53,7 @@ describe('retry', () => {
 
     await expect(
       executeWithMiddleware([retry(1)], {
-        context: { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        context: { uri: 'https://example.com', getTenantId: 'dummy-tenant' },
         fnArgument: requestConfig,
         fn: request
       })
@@ -77,7 +77,7 @@ describe('retry', () => {
 
     await expect(
       executeWithMiddleware([retry(2)], {
-        context: { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        context: { uri: 'https://example.com', getTenantId: 'dummy-tenant' },
         fnArgument: requestConfig,
         fn: request
       })
@@ -101,7 +101,7 @@ describe('retry', () => {
       executeWithMiddleware([retry(7)], {
         context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant'
+          getTenantId: 'dummy-tenant'
         },
         fn: request,
         fnArgument: requestConfig
@@ -128,7 +128,7 @@ describe('retry', () => {
       executeWithMiddleware([retry(7)], {
         context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant'
+          getTenantId: 'dummy-tenant'
         },
         fn: request,
         fnArgument: requestConfig
@@ -153,7 +153,7 @@ describe('retry', () => {
 
     await expect(
       executeWithMiddleware([retry(1)], {
-        context: { uri: 'https://example.com', tenantId: 'dummy-tenant' },
+        context: { uri: 'https://example.com', getTenantId: 'dummy-tenant' },
         fnArgument: requestConfig,
         fn: request
       })

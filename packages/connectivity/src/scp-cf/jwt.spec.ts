@@ -291,14 +291,14 @@ describe('jwt', () => {
     it("returns the XSUAA service binding's tenant ID as `zid`, if JWT is not present and binding is present", () => {
       mockServiceBindings({ xsuaaBinding: true });
       expect(decodeOrMakeJwt(undefined)).toEqual({
-        zid: xsuaaBindingMock.credentials.tenantid
+        zid: xsuaaBindingMock.credentials.getTenantId
       });
     });
 
     it("returns the destination service binding's tenant ID, if JWT, XSUAA and identity service bindings are missing", () => {
       mockServiceBindings({ xsuaaBinding: false });
       expect(decodeOrMakeJwt(undefined)).toEqual({
-        zid: destinationBindingClientSecretMock.credentials.tenantid
+        zid: destinationBindingClientSecretMock.credentials.getTenantId
       });
     });
   });

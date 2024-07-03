@@ -58,7 +58,8 @@ export {
   PartialDestinationFetchOptions,
   ServiceBindingTransformOptions,
   transformServiceBindingToDestination,
-  getAllDestinationsFromDestinationService
+  getAllDestinationsFromDestinationService,
+  getTenantId
 } from './scp-cf';
 
 export type {

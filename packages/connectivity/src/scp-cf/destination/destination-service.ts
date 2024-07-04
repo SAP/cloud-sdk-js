@@ -237,7 +237,8 @@ function getTenantIdFromTokens(token: AuthAndExchangeTokens | string): string {
     tenant = getTenantId(token);
   } else {
     tenant =
-      token.exchangeTenant || // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+      // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+      token.exchangeTenant || 
       getTenantId(token.exchangeHeaderJwt) ||
       getTenantId(token.authHeaderJwt);
   }

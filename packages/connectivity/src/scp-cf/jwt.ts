@@ -65,7 +65,6 @@ export function getSubdomain(
   );
 }
 
-
 /**
  * @internal
  * Retrieve the audiences of a decoded JWT based on the audiences and scopes in the token.

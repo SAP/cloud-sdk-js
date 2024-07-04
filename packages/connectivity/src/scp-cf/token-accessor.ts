@@ -1,6 +1,6 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { JwtPayload } from './jsonwebtoken-type';
-import { getSubdomain, getTenantIdFromBinding } from './jwt';
+import { getSubdomain, getTenantId, getTenantIdFromBinding } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';

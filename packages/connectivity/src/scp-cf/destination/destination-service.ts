@@ -13,7 +13,7 @@ import {
   MiddlewareContext
 } from '@sap-cloud-sdk/resilience';
 import * as asyncRetry from 'async-retry';
-import { decodeJwt, tenantId, wrapJwtInHeader } from '../jwt';
+import { decodeJwt, getTenantId, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { buildAuthorizationHeaders } from '../authorization-header';
 import {

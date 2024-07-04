@@ -4,7 +4,8 @@ import {
   buildHeadersForDestination,
   Destination,
   HttpDestinationOrFetchOptions,
-  getAgentConfigAsync
+  getAgentConfigAsync,
+  getTenantId
 } from '@sap-cloud-sdk/connectivity';
 import {
   assertHttpDestination,
@@ -13,8 +14,7 @@ import {
   getAdditionalQueryParameters,
   getProxyConfig,
   HttpDestination,
-  resolveDestination,
-  tenantId
+  resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {

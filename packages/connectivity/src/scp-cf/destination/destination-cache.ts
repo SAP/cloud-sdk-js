@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { tenantId, userId } from '../jwt';
+import { getTenantId, userId } from '../jwt';
 import { JwtPayload } from '../jsonwebtoken-type';
 import { AsyncCache, AsyncCacheInterface } from '../async-cache';
 import { Destination } from './destination-service-types';
@@ -164,12 +164,15 @@ export function getDestinationCacheKey(
   isolationStrategy: IsolationStrategy = 'tenant-user'
 ): string | undefined {
   if (isolationStrategy === 'tenant') {
-    return getTenantCacheKey(destinationName, tenantId(getJwtForTenant(token)));
+    return getTenantCacheKey(
+      destinationName,
+      getTenantId(getJwtForTenant(token))
+    );
   }
   if (isolationStrategy === 'tenant-user') {
     return getTenantUserCacheKey(
       destinationName,
-      tenantId(getJwtForTenant(token)),
+      getTenantId(getJwtForTenant(token)),
       userId(getJwtForUser(token))
     );
   }

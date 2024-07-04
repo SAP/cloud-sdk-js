@@ -7,7 +7,7 @@ import {
 } from './environment-accessor/environment-accessor-types';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
-import { decodeJwt, getSubdomain, tenantId } from './jwt';
+import { decodeJwt, getSubdomain, getTenantId } from './jwt';
 
 interface XsuaaParameters {
   subdomain: string | undefined;
@@ -29,7 +29,7 @@ export async function getClientCredentialsToken(
   const decodedJwt = jwt ? decodeJwt(jwt) : {};
   const fnArgument: XsuaaParameters = {
     subdomain: getSubdomain(decodedJwt),
-    zoneId: tenantId(decodedJwt),
+    zoneId: getTenantId(decodedJwt),
     serviceCredentials: resolveServiceBinding(service).credentials
   };
 
@@ -78,7 +78,7 @@ export function getUserToken(
   const decodedUserJwt = decodeJwt(userJwt);
   const fnArgument: XsuaaParameters = {
     subdomain: getSubdomain(decodedUserJwt),
-    zoneId: tenantId(decodedUserJwt),
+    zoneId: getTenantId(decodedUserJwt),
     serviceCredentials: service.credentials,
     userJwt
   };

@@ -234,12 +234,12 @@ function getTenantIdFromTokens(token: AuthAndExchangeTokens | string): string {
   let tenant: string | undefined;
   if (typeof token === 'string') {
     // TODO: subdomain !== tenantID, the fallback is probably incorrect and should be removed or replaced with subdomain explicitly (in middlewarecontext)
-    tenant = tenantId(token);
+    tenant = getTenantId(token);
   } else {
     tenant =
       token.exchangeTenant || // represents the tenant as string already see https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
-      tenantId(token.exchangeHeaderJwt) ||
-      tenantId(token.authHeaderJwt);
+      getTenantId(token.exchangeHeaderJwt) ||
+      getTenantId(token.authHeaderJwt);
   }
 
   if (!tenant) {

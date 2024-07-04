@@ -1,6 +1,6 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { JwtPayload } from './jsonwebtoken-type';
-import { getSubdomain, getTenantIdFromBinding, tenantId } from './jwt';
+import { getSubdomain, getTenantIdFromBinding } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
@@ -38,7 +38,7 @@ export async function serviceToken(
   const serviceBinding = resolveServiceBinding(service);
   const serviceCredentials = serviceBinding.credentials;
   const tenantForCaching = options?.jwt
-    ? tenantId(options.jwt) || getSubdomain(options.jwt)
+    ? getTenantId(options.jwt) || getSubdomain(options.jwt)
     : getTenantIdFromBinding();
 
   if (opts.useCache) {

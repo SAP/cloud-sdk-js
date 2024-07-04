@@ -32,13 +32,13 @@ export function userId({ user_id }: JwtPayload): string {
   return user_id;
 }
 
+/* eslint-disable jsdoc/check-param-names, jsdoc/require-param */
 /**
- * @internal
  * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` property.
  * @param jwtPayload - Token payload to read the tenant ID from.
  * @returns The tenant ID, if available.
  */
-export function tenantId(
+export function getTenantId(
   jwt: JwtPayload | string | undefined
 ): string | undefined {
   const decodedJwt = jwt ? decodeJwt(jwt) : {};
@@ -47,6 +47,7 @@ export function tenantId(
   );
   return decodedJwt.zid || decodedJwt.app_tid || undefined;
 }
+/* eslint-enable jsdoc/check-param-names, jsdoc/require-param */
 
 /**
  * @internal
@@ -63,6 +64,7 @@ export function getSubdomain(
     (isXsuaaToken(decodedJwt) ? getIssuerSubdomain(decodedJwt) : undefined)
   );
 }
+
 
 /**
  * @internal
@@ -280,7 +282,7 @@ export function decodeOrMakeJwt(
 ): JwtPayload | undefined {
   if (jwt) {
     const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
-    if (tenantId(decodedJwt)) {
+    if (getTenantId(decodedJwt)) {
       return decodedJwt;
     }
   }

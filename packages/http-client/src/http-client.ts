@@ -108,7 +108,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
         jwt: destination.jwt,
         uri: resolvedDestination.url,
         destinationName: resolvedDestination.name ?? undefined,
-        tenantId: tenantId(destination.jwt)
+        tenantId: getTenantId(destination.jwt)
       }
     });
   };

@@ -1,5 +1,5 @@
 import { JwtPayload } from './jsonwebtoken-type';
-import { tenantId } from './jwt';
+import { getTenantId } from './jwt';
 
 /**
  * Compare two decoded JWTs based on their `tenantId`s.
@@ -12,5 +12,5 @@ export function isIdenticalTenant(
   userTokenPayload: JwtPayload,
   providerTokenPayload: JwtPayload
 ): boolean {
-  return tenantId(userTokenPayload) === tenantId(providerTokenPayload);
+  return getTenantId(userTokenPayload) === getTenantId(providerTokenPayload);
 }

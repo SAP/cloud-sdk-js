@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/connectivity': minor
 ---
 
-[New Functionality] Added getTenantId function for convenience.
+[New Functionality] Add `getTenantId()` function for convenience.

@@ -31,16 +31,17 @@ export function userId({ user_id }: JwtPayload): string {
   return user_id;
 }
 
+/* eslint-disable jsdoc/check-param-names, jsdoc/require-param */
 /**
- * @internal
  * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` property.
  * @param jwtPayload - Token payload to read the tenant ID from.
  * @returns The tenant ID, if available.
  */
-export function tenantId({ zid, app_tid }: JwtPayload): string {
+export function getTenantId({ zid, app_tid }: JwtPayload): string {
   logger.debug(`JWT zid is: ${zid}, app_tid is: ${app_tid}.`);
   return zid ?? app_tid;
 }
+/* eslint-enable jsdoc/check-param-names, jsdoc/require-param */
 
 /**
  * @internal
@@ -258,7 +259,7 @@ export function decodeOrMakeJwt(
 ): JwtPayload | undefined {
   if (jwt) {
     const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
-    if (tenantId(decodedJwt)) {
+    if (getTenantId(decodedJwt)) {
       return decodedJwt;
     }
   }

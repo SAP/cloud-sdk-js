@@ -198,7 +198,10 @@ describe('connectivity-service', () => {
         userJwt: getJwtPair(subscriberUserToken)
       });
 
-      const withProxy = await addProxyConfigurationOnPrem(input,  requiredSubscriberToken);
+      const withProxy = await addProxyConfigurationOnPrem(
+        input,
+        requiredSubscriberToken
+      );
       expect(withProxy).toEqual(expected);
     });
   });

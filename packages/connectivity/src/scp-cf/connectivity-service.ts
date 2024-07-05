@@ -69,7 +69,9 @@ export function httpProxyHostAndPort(): HostAndPort {
  * @internal
  * @returns Socks Proxy Configuration
  */
-export async function socksProxyHostAndPort(jwt?: Required<SubscriberToken>): Promise<ProxyConfiguration> {
+export async function socksProxyHostAndPort(
+  jwt?: Required<SubscriberToken>
+): Promise<ProxyConfiguration> {
   const service = readConnectivityServiceBinding();
   const connectivityServiceToken = await serviceToken(service, { jwt });
   return {

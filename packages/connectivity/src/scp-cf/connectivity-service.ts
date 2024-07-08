@@ -31,7 +31,7 @@ export async function addProxyConfigurationOnPrem(
   if (destination.type === 'MAIL') {
     return {
       ...destination,
-      proxyConfiguration: await socksProxyHostAndPort()
+      proxyConfiguration: await socksProxyHostAndPort(subscriberToken)
     };
   }
 
@@ -69,9 +69,11 @@ export function httpProxyHostAndPort(): HostAndPort {
  * @internal
  * @returns Socks Proxy Configuration
  */
-export async function socksProxyHostAndPort(): Promise<ProxyConfiguration> {
+export async function socksProxyHostAndPort(
+  jwt?: Required<SubscriberToken>
+): Promise<ProxyConfiguration> {
   const service = readConnectivityServiceBinding();
-  const connectivityServiceToken = await serviceToken(service);
+  const connectivityServiceToken = await serviceToken(service, { jwt });
   return {
     host: service.credentials.onpremise_proxy_host,
     port: parseInt(service.credentials.onpremise_socks5_proxy_port),

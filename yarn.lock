@@ -4766,7 +4766,19 @@ glob-parent@^6.0.2:
   dependencies:
     is-glob "^4.0.3"
 
-glob@^10.3.7, glob@^10.4.3:
+glob@^10.3.7:
+  version "10.4.4"
+  resolved "https://registry.npmjs.org/glob/-/glob-10.4.4.tgz#d60943feb6f8140522117e6576a923b715718380"
+  integrity sha512-XsOKvHsu38Xe19ZQupE6N/HENeHQBA05o3hV8labZZT2zYDg1+emxWHnc/Bm9AcCMPXfD6jt+QC7zC5JSFyumw==
+  dependencies:
+    foreground-child "^3.1.0"
+    jackspeak "^3.1.2"
+    minimatch "^9.0.4"
+    minipass "^7.1.2"
+    package-json-from-dist "^1.0.0"
+    path-scurry "^1.11.1"
+
+glob@^10.4.3:
   version "10.4.3"
   resolved "https://registry.npmjs.org/glob/-/glob-10.4.3.tgz#e0ba2253dd21b3d0acdfb5d507c59a29f513fc7a"
   integrity sha512-Q38SGlYRpVtDBPSWEylRyctn7uDeTp4NQERTLiCT1FqA9JXPYWqAVmQU6qh4r/zMM5ehxTcbaO8EjhWnvEhmyg==
@@ -8110,9 +8122,9 @@ rimraf@^3.0.2:
     glob "^7.1.3"
 
 rimraf@^5.0.5:
-  version "5.0.8"
-  resolved "https://registry.npmjs.org/rimraf/-/rimraf-5.0.8.tgz#9d4d0ef5106817102b14fdbbf01cf29545e99a6c"
-  integrity sha512-XSh0V2/yNhDEi8HwdIefD8MLgs4LQXPag/nEJWs3YUc3Upn+UHa1GyIkEg9xSSNt7HnkO5FjTvmcRzgf+8UZuw==
+  version "5.0.9"
+  resolved "https://registry.npmjs.org/rimraf/-/rimraf-5.0.9.tgz#c3baa1b886eadc2ec7981a06a593c3d01134ffe9"
+  integrity sha512-3i7b8OcswU6CpU8Ej89quJD4O98id7TtVM5U4Mybh84zQXdrFmDLouWBEEaD/QfO3gDDfH+AGFCGsR7kngzQnA==
   dependencies:
     glob "^10.3.7"
 

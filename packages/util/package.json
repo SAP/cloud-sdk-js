@@ -36,7 +36,7 @@
   "dependencies": {
     "axios": "^1.7.2",
     "chalk": "^4.1.0",
-    "logform": "^2.6.0",
+    "logform": "^2.6.1",
     "voca": "^1.4.1",
     "winston": "^3.13.0",
     "winston-transport": "^4.7.0"

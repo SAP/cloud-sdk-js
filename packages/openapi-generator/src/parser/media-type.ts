@@ -31,10 +31,7 @@ export function parseTopLevelMediaType(
       'text/plain',
       '*/*'
     ];
-    const mediaType = getMediaTypeObject(
-      bodyOrResponseObject,
-      allowedTypes
-    );
+    const mediaType = getMediaTypeObject(bodyOrResponseObject, allowedTypes);
     const schema = mediaType?.schema;
     if (schema) {
       return parseSchema(schema, refs, options);
@@ -60,7 +57,7 @@ export function parseMediaType(
       refs,
       options
     );
-    
+
     if (!supportedMediaType) {
       logger.warn(
         "Could not parse media type, because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime."
@@ -104,8 +101,8 @@ function getMediaTypeObject(
   contentType: string[]
 ): OpenAPIV3.MediaTypeObject | undefined {
   if (bodyOrResponseObject?.content) {
-    return Object.entries(bodyOrResponseObject.content).find(
-      ([key]) => contentType.includes(key)
+    return Object.entries(bodyOrResponseObject.content).find(([key]) =>
+      contentType.includes(key)
     )?.[1];
   }
   return undefined;

@@ -1,4 +1,5 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { JwtPayload } from 'jsonwebtoken';
 import { Protocol } from './protocol';
 import {
   ProxyConfiguration,
@@ -31,7 +32,9 @@ export async function addProxyConfigurationOnPrem(
   if (destination.type === 'MAIL') {
     return {
       ...destination,
-      proxyConfiguration: await socksProxyHostAndPort(subscriberToken)
+      proxyConfiguration: await socksProxyHostAndPort(
+        subscriberToken?.userJwt.decoded
+      )
     };
   }
 
@@ -67,13 +70,16 @@ export function httpProxyHostAndPort(): HostAndPort {
 
 /**
  * @internal
+ * @param userJwt - The user JWT
  * @returns Socks Proxy Configuration
  */
 export async function socksProxyHostAndPort(
-  jwt?: Required<SubscriberToken>
+  userJwt?: JwtPayload
 ): Promise<ProxyConfiguration> {
   const service = readConnectivityServiceBinding();
-  const connectivityServiceToken = await serviceToken(service, { jwt });
+  const connectivityServiceToken = await serviceToken(service, {
+    jwt: userJwt
+  });
   return {
     host: service.credentials.onpremise_proxy_host,
     port: parseInt(service.credentials.onpremise_socks5_proxy_port),

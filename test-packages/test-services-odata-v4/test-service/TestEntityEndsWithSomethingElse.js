@@ -25,7 +25,7 @@ TestEntityEndsWithSomethingElse._entityName = 'A_TestEntityEndsWithSomethingElse
  */
 TestEntityEndsWithSomethingElse._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
- * All key fields of the TestEntityEndsWithSomethingElse entity
+ * All key fields of the TestEntityEndsWithSomethingElse entity.
  */
 TestEntityEndsWithSomethingElse._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntityEndsWithSomethingElse.js.map

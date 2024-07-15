@@ -28,7 +28,7 @@ export declare class TestEntityLink<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntityLink entity
+   * All key fields of the TestEntityLink entity.
    */
   static _keys: string[];
   /**

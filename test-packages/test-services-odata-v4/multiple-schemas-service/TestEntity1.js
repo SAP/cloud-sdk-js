@@ -25,7 +25,7 @@ TestEntity1._entityName = 'A_TestEntity1';
  */
 TestEntity1._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
- * All key fields of the TestEntity1 entity
+ * All key fields of the TestEntity1 entity.
  */
 TestEntity1._keys = ['KeyPropertyString'];
 //# sourceMappingURL=TestEntity1.js.map

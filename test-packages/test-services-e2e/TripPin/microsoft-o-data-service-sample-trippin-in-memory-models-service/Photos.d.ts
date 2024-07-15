@@ -26,7 +26,7 @@ export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the Photos entity
+   * All key fields of the Photos entity.
    */
   static _keys: string[];
   /**

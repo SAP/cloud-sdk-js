@@ -25,7 +25,7 @@ TestEntity50Prop._entityName = 'TestEntity50Prop';
  */
 TestEntity50Prop._defaultBasePath = '/odata/test-service';
 /**
- * All key fields of the TestEntity50Prop entity
+ * All key fields of the TestEntity50Prop entity.
  */
 TestEntity50Prop._keys = ['KeyTestEntity50Prop'];
 //# sourceMappingURL=TestEntity50Prop.js.map

@@ -3,14 +3,12 @@ const jsdoc = require('eslint-plugin-jsdoc');
 const regex = require('eslint-plugin-regex');
 const unusedImports = require('eslint-plugin-unused-imports');
 const importeslint = require('eslint-plugin-import');
-const prettierRecommended = require('eslint-plugin-prettier/recommended');
 const tseslint = require('typescript-eslint');
 const eslint = require('@eslint/js');
 
 const flatConfig = [
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
-  prettierRecommended,
   {
     linterOptions: {
       reportUnusedDisableDirectives: 'warn'

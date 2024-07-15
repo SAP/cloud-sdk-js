@@ -35,7 +35,7 @@ export class TestEntityMultiLink<T extends DeSerializers = DefaultDeSerializers>
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntityMultiLink entity
+   * All key fields of the TestEntityMultiLink entity.
    */
   static _keys = ['KeyProperty'];
   /**

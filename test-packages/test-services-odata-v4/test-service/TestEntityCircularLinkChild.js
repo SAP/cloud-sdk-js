@@ -25,7 +25,7 @@ TestEntityCircularLinkChild._entityName = 'A_TestEntityCircularLinkChild';
  */
 TestEntityCircularLinkChild._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
- * All key fields of the TestEntityCircularLinkChild entity
+ * All key fields of the TestEntityCircularLinkChild entity.
  */
 TestEntityCircularLinkChild._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntityCircularLinkChild.js.map

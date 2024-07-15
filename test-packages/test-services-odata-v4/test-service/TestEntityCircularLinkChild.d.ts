@@ -32,7 +32,7 @@ export declare class TestEntityCircularLinkChild<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntityCircularLinkChild entity
+   * All key fields of the TestEntityCircularLinkChild entity.
    */
   static _keys: string[];
   /**

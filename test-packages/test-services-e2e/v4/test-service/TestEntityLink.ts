@@ -27,7 +27,7 @@ export class TestEntityLink<T extends DeSerializers = DefaultDeSerializers>
    */
   static override _defaultBasePath = '/odata/test-service';
   /**
-   * All key fields of the TestEntityLink entity
+   * All key fields of the TestEntityLink entity.
    */
   static _keys = ['KeyTestEntityLink', 'KeyToTestEntity'];
   /**

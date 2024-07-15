@@ -25,7 +25,7 @@ Airports._entityName = 'Airports';
  */
 Airports._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 /**
- * All key fields of the Airports entity
+ * All key fields of the Airports entity.
  */
 Airports._keys = ['IcaoCode'];
 //# sourceMappingURL=Airports.js.map

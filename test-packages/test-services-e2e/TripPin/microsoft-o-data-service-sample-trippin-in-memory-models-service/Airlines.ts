@@ -28,7 +28,7 @@ export class Airlines<T extends DeSerializers = DefaultDeSerializers>
   static override _defaultBasePath =
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
-   * All key fields of the Airlines entity
+   * All key fields of the Airlines entity.
    */
   static _keys = ['AirlineCode'];
   /**

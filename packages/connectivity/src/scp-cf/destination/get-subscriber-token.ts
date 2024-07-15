@@ -92,10 +92,7 @@ async function retrieveServiceToken(
   }
 }
 
-function getJwtForServiceToken(
-  iss?: string,
-  decodedUserJwt?: JwtPayload
-) {
+function getJwtForServiceToken(iss?: string, decodedUserJwt?: JwtPayload) {
   if (iss) {
     logger.debug(
       'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'

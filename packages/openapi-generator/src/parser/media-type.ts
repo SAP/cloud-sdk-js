@@ -14,7 +14,7 @@ const logger = createLogger('openapi-generator');
  * @returns The type name of the request body if there is one.
  * @internal
  */
-export function parseApplicationJsonMediaType(
+export function parseTopLevelMediaType(
   bodyOrResponseObject:
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
@@ -23,9 +23,17 @@ export function parseApplicationJsonMediaType(
   options: ParserOptions
 ): OpenApiSchema | undefined {
   if (bodyOrResponseObject) {
+    const allowedTypes = [
+      'application/json',
+      'application/merge-patch+json',
+      'application/json-patch+json',
+      'application/octet-stream',
+      'text/plain',
+      '*/*'
+    ];
     const mediaType = getMediaTypeObject(
       bodyOrResponseObject,
-      'application/json'
+      allowedTypes
     );
     const schema = mediaType?.schema;
     if (schema) {
@@ -47,26 +55,26 @@ export function parseMediaType(
 ): OpenApiSchema | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
-    const jsonMediaType = parseApplicationJsonMediaType(
+    const supportedMediaType = parseTopLevelMediaType(
       bodyOrResponseObject,
       refs,
       options
     );
-
-    if (!jsonMediaType) {
+    
+    if (!supportedMediaType) {
       logger.warn(
-        "Could not parse media type, because it is not 'application/json'. Generation will continue with 'any'. This might lead to errors at runtime."
+        "Could not parse media type, because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime."
       );
       return { type: 'any' };
     }
 
-    // There is only the application/json media type
+    // There is only one media type
     if (allMediaTypes.length === 1) {
-      return jsonMediaType;
+      return supportedMediaType;
     }
 
     return {
-      anyOf: [jsonMediaType, { type: 'any' }]
+      anyOf: [supportedMediaType, { type: 'any' }]
     };
   }
 }
@@ -93,11 +101,11 @@ function getMediaTypeObject(
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
     | undefined,
-  contentType: string
+  contentType: string[]
 ): OpenAPIV3.MediaTypeObject | undefined {
   if (bodyOrResponseObject?.content) {
     return Object.entries(bodyOrResponseObject.content).find(
-      ([key]) => key === contentType
+      ([key]) => contentType.includes(key)
     )?.[1];
   }
   return undefined;

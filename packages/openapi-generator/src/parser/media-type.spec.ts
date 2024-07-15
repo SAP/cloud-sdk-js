@@ -1,11 +1,11 @@
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
-import { parseApplicationJsonMediaType, parseMediaType } from './media-type';
+import { parseTopLevelMediaType, parseMediaType } from './media-type';
 
 const defaultOptions = { strictNaming: true };
-describe('parseApplicationJsonMediaType', () => {
-  it('returns undefined if there is no application/json media type', async () => {
+describe('parseTopLevelMediaType', () => {
+  it('returns undefined if the media type is not supported', async () => {
     expect(
-      parseApplicationJsonMediaType(
+      parseTopLevelMediaType(
         {
           content: { 'application/xml': { schema: { type: 'string' } } }
         },
@@ -15,9 +15,9 @@ describe('parseApplicationJsonMediaType', () => {
     ).toBeUndefined();
   });
 
-  it('returns parsed media type for application/json', async () => {
+  it('returns parsed media type for supported media type application/json', async () => {
     expect(
-      parseApplicationJsonMediaType(
+      parseTopLevelMediaType(
         {
           content: { 'application/json': { schema: { type: 'object' } } }
         },

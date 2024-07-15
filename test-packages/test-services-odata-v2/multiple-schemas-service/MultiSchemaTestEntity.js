@@ -25,7 +25,7 @@ MultiSchemaTestEntity._entityName = 'MultiSchemaTestEntity';
  */
 MultiSchemaTestEntity._defaultBasePath = '/';
 /**
- * All key fields of the MultiSchemaTestEntity entity
+ * All key fields of the MultiSchemaTestEntity entity.
  */
 MultiSchemaTestEntity._keys = ['KeyProperty'];
 //# sourceMappingURL=MultiSchemaTestEntity.js.map

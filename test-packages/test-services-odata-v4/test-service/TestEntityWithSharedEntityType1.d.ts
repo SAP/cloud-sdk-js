@@ -28,7 +28,7 @@ export declare class TestEntityWithSharedEntityType1<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntityWithSharedEntityType1 entity
+   * All key fields of the TestEntityWithSharedEntityType1 entity.
    */
   static _keys: string[];
   /**

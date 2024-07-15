@@ -29,7 +29,7 @@ export class TestEntityLvl2SingleLink<
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntityLvl2SingleLink entity
+   * All key fields of the TestEntityLvl2SingleLink entity.
    */
   static _keys = ['KeyProperty'];
   /**

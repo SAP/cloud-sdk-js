@@ -55,7 +55,7 @@ TestEntityWithMultipleKeys._entityName = 'TestEntityWithMultipleKeys';
  */
 TestEntityWithMultipleKeys._defaultBasePath = '/odata/test-service';
 /**
- * All key fields of the TestEntityWithMultipleKeys entity
+ * All key fields of the TestEntityWithMultipleKeys entity.
  */
 TestEntityWithMultipleKeys._keys = [
     'KeyTestEntityWithMultipleKeys',

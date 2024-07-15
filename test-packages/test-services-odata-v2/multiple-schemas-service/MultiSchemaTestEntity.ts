@@ -29,7 +29,7 @@ export class MultiSchemaTestEntity<
    */
   static override _defaultBasePath = '/';
   /**
-   * All key fields of the MultiSchemaTestEntity entity
+   * All key fields of the MultiSchemaTestEntity entity.
    */
   static _keys = ['KeyProperty'];
   /**

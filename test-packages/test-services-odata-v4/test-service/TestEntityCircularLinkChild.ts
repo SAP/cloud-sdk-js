@@ -33,7 +33,7 @@ export class TestEntityCircularLinkChild<
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntityCircularLinkChild entity
+   * All key fields of the TestEntityCircularLinkChild entity.
    */
   static _keys = ['KeyProperty'];
   /**

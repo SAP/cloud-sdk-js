@@ -25,7 +25,7 @@ CaseTest._entityName = 'A_CaseTest';
  */
 CaseTest._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
- * All key fields of the CaseTest entity
+ * All key fields of the CaseTest entity.
  */
 CaseTest._keys = ['KeyPropertyString'];
 //# sourceMappingURL=CaseTest.js.map

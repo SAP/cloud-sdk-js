@@ -29,7 +29,7 @@ export class TestEntityWithNoKeys<
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntityWithNoKeys entity
+   * All key fields of the TestEntityWithNoKeys entity.
    */
   static _keys = [];
   /**

@@ -34,7 +34,7 @@ export class TestEntityWithMultipleKeys<
    */
   static override _defaultBasePath = '/odata/test-service';
   /**
-   * All key fields of the TestEntityWithMultipleKeys entity
+   * All key fields of the TestEntityWithMultipleKeys entity.
    */
   static _keys = [
     'KeyTestEntityWithMultipleKeys',

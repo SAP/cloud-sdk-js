@@ -28,7 +28,7 @@ export declare class TestEntityEndsWith<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntityEndsWith entity
+   * All key fields of the TestEntityEndsWith entity.
    */
   static _keys: string[];
   /**

@@ -28,7 +28,7 @@ export declare class TestEntityLvl3MultiLink<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntityLvl3MultiLink entity
+   * All key fields of the TestEntityLvl3MultiLink entity.
    */
   static _keys: string[];
   /**

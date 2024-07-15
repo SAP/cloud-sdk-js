@@ -28,7 +28,7 @@ export declare class TestEntityWithNoKeys<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntityWithNoKeys entity
+   * All key fields of the TestEntityWithNoKeys entity.
    */
   static _keys: never[];
   /**

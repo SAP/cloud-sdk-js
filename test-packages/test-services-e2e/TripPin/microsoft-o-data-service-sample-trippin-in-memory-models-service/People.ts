@@ -31,7 +31,7 @@ export class People<T extends DeSerializers = DefaultDeSerializers>
   static override _defaultBasePath =
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
-   * All key fields of the People entity
+   * All key fields of the People entity.
    */
   static _keys = ['UserName'];
   /**

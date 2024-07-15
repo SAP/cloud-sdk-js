@@ -25,7 +25,7 @@ Airlines._entityName = 'Airlines';
  */
 Airlines._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 /**
- * All key fields of the Airlines entity
+ * All key fields of the Airlines entity.
  */
 Airlines._keys = ['AirlineCode'];
 //# sourceMappingURL=Airlines.js.map

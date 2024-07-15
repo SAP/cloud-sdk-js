@@ -10,8 +10,8 @@ import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
 import { decodeJwt, getSubdomain, getTenantId } from './jwt';
 
 interface XsuaaParameters {
-  subdomain: string | undefined;
-  zoneId: string | undefined;
+  subdomain?: string;
+  zoneId?: string;
   serviceCredentials: ServiceCredentials;
   userJwt?: string;
 }

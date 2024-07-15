@@ -757,10 +757,10 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.57.0.tgz#a5417ae8427873f1dd08b70b3574b453e67b5f7f"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
-"@eslint/js@^9.6.0":
-  version "9.6.0"
-  resolved "https://registry.npmjs.org/@eslint/js/-/js-9.6.0.tgz#5b0cb058cc13d9c92d4e561d3538807fa5127c95"
-  integrity sha512-D9B0/3vNg44ZeWbYMpBoXqNP4j6eQD5vNwIlGAuFRRzK/WtT/jvDQW3Bi9kkf3PMDMlM7Yi+73VLUsn5bJcl8A==
+"@eslint/js@^9.7.0":
+  version "9.7.0"
+  resolved "https://registry.npmjs.org/@eslint/js/-/js-9.7.0.tgz#b712d802582f02b11cfdf83a85040a296afec3f0"
+  integrity sha512-ChuWDQenef8OSFnvuxv0TCVxEwmu3+hPNKvM9B34qpM0rDRbjL8t5QkQeHHeAfsKQjuH9wS82WeCi1J/owatng==
 
 "@exodus/schemasafe@^1.0.0-rc.2":
   version "1.3.0"
@@ -1379,7 +1379,7 @@
     "@sap/hdi-deploy" "^4"
     axios "^1"
 
-"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^7", "@sap/cds@^7.9.3":
+"@sap/cds@>=5.6.0", "@sap/cds@^6.1.1", "@sap/cds@^7", "@sap/cds@^8.0.3":
   version "6.8.4"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.8.4.tgz#c73adb8e61f9efb4eff705f125a717f214f8e49f"
   integrity sha512-CTf6Y732ABTIAQPwtFZpfLUzZgQLOs9ZqBIrHhFJRx3VQvopfBZlbWAhujz092xETM7u4msZudoUprkmRo0+hg==
@@ -7649,10 +7649,10 @@ prettier@^2.7.1:
   resolved "https://registry.npmjs.org/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
-prettier@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-3.3.2.tgz#03ff86dc7c835f2d2559ee76876a3914cec4a90a"
-  integrity sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==
+prettier@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-3.3.3.tgz#30c54fe0be0d8d12e6ae61dbb10109ea00d53105"
+  integrity sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==
 
 pretty-format@^29.0.0, pretty-format@^29.7.0:
   version "29.7.0"

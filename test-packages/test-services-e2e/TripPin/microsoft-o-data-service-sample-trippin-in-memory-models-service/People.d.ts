@@ -29,7 +29,7 @@ export declare class People<T extends DeSerializers = DefaultDeSerializers>
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the People entity
+   * All key fields of the People entity.
    */
   static _keys: string[];
   /**

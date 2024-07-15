@@ -28,7 +28,7 @@ export declare class MultiSchemaTestEntity<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the MultiSchemaTestEntity entity
+   * All key fields of the MultiSchemaTestEntity entity.
    */
   static _keys: string[];
   /**

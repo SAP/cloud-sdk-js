@@ -26,7 +26,7 @@ export declare class Airlines<T extends DeSerializers = DefaultDeSerializers>
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the Airlines entity
+   * All key fields of the Airlines entity.
    */
   static _keys: string[];
   /**

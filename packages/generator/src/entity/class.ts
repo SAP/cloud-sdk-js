@@ -94,7 +94,7 @@ function keys(entity: VdmEntity): PropertyDeclarationStructure {
       .map(key => `'${key.originalName}'`)
       .join(',')}]`,
     docs: [
-      addLeadingNewline(`All key fields of the ${entity.className} entity`)
+      addLeadingNewline(`All key fields of the ${entity.className} entity.`)
     ]
   };
 }

@@ -26,7 +26,7 @@ export declare class Casetest_1<T extends DeSerializers = DefaultDeSerializers>
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the Casetest_1 entity
+   * All key fields of the Casetest_1 entity.
    */
   static _keys: string[];
   /**

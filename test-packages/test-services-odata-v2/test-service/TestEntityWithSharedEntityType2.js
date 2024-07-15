@@ -25,7 +25,7 @@ TestEntityWithSharedEntityType2._entityName = 'A_TestEntityWithSharedEntityType2
  */
 TestEntityWithSharedEntityType2._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
- * All key fields of the TestEntityWithSharedEntityType2 entity
+ * All key fields of the TestEntityWithSharedEntityType2 entity.
  */
 TestEntityWithSharedEntityType2._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntityWithSharedEntityType2.js.map

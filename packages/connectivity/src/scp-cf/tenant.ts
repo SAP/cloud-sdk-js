@@ -1,5 +1,5 @@
 import { JwtPayload } from './jsonwebtoken-type';
-import { decodeJwt, tenantId } from './jwt';
+import { decodeJwt, getTenantId } from './jwt';
 import { getIssuerSubdomain } from './subdomain-replacer';
 
 /**
@@ -12,7 +12,7 @@ export function getTenantIdWithFallback(
   token: string | JwtPayload | undefined
 ): string | undefined {
   const decodedJwt = token ? decodeJwt(token) : {};
-  return tenantId(decodedJwt) || getIssuerSubdomain(decodedJwt) || undefined;
+  return getTenantId(decodedJwt) || getIssuerSubdomain(decodedJwt) || undefined;
 }
 
 /**
@@ -26,5 +26,5 @@ export function isIdenticalTenant(
   userTokenPayload: JwtPayload,
   providerTokenPayload: JwtPayload
 ): boolean {
-  return tenantId(userTokenPayload) === tenantId(providerTokenPayload);
+  return getTenantId(userTokenPayload) === getTenantId(providerTokenPayload);
 }

@@ -27,7 +27,7 @@ export class TestEntity50Prop<T extends DeSerializers = DefaultDeSerializers>
    */
   static override _defaultBasePath = '/odata/test-service';
   /**
-   * All key fields of the TestEntity50Prop entity
+   * All key fields of the TestEntity50Prop entity.
    */
   static _keys = ['KeyTestEntity50Prop'];
   /**

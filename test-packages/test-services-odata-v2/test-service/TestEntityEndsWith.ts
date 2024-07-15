@@ -27,7 +27,7 @@ export class TestEntityEndsWith<T extends DeSerializers = DefaultDeSerializers>
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntityEndsWith entity
+   * All key fields of the TestEntityEndsWith entity.
    */
   static _keys = ['KeyProperty'];
   /**

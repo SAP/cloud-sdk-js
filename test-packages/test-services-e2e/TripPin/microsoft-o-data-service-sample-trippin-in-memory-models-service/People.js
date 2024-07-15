@@ -25,7 +25,7 @@ People._entityName = 'People';
  */
 People._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 /**
- * All key fields of the People entity
+ * All key fields of the People entity.
  */
 People._keys = ['UserName'];
 //# sourceMappingURL=People.js.map

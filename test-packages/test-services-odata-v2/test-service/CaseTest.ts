@@ -27,7 +27,7 @@ export class CaseTest<T extends DeSerializers = DefaultDeSerializers>
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the CaseTest entity
+   * All key fields of the CaseTest entity.
    */
   static _keys = ['KeyPropertyString'];
   /**

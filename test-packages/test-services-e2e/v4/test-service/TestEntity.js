@@ -65,7 +65,7 @@ TestEntity._entityName = 'TestEntity';
  */
 TestEntity._defaultBasePath = '/odata/test-service';
 /**
- * All key fields of the TestEntity entity
+ * All key fields of the TestEntity entity.
  */
 TestEntity._keys = ['KeyTestEntity'];
 //# sourceMappingURL=TestEntity.js.map

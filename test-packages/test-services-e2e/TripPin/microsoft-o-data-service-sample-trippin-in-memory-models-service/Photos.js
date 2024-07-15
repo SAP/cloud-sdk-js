@@ -25,7 +25,7 @@ Photos._entityName = 'Photos';
  */
 Photos._defaultBasePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 /**
- * All key fields of the Photos entity
+ * All key fields of the Photos entity.
  */
 Photos._keys = ['Id'];
 //# sourceMappingURL=Photos.js.map

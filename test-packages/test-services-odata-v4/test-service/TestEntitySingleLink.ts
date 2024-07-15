@@ -37,7 +37,7 @@ export class TestEntitySingleLink<
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntitySingleLink entity
+   * All key fields of the TestEntitySingleLink entity.
    */
   static _keys = ['KeyProperty'];
   /**

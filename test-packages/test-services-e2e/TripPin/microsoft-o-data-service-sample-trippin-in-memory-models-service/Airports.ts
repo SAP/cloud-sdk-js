@@ -29,7 +29,7 @@ export class Airports<T extends DeSerializers = DefaultDeSerializers>
   static override _defaultBasePath =
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
-   * All key fields of the Airports entity
+   * All key fields of the Airports entity.
    */
   static _keys = ['IcaoCode'];
   /**

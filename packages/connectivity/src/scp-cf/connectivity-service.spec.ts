@@ -6,7 +6,9 @@ import {
 } from '../../../../test-resources/test/test-util/environment-mocks';
 import {
   providerServiceToken,
-  providerUserToken
+  providerUserToken,
+  subscriberServiceToken,
+  subscriberUserToken
 } from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../test-resources/test/test-util/token-accessor-mocks';
 import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
@@ -169,6 +171,37 @@ describe('connectivity-service', () => {
       };
 
       const withProxy = await addProxyConfigurationOnPrem(input);
+      expect(withProxy).toEqual(expected);
+    });
+
+    it('adds a proxy configuration containing a subscriberServiceToken', async () => {
+      mockServiceBindings();
+      mockServiceToken();
+
+      const input: Destination = {
+        url: 'https://example.com',
+        proxyType: 'OnPremise',
+        type: 'MAIL'
+      };
+
+      const expected: Destination = {
+        url: 'https://example.com',
+        proxyType: 'OnPremise',
+        type: 'MAIL',
+        proxyConfiguration: {
+          ...connectivitySocksProxyConfigMock,
+          'proxy-authorization': subscriberServiceToken
+        }
+      };
+
+      const requiredSubscriberToken = getRequiredSubscriberToken({
+        userJwt: getJwtPair(subscriberUserToken)
+      });
+
+      const withProxy = await addProxyConfigurationOnPrem(
+        input,
+        requiredSubscriberToken
+      );
       expect(withProxy).toEqual(expected);
     });
   });

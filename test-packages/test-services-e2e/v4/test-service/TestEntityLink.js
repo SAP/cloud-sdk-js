@@ -25,7 +25,7 @@ TestEntityLink._entityName = 'TestEntityLink';
  */
 TestEntityLink._defaultBasePath = '/odata/test-service';
 /**
- * All key fields of the TestEntityLink entity
+ * All key fields of the TestEntityLink entity.
  */
 TestEntityLink._keys = ['KeyTestEntityLink', 'KeyToTestEntity'];
 //# sourceMappingURL=TestEntityLink.js.map

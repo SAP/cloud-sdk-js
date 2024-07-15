@@ -28,7 +28,7 @@ export declare class TestEntityLvl2SingleLink<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntityLvl2SingleLink entity
+   * All key fields of the TestEntityLvl2SingleLink entity.
    */
   static _keys: string[];
   /**

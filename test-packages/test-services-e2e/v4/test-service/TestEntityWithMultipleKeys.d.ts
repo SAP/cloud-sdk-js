@@ -29,7 +29,7 @@ export declare class TestEntityWithMultipleKeys<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntityWithMultipleKeys entity
+   * All key fields of the TestEntityWithMultipleKeys entity.
    */
   static _keys: string[];
   /**

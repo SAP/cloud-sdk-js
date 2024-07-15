@@ -23,7 +23,7 @@ export function batchFunction(
             {
               name: 'requests',
               type: 'MethodRequestBuilderBase<ODataRequestConfig>[]',
-              description: 'The requests of the batch'
+              description: 'The requests of the batch.'
             }
           ],
           returns: {
@@ -82,7 +82,7 @@ export function changesetFunction(
             {
               name: 'requests',
               type: `Write${service.className}RequestBuilder[]`,
-              description: 'The requests of the change set'
+              description: 'The requests of the change set.'
             }
           ],
           returns: {

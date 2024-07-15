@@ -29,7 +29,7 @@ export class TestEntityWithSharedEntityType2<
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntityWithSharedEntityType2 entity
+   * All key fields of the TestEntityWithSharedEntityType2 entity.
    */
   static _keys = ['KeyProperty'];
   /**

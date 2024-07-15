@@ -30,7 +30,7 @@ export class TestEntityWithEnumKey<
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntityWithEnumKey entity
+   * All key fields of the TestEntityWithEnumKey entity.
    */
   static _keys = ['KeyPropertyEnum1'];
   /**

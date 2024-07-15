@@ -86,15 +86,15 @@ async function retrieveServiceToken(
       );
     } catch (err) {
       logger.warn(
-        'Failed to fetch subscriber service token for destination. This is only relevant if you are using subscriber destinations.'
+        `Failed to fetch subscriber service token for destination. This is only relevant if you are using subscriber destinations. Failure caused by: ${err.message}`
       );
     }
   }
 }
 
 function getJwtForServiceToken(
-  iss: string | undefined,
-  decodedUserJwt: JwtPayload | undefined
+  iss?: string,
+  decodedUserJwt?: JwtPayload
 ) {
   if (iss) {
     logger.debug(

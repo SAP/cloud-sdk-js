@@ -233,7 +233,6 @@ export async function fetchCertificate(
 function getTenantIdFromTokens(token: AuthAndExchangeTokens | string): string {
   let tenant: string | undefined;
   if (typeof token === 'string') {
-    // TODO: subdomain !== tenantID, the fallback is probably incorrect and should be removed or replaced with subdomain explicitly (in middlewarecontext)
     tenant = getTenantId(token);
   } else {
     tenant =

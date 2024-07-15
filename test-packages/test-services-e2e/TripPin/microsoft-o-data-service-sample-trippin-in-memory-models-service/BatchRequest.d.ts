@@ -24,7 +24,7 @@ import {
 } from './index';
 /**
  * Batch builder for operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.
- * @param requests The requests of the batch
+ * @param requests The requests of the batch.
  * @returns A request builder for batch.
  */
 export declare function batch<DeSerializersT extends DeSerializers>(
@@ -41,7 +41,7 @@ export declare function batch<DeSerializersT extends DeSerializers>(
 ): ODataBatchRequestBuilder<DeSerializersT>;
 /**
  * Change set constructor consists of write operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.
- * @param requests The requests of the change set
+ * @param requests The requests of the change set.
  * @returns A change set for batch.
  */
 export declare function changeset<DeSerializersT extends DeSerializers>(

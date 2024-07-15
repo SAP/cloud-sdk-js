@@ -25,7 +25,7 @@ TestEntityWithEnumKey._entityName = 'A_TestEntityWithEnumKey';
  */
 TestEntityWithEnumKey._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
- * All key fields of the TestEntityWithEnumKey entity
+ * All key fields of the TestEntityWithEnumKey entity.
  */
 TestEntityWithEnumKey._keys = ['KeyPropertyEnum1'];
 //# sourceMappingURL=TestEntityWithEnumKey.js.map

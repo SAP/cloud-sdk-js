@@ -29,7 +29,7 @@ export class TestEntity3<T extends DeSerializers = DefaultDeSerializers>
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntity3 entity
+   * All key fields of the TestEntity3 entity.
    */
   static _keys = ['KeyPropertyString'];
   /**

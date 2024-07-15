@@ -25,7 +25,7 @@ TestEntityLvl2SingleLink._entityName = 'A_TestEntityLvl2SingleLink';
  */
 TestEntityLvl2SingleLink._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
- * All key fields of the TestEntityLvl2SingleLink entity
+ * All key fields of the TestEntityLvl2SingleLink entity.
  */
 TestEntityLvl2SingleLink._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntityLvl2SingleLink.js.map

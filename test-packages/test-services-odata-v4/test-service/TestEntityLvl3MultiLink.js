@@ -25,7 +25,7 @@ TestEntityLvl3MultiLink._entityName = 'A_TestEntityLvl3MultiLink';
  */
 TestEntityLvl3MultiLink._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
- * All key fields of the TestEntityLvl3MultiLink entity
+ * All key fields of the TestEntityLvl3MultiLink entity.
  */
 TestEntityLvl3MultiLink._keys = ['KeyProperty'];
 //# sourceMappingURL=TestEntityLvl3MultiLink.js.map

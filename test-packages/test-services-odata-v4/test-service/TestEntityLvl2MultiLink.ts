@@ -33,7 +33,7 @@ export class TestEntityLvl2MultiLink<
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntityLvl2MultiLink entity
+   * All key fields of the TestEntityLvl2MultiLink entity.
    */
   static _keys = ['KeyProperty'];
   /**

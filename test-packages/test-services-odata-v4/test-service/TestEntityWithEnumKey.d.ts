@@ -28,7 +28,7 @@ export declare class TestEntityWithEnumKey<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntityWithEnumKey entity
+   * All key fields of the TestEntityWithEnumKey entity.
    */
   static _keys: string[];
   /**

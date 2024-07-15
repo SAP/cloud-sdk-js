@@ -28,7 +28,7 @@ export declare class TestEntity50Prop<
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntity50Prop entity
+   * All key fields of the TestEntity50Prop entity.
    */
   static _keys: string[];
   /**

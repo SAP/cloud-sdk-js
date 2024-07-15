@@ -28,7 +28,7 @@ export declare class TestEntity1<T extends DeSerializers = DefaultDeSerializers>
    */
   static _defaultBasePath: string;
   /**
-   * All key fields of the TestEntity1 entity
+   * All key fields of the TestEntity1 entity.
    */
   static _keys: string[];
   /**

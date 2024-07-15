@@ -25,7 +25,7 @@ TestEntityWithNoKeys._entityName = 'A_TestEntityWithNoKeys';
  */
 TestEntityWithNoKeys._defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
 /**
- * All key fields of the TestEntityWithNoKeys entity
+ * All key fields of the TestEntityWithNoKeys entity.
  */
 TestEntityWithNoKeys._keys = [];
 //# sourceMappingURL=TestEntityWithNoKeys.js.map

@@ -29,7 +29,7 @@ export class TestEntityEndsWithSomethingElse<
    */
   static override _defaultBasePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
-   * All key fields of the TestEntityEndsWithSomethingElse entity
+   * All key fields of the TestEntityEndsWithSomethingElse entity.
    */
   static _keys = ['KeyProperty'];
   /**

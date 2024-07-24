@@ -23,14 +23,7 @@ export function parseTopLevelMediaType(
   options: ParserOptions
 ): OpenApiSchema | undefined {
   if (bodyOrResponseObject) {
-    const allowedTypes = [
-      'application/json',
-      'application/merge-patch+json',
-      'application/json-patch+json',
-      'application/octet-stream',
-      'text/plain',
-      '*/*'
-    ];
+    const allowedTypes = ['application/json', 'application/merge-patch+json'];
     const mediaType = getMediaTypeObject(bodyOrResponseObject, allowedTypes);
     const schema = mediaType?.schema;
     if (schema) {

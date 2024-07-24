@@ -26,6 +26,20 @@ describe('parseTopLevelMediaType', () => {
       )
     ).toEqual(emptyObjectSchema);
   });
+
+  it('returns parsed media type for supported media type application/merge-patch+json', async () => {
+    expect(
+      parseTopLevelMediaType(
+        {
+          content: {
+            'application/merge-patch+json': { schema: { type: 'object' } }
+          }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual(emptyObjectSchema);
+  });
 });
 
 describe('parseMediaType', () => {
@@ -52,6 +66,20 @@ describe('parseMediaType', () => {
       parseMediaType(
         {
           content: { 'application/json': { schema: { type: 'object' } } }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual(emptyObjectSchema);
+  });
+
+  it('returns parsed media type if there is only application/merge-patch+json', async () => {
+    expect(
+      parseMediaType(
+        {
+          content: {
+            'application/merge-patch+json': { schema: { type: 'object' } }
+          }
         },
         await createTestRefs(),
         defaultOptions

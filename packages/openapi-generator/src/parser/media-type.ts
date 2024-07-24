@@ -67,7 +67,7 @@ export function parseMediaType(
     const allSupported = allMediaTypes.every(type =>
       supportedTypes.includes(type)
     );
-    
+
     if (allSupported) {
       return jsonMediaType;
     }

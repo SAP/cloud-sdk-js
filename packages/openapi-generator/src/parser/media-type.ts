@@ -53,7 +53,7 @@ export function parseMediaType(
 
     if (!jsonMediaType) {
       logger.warn(
-        "Could not parse media type, because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime."
+        `Could not parse '${allMediaTypes}', because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime.`
       );
       return { type: 'any' };
     }
@@ -67,7 +67,7 @@ export function parseMediaType(
     const allSupported = allMediaTypes.every(type =>
       supportedTypes.includes(type)
     );
-
+    
     if (allSupported) {
       return jsonMediaType;
     }

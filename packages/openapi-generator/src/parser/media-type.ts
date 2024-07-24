@@ -14,7 +14,7 @@ const logger = createLogger('openapi-generator');
  * @returns The type name of the request body if there is one.
  * @internal
  */
-export function parseTopLevelMediaType(
+export function parseApplicationJsonMediaType(
   bodyOrResponseObject:
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
@@ -45,13 +45,13 @@ export function parseMediaType(
 ): OpenApiSchema | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
-    const supportedMediaType = parseTopLevelMediaType(
+    const jsonMediaType = parseApplicationJsonMediaType(
       bodyOrResponseObject,
       refs,
       options
     );
 
-    if (!supportedMediaType) {
+    if (!jsonMediaType) {
       logger.warn(
         "Could not parse media type, because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime."
       );
@@ -60,11 +60,11 @@ export function parseMediaType(
 
     // There is only one media type
     if (allMediaTypes.length === 1) {
-      return supportedMediaType;
+      return jsonMediaType;
     }
 
     return {
-      anyOf: [supportedMediaType, { type: 'any' }]
+      anyOf: [jsonMediaType, { type: 'any' }]
     };
   }
 }

@@ -87,6 +87,21 @@ describe('parseMediaType', () => {
     ).toEqual(emptyObjectSchema);
   });
 
+  it('returns parsed media type if there is both application/json and application/merge-patch+json', async () => {
+    expect(
+      parseMediaType(
+        {
+          content: {
+            'application/json': { schema: { type: 'object' } },
+            'application/merge-patch+json': { schema: { type: 'object' } }
+          }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual(emptyObjectSchema);
+  });
+
   it('returns anyOf schema if there are other schemas and application/json', async () => {
     expect(
       parseMediaType(

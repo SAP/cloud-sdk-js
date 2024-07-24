@@ -63,6 +63,15 @@ export function parseMediaType(
       return jsonMediaType;
     }
 
+    const supportedTypes = ['application/json', 'application/merge-patch+json'];
+    const allSupported = allMediaTypes.every(type =>
+      supportedTypes.includes(type)
+    );
+
+    if (allSupported) {
+      return jsonMediaType;
+    }
+
     return {
       anyOf: [jsonMediaType, { type: 'any' }]
     };

@@ -6,7 +6,10 @@ import { parseSchema } from './schema';
 import { ParserOptions } from './options';
 
 const logger = createLogger('openapi-generator');
-const allowedTypes = ['application/json', 'application/merge-patch+json'];
+const allowedJsonMediaTypes = [
+  'application/json',
+  'application/merge-patch+json'
+];
 /**
  * Parse the type of a resolved request body or response object.
  * @param bodyOrResponseObject - The request body or response object to parse the type from.
@@ -24,7 +27,10 @@ export function parseApplicationJsonMediaType(
   options: ParserOptions
 ): OpenApiSchema | undefined {
   if (bodyOrResponseObject) {
-    const mediaType = getMediaTypeObject(bodyOrResponseObject, allowedTypes);
+    const mediaType = getMediaTypeObject(
+      bodyOrResponseObject,
+      allowedJsonMediaTypes
+    );
     const schema = mediaType?.schema;
     if (schema) {
       return parseSchema(schema, refs, options);
@@ -63,7 +69,7 @@ export function parseMediaType(
       return jsonMediaType;
     }
 
-    return allMediaTypes.every(type => allowedTypes.includes(type))
+    return allMediaTypes.every(type => allowedJsonMediaTypes.includes(type))
       ? jsonMediaType
       : { anyOf: [jsonMediaType, { type: 'any' }] };
   }

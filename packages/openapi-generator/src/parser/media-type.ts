@@ -6,6 +6,10 @@ import { parseSchema } from './schema';
 import { ParserOptions } from './options';
 
 const logger = createLogger('openapi-generator');
+const allowedJsonMediaTypes = [
+  'application/json',
+  'application/merge-patch+json'
+];
 /**
  * Parse the type of a resolved request body or response object.
  * @param bodyOrResponseObject - The request body or response object to parse the type from.
@@ -25,7 +29,7 @@ export function parseApplicationJsonMediaType(
   if (bodyOrResponseObject) {
     const mediaType = getMediaTypeObject(
       bodyOrResponseObject,
-      'application/json'
+      allowedJsonMediaTypes
     );
     const schema = mediaType?.schema;
     if (schema) {
@@ -55,19 +59,19 @@ export function parseMediaType(
 
     if (!jsonMediaType) {
       logger.warn(
-        "Could not parse media type, because it is not 'application/json'. Generation will continue with 'any'. This might lead to errors at runtime."
+        `Could not parse '${allMediaTypes}', because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime.`
       );
       return { type: 'any' };
     }
 
-    // There is only the application/json media type
+    // There is only one media type
     if (allMediaTypes.length === 1) {
       return jsonMediaType;
     }
 
-    return {
-      anyOf: [jsonMediaType, { type: 'any' }]
-    };
+    return allMediaTypes.every(type => allowedJsonMediaTypes.includes(type))
+      ? jsonMediaType
+      : { anyOf: [jsonMediaType, { type: 'any' }] };
   }
 }
 /**
@@ -93,11 +97,11 @@ function getMediaTypeObject(
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
     | undefined,
-  contentType: string
+  contentType: string[]
 ): OpenAPIV3.MediaTypeObject | undefined {
   if (bodyOrResponseObject?.content) {
-    return Object.entries(bodyOrResponseObject.content).find(
-      ([key]) => key === contentType
+    return Object.entries(bodyOrResponseObject.content).find(([key]) =>
+      contentType.includes(key)
     )?.[1];
   }
   return undefined;

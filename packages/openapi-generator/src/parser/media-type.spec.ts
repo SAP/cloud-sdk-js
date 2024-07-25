@@ -3,7 +3,7 @@ import { parseApplicationJsonMediaType, parseMediaType } from './media-type';
 
 const defaultOptions = { strictNaming: true };
 describe('parseApplicationJsonMediaType', () => {
-  it('returns undefined if there is no application/json media type', async () => {
+  it('returns undefined if the media type is not supported', async () => {
     expect(
       parseApplicationJsonMediaType(
         {
@@ -15,11 +15,25 @@ describe('parseApplicationJsonMediaType', () => {
     ).toBeUndefined();
   });
 
-  it('returns parsed media type for application/json', async () => {
+  it('returns parsed media type for supported media type application/json', async () => {
     expect(
       parseApplicationJsonMediaType(
         {
           content: { 'application/json': { schema: { type: 'object' } } }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual(emptyObjectSchema);
+  });
+
+  it('returns parsed media type for supported media type application/merge-patch+json', async () => {
+    expect(
+      parseApplicationJsonMediaType(
+        {
+          content: {
+            'application/merge-patch+json': { schema: { type: 'object' } }
+          }
         },
         await createTestRefs(),
         defaultOptions
@@ -52,6 +66,35 @@ describe('parseMediaType', () => {
       parseMediaType(
         {
           content: { 'application/json': { schema: { type: 'object' } } }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual(emptyObjectSchema);
+  });
+
+  it('returns parsed media type if there is only application/merge-patch+json', async () => {
+    expect(
+      parseMediaType(
+        {
+          content: {
+            'application/merge-patch+json': { schema: { type: 'object' } }
+          }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual(emptyObjectSchema);
+  });
+
+  it('returns parsed media type if there is both application/json and application/merge-patch+json', async () => {
+    expect(
+      parseMediaType(
+        {
+          content: {
+            'application/json': { schema: { type: 'object' } },
+            'application/merge-patch+json': { schema: { type: 'object' } }
+          }
         },
         await createTestRefs(),
         defaultOptions

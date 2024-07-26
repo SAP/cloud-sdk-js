@@ -1441,10 +1441,10 @@
     node-cache "^5.1.0"
     verror "1.10.1"
 
-"@sap/xssec@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.0.tgz#17bc031707203814b5de80d247f533fe9727d580"
-  integrity sha512-TAKTOTjGVcI9z5l0I7AM90lxm6pzLXm+QAPI0nh82JeLIJHa7ONjzpTjdQ7pQHXxP85wM3sr22hJ+bsJu21NBg==
+"@sap/xssec@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.1.tgz#9fb7b59a1ba8c23a18858a967bc6933955885609"
+  integrity sha512-NEZ28d6Mns5AMTSB82I1iB5ESgZRJPgo33Z/paX3vpJuYji7aK7obWR9FeVMu1OYNAeXhg+44VLdw/AAc3BiJg==
   dependencies:
     debug "^4.3.4"
     jwt-decode "^4"
@@ -8945,9 +8945,9 @@ tar-stream@^3.1.5, tar-stream@^3.1.6:
     streamx "^2.15.0"
 
 tar@>=6.1.2, tar@^6.0.2, tar@^6.1.11, tar@^6.1.2, tar@^6.2.1:
-  version "7.4.1"
-  resolved "https://registry.npmjs.org/tar/-/tar-7.4.1.tgz#e74de34641cc0cb6a1d6a200085a3fa55de64843"
-  integrity sha512-dDJzpQf7Nud96mCs3wtw+XUiWGpi9WHxytSusrg0lYlj/Kr11DnB5hfw5bNDQNzx52JJ2Vy+7l8AFivp6H7ETA==
+  version "7.4.2"
+  resolved "https://registry.npmjs.org/tar/-/tar-7.4.2.tgz#244859617851fc6dd5413c67b195585d25a7a2f4"
+  integrity sha512-pP4ToLATHpXOrbxOZudW6rnfyPWJZoyERNrpTpQEtW6LkvpXw+WDnpj2GBQX9tyQ6teUyPESyyiOCFgp6HnGdw==
   dependencies:
     "@isaacs/fs-minipass" "^4.0.0"
     chownr "^3.0.0"

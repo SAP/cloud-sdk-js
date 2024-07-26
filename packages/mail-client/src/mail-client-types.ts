@@ -119,7 +119,7 @@ export interface MailConfig {
   /**
    * E-mail address that will appear in the "Reply-To:" field.
    */
-  replyTo?: string | Address | undefined;
+  replyTo?: string | Address | (string | Address)[] | undefined;
   /**
    * Subject of the e-mail.
    */

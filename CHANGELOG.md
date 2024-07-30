@@ -28,6 +28,28 @@
 
 - 
 
+# 3.17.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.17.0
+
+## New Functionalities
+
+- [connectivity] Add `getTenantId()` function for convenience. (dbad36f)
+- [mail-client] Add support for multi-tenancy for on-premise mail destinations. (68a07d6)
+
+## Improvements
+
+- [connectivity] Use tenant ID instead of tenant-aware authentication URL for the client credentials cache. (54a46a3)
+- [connectivity] Retrieve service token for OAuth2ClientCredentials authentication only once. (99b5009)
+- [openapi-generator] Generated OpenAPI clients support `application/merge-patch+json` media type for patch requests. (e9a243a)
+
+## Fixed Issues
+
+- [connectivity] Fix token fetching for mail multi-tenancy scenarios.
+  - @sap-cloud-sdk/resilience@3.17.0
+  - @sap-cloud-sdk/util@3.17.0 (86f4158)
+- [mail-client] Fix token fetching for mail multi-tenancy scenarios. (86f4158)
+
 # 3.16.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.16.0

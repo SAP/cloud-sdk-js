@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 3.17.0
+
+### Minor Changes
+
+- e9a243a: [Improvement] Generated OpenAPI clients support `application/merge-patch+json` media type for patch requests.
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.17.0
+- @sap-cloud-sdk/openapi@3.17.0
+- @sap-cloud-sdk/util@3.17.0
+
 ## 3.16.0
 
 ### Minor Changes

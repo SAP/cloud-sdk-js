@@ -1,5 +1,18 @@
 # @sap-cloud-sdk/openapi
 
+## 3.17.0
+
+### Patch Changes
+
+- Updated dependencies [54a46a3]
+- Updated dependencies [86f4158]
+- Updated dependencies [dbad36f]
+- Updated dependencies [99b5009]
+  - @sap-cloud-sdk/connectivity@3.17.0
+  - @sap-cloud-sdk/http-client@3.17.0
+  - @sap-cloud-sdk/resilience@3.17.0
+  - @sap-cloud-sdk/util@3.17.0
+
 ## 3.16.0
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.17.0
+
+### Minor Changes
+
+- 54a46a3: [Improvement] Use tenant ID instead of tenant-aware authentication URL for the client credentials cache.
+- dbad36f: [New Functionality] Add `getTenantId()` function for convenience.
+- 99b5009: [Improvement] Retrieve service token for OAuth2ClientCredentials authentication only once.
+
+### Patch Changes
+
+- 86f4158: [Fixed Issue] Fix token fetching for mail multi-tenancy scenarios.
+  - @sap-cloud-sdk/resilience@3.17.0
+  - @sap-cloud-sdk/util@3.17.0
+
 ## 3.16.0
 
 ### Minor Changes

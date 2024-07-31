@@ -32,10 +32,7 @@ Check our [API documentation](https://sap.github.io/cloud-sdk/api/latest/) and [
   - [@sap-cloud-sdk/test-util](#sap-cloud-sdktest-util)
 - [How to switch to the Open Source version of the SAP Cloud SDK](#how-to-switch-to-the-open-source-version-of-the-sap-cloud-sdk)
 - [Related Projects](#related-projects)
-  - [SAP Cloud SDK CLI](#sap-cloud-sdk-cli)
   - [SAP Cloud SDK Sample Projects](#sap-cloud-sdk-sample-projects)
-  - [Virtual Data Model (VDM)](#virtual-data-model-vdm)
-  - [Project "Piper"](#project-piper)
 - [Feedback](#feedback)
 - [Contribute](#contribute)
 - [Links](#links)
@@ -108,33 +105,10 @@ If you are using an old version of the SAP Cloud SDK, you might want to read [ho
 
 ## Related Projects
 
-### SAP Cloud SDK CLI
-
-The [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) is deprecated. We have provided sample projects with example applications to show how you can integrate the SAP Cloud SDK into your projects.
-
 ### SAP Cloud SDK Sample Projects
 
 We have created multiple [sample projects](https://github.com/SAP-samples/cloud-sdk-js) which showcase the use of the SAP Cloud SDK for TypeScript/JavaScript in different scenarios.
 Each project outlines the configurations needed to execute it locally and to deploy the project to SAP Business Technology Platform.
-
-### Virtual Data Model (VDM)
-
-In addition to the Open Source parts of this project, we also publish the SAP Cloud SDK Virtual Data Model (VDM) - JavaScript / TypeScript clients for the latest versions of the published OData services of SAP S/4HANA Cloud under the SAP Developer license. Those are not included in this project, but rely on modules from this project.
-
-To install an OData client for an SAP S/4HANA service run:
-
-```bash
-$ npm install @sap/cloud-sdk-vdm-<service name>-service
-```
-
-In the example above, `service name` is the name of the service you want to use, e. g. for the business partner service, run: `npm install @sap/cloud-sdk-vdm-business-partner-service`.
-
-### Project "Piper"
-
-Continuous delivery is a method to develop software with short feedback cycles.
-It is applicable to projects both for SAP Business Technology Platform and SAP on-premise platforms.
-SAP implements tooling for continuous delivery in the open-source [project "Piper"](https://sap.github.io/jenkins-library/).
-The goal of project "Piper" is to substantially ease setting up continuous delivery in your project using SAP technologies.
 
 ## Feedback
 

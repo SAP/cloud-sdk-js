@@ -1745,10 +1745,10 @@
   resolved "https://registry.npmjs.org/@types/uuid/-/uuid-10.0.0.tgz#e9c07fe50da0f53dc24970cca94d619ff03f6f6d"
   integrity sha512-7gqG38EyHgyP1S+7+xomFtL+ZNHcKv6DwNaCZmJmo1vgMugyF3TCnXVg4t1uk89mLNwnLtnY3TpOpCOyp1/xHQ==
 
-"@types/voca@^1.4.5":
-  version "1.4.5"
-  resolved "https://registry.npmjs.org/@types/voca/-/voca-1.4.5.tgz#c9a14ee976ffd514e5072f62ef18c968236df6a0"
-  integrity sha512-GaPq2U8tWosTT+gBTXIPSWrW3q2ok2ohWpq3xF8mREFJ1gZrfjZUrkbt34GKbN8KGfM2NSCZzYzX/1IEcOvE9w==
+"@types/voca@^1.4.6":
+  version "1.4.6"
+  resolved "https://registry.npmjs.org/@types/voca/-/voca-1.4.6.tgz#7a25495b0113b8abd4325a7637b70954ee27e24d"
+  integrity sha512-ubfCfFxlTOhBBUP2v8lzD8AQVKKu9erZ2t9/8hLpuYHYib3CM/lOwTII3mi527j5UeRDaVjIiAx+iTIWgVCWKQ==
 
 "@types/yargs-parser@*":
   version "21.0.3"

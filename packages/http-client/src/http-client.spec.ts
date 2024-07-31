@@ -35,7 +35,6 @@ import {
   providerXsuaaUrl,
   subscriberServiceToken,
   subscriberUserToken,
-  subscriberXsuaaUrl,
   testTenants,
   xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
@@ -250,10 +249,12 @@ describe('generic http client', () => {
         .get('')
         .query({ zid: testTenants.subscriber })
         .reply(200, responseWithPublicKey());
+
       nock(jku)
         .get('')
         .query({ zid: testTenants.provider })
         .reply(200, responseWithPublicKey());
+
       mockUserTokenGrantCall(
         providerXsuaaUrl,
         1,
@@ -261,18 +262,20 @@ describe('generic http client', () => {
         subscriberUserToken,
         xsuaaBindingMock.credentials
       );
+
+      mockClientCredentialsGrantCall(
+        providerXsuaaUrl,
+        { access_token: subscriberServiceToken },
+        200,
+        destinationBindingClientSecretMock.credentials,
+        testTenants.subscriber
+      );
+
       mockClientCredentialsGrantCall(
         providerXsuaaUrl,
         { access_token: providerServiceToken },
         200,
         destinationBindingClientSecretMock.credentials
-      );
-      mockClientCredentialsGrantCall(
-        subscriberXsuaaUrl,
-        { access_token: subscriberServiceToken },
-        200,
-        destinationBindingClientSecretMock.credentials,
-        testTenants.subscriber
       );
     }
 
@@ -300,6 +303,7 @@ describe('generic http client', () => {
           method: 'get'
         }
       );
+
       delete process.env['VCAP_SERVICES'];
       nock.cleanAll();
       jest.clearAllMocks();

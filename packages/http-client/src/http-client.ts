@@ -4,7 +4,8 @@ import {
   buildHeadersForDestination,
   Destination,
   HttpDestinationOrFetchOptions,
-  getAgentConfigAsync
+  getAgentConfigAsync,
+  getTenantId
 } from '@sap-cloud-sdk/connectivity';
 import {
   assertHttpDestination,
@@ -12,7 +13,6 @@ import {
   getAdditionalHeaders,
   getAdditionalQueryParameters,
   getProxyConfig,
-  getTenantIdWithFallback,
   HttpDestination,
   resolveDestination
 } from '@sap-cloud-sdk/connectivity/internal';
@@ -108,7 +108,7 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
         jwt: destination.jwt,
         uri: resolvedDestination.url,
         destinationName: resolvedDestination.name ?? undefined,
-        tenantId: getTenantIdWithFallback(destination.jwt)
+        tenantId: getTenantId(destination.jwt)
       }
     });
   };

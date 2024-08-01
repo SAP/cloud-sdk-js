@@ -1,5 +1,21 @@
 # @sap-cloud-sdk/mail-client
 
+## 3.17.0
+
+### Minor Changes
+
+- 68a07d6: [New Functionality] Add support for multi-tenancy for on-premise mail destinations.
+
+### Patch Changes
+
+- 86f4158: [Fixed Issue] Fix token fetching for mail multi-tenancy scenarios.
+- Updated dependencies [54a46a3]
+- Updated dependencies [86f4158]
+- Updated dependencies [dbad36f]
+- Updated dependencies [99b5009]
+  - @sap-cloud-sdk/connectivity@3.17.0
+  - @sap-cloud-sdk/util@3.17.0
+
 ## 3.16.0
 
 ### Patch Changes

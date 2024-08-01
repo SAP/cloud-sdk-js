@@ -7,12 +7,11 @@ import {
 } from './environment-accessor/environment-accessor-types';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
-import { getIssuerSubdomain } from './subdomain-replacer';
-import { decodeJwt, getTenantId } from './jwt';
+import { decodeJwt, getSubdomain, getTenantId } from './jwt';
 
 interface XsuaaParameters {
-  subdomain: string | null;
-  zoneId: string | null;
+  subdomain?: string;
+  zoneId?: string;
   serviceCredentials: ServiceCredentials;
   userJwt?: string;
 }
@@ -20,17 +19,17 @@ interface XsuaaParameters {
 /**
  * Make a client credentials request against the XSUAA service.
  * @param service - Service as it is defined in the environment variable.
- * @param userJwt - User JWT.
+ * @param jwt - User JWT or object containing the `iss` property.
  * @returns Client credentials token.
  */
 export async function getClientCredentialsToken(
   service: string | Service,
-  userJwt?: string | JwtPayload
+  jwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
-  const jwt = userJwt ? decodeJwt(userJwt) : {};
+  const decodedJwt = jwt ? decodeJwt(jwt) : {};
   const fnArgument: XsuaaParameters = {
-    subdomain: getIssuerSubdomain(jwt) || null,
-    zoneId: getTenantId(jwt) || null,
+    subdomain: getSubdomain(decodedJwt),
+    zoneId: getTenantId(decodedJwt),
     serviceCredentials: resolveServiceBinding(service).credentials
   };
 
@@ -41,7 +40,8 @@ export async function getClientCredentialsToken(
 
     return xsuaaService.fetchClientCredentialsToken({
       // tenant is the subdomain, not tenant ID
-      tenant: arg.subdomain
+      tenant: arg.zoneId ? undefined : arg.subdomain,
+      zid: arg.zoneId
     });
   };
 
@@ -75,10 +75,10 @@ export function getUserToken(
   service: Service,
   userJwt: string
 ): Promise<string> {
-  const jwt = decodeJwt(userJwt);
+  const decodedUserJwt = decodeJwt(userJwt);
   const fnArgument: XsuaaParameters = {
-    subdomain: getIssuerSubdomain(jwt) || null,
-    zoneId: getTenantId(jwt) || null,
+    subdomain: getSubdomain(decodedUserJwt),
+    zoneId: getTenantId(decodedUserJwt),
     serviceCredentials: service.credentials,
     userJwt
   };
@@ -90,7 +90,8 @@ export function getUserToken(
     return xsuaaService
       .fetchJwtBearerToken(arg.userJwt, {
         // tenant is the subdomain, not tenant ID
-        tenant: arg.subdomain
+        tenant: arg.zoneId ? undefined : arg.subdomain,
+        zid: arg.zoneId
       })
       .then(token => token.access_token);
   };

@@ -1,7 +1,7 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { exchangeToken, shouldExchangeToken } from '../identity-service';
-import { getIssuerSubdomain } from '../subdomain-replacer';
 import { getDestinationServiceCredentials } from '../environment-accessor';
+import { getSubdomain } from '../jwt';
 import {
   DestinationOrFetchOptions,
   sanitizeDestination,
@@ -138,9 +138,9 @@ export async function getAllDestinationsFromDestinationService(
     (await getProviderServiceToken(options));
 
   const destinationServiceUri = getDestinationServiceCredentials().uri;
-  const accountName = getIssuerSubdomain(token.decoded);
+  const subdomain = getSubdomain(token.decoded);
   logger.debug(
-    `Retrieving all destinations for account: "${accountName}" from destination service.`
+    `Retrieving all destinations for account: "${subdomain}" from destination service.`
   );
 
   const [instance, subaccount] = await Promise.all([
@@ -168,7 +168,7 @@ export async function getAllDestinationsFromDestinationService(
 
   if (allDestinations?.length) {
     logger.debug(
-      `Successfully retrieved all destinations for account: "${accountName}" from destination service.`
+      `Successfully retrieved all destinations for account: "${subdomain}" from destination service.`
     );
   } else {
     logger.debug("Didn't receive any destinations from destination service.");

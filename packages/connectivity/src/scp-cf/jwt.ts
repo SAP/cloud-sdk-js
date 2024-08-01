@@ -10,6 +10,7 @@ import { Cache } from './cache';
 import { getServiceCredentials, getXsuaaService } from './environment-accessor';
 import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
 import { TokenKey } from './xsuaa-service-types';
+import { getIssuerSubdomain } from './subdomain-replacer';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -31,17 +32,36 @@ export function userId({ user_id }: JwtPayload): string {
   return user_id;
 }
 
-/* eslint-disable jsdoc/check-param-names, jsdoc/require-param */
 /**
  * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` property.
- * @param jwtPayload - Token payload to read the tenant ID from.
+ * @param jwt - Token to read the tenant ID from.
  * @returns The tenant ID, if available.
  */
-export function getTenantId({ zid, app_tid }: JwtPayload): string {
-  logger.debug(`JWT zid is: ${zid}, app_tid is: ${app_tid}.`);
-  return zid ?? app_tid;
+export function getTenantId(
+  jwt: JwtPayload | string | undefined
+): string | undefined {
+  const decodedJwt = jwt ? decodeJwt(jwt) : {};
+  logger.debug(
+    `JWT zid is: ${decodedJwt.zid}, app_tid is: ${decodedJwt.app_tid}.`
+  );
+  return decodedJwt.zid || decodedJwt.app_tid || undefined;
 }
-/* eslint-enable jsdoc/check-param-names, jsdoc/require-param */
+
+/**
+ * @internal
+ * Retrieve the subdomain from the decoded XSUAA JWT. If the JWT is not in XSUAA format, returns `undefined`.
+ * @param jwt - JWT to retrieve the subdomain from.
+ * @returns The subdomain, if available.
+ */
+export function getSubdomain(
+  jwt: JwtPayload | string | undefined
+): string | undefined {
+  const decodedJwt = jwt ? decodeJwt(jwt) : {};
+  return (
+    decodedJwt?.ext_attr?.zdn ||
+    (isXsuaaToken(decodedJwt) ? getIssuerSubdomain(decodedJwt) : undefined)
+  );
+}
 
 /**
  * @internal
@@ -197,12 +217,12 @@ export function wrapJwtInHeader(token: string): {
 
 /**
  * Checks if the given JWT was issued by XSUAA based on the `iss` property and the UAA domain of the XSUAA.
- * @param jwt - JWT to be checked.
+ * @param decodedJwt - JWT to be checked.
  * @returns Whether the JWT was issued by XSUAA.
  * @internal
  */
-export function isXsuaaToken(jwt: JwtWithPayloadObject): boolean {
-  return jwt.payload.ext_attr?.enhancer === 'XSUAA';
+export function isXsuaaToken(decodedJwt: JwtPayload | undefined): boolean {
+  return decodedJwt?.ext_attr?.enhancer === 'XSUAA';
 }
 
 /**

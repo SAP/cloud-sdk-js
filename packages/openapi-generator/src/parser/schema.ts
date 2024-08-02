@@ -42,18 +42,6 @@ export function parseSchema(
     return parseArraySchema(schema, refs, options);
   }
 
-  if (
-    schema.type === 'object' ||
-    schema.properties ||
-    'additionalProperties' in schema
-  ) {
-    return parseObjectSchema(schema, refs, options);
-  }
-
-  if (schema.enum?.length) {
-    return parseEnumSchema(schema, options);
-  }
-
   if (schema.oneOf?.length) {
     return parseXOfSchema(schema, refs, 'oneOf', options);
   }
@@ -70,6 +58,18 @@ export function parseSchema(
     return {
       not: parseSchema(schema.not, refs, options)
     };
+  }
+
+  if (
+    schema.type === 'object' ||
+    schema.properties ||
+    'additionalProperties' in schema
+  ) {
+    return parseObjectSchema(schema, refs, options);
+  }
+
+  if (schema.enum?.length) {
+    return parseEnumSchema(schema, options);
   }
 
   return {

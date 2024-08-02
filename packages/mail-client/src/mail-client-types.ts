@@ -117,7 +117,7 @@ export interface MailConfig {
    */
   bcc?: string | Address | (string | Address)[] | undefined;
   /**
-   * E-mail address that will appear in the "Reply-To:" field.
+   * Comma separated list or array of e-mail addresses that will appear in the "Reply-To:" field.
    */
   replyTo?: string | Address | (string | Address)[] | undefined;
   /**

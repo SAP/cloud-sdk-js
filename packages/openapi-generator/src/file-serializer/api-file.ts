@@ -1,7 +1,8 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
   serializeImports,
-  Import
+  Import,
+  CreateFileOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   OpenApiApi,
@@ -18,8 +19,8 @@ import { serializeOperation } from './operation';
  * @returns The serialized API file contents.
  * @internal
  */
-export function apiFile(api: OpenApiApi, serviceName: string): string {
-  const imports = serializeImports(getImports(api));
+export function apiFile(api: OpenApiApi, serviceName: string, options?: CreateFileOptions): string {
+  const imports = serializeImports(getImports(api, options));
   const apiDoc = apiDocumentation(api, serviceName);
   const apiContent = codeBlock`
 export const ${api.name} = {
@@ -55,14 +56,14 @@ function collectRefsFromOperations(
   );
 }
 
-function getImports(api: OpenApiApi): Import[] {
+function getImports(api: OpenApiApi, options?: CreateFileOptions): Import[] {
   const refs = collectRefsFromOperations(api.operations).map(
     requestBodyType => requestBodyType.schemaName
   );
 
   const refImports = {
     names: refs,
-    moduleIdentifier: './schema',
+    moduleIdentifier: options?.generateESM ? './schema/index.js' : './schema',
     typeOnly: true
   };
   const openApiImports = {

@@ -197,7 +197,7 @@ async function generateMandatorySources(
     await createFile(
       schemaDir,
       'index.ts',
-      schemaIndexFile(openApiDocument),
+      schemaIndexFile(openApiDocument, createFileOptions),
       createFileOptions
     );
   }
@@ -221,7 +221,7 @@ async function createApis(
       createFile(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
-        apiFile(api, openApiDocument.serviceName),
+        apiFile(api, openApiDocument.serviceName, options),
         options
       )
     )
@@ -239,7 +239,7 @@ async function createSchemaFiles(
       createFile(
         dir,
         `${schema.fileName}.ts`,
-        schemaFile(schema),
+        schemaFile(schema, createFileOptions),
         createFileOptions
       )
     )

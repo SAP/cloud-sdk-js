@@ -42,7 +42,7 @@
     "@sap/xsenv": "^5.2.0",
     "@sap/xssec": "^4.2.1",
     "async-retry": "^1.3.3",
-    "axios": "^1.7.2",
+    "axios": "^1.7.3",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {

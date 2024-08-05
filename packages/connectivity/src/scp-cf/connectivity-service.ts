@@ -1,5 +1,5 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload } from './jsonwebtoken-type';
 import { Protocol } from './protocol';
 import {
   ProxyConfiguration,

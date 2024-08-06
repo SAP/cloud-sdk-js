@@ -19,7 +19,11 @@ import { serializeOperation } from './operation';
  * @returns The serialized API file contents.
  * @internal
  */
-export function apiFile(api: OpenApiApi, serviceName: string, options?: CreateFileOptions): string {
+export function apiFile(
+  api: OpenApiApi,
+  serviceName: string,
+  options?: CreateFileOptions
+): string {
   const imports = serializeImports(getImports(api, options));
   const apiDoc = apiDocumentation(api, serviceName);
   const apiContent = codeBlock`

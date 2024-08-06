@@ -14,7 +14,10 @@ import { serializeSchema } from './schema';
  * @returns The serialized schema file contents.
  * @internal
  */
-export function schemaFile(namedSchema: OpenApiPersistedSchema, options?: CreateFileOptions): string {
+export function schemaFile(
+  namedSchema: OpenApiPersistedSchema,
+  options?: CreateFileOptions
+): string {
   const imports = serializeImports(getImports(namedSchema, options));
 
   return codeBlock`    
@@ -26,13 +29,18 @@ export function schemaFile(namedSchema: OpenApiPersistedSchema, options?: Create
   `;
 }
 
-function getImports(namedSchema: OpenApiPersistedSchema, options?: CreateFileOptions): Import[] {
+function getImports(
+  namedSchema: OpenApiPersistedSchema,
+  options?: CreateFileOptions
+): Import[] {
   return collectRefs(namedSchema.schema)
     .filter(ref => ref.schemaName !== namedSchema.schemaName)
     .map(ref => ({
       names: [ref.schemaName],
       typeOnly: true,
-      moduleIdentifier: options?.generateESM ? `./${ref.fileName}.js` : `./${ref.fileName}`
+      moduleIdentifier: options?.generateESM
+        ? `./${ref.fileName}.js`
+        : `./${ref.fileName}`
     }));
 }
 

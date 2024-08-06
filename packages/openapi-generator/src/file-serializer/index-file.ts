@@ -24,16 +24,27 @@ export function apiIndexFile(openApiDocument: OpenApiDocument): string {
  * @returns The serialized index file contents.
  * @internal
  */
-export function schemaIndexFile(openApiDocument: OpenApiDocument, options?: CreateFileOptions): string {
-  return exportAllFiles(openApiDocument.schemas.map(schema => schema.fileName), options);
+export function schemaIndexFile(
+  openApiDocument: OpenApiDocument,
+  options?: CreateFileOptions
+): string {
+  return exportAllFiles(
+    openApiDocument.schemas.map(schema => schema.fileName),
+    options
+  );
 }
 
-function exportAllFiles(fileNames: string[], options?: CreateFileOptions): string {
+function exportAllFiles(
+  fileNames: string[],
+  options?: CreateFileOptions
+): string {
   return codeBlock`${fileNames
     .map(fileName => exportAll(fileName, options))
     .join('\n')}`;
 }
 
 function exportAll(file: string, options?: CreateFileOptions) {
-  return options?.generateESM ? `export * from './${file}.js';` : `export * from './${file}';`;
+  return options?.generateESM
+    ? `export * from './${file}.js';`
+    : `export * from './${file}';`;
 }

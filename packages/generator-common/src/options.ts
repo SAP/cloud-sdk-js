@@ -112,7 +112,6 @@ export function getCommonCliOptions(serviceType: ServiceType) {
       type: 'boolean',
       default: false
     },
-
     readme: {
       type: 'boolean',
       describe: getReadmeText(serviceType),

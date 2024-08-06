@@ -131,7 +131,8 @@ async function getFileCreationOptions(
 ): Promise<CreateFileOptions> {
   return {
     prettierOptions: await readPrettierConfig(options.prettierConfig),
-    overwrite: options.overwrite
+    overwrite: options.overwrite,
+    generateESM: options.generateESM
   };
 }
 

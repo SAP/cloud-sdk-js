@@ -8,13 +8,13 @@ import { OpenApiDocument } from '../openapi-types';
  * @returns The serialized index file contents.
  * @internal
  */
-export function apiIndexFile(openApiDocument: OpenApiDocument): string {
+export function apiIndexFile(openApiDocument: OpenApiDocument, options?: CreateFileOptions): string {
   const files = [
     ...openApiDocument.apis.map(api => api.name),
     ...(openApiDocument.schemas.length ? ['schema'] : [])
   ];
   return codeBlock`
-    ${exportAllFiles(files.map(fileName => kebabCase(fileName)))}
+    ${exportAllFiles(files.map(fileName => kebabCase(fileName)), options)}
   `;
 }
 

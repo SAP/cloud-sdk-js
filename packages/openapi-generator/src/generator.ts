@@ -207,7 +207,7 @@ async function generateMandatorySources(
   await createFile(
     serviceDir,
     'index.ts',
-    apiIndexFile(openApiDocument),
+    apiIndexFile(openApiDocument, createFileOptions),
     createFileOptions
   );
 }

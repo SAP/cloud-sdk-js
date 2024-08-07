@@ -28,6 +28,22 @@
 
 - 
 
+# 3.18.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.18.0
+
+## New Functionalities
+
+- [connectivity] Support IAS tokens without the need to pass `iss` in the destination fetch options. (06e5c72)
+- [openapi-generator, generator-common] Introduce option `generateESM` in OpenAPI generator to generate ESM compatible code. (3a93e38)
+
+## Fixed Issues
+
+- [connectivity] Fix the JwtPayload import.
+  - @sap-cloud-sdk/resilience@3.18.0
+  - @sap-cloud-sdk/util@3.18.0 (c23ccfd)
+- [mail-client] Fix the type of `replyTo` property in the `MailConfig` interface. (00fa35d)
+
 # 3.17.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.17.0

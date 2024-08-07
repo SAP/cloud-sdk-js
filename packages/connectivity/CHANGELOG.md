@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.18.0
+
+### Minor Changes
+
+- 06e5c72: [New Functionality] Support IAS tokens without the need to pass `iss` in the destination fetch options.
+
+### Patch Changes
+
+- c23ccfd: [Fixed Issue] Fix the JwtPayload import.
+  - @sap-cloud-sdk/resilience@3.18.0
+  - @sap-cloud-sdk/util@3.18.0
+
 ## 3.17.0
 
 ### Minor Changes

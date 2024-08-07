@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/generator-common
 
+## 3.18.0
+
+### Minor Changes
+
+- 3a93e38: [New Functionality] Introduce option `generateESM` in OpenAPI generator to generate ESM compatible code.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.18.0
+
 ## 3.17.0
 
 ### Patch Changes

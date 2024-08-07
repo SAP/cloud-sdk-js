@@ -1,210 +1,147 @@
+import { readPrettierConfig } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiApi, OpenApiReferenceSchema } from '../openapi-types';
 import { apiDocumentation, apiFile } from './api-file';
 
+const singleOperationApi: OpenApiApi = {
+  name: 'TestApi',
+  operations: [
+    {
+      operationId: 'getFn',
+      method: 'get',
+      tags: [],
+      pathParameters: [
+        {
+          in: 'path',
+          name: 'id',
+          originalName: 'id',
+          schema: { type: 'string' },
+          required: true,
+          schemaProperties: {}
+        }
+      ],
+      queryParameters: [],
+      headerParameters: [],
+      response: { type: 'any' },
+      responses: { 200: { description: 'some response description' } },
+      pathPattern: 'test/{id}'
+    }
+  ]
+};
+
+const multipleOperationApi: OpenApiApi = {
+  name: 'TestApi',
+  operations: [
+    {
+      operationId: 'getFn',
+      method: 'get',
+      responses: { 200: { description: 'some response description' } },
+      tags: [],
+      pathParameters: [
+        {
+          in: 'path',
+          name: 'id',
+          originalName: 'id',
+          schema: {
+            $ref: '#/components/schemas/PathParameterType',
+            schemaName: 'PathParameterType'
+          } as OpenApiReferenceSchema,
+          required: true,
+          schemaProperties: {}
+        }
+      ],
+      queryParameters: [
+        {
+          in: 'query',
+          name: 'queryParam',
+          originalName: 'queryParam',
+          schema: {
+            $ref: '#/components/schemas/QueryParameterType',
+            schemaName: 'QueryParameterType'
+          } as OpenApiReferenceSchema,
+          required: true,
+          schemaProperties: {}
+        }
+      ],
+      headerParameters: [
+        {
+          in: 'header',
+          name: 'headerParam',
+          originalName: 'headerParam',
+          schema: { type: 'string' },
+          schemaProperties: {}
+        }
+      ],
+      pathPattern: 'test/{id}',
+      response: { type: 'string' }
+    },
+    {
+      operationId: 'createFn',
+      method: 'post',
+      responses: { 201: { description: 'some response description' } },
+      tags: [],
+      pathParameters: [],
+      queryParameters: [],
+      headerParameters: [],
+      requestBody: {
+        required: true,
+        schema: {
+          $ref: '#/components/schemas/RefType',
+          schemaName: 'RefType'
+        } as OpenApiReferenceSchema
+      },
+      pathPattern: 'test',
+      response: {
+        $ref: '#/components/schemas/ResponseType',
+        schemaName: 'ResponseType'
+      } as OpenApiReferenceSchema
+    }
+  ]
+};
+
+const docsApi: OpenApiApi = {
+  name: 'TestApi',
+  operations: [
+    {
+      operationId: 'getFn',
+      method: 'get',
+      responses: { 200: { description: 'some response description' } },
+      tags: [],
+      pathParameters: [],
+      queryParameters: [],
+      headerParameters: [],
+      response: { type: 'any' },
+      pathPattern: 'test'
+    }
+  ]
+};
+
 describe('apiFile', () => {
   it('apiFile serializes api file with one operation and no references', () => {
-    const api: OpenApiApi = {
-      name: 'TestApi',
-      operations: [
-        {
-          operationId: 'getFn',
-          method: 'get',
-          tags: [],
-          pathParameters: [
-            {
-              in: 'path',
-              name: 'id',
-              originalName: 'id',
-              schema: { type: 'string' },
-              required: true,
-              schemaProperties: {}
-            }
-          ],
-          queryParameters: [],
-          headerParameters: [],
-          response: { type: 'any' },
-          responses: { 200: { description: 'some response description' } },
-          pathPattern: 'test/{id}'
-        }
-      ]
-    };
-    expect(apiFile(api, 'MyServiceName')).toMatchInlineSnapshot(`
-      "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
-      /**
-       * Representation of the 'TestApi'.
-       * This API is part of the 'MyServiceName' service.
-       */
-      export const TestApi = {
-        /**
-         * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
-         * @param id - Path parameter.
-         * @returns The request builder, use the \`execute()\` method to trigger the request.
-         */
-        getFn: (id: string) => new OpenApiRequestBuilder<any>(
-          'get',
-          "test/{id}",
-          {
-                pathParameters: { id }
-              }
-        )
-      };"
-    `);
+    expect(apiFile(singleOperationApi, 'MyServiceName')).toMatchSnapshot();
   });
 
-  it('apiFile serializes api file with multiple operations and references', () => {
-    const api: OpenApiApi = {
-      name: 'TestApi',
-      operations: [
-        {
-          operationId: 'getFn',
-          method: 'get',
-          responses: { 200: { description: 'some response description' } },
-          tags: [],
-          pathParameters: [
-            {
-              in: 'path',
-              name: 'id',
-              originalName: 'id',
-              schema: {
-                $ref: '#/components/schemas/PathParameterType',
-                schemaName: 'PathParameterType'
-              } as OpenApiReferenceSchema,
-              required: true,
-              schemaProperties: {}
-            }
-          ],
-          queryParameters: [
-            {
-              in: 'query',
-              name: 'queryParam',
-              originalName: 'queryParam',
-              schema: {
-                $ref: '#/components/schemas/QueryParameterType',
-                schemaName: 'QueryParameterType'
-              } as OpenApiReferenceSchema,
-              required: true,
-              schemaProperties: {}
-            }
-          ],
-          headerParameters: [
-            {
-              in: 'header',
-              name: 'headerParam',
-              originalName: 'headerParam',
-              schema: { type: 'string' },
-              schemaProperties: {}
-            }
-          ],
-          pathPattern: 'test/{id}',
-          response: { type: 'string' }
-        },
-        {
-          operationId: 'createFn',
-          method: 'post',
-          responses: { 201: { description: 'some response description' } },
-          tags: [],
-          pathParameters: [],
-          queryParameters: [],
-          headerParameters: [],
-          requestBody: {
-            required: true,
-            schema: {
-              $ref: '#/components/schemas/RefType',
-              schemaName: 'RefType'
-            } as OpenApiReferenceSchema
-          },
-          pathPattern: 'test',
-          response: {
-            $ref: '#/components/schemas/ResponseType',
-            schemaName: 'ResponseType'
-          } as OpenApiReferenceSchema
-        }
-      ]
-    };
-    expect(apiFile(api, 'MyServiceName')).toMatchInlineSnapshot(`
-      "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
-      import type { QueryParameterType, RefType, ResponseType } from './schema';
-      /**
-       * Representation of the 'TestApi'.
-       * This API is part of the 'MyServiceName' service.
-       */
-      export const TestApi = {
-        /**
-         * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
-         * @param id - Path parameter.
-         * @param queryParameters - Object containing the following keys: queryParam.
-         * @param headerParameters - Object containing the following keys: headerParam.
-         * @returns The request builder, use the \`execute()\` method to trigger the request.
-         */
-        getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}, headerParameters?: {'headerParam'?: string}) => new OpenApiRequestBuilder<string>(
-          'get',
-          "test/{id}",
-          {
-                pathParameters: { id },
-                queryParameters,
-                headerParameters
-              }
-        ),
-        /**
-         * Create a request builder for execution of post requests to the 'test' endpoint.
-         * @param body - Request body.
-         * @returns The request builder, use the \`execute()\` method to trigger the request.
-         */
-        createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
-          'post',
-          "test",
-          {
-                body
-              }
-        )
-      };"
-    `);
+  it('apiFile serializes api file with multiple operations and references', async () => {
+    expect(apiFile(multipleOperationApi, 'MyServiceName')).toMatchSnapshot();
   });
 
   it('creates a api File with documentation', () => {
-    const api: OpenApiApi = {
-      name: 'TestApi',
-      operations: [
-        {
-          operationId: 'getFn',
-          method: 'get',
-          responses: { 200: { description: 'some response description' } },
-          tags: [],
-          pathParameters: [],
-          queryParameters: [],
-          headerParameters: [],
-          response: { type: 'any' },
-          pathPattern: 'test'
-        }
-      ]
-    };
+    expect(apiFile(docsApi, 'TestService')).toMatchSnapshot();
+  });
 
-    expect(apiFile(api, 'TestService')).toMatchInlineSnapshot(`
-      "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
-      /**
-       * Representation of the 'TestApi'.
-       * This API is part of the 'TestService' service.
-       */
-      export const TestApi = {
-        /**
-         * Create a request builder for execution of get requests to the 'test' endpoint.
-         * @returns The request builder, use the \`execute()\` method to trigger the request.
-         */
-        getFn: () => new OpenApiRequestBuilder<any>(
-          'get',
-          "test"
-        )
-      };"
-    `);
+  it('creates an api file following the esm pattern', async () => {
+    const createFileOptions = {
+      generateESM: true,
+      overwrite: false,
+      prettierOptions: await readPrettierConfig(undefined)
+    };
+    expect(
+      apiFile(multipleOperationApi, 'MyServiceName', createFileOptions)
+    ).toMatchSnapshot();
   });
 
   it('creates documentation for the api', () => {
-    expect(apiDocumentation({ name: 'TestApi' } as any, 'TestService'))
-      .toMatchInlineSnapshot(`
-      "/**
-       * Representation of the 'TestApi'.
-       * This API is part of the 'TestService' service.
-       */"
-    `);
+    expect(
+      apiDocumentation({ name: 'TestApi' } as any, 'TestService')
+    ).toMatchSnapshot();
   });
 });

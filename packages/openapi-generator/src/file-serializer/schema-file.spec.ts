@@ -129,7 +129,7 @@ describe('schemaFile', () => {
     expect(schemaFile(schemaWithReferences)).toMatchSnapshot();
   });
 
-  it('serialize schema file for schema including ESM references', async () => {
+  it('serializes schema file for schema including ESM references', async () => {
     const createFileOptions: CreateFileOptions = {
       generateESM: true,
       overwrite: false,

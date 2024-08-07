@@ -115,8 +115,8 @@ const docsApi: OpenApiApi = {
   ]
 };
 
-describe('apiFile', () => {
-  it('apiFile serializes api file with one operation and no references', () => {
+describe('api-file', () => {
+  it('serializes api file with one operation and no references', () => {
     expect(apiFile(singleOperationApi, 'MyServiceName')).toMatchSnapshot();
   });
 
@@ -124,7 +124,7 @@ describe('apiFile', () => {
     expect(apiFile(multipleOperationApi, 'MyServiceName')).toMatchSnapshot();
   });
 
-  it('creates a api File with documentation', () => {
+  it('creates an api file with documentation', () => {
     expect(apiFile(docsApi, 'TestService')).toMatchSnapshot();
   });
 

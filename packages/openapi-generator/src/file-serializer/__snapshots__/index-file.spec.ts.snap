@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index-file apiIndexFile serializes the api index file following the esm format 1`] = `
+"    export * from './test-api.js';
+    export * from './default-api.js';
+    export * from './schema/index.js';"
+`;
+
+exports[`index-file apiIndexFile serializes the api index file with referenced schemas 1`] = `
+"    export * from './test-api';
+    export * from './default-api';
+    export * from './schema';"
+`;
+
+exports[`index-file apiIndexFile serializes the api index file without referenced schemas 1`] = `
+"    export * from './test-api';
+    export * from './default-api';"
+`;
+
+exports[`index-file apiIndexFile serializes the schema index file following the esm format 1`] = `
+"    export * from './test-api.js';
+    export * from './default-api.js';
+    export * from './schema/index.js';"
+`;
+
+exports[`index-file schemaIndexFile serializes the schema index file for schemas following the ESM format 1`] = `
+"export * from './my-schema-1.js';
+export * from './some-other-name.js';"
+`;
+
+exports[`index-file schemaIndexFile serializes the schema index file for schemas in a document 1`] = `
+"export * from './my-schema-1';
+export * from './some-other-name';"
+`;

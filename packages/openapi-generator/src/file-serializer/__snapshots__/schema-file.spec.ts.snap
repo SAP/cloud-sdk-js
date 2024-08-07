@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`schemaFile creates a schema property documentation 1`] = `
+"/**
+ * My property Description.
+ */"
+`;
+
+exports[`schemaFile creates schema documentation 1`] = `
+"/**
+ * Representation of the 'mySchema' schema.
+ */"
+`;
+
+exports[`schemaFile serialize schema file for schema including ESM references 1`] = `
+"    import type { OtherSchema1 } from './other-schema-1.js';
+    import type { OtherSchema2 } from './other-schema-2.js';
+    /**
+     * Representation of the 'MySchema' schema.
+     */
+    export type MySchema = {
+      'otherSchema1': OtherSchema1;
+      /**
+       * Description other Schema 2
+       */
+      'otherSchema2': OtherSchema2;
+    };"
+`;
+
+exports[`schemaFile serializes schema file for schema 1`] = `
+"    
+    /**
+     * Representation of the 'MySchema' schema.
+     * @deprecated
+     */
+    export type MySchema = {
+      /**
+       * Max Length: 10.
+       */
+      'string-property': string;
+    };"
+`;
+
+exports[`schemaFile serializes schema file for schema including not schema 1`] = `
+"    
+    /**
+     * Representation of the 'MySchema' schema.
+     */
+    export type MySchema = any[];"
+`;
+
+exports[`schemaFile serializes schema file for schema including references 1`] = `
+"    import type { OtherSchema1 } from './other-schema-1';
+    import type { OtherSchema2 } from './other-schema-2';
+    /**
+     * Representation of the 'MySchema' schema.
+     */
+    export type MySchema = {
+      'otherSchema1': OtherSchema1;
+      /**
+       * Description other Schema 2
+       */
+      'otherSchema2': OtherSchema2;
+    };"
+`;
+
+exports[`schemaFile serializes schema file without imports for schema including only self reference 1`] = `
+"    
+    /**
+     * Representation of the 'MySchema' schema.
+     */
+    export type MySchema = {
+      'property'?: MySchema;
+    };"
+`;
+
+exports[`schemaFile serializes simple schema file for schema with description 1`] = `
+"    
+    /**
+     * Representation of the 'MySchema' schema.
+     */
+    export type MySchema = {
+      /**
+       * My description
+       * Min Length: 2.
+       */
+      'string-property': string;
+      'string-property-no-description': string;
+    };"
+`;

@@ -1,201 +1,163 @@
 import {
+  CreateFileOptions,
+  readPrettierConfig
+} from '@sap-cloud-sdk/generator-common/internal';
+import {
   OpenApiObjectSchemaProperty,
   OpenApiPersistedSchema
 } from '../openapi-types';
 import { schemaDocumentation, schemaFile } from './schema-file';
 import { schemaPropertyDocumentation } from './schema';
-describe('schemaFile', () => {
-  it('serializes schema file for schema', () => {
-    expect(
-      schemaFile({
-        schemaName: 'MySchema',
-        fileName: 'my-schema',
+
+const schema = {
+  schemaName: 'MySchema',
+  fileName: 'my-schema',
+  schema: {
+    properties: [
+      {
+        name: 'string-property',
+        required: true,
         schema: {
-          properties: [
-            {
-              name: 'string-property',
-              required: true,
-              schema: {
-                type: 'string'
-              },
-              schemaProperties: {
-                maxLength: 10
-              }
-            }
-          ]
+          type: 'string'
         },
         schemaProperties: {
-          deprecated: true
+          maxLength: 10
         }
-      })
-    ).toMatchInlineSnapshot(`
-      "    
-          /**
-           * Representation of the 'MySchema' schema.
-           * @deprecated
-           */
-          export type MySchema = {
-            /**
-             * Max Length: 10.
-             */
-            'string-property': string;
-          };"
-    `);
+      }
+    ]
+  },
+  schemaProperties: {
+    deprecated: true
+  }
+};
+
+const schemaWithReferences = {
+  schemaName: 'MySchema',
+  fileName: 'my-schema',
+  schemaProperties: {},
+  schema: {
+    properties: [
+      {
+        name: 'otherSchema1',
+        required: true,
+        schema: {
+          $ref: '#/components/schema/OtherSchema1',
+          schemaName: 'OtherSchema1',
+          fileName: 'other-schema-1'
+        },
+        schemaProperties: {}
+      },
+      {
+        name: 'otherSchema2',
+        description: 'Description other Schema 2',
+        required: true,
+        schema: {
+          $ref: '#/components/schema/OtherSchema2',
+          schemaName: 'OtherSchema2',
+          fileName: 'other-schema-2'
+        },
+        schemaProperties: {}
+      }
+    ]
+  }
+};
+
+const schemaWithNotSchema = {
+  schemaName: 'MySchema',
+  fileName: 'my-schema',
+  schema: {
+    items: { not: { type: 'integer' } }
+  },
+  schemaProperties: {}
+};
+
+const schemaWithoutImportsIncludingOnlySelfReference = {
+  schemaName: 'MySchema',
+  fileName: 'my-schema',
+  schema: {
+    properties: [
+      {
+        name: 'property',
+        required: false,
+        schema: {
+          $ref: '#/components/schema/MySchema',
+          schemaName: 'MySchema',
+          fileName: 'my-schema'
+        },
+        schemaProperties: {}
+      }
+    ]
+  },
+  schemaProperties: {}
+};
+
+const schemaWithDescription = {
+  schemaName: 'MySchema',
+  fileName: 'my-schema',
+  schema: {
+    properties: [
+      {
+        name: 'string-property',
+        description: 'My description',
+        required: true,
+        schema: {
+          type: 'string'
+        },
+        schemaProperties: {
+          minLength: 2
+        }
+      },
+      {
+        name: 'string-property-no-description',
+        required: true,
+        schema: {
+          type: 'string'
+        },
+        schemaProperties: {}
+      }
+    ]
+  },
+  schemaProperties: {}
+};
+
+describe('schemaFile', () => {
+  it('serializes schema file for schema', () => {
+    expect(schemaFile(schema)).toMatchSnapshot();
   });
 
   it('serializes schema file for schema including references', () => {
+    expect(schemaFile(schemaWithReferences)).toMatchSnapshot();
+  });
+
+  it('serialize schema file for schema including ESM references', async () => {
+    const createFileOptions: CreateFileOptions = {
+      generateESM: true,
+      overwrite: false,
+      prettierOptions: await readPrettierConfig(undefined)
+    };
     expect(
-      schemaFile({
-        schemaName: 'MySchema',
-        fileName: 'my-schema',
-        schemaProperties: {},
-        schema: {
-          properties: [
-            {
-              name: 'otherSchema1',
-              required: true,
-              schema: {
-                $ref: '#/components/schema/OtherSchema1',
-                schemaName: 'OtherSchema1',
-                fileName: 'other-schema-1'
-              },
-              schemaProperties: {}
-            },
-            {
-              name: 'otherSchema2',
-              description: 'Description other Schema 2',
-              required: true,
-              schema: {
-                $ref: '#/components/schema/OtherSchema2',
-                schemaName: 'OtherSchema2',
-                fileName: 'other-schema-2'
-              },
-              schemaProperties: {}
-            }
-          ]
-        }
-      })
-    ).toMatchInlineSnapshot(`
-      "    import type { OtherSchema1 } from './other-schema-1';
-          import type { OtherSchema2 } from './other-schema-2';
-          /**
-           * Representation of the 'MySchema' schema.
-           */
-          export type MySchema = {
-            'otherSchema1': OtherSchema1;
-            /**
-             * Description other Schema 2
-             */
-            'otherSchema2': OtherSchema2;
-          };"
-    `);
+      schemaFile(schemaWithReferences, createFileOptions)
+    ).toMatchSnapshot();
   });
 
   it('serializes schema file for schema including not schema', () => {
-    expect(
-      schemaFile({
-        schemaName: 'MySchema',
-        fileName: 'my-schema',
-        schema: {
-          items: { not: { type: 'integer' } }
-        },
-        schemaProperties: {}
-      })
-    ).toMatchInlineSnapshot(`
-      "    
-          /**
-           * Representation of the 'MySchema' schema.
-           */
-          export type MySchema = any[];"
-    `);
+    expect(schemaFile(schemaWithNotSchema)).toMatchSnapshot();
   });
 
   it('serializes schema file without imports for schema including only self reference', () => {
     expect(
-      schemaFile({
-        schemaName: 'MySchema',
-        fileName: 'my-schema',
-        schema: {
-          properties: [
-            {
-              name: 'property',
-              required: false,
-              schema: {
-                $ref: '#/components/schema/MySchema',
-                schemaName: 'MySchema',
-                fileName: 'my-schema'
-              },
-              schemaProperties: {}
-            }
-          ]
-        },
-        schemaProperties: {}
-      })
-    ).toMatchInlineSnapshot(`
-      "    
-          /**
-           * Representation of the 'MySchema' schema.
-           */
-          export type MySchema = {
-            'property'?: MySchema;
-          };"
-    `);
+      schemaFile(schemaWithoutImportsIncludingOnlySelfReference)
+    ).toMatchSnapshot();
   });
 
   it('serializes simple schema file for schema with description', () => {
-    expect(
-      schemaFile({
-        schemaName: 'MySchema',
-        fileName: 'my-schema',
-        schema: {
-          properties: [
-            {
-              name: 'string-property',
-              description: 'My description',
-              required: true,
-              schema: {
-                type: 'string'
-              },
-              schemaProperties: {
-                minLength: 2
-              }
-            },
-            {
-              name: 'string-property-no-description',
-              required: true,
-              schema: {
-                type: 'string'
-              },
-              schemaProperties: {}
-            }
-          ]
-        },
-        schemaProperties: {}
-      })
-    ).toMatchInlineSnapshot(`
-      "    
-          /**
-           * Representation of the 'MySchema' schema.
-           */
-          export type MySchema = {
-            /**
-             * My description
-             * Min Length: 2.
-             */
-            'string-property': string;
-            'string-property-no-description': string;
-          };"
-    `);
+    expect(schemaFile(schemaWithDescription)).toMatchSnapshot();
   });
 
   it('creates schema documentation', () => {
     expect(
       schemaDocumentation({ schemaName: 'mySchema' } as OpenApiPersistedSchema)
-    ).toMatchInlineSnapshot(`
-      "/**
-       * Representation of the 'mySchema' schema.
-       */"
-    `);
+    ).toMatchSnapshot();
   });
 
   it('uses the schema description documentation if present', () => {
@@ -212,10 +174,6 @@ describe('schemaFile', () => {
       schemaPropertyDocumentation({
         description: 'My property Description.'
       } as OpenApiObjectSchemaProperty)
-    ).toMatchInlineSnapshot(`
-      "/**
-       * My property Description.
-       */"
-    `);
+    ).toMatchSnapshot();
   });
 });

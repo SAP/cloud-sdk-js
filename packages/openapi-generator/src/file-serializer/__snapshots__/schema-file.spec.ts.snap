@@ -12,21 +12,6 @@ exports[`schemaFile creates schema documentation 1`] = `
  */"
 `;
 
-exports[`schemaFile serialize schema file for schema including ESM references 1`] = `
-"    import type { OtherSchema1 } from './other-schema-1.js';
-    import type { OtherSchema2 } from './other-schema-2.js';
-    /**
-     * Representation of the 'MySchema' schema.
-     */
-    export type MySchema = {
-      'otherSchema1': OtherSchema1;
-      /**
-       * Description other Schema 2
-       */
-      'otherSchema2': OtherSchema2;
-    };"
-`;
-
 exports[`schemaFile serializes schema file for schema 1`] = `
 "    
     /**
@@ -38,6 +23,21 @@ exports[`schemaFile serializes schema file for schema 1`] = `
        * Max Length: 10.
        */
       'string-property': string;
+    };"
+`;
+
+exports[`schemaFile serializes schema file for schema including ESM references 1`] = `
+"    import type { OtherSchema1 } from './other-schema-1.js';
+    import type { OtherSchema2 } from './other-schema-2.js';
+    /**
+     * Representation of the 'MySchema' schema.
+     */
+    export type MySchema = {
+      'otherSchema1': OtherSchema1;
+      /**
+       * Description other Schema 2
+       */
+      'otherSchema2': OtherSchema2;
     };"
 `;
 

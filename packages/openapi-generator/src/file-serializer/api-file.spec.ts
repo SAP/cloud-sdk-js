@@ -120,7 +120,7 @@ describe('apiFile', () => {
     expect(apiFile(singleOperationApi, 'MyServiceName')).toMatchSnapshot();
   });
 
-  it('apiFile serializes api file with multiple operations and references', async () => {
+  it('serializes api file with multiple operations and references', async () => {
     expect(apiFile(multipleOperationApi, 'MyServiceName')).toMatchSnapshot();
   });
 

@@ -50,7 +50,9 @@ function exportAllFiles(
 }
 
 function exportAll(file: string, options?: CreateFileOptions) {
-  return options?.generateESM && file !== 'schema'
-    ? `export * from './${file}.js';`
+  return options?.generateESM
+    ? file === 'schema'
+      ? "export * from './schema/index.js';"
+      : `export * from './${file}.js';`
     : `export * from './${file}';`;
 }

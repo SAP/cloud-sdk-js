@@ -3,4 +3,4 @@
 '@sap-cloud-sdk/generator-common': minor
 ---
 
-[New Functionality] Add support for ESM in OpenAPI generator.
+[New Functionality] Introduce option `generateESM` in OpenAPI generator to generate ESM compatible code.

@@ -131,7 +131,8 @@ async function getFileCreationOptions(
 ): Promise<CreateFileOptions> {
   return {
     prettierOptions: await readPrettierConfig(options.prettierConfig),
-    overwrite: options.overwrite
+    overwrite: options.overwrite,
+    generateESM: options.generateESM
   };
 }
 
@@ -197,7 +198,7 @@ async function generateMandatorySources(
     await createFile(
       schemaDir,
       'index.ts',
-      schemaIndexFile(openApiDocument),
+      schemaIndexFile(openApiDocument, createFileOptions),
       createFileOptions
     );
   }
@@ -206,7 +207,7 @@ async function generateMandatorySources(
   await createFile(
     serviceDir,
     'index.ts',
-    apiIndexFile(openApiDocument),
+    apiIndexFile(openApiDocument, createFileOptions),
     createFileOptions
   );
 }
@@ -221,7 +222,7 @@ async function createApis(
       createFile(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
-        apiFile(api, openApiDocument.serviceName),
+        apiFile(api, openApiDocument.serviceName, options),
         options
       )
     )
@@ -239,7 +240,7 @@ async function createSchemaFiles(
       createFile(
         dir,
         `${schema.fileName}.ts`,
-        schemaFile(schema),
+        schemaFile(schema, createFileOptions),
         createFileOptions
       )
     )

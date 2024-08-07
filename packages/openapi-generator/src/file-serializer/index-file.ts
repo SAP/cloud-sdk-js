@@ -1,4 +1,5 @@
 import { codeBlock, kebabCase } from '@sap-cloud-sdk/util';
+import { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiDocument } from '../openapi-types';
 
 /**
@@ -7,13 +8,19 @@ import { OpenApiDocument } from '../openapi-types';
  * @returns The serialized index file contents.
  * @internal
  */
-export function apiIndexFile(openApiDocument: OpenApiDocument): string {
+export function apiIndexFile(
+  openApiDocument: OpenApiDocument,
+  options?: CreateFileOptions
+): string {
   const files = [
     ...openApiDocument.apis.map(api => api.name),
     ...(openApiDocument.schemas.length ? ['schema'] : [])
   ];
   return codeBlock`
-    ${exportAllFiles(files.map(fileName => kebabCase(fileName)))}
+    ${exportAllFiles(
+      files.map(fileName => kebabCase(fileName)),
+      options
+    )}
   `;
 }
 
@@ -23,16 +30,29 @@ export function apiIndexFile(openApiDocument: OpenApiDocument): string {
  * @returns The serialized index file contents.
  * @internal
  */
-export function schemaIndexFile(openApiDocument: OpenApiDocument): string {
-  return exportAllFiles(openApiDocument.schemas.map(schema => schema.fileName));
+export function schemaIndexFile(
+  openApiDocument: OpenApiDocument,
+  options?: CreateFileOptions
+): string {
+  return exportAllFiles(
+    openApiDocument.schemas.map(schema => schema.fileName),
+    options
+  );
 }
 
-function exportAllFiles(fileNames: string[]): string {
+function exportAllFiles(
+  fileNames: string[],
+  options?: CreateFileOptions
+): string {
   return codeBlock`${fileNames
-    .map(fileName => exportAll(fileName))
+    .map(fileName => exportAll(fileName, options))
     .join('\n')}`;
 }
 
-function exportAll(file: string) {
-  return `export * from './${file}';`;
+function exportAll(file: string, options?: CreateFileOptions) {
+  return options?.generateESM
+    ? file === 'schema'
+      ? "export * from './schema/index.js';"
+      : `export * from './${file}.js';`
+    : `export * from './${file}';`;
 }

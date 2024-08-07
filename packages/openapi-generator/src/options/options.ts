@@ -9,7 +9,17 @@ import {
 /**
  * Options to configure OData client generation when using the generator programmatically.
  */
-export type GeneratorOptions = CommonGeneratorOptions;
+export type GeneratorOptions = CommonGeneratorOptions & OpenAPIGeneratorOptions;
+
+/**
+ * Options to configure OpenAPI client generation when using the generator programmatically.
+ */
+export interface OpenAPIGeneratorOptions {
+  /**
+   * Whether to generate ECMAScript modules instead of CommonJS modules.
+   */
+  generateESM?: boolean;
+}
 
 /**
  * @internal
@@ -21,5 +31,11 @@ export type ParsedGeneratorOptions = ParsedOptions<typeof cliOptions>;
  * @internal
  */
 export const cliOptions = {
-  ...getCommonCliOptions('OpenApi')
+  ...getCommonCliOptions('OpenApi'),
+  generateESM: {
+    describe:
+      'When enabled, all generated files follow the ECMAScript module syntax.',
+    type: 'boolean',
+    default: false
+  }
 } as const satisfies Options<GeneratorOptions>;

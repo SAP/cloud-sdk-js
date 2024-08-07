@@ -36,7 +36,8 @@ describe('parseGeneratorOptions', () => {
     prettierConfig: undefined,
     verbose: false,
     overwrite: false,
-    config: undefined
+    config: undefined,
+    generateESM: false
   };
 
   it('gets default options', () => {

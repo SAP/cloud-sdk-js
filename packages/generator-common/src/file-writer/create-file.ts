@@ -32,6 +32,10 @@ export interface CreateFileOptions {
    * Flag to indicate if the file is formatted using prettier - Default is true.
    */
   usePrettier?: boolean;
+  /**
+   * Flag to indicate if the file is generated as ESM.
+   */
+  generateESM?: boolean;
 }
 
 /**

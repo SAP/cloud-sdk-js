@@ -1,7 +1,8 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
   serializeImports,
-  Import
+  Import,
+  CreateFileOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiPersistedSchema } from '../openapi-types';
 import { collectRefs, getSchemaPropertiesDocumentation } from '../schema-util';
@@ -13,8 +14,11 @@ import { serializeSchema } from './schema';
  * @returns The serialized schema file contents.
  * @internal
  */
-export function schemaFile(namedSchema: OpenApiPersistedSchema): string {
-  const imports = serializeImports(getImports(namedSchema));
+export function schemaFile(
+  namedSchema: OpenApiPersistedSchema,
+  options?: CreateFileOptions
+): string {
+  const imports = serializeImports(getImports(namedSchema, options));
 
   return codeBlock`    
     ${imports}
@@ -25,13 +29,18 @@ export function schemaFile(namedSchema: OpenApiPersistedSchema): string {
   `;
 }
 
-function getImports(namedSchema: OpenApiPersistedSchema): Import[] {
+function getImports(
+  namedSchema: OpenApiPersistedSchema,
+  options?: CreateFileOptions
+): Import[] {
   return collectRefs(namedSchema.schema)
     .filter(ref => ref.schemaName !== namedSchema.schemaName)
     .map(ref => ({
       names: [ref.schemaName],
       typeOnly: true,
-      moduleIdentifier: `./${ref.fileName}`
+      moduleIdentifier: options?.generateESM
+        ? `./${ref.fileName}.js`
+        : `./${ref.fileName}`
     }));
 }
 

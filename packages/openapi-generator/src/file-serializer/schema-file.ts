@@ -48,9 +48,13 @@ function getImports(
  * @internal
  */
 export function schemaDocumentation(schema: OpenApiPersistedSchema): string {
+  const schemaDescription = schema.description
+    ? schema.description.endsWith('.')
+      ? schema.description
+      : schema.description + '.'
+    : `Representation of the '${schema.schemaName}' schema.`;
   const lines = [
-    schema.description ||
-      `Representation of the '${schema.schemaName}' schema.`,
+    schemaDescription,
     ...getSchemaPropertiesDocumentation(schema.schemaProperties)
   ];
   return documentationBlock`${lines.join(unixEOL)}`;

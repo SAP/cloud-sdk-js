@@ -4015,17 +4015,10 @@ eslint-plugin-regex@^1.10.0:
   resolved "https://registry.npmjs.org/eslint-plugin-regex/-/eslint-plugin-regex-1.10.0.tgz#d182cedbeb89eb03cd8e53f750f6f92e14fa6f9c"
   integrity sha512-C8/qYKkkbIb0epxKzaz4aw7oVAOmm19fJpR/moUrUToq/vc4xW4sEKMlTQqH6EtNGpvLjYsbbZRlWNWwQGeTSA==
 
-eslint-plugin-unused-imports@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/eslint-plugin-unused-imports/-/eslint-plugin-unused-imports-4.0.1.tgz#b78916ecb82ae6d0f54efb33879c6c7ecb52f080"
-  integrity sha512-rax76s05z64uQgG9YXsWFmXrgjkaK79AvfeAWiSxhPP6RVGxeRaj4+2u+wxxu/mDy2pmJoOy1QTOEALMia2xGQ==
-  dependencies:
-    eslint-rule-composer "^0.3.0"
-
-eslint-rule-composer@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.npmjs.org/eslint-rule-composer/-/eslint-rule-composer-0.3.0.tgz#79320c927b0c5c0d3d3d2b76c8b4a488f25bbaf9"
-  integrity sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==
+eslint-plugin-unused-imports@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.npmjs.org/eslint-plugin-unused-imports/-/eslint-plugin-unused-imports-4.1.2.tgz#a1a9c9276869eb5c0a5c993386cfc09b73256bd2"
+  integrity sha512-A/Ypb0DQlDEzIbcoAv87NpLLcG3iwlE0gBEpS9Ud/62v2v3CoO15lZ/WfGyo2Wq7YraWJ2aE0TeHgJcpor6KQQ==
 
 eslint-rule-docs@^1.1.5:
   version "1.1.235"

@@ -38,7 +38,7 @@
     "chalk": "^4.1.0",
     "logform": "^2.6.0",
     "voca": "^1.4.1",
-    "winston": "^3.13.1",
+    "winston": "^3.14.1",
     "winston-transport": "^4.7.1"
   },
   "devDependencies": {

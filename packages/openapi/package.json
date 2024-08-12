@@ -27,7 +27,7 @@
   "scripts": {
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
-    "test3": "yarn test:unit",
+    "test4": "yarn test:unit",
     "test:unit": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",

@@ -24,7 +24,13 @@
         "@sap-cloud-sdk/mail-client#test",
         "@sap-cloud-sdk/openapi#test",
         "@sap-cloud-sdk/http-client#test",
-        "@sap-cloud-sdk/temporal-de-serializers#test"
+        "@sap-cloud-sdk/temporal-de-serializers#test",
+        "@sap-cloud-sdk/generator#test",
+        "@sap-cloud-sdk/odata-common#test",
+        "@sap-cloud-sdk/odata-v2#test",
+        "@sap-cloud-sdk/odata-v4#test",
+        "@sap-cloud-sdk/openapi-generator#test",
+        "@sap-cloud-sdk/test-util#test"
       ]
     },
     "readme": {

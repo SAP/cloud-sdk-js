@@ -18,7 +18,16 @@
       "dependsOn": ["^compile", "check:dependencies", "check:public-api"]
     },
     "@sap-cloud-sdk/connectivity#test": {
-      "dependsOn": ["@sap-cloud-sdk/generator#test"]
+      "dependsOn": [
+        "@sap-cloud-sdk/util:test",
+        "@sap-cloud-sdk/resilience:test",
+        "@sap-cloud-sdk/mail-client:test",
+        "@sap-cloud-sdk/odata-v4:compile",
+        "@sap-cloud-sdk/odata-v2:compile",
+        "@sap-cloud-sdk/openapi:test",
+        "@sap-cloud-sdk/http-client:test",
+        "@sap-cloud-sdk/temporal-de-serializers:test"
+      ]
     },
     "readme": {
       "dependsOn": ["@sap-cloud-sdk/util#compile"],

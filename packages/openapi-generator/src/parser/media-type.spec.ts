@@ -1,11 +1,11 @@
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
-import { parseApplicationJsonMediaType, parseMediaType } from './media-type';
+import { parseTopLevelMediaType, parseMediaType } from './media-type';
 
 const defaultOptions = { strictNaming: true };
-describe('parseApplicationJsonMediaType', () => {
+describe('parseTopLevelMediaType', () => {
   it('returns undefined if the media type is not supported', async () => {
     expect(
-      parseApplicationJsonMediaType(
+      parseTopLevelMediaType(
         {
           content: { 'application/xml': { schema: { type: 'string' } } }
         },
@@ -17,7 +17,7 @@ describe('parseApplicationJsonMediaType', () => {
 
   it('returns parsed media type for supported media type application/json', async () => {
     expect(
-      parseApplicationJsonMediaType(
+      parseTopLevelMediaType(
         {
           content: { 'application/json': { schema: { type: 'object' } } }
         },
@@ -29,7 +29,7 @@ describe('parseApplicationJsonMediaType', () => {
 
   it('returns parsed media type for supported media type application/merge-patch+json', async () => {
     expect(
-      parseApplicationJsonMediaType(
+      parseTopLevelMediaType(
         {
           content: {
             'application/merge-patch+json': { schema: { type: 'object' } }
@@ -39,6 +39,20 @@ describe('parseApplicationJsonMediaType', () => {
         defaultOptions
       )
     ).toEqual(emptyObjectSchema);
+  });
+
+  it('returns parsed media type for supported media type text/plain', async () => {
+    expect(
+      parseTopLevelMediaType(
+        {
+          content: {
+            'text/plain': { schema: { type: 'integer' } }
+          }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual({ type: 'number' });
   });
 });
 
@@ -87,6 +101,20 @@ describe('parseMediaType', () => {
     ).toEqual(emptyObjectSchema);
   });
 
+  it('returns `any` if there is only wildcard media type */*', async () => {
+    expect(
+      parseMediaType(
+        {
+          content: {
+            '*/*': { schema: { type: 'string' } }
+          }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual({ type: 'any' });
+  });
+
   it('returns parsed media type if there is both application/json and application/merge-patch+json', async () => {
     expect(
       parseMediaType(
@@ -109,6 +137,21 @@ describe('parseMediaType', () => {
           content: {
             'application/json': { schema: { type: 'object' } },
             'application/xml': { schema: { type: 'string' } }
+          }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual({ anyOf: [emptyObjectSchema, { type: 'any' }] });
+  });
+
+  it('returns anyOf schema if there are wildcard and application/json', async () => {
+    expect(
+      parseMediaType(
+        {
+          content: {
+            'application/json': { schema: { type: 'object' } },
+            '*/*': { schema: { type: 'string' } }
           }
         },
         await createTestRefs(),

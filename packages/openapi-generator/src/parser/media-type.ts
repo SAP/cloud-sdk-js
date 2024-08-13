@@ -9,7 +9,9 @@ const logger = createLogger('openapi-generator');
 const allowedMediaTypes = [
   'application/json',
   'application/merge-patch+json',
-  'text/plain'
+  'application/octet-stream',
+  'text/plain',
+  '*/*'
 ];
 /**
  * Parse the type of a resolved request body or response object.
@@ -40,15 +42,6 @@ export function parseTopLevelMediaType(
 }
 
 /**
- * Check if the provided media type is a wildcard.
- * @param mediaTypes - List of all media types parsed from a request body or response object.
- * @returns - `true` if the media type is a wildcard. `false` otherwise.
- */
-function isWildcardMediaType(mediaTypes: string[]): boolean {
-  return mediaTypes.includes('*/*');
-}
-
-/**
  * @internal
  */
 export function parseMediaType(
@@ -68,9 +61,6 @@ export function parseMediaType(
     );
 
     if (!parsedMediaType) {
-      if (isWildcardMediaType(allMediaTypes)) {
-        return { type: 'any' };
-      }
       logger.warn(
         `Could not parse '${allMediaTypes}', because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime.`
       );

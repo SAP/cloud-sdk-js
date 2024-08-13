@@ -66,6 +66,12 @@ export function parseSchema(
     return parseXOfSchema(schema, refs, 'anyOf', options);
   }
 
+  if (schema.type === 'string' && schema.format === 'binary') {
+    return {
+      type: 'Blob'
+    };
+  }
+
   if (schema.not) {
     return {
       not: parseSchema(schema.not, refs, options)

@@ -15,7 +15,7 @@ describe('parseTopLevelMediaType', () => {
     ).toBeUndefined();
   });
 
-  it('returns parsed media type for supported media type application/json', async () => {
+  it('returns parsed schema for supported media type application/json', async () => {
     expect(
       parseTopLevelMediaType(
         {
@@ -27,7 +27,7 @@ describe('parseTopLevelMediaType', () => {
     ).toEqual(emptyObjectSchema);
   });
 
-  it('returns parsed media type for supported media type application/merge-patch+json', async () => {
+  it('returns parsed schema for supported media type application/merge-patch+json', async () => {
     expect(
       parseTopLevelMediaType(
         {
@@ -41,7 +41,7 @@ describe('parseTopLevelMediaType', () => {
     ).toEqual(emptyObjectSchema);
   });
 
-  it('returns parsed media type for supported media type text/plain', async () => {
+  it('returns parsed schema for supported media type text/plain', async () => {
     expect(
       parseTopLevelMediaType(
         {
@@ -54,6 +54,22 @@ describe('parseTopLevelMediaType', () => {
       )
     ).toEqual({ type: 'number' });
   });
+
+  it('returns parsed schema for supported media type application/octet-stream', async () => {
+    expect(
+      parseTopLevelMediaType(
+        {
+          content: {
+            'application/octet-stream': {
+              schema: { type: 'string', format: 'binary' }
+            }
+          }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual({ type: 'Blob' });
+  });
 });
 
 describe('parseMediaType', () => {
@@ -63,7 +79,7 @@ describe('parseMediaType', () => {
     ).toBeUndefined();
   });
 
-  it('returns any schema if there are other schemas', async () => {
+  it('returns type `any` if there is an unsupported media type', async () => {
     expect(
       parseMediaType(
         {
@@ -75,7 +91,7 @@ describe('parseMediaType', () => {
     ).toEqual({ type: 'any' });
   });
 
-  it('returns parsed media type if there is only application/json', async () => {
+  it('returns parsed schema if there is only application/json', async () => {
     expect(
       parseMediaType(
         {
@@ -87,7 +103,7 @@ describe('parseMediaType', () => {
     ).toEqual(emptyObjectSchema);
   });
 
-  it('returns parsed media type if there is only application/merge-patch+json', async () => {
+  it('returns parsed schema if there is only application/merge-patch+json', async () => {
     expect(
       parseMediaType(
         {
@@ -101,7 +117,7 @@ describe('parseMediaType', () => {
     ).toEqual(emptyObjectSchema);
   });
 
-  it('returns `any` if there is only wildcard media type */*', async () => {
+  it('returns parsed schema if there is only wildcard media type */*', async () => {
     expect(
       parseMediaType(
         {
@@ -112,10 +128,10 @@ describe('parseMediaType', () => {
         await createTestRefs(),
         defaultOptions
       )
-    ).toEqual({ type: 'any' });
+    ).toEqual({ type: 'string' });
   });
 
-  it('returns parsed media type if there is both application/json and application/merge-patch+json', async () => {
+  it('returns parsed schema if there is both application/json and application/merge-patch+json', async () => {
     expect(
       parseMediaType(
         {
@@ -130,28 +146,13 @@ describe('parseMediaType', () => {
     ).toEqual(emptyObjectSchema);
   });
 
-  it('returns anyOf schema if there are other schemas and application/json', async () => {
+  it('returns anyOf schema if there are unsupported media type and supported media type', async () => {
     expect(
       parseMediaType(
         {
           content: {
             'application/json': { schema: { type: 'object' } },
             'application/xml': { schema: { type: 'string' } }
-          }
-        },
-        await createTestRefs(),
-        defaultOptions
-      )
-    ).toEqual({ anyOf: [emptyObjectSchema, { type: 'any' }] });
-  });
-
-  it('returns anyOf schema if there are wildcard and application/json', async () => {
-    expect(
-      parseMediaType(
-        {
-          content: {
-            'application/json': { schema: { type: 'object' } },
-            '*/*': { schema: { type: 'string' } }
           }
         },
         await createTestRefs(),

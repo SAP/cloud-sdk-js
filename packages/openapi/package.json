@@ -41,7 +41,7 @@
     "@sap-cloud-sdk/http-client": "^3.18.0",
     "@sap-cloud-sdk/resilience": "^3.18.0",
     "@sap-cloud-sdk/util": "^3.18.0",
-    "axios": "^1.7.3"
+    "axios": "^1.7.4"
   },
   "devDependencies": {
     "nock": "^14.0.0-beta.6",

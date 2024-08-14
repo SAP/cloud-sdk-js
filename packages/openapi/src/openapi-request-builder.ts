@@ -33,7 +33,7 @@ import {
 export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: CustomRequestConfig = {};
-  private _fetchCsrfToken = true;
+  protected _fetchCsrfToken = true;
   private _middlewares: HttpMiddleware[] = [];
 
   /**
@@ -144,7 +144,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * Get http request config.
    * @returns Promise of http request config with origin.
    */
-  private async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
+  protected async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
     const defaultConfig = {
       method: this.method,
       url: this.getPath(),

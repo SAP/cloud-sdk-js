@@ -31,9 +31,9 @@ import {
  * @typeParam ResponseT - Type of the response for the request.
  */
 export class OpenApiRequestBuilder<ResponseT = any> {
+  protected _fetchCsrfToken = true;
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: CustomRequestConfig = {};
-  protected _fetchCsrfToken = true;
   private _middlewares: HttpMiddleware[] = [];
 
   /**

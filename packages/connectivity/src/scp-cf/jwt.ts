@@ -17,6 +17,12 @@ const logger = createLogger({
   messageContext: 'jwt'
 });
 
+/**
+ * @internal
+ */
+export const defaultTenantId = 'provider-tenant';
+
+
 function makeArray(val: string | string[] | undefined): string[] {
   return val ? (Array.isArray(val) ? val : [val]) : [];
 }
@@ -30,6 +36,16 @@ function makeArray(val: string | string[] | undefined): string[] {
 export function userId({ user_id }: JwtPayload): string {
   logger.debug(`JWT user_id is: ${user_id}.`);
   return user_id;
+}
+
+/**
+ * @internal
+ * Get the default tenant ID.
+ * @returns The default tenant ID.
+ */
+export function getDefaultTenantId(): string {
+  logger.debug('Could not determine tenant from XSUAA, identity or destination service binding. Client Credentials token is cached without tenant information.');
+  return defaultTenantId;
 }
 
 /**

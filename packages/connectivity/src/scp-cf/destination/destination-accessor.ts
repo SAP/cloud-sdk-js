@@ -129,8 +129,8 @@ export async function getAllDestinationsFromDestinationService(
   logger.debug(
     'Attempting to retrieve all destinations from destination service.'
   );
-  if (shouldExchangeToken(options)) {
-    options.jwt = await exchangeToken(options);
+  if (shouldExchangeToken(options) && options.jwt) {
+    options.jwt = await exchangeToken(options.jwt);
   }
 
   const token =

@@ -105,11 +105,11 @@
     "license-checker": "^25.0.1",
     "madge": "^6.1.0",
     "prettier": "^3.3.3",
-    "puppeteer": "^23.0.2",
+    "puppeteer": "^23.1.0",
     "semver": "^7.6.3",
     "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",
-    "turbo": "^2.0.12",
+    "turbo": "^2.0.13",
     "typedoc": "^0.25.13",
     "typescript": "~5.4.5"
   },

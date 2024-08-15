@@ -44,7 +44,7 @@ export function userId({ user_id }: JwtPayload): string {
  * @returns The default tenant ID.
  */
 export function getDefaultTenantId(): string {
-  logger.debug('Could not determine tenant from XSUAA, identity or destination service binding. Client Credentials token is cached without tenant information.');
+  logger.debug('Could not determine tenant from JWT nor XSUAA, identity or destination service binding. Client Credentials token is cached without tenant information.');
   return defaultTenantId;
 }
 

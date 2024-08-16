@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { decodeJwt, decodeOrMakeJwt } from '../jwt';
+import { decodeJwt, decodeOrMakeJwt, defaultTenantId } from '../jwt';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   IsolationStrategy,
@@ -17,11 +17,6 @@ const logger = createLogger({
   package: 'connectivity',
   messageContext: 'register-destination'
 });
-
-/**
- * @internal
- */
-const defaultTenantId = 'provider-tenant';
 
 /**
  * Represents options to configure how a destination should be registered.

@@ -25,7 +25,7 @@ describe('package-json', () => {
       url: ''
     },
     devDependencies: {
-      typescript: '^5.4.5'
+      typescript: '~4.5'
     }
   };
 

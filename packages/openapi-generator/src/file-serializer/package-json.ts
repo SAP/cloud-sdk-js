@@ -24,7 +24,7 @@ export function packageJson(options: PackageJsonOptions): string {
           '@sap-cloud-sdk/openapi': `^${options.sdkVersion}`
         },
         devDependencies: {
-          typescript: '^5.4.5'
+          typescript: '~4.5'
         }
       },
       null,

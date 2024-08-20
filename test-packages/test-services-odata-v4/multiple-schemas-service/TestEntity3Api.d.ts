@@ -48,115 +48,25 @@ export declare class TestEntity3Api<
   private _schema?;
   get schema(): {
     KEY_PROPERTY_STRING: OrderableEdmTypeField<
-      TestEntity3<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity3<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     ENUM_PROPERTY: EnumField<
-      TestEntity3<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity3<DeSerializers>,
       DeSerializersT,
       TestEnumType2,
       true,
       true
     >;
     COMPLEX_TYPE_PROPERTY: TestComplexType2Field<
-      TestEntity3<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity3<DeSerializers>,
       DeSerializersT,
       true,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntity3<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntity3<DeSerializers>>;
   };
 }

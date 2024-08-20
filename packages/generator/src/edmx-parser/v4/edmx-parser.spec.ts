@@ -35,9 +35,9 @@ describe('edmx-edmx-parser', () => {
     );
     expect(isBoundValues.length).not.toEqual(0);
 
-    const isBoundValuesWithTrueAndFalseRemoved = isBoundValues
-      .filter(isBound => isBound === 'true')
-      .filter(isBound => isBound === 'false');
+    const isBoundValuesWithTrueAndFalseRemoved = isBoundValues.filter(
+      isBound => isBound !== 'true' && isBound !== 'false'
+    );
     expect(isBoundValuesWithTrueAndFalseRemoved.length).toEqual(0);
   });
 

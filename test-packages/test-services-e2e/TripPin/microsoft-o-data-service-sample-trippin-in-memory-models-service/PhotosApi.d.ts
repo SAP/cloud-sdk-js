@@ -42,87 +42,19 @@ export declare class PhotosApi<
   private _schema?;
   get schema(): {
     ID: OrderableEdmTypeField<
-      Photos<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      Photos<DeSerializers>,
       DeSerializersT,
       'Edm.Int64',
       false,
       true
     >;
     NAME: OrderableEdmTypeField<
-      Photos<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      Photos<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
-    ALL_FIELDS: AllFields<
-      Photos<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<Photos<DeSerializers>>;
   };
 }

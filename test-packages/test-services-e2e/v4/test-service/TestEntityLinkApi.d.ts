@@ -45,116 +45,26 @@ export declare class TestEntityLinkApi<
   private _schema?;
   get schema(): {
     KEY_TEST_ENTITY_LINK: OrderableEdmTypeField<
-      TestEntityLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLink<DeSerializers>,
       DeSerializersT,
       'Edm.Int32',
       false,
       true
     >;
     KEY_TO_TEST_ENTITY: OrderableEdmTypeField<
-      TestEntityLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLink<DeSerializers>,
       DeSerializersT,
       'Edm.Int32',
       false,
       true
     >;
     STRING_PROPERTY: OrderableEdmTypeField<
-      TestEntityLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityLink<DeSerializers>>;
   };
 }

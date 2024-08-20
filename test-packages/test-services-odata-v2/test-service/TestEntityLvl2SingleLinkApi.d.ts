@@ -55,162 +55,40 @@ export declare class TestEntityLvl2SingleLinkApi<
   private _schema?;
   get schema(): {
     KEY_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2SingleLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2SingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     STRING_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2SingleLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2SingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
     BOOLEAN_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2SingleLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2SingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.Boolean',
       true,
       true
     >;
     GUID_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2SingleLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2SingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
       true,
       true
     >;
     INT_16_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2SingleLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2SingleLink<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',
       true,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityLvl2SingleLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityLvl2SingleLink<DeSerializers>>;
   };
 }

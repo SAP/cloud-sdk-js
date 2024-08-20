@@ -55,54 +55,12 @@ export declare class TestEntityEndsWithSomethingElseApi<
   private _schema?;
   get schema(): {
     KEY_PROPERTY: OrderableEdmTypeField<
-      TestEntityEndsWithSomethingElse<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityEndsWithSomethingElse<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityEndsWithSomethingElse<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityEndsWithSomethingElse<DeSerializers>>;
   };
 }

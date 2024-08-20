@@ -51,203 +51,49 @@ export declare class PeopleApi<
   private _schema?;
   get schema(): {
     USER_NAME: OrderableEdmTypeField<
-      People<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      People<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     FIRST_NAME: OrderableEdmTypeField<
-      People<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      People<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     LAST_NAME: OrderableEdmTypeField<
-      People<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      People<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     EMAILS: CollectionField<
-      People<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      People<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
     ADDRESS_INFO: CollectionField<
-      People<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      People<DeSerializers>,
       DeSerializersT,
-      Location<DefaultDeSerializers>,
+      Location,
       true,
       true
     >;
     GENDER: EnumField<
-      People<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      People<DeSerializers>,
       DeSerializersT,
       PersonGender,
       true,
       true
     >;
     CONCURRENCY: OrderableEdmTypeField<
-      People<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      People<DeSerializers>,
       DeSerializersT,
       'Edm.Int64',
       false,
@@ -271,30 +117,6 @@ export declare class PeopleApi<
       DeSerializersT,
       PhotosApi<DeSerializersT>
     >;
-    ALL_FIELDS: AllFields<
-      People<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<People<DeSerializers>>;
   };
 }

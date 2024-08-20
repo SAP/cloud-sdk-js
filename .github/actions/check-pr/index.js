@@ -2,103 +2,42 @@
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 8438:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.validateBody = exports.validateChangesets = exports.validatePostamble = exports.validateTitle = void 0;
+exports.validateTitle = validateTitle;
+exports.validatePostamble = validatePostamble;
+exports.validateChangesets = validateChangesets;
+exports.validateBody = validateBody;
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable jsdoc/require-jsdoc */
-var promises_1 = __nccwpck_require__(3977);
-var node_path_1 = __nccwpck_require__(9411);
-var core_1 = __nccwpck_require__(7117);
-var validCommitTypes = ['feat', 'fix', 'chore'];
+const promises_1 = __nccwpck_require__(3977);
+const node_path_1 = __nccwpck_require__(9411);
+const core_1 = __nccwpck_require__(7117);
+const validCommitTypes = ['feat', 'fix', 'chore'];
 // Expected format: preamble(topic)!: Title text
-function validateTitle(title) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a, preamble, postamble;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    if (!title.includes(':')) {
-                        return [2 /*return*/, (0, core_1.setFailed)('PR title does not adhere to conventional commit guidelines. No preamble found.')];
-                    }
-                    _a = title.split(':'), preamble = _a[0], postamble = _a[1];
-                    return [4 /*yield*/, validatePreamble(preamble)];
-                case 1:
-                    _b.sent();
-                    validatePostamble(postamble);
-                    return [2 /*return*/];
-            }
-        });
-    });
+async function validateTitle(title) {
+    if (!title.includes(':')) {
+        return (0, core_1.setFailed)('PR title does not adhere to conventional commit guidelines. No preamble found.');
+    }
+    const [preamble, postamble] = title.split(':');
+    await validatePreamble(preamble);
+    validatePostamble(postamble);
 }
-exports.validateTitle = validateTitle;
-function validatePreamble(preamble) {
-    return __awaiter(this, void 0, void 0, function () {
-        var groups, commitType, isBreaking, _a, _b;
-        var _c;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
-                case 0:
-                    groups = (_c = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)) === null || _c === void 0 ? void 0 : _c.groups;
-                    if (!groups) {
-                        return [2 /*return*/, (0, core_1.setFailed)('Could not parse preamble. Ensure it follows the conventional commit guidelines.')];
-                    }
-                    commitType = groups.commitType, isBreaking = groups.isBreaking;
-                    validateCommitType(commitType);
-                    _a = validateChangesets;
-                    _b = [preamble,
-                        commitType,
-                        !!isBreaking];
-                    return [4 /*yield*/, extractChangedFilesContents()];
-                case 1:
-                    _a.apply(void 0, _b.concat([_d.sent()]));
-                    return [2 /*return*/];
-            }
-        });
-    });
+async function validatePreamble(preamble) {
+    const groups = preamble.match(/(?<commitType>\w+)?(\((?<topic>\w+)\))?(?<isBreaking>!)?/)?.groups;
+    if (!groups) {
+        return (0, core_1.setFailed)('Could not parse preamble. Ensure it follows the conventional commit guidelines.');
+    }
+    const { commitType, isBreaking } = groups;
+    validateCommitType(commitType);
+    validateChangesets(preamble, commitType, !!isBreaking, await extractChangedFilesContents());
 }
 function validateCommitType(commitType) {
     if (!commitType || !validCommitTypes.includes(commitType)) {
-        return (0, core_1.setFailed)("PR title does not adhere to conventional commit guidelines. Commit type found: ".concat(commitType, ". Must be one of ").concat(validCommitTypes.join(', ')));
+        return (0, core_1.setFailed)(`PR title does not adhere to conventional commit guidelines. Commit type found: ${commitType}. Must be one of ${validCommitTypes.join(', ')}`);
     }
     (0, core_1.info)('✓ Commit type: OK');
 }
@@ -111,7 +50,6 @@ function validatePostamble(title) {
     }
     (0, core_1.info)('✓ Title: OK');
 }
-exports.validatePostamble = validatePostamble;
 function getAllowedBumps(preamble, isBreaking) {
     if (isBreaking) {
         return ['major'];
@@ -124,78 +62,37 @@ function getAllowedBumps(preamble, isBreaking) {
     }
     return [];
 }
-function hasMatchingChangeset(allowedBumps, changedFileContents) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            if (allowedBumps.length) {
-                return [2 /*return*/, changedFileContents.some(function (fileContent) {
-                        return allowedBumps.some(function (bump) {
-                            return new RegExp("(\"|')@sap-cloud-sdk/.*(\"|'): ".concat(bump)).test(fileContent);
-                        });
-                    })];
-            }
-            return [2 /*return*/, true];
-        });
-    });
+async function hasMatchingChangeset(allowedBumps, changedFileContents) {
+    if (allowedBumps.length) {
+        return changedFileContents.some(fileContent => allowedBumps.some(bump => new RegExp(`("|')@sap-cloud-sdk/.*("|'): ${bump}`).test(fileContent)));
+    }
+    return true;
 }
-function extractChangedFilesContents() {
-    return __awaiter(this, void 0, void 0, function () {
-        var changedFilesStr, changedFiles, fileContents;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    changedFilesStr = (0, core_1.getInput)('changed-files').trim();
-                    changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
-                    return [4 /*yield*/, Promise.all(changedFiles.map(function (file) { return (0, promises_1.readFile)(file, 'utf-8'); }))];
-                case 1:
-                    fileContents = _a.sent();
-                    return [2 /*return*/, fileContents];
-            }
-        });
-    });
+async function extractChangedFilesContents() {
+    const changedFilesStr = (0, core_1.getInput)('changed-files').trim();
+    const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
+    const fileContents = await Promise.all(changedFiles.map(file => (0, promises_1.readFile)(file, 'utf-8')));
+    return fileContents;
 }
-function validateChangesets(preamble, commitType, isBreaking, fileContents) {
-    return __awaiter(this, void 0, void 0, function () {
-        var allowedBumps;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    allowedBumps = getAllowedBumps(commitType, isBreaking);
-                    return [4 /*yield*/, hasMatchingChangeset(allowedBumps, fileContents)];
-                case 1:
-                    if (!(_a.sent())) {
-                        return [2 /*return*/, (0, core_1.setFailed)("Preamble '".concat(preamble, "' requires a changeset file with bump ").concat(allowedBumps
-                                .map(function (bump) { return "'".concat(bump, "'"); })
-                                .join(' or '), "."))];
-                    }
-                    (0, core_1.info)('✓ Changesets: OK');
-                    return [2 /*return*/];
-            }
-        });
-    });
+async function validateChangesets(preamble, commitType, isBreaking, fileContents) {
+    const allowedBumps = getAllowedBumps(commitType, isBreaking);
+    if (!(await hasMatchingChangeset(allowedBumps, fileContents))) {
+        return (0, core_1.setFailed)(`Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
+            .map(bump => `'${bump}'`)
+            .join(' or ')}.`);
+    }
+    (0, core_1.info)('✓ Changesets: OK');
 }
-exports.validateChangesets = validateChangesets;
-function validateBody(body) {
-    return __awaiter(this, void 0, void 0, function () {
-        var template;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, promises_1.readFile)((0, node_path_1.resolve)('.github', 'PULL_REQUEST_TEMPLATE.md'), 'utf-8')];
-                case 1:
-                    template = _a.sent();
-                    if (!body || body === template) {
-                        return [2 /*return*/, (0, core_1.setFailed)('PR must have a description.')];
-                    }
-                    if (body.includes(template)) {
-                        return [2 /*return*/, (0, core_1.setFailed)('PR template must not be ignored.')];
-                    }
-                    (0, core_1.info)('✓ Body: OK');
-                    return [2 /*return*/];
-            }
-        });
-    });
+async function validateBody(body) {
+    const template = await (0, promises_1.readFile)((0, node_path_1.resolve)('.github', 'PULL_REQUEST_TEMPLATE.md'), 'utf-8');
+    if (!body || body === template) {
+        return (0, core_1.setFailed)('PR must have a description.');
+    }
+    if (body.includes(template)) {
+        return (0, core_1.setFailed)('PR template must not be ignored.');
+    }
+    (0, core_1.info)('✓ Body: OK');
 }
-exports.validateBody = validateBody;
 
 
 /***/ }),
@@ -31297,9 +31194,9 @@ var __webpack_exports__ = {};
 var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var core_1 = __nccwpck_require__(7117);
-var github_1 = __nccwpck_require__(4005);
-var validators_1 = __nccwpck_require__(8438);
+const core_1 = __nccwpck_require__(7117);
+const github_1 = __nccwpck_require__(4005);
+const validators_1 = __nccwpck_require__(8438);
 try {
     (0, validators_1.validateTitle)(github_1.context.payload.pull_request.title);
     (0, validators_1.validateBody)(github_1.context.payload.pull_request.body.replace(/\r\n/g, '\n'));

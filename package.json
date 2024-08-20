@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "3.18.0",
+  "version": "3.18.1",
   "private": true,
   "sideEffects": false,
   "packageManager": "yarn@1.22.18",
@@ -92,7 +92,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.4",
-    "@types/node": "^18.19.44",
+    "@types/node": "^18.19.45",
     "@types/uuid": "^10.0.0",
     "@types/voca": "^1.4.6",
     "axios": "^1.7.4",

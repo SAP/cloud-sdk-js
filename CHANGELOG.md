@@ -28,6 +28,16 @@
 
 - 
 
+# 3.18.1
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.18.1
+
+## Fixed Issues
+
+- [connectivity] Fix IAS to XSUAA token exchange to have less strict verification.
+  - @sap-cloud-sdk/resilience@3.18.1
+  - @sap-cloud-sdk/util@3.18.1 (c1bf319)
+
 # 3.18.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.18.0

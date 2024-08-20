@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.18.1
+
+### Patch Changes
+
+- c1bf319: [Fixed Issue] Fix IAS to XSUAA token exchange to have less strict verification.
+  - @sap-cloud-sdk/resilience@3.18.1
+  - @sap-cloud-sdk/util@3.18.1
+
 ## 3.18.0
 
 ### Minor Changes

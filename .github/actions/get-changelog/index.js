@@ -7,7 +7,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getChangelog = void 0;
+exports.getChangelog = getChangelog;
 var fs_1 = __nccwpck_require__(7147);
 var get_package_version_1 = __nccwpck_require__(7761);
 var unixEOL = '\n';
@@ -21,7 +21,6 @@ function getChangelog(v) {
     var logs = olderLogs.split("".concat(unixEOL, "# "))[0];
     return logs.slice(logs.indexOf("".concat(unixEOL, "##")) + 1);
 }
-exports.getChangelog = getChangelog;
 
 
 /***/ }),

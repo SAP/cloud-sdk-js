@@ -111,7 +111,7 @@
     "ts-node": "^10.9.2",
     "turbo": "^2.0.14",
     "typedoc": "^0.25.13",
-    "typescript": "^5.5.4"
+    "typescript": "~5.5.4"
   },
   "resolutions": {
     "@sap/cds": "^6.1.1",

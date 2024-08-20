@@ -49,6 +49,6 @@
     "@sap-cloud-sdk/test-services-odata-v2": "^3.18.1",
     "@sap-cloud-sdk/resilience": "^3.18.1",
     "nock": "^14.0.0-beta.6",
-    "typescript": "^5.5.4"
+    "typescript": "~5.5.4"
   }
 }

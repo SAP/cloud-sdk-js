@@ -49,319 +49,77 @@ export declare class TestEntityApi<
   private _schema?;
   get schema(): {
     KEY_TEST_ENTITY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Int32',
       false,
       true
     >;
     STRING_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
     GUID_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
       true,
       true
     >;
     BOOLEAN_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Boolean',
       true,
       true
     >;
     INT_64_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Int64',
       true,
       true
     >;
     DOUBLE_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Double',
       true,
       true
     >;
     DECIMAL_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Decimal',
       true,
       true
     >;
     DATE_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.Date',
       true,
       true
     >;
     TIME_OF_DAY_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.TimeOfDay',
       true,
       true
     >;
     DATA_TIME_OFFSET_DATA_TIME_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.DateTimeOffset',
       true,
       true
     >;
     DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: OrderableEdmTypeField<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.DateTimeOffset',
       true,
@@ -376,30 +134,6 @@ export declare class TestEntityApi<
       DeSerializersT,
       TestEntityLinkApi<DeSerializersT>
     >;
-    ALL_FIELDS: AllFields<
-      TestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntity<DeSerializers>>;
   };
 }

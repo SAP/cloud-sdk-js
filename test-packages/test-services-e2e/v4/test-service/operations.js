@@ -1,6 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.operations = exports.createTestEntityByIdReturnId = exports.createTestEntityById = exports.returnSapCloudSdk = exports.returnInt = exports.returnCollection = exports.getByKeyWithMultipleKeys = exports.getByKey = exports.getAll = exports.concatStrings = void 0;
+exports.operations = void 0;
+exports.concatStrings = concatStrings;
+exports.getAll = getAll;
+exports.getByKey = getByKey;
+exports.getByKeyWithMultipleKeys = getByKeyWithMultipleKeys;
+exports.returnCollection = returnCollection;
+exports.returnInt = returnInt;
+exports.returnSapCloudSdk = returnSapCloudSdk;
+exports.createTestEntityById = createTestEntityById;
+exports.createTestEntityByIdReturnId = createTestEntityByIdReturnId;
 /*
  * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -20,7 +29,6 @@ function concatStrings(parameters, deSerializers = odata_v4_1.defaultDeSerialize
     };
     return new odata_v4_1.OperationRequestBuilder('/odata/test-service', 'concatStrings', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)), params, deSerializers, 'function');
 }
-exports.concatStrings = concatStrings;
 /**
  * Get All.
  * @param parameters - Object containing all parameters for the function.
@@ -30,7 +38,6 @@ function getAll(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/odata/test-service', 'getAll', data => (0, odata_v4_1.transformReturnValueForEntityList)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers, 'function');
 }
-exports.getAll = getAll;
 /**
  * Get By Key.
  * @param parameters - Object containing all parameters for the function.
@@ -42,7 +49,6 @@ function getByKey(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     };
     return new odata_v4_1.OperationRequestBuilder('/odata/test-service', 'getByKey', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers, 'function');
 }
-exports.getByKey = getByKey;
 /**
  * Get By Key With Multiple Keys.
  * @param parameters - Object containing all parameters for the function.
@@ -56,7 +62,6 @@ function getByKeyWithMultipleKeys(parameters, deSerializers = odata_v4_1.default
     };
     return new odata_v4_1.OperationRequestBuilder('/odata/test-service', 'getByKeyWithMultipleKeys', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityWithMultipleKeysApi), params, deSerializers, 'function');
 }
-exports.getByKeyWithMultipleKeys = getByKeyWithMultipleKeys;
 /**
  * Return Collection.
  * @param parameters - Object containing all parameters for the function.
@@ -68,7 +73,6 @@ function returnCollection(parameters, deSerializers = odata_v4_1.defaultDeSerial
     };
     return new odata_v4_1.OperationRequestBuilder('/odata/test-service', 'returnCollection', data => (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val => (0, odata_v4_1.edmToTs)(val, 'Edm.Int32', deSerializers)), params, deSerializers, 'function');
 }
-exports.returnCollection = returnCollection;
 /**
  * Return Int.
  * @param parameters - Object containing all parameters for the function.
@@ -80,7 +84,6 @@ function returnInt(parameters, deSerializers = odata_v4_1.defaultDeSerializers) 
     };
     return new odata_v4_1.OperationRequestBuilder('/odata/test-service', 'returnInt', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32', deSerializers)), params, deSerializers, 'function');
 }
-exports.returnInt = returnInt;
 /**
  * Return Sap Cloud Sdk.
  * @param parameters - Object containing all parameters for the function.
@@ -90,7 +93,6 @@ function returnSapCloudSdk(parameters, deSerializers = odata_v4_1.defaultDeSeria
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/odata/test-service', 'returnSapCloudSdk', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)), params, deSerializers, 'function');
 }
-exports.returnSapCloudSdk = returnSapCloudSdk;
 /**
  * Create Test Entity By Id.
  * @param parameters - Object containing all parameters for the action.
@@ -102,7 +104,6 @@ function createTestEntityById(parameters, deSerializers = odata_v4_1.defaultDeSe
     };
     return new odata_v4_1.OperationRequestBuilder('/odata/test-service', 'createTestEntityById', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers, 'action');
 }
-exports.createTestEntityById = createTestEntityById;
 /**
  * Create Test Entity By Id Return Id.
  * @param parameters - Object containing all parameters for the action.
@@ -114,7 +115,6 @@ function createTestEntityByIdReturnId(parameters, deSerializers = odata_v4_1.def
     };
     return new odata_v4_1.OperationRequestBuilder('/odata/test-service', 'createTestEntityByIdReturnId', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32', deSerializers)), params, deSerializers, 'action');
 }
-exports.createTestEntityByIdReturnId = createTestEntityByIdReturnId;
 exports.operations = {
     concatStrings,
     getAll,

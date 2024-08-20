@@ -53,58 +53,12 @@ export declare class TestEntityWithEnumKeyApi<
   private _schema?;
   get schema(): {
     KEY_PROPERTY_ENUM_1: EnumField<
-      TestEntityWithEnumKey<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityWithEnumKey<DeSerializers>,
       DeSerializersT,
       TestEnumType,
       false,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityWithEnumKey<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityWithEnumKey<DeSerializers>>;
   };
 }

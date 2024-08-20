@@ -42,54 +42,12 @@ export declare class CaseTestApi<
   private _schema?;
   get schema(): {
     KEY_PROPERTY_STRING: OrderableEdmTypeField<
-      CaseTest<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      CaseTest<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    ALL_FIELDS: AllFields<
-      CaseTest<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<CaseTest<DeSerializers>>;
   };
 }

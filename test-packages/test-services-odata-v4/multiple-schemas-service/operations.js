@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.operations = exports.testActionImportNoParameterComplexReturnType2 = exports.testActionImportNoParameterComplexReturnType1 = exports.testFunctionImportEntityReturnType2 = exports.testFunctionImportEntityReturnType1 = void 0;
+exports.operations = void 0;
+exports.testFunctionImportEntityReturnType1 = testFunctionImportEntityReturnType1;
+exports.testFunctionImportEntityReturnType2 = testFunctionImportEntityReturnType2;
+exports.testActionImportNoParameterComplexReturnType1 = testActionImportNoParameterComplexReturnType1;
+exports.testActionImportNoParameterComplexReturnType2 = testActionImportNoParameterComplexReturnType2;
 /*
  * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -19,7 +23,6 @@ function testFunctionImportEntityReturnType1(parameters, deSerializers = odata_v
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.multipleSchemasService)(deSerializers).testEntity1Api), params, deSerializers, 'function');
 }
-exports.testFunctionImportEntityReturnType1 = testFunctionImportEntityReturnType1;
 /**
  * Test Function Import Entity Return Type 2.
  * @param parameters - Object containing all parameters for the function.
@@ -29,7 +32,6 @@ function testFunctionImportEntityReturnType2(parameters, deSerializers = odata_v
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.multipleSchemasService)(deSerializers).testEntity2Api), params, deSerializers, 'function');
 }
-exports.testFunctionImportEntityReturnType2 = testFunctionImportEntityReturnType2;
 /**
  * Test Action Import No Parameter Complex Return Type 1.
  * @param parameters - Object containing all parameters for the action.
@@ -39,7 +41,6 @@ function testActionImportNoParameterComplexReturnType1(parameters, deSerializers
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType1', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType1_1.TestComplexType1)), params, deSerializers, 'action');
 }
-exports.testActionImportNoParameterComplexReturnType1 = testActionImportNoParameterComplexReturnType1;
 /**
  * Test Action Import No Parameter Complex Return Type 2.
  * @param parameters - Object containing all parameters for the action.
@@ -49,7 +50,6 @@ function testActionImportNoParameterComplexReturnType2(parameters, deSerializers
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterComplexReturnType2', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType2_1.TestComplexType2)), params, deSerializers, 'action');
 }
-exports.testActionImportNoParameterComplexReturnType2 = testActionImportNoParameterComplexReturnType2;
 exports.operations = {
     testFunctionImportEntityReturnType1,
     testFunctionImportEntityReturnType2,

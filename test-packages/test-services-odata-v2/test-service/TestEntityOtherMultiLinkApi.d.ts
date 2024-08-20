@@ -55,54 +55,12 @@ export declare class TestEntityOtherMultiLinkApi<
   private _schema?;
   get schema(): {
     KEY_PROPERTY: OrderableEdmTypeField<
-      TestEntityOtherMultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityOtherMultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityOtherMultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityOtherMultiLink<DeSerializers>>;
   };
 }

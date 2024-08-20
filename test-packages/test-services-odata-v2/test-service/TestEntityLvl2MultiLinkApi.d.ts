@@ -52,162 +52,40 @@ export declare class TestEntityLvl2MultiLinkApi<
   private _schema?;
   get schema(): {
     KEY_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     STRING_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
     BOOLEAN_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Boolean',
       true,
       true
     >;
     GUID_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
       true,
       true
     >;
     INT_16_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl2MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl2MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',
       true,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityLvl2MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityLvl2MultiLink<DeSerializers>>;
   };
 }

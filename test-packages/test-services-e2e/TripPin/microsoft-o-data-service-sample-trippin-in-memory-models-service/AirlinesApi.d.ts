@@ -42,87 +42,19 @@ export declare class AirlinesApi<
   private _schema?;
   get schema(): {
     AIRLINE_CODE: OrderableEdmTypeField<
-      Airlines<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      Airlines<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     NAME: OrderableEdmTypeField<
-      Airlines<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      Airlines<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    ALL_FIELDS: AllFields<
-      Airlines<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<Airlines<DeSerializers>>;
   };
 }

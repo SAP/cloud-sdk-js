@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.operations = exports.resetDataSource = exports.getNearestAirport = void 0;
+exports.operations = void 0;
+exports.getNearestAirport = getNearestAirport;
+exports.resetDataSource = resetDataSource;
 /*
  * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -21,7 +23,6 @@ function getNearestAirport(parameters, deSerializers = odata_v4_1.defaultDeSeria
     return new odata_v4_1.OperationRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'GetNearestAirport', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.microsoftODataServiceSampleTrippinInMemoryModelsService)(deSerializers)
         .airportsApi), params, deSerializers, 'function');
 }
-exports.getNearestAirport = getNearestAirport;
 /**
  * Reset Data Source.
  * @param parameters - Object containing all parameters for the action.
@@ -31,7 +32,6 @@ function resetDataSource(parameters, deSerializers = odata_v4_1.defaultDeSeriali
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/', 'ResetDataSource', data => (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined), params, deSerializers, 'action');
 }
-exports.resetDataSource = resetDataSource;
 exports.operations = {
     getNearestAirport,
     resetDataSource

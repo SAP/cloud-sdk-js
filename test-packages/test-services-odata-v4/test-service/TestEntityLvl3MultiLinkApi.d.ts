@@ -52,116 +52,26 @@ export declare class TestEntityLvl3MultiLinkApi<
   private _schema?;
   get schema(): {
     STRING_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl3MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl3MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
     GUID_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl3MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl3MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.Guid',
       true,
       true
     >;
     KEY_PROPERTY: OrderableEdmTypeField<
-      TestEntityLvl3MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityLvl3MultiLink<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityLvl3MultiLink<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityLvl3MultiLink<DeSerializers>>;
   };
 }

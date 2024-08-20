@@ -52,54 +52,12 @@ export declare class MultiSchemaTestEntityApi<
   private _schema?;
   get schema(): {
     KEY_PROPERTY: OrderableEdmTypeField<
-      MultiSchemaTestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      MultiSchemaTestEntity<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
-    ALL_FIELDS: AllFields<
-      MultiSchemaTestEntity<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<MultiSchemaTestEntity<DeSerializers>>;
   };
 }

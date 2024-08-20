@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defaultMultipleSchemasServicePath = exports.changeset = exports.batch = void 0;
+exports.defaultMultipleSchemasServicePath = void 0;
+exports.batch = batch;
+exports.changeset = changeset;
 /*
  * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -11,10 +13,8 @@ const util_1 = require("@sap-cloud-sdk/util");
 function batch(first, ...rest) {
     return new odata_v2_1.ODataBatchRequestBuilder(exports.defaultMultipleSchemasServicePath, (0, util_1.transformVariadicArgumentToArray)(first, rest));
 }
-exports.batch = batch;
 function changeset(first, ...rest) {
     return new odata_v2_1.BatchChangeSet((0, util_1.transformVariadicArgumentToArray)(first, rest));
 }
-exports.changeset = changeset;
 exports.defaultMultipleSchemasServicePath = '/';
 //# sourceMappingURL=BatchRequest.js.map

@@ -53,7 +53,7 @@ exports.TestCaseApi = {
      * @param headerParameters - Object containing the following keys: requiredHeaderParam.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    testCaseOptionalQueryRequiredHeader: (body, queryParameters, headerParameters) => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/parameters', {
+    testCaseOptionalQueryRequiredHeader: (body, headerParameters, queryParameters) => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/parameters', {
         body,
         queryParameters,
         headerParameters

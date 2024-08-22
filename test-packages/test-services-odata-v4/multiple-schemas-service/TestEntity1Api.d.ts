@@ -48,144 +48,32 @@ export declare class TestEntity1Api<
   private _schema?;
   get schema(): {
     KEY_PROPERTY_STRING: OrderableEdmTypeField<
-      TestEntity1<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity1<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     INT_16_PROPERTY: OrderableEdmTypeField<
-      TestEntity1<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity1<DeSerializers>,
       DeSerializersT,
       'Edm.Int16',
       true,
       true
     >;
     ENUM_PROPERTY: EnumField<
-      TestEntity1<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity1<DeSerializers>,
       DeSerializersT,
       TestEnumType1,
       true,
       true
     >;
     COMPLEX_TYPE_PROPERTY: TestComplexType1Field<
-      TestEntity1<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity1<DeSerializers>,
       DeSerializersT,
       true,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntity1<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntity1<DeSerializers>>;
   };
 }

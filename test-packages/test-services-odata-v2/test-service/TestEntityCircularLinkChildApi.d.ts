@@ -58,27 +58,7 @@ export declare class TestEntityCircularLinkChildApi<
   private _schema?;
   get schema(): {
     KEY_PROPERTY: OrderableEdmTypeField<
-      TestEntityCircularLinkChild<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityCircularLinkChild<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
@@ -93,28 +73,6 @@ export declare class TestEntityCircularLinkChildApi<
       DeSerializersT,
       TestEntityCircularLinkChildApi<DeSerializersT>
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityCircularLinkChild<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityCircularLinkChild<DeSerializers>>;
   };
 }

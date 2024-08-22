@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.multipleSchemasService = void 0;
+exports.multipleSchemasService = multipleSchemasService;
 /*
  * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -16,7 +16,6 @@ const BatchRequest_1 = require("./BatchRequest");
 function multipleSchemasService(deSerializers = odata_v4_1.defaultDeSerializers) {
     return new MultipleSchemasService((0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers));
 }
-exports.multipleSchemasService = multipleSchemasService;
 class MultipleSchemasService {
     constructor(deSerializers) {
         this.apis = {};

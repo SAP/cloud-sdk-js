@@ -238,7 +238,7 @@ describe('serializeOperation', () => {
        * @param headerParameters - Object containing the following keys: resource-group.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */
-      getFn: (queryParameters: {'limit'?: number, 'page'?: number}, headerParameters: {'resource-group': string}) => new OpenApiRequestBuilder<any>(
+      getFn: (headerParameters: {'resource-group': string}, queryParameters?: {'limit'?: number, 'page'?: number}) => new OpenApiRequestBuilder<any>(
         'get',
         "test",
         {

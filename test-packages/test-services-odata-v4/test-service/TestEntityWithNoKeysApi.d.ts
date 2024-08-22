@@ -49,58 +49,12 @@ export declare class TestEntityWithNoKeysApi<
   private _schema?;
   get schema(): {
     NORMAL_PROPERTY: OrderableEdmTypeField<
-      TestEntityWithNoKeys<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityWithNoKeys<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       true,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityWithNoKeys<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityWithNoKeys<DeSerializers>>;
   };
 }

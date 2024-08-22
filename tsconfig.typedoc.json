@@ -85,7 +85,6 @@
     "includeVersion": true,
     "hideGenerator": true,
     "excludePrivate": true,
-    "includes": "packages",
     "treatWarningsAsErrors": true,
     "validation": {
       "invalidLink": true

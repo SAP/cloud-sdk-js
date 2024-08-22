@@ -55,116 +55,26 @@ export declare class TestEntityWithMultipleKeysApi<
   private _schema?;
   get schema(): {
     KEY_TEST_ENTITY_WITH_MULTIPLE_KEYS: OrderableEdmTypeField<
-      TestEntityWithMultipleKeys<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityWithMultipleKeys<DeSerializers>,
       DeSerializersT,
       'Edm.Int32',
       false,
       true
     >;
     STRING_PROPERTY_WITH_MULTIPLE_KEYS: OrderableEdmTypeField<
-      TestEntityWithMultipleKeys<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityWithMultipleKeys<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     BOOLEAN_PROPERTY_WITH_MULTIPLE_KEYS: OrderableEdmTypeField<
-      TestEntityWithMultipleKeys<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntityWithMultipleKeys<DeSerializers>,
       DeSerializersT,
       'Edm.Boolean',
       false,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntityWithMultipleKeys<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntityWithMultipleKeys<DeSerializers>>;
   };
 }

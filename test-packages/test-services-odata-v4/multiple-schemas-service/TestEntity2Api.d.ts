@@ -45,87 +45,19 @@ export declare class TestEntity2Api<
   private _schema?;
   get schema(): {
     KEY_PROPERTY_STRING: OrderableEdmTypeField<
-      TestEntity2<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity2<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     SINGLE_PROPERTY: OrderableEdmTypeField<
-      TestEntity2<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      TestEntity2<DeSerializers>,
       DeSerializersT,
       'Edm.Single',
       true,
       true
     >;
-    ALL_FIELDS: AllFields<
-      TestEntity2<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<TestEntity2<DeSerializers>>;
   };
 }

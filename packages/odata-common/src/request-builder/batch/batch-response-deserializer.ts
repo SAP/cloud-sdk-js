@@ -68,10 +68,12 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
         this.responseDataAccessor,
         this.deserializer
       ),
-      isSuccess: () => true,
-      isError: () => false,
-      isReadResponse: () => true,
-      isWriteResponses: () => false
+      isSuccess: (): this is
+        | ReadResponse<DeSerializersT>
+        | WriteResponses<DeSerializersT> => true,
+      isError: (): this is ErrorResponse => false,
+      isReadResponse: (): this is ReadResponse<DeSerializersT> => true,
+      isWriteResponses: (): this is WriteResponses<DeSerializersT> => false
     };
   }
 
@@ -79,10 +81,12 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
     return {
       ...responseData,
       responseType: 'ErrorResponse',
-      isSuccess: () => false,
-      isError: () => true,
-      isReadResponse: () => false,
-      isWriteResponses: () => false
+      isSuccess: (): this is
+        | ReadResponse<DeSerializersT>
+        | WriteResponses<DeSerializersT> => false,
+      isError: (): this is ErrorResponse => true,
+      isReadResponse: (): this is ReadResponse<DeSerializersT> => false,
+      isWriteResponses: (): this is WriteResponses<DeSerializersT> => false
     };
   }
 
@@ -108,10 +112,12 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
       responses: changesetData.map(subResponseData =>
         this.deserializeChangeSetSubResponse(subResponseData)
       ),
-      isSuccess: () => true,
-      isError: () => false,
-      isReadResponse: () => false,
-      isWriteResponses: () => true
+      isSuccess: (): this is
+        | ReadResponse<DeSerializersT>
+        | WriteResponses<DeSerializersT> => true,
+      isError: (): this is ErrorResponse => false,
+      isReadResponse: (): this is ReadResponse<DeSerializersT> => false,
+      isWriteResponses: (): this is WriteResponses<DeSerializersT> => true
     };
   }
 

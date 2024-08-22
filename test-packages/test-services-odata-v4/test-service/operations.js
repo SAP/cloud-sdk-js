@@ -1,6 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.operations = exports.testActionImportNullableTest = exports.testActionImportSharedEntityReturnTypeCollection = exports.testActionImportSharedEntityReturnType = exports.testActionImportNoParameterEntityReturnType = exports.testActionImportUnsupportedEdmTypes = exports.testActionImportMultipleParameterComplexReturnType = exports.testActionImportNoParameterNoReturnType = exports.testFunctionImportWithDifferentName = exports.testFunctionImportMultipleParams = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportComplexReturnType = exports.testFunctionImportSharedEntityReturnTypeCollection = exports.testFunctionImportSharedEntityReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportNullableTest = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = void 0;
+exports.operations = void 0;
+exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
+exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnTypeCollection;
+exports.testFunctionImportNullableTest = testFunctionImportNullableTest;
+exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
+exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
+exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntityReturnType;
+exports.testFunctionImportSharedEntityReturnTypeCollection = testFunctionImportSharedEntityReturnTypeCollection;
+exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnType;
+exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComplexReturnTypeCollection;
+exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
+exports.testFunctionImportWithDifferentName = testFunctionImportWithDifferentName;
+exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoReturnType;
+exports.testActionImportMultipleParameterComplexReturnType = testActionImportMultipleParameterComplexReturnType;
+exports.testActionImportUnsupportedEdmTypes = testActionImportUnsupportedEdmTypes;
+exports.testActionImportNoParameterEntityReturnType = testActionImportNoParameterEntityReturnType;
+exports.testActionImportSharedEntityReturnType = testActionImportSharedEntityReturnType;
+exports.testActionImportSharedEntityReturnTypeCollection = testActionImportSharedEntityReturnTypeCollection;
+exports.testActionImportNullableTest = testActionImportNullableTest;
 /*
  * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -18,7 +36,6 @@ function testFunctionImportEdmReturnType(parameters, deSerializers = odata_v4_1.
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnType', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.Boolean', deSerializers)), params, deSerializers, 'function');
 }
-exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
 /**
  * Test Function Import Edm Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
@@ -28,7 +45,6 @@ function testFunctionImportEdmReturnTypeCollection(parameters, deSerializers = o
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEdmReturnTypeCollection', data => (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val => (0, odata_v4_1.edmToTs)(val, 'Edm.String', deSerializers)), params, deSerializers, 'function');
 }
-exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnTypeCollection;
 /**
  * Test Function Import Nullable Test.
  * @param parameters - Object containing all parameters for the function.
@@ -42,7 +58,6 @@ function testFunctionImportNullableTest(parameters, deSerializers = odata_v4_1.d
     };
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportNullableTest', data => (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val => (0, odata_v4_1.edmToTs)(val, 'Edm.String', deSerializers)), params, deSerializers, 'function');
 }
-exports.testFunctionImportNullableTest = testFunctionImportNullableTest;
 /**
  * Test Function Import Entity Return Type.
  * @param parameters - Object containing all parameters for the function.
@@ -52,7 +67,6 @@ function testFunctionImportEntityReturnType(parameters, deSerializers = odata_v4
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers, 'function');
 }
-exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
 /**
  * Test Function Import Entity Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
@@ -62,7 +76,6 @@ function testFunctionImportEntityReturnTypeCollection(parameters, deSerializers 
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', data => (0, odata_v4_1.transformReturnValueForEntityList)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers, 'function');
 }
-exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
 /**
  * Test Function Import Shared Entity Return Type. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
@@ -72,7 +85,6 @@ function testFunctionImportSharedEntityReturnType(parameters, deSerializers = od
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnType', data => (0, odata_v4_1.throwErrorWhenReturnTypeIsUnionType)(data, 'TestFunctionImportSharedEntityReturnType'), params, deSerializers, 'function');
 }
-exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntityReturnType;
 /**
  * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist for this function import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the function.
@@ -82,7 +94,6 @@ function testFunctionImportSharedEntityReturnTypeCollection(parameters, deSerial
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeCollection', data => (0, odata_v4_1.throwErrorWhenReturnTypeIsUnionType)(data, 'TestFunctionImportSharedEntityReturnTypeCollection'), params, deSerializers, 'function');
 }
-exports.testFunctionImportSharedEntityReturnTypeCollection = testFunctionImportSharedEntityReturnTypeCollection;
 /**
  * Test Function Import Complex Return Type.
  * @param parameters - Object containing all parameters for the function.
@@ -92,7 +103,6 @@ function testFunctionImportComplexReturnType(parameters, deSerializers = odata_v
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnType', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers, 'function');
 }
-exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnType;
 /**
  * Test Function Import Complex Return Type Collection.
  * @param parameters - Object containing all parameters for the function.
@@ -102,7 +112,6 @@ function testFunctionImportComplexReturnTypeCollection(parameters, deSerializers
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportComplexReturnTypeCollection', data => (0, odata_v4_1.transformReturnValueForComplexTypeList)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers, 'function');
 }
-exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComplexReturnTypeCollection;
 /**
  * Test Function Import Multiple Params.
  * @param parameters - Object containing all parameters for the function.
@@ -117,7 +126,6 @@ function testFunctionImportMultipleParams(parameters, deSerializers = odata_v4_1
     };
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportMultipleParams', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.Boolean', deSerializers)), params, deSerializers, 'function');
 }
-exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
 /**
  * Test Function Import With Different Name.
  * @param parameters - Object containing all parameters for the function.
@@ -127,7 +135,6 @@ function testFunctionImportWithDifferentName(parameters, deSerializers = odata_v
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportWithDifferentName', data => (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined), params, deSerializers, 'function');
 }
-exports.testFunctionImportWithDifferentName = testFunctionImportWithDifferentName;
 /**
  * Test Action Import No Parameter No Return Type.
  * @param parameters - Object containing all parameters for the action.
@@ -137,7 +144,6 @@ function testActionImportNoParameterNoReturnType(parameters, deSerializers = oda
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterNoReturnType', data => (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined), params, deSerializers, 'action');
 }
-exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoReturnType;
 /**
  * Test Action Import Multiple Parameter Complex Return Type.
  * @param parameters - Object containing all parameters for the action.
@@ -152,7 +158,6 @@ function testActionImportMultipleParameterComplexReturnType(parameters, deSerial
     };
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportMultipleParameterComplexReturnType', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers, 'action');
 }
-exports.testActionImportMultipleParameterComplexReturnType = testActionImportMultipleParameterComplexReturnType;
 /**
  * Test Action Import Unsupported Edm Types.
  * @param parameters - Object containing all parameters for the action.
@@ -164,7 +169,6 @@ function testActionImportUnsupportedEdmTypes(parameters, deSerializers = odata_v
     };
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportUnsupportedEdmTypes', data => (0, odata_v4_1.transformReturnValueForEdmType)(data, val => (0, odata_v4_1.edmToTs)(val.value, 'Edm.Any', deSerializers)), params, deSerializers, 'action');
 }
-exports.testActionImportUnsupportedEdmTypes = testActionImportUnsupportedEdmTypes;
 /**
  * Test Action Import No Parameter Entity Return Type.
  * @param parameters - Object containing all parameters for the action.
@@ -174,7 +178,6 @@ function testActionImportNoParameterEntityReturnType(parameters, deSerializers =
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterEntityReturnType', data => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers, 'action');
 }
-exports.testActionImportNoParameterEntityReturnType = testActionImportNoParameterEntityReturnType;
 /**
  * Test Action Import Shared Entity Return Type. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the action.
@@ -184,7 +187,6 @@ function testActionImportSharedEntityReturnType(parameters, deSerializers = odat
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnType', data => (0, odata_v4_1.throwErrorWhenReturnTypeIsUnionType)(data, 'TestActionImportSharedEntityReturnType'), params, deSerializers, 'action');
 }
-exports.testActionImportSharedEntityReturnType = testActionImportSharedEntityReturnType;
 /**
  * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist for this action import. Please use 'executeRaw' to get the raw response.
  * @param parameters - Object containing all parameters for the action.
@@ -194,7 +196,6 @@ function testActionImportSharedEntityReturnTypeCollection(parameters, deSerializ
     const params = {};
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnTypeCollection', data => (0, odata_v4_1.throwErrorWhenReturnTypeIsUnionType)(data, 'TestActionImportSharedEntityReturnTypeCollection'), params, deSerializers, 'action');
 }
-exports.testActionImportSharedEntityReturnTypeCollection = testActionImportSharedEntityReturnTypeCollection;
 /**
  * Test Action Import Nullable Test.
  * @param parameters - Object containing all parameters for the action.
@@ -208,7 +209,6 @@ function testActionImportNullableTest(parameters, deSerializers = odata_v4_1.def
     };
     return new odata_v4_1.OperationRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNullableTest', data => (0, odata_v4_1.transformReturnValueForComplexType)(data, data => (0, odata_v4_1.entityDeserializer)(deSerializers || odata_v4_1.defaultDeSerializers).deserializeComplexType(data, TestComplexType_1.TestComplexType)), params, deSerializers, 'action');
 }
-exports.testActionImportNullableTest = testActionImportNullableTest;
 exports.operations = {
     testFunctionImportEdmReturnType,
     testFunctionImportEdmReturnTypeCollection,

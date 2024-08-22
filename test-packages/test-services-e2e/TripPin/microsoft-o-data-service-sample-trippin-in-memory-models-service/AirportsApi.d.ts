@@ -43,144 +43,32 @@ export declare class AirportsApi<
   private _schema?;
   get schema(): {
     ICAO_CODE: OrderableEdmTypeField<
-      Airports<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      Airports<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     NAME: OrderableEdmTypeField<
-      Airports<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      Airports<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     IATA_CODE: OrderableEdmTypeField<
-      Airports<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      Airports<DeSerializers>,
       DeSerializersT,
       'Edm.String',
       false,
       true
     >;
     LOCATION: AirportLocationField<
-      Airports<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >,
+      Airports<DeSerializers>,
       DeSerializersT,
       false,
       true
     >;
-    ALL_FIELDS: AllFields<
-      Airports<
-        DeSerializers<
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any,
-          any
-        >
-      >
-    >;
+    ALL_FIELDS: AllFields<Airports<DeSerializers>>;
   };
 }

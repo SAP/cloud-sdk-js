@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.microsoftODataServiceSampleTrippinInMemoryModelsService = void 0;
+exports.microsoftODataServiceSampleTrippinInMemoryModelsService = microsoftODataServiceSampleTrippinInMemoryModelsService;
 /*
  * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -16,7 +16,6 @@ const BatchRequest_1 = require("./BatchRequest");
 function microsoftODataServiceSampleTrippinInMemoryModelsService(deSerializers = odata_v4_1.defaultDeSerializers) {
     return new MicrosoftODataServiceSampleTrippinInMemoryModelsService((0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers));
 }
-exports.microsoftODataServiceSampleTrippinInMemoryModelsService = microsoftODataServiceSampleTrippinInMemoryModelsService;
 class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
     constructor(deSerializers) {
         this.apis = {};

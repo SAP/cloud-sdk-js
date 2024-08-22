@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "target": "es2021",
+    "module": "Node16",
     "outDir": "./lib",
     "tsBuildInfoFile": "./lib/.tsbuildinfo",
     "composite": false,

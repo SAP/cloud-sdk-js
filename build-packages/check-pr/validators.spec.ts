@@ -79,25 +79,37 @@ describe('check-pr', () => {
     });
 
     it('should fail if change type is false', async () => {
-      const fileContents = ["'@sap-cloud-sdk/generator': major", '[Fix] Something is fixed.'];
+      const fileContents = [
+        "'@sap-cloud-sdk/generator': major",
+        '[Fix] Something is fixed.'
+      ];
       await validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(1);
     });
 
     it('should pass if correct change type is provided', async () => {
-      const fileContents = ["'@sap-cloud-sdk/generator': major", '[Fixed Issue] Something is fixed.'];
+      const fileContents = [
+        "'@sap-cloud-sdk/generator': major",
+        '[Fixed Issue] Something is fixed.'
+      ];
       await validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(0);
     });
 
     it('should validate with matched changesets', async () => {
-      const fileContents = ["'@sap-cloud-sdk/generator': major", '[Fixed Issue] Something is fixed.'];
+      const fileContents = [
+        "'@sap-cloud-sdk/generator': major",
+        '[Fixed Issue] Something is fixed.'
+      ];
       await validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(0);
     });
 
     it('should validate with matched changesets in double quotes', async () => {
-      const fileContents = ['"@sap-cloud-sdk/generator": major', '[Fixed Issue] Something is fixed.'];
+      const fileContents = [
+        '"@sap-cloud-sdk/generator": major',
+        '[Fixed Issue] Something is fixed.'
+      ];
       await validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(0);
     });

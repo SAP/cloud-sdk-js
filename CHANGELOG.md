@@ -28,6 +28,14 @@
 
 - 
 
+# 3.19.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.19.0
+
+## Fixed Issues
+
+- [openapi-generator] Prevent query parameters from being optional when header parameters are required in signature. (a566fdd)
+
 # 3.18.1
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.18.1

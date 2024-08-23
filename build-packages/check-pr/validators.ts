@@ -82,7 +82,7 @@ function getAllowedBumps(preamble: string, isBreaking: boolean): string[] {
 function hasMatchingChangeset(
   allowedBumps: string[],
   changedFileContents: string[]
-): boolean{
+): boolean {
   if (allowedBumps.length) {
     return changedFileContents.some(fileContent =>
       allowedBumps.some(bump =>
@@ -127,13 +127,19 @@ export async function validateChangesets(
     return setFailed('Missing change type in changeset.');
   }
 
-  const allChangeTypesMatch = changeTypes.every(type => allowedChangeTypes.includes(type));
+  const allChangeTypesMatch = changeTypes.every(type =>
+    allowedChangeTypes.includes(type)
+  );
 
-  if (!(hasMatchingChangeset(allowedBumps, fileContents) && allChangeTypesMatch)) {
+  if (
+    !(hasMatchingChangeset(allowedBumps, fileContents) && allChangeTypesMatch)
+  ) {
     return setFailed(
       `Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
         .map(bump => `'${bump}'`)
-        .join(' or ')} and all change types in brackets must match one of the allowed change types ${allowedChangeTypes
+        .join(
+          ' or '
+        )} and all change types in brackets must match one of the allowed change types ${allowedChangeTypes
         .map(type => `'[${type}]'`)
         .join(' or ')}.`
     );

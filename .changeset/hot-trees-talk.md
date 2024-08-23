@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/openapi-generator': minor
 ---
 
-[Fix] Order query and header parameters in signature based on optional modifier.
+[Fix] Prevent query parameters from being optional when header parameters are required in signature.

@@ -90,8 +90,8 @@ export const TestCaseApi = {
    */
   testCaseOptionalQueryRequiredHeader: (
     body: SimpleTestEntity,
-    headerParameters: { requiredHeaderParam: string },
-    queryParameters?: { optionalQueryParam?: string }
+    queryParameters: { optionalQueryParam?: string },
+    headerParameters: { requiredHeaderParam: string }
   ) =>
     new OpenApiRequestBuilder<any>('post', '/test-cases/parameters', {
       body,

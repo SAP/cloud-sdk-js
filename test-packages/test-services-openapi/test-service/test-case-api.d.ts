@@ -72,11 +72,11 @@ export declare const TestCaseApi: {
    */
   testCaseOptionalQueryRequiredHeader: (
     body: SimpleTestEntity,
+    queryParameters: {
+      optionalQueryParam?: string;
+    },
     headerParameters: {
       requiredHeaderParam: string;
-    },
-    queryParameters?: {
-      optionalQueryParam?: string;
     }
   ) => OpenApiRequestBuilder<any>;
   /**

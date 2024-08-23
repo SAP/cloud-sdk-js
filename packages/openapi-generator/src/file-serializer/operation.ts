@@ -36,20 +36,29 @@ ${operation.operationId}: (${serializeOperationSignature(
 function serializeOperationSignature(operation: OpenApiOperation): string {
   const pathParams = serializePathParamsForSignature(operation);
   const requestBodyParam = serializeRequestBodyParamForSignature(operation);
-  const headerParams = serializeParamsForSignature(
-    operation,
-    'headerParameters'
+
+  const allOptionalHeaders = operation.headerParameters.every(
+    param => !param.required
+  );
+  const allOptionalQuery = operation.queryParameters.every(
+    param => !param.required
   );
 
-  const queryParams = serializeParamsForSignature(operation, 'queryParameters');
+  const headerParams = serializeParamsForSignature(
+    operation,
+    'headerParameters',
+    allOptionalHeaders
+  );
 
-  const paramsOrder =
-    headerParams?.startsWith('headerParameters?:') ||
-    !queryParams?.startsWith('queryParameters?:')
-      ? [pathParams, requestBodyParam, queryParams, headerParams]
-      : [pathParams, requestBodyParam, headerParams, queryParams];
+  const queryParams = serializeParamsForSignature(
+    operation,
+    'queryParameters',
+    allOptionalHeaders ? allOptionalQuery : false
+  );
 
-  return paramsOrder.filter(Boolean).join(', ');
+  return [pathParams, requestBodyParam, queryParams, headerParams]
+    .filter(params => params)
+    .join(', ');
 }
 
 function serializePathParamsForSignature(
@@ -74,7 +83,8 @@ function serializeRequestBodyParamForSignature(
 
 function serializeParamsForSignature(
   operation: OpenApiOperation,
-  paramType: 'queryParameters' | 'headerParameters'
+  paramType: 'queryParameters' | 'headerParameters',
+  isAllOptional: boolean
 ): string | undefined {
   const parameters = operation[paramType];
   if (parameters.length) {
@@ -87,9 +97,7 @@ function serializeParamsForSignature(
       )
       .join(', ');
 
-    const allOptional = parameters.every(param => !param.required);
-
-    return `${paramType}${allOptional ? '?' : ''}: {${paramsString}}`;
+    return `${paramType}${isAllOptional ? '?' : ''}: {${paramsString}}`;
   }
 }
 

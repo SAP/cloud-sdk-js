@@ -53,7 +53,7 @@ function serializeOperationSignature(operation: OpenApiOperation): string {
   const queryParams = serializeParamsForSignature(
     operation,
     'queryParameters',
-    allOptionalHeaders ? allOptionalQuery : false
+    allOptionalHeaders && allOptionalQuery
   );
 
   return [pathParams, requestBodyParam, queryParams, headerParams]

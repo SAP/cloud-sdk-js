@@ -139,7 +139,7 @@ export async function validateChangesets(
         .map(bump => `'${bump}'`)
         .join(
           ' or '
-        )} and all change types in brackets must match one of the allowed change types ${allowedChangeTypes
+        )} and all change types must match one of the allowed change types ${allowedChangeTypes
         .map(type => `'[${type}]'`)
         .join(' or ')}.`
     );

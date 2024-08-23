@@ -94,7 +94,7 @@ async function validateChangesets(preamble, commitType, isBreaking, fileContents
     if (!(hasMatchingChangeset(allowedBumps, fileContents) && allChangeTypesMatch)) {
         return (0, core_1.setFailed)(`Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
             .map(bump => `'${bump}'`)
-            .join(' or ')} and all change types in brackets must match one of the allowed change types ${allowedChangeTypes
+            .join(' or ')} and all change types must match one of the allowed change types ${allowedChangeTypes
             .map(type => `'[${type}]'`)
             .join(' or ')}.`);
     }

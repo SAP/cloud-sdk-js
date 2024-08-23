@@ -75,6 +75,7 @@ async function extractChangedFilesContents() {
     return fileContents;
 }
 async function validateChangesets(preamble, commitType, isBreaking, fileContents) {
+    const allowedTerms = ['feat', 'fix', 'chore'];
     const allowedBumps = getAllowedBumps(commitType, isBreaking);
     if (!(await hasMatchingChangeset(allowedBumps, fileContents))) {
         return (0, core_1.setFailed)(`Preamble '${preamble}' requires a changeset file with bump ${allowedBumps

@@ -252,7 +252,9 @@ describe('register-destination', () => {
     it('throws an error if there is a JWT, but no tenant ID could be identified', async () => {
       const dummyTenantId = 'provider-tenant';
 
-      expect(registerDestination(testDestination, { jwt: signedJwt({}) })).rejects.toThrowErrorMatchingSnapshot();
+      expect(
+        registerDestination(testDestination, { jwt: signedJwt({}) })
+      ).rejects.toThrowErrorMatchingSnapshot();
       const registeredDestination = await registerDestinationCache.destination
         .getCacheInstance()
         .get(`${dummyTenantId}::${testDestination.name}`);

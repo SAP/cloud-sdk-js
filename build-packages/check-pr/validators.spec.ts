@@ -78,7 +78,7 @@ describe('check-pr', () => {
       expect(process.exitCode).toEqual(1);
     });
 
-    it('should fail if change type is false', async () => {
+    it('should fail if change type is wrong', async () => {
       const fileContents = [
         "'@sap-cloud-sdk/generator': major",
         '[Fix] Something is fixed.'

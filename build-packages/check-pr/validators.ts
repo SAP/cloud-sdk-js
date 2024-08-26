@@ -118,6 +118,14 @@ export async function validateChangesets(
     'Fixed Issue'
   ];
 
+  if (!hasMatchingChangeset(allowedBumps, fileContents)) {
+    return setFailed(
+      `Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
+        .map(bump => `'${bump}'`)
+        .join(' or ')}.`
+    );
+  }
+
   const changeTypes = fileContents.flatMap(content => {
     const matches = content.match(/\[([^\]]+)\]/g);
     return matches ? matches.map(match => match.slice(1, -1)) : [];
@@ -131,15 +139,9 @@ export async function validateChangesets(
     allowedChangeTypes.includes(type)
   );
 
-  if (
-    !(hasMatchingChangeset(allowedBumps, fileContents) && allChangeTypesMatch)
-  ) {
+  if (!allChangeTypesMatch) {
     return setFailed(
-      `Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
-        .map(bump => `'${bump}'`)
-        .join(
-          ' or '
-        )} and all change types must match one of the allowed change types ${allowedChangeTypes
+      `All change types must match one of the allowed change types ${allowedChangeTypes
         .map(type => `'[${type}]'`)
         .join(' or ')}.`
     );

@@ -131,7 +131,7 @@ export async function validateChangesets(
     return matches ? matches.map(match => match.slice(1, -1)) : [];
   });
 
-  if (changeTypes.length === 0) {
+  if (preamble !== 'chore' && !changeTypes.length) {
     return setFailed('Missing change type in changeset.');
   }
 

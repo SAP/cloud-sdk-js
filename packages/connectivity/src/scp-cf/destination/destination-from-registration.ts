@@ -1,5 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { decodeJwt, decodeOrMakeJwt, defaultTenantId, getTenantId } from '../jwt';
+import {
+  decodeJwt,
+  decodeOrMakeJwt,
+  defaultTenantId,
+  getTenantId
+} from '../jwt';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   IsolationStrategy,

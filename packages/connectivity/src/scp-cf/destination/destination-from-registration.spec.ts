@@ -238,22 +238,26 @@ describe('register-destination', () => {
       ).toEqual(testDestination);
     });
 
-    it('registers destination with a dummy ID, if there is a JWT, but no tenant ID could be identified', async () => {
-      const logger = createLogger('register-destination');
-      jest.spyOn(logger, 'error');
+    it('registers destination and retrieves it with IAS JWT', async () => {
+      const iasJwt = signedJwt({ app_tid: 'test', iat: 123 });
+      await registerDestination(testDestination, { jwt: iasJwt });
+      expect(
+        await searchRegisteredDestination({
+          destinationName: testDestination.name,
+          jwt: iasJwt
+        })
+      ).toEqual(testDestination);
+    });
 
+    it('throws an error if there is a JWT, but no tenant ID could be identified', async () => {
       const dummyTenantId = 'provider-tenant';
 
-      await registerDestination(testDestination, { jwt: signedJwt({}) });
+      expect(registerDestination(testDestination, { jwt: signedJwt({}) })).rejects.toThrowErrorMatchingSnapshot();
       const registeredDestination = await registerDestinationCache.destination
         .getCacheInstance()
         .get(`${dummyTenantId}::${testDestination.name}`);
 
-      expect(registeredDestination).toEqual(testDestination);
-
-      expect(logger.error).toHaveBeenCalledWith(
-        'Could not determine tenant from JWT nor XSUAA, identity or destination service binding. Destination is registered without tenant information.'
-      );
+      expect(registeredDestination).toEqual(undefined);
     });
 
     it('registers destination with a dummy ID, if there is no JWT and no tenant ID can be identified', async () => {

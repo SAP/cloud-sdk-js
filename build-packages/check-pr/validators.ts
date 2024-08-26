@@ -103,12 +103,12 @@ async function extractChangesetFileContents(): Promise<string[]> {
   return fileContents;
 }
 
-export async function validateChangesets(
+export function validateChangesets(
   preamble: string,
   commitType: string,
   isBreaking: boolean,
   fileContents: string[]
-): Promise<void> {
+): void {
   const allowedBumps = getAllowedBumps(commitType, isBreaking);
   const allowedChangeTypes = [
     'Known Issue',

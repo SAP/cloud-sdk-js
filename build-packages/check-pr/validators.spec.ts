@@ -72,10 +72,15 @@ describe('check-pr', () => {
   });
 
   describe('validatePreamble', () => {
-    it('should invalidate with unmatched changesets', async () => {
+    it('should invalidate with unmatched changesets', () => {
       const fileContents = ["'@sap-cloud-sdk/generator': minor"];
-      await validateChangesets('chore!', '', true, fileContents);
+      validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(1);
+    });
+
+    it('should not fail when preamble is chore and no changeset was created', () => {
+      validateChangesets('chore', '', false, []);
+      expect(process.exitCode).toEqual(0);
     });
 
     it('should fail if change type is wrong', async () => {
@@ -83,7 +88,7 @@ describe('check-pr', () => {
         "'@sap-cloud-sdk/generator': major",
         '[Fix] Something is fixed.'
       ];
-      await validateChangesets('chore!', '', true, fileContents);
+      validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(1);
     });
 
@@ -92,7 +97,7 @@ describe('check-pr', () => {
         "'@sap-cloud-sdk/generator': major",
         '[Fixed Issue] Something is fixed.'
       ];
-      await validateChangesets('chore!', '', true, fileContents);
+      validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(0);
     });
 
@@ -101,7 +106,7 @@ describe('check-pr', () => {
         "'@sap-cloud-sdk/generator': major",
         '[Fixed Issue] Something is fixed.'
       ];
-      await validateChangesets('chore!', '', true, fileContents);
+      validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(0);
     });
 
@@ -110,7 +115,7 @@ describe('check-pr', () => {
         '"@sap-cloud-sdk/generator": major',
         '[Fixed Issue] Something is fixed.'
       ];
-      await validateChangesets('chore!', '', true, fileContents);
+      validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(0);
     });
   });

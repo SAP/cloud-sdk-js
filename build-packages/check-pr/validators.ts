@@ -37,7 +37,7 @@ async function validatePreamble(preamble: string): Promise<void> {
     preamble,
     commitType,
     !!isBreaking,
-    await extractChangedFilesContents()
+    await extractChangesetFileContents()
   );
 }
 
@@ -79,10 +79,10 @@ function getAllowedBumps(preamble: string, isBreaking: boolean): string[] {
   return [];
 }
 
-async function hasMatchingChangeset(
+function hasMatchingChangeset(
   allowedBumps: string[],
   changedFileContents: string[]
-): Promise<boolean> {
+): boolean {
   if (allowedBumps.length) {
     return changedFileContents.some(fileContent =>
       allowedBumps.some(bump =>
@@ -94,26 +94,55 @@ async function hasMatchingChangeset(
   return true;
 }
 
-async function extractChangedFilesContents(): Promise<string[]> {
-  const changedFilesStr = getInput('changed-files').trim();
-  const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
+async function extractChangesetFileContents(): Promise<string[]> {
+  const changeSetFilesStr = getInput('changed-files').trim();
+  const changeSetFiles = changeSetFilesStr ? changeSetFilesStr.split(' ') : [];
   const fileContents = await Promise.all(
-    changedFiles.map(file => readFile(file, 'utf-8'))
+    changeSetFiles.map(file => readFile(file, 'utf-8'))
   );
   return fileContents;
 }
 
-export async function validateChangesets(
+export function validateChangesets(
   preamble: string,
   commitType: string,
   isBreaking: boolean,
   fileContents: string[]
-): Promise<void> {
+): void {
   const allowedBumps = getAllowedBumps(commitType, isBreaking);
-  if (!(await hasMatchingChangeset(allowedBumps, fileContents))) {
+  const allowedChangeTypes = [
+    'Known Issue',
+    'Compatibility Note',
+    'New Functionality',
+    'Improvement',
+    'Fixed Issue'
+  ];
+
+  if (!hasMatchingChangeset(allowedBumps, fileContents)) {
     return setFailed(
       `Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
         .map(bump => `'${bump}'`)
+        .join(' or ')}.`
+    );
+  }
+
+  const changeTypes = fileContents.flatMap(content => {
+    const matches = content.match(/\[([^\]]+)\]/g);
+    return matches ? matches.map(match => match.slice(1, -1)) : [];
+  });
+
+  if (preamble !== 'chore' && !changeTypes.length) {
+    return setFailed('Missing change type in changeset.');
+  }
+
+  const allChangeTypesMatch = changeTypes.every(type =>
+    allowedChangeTypes.includes(type)
+  );
+
+  if (!allChangeTypesMatch) {
+    return setFailed(
+      `All change types must match one of the allowed change types ${allowedChangeTypes
+        .map(type => `'[${type}]'`)
         .join(' or ')}.`
     );
   }

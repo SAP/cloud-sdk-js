@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { decodeJwt, decodeOrMakeJwt, defaultTenantId } from '../jwt';
+import { decodeJwt, decodeOrMakeJwt, defaultTenantId, getTenantId } from '../jwt';
 import { DestinationFetchOptions } from './destination-accessor-types';
 import {
   IsolationStrategy,
@@ -58,7 +58,7 @@ export async function registerDestination(
 
 function getJwtForCaching(options: RegisterDestinationOptions | undefined) {
   const jwt = decodeOrMakeJwt(options?.jwt);
-  if (!jwt?.zid) {
+  if (!getTenantId(jwt?.zid)) {
     if (options?.jwt) {
       logger.error(
         'Could not determine tenant from JWT nor XSUAA, identity or destination service binding. Destination is registered without tenant information.'

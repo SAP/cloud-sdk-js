@@ -74,7 +74,7 @@ async function extractChangesetFileContents() {
     const fileContents = await Promise.all(changeSetFiles.map(file => (0, promises_1.readFile)(file, 'utf-8')));
     return fileContents;
 }
-async function validateChangesets(preamble, commitType, isBreaking, fileContents) {
+function validateChangesets(preamble, commitType, isBreaking, fileContents) {
     const allowedBumps = getAllowedBumps(commitType, isBreaking);
     const allowedChangeTypes = [
         'Known Issue',

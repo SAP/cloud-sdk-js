@@ -83,6 +83,11 @@ async function validateChangesets(preamble, commitType, isBreaking, fileContents
         'Improvement',
         'Fixed Issue'
     ];
+    if (!hasMatchingChangeset(allowedBumps, fileContents)) {
+        return (0, core_1.setFailed)(`Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
+            .map(bump => `'${bump}'`)
+            .join(' or ')}.`);
+    }
     const changeTypes = fileContents.flatMap(content => {
         const matches = content.match(/\[([^\]]+)\]/g);
         return matches ? matches.map(match => match.slice(1, -1)) : [];
@@ -91,10 +96,8 @@ async function validateChangesets(preamble, commitType, isBreaking, fileContents
         return (0, core_1.setFailed)('Missing change type in changeset.');
     }
     const allChangeTypesMatch = changeTypes.every(type => allowedChangeTypes.includes(type));
-    if (!(hasMatchingChangeset(allowedBumps, fileContents) && allChangeTypesMatch)) {
-        return (0, core_1.setFailed)(`Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
-            .map(bump => `'${bump}'`)
-            .join(' or ')} and all change types must match one of the allowed change types ${allowedChangeTypes
+    if (!allChangeTypesMatch) {
+        return (0, core_1.setFailed)(`All change types must match one of the allowed change types ${allowedChangeTypes
             .map(type => `'[${type}]'`)
             .join(' or ')}.`);
     }

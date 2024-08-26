@@ -63,7 +63,7 @@ export async function registerDestination(
 
 function getJwtForCaching(options: RegisterDestinationOptions | undefined) {
   const jwt = decodeOrMakeJwt(options?.jwt);
-  if (!getTenantId(jwt?.zid)) {
+  if (!getTenantId(jwt)) {
     if (options?.jwt) {
       logger.error(
         'Could not determine tenant from JWT nor XSUAA, identity or destination service binding. Destination is registered without tenant information.'

@@ -1,5 +1,5 @@
 ---
-'@sap-cloud-sdk/connectivity': patch
+'@sap-cloud-sdk/connectivity': minor
 ---
 
-[Fixed Issue] Throw an error if a JWT for caching was provided, but doesn't contain tenant information.
+[Compatibility Note] Throw an error if a JWT for caching was provided, but doesn't contain tenant information.

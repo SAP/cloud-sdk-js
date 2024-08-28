@@ -61,7 +61,7 @@ export function serializeSchema(schema: OpenApiSchema): string {
     return codeBlock`any`;
   }
 
-  return getType({ originalType: schema.type });
+  return getType(schema);
 }
 
 function serializeObjectSchema(schema: OpenApiObjectSchema): string {

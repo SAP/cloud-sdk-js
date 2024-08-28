@@ -28,6 +28,28 @@
 
 - 
 
+# 3.20.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.20.0
+
+## Compatibility Notes
+
+- [connectivity] Throw an error if a JWT for caching was provided, but doesn't contain tenant information. (39eb88c)
+
+## Fixed Issues
+
+- [connectivity] Derive tenant information for destination caching also for IAS tokens.
+  - @sap-cloud-sdk/resilience@3.20.0
+  - @sap-cloud-sdk/util@3.20.0 (39eb88c)
+
+# 3.19.0
+
+API Docs: https://sap.github.io/cloud-sdk/api/3.19.0
+
+## Fixed Issues
+
+- [openapi-generator] Prevent query parameters from being optional when header parameters are required in signature. (a566fdd)
+
 # 3.18.1
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.18.1

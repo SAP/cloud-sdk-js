@@ -33,7 +33,7 @@ async function validatePreamble(preamble) {
     }
     const { commitType, isBreaking } = groups;
     validateCommitType(commitType);
-    validateChangesets(preamble, commitType, !!isBreaking, await extractChangedFilesContents());
+    validateChangesets(preamble, commitType, !!isBreaking, await extractChangesetFileContents());
 }
 function validateCommitType(commitType) {
     if (!commitType || !validCommitTypes.includes(commitType)) {
@@ -62,23 +62,43 @@ function getAllowedBumps(preamble, isBreaking) {
     }
     return [];
 }
-async function hasMatchingChangeset(allowedBumps, changedFileContents) {
+function hasMatchingChangeset(allowedBumps, changedFileContents) {
     if (allowedBumps.length) {
         return changedFileContents.some(fileContent => allowedBumps.some(bump => new RegExp(`("|')@sap-cloud-sdk/.*("|'): ${bump}`).test(fileContent)));
     }
     return true;
 }
-async function extractChangedFilesContents() {
-    const changedFilesStr = (0, core_1.getInput)('changed-files').trim();
-    const changedFiles = changedFilesStr ? changedFilesStr.split(' ') : [];
-    const fileContents = await Promise.all(changedFiles.map(file => (0, promises_1.readFile)(file, 'utf-8')));
+async function extractChangesetFileContents() {
+    const changeSetFilesStr = (0, core_1.getInput)('changed-files').trim();
+    const changeSetFiles = changeSetFilesStr ? changeSetFilesStr.split(' ') : [];
+    const fileContents = await Promise.all(changeSetFiles.map(file => (0, promises_1.readFile)(file, 'utf-8')));
     return fileContents;
 }
-async function validateChangesets(preamble, commitType, isBreaking, fileContents) {
+function validateChangesets(preamble, commitType, isBreaking, fileContents) {
     const allowedBumps = getAllowedBumps(commitType, isBreaking);
-    if (!(await hasMatchingChangeset(allowedBumps, fileContents))) {
+    const allowedChangeTypes = [
+        'Known Issue',
+        'Compatibility Note',
+        'New Functionality',
+        'Improvement',
+        'Fixed Issue'
+    ];
+    if (!hasMatchingChangeset(allowedBumps, fileContents)) {
         return (0, core_1.setFailed)(`Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
             .map(bump => `'${bump}'`)
+            .join(' or ')}.`);
+    }
+    const changeTypes = fileContents.flatMap(content => {
+        const matches = content.match(/\[([^\]]+)\]/g);
+        return matches ? matches.map(match => match.slice(1, -1)) : [];
+    });
+    if (preamble !== 'chore' && !changeTypes.length) {
+        return (0, core_1.setFailed)('Missing change type in changeset.');
+    }
+    const allChangeTypesMatch = changeTypes.every(type => allowedChangeTypes.includes(type));
+    if (!allChangeTypesMatch) {
+        return (0, core_1.setFailed)(`All change types must match one of the allowed change types ${allowedChangeTypes
+            .map(type => `'[${type}]'`)
             .join(' or ')}.`);
     }
     (0, core_1.info)('✓ Changesets: OK');

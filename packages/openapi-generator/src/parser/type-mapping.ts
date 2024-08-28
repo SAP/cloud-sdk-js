@@ -1,4 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { OpenAPIV3 } from 'openapi-types';
 
 const logger = createLogger('openapi-generator');
 
@@ -38,13 +39,31 @@ const typeMapping = {
   any: 'any'
 };
 
+type InputType =
+  | { originalType: string | undefined }
+  | { originalSchema: OpenAPIV3.NonArraySchemaObject };
+
 /**
  * Get the mapped TypeScript type for the given original OpenAPI type.
  * @param originalType - Original OpenAPI type, to get a mapping for.
+ * @param originalSchema - Original OpenAPI schema, to get a type mapping for.
+ * @function mapType - Helper function to get mapped Typescript type
  * @returns The mapped TypeScript type.
  * @internal
  */
-export function getType(originalType: string | undefined): string {
+export function getType(input: InputType): string {
+  if ('originalSchema' in input) {
+    const { type, format } = input.originalSchema;
+
+    if (type === 'string' && format === 'binary') {
+      return 'Blob';
+    }
+    return mapType(type);
+  }
+  return mapType(input.originalType);
+}
+
+function mapType(originalType: string | undefined) {
   const type = originalType ? typeMapping[originalType] : 'any';
   if (!type) {
     logger.verbose(

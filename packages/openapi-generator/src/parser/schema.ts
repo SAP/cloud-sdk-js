@@ -66,12 +66,6 @@ export function parseSchema(
     return parseXOfSchema(schema, refs, 'anyOf', options);
   }
 
-  if (schema.type === 'string' && schema.format === 'binary') {
-    return {
-      type: 'Blob'
-    };
-  }
-
   if (schema.not) {
     return {
       not: parseSchema(schema.not, refs, options)
@@ -79,7 +73,7 @@ export function parseSchema(
   }
 
   return {
-    type: getType(schema.type)
+    type: getType({ originalSchema: schema })
   };
 }
 
@@ -186,7 +180,7 @@ function parseEnumSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   options: ParserOptions
 ): OpenApiEnumSchema {
-  const type = schema.type ? getType(schema.type) : 'string';
+  const type = schema.type ? getType({ originalType: schema.type }) : 'string';
   return {
     type,
     enum: (schema.enum || []).map(entry => {

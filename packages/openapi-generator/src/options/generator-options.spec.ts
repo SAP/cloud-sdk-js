@@ -37,7 +37,8 @@ describe('parseGeneratorOptions', () => {
     verbose: false,
     overwrite: false,
     config: undefined,
-    generateESM: false
+    generateESM: false,
+    schemaPrefix: undefined
   };
 
   it('gets default options', () => {

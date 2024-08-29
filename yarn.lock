@@ -1442,14 +1442,13 @@
     node-cache "^5.1.0"
     verror "1.10.1"
 
-"@sap/xssec@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.1.tgz#9fb7b59a1ba8c23a18858a967bc6933955885609"
-  integrity sha512-NEZ28d6Mns5AMTSB82I1iB5ESgZRJPgo33Z/paX3vpJuYji7aK7obWR9FeVMu1OYNAeXhg+44VLdw/AAc3BiJg==
+"@sap/xssec@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.2.tgz#12ac707526048bf6c17491fa6305171196f62b9d"
+  integrity sha512-3kxvs5JWtYCRjSMPl7lqTxsOTq45HPD1rt20LVsSBOE5YZ2XelC4JV7HAYz4M1NSVhCl7/LflNAaJ/kGLiY4Gg==
   dependencies:
     debug "^4.3.4"
     jwt-decode "^4"
-    node-fetch "^2"
 
 "@shikijs/core@1.14.1":
   version "1.14.1"
@@ -6839,7 +6838,7 @@ node-fetch-h2@^2.3.0:
   dependencies:
     http2-client "^1.2.5"
 
-node-fetch@^2, node-fetch@^2.6.1:
+node-fetch@^2.6.1:
   version "2.7.0"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==

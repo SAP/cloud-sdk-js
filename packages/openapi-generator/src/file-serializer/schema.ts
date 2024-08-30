@@ -38,7 +38,7 @@ export function serializeSchema(schema: OpenApiSchema): string {
   }
 
   if (isObjectSchema(schema)) {
-    let types: string[] = [];
+    const types: string[] = [];
     if (isAllOfSchema(schema)) {
       types.push(schema.allOf.map(type => serializeSchema(type)).join(' & '));
     }

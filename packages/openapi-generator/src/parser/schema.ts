@@ -48,9 +48,11 @@ export function parseSchema(
     'additionalProperties' in schema
   ) {
     return {
-      ...(schema.allOf?.length && parseXOfSchema(schema, refs, 'allOf', options)) ,
-      ...((schema.properties || 'additionalProperties' in schema) && parseObjectSchema(schema, refs, options))
-    }
+      ...(schema.allOf?.length &&
+        parseXOfSchema(schema, refs, 'allOf', options)),
+      ...((schema.properties || 'additionalProperties' in schema) &&
+        parseObjectSchema(schema, refs, options))
+    };
   }
 
   if (schema.enum?.length) {
@@ -226,7 +228,9 @@ function parseXOfSchema(
 ): any {
   const required = schema.required;
   return {
-    [xOf]: (schema[xOf] || []).map(entry => parseSchema({...entry, required }, refs, options))
+    [xOf]: (schema[xOf] || []).map(entry =>
+      parseSchema({ ...entry, required }, refs, options)
+    )
   };
 }
 

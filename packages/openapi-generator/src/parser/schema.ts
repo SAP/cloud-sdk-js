@@ -50,8 +50,7 @@ export function parseSchema(
     return {
       ...(schema.allOf?.length &&
         parseXOfSchema(schema, refs, 'allOf', options)),
-      ...((schema.properties || 'additionalProperties' in schema) &&
-        parseObjectSchema(schema, refs, options))
+      ...parseObjectSchema(schema, refs, options)
     };
   }
 

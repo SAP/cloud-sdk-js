@@ -54,3 +54,20 @@ definitions:
         type: integer
         description: An integer property
         required: false
+  TestEntity_2:
+    type: object
+    allOf:
+      - $ref: '#/definitions/TestEntity'
+      - properties:
+          booleanProperty:
+            type: boolean
+    required:
+      - booleanProperty
+  TestEntity_3:
+    type: object
+    allOf:
+      - $ref: '#/definitions/TestEntity'
+    properties:
+      booleanProperty:
+        type: boolean
+    

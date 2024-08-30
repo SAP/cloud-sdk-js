@@ -38,7 +38,12 @@ export function serializeSchema(schema: OpenApiSchema): string {
   }
 
   if (isObjectSchema(schema)) {
-    return serializeObjectSchema(schema);
+    let types: string[] = [];
+    if (isAllOfSchema(schema)) {
+      types.push(schema.allOf.map(type => serializeSchema(type)).join(' & '));
+    }
+    types.push(serializeObjectSchema(schema));
+    return types.join(' & ');
   }
 
   if (isEnumSchema(schema)) {

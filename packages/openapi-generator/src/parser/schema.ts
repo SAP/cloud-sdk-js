@@ -47,7 +47,10 @@ export function parseSchema(
     schema.properties ||
     'additionalProperties' in schema
   ) {
-    return parseObjectSchema(schema, refs, options);
+    return {
+      ...(schema.allOf?.length && parseXOfSchema(schema, refs, 'allOf', options)) ,
+      ...((schema.properties || 'additionalProperties' in schema) && parseObjectSchema(schema, refs, options))
+    }
   }
 
   if (schema.enum?.length) {
@@ -221,8 +224,9 @@ function parseXOfSchema(
   xOf: 'oneOf' | 'allOf' | 'anyOf',
   options: ParserOptions
 ): any {
+  const required = schema.required;
   return {
-    [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry, refs, options))
+    [xOf]: (schema[xOf] || []).map(entry => parseSchema({...entry, required }, refs, options))
   };
 }
 

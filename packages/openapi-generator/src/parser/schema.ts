@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
-import { isReferenceObject } from '../schema-util';
+import { isAllOfSchema, isReferenceObject } from '../schema-util';
 import {
   OpenApiArraySchema,
   OpenApiEnumSchema,
@@ -47,11 +47,15 @@ export function parseSchema(
     schema.properties ||
     'additionalProperties' in schema
   ) {
-    return {
-      ...(schema.allOf?.length &&
-        parseXOfSchema(schema, refs, 'allOf', options)),
-      ...parseObjectSchema(schema, refs, options)
-    };
+    if (isAllOfSchema(schema)) {
+      return {
+        ...(schema.allOf?.length &&
+          parseXOfSchema(schema, refs, 'allOf', options)),
+        ...((schema.properties || 'additionalProperties' in schema) &&
+          parseObjectSchema(schema, refs, options))
+      }
+    }
+    return parseObjectSchema(schema, refs, options);
   }
 
   if (schema.enum?.length) {

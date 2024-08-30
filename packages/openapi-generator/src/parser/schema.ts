@@ -53,7 +53,7 @@ export function parseSchema(
           parseXOfSchema(schema, refs, 'allOf', options)),
         ...((schema.properties || 'additionalProperties' in schema) &&
           parseObjectSchema(schema, refs, options))
-      }
+      };
     }
     return parseObjectSchema(schema, refs, options);
   }

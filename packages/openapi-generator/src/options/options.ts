@@ -45,7 +45,7 @@ export const cliOptions = {
   },
   schemaPrefix: {
     describe:
-    'When enabled, all generated files follow the ECMAScript module syntax.',
+      'When enabled, all generated files follow the ECMAScript module syntax.',
     type: 'string',
     default: undefined
   }

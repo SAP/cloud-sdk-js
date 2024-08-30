@@ -60,7 +60,6 @@ describe('OpenApiDocumentRefs', () => {
       );
     });
 
-    
     it('gets the schema naming for reference object with a prefix', async () => {
       refs = await createRefs(
         {

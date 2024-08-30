@@ -8,7 +8,7 @@ export interface ParserOptions {
    */
   strictNaming: boolean;
   /**
-   * Add prefix to schema names
+   * Add prefix to schema names.
    */
   schemaPrefix?: string;
 }

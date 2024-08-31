@@ -32,7 +32,7 @@ export function serializeSchema(schema: OpenApiSchema): string {
     const type = serializeSchema(schema.items);
     return schema.uniqueItems
       ? `Set<${type}>`
-      : 'properties' in schema.items
+      : ('properties' in schema.items || 'allOf' in schema.items)
         ? `(${type})[]`
         : `${type}[]`;
   }

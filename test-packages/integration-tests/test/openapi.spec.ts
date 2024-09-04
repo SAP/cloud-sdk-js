@@ -6,8 +6,6 @@ const destination = {
 };
 
 describe('response handling', () => {
-  // /test-cases/media-type/octet-stream
-
   beforeEach(() => {
     nock(destination.url)
       .get('/test-cases/media-type/octet-stream')

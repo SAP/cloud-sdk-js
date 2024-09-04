@@ -28,7 +28,6 @@ const typeMapping = {
   map: 'any',
   date: 'string',
   DateTime: 'string',
-  Blob: 'Blob',
   binary: 'any',
   File: 'any',
   file: 'any',

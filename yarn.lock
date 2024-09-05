@@ -1442,10 +1442,10 @@
     node-cache "^5.1.0"
     verror "1.10.1"
 
-"@sap/xssec@^4.2.2":
-  version "4.2.2"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.2.tgz#12ac707526048bf6c17491fa6305171196f62b9d"
-  integrity sha512-3kxvs5JWtYCRjSMPl7lqTxsOTq45HPD1rt20LVsSBOE5YZ2XelC4JV7HAYz4M1NSVhCl7/LflNAaJ/kGLiY4Gg==
+"@sap/xssec@^4.2.3":
+  version "4.2.3"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.3.tgz#e3caade8e42819e96683785ce73c116a7e2cb38c"
+  integrity sha512-tE3tOqcgcN0qbndZtrwTxogmLMh/tf5EG9OG0bVe7cmD/WQsn+5F0h4IIw9Vg8D5MnAXsWlJ52hkwz5CpA9nxg==
   dependencies:
     debug "^4.3.4"
     jwt-decode "^4"
@@ -7580,9 +7580,9 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.4.23, postcss@^8.4.38:
-  version "8.4.44"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.44.tgz#d56834ef6508610ba224bb22b2457b2169ed0480"
-  integrity sha512-Aweb9unOEpQ3ezu4Q00DPvvM2ZTUitJdNKeP/+uQgr1IBIqu574IaZoURId7BKtWMREwzKa9OgzPzezWGPWFQw==
+  version "8.4.45"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.45.tgz#538d13d89a16ef71edbf75d895284ae06b79e603"
+  integrity sha512-7KTLTdzdZZYscUc65XmjFiB73vBhBfbPztCYdUNvlaso9PrzjzcmjqBPR0lNGkcVlcO4BjiO5rK/qNz+XAen1Q==
   dependencies:
     nanoid "^3.3.7"
     picocolors "^1.0.1"
@@ -9884,9 +9884,9 @@ yallist@^5.0.0:
   integrity sha512-YgvUTfwqyc7UXVMrB+SImsVYSmTS8X/tSrtdNZMImM+n7+QTriRXyXim0mBrTXNeqzVF0KWGgHPeiyViFFrNDw==
 
 yaml@>=2.2.2, yaml@^1.10.0, yaml@^2.2.2, yaml@^2.4.5:
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/yaml/-/yaml-2.5.0.tgz#c6165a721cf8000e91c36490a41d7be25176cf5d"
-  integrity sha512-2wWLbGbYDiSqqIKoPjar3MPgB94ErzCtrNE1FdqGuaO0pi2JGjmE8aW8TDZwzU7vuxcGRdL/4gPQwQ7hD5AMSw==
+  version "2.5.1"
+  resolved "https://registry.npmjs.org/yaml/-/yaml-2.5.1.tgz#c9772aacf62cb7494a95b0c4f1fb065b563db130"
+  integrity sha512-bLQOjaX/ADgQ20isPJRvF0iRUHIxVhYvr53Of7wGcWlO2jvtUlH5m87DsmulFVxRpNLOnI4tB6p/oh8D7kpn9Q==
 
 yargs-parser@^20.2.2, yargs-parser@^20.2.3:
   version "20.2.9"

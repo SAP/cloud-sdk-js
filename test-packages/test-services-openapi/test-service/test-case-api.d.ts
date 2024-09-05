@@ -164,11 +164,6 @@ export declare const TestCaseApi: {
     body: Schema123456 | undefined
   ) => OpenApiRequestBuilder<any>;
   /**
-   * Create a request builder for execution of get requests to the '/test-cases/media-type/octet-stream' endpoint.
-   * @returns The request builder, use the `execute()` method to trigger the request.
-   */
-  mediaOctetStream: () => OpenApiRequestBuilder<string>;
-  /**
    * Create a request builder for execution of get requests to the '/test-cases/no-operation-id' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */

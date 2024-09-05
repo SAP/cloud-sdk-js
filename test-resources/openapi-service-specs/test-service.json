@@ -740,25 +740,6 @@
           }
         }
       }
-    },
-    "/test-cases/media-type/octet-stream": {
-      "get": {
-        "tags": ["test case"],
-        "operationId": "mediaOctetStream",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {

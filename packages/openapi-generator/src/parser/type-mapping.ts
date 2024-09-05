@@ -1,6 +1,4 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { OpenAPIV3 } from 'openapi-types';
-import { OpenApiSimpleSchema } from '../openapi-types';
 
 const logger = createLogger('openapi-generator');
 
@@ -28,7 +26,6 @@ const typeMapping = {
   map: 'any',
   date: 'string',
   DateTime: 'string',
-  Blob: 'Blob',
   binary: 'any',
   File: 'any',
   file: 'any',
@@ -42,25 +39,15 @@ const typeMapping = {
 
 /**
  * Get the mapped TypeScript type for the given original OpenAPI type.
- * @param schema - Original OpenAPI schema, to get a type mapping for.
+ * @param originalType - Original OpenAPI type, to get a mapping for.
  * @returns The mapped TypeScript type.
  * @internal
  */
-export function getType(
-  schema: OpenAPIV3.NonArraySchemaObject | OpenApiSimpleSchema
-): string {
-  if (
-    'format' in schema &&
-    schema.type === 'string' &&
-    schema.format === 'binary'
-  ) {
-    return 'Blob';
-  }
-
-  const type = schema.type ? typeMapping[schema.type] : 'any';
+export function getType(originalType: string | undefined): string {
+  const type = originalType ? typeMapping[originalType] : 'any';
   if (!type) {
     logger.verbose(
-      `Could not map type '${schema.type}' to a native type. Using any.`
+      `Could not map type '${originalType}' to a native type. Using any.`
     );
     return 'any';
   }

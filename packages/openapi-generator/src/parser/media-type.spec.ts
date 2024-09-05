@@ -46,13 +46,13 @@ describe('parseTopLevelMediaType', () => {
       parseTopLevelMediaType(
         {
           content: {
-            'text/plain': { schema: { type: 'string' } }
+            'text/plain': { schema: { type: 'integer' } }
           }
         },
         await createTestRefs(),
         defaultOptions
       )
-    ).toEqual({ type: 'string' });
+    ).toEqual({ type: 'number' });
   });
 
   it('returns parsed schema for supported media type application/octet-stream', async () => {
@@ -68,7 +68,7 @@ describe('parseTopLevelMediaType', () => {
         await createTestRefs(),
         defaultOptions
       )
-    ).toEqual({ type: 'Blob' });
+    ).toEqual({ type: 'string' });
   });
 });
 

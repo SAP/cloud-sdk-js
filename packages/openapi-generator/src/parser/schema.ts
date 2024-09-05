@@ -73,7 +73,7 @@ export function parseSchema(
   }
 
   return {
-    type: getType(schema)
+    type: getType(schema.type)
   };
 }
 
@@ -180,7 +180,7 @@ function parseEnumSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   options: ParserOptions
 ): OpenApiEnumSchema {
-  const type = schema.type ? getType(schema) : 'string';
+  const type = schema.type ? getType(schema.type) : 'string';
   return {
     type,
     enum: (schema.enum || []).map(entry => {

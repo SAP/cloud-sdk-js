@@ -13,8 +13,8 @@ describe('response handling', () => {
       .reply(200, 'dGVzdA==', { 'content-type': 'application/octet-stream' });
   });
 
-  it('transforms response to Blob', async () => {
+  it('returns string response', async () => {
     const response = await TestCaseApi.mediaOctetStream().execute(destination);
-    expect(response).toBeInstanceOf(Blob);
+    expect(response).toBeInstanceOf(String);
   });
 });

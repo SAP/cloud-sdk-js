@@ -216,7 +216,7 @@ export const TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   mediaOctetStream: () =>
-    new OpenApiRequestBuilder<Blob>(
+    new OpenApiRequestBuilder<string>(
       'get',
       '/test-cases/media-type/octet-stream'
     ),

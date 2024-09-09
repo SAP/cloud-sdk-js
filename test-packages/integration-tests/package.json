@@ -22,8 +22,8 @@
     "@sap-cloud-sdk/test-services-odata-v4": "^3.20.0",
     "@sap-cloud-sdk/test-util": "^3.20.0",
     "@sap-cloud-sdk/util": "^3.20.0",
-    "@sap/xssec": "^4.2.2",
-    "axios": "^1.7.5"
+    "@sap/xssec": "^4.2.4",
+    "axios": "^1.7.7"
   },
   "devDependencies": {
     "@sap-cloud-sdk/generator": "^3.20.0",

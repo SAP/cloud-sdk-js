@@ -200,10 +200,16 @@ export interface HttpRequestOptions {
 /**
  * The type for parameter in Custom Request Configuration.
  */
-export type CustomRequestConfig = Omit<
+export type CustomRequestConfig = Pick<
   HttpRequestConfig,
-  'url' | 'baseURL' | 'data' | 'headers' | 'params'
->;
+  | 'middleware'
+  | 'maxContentLength'
+  | 'proxy'
+  | 'httpAgent'
+  | 'httpsAgent'
+  | 'parameterEncoder'
+> &
+  Record<string, any>;
 
 /**
  * This interface is used for defining e.g., headers and query parameters with origin information.

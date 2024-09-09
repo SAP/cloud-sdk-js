@@ -1,6 +1,5 @@
 import { add, commit, tag } from '@changesets/git';
 import { getPackageVersion } from './get-package-version';
-import { mergeChangelogs } from './merge-changelogs';
 
 async function commitAndTag() {
   const version: string = getPackageVersion();
@@ -12,7 +11,7 @@ async function commitAndTag() {
 }
 
 async function afterBump() {
-  await mergeChangelogs();
+  // await mergeChangelogs();
   await commitAndTag();
 }
 

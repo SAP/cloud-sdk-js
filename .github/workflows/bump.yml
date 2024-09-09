@@ -28,5 +28,17 @@ jobs:
           git config --global user.name "cloud-sdk-js"
       - name: Bump version
         run: yarn run version
-      - name: Push
-        run: git push --follow-tags
+      - run: |
+          yarn generate
+          yarn doc
+      - id: get-workspaces
+        run: echo "workspaces=`ts-node scripts/get-workspaces.ts`" >> $GITHUB_OUTPUT
+      - name: Get Changelog
+        id: merge-changelogs
+        uses: ./.github/actions/merge-changelogs
+          with:
+            workspaces: ${{ steps.get-workspaces.outputs.workspaces }}
+            write-file: 'true'
+      - run: ts-node scripts/after-bump.ts
+      # - name: Push
+      #   run: git push --follow-tags

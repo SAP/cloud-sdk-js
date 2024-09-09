@@ -1,0 +1,12 @@
+name: 'Merge Changelogs'
+description: 'Merges all public changelogs from changesets into a single changelog.'
+inputs:
+  workspaces:
+    description: 'Comma separated list of workspace locations.'
+    required: true
+  write-file:
+    description: 'Whether the changelog should be written'
+    default: 'false'
+runs:
+  using: 'node20'
+  main: 'index.js'

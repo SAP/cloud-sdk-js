@@ -1,0 +1,25 @@
+{
+  "name": "merge-changelogs",
+  "version": "1.0.0",
+  "description": "Merges all changelogs produced by changesets into one changelog",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "postcompile": "ncc build lib/build-packages/merge-changelogs/index.js --out ../../.github/actions/merge-changelogs/",
+    "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
+    "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
+    "check:dependencies": "depcheck --skip-missing=true .",
+    "all": "yarn && yarn run lint && yarn run compile"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3",
+    "typescript": "~5.5.4"
+  }
+}

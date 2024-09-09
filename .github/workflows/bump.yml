@@ -36,9 +36,9 @@ jobs:
       - name: Get Changelog
         id: merge-changelogs
         uses: ./.github/actions/merge-changelogs
-          with:
-            workspaces: ${{ steps.get-workspaces.outputs.workspaces }}
-            write-file: 'true'
+        with:
+          workspaces: ${{ steps.get-workspaces.outputs.workspaces }}
+          write-file: 'true'
       - run: ts-node scripts/after-bump.ts
       # - name: Push
       #   run: git push --follow-tags

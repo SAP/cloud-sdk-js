@@ -127,6 +127,7 @@ async function mergeChangelogs() {
     const changelogs = await Promise.all(pathsToPublicLogs.map(async (file) => (0, promises_1.readFile)(file, { encoding: 'utf8' })));
     const newChangelog = await formatChangelog(mergeMessages(changelogs.map(log => parseChangelog(log)).flat()));
     (0, core_1.setOutput)('changelog', newChangelog);
+    console.log(newChangelog);
     if ((0, core_1.getInput)('write-file') === 'true') {
         await writeChangelog(newChangelog);
     }

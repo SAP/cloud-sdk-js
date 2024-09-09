@@ -32,11 +32,11 @@ jobs:
           git config --global user.name "cloud-sdk-js"
       - name: Bump version
         run: yarn run version
-      - run: |
+      - id: get-workspaces
+        run: |
           workspaces=`yarn ts-node ${{ github.workspace }}/scripts/get-workspaces.ts`
           echo $workspaces
-      - id: get-workspaces
-        run: echo "workspaces=${workspaces}" >> $GITHUB_OUTPUT
+          echo "workspaces=$workspaces" >> $GITHUB_OUTPUT
       - name: Get Changelog
         id: merge-changelogs
         uses: ./.github/actions/merge-changelogs

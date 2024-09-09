@@ -47,5 +47,5 @@ jobs:
           yarn generate
           yarn doc
           yarn ts-node ${{ github.workspace }}/scripts/after-bump.ts
-      # - name: Push
-      #   run: git push --follow-tags
+      - name: Push
+        run: git push #--follow-tags

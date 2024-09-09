@@ -2,7 +2,7 @@ import { resolve, sep } from 'path';
 import { readFile, readdir } from 'fs/promises';
 import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile, nextSdkVersion } from './util';
-import { validMessageTypes } from './merge-changelogs';
+import { validMessageTypes } from '../build-packages/merge-changelogs';
 
 function updateRootPackageJson(version: string) {
   transformFile(resolve('package.json'), packageJson =>

@@ -142,6 +142,9 @@ async function writeChangelog(newChangelog) {
         newChangelog +
         unifiedChangelog.split('\n').slice(30).join('\n'), { encoding: 'utf8' });
 }
+mergeChangelogs().catch(error => {
+    (0, core_1.setFailed)(error.message);
+});
 
 
 /***/ }),

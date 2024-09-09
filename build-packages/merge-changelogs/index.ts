@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import { readFile, writeFile } from 'fs/promises';
 import { resolve } from 'path';
-import { setOutput, getInput, error, info } from '@actions/core';
+import { setOutput, getInput, error, info, setFailed } from '@actions/core';
 
 export const validMessageTypes = [
   'Known Issue',
@@ -206,3 +206,7 @@ async function writeChangelog(newChangelog: string): Promise<void> {
     { encoding: 'utf8' }
   );
 }
+
+mergeChangelogs().catch(error => {
+  setFailed(error.message);
+});

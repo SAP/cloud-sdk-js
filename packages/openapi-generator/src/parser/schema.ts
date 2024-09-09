@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
-import { isAllOfSchema, isReferenceObject } from '../schema-util';
+import { isReferenceObject } from '../schema-util';
 import {
   OpenApiArraySchema,
   OpenApiEnumSchema,
@@ -52,6 +52,9 @@ export function parseSchema(
 
   if (schema.allOf?.length) {
     if (schema.properties) {
+      logger.info(
+        'Detected schema with allOf and properties in the same level. This was refactored to a schema with allOf only, also containing all the properties from the top level.'
+      );
       schema.allOf.push({ properties: schema.properties });
       delete schema.properties;
     }
@@ -225,11 +228,8 @@ function parseXOfSchema(
   xOf: 'oneOf' | 'allOf' | 'anyOf',
   options: ParserOptions
 ): any {
-  const required = schema.required;
   return {
-    [xOf]: (schema[xOf] || []).map(entry =>
-      parseSchema(entry, refs, options)
-    )
+    [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry, refs, options))
   };
 }
 

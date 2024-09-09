@@ -42,22 +42,6 @@ export function parseSchema(
     return parseArraySchema(schema, refs, options);
   }
 
-  if (
-    schema.type === 'object' ||
-    schema.properties ||
-    'additionalProperties' in schema
-  ) {
-    if (isAllOfSchema(schema)) {
-      return {
-        ...(schema.allOf?.length &&
-          parseXOfSchema(schema, refs, 'allOf', options)),
-        ...((schema.properties || 'additionalProperties' in schema) &&
-          parseObjectSchema(schema, refs, options))
-      };
-    }
-    return parseObjectSchema(schema, refs, options);
-  }
-
   if (schema.enum?.length) {
     return parseEnumSchema(schema, options);
   }
@@ -67,11 +51,23 @@ export function parseSchema(
   }
 
   if (schema.allOf?.length) {
+    if (schema.properties) {
+      schema.allOf.push({ properties: schema.properties });
+      delete schema.properties;
+    }
     return parseXOfSchema(schema, refs, 'allOf', options);
   }
 
   if (schema.anyOf?.length) {
     return parseXOfSchema(schema, refs, 'anyOf', options);
+  }
+
+  if (
+    schema.type === 'object' ||
+    schema.properties ||
+    'additionalProperties' in schema
+  ) {
+    return parseObjectSchema(schema, refs, options);
   }
 
   if (schema.not) {
@@ -232,7 +228,7 @@ function parseXOfSchema(
   const required = schema.required;
   return {
     [xOf]: (schema[xOf] || []).map(entry =>
-      parseSchema({ ...entry, required }, refs, options)
+      parseSchema(entry, refs, options)
     )
   };
 }

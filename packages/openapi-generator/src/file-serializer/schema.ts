@@ -32,18 +32,13 @@ export function serializeSchema(schema: OpenApiSchema): string {
     const type = serializeSchema(schema.items);
     return schema.uniqueItems
       ? `Set<${type}>`
-      : 'properties' in schema.items || 'allOf' in schema.items
+      : ['properties', 'allOf', 'oneOf', 'anyOf'].some(prop => prop in schema.items)
         ? `(${type})[]`
         : `${type}[]`;
   }
 
   if (isObjectSchema(schema)) {
-    const types: string[] = [];
-    if (isAllOfSchema(schema)) {
-      types.push(schema.allOf.map(type => serializeSchema(type)).join(' & '));
-    }
-    types.push(serializeObjectSchema(schema));
-    return types.join(' & ');
+    return serializeObjectSchema(schema);
   }
 
   if (isEnumSchema(schema)) {

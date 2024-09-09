@@ -9,7 +9,7 @@
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.validMessageTypes = void 0;
 exports.mergeChangelogs = mergeChangelogs;
-/* eslint-disable no-console, jsdoc/require-jsdoc */
+/* eslint-disable jsdoc/require-jsdoc */
 const promises_1 = __nccwpck_require__(3292);
 const path_1 = __nccwpck_require__(1017);
 const core_1 = __nccwpck_require__(7117);
@@ -35,13 +35,13 @@ function splitByVersion(changelog) {
 }
 function assertGroups(groups, packageName, version) {
     if (!exports.validMessageTypes.includes(groups?.type)) {
-        console.error(groups?.type
+        (0, core_1.error)(groups?.type
             ? `Error: Type [${groups?.type}] is not valid (${groups?.commit})`
             : `Error: No type was provided for "${groups?.summary} (${groups?.commit})"`);
         throw new Error(`Incorrect or missing type in CHANGELOG.md in ${packageName} for v${version}!`);
     }
     if (typeof groups?.summary !== 'string' || groups?.summary.trim() === '') {
-        console.error(`Error: Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}! (${groups?.commit})`);
+        (0, core_1.error)(`Error: Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}! (${groups?.commit})`);
         throw new Error(`Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}!`);
     }
 }
@@ -127,9 +127,13 @@ async function mergeChangelogs() {
     const changelogs = await Promise.all(pathsToPublicLogs.map(async (file) => (0, promises_1.readFile)(file, { encoding: 'utf8' })));
     const newChangelog = await formatChangelog(mergeMessages(changelogs.map(log => parseChangelog(log)).flat()));
     (0, core_1.setOutput)('changelog', newChangelog);
-    console.log(newChangelog);
+    (0, core_1.info)(newChangelog);
     if ((0, core_1.getInput)('write-file') === 'true') {
+        (0, core_1.info)('writing file');
         await writeChangelog(newChangelog);
+    }
+    else {
+        (0, core_1.info)('not writing file');
     }
 }
 async function writeChangelog(newChangelog) {

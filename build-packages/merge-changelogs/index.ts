@@ -1,7 +1,7 @@
-/* eslint-disable no-console, jsdoc/require-jsdoc */
+/* eslint-disable jsdoc/require-jsdoc */
 import { readFile, writeFile } from 'fs/promises';
 import { resolve } from 'path';
-import { setOutput, getInput } from '@actions/core';
+import { setOutput, getInput, error, info } from '@actions/core';
 
 export const validMessageTypes = [
   'Known Issue',
@@ -50,7 +50,7 @@ function assertGroups(
   type: (typeof validMessageTypes)[number];
 } {
   if (!validMessageTypes.includes(groups?.type as any)) {
-    console.error(
+    error(
       groups?.type
         ? `Error: Type [${groups?.type}] is not valid (${groups?.commit})`
         : `Error: No type was provided for "${groups?.summary} (${groups?.commit})"`
@@ -60,7 +60,7 @@ function assertGroups(
     );
   }
   if (typeof groups?.summary !== 'string' || groups?.summary.trim() === '') {
-    console.error(
+    error(
       `Error: Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}! (${groups?.commit})`
     );
     throw new Error(
@@ -186,10 +186,13 @@ export async function mergeChangelogs(): Promise<void> {
     mergeMessages(changelogs.map(log => parseChangelog(log)).flat())
   );
   setOutput('changelog', newChangelog);
-  console.log(newChangelog);
+  info(newChangelog);
 
   if (getInput('write-file') === 'true') {
+    info('writing file');
     await writeChangelog(newChangelog);
+  } else {
+    info('not writing file');
   }
 }
 

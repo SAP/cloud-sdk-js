@@ -24,6 +24,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+      - run: ls ${{ github.workspace }}/scripts
       - run: yarn install --frozen-lockfile
       - name: Setup git
         run: |

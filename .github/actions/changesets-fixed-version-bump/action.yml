@@ -1,0 +1,15 @@
+name: 'Fixed version bump'
+description: 'Bumps version for fixed packages and the root package.json using changests.'
+inputs:
+  before-bump-script:
+    description: 'Script to run before bumping the version'
+    required: false
+  after-bump-script:
+    description: 'Script to run after bumping the version'
+    required: false
+outputs:
+  changelog:
+    description: 'The current changelog'
+runs:
+  using: 'node20'
+  main: 'index.js'

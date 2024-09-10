@@ -30,22 +30,25 @@ jobs:
         run: |
           git config --global user.email "cloud-sdk-js@github.com"
           git config --global user.name "cloud-sdk-js"
+      # - name: Bump version
+      #   run: yarn run version
       - name: Bump version
-        run: yarn run version
-      - id: get-workspaces
-        run: |
-          workspaces=`yarn -s ts-node ${{ github.workspace }}/scripts/get-workspaces.ts`
-          echo $workspaces
-          echo "workspaces=$workspaces" >> $GITHUB_OUTPUT
-      - name: Get Changelog
-        id: merge-changelogs
-        uses: ./.github/actions/merge-changelogs
-        with:
-          workspaces: ${{ steps.get-workspaces.outputs.workspaces }}
-          write-file: 'true'
-      - run: |
-          yarn generate
-          yarn doc
-          yarn ts-node ${{ github.workspace }}/scripts/after-bump.ts
-      - name: Push
-        run: git push #--follow-tags
+        uses: ./.github/actions/changesets-fixed-version-bump
+
+      # - id: get-workspaces
+      #   run: |
+      #     workspaces=`yarn -s ts-node ${{ github.workspace }}/scripts/get-workspaces.ts`
+      #     echo $workspaces
+      #     echo "workspaces=$workspaces" >> $GITHUB_OUTPUT
+      # - name: Get Changelog
+      #   id: merge-changelogs
+      #   uses: ./.github/actions/merge-changelogs
+      #   with:
+      #     workspaces: ${{ steps.get-workspaces.outputs.workspaces }}
+      #     write-file: 'true'
+      # - run: |
+      #     yarn generate
+      #     yarn doc
+      #     yarn ts-node ${{ github.workspace }}/scripts/after-bump.ts
+      # - name: Push
+      #   run: git push #--follow-tags

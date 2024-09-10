@@ -89072,18 +89072,18 @@ async function bump() {
     const beforeBumpScript = (0, core_1.getInput)('before-bump');
     (0, core_1.info)(`executing before script`);
     if (beforeBumpScript) {
-        (0, execa_1.command)(beforeBumpScript);
+        await (0, execa_1.command)(beforeBumpScript);
     }
     (0, core_1.info)(`updating root package.json`);
     await updateRootPackageJson(version);
     // TODO: what if I use pnpm? either pass the command or package manager?
     (0, core_1.info)(`setting version`);
-    (0, execa_1.command)('yarn changeset version');
+    await (0, execa_1.command)('yarn changeset version');
     // after bump
     (0, core_1.info)(`executing after script`);
     const afterBumpScript = (0, core_1.getInput)('after-bump');
     if (afterBumpScript) {
-        (0, execa_1.command)(afterBumpScript);
+        await (0, execa_1.command)(afterBumpScript);
     }
     await commitAndTag(version).catch(err => {
         (0, core_1.error)(err);

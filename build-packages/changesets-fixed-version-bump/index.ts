@@ -15,20 +15,20 @@ async function bump() {
   const beforeBumpScript = getInput('before-bump');
   info(`executing before script`);
   if (beforeBumpScript) {
-    command(beforeBumpScript);
+    await command(beforeBumpScript);
   }
 
   info(`updating root package.json`);
   await updateRootPackageJson(version);
   // TODO: what if I use pnpm? either pass the command or package manager?
   info(`setting version`);
-  command('yarn changeset version');
+  await command('yarn changeset version');
 
   // after bump
   info(`executing after script`);
   const afterBumpScript = getInput('after-bump');
   if (afterBumpScript) {
-    command(afterBumpScript);
+    await command(afterBumpScript);
   }
   await commitAndTag(version).catch(err => {
     error(err);

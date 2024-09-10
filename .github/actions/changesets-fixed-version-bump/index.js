@@ -89065,16 +89065,22 @@ const git_1 = __nccwpck_require__(69674);
 const util_2 = __nccwpck_require__(50914);
 async function bump() {
     // before bump
+    (0, core_1.info)('Bumping version...');
     const version = await (0, util_2.getNextVersion)();
+    (0, core_1.info)(`Bumping to version ${version}`);
     process.env.NEXT_PACKAGE_VERSION = version;
     const beforeBumpScript = (0, core_1.getInput)('before-bump');
+    (0, core_1.info)(`executing before script`);
     if (beforeBumpScript) {
         (0, execa_1.command)(beforeBumpScript);
     }
+    (0, core_1.info)(`updating root package.json`);
     await updateRootPackageJson(version);
     // TODO: what if I use pnpm? either pass the command or package manager?
+    (0, core_1.info)(`setting version`);
     (0, execa_1.command)('yarn changeset version');
     // after bump
+    (0, core_1.info)(`executing after script`);
     const afterBumpScript = (0, core_1.getInput)('after-bump');
     if (afterBumpScript) {
         (0, execa_1.command)(afterBumpScript);
@@ -89092,9 +89098,14 @@ async function updateRootPackageJson(version) {
 }
 async function commitAndTag(version) {
     const cwd = process.cwd();
+    (0, core_1.info)(`add`);
     await (0, git_1.add)('-A', cwd);
+    (0, core_1.info)(`commit`);
     await (0, git_1.commit)(`v${version}`, cwd);
+    (0, core_1.info)(`tag`);
     await (0, git_1.tag)(`v${version}`, cwd);
+    (0, core_1.info)(`push`);
+    await (0, execa_1.command)('git push'); // --follow-tags');
 }
 bump();
 

@@ -14,6 +14,7 @@ async function updateDocumentationMd(version: string) {
 }
 
 async function beforeBump() {
+  console.log('calling before bump', process.env.NEXT_PACKAGE_VERSION);
   if (process.env.NEXT_PACKAGE_VERSION) {
     return updateDocumentationMd(process.env.NEXT_PACKAGE_VERSION);
   }

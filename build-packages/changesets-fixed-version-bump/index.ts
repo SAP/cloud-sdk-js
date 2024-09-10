@@ -2,7 +2,7 @@
 import { resolve } from 'path';
 import { formatJson } from '@sap-cloud-sdk/util';
 import { getInput, error } from '@actions/core';
-import execa, { command } from 'execa';
+import { command } from 'execa';
 import { add, commit, tag } from '@changesets/git';
 import { transformFile, getNextVersion } from './util';
 
@@ -17,7 +17,7 @@ async function bump() {
 
   await updateRootPackageJson(version);
   // TODO: what if I use pnpm? either pass the command or package manager?
-  execa('yarn changeset version');
+  command('yarn changeset version');
 
   // after bump
   const afterBumpScript = getInput('after-bump');

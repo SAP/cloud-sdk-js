@@ -1,10 +1,10 @@
 name: 'Fixed version bump'
 description: 'Bumps version for fixed packages and the root package.json using changests.'
 inputs:
-  before-bump-script:
+  before-bump:
     description: 'Script to run before bumping the version'
     required: false
-  after-bump-script:
+  after-bump:
     description: 'Script to run after bumping the version'
     required: false
 outputs:

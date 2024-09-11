@@ -36,6 +36,9 @@ jobs:
         uses: ./.github/actions/changesets-fixed-version-bump
         with:
           before-bump: 'yarn ts-node ${{ github.workspace }}/scripts/before-bump.ts'
+          after-bump: |
+            yarn generate
+            yarn doc
 
       # - id: get-workspaces
       #   run: |

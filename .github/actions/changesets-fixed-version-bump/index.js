@@ -89065,18 +89065,17 @@ const git_1 = __nccwpck_require__(69674);
 const util_2 = __nccwpck_require__(50914);
 async function bump() {
     // before bump
-    (0, core_1.info)('Bumping version...');
     const version = await (0, util_2.getNextVersion)();
-    (0, core_1.info)(`Bumping to version ${version}`);
+    (0, core_1.info)(`bumping to version ${version}`);
     process.env.NEXT_PACKAGE_VERSION = version;
+    (0, core_1.info)('executing before bump scripts');
     await executeCustomScript((0, core_1.getInput)('before-bump'));
-    (0, core_1.info)(`updating root package.json`);
+    (0, core_1.info)('updating root package.json');
     await updateRootPackageJson(version);
-    // TODO: what if I use pnpm? either pass the command or package manager?
-    (0, core_1.info)(`setting version`);
-    await (0, execa_1.command)('yarn changeset version');
+    (0, core_1.info)('setting version');
+    await (0, execa_1.command)('changeset version');
     // after bump
-    (0, core_1.info)(`executing after script`);
+    (0, core_1.info)('executing after bump scripts');
     await executeCustomScript((0, core_1.getInput)('after-bump'));
     await commitAndTag(version).catch(err => {
         (0, core_1.error)(err);
@@ -89091,19 +89090,20 @@ async function updateRootPackageJson(version) {
 }
 async function commitAndTag(version) {
     const cwd = process.cwd();
-    (0, core_1.info)(`add`);
+    (0, core_1.info)(`git add`);
     await (0, git_1.add)('-A', cwd);
-    (0, core_1.info)(`commit`);
+    (0, core_1.info)(`git commit`);
     await (0, git_1.commit)(`v${version}`, cwd);
-    (0, core_1.info)(`tag`);
+    (0, core_1.info)(`git tag`);
     await (0, git_1.tag)(`v${version}`, cwd);
-    (0, core_1.info)(`push`);
+    (0, core_1.info)(`git push`);
     await (0, execa_1.command)('git push'); // --follow-tags');
 }
 async function executeCustomScript(script) {
     if (script) {
         const commands = script.split('\n');
         for (const cmd of commands) {
+            (0, core_1.info)(`executing custom script: ${cmd}`);
             await (0, execa_1.command)(cmd);
         }
     }

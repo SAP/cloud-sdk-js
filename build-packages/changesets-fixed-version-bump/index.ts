@@ -12,11 +12,7 @@ async function bump() {
   const version = await getNextVersion();
   info(`Bumping to version ${version}`);
   process.env.NEXT_PACKAGE_VERSION = version;
-  const beforeBumpScript = getInput('before-bump');
-  info(`executing before script`);
-  if (beforeBumpScript) {
-    await command(beforeBumpScript);
-  }
+  await executeCustomScript(getInput('before-bump'));
 
   info(`updating root package.json`);
   await updateRootPackageJson(version);
@@ -26,10 +22,8 @@ async function bump() {
 
   // after bump
   info(`executing after script`);
-  const afterBumpScript = getInput('after-bump');
-  if (afterBumpScript) {
-    await command(afterBumpScript);
-  }
+  await executeCustomScript(getInput('after-bump'));
+
   await commitAndTag(version).catch(err => {
     error(err);
     process.exit(1);
@@ -56,6 +50,15 @@ async function commitAndTag(version: string) {
   await tag(`v${version}`, cwd);
   info(`push`);
   await command('git push'); // --follow-tags');
+}
+
+async function executeCustomScript(script: string) {
+  if (script) {
+    const commands = script.split('\n');
+    for (const cmd of commands) {
+      await command(cmd);
+    }
+  }
 }
 
 bump();

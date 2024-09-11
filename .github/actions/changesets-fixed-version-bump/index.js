@@ -89069,11 +89069,7 @@ async function bump() {
     const version = await (0, util_2.getNextVersion)();
     (0, core_1.info)(`Bumping to version ${version}`);
     process.env.NEXT_PACKAGE_VERSION = version;
-    const beforeBumpScript = (0, core_1.getInput)('before-bump');
-    (0, core_1.info)(`executing before script`);
-    if (beforeBumpScript) {
-        await (0, execa_1.command)(beforeBumpScript);
-    }
+    await executeCustomScript((0, core_1.getInput)('before-bump'));
     (0, core_1.info)(`updating root package.json`);
     await updateRootPackageJson(version);
     // TODO: what if I use pnpm? either pass the command or package manager?
@@ -89081,10 +89077,7 @@ async function bump() {
     await (0, execa_1.command)('yarn changeset version');
     // after bump
     (0, core_1.info)(`executing after script`);
-    const afterBumpScript = (0, core_1.getInput)('after-bump');
-    if (afterBumpScript) {
-        await (0, execa_1.command)(afterBumpScript);
-    }
+    await executeCustomScript((0, core_1.getInput)('after-bump'));
     await commitAndTag(version).catch(err => {
         (0, core_1.error)(err);
         process.exit(1);
@@ -89106,6 +89099,14 @@ async function commitAndTag(version) {
     await (0, git_1.tag)(`v${version}`, cwd);
     (0, core_1.info)(`push`);
     await (0, execa_1.command)('git push'); // --follow-tags');
+}
+async function executeCustomScript(script) {
+    if (script) {
+        const commands = script.split('\n');
+        for (const cmd of commands) {
+            await (0, execa_1.command)(cmd);
+        }
+    }
 }
 bump();
 

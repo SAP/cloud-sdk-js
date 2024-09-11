@@ -89073,7 +89073,8 @@ async function bump() {
     (0, core_1.info)('updating root package.json');
     await updateRootPackageJson(version);
     (0, core_1.info)('setting version');
-    await (0, execa_1.command)('changeset version');
+    // abstract from different package managers
+    await (0, execa_1.command)('node_modules/@changesets/cli/bin.js version');
     // after bump
     (0, core_1.info)('executing after bump scripts');
     await executeCustomScript((0, core_1.getInput)('after-bump'));

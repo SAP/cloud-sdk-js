@@ -17,7 +17,8 @@ async function bump() {
   info('updating root package.json');
   await updateRootPackageJson(version);
   info('setting version');
-  await command('changeset version');
+  // abstract from different package managers
+  await command('node_modules/@changesets/cli/bin.js version');
 
   // after bump
   info('executing after bump scripts');

@@ -31,12 +31,13 @@ function getChangelog(v) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getPackageVersion = getPackageVersion;
+exports.getPackageVersion = void 0;
 var fs_1 = __nccwpck_require__(7147);
-function getPackageVersion(pathToRootPackageJson) {
-    var packageJson = (0, fs_1.readFileSync)(pathToRootPackageJson || 'package.json', 'utf8');
-    return JSON.parse(packageJson).version;
-}
+var getPackageVersion = function (pathToRootPackageJson) {
+    return JSON.parse((0, fs_1.readFileSync)(pathToRootPackageJson || 'package.json', 'utf8'))
+        .version;
+};
+exports.getPackageVersion = getPackageVersion;
 
 
 /***/ }),

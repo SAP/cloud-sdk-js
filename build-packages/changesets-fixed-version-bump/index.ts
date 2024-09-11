@@ -8,20 +8,19 @@ import { transformFile, getNextVersion } from './util';
 
 async function bump() {
   // before bump
-  info('Bumping version...');
   const version = await getNextVersion();
-  info(`Bumping to version ${version}`);
+  info(`bumping to version ${version}`);
   process.env.NEXT_PACKAGE_VERSION = version;
+  info('executing before bump scripts');
   await executeCustomScript(getInput('before-bump'));
 
-  info(`updating root package.json`);
+  info('updating root package.json');
   await updateRootPackageJson(version);
-  // TODO: what if I use pnpm? either pass the command or package manager?
-  info(`setting version`);
-  await command('yarn changeset version');
+  info('setting version');
+  await command('changeset version');
 
   // after bump
-  info(`executing after script`);
+  info('executing after bump scripts');
   await executeCustomScript(getInput('after-bump'));
 
   await commitAndTag(version).catch(err => {
@@ -42,13 +41,13 @@ async function updateRootPackageJson(version: string) {
 async function commitAndTag(version: string) {
   const cwd = process.cwd();
 
-  info(`add`);
+  info(`git add`);
   await add('-A', cwd);
-  info(`commit`);
+  info(`git commit`);
   await commit(`v${version}`, cwd);
-  info(`tag`);
+  info(`git tag`);
   await tag(`v${version}`, cwd);
-  info(`push`);
+  info(`git push`);
   await command('git push'); // --follow-tags');
 }
 
@@ -56,6 +55,7 @@ async function executeCustomScript(script: string) {
   if (script) {
     const commands = script.split('\n');
     for (const cmd of commands) {
+      info(`executing custom script: ${cmd}`);
       await command(cmd);
     }
   }

@@ -39,14 +39,14 @@ export async function getNextVersion(): Promise<{
     .sort((a, b) => b - a);
   const bumpType = bumpTypeOrder[Math.min(...versionIncreases)];
 
-  if (bumpType === 'none') {
+  if (bumpType === 'none' || !bumpType) {
     throw new Error(`No changesets to release`);
   }
   const version = inc(currentVersion, bumpType);
 
   if (!version) {
     throw new Error(
-      `Invalid new version -- current version: ${currentVersion}, version type: ${bumpType}`
+      `Invalid new version -- current version: ${currentVersion}, bump type: ${bumpType}`
     );
   }
   return { version, bumpType };

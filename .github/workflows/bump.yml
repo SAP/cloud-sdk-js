@@ -10,9 +10,6 @@ on:
         description: Mandatory, when bumping a major version. Semver compatible version string (X.Y.Z). Must not be set for patch and minor version releases.
         required: false
 
-env:
-  INPUT_MAJOR_VERSION: ${{ inputs.majorVersion }}
-
 jobs:
   bump:
     runs-on: ubuntu-latest
@@ -33,22 +30,18 @@ jobs:
       - name: Bump version
         id: bump
         uses: ./.github/actions/changesets-fixed-version-bump
+        with:
+          majorVersion: ${{ inputs.majorVersion }}
       - run: |
           yarn ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
           yarn generate
           yarn doc
         env:
           NEXT_PACKAGE_VERSION: ${{ steps.bump.outputs.version }}
-      - id: get-workspaces
-        run: |
-          workspaces=`yarn -s ts-node ${{ github.workspace }}/scripts/get-workspaces.ts`
-          echo $workspaces
-          echo "workspaces=$workspaces" >> $GITHUB_OUTPUT
+
       - name: Merge Changelogs
         id: merge-changelogs
         uses: ./.github/actions/merge-changelogs
-        with:
-          workspaces: ${{ steps.get-workspaces.outputs.workspaces }}
 
       - run: yarn -s ts-node ${{ github.workspace }}/scripts/write-changelog.ts
         env:

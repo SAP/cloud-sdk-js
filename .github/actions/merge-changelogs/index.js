@@ -26,10 +26,7 @@ function getPackageName(changelog) {
 }
 function splitByVersion(changelog) {
     return changelog.split('\n## ').map(h2 => {
-        (0, core_1.info)('splitting by version');
         const [version, ...content] = h2.split('\n');
-        (0, core_1.info)(`version: ${version}`);
-        (0, core_1.info)(`content: ${content}`);
         return {
             version,
             content: content.join('\n').trim()
@@ -134,6 +131,7 @@ async function mergeChangelogs() {
         .map(({ workspace }) => (0, path_1.resolve)(workspace, 'CHANGELOG.md'));
     (0, core_1.info)(`pathsToPublicLogs: ${pathsToPublicLogs}`);
     const changelogs = await Promise.all(pathsToPublicLogs.map(async (file) => (0, promises_1.readFile)(file, { encoding: 'utf8' })));
+    (0, core_1.info)(`parsed changelogs: ${JSON.stringify(changelogs.map(log => parseChangelog(log)))}`);
     const newChangelog = await formatChangelog(mergeMessages(changelogs.map(log => parseChangelog(log)).flat()));
     (0, core_1.setOutput)('changelog', newChangelog);
     (0, core_1.info)(newChangelog);

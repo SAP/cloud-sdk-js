@@ -32,10 +32,7 @@ function getPackageName(changelog: string): string {
 
 function splitByVersion(changelog: string): ContentByVersion[] {
   return changelog.split('\n## ').map(h2 => {
-    info('splitting by version');
     const [version, ...content] = h2.split('\n');
-    info(`version: ${version}`);
-    info(`content: ${content}`);
     return {
       version,
       content: content.join('\n').trim()
@@ -190,6 +187,10 @@ export async function mergeChangelogs(): Promise<void> {
   info(`pathsToPublicLogs: ${pathsToPublicLogs}`);
   const changelogs = await Promise.all(
     pathsToPublicLogs.map(async file => readFile(file, { encoding: 'utf8' }))
+  );
+
+  info(
+    `parsed changelogs: ${JSON.stringify(changelogs.map(log => parseChangelog(log)))}`
   );
   const newChangelog = await formatChangelog(
     mergeMessages(changelogs.map(log => parseChangelog(log)).flat())

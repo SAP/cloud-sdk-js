@@ -425,7 +425,7 @@ describe('parseSchema', () => {
       oneOf: [
         { type: 'object' },
         {
-           allOf: [{ type: 'object' }, { type: 'string' }]
+          allOf: [{ type: 'object' }, { type: 'string' }]
         }
       ]
     };
@@ -436,15 +436,17 @@ describe('parseSchema', () => {
           { allOf: [emptyObjectSchema, { type: 'string' }] },
           {
             additionalProperties: { type: 'any' },
-            properties: [{
-              name: 'prop1',
-              description: undefined,
-              required: false,
-              schema: {
-                type: 'string'
-              },
-              schemaProperties: {}
-            }]
+            properties: [
+              {
+                name: 'prop1',
+                description: undefined,
+                required: false,
+                schema: {
+                  type: 'string'
+                },
+                schemaProperties: {}
+              }
+            ]
           }
         ]
       }
@@ -456,8 +458,11 @@ describe('parseSchema', () => {
       oneOf: [
         { type: 'object' },
         {
-           allOf: [{ type: 'object', properties: { prop1: { type: 'string' } } }, { type: 'string' }],
-           required: ['prop1']
+          allOf: [
+            { type: 'object', properties: { prop1: { type: 'string' } } },
+            { type: 'string' }
+          ],
+          required: ['prop1']
         }
       ]
     };
@@ -465,18 +470,25 @@ describe('parseSchema', () => {
       {
         oneOf: [
           emptyObjectSchema,
-          { allOf: [{
-            additionalProperties: { type: 'any' },
-            properties: [{
-              name: 'prop1',
-              description: undefined,
-              required: true,
-              schema: {
-                type: 'string'
+          {
+            allOf: [
+              {
+                additionalProperties: { type: 'any' },
+                properties: [
+                  {
+                    name: 'prop1',
+                    description: undefined,
+                    required: true,
+                    schema: {
+                      type: 'string'
+                    },
+                    schemaProperties: {}
+                  }
+                ]
               },
-              schemaProperties: {}
-            }]
-          }, { type: 'string' }] },
+              { type: 'string' }
+            ]
+          }
         ]
       }
     );

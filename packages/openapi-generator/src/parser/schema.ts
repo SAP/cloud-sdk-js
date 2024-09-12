@@ -224,7 +224,11 @@ function parseXOfSchema(
   options: ParserOptions
 ): any {
   let normalizedSchema: OpenAPIV3.NonArraySchemaObject = schema;
-  if (schema.properties || (schema.additionalProperties && typeof schema.additionalProperties === 'object')) {
+  if (
+    schema.properties ||
+    (schema.additionalProperties &&
+      typeof schema.additionalProperties === 'object')
+  ) {
     logger.info(
       `Detected schema with ${xOf} and properties in the same level. This was refactored to a schema with ${xOf} only, containing all the properties from the top level.`
     );
@@ -234,8 +238,19 @@ function parseXOfSchema(
     normalizedSchema = { [xOf]: [...(schema[xOf] || []), objectSchema] };
   }
   return {
-    [xOf]: (normalizedSchema[xOf] || []).map(entry => parseSchema({ ...entry,
-      required: [...('required' in entry && entry.required ? entry.required : []), ...(normalizedSchema.required || [])] }, refs, options))
+    [xOf]: (normalizedSchema[xOf] || []).map(entry =>
+      parseSchema(
+        {
+          ...entry,
+          required: [
+            ...('required' in entry && entry.required ? entry.required : []),
+            ...(normalizedSchema.required || [])
+          ]
+        },
+        refs,
+        options
+      )
+    )
   };
 }
 

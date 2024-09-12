@@ -2,6 +2,7 @@
 import { readFile } from 'fs/promises';
 import { resolve } from 'path';
 import { setOutput, getInput, error, setFailed } from '@actions/core';
+import { getPackages, getPackagesSync } from '@manypkg/get-packages';
 
 export const validMessageTypes = [
   'Known Issue',
@@ -159,13 +160,18 @@ async function formatChangelog(messages: Change[]): Promise<string> {
 
 export async function mergeChangelogs(): Promise<void> {
   // TODO: use package for this
-  const workspaces = getInput('workspaces').split(',');
+  // const workspaces = getInput('workspaces').split(',');
+  const { packages } = await getPackages(process.cwd());
   const workspacesWithVisibility = await Promise.all(
-    workspaces.map(async workspace => {
-      const packageJson = await readFile(resolve(workspace, 'package.json'), {
-        encoding: 'utf8'
-      });
-      return { isPublic: !JSON.parse(packageJson).private, workspace } as const;
+    packages.map(async ({ packageJson, relativeDir }) => {
+      // const packageJson = await readFile(resolve(workspace, 'package.json'), {
+      //   encoding: 'utf8'
+      // });
+      // return { isPublic: !JSON.parse(packageJson).private, workspace } as const;
+      return {
+        isPublic: !packageJson.private,
+        workspace: relativeDir
+      } as const;
     })
   );
   const pathsToPublicLogs = workspacesWithVisibility

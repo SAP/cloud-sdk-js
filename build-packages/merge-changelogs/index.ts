@@ -31,13 +31,16 @@ function getPackageName(changelog: string): string {
 }
 
 function splitByVersion(changelog: string): ContentByVersion[] {
-  return changelog.split('\n## ').map(h2 => {
-    const [version, ...content] = h2.split('\n');
-    return {
-      version,
-      content: content.join('\n').trim()
-    };
-  });
+  return changelog
+    .split('\n## ')
+    .slice(1)
+    .map(h2 => {
+      const [version, ...content] = h2.split('\n');
+      return {
+        version,
+        content: content.join('\n').trim()
+      };
+    });
 }
 
 function assertGroups(

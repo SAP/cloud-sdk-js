@@ -120,6 +120,7 @@ async function formatChangelog(parsedChangelogs) {
 async function mergeChangelogs() {
     // TODO: use package for this
     const workspaces = (0, core_1.getInput)('workspaces').split(',');
+    (0, core_1.info)(`workspaces: ${workspaces}`);
     const workspacesWithVisibility = await Promise.all(workspaces.map(async (workspace) => {
         const packageJson = await (0, promises_1.readFile)((0, path_1.resolve)(workspace, 'package.json'), {
             encoding: 'utf8'
@@ -129,7 +130,9 @@ async function mergeChangelogs() {
     const pathsToPublicLogs = workspacesWithVisibility
         .filter(({ isPublic }) => isPublic)
         .map(({ workspace }) => (0, path_1.resolve)(workspace, 'CHANGELOG.md'));
+    (0, core_1.info)(`pathsToPublicLogs: ${pathsToPublicLogs}`);
     const changelogs = await Promise.all(pathsToPublicLogs.map(async (file) => (0, promises_1.readFile)(file, { encoding: 'utf8' })));
+    (0, core_1.info)(`changelogs: ${changelogs}`);
     const newChangelog = await formatChangelog(mergeMessages(changelogs.map(log => parseChangelog(log)).flat()));
     (0, core_1.setOutput)('changelog', newChangelog);
     (0, core_1.info)(newChangelog);

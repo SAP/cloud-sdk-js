@@ -167,6 +167,7 @@ async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
 }
 
 export async function mergeChangelogs(): Promise<void> {
+  // TODO: use package for this
   const workspaces = getInput('workspaces').split(',');
   const workspacesWithVisibility = await Promise.all(
     workspaces.map(async workspace => {
@@ -187,24 +188,6 @@ export async function mergeChangelogs(): Promise<void> {
   );
   setOutput('changelog', newChangelog);
   info(newChangelog);
-
-  if (getInput('write-file') === 'true') {
-    info('writing file');
-    await writeChangelog(newChangelog);
-  } else {
-    info('not writing file');
-  }
-}
-
-async function writeChangelog(newChangelog: string): Promise<void> {
-  const unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
-  await writeFile(
-    'CHANGELOG.md',
-    unifiedChangelog.split('\n').slice(0, 30).join('\n') +
-      newChangelog +
-      unifiedChangelog.split('\n').slice(30).join('\n'),
-    { encoding: 'utf8' }
-  );
 }
 
 mergeChangelogs().catch(error => {

@@ -40,20 +40,21 @@ jobs:
             yarn generate
             yarn doc
 
-      # - id: get-workspaces
-      #   run: |
-      #     workspaces=`yarn -s ts-node ${{ github.workspace }}/scripts/get-workspaces.ts`
-      #     echo $workspaces
-      #     echo "workspaces=$workspaces" >> $GITHUB_OUTPUT
-      # - name: Get Changelog
-      #   id: merge-changelogs
-      #   uses: ./.github/actions/merge-changelogs
-      #   with:
-      #     workspaces: ${{ steps.get-workspaces.outputs.workspaces }}
-      #     write-file: 'true'
-      # - run: |
-      #     yarn generate
-      #     yarn doc
-      #     yarn ts-node ${{ github.workspace }}/scripts/after-bump.ts
-      # - name: Push
-      #   run: git push #--follow-tags
+      - id: get-workspaces
+        run: |
+          workspaces=`yarn -s ts-node ${{ github.workspace }}/scripts/get-workspaces.ts`
+          echo $workspaces
+          echo "workspaces=$workspaces" >> $GITHUB_OUTPUT
+      - name: Merge Changelogs
+        id: merge-changelogs
+        uses: ./.github/actions/merge-changelogs
+        with:
+          workspaces: ${{ steps.get-workspaces.outputs.workspaces }}
+      - run: echo ${{ steps.merge-changelogs.outputs.changelog }}
+      - run: yarn -s ts-node ${{ github.workspace }}/scripts/write-changelog.ts
+        env:
+          CHANGELOG: ${{ steps.merge-changelogs.outputs.changelog }}
+      - name: Commit and tag
+        uses: ./.github/actions/commit-and-tag
+        with:
+          version: ${{ steps.merge-changelogs.outputs.changelog }}

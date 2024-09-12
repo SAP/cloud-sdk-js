@@ -114,6 +114,7 @@ async function formatChangelog(parsedChangelogs) {
     return createNewSection(version, parsedChangelogs);
 }
 async function mergeChangelogs() {
+    // TODO: use package for this
     const workspaces = (0, core_1.getInput)('workspaces').split(',');
     const workspacesWithVisibility = await Promise.all(workspaces.map(async (workspace) => {
         const packageJson = await (0, promises_1.readFile)((0, path_1.resolve)(workspace, 'package.json'), {
@@ -128,19 +129,6 @@ async function mergeChangelogs() {
     const newChangelog = await formatChangelog(mergeMessages(changelogs.map(log => parseChangelog(log)).flat()));
     (0, core_1.setOutput)('changelog', newChangelog);
     (0, core_1.info)(newChangelog);
-    if ((0, core_1.getInput)('write-file') === 'true') {
-        (0, core_1.info)('writing file');
-        await writeChangelog(newChangelog);
-    }
-    else {
-        (0, core_1.info)('not writing file');
-    }
-}
-async function writeChangelog(newChangelog) {
-    const unifiedChangelog = await (0, promises_1.readFile)('CHANGELOG.md', { encoding: 'utf8' });
-    await (0, promises_1.writeFile)('CHANGELOG.md', unifiedChangelog.split('\n').slice(0, 30).join('\n') +
-        newChangelog +
-        unifiedChangelog.split('\n').slice(30).join('\n'), { encoding: 'utf8' });
 }
 mergeChangelogs().catch(error => {
     (0, core_1.setFailed)(error.message);

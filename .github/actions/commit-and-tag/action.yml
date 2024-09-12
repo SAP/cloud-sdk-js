@@ -1,0 +1,8 @@
+name: 'commit-and-tag'
+description: 'Commits and tags the current changes.'
+inputs:
+  version:
+    description: 'Version to use for the tag and commit message'
+runs:
+  using: 'node20'
+  main: 'index.js'

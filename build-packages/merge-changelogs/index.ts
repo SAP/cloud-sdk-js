@@ -162,21 +162,10 @@ export async function mergeChangelogs(): Promise<void> {
   // TODO: use package for this
   // const workspaces = getInput('workspaces').split(',');
   const { packages } = await getPackages(process.cwd());
-  const workspacesWithVisibility = await Promise.all(
-    packages.map(async ({ packageJson, relativeDir }) => {
-      // const packageJson = await readFile(resolve(workspace, 'package.json'), {
-      //   encoding: 'utf8'
-      // });
-      // return { isPublic: !JSON.parse(packageJson).private, workspace } as const;
-      return {
-        isPublic: !packageJson.private,
-        workspace: relativeDir
-      } as const;
-    })
-  );
-  const pathsToPublicLogs = workspacesWithVisibility
-    .filter(({ isPublic }) => isPublic)
-    .map(({ workspace }) => resolve(workspace, 'CHANGELOG.md'));
+  const pathsToPublicLogs = packages
+    .filter(({ packageJson }) => !packageJson.private)
+    .map(({ relativeDir }) => resolve(relativeDir, 'CHANGELOG.md'));
+
   const changelogs = await Promise.all(
     pathsToPublicLogs.map(async file => readFile(file, { encoding: 'utf8' }))
   );

@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
-import { readFile, writeFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
 import { resolve } from 'path';
-import { setOutput, getInput, error, info, setFailed } from '@actions/core';
+import { setOutput, getInput, error, setFailed } from '@actions/core';
 
 export const validMessageTypes = [
   'Known Issue',
@@ -96,17 +96,15 @@ function parseContent(
 function parseChangelog(changelog: string): Change[] {
   const packageName = getPackageName(changelog);
   const [latest] = splitByVersion(changelog);
-  info(`packageName: ${packageName}, latest: ${JSON.stringify(latest)}`);
   return parseContent(latest.content, latest.version, packageName).flat();
 }
 
-function writeHeader(version: string) {
+function formatHeader(version: string) {
   return `
-# ${version}
-`;
+# ${version}`;
 }
 
-function writeMessagesOfType(
+function formatMessagesOfType(
   messages: Change[],
   type: (typeof validMessageTypes)[number]
 ): string {
@@ -128,21 +126,7 @@ function writeMessagesOfType(
   return `\n\n## ${pluralizedType}\n\n${formatted}`;
 }
 
-function createNewSection(version: string, messages: Change[]): string {
-  return (
-    writeHeader(version) +
-    writeMessagesOfType(messages, 'Known Issue') +
-    writeMessagesOfType(messages, 'Compatibility Note') +
-    writeMessagesOfType(messages, 'New Functionality') +
-    writeMessagesOfType(messages, 'Improvement') +
-    writeMessagesOfType(messages, 'Fixed Issue') +
-    writeMessagesOfType(messages, 'Updated Dependencies') +
-    '\n\n'
-  );
-}
-
 function mergeMessages(parsedMessages: Change[]): Change[] {
-  info('Merging messages');
   return parsedMessages.reduce((prev, curr) => {
     const sameMessage = prev.find(
       msg =>
@@ -159,17 +143,18 @@ function mergeMessages(parsedMessages: Change[]): Change[] {
   }, [] as Change[]);
 }
 
-async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
-  // const unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
-  // const missingFromUnifiedChangelog = parsedChangelogs.filter(
-  //   summary => !unifiedChangelog.includes(`# ${summary.version}`)
-  // );
-  info('Formatting changelog');
-  console.log(JSON.stringify(parsedChangelogs));
-  const version = parsedChangelogs[0].version;
-  // const versions = [...new Set(parsedChangelogs.map(msg => msg.version))];
-
-  return createNewSection(version, parsedChangelogs);
+async function formatChangelog(messages: Change[]): Promise<string> {
+  const version = messages[0].version;
+  return (
+    formatHeader(version) +
+    formatMessagesOfType(messages, 'Known Issue') +
+    formatMessagesOfType(messages, 'Compatibility Note') +
+    formatMessagesOfType(messages, 'New Functionality') +
+    formatMessagesOfType(messages, 'Improvement') +
+    formatMessagesOfType(messages, 'Fixed Issue') +
+    formatMessagesOfType(messages, 'Updated Dependencies') +
+    '\n\n'
+  );
 }
 
 export async function mergeChangelogs(): Promise<void> {
@@ -186,19 +171,14 @@ export async function mergeChangelogs(): Promise<void> {
   const pathsToPublicLogs = workspacesWithVisibility
     .filter(({ isPublic }) => isPublic)
     .map(({ workspace }) => resolve(workspace, 'CHANGELOG.md'));
-  info(`pathsToPublicLogs: ${pathsToPublicLogs}`);
   const changelogs = await Promise.all(
     pathsToPublicLogs.map(async file => readFile(file, { encoding: 'utf8' }))
   );
 
-  info(
-    `parsed changelogs: ${JSON.stringify(changelogs.map(log => parseChangelog(log)))}`
-  );
   const newChangelog = await formatChangelog(
     mergeMessages(changelogs.map(log => parseChangelog(log)).flat())
   );
   setOutput('changelog', newChangelog);
-  info(newChangelog);
 }
 
 mergeChangelogs().catch(error => {

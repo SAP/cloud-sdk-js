@@ -27,8 +27,9 @@ function getPackageName(changelog) {
 function splitByVersion(changelog) {
     return changelog.split('\n## ').map(h2 => {
         (0, core_1.info)('splitting by version');
-        (0, core_1.info)(h2);
         const [version, ...content] = h2.split('\n');
+        (0, core_1.info)(`version: ${version}`);
+        (0, core_1.info)(`content: ${content}`);
         return {
             version,
             content: content.join('\n').trim()

@@ -15,6 +15,7 @@ export function getPackageVersion(
   return JSON.parse(packageJson).version;
 }
 
+// TODO: this is currently duplicate (scripts/util.ts)
 export async function transformFile(
   filePath: string,
   transformFn: CallableFunction
@@ -24,35 +25,29 @@ export async function transformFile(
   await writeFile(filePath, transformedFile, { encoding: 'utf8' });
 }
 
-const versionTypeOrder = ['major', 'minor', 'patch', 'none'] as const;
+const bumpTypeOrder = ['major', 'minor', 'patch', 'none'] as const;
 
-export async function getNextVersion(): Promise<string> {
+export async function getNextVersion(): Promise<{
+  version: string;
+  bumpType: (typeof bumpTypeOrder)[number];
+}> {
   const currentVersion = getPackageVersion();
   const releasePlan = await getReleasePlan(process.cwd());
 
   const versionIncreases = releasePlan.releases
-    .map(({ type }) => versionTypeOrder.indexOf(type))
+    .map(({ type }) => bumpTypeOrder.indexOf(type))
     .sort((a, b) => b - a);
-  const versionType = versionTypeOrder[Math.min(...versionIncreases)];
-  // TODO: handle this correctly
-  if (versionType === 'none') {
+  const bumpType = bumpTypeOrder[Math.min(...versionIncreases)];
+
+  if (bumpType === 'none') {
     throw new Error(`No changesets to release`);
   }
-  const newVersion = inc(currentVersion, versionType);
-  // TODO: this does not belong here
-  if (
-    versionType === 'major' &&
-    newVersion !== process.env.INPUT_MAJOR_VERSION
-  ) {
-    throw new Error(
-      `Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input in the workflow.`
-    );
-  }
+  const version = inc(currentVersion, bumpType);
 
-  if (!newVersion) {
+  if (!version) {
     throw new Error(
-      `Invalid new version -- current version: ${currentVersion}, version type: ${versionType}`
+      `Invalid new version -- current version: ${currentVersion}, version type: ${bumpType}`
     );
   }
-  return newVersion;
+  return { version, bumpType };
 }

@@ -1,11 +1,17 @@
 import { resolve } from 'node:path';
 import { formatJson } from '@sap-cloud-sdk/util';
-import { info, setOutput } from '@actions/core';
+import { getInput, info, setOutput } from '@actions/core';
 import { command } from 'execa';
 import { transformFile, getNextVersion } from './util';
 
 async function bump() {
-  const version = await getNextVersion();
+  const { version, bumpType } = await getNextVersion();
+  // TODO: this does not belong here
+  if (bumpType === 'major' && version !== getInput('majorVersion')) {
+    throw new Error(
+      `Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input.`
+    );
+  }
   info(`bumping to version ${version}`);
   setOutput('version', version);
 

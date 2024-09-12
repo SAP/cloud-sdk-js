@@ -22,33 +22,28 @@ function getPackageVersion(pathToRootPackageJson) {
     const packageJson = (0, node_fs_1.readFileSync)(pathToRootPackageJson || 'package.json', 'utf8');
     return JSON.parse(packageJson).version;
 }
+// TODO: this is currently duplicate (scripts/util.ts)
 async function transformFile(filePath, transformFn) {
     const file = await (0, promises_1.readFile)(filePath, { encoding: 'utf8' });
     const transformedFile = await transformFn(file);
     await (0, promises_1.writeFile)(filePath, transformedFile, { encoding: 'utf8' });
 }
-const versionTypeOrder = ['major', 'minor', 'patch', 'none'];
+const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
     const currentVersion = getPackageVersion();
     const releasePlan = await (0, get_release_plan_1.default)(process.cwd());
     const versionIncreases = releasePlan.releases
-        .map(({ type }) => versionTypeOrder.indexOf(type))
+        .map(({ type }) => bumpTypeOrder.indexOf(type))
         .sort((a, b) => b - a);
-    const versionType = versionTypeOrder[Math.min(...versionIncreases)];
-    // TODO: handle this correctly
-    if (versionType === 'none') {
+    const bumpType = bumpTypeOrder[Math.min(...versionIncreases)];
+    if (bumpType === 'none') {
         throw new Error(`No changesets to release`);
     }
-    const newVersion = (0, semver_1.inc)(currentVersion, versionType);
-    // TODO: this does not belong here
-    if (versionType === 'major' &&
-        newVersion !== process.env.INPUT_MAJOR_VERSION) {
-        throw new Error(`Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input in the workflow.`);
+    const version = (0, semver_1.inc)(currentVersion, bumpType);
+    if (!version) {
+        throw new Error(`Invalid new version -- current version: ${currentVersion}, version type: ${bumpType}`);
     }
-    if (!newVersion) {
-        throw new Error(`Invalid new version -- current version: ${currentVersion}, version type: ${versionType}`);
-    }
-    return newVersion;
+    return { version, bumpType };
 }
 
 
@@ -89078,7 +89073,11 @@ const core_1 = __nccwpck_require__(37117);
 const execa_1 = __nccwpck_require__(30580);
 const util_2 = __nccwpck_require__(50914);
 async function bump() {
-    const version = await (0, util_2.getNextVersion)();
+    const { version, bumpType } = await (0, util_2.getNextVersion)();
+    // TODO: this does not belong here
+    if (bumpType === 'major' && version !== (0, core_1.getInput)('majorVersion')) {
+        throw new Error(`Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input.`);
+    }
     (0, core_1.info)(`bumping to version ${version}`);
     (0, core_1.setOutput)('version', version);
     (0, core_1.info)('updating root package.json');

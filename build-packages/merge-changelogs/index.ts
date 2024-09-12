@@ -164,7 +164,7 @@ async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
   // );
   info('Formatting changelog');
   console.log(JSON.stringify(parsedChangelogs));
-  const version = parsedChangelogs[0].version;
+  const version = parsedChangelogs[1].version;
   // const versions = [...new Set(parsedChangelogs.map(msg => msg.version))];
 
   return createNewSection(version, parsedChangelogs);

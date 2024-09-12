@@ -62,6 +62,7 @@ function parseContent(content, version, packageName) {
 function parseChangelog(changelog) {
     const packageName = getPackageName(changelog);
     const [latest] = splitByVersion(changelog);
+    (0, core_1.info)('Parsing changelog');
     return parseContent(latest.content, latest.version, packageName).flat();
 }
 function writeHeader(version) {
@@ -92,6 +93,7 @@ function createNewSection(version, messages) {
         '\n\n');
 }
 function mergeMessages(parsedMessages) {
+    (0, core_1.info)('Merging messages');
     return parsedMessages.reduce((prev, curr) => {
         const sameMessage = prev.find(msg => msg.summary === curr.summary &&
             msg.dependencies === curr.dependencies &&
@@ -109,6 +111,7 @@ async function formatChangelog(parsedChangelogs) {
     // const missingFromUnifiedChangelog = parsedChangelogs.filter(
     //   summary => !unifiedChangelog.includes(`# ${summary.version}`)
     // );
+    (0, core_1.info)('Formatting changelog');
     const version = parsedChangelogs[0].version;
     // const versions = [...new Set(parsedChangelogs.map(msg => msg.version))];
     return createNewSection(version, parsedChangelogs);

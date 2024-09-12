@@ -93,6 +93,7 @@ function parseContent(
 function parseChangelog(changelog: string): Change[] {
   const packageName = getPackageName(changelog);
   const [latest] = splitByVersion(changelog);
+  info('Parsing changelog');
   return parseContent(latest.content, latest.version, packageName).flat();
 }
 
@@ -139,6 +140,7 @@ function createNewSection(version: string, messages: Change[]): string {
 }
 
 function mergeMessages(parsedMessages: Change[]): Change[] {
+  info('Merging messages');
   return parsedMessages.reduce((prev, curr) => {
     const sameMessage = prev.find(
       msg =>
@@ -160,6 +162,7 @@ async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
   // const missingFromUnifiedChangelog = parsedChangelogs.filter(
   //   summary => !unifiedChangelog.includes(`# ${summary.version}`)
   // );
+  info('Formatting changelog');
   const version = parsedChangelogs[0].version;
   // const versions = [...new Set(parsedChangelogs.map(msg => msg.version))];
 

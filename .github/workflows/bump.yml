@@ -30,16 +30,15 @@ jobs:
         run: |
           git config --global user.email "cloud-sdk-js@github.com"
           git config --global user.name "cloud-sdk-js"
-      # - name: Bump version
-      #   run: yarn run version
       - name: Bump version
+        id: bump
         uses: ./.github/actions/changesets-fixed-version-bump
-        with:
-          before-bump: yarn ts-node ${{ github.workspace }}/scripts/before-bump.ts
-          after-bump: |
-            yarn generate
-            yarn doc
-
+      - run: |
+          yarn ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
+          yarn generate
+          yarn doc
+        env:
+          NEXT_PACKAGE_VERSION: ${{ steps.bump.outputs.version }}
       - id: get-workspaces
         run: |
           workspaces=`yarn -s ts-node ${{ github.workspace }}/scripts/get-workspaces.ts`
@@ -57,4 +56,4 @@ jobs:
       - name: Commit and tag
         uses: ./.github/actions/commit-and-tag
         with:
-          version: ${{ steps.merge-changelogs.outputs.changelog }}
+          version: ${{ steps.bump.outputs.version }}

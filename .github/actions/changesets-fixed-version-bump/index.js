@@ -89063,35 +89063,20 @@ const core_1 = __nccwpck_require__(37117);
 const execa_1 = __nccwpck_require__(30580);
 const util_2 = __nccwpck_require__(50914);
 async function bump() {
-    // before bump
     const version = await (0, util_2.getNextVersion)();
     (0, core_1.info)(`bumping to version ${version}`);
-    process.env.NEXT_PACKAGE_VERSION = version;
-    (0, core_1.info)('executing before bump scripts');
-    await executeCustomScript((0, core_1.getInput)('before-bump'));
+    (0, core_1.setOutput)('version', version);
     (0, core_1.info)('updating root package.json');
     await updateRootPackageJson(version);
     (0, core_1.info)('setting version');
     // abstract from different package managers
     await (0, execa_1.command)('node_modules/@changesets/cli/bin.js version');
-    // after bump
-    (0, core_1.info)('executing after bump scripts');
-    await executeCustomScript((0, core_1.getInput)('after-bump'));
 }
 async function updateRootPackageJson(version) {
     await (0, util_2.transformFile)((0, path_1.resolve)('package.json'), packageJson => (0, util_1.formatJson)({
         ...JSON.parse(packageJson),
         version: `${version}`
     }));
-}
-async function executeCustomScript(script) {
-    if (script) {
-        const commands = script.split('\n');
-        for (const cmd of commands) {
-            (0, core_1.info)(`executing custom script: ${cmd}`);
-            await (0, execa_1.command)(cmd);
-        }
-    }
 }
 bump();
 

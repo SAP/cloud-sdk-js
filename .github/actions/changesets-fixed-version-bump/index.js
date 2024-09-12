@@ -89074,7 +89074,6 @@ const execa_1 = __nccwpck_require__(30580);
 const util_2 = __nccwpck_require__(50914);
 async function bump() {
     const { version, bumpType } = await (0, util_2.getNextVersion)();
-    // TODO: this does not belong here
     if (bumpType === 'major' && version !== (0, core_1.getInput)('majorVersion')) {
         throw new Error(`Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input.`);
     }

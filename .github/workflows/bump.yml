@@ -14,19 +14,15 @@ jobs:
   bump:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
           # ref: 'main'
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: ls ${{ github.workspace }}/scripts
       - run: yarn install --frozen-lockfile
-      - name: Setup git
-        run: |
-          git config --global user.email "bot-sdk-js@github.com"
-          git config --global user.name "bot-sdk-js"
+
       - name: Bump version
         id: bump
         uses: ./.github/actions/changesets-fixed-version-bump
@@ -46,6 +42,12 @@ jobs:
       - run: yarn -s ts-node ${{ github.workspace }}/scripts/write-changelog.ts
         env:
           CHANGELOG: ${{ steps.merge-changelogs.outputs.changelog }}
+
+      # TODO: commit-and-tag does not need to rely on changesets, should be a composite action
+      - name: Setup git
+        run: |
+          git config --global user.email "bot-sdk-js@github.com"
+          git config --global user.name "bot-sdk-js"
       - name: Commit and tag
         uses: ./.github/actions/commit-and-tag
         with:

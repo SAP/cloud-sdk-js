@@ -72,7 +72,7 @@ export class OpenApiDocumentRefs {
       (mapping, originalName, i) => ({
         ...mapping,
         [`#/components/schemas/${originalName}`]: {
-          schemaName: schemaNames[i],
+          schemaName: pascalCase(options.schemaPrefix ?? '') + schemaNames[i],
           fileName: fileNames[i]
         }
       }),

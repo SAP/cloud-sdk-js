@@ -25,8 +25,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: Setup git
         run: |
-          git config --global user.email "cloud-sdk-js@github.com"
-          git config --global user.name "cloud-sdk-js"
+          git config --global user.email "bot-sdk-js@github.com"
+          git config --global user.name "bot-sdk-js"
       - name: Bump version
         id: bump
         uses: ./.github/actions/changesets-fixed-version-bump

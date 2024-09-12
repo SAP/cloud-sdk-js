@@ -10,5 +10,5 @@ export interface ParserOptions {
   /**
    * Add prefix to schema names.
    */
-  schemaPrefix?: string;
+  schemaPrefix: string;
 }

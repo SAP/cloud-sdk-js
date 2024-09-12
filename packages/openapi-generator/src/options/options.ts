@@ -45,8 +45,9 @@ export const cliOptions = {
   },
   schemaPrefix: {
     describe:
-      'When enabled, all generated files follow the ECMAScript module syntax.',
+      'Prefix all schema names with a value. This is useful to avoid naming conflicts when multiple services are generated.',
     type: 'string',
-    default: undefined
+    default: '',
+    hidden: true
   }
 } as const satisfies Options<GeneratorOptions>;

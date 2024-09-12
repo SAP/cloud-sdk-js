@@ -46,7 +46,7 @@ jobs:
       # TODO: commit-and-tag does not need to rely on changesets, should be a composite action
       - name: Setup git
         run: |
-          git config --global user.email "bot-sdk-js@github.com"
+          git config --global user.email "sap-cloud-sdk@sap.com"
           git config --global user.name "bot-sdk-js"
       - name: Commit and tag
         uses: ./.github/actions/commit-and-tag

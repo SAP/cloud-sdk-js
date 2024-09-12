@@ -1,8 +1,8 @@
+import { resolve } from 'node:path';
 import mock from 'mock-fs';
 import { getNextVersion } from './util';
-import { resolve } from 'path';
 
-describe('nextSdkVersion', () => {
+describe('getNextVersion', () => {
   afterEach(() => {
     mock.restore();
   });

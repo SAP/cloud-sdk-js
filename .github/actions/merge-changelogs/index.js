@@ -10,8 +10,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.validMessageTypes = void 0;
 exports.mergeChangelogs = mergeChangelogs;
 /* eslint-disable jsdoc/require-jsdoc */
-const promises_1 = __nccwpck_require__(3292);
-const path_1 = __nccwpck_require__(1017);
+const promises_1 = __nccwpck_require__(3977);
+const node_path_1 = __nccwpck_require__(9411);
 const core_1 = __nccwpck_require__(7117);
 const get_packages_1 = __nccwpck_require__(512);
 exports.validMessageTypes = [
@@ -108,12 +108,10 @@ async function formatChangelog(messages) {
         '\n\n');
 }
 async function mergeChangelogs() {
-    // TODO: use package for this
-    // const workspaces = getInput('workspaces').split(',');
     const { packages } = await (0, get_packages_1.getPackages)(process.cwd());
     const pathsToPublicLogs = packages
         .filter(({ packageJson }) => !packageJson.private)
-        .map(({ relativeDir }) => (0, path_1.resolve)(relativeDir, 'CHANGELOG.md'));
+        .map(({ relativeDir }) => (0, node_path_1.resolve)(relativeDir, 'CHANGELOG.md'));
     const changelogs = await Promise.all(pathsToPublicLogs.map(async (file) => (0, promises_1.readFile)(file, { encoding: 'utf8' })));
     const newChangelog = await formatChangelog(mergeMessages(changelogs.map(log => parseChangelog(log)).flat()));
     (0, core_1.setOutput)('changelog', newChangelog);
@@ -40121,6 +40119,22 @@ module.exports = require("net");
 
 "use strict";
 module.exports = require("node:events");
+
+/***/ }),
+
+/***/ 3977:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs/promises");
+
+/***/ }),
+
+/***/ 9411:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:path");
 
 /***/ }),
 

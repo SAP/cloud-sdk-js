@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import { readFile, writeFile } from 'fs/promises';
-import { PathLike, readFileSync } from 'fs';
+import { readFile, writeFile } from 'node:fs/promises';
+import { PathLike, readFileSync } from 'node:fs';
 import getReleasePlan from '@changesets/get-release-plan';
 import { inc } from 'semver';
 

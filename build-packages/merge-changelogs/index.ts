@@ -1,8 +1,8 @@
 /* eslint-disable jsdoc/require-jsdoc */
-import { readFile } from 'fs/promises';
-import { resolve } from 'path';
-import { setOutput, getInput, error, setFailed } from '@actions/core';
-import { getPackages, getPackagesSync } from '@manypkg/get-packages';
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { setOutput, error, setFailed } from '@actions/core';
+import { getPackages } from '@manypkg/get-packages';
 
 export const validMessageTypes = [
   'Known Issue',
@@ -159,8 +159,6 @@ async function formatChangelog(messages: Change[]): Promise<string> {
 }
 
 export async function mergeChangelogs(): Promise<void> {
-  // TODO: use package for this
-  // const workspaces = getInput('workspaces').split(',');
   const { packages } = await getPackages(process.cwd());
   const pathsToPublicLogs = packages
     .filter(({ packageJson }) => !packageJson.private)

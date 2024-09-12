@@ -1,5 +1,4 @@
-/* eslint-disable jsdoc/require-jsdoc */
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import { formatJson } from '@sap-cloud-sdk/util';
 import { info, setOutput } from '@actions/core';
 import { command } from 'execa';

@@ -14,12 +14,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getPackageVersion = getPackageVersion;
 exports.transformFile = transformFile;
 exports.getNextVersion = getNextVersion;
-const promises_1 = __nccwpck_require__(73292);
-const fs_1 = __nccwpck_require__(57147);
-const get_release_plan_1 = __importDefault(__nccwpck_require__(69256));
+const promises_1 = __nccwpck_require__(93977);
+const node_fs_1 = __nccwpck_require__(87561);
+const get_release_plan_1 = __importDefault(__nccwpck_require__(49180));
 const semver_1 = __nccwpck_require__(77546);
 function getPackageVersion(pathToRootPackageJson) {
-    const packageJson = (0, fs_1.readFileSync)(pathToRootPackageJson || 'package.json', 'utf8');
+    const packageJson = (0, node_fs_1.readFileSync)(pathToRootPackageJson || 'package.json', 'utf8');
     return JSON.parse(packageJson).version;
 }
 async function transformFile(filePath, transformFn) {
@@ -50,6 +50,2125 @@ async function getNextVersion() {
     }
     return newVersion;
 }
+
+
+/***/ }),
+
+/***/ 3624:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var errors = __nccwpck_require__(76249);
+var getDependentsGraph = __nccwpck_require__(54721);
+var shouldSkipPackage = __nccwpck_require__(57193);
+var semverParse = __nccwpck_require__(58257);
+var semverGt = __nccwpck_require__(93473);
+var semverSatisfies = __nccwpck_require__(81495);
+var semverInc = __nccwpck_require__(25009);
+
+function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
+
+var semverParse__default = /*#__PURE__*/_interopDefault(semverParse);
+var semverGt__default = /*#__PURE__*/_interopDefault(semverGt);
+var semverSatisfies__default = /*#__PURE__*/_interopDefault(semverSatisfies);
+var semverInc__default = /*#__PURE__*/_interopDefault(semverInc);
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function getHighestReleaseType(releases) {
+  if (releases.length === 0) {
+    throw new Error(`Large internal Changesets error when calculating highest release type in the set of releases. Please contact the maintainers`);
+  }
+
+  let highestReleaseType = "none";
+
+  for (let release of releases) {
+    switch (release.type) {
+      case "major":
+        return "major";
+
+      case "minor":
+        highestReleaseType = "minor";
+        break;
+
+      case "patch":
+        if (highestReleaseType === "none") {
+          highestReleaseType = "patch";
+        }
+
+        break;
+    }
+  }
+
+  return highestReleaseType;
+}
+function getCurrentHighestVersion(packageGroup, packagesByName) {
+  let highestVersion;
+
+  for (let pkgName of packageGroup) {
+    let pkg = packagesByName.get(pkgName);
+
+    if (!pkg) {
+      console.error(`FATAL ERROR IN CHANGESETS! We were unable to version for package group: ${pkgName} in package group: ${packageGroup.toString()}`);
+      throw new Error(`fatal: could not resolve linked packages`);
+    }
+
+    if (highestVersion === undefined || semverGt__default["default"](pkg.packageJson.version, highestVersion)) {
+      highestVersion = pkg.packageJson.version;
+    }
+  }
+
+  return highestVersion;
+}
+
+/*
+  WARNING:
+  Important note for understanding how this package works:
+
+  We are doing some kind of wacky things with manipulating the objects within the
+  releases array, despite the fact that this was passed to us as an argument. We are
+  aware that this is generally bad practice, but have decided to to this here as
+  we control the entire flow of releases.
+
+  We could solve this by inlining this function, or by returning a deep-cloned then
+  modified array, but we decided both of those are worse than this solution.
+*/
+
+function applyLinks(releases, packagesByName, linked) {
+  let updated = false; // We do this for each set of linked packages
+
+  for (let linkedPackages of linked) {
+    // First we filter down to all the relevant releases for one set of linked packages
+    let releasingLinkedPackages = [...releases.values()].filter(release => linkedPackages.includes(release.name) && release.type !== "none"); // If we proceed any further we do extra work with calculating highestVersion for things that might
+    // not need one, as they only have workspace based packages
+
+    if (releasingLinkedPackages.length === 0) continue;
+    let highestReleaseType = getHighestReleaseType(releasingLinkedPackages);
+    let highestVersion = getCurrentHighestVersion(linkedPackages, packagesByName); // Finally, we update the packages so all of them are on the highest version
+
+    for (let linkedPackage of releasingLinkedPackages) {
+      if (linkedPackage.type !== highestReleaseType) {
+        updated = true;
+        linkedPackage.type = highestReleaseType;
+      }
+
+      if (linkedPackage.oldVersion !== highestVersion) {
+        updated = true;
+        linkedPackage.oldVersion = highestVersion;
+      }
+    }
+  }
+
+  return updated;
+}
+
+function incrementVersion(release, preInfo) {
+  if (release.type === "none") {
+    return release.oldVersion;
+  }
+
+  let version = semverInc__default["default"](release.oldVersion, release.type);
+
+  if (preInfo !== undefined && preInfo.state.mode !== "exit") {
+    let preVersion = preInfo.preVersions.get(release.name);
+
+    if (preVersion === undefined) {
+      throw new errors.InternalError(`preVersion for ${release.name} does not exist when preState is defined`);
+    } // why are we adding this ourselves rather than passing 'pre' + versionType to semver.inc?
+    // because semver.inc with prereleases is confusing and this seems easier
+
+
+    version += `-${preInfo.state.tag}.${preVersion}`;
+  }
+
+  return version;
+}
+
+/*
+  WARNING:
+  Important note for understanding how this package works:
+
+  We are doing some kind of wacky things with manipulating the objects within the
+  releases array, despite the fact that this was passed to us as an argument. We are
+  aware that this is generally bad practice, but have decided to to this here as
+  we control the entire flow of releases.
+
+  We could solve this by inlining this function, or by returning a deep-cloned then
+  modified array, but we decided both of those are worse than this solution.
+*/
+function determineDependents({
+  releases,
+  packagesByName,
+  dependencyGraph,
+  preInfo,
+  config
+}) {
+  let updated = false; // NOTE this is intended to be called recursively
+
+  let pkgsToSearch = [...releases.values()];
+
+  while (pkgsToSearch.length > 0) {
+    // nextRelease is our dependency, think of it as "avatar"
+    const nextRelease = pkgsToSearch.shift();
+    if (!nextRelease) continue; // pkgDependents will be a list of packages that depend on nextRelease ie. ['avatar-group', 'comment']
+
+    const pkgDependents = dependencyGraph.get(nextRelease.name);
+
+    if (!pkgDependents) {
+      throw new Error(`Error in determining dependents - could not find package in repository: ${nextRelease.name}`);
+    }
+
+    pkgDependents.map(dependent => {
+      let type;
+      const dependentPackage = packagesByName.get(dependent);
+      if (!dependentPackage) throw new Error("Dependency map is incorrect");
+
+      if (shouldSkipPackage.shouldSkipPackage(dependentPackage, {
+        ignore: config.ignore,
+        allowPrivatePackages: config.privatePackages.version
+      })) {
+        type = "none";
+      } else {
+        const dependencyVersionRanges = getDependencyVersionRanges(dependentPackage.packageJson, nextRelease);
+
+        for (const {
+          depType,
+          versionRange
+        } of dependencyVersionRanges) {
+          if (nextRelease.type === "none") {
+            continue;
+          } else if (shouldBumpMajor({
+            dependent,
+            depType,
+            versionRange,
+            releases,
+            nextRelease,
+            preInfo,
+            onlyUpdatePeerDependentsWhenOutOfRange: config.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.onlyUpdatePeerDependentsWhenOutOfRange
+          })) {
+            type = "major";
+          } else if ((!releases.has(dependent) || releases.get(dependent).type === "none") && (config.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.updateInternalDependents === "always" || !semverSatisfies__default["default"](incrementVersion(nextRelease, preInfo), versionRange))) {
+            switch (depType) {
+              case "dependencies":
+              case "optionalDependencies":
+              case "peerDependencies":
+                if (type !== "major" && type !== "minor") {
+                  type = "patch";
+                }
+
+                break;
+
+              case "devDependencies":
+                {
+                  // We don't need a version bump if the package is only in the devDependencies of the dependent package
+                  if (type !== "major" && type !== "minor" && type !== "patch") {
+                    type = "none";
+                  }
+                }
+            }
+          }
+        }
+      }
+
+      if (releases.has(dependent) && releases.get(dependent).type === type) {
+        type = undefined;
+      }
+
+      return {
+        name: dependent,
+        type,
+        pkgJSON: dependentPackage.packageJson
+      };
+    }).filter(dependentItem => !!dependentItem.type).forEach(({
+      name,
+      type,
+      pkgJSON
+    }) => {
+      // At this point, we know if we are making a change
+      updated = true;
+      const existing = releases.get(name); // For things that are being given a major bump, we check if we have already
+      // added them here. If we have, we update the existing item instead of pushing it on to search.
+      // It is safe to not add it to pkgsToSearch because it should have already been searched at the
+      // largest possible bump type.
+
+      if (existing && type === "major" && existing.type !== "major") {
+        existing.type = "major";
+        pkgsToSearch.push(existing);
+      } else {
+        let newDependent = {
+          name,
+          type,
+          oldVersion: pkgJSON.version,
+          changesets: []
+        };
+        pkgsToSearch.push(newDependent);
+        releases.set(name, newDependent);
+      }
+    });
+  }
+
+  return updated;
+}
+/*
+  Returns an array of objects in the shape { depType: DependencyType, versionRange: string }
+  The array can contain more than one elements in case a dependency appears in multiple
+  dependency lists. For example, a package that is both a peerDepenency and a devDependency.
+*/
+
+function getDependencyVersionRanges(dependentPkgJSON, dependencyRelease) {
+  const DEPENDENCY_TYPES = ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"];
+  const dependencyVersionRanges = [];
+
+  for (const type of DEPENDENCY_TYPES) {
+    var _dependentPkgJSON$typ;
+
+    const versionRange = (_dependentPkgJSON$typ = dependentPkgJSON[type]) === null || _dependentPkgJSON$typ === void 0 ? void 0 : _dependentPkgJSON$typ[dependencyRelease.name];
+    if (!versionRange) continue;
+
+    if (versionRange.startsWith("workspace:")) {
+      dependencyVersionRanges.push({
+        depType: type,
+        versionRange: // intentionally keep other workspace ranges untouched
+        // this has to be fixed but this should only be done when adding appropriate tests
+        versionRange === "workspace:*" ? // workspace:* actually means the current exact version, and not a wildcard similar to a reguler * range
+        dependencyRelease.oldVersion : versionRange.replace(/^workspace:/, "")
+      });
+    } else {
+      dependencyVersionRanges.push({
+        depType: type,
+        versionRange
+      });
+    }
+  }
+
+  return dependencyVersionRanges;
+}
+
+function shouldBumpMajor({
+  dependent,
+  depType,
+  versionRange,
+  releases,
+  nextRelease,
+  preInfo,
+  onlyUpdatePeerDependentsWhenOutOfRange
+}) {
+  // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
+  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
+  // 2. If onlyUpdatePeerDependentsWhenOutOfRange set to false, bump major regardless whether or not the version is leaving the range.
+  !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies__default["default"](incrementVersion(nextRelease, preInfo), versionRange)) && ( // bump major only if the dependent doesn't already has a major release.
+  !releases.has(dependent) || releases.has(dependent) && releases.get(dependent).type !== "major");
+}
+
+// This function takes in changesets and returns one release per
+function flattenReleases(changesets, packagesByName, config) {
+  let releases = new Map();
+  changesets.forEach(changeset => {
+    changeset.releases // Filter out skipped packages because they should not trigger a release
+    // If their dependencies need updates, they will be added to releases by `determineDependents()` with release type `none`
+    .filter(({
+      name
+    }) => !shouldSkipPackage.shouldSkipPackage(packagesByName.get(name), {
+      ignore: config.ignore,
+      allowPrivatePackages: config.privatePackages.version
+    })).forEach(({
+      name,
+      type
+    }) => {
+      let release = releases.get(name);
+      let pkg = packagesByName.get(name);
+
+      if (!pkg) {
+        throw new Error(`"${changeset.id}" changeset mentions a release for a package "${name}" but such a package could not be found.`);
+      }
+
+      if (!release) {
+        release = {
+          name,
+          type,
+          oldVersion: pkg.packageJson.version,
+          changesets: [changeset.id]
+        };
+      } else {
+        if (type === "major" || (release.type === "patch" || release.type === "none") && (type === "minor" || type === "patch")) {
+          release.type = type;
+        } // Check whether the bumpType will change
+        // If the bumpType has changed recalc newVersion
+        // push new changeset to releases
+
+
+        release.changesets.push(changeset.id);
+      }
+
+      releases.set(name, release);
+    });
+  });
+  return releases;
+}
+
+function matchFixedConstraint(releases, packagesByName, config) {
+  let updated = false;
+
+  for (let fixedPackages of config.fixed) {
+    let releasingFixedPackages = [...releases.values()].filter(release => fixedPackages.includes(release.name) && release.type !== "none");
+    if (releasingFixedPackages.length === 0) continue;
+    let highestReleaseType = getHighestReleaseType(releasingFixedPackages);
+    let highestVersion = getCurrentHighestVersion(fixedPackages, packagesByName); // Finally, we update the packages so all of them are on the highest version
+
+    for (let pkgName of fixedPackages) {
+      if (shouldSkipPackage.shouldSkipPackage(packagesByName.get(pkgName), {
+        ignore: config.ignore,
+        allowPrivatePackages: config.privatePackages.version
+      })) {
+        continue;
+      }
+
+      let release = releases.get(pkgName);
+
+      if (!release) {
+        updated = true;
+        releases.set(pkgName, {
+          name: pkgName,
+          type: highestReleaseType,
+          oldVersion: highestVersion,
+          changesets: []
+        });
+        continue;
+      }
+
+      if (release.type !== highestReleaseType) {
+        updated = true;
+        release.type = highestReleaseType;
+      }
+
+      if (release.oldVersion !== highestVersion) {
+        updated = true;
+        release.oldVersion = highestVersion;
+      }
+    }
+  }
+
+  return updated;
+}
+
+function getPreVersion(version) {
+  let parsed = semverParse__default["default"](version);
+  let preVersion = parsed.prerelease[1] === undefined ? -1 : parsed.prerelease[1];
+
+  if (typeof preVersion !== "number") {
+    throw new errors.InternalError("preVersion is not a number");
+  }
+
+  preVersion++;
+  return preVersion;
+}
+
+function getSnapshotSuffix(template, snapshotParameters) {
+  let snapshotRefDate = new Date();
+  const placeholderValues = {
+    commit: snapshotParameters.commit,
+    tag: snapshotParameters.tag,
+    timestamp: snapshotRefDate.getTime().toString(),
+    datetime: snapshotRefDate.toISOString().replace(/\.\d{3}Z$/, "").replace(/[^\d]/g, "")
+  }; // We need a special handling because we need to handle a case where `--snapshot` is used without any template,
+  // and the resulting version needs to be composed without a tag.
+
+  if (!template) {
+    return [placeholderValues.tag, placeholderValues.datetime].filter(Boolean).join("-");
+  }
+
+  const placeholders = Object.keys(placeholderValues);
+
+  if (!template.includes(`{tag}`) && placeholderValues.tag !== undefined) {
+    throw new Error(`Failed to compose snapshot version: "{tag}" placeholder is missing, but the snapshot parameter is defined (value: '${placeholderValues.tag}')`);
+  }
+
+  return placeholders.reduce((prev, key) => {
+    return prev.replace(new RegExp(`\\{${key}\\}`, "g"), () => {
+      const value = placeholderValues[key];
+
+      if (value === undefined) {
+        throw new Error(`Failed to compose snapshot version: "{${key}}" placeholder is used without having a value defined!`);
+      }
+
+      return value;
+    });
+  }, template);
+}
+
+function getSnapshotVersion(release, preInfo, useCalculatedVersion, snapshotSuffix) {
+  if (release.type === "none") {
+    return release.oldVersion;
+  }
+  /**
+   * Using version as 0.0.0 so that it does not hinder with other version release
+   * For example;
+   * if user has a regular pre-release at 1.0.0-beta.0 and then you had a snapshot pre-release at 1.0.0-canary-git-hash
+   * and a consumer is using the range ^1.0.0-beta, most people would expect that range to resolve to 1.0.0-beta.0
+   * but it'll actually resolve to 1.0.0-canary-hash. Using 0.0.0 solves this problem because it won't conflict with other versions.
+   *
+   * You can set `snapshot.useCalculatedVersion` flag to true to use calculated versions if you don't care about the above problem.
+   */
+
+
+  const baseVersion = useCalculatedVersion ? incrementVersion(release, preInfo) : `0.0.0`;
+  return `${baseVersion}-${snapshotSuffix}`;
+}
+
+function getNewVersion(release, preInfo) {
+  if (release.type === "none") {
+    return release.oldVersion;
+  }
+
+  return incrementVersion(release, preInfo);
+}
+
+function assembleReleasePlan(changesets, packages, config, // intentionally not using an optional parameter here so the result of `readPreState` has to be passed in here
+preState, // snapshot: undefined            ->  not using snaphot
+// snapshot: { tag: undefined }   ->  --snapshot (empty tag)
+// snapshot: { tag: "canary" }    ->  --snapshot canary
+snapshot) {
+  // TODO: remove `refined*` in the next major version of this package
+  // just use `config` and `snapshot` parameters directly, typed as: `config: Config, snapshot?: SnapshotReleaseParameters`
+  const refinedConfig = config.snapshot ? config : _objectSpread2(_objectSpread2({}, config), {}, {
+    snapshot: {
+      prereleaseTemplate: null,
+      useCalculatedVersion: config.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.useCalculatedVersionForSnapshots
+    }
+  });
+  const refinedSnapshot = typeof snapshot === "string" ? {
+    tag: snapshot
+  } : typeof snapshot === "boolean" ? {
+    tag: undefined
+  } : snapshot;
+  let packagesByName = new Map(packages.packages.map(x => [x.packageJson.name, x]));
+  const relevantChangesets = getRelevantChangesets(changesets, packagesByName, refinedConfig, preState);
+  const preInfo = getPreInfo(changesets, packagesByName, refinedConfig, preState); // releases is, at this point a list of all packages we are going to releases,
+  // flattened down to one release per package, having a reference back to their
+  // changesets, and with a calculated new versions
+
+  let releases = flattenReleases(relevantChangesets, packagesByName, refinedConfig);
+  let dependencyGraph = getDependentsGraph.getDependentsGraph(packages, {
+    bumpVersionsWithWorkspaceProtocolOnly: refinedConfig.bumpVersionsWithWorkspaceProtocolOnly
+  });
+  let releasesValidated = false;
+
+  while (releasesValidated === false) {
+    // The map passed in to determineDependents will be mutated
+    let dependentAdded = determineDependents({
+      releases,
+      packagesByName,
+      dependencyGraph,
+      preInfo,
+      config: refinedConfig
+    }); // `releases` might get mutated here
+
+    let fixedConstraintUpdated = matchFixedConstraint(releases, packagesByName, refinedConfig);
+    let linksUpdated = applyLinks(releases, packagesByName, refinedConfig.linked);
+    releasesValidated = !linksUpdated && !dependentAdded && !fixedConstraintUpdated;
+  }
+
+  if ((preInfo === null || preInfo === void 0 ? void 0 : preInfo.state.mode) === "exit") {
+    for (let pkg of packages.packages) {
+      // If a package had a prerelease, but didn't trigger a version bump in the regular release,
+      // we want to give it a patch release.
+      // Detailed explanation at https://github.com/changesets/changesets/pull/382#discussion_r434434182
+      if (preInfo.preVersions.get(pkg.packageJson.name) !== 0) {
+        const existingRelease = releases.get(pkg.packageJson.name);
+
+        if (!existingRelease) {
+          releases.set(pkg.packageJson.name, {
+            name: pkg.packageJson.name,
+            type: "patch",
+            oldVersion: pkg.packageJson.version,
+            changesets: []
+          });
+        } else if (existingRelease.type === "none" && !shouldSkipPackage.shouldSkipPackage(pkg, {
+          ignore: refinedConfig.ignore,
+          allowPrivatePackages: refinedConfig.privatePackages.version
+        })) {
+          existingRelease.type = "patch";
+        }
+      }
+    }
+  } // Caching the snapshot version here and use this if it is snapshot release
+
+
+  const snapshotSuffix = refinedSnapshot && getSnapshotSuffix(refinedConfig.snapshot.prereleaseTemplate, refinedSnapshot);
+  return {
+    changesets: relevantChangesets,
+    releases: [...releases.values()].map(incompleteRelease => {
+      return _objectSpread2(_objectSpread2({}, incompleteRelease), {}, {
+        newVersion: snapshotSuffix ? getSnapshotVersion(incompleteRelease, preInfo, refinedConfig.snapshot.useCalculatedVersion, snapshotSuffix) : getNewVersion(incompleteRelease, preInfo)
+      });
+    }),
+    preState: preInfo === null || preInfo === void 0 ? void 0 : preInfo.state
+  };
+}
+
+function getRelevantChangesets(changesets, packagesByName, config, preState) {
+  for (const changeset of changesets) {
+    // Using the following 2 arrays to decide whether a changeset
+    // contains both skipped and not skipped packages
+    const skippedPackages = [];
+    const notSkippedPackages = [];
+
+    for (const release of changeset.releases) {
+      if (shouldSkipPackage.shouldSkipPackage(packagesByName.get(release.name), {
+        ignore: config.ignore,
+        allowPrivatePackages: config.privatePackages.version
+      })) {
+        skippedPackages.push(release.name);
+      } else {
+        notSkippedPackages.push(release.name);
+      }
+    }
+
+    if (skippedPackages.length > 0 && notSkippedPackages.length > 0) {
+      throw new Error(`Found mixed changeset ${changeset.id}\n` + `Found ignored packages: ${skippedPackages.join(" ")}\n` + `Found not ignored packages: ${notSkippedPackages.join(" ")}\n` + "Mixed changesets that contain both ignored and not ignored packages are not allowed");
+    }
+  }
+
+  if (preState && preState.mode !== "exit") {
+    let usedChangesetIds = new Set(preState.changesets);
+    return changesets.filter(changeset => !usedChangesetIds.has(changeset.id));
+  }
+
+  return changesets;
+}
+
+function getHighestPreVersion(packageGroup, packagesByName) {
+  let highestPreVersion = 0;
+
+  for (let pkg of packageGroup) {
+    highestPreVersion = Math.max(getPreVersion(packagesByName.get(pkg).packageJson.version), highestPreVersion);
+  }
+
+  return highestPreVersion;
+}
+
+function getPreInfo(changesets, packagesByName, config, preState) {
+  if (preState === undefined) {
+    return;
+  }
+
+  let updatedPreState = _objectSpread2(_objectSpread2({}, preState), {}, {
+    changesets: changesets.map(changeset => changeset.id),
+    initialVersions: _objectSpread2({}, preState.initialVersions)
+  });
+
+  for (const [, pkg] of packagesByName) {
+    if (updatedPreState.initialVersions[pkg.packageJson.name] === undefined) {
+      updatedPreState.initialVersions[pkg.packageJson.name] = pkg.packageJson.version;
+    }
+  } // Populate preVersion
+  // preVersion is the map between package name and its next pre version number.
+
+
+  let preVersions = new Map();
+
+  for (const [, pkg] of packagesByName) {
+    preVersions.set(pkg.packageJson.name, getPreVersion(pkg.packageJson.version));
+  }
+
+  for (let fixedGroup of config.fixed) {
+    let highestPreVersion = getHighestPreVersion(fixedGroup, packagesByName);
+
+    for (let fixedPackage of fixedGroup) {
+      preVersions.set(fixedPackage, highestPreVersion);
+    }
+  }
+
+  for (let linkedGroup of config.linked) {
+    let highestPreVersion = getHighestPreVersion(linkedGroup, packagesByName);
+
+    for (let linkedPackage of linkedGroup) {
+      preVersions.set(linkedPackage, highestPreVersion);
+    }
+  }
+
+  return {
+    state: updatedPreState,
+    preVersions
+  };
+}
+
+exports["default"] = assembleReleasePlan;
+
+
+/***/ }),
+
+/***/ 37168:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var fs = __nccwpck_require__(41621);
+var path = __nccwpck_require__(71017);
+var micromatch = __nccwpck_require__(39015);
+var errors = __nccwpck_require__(76249);
+var logger = __nccwpck_require__(11376);
+var getDependentsGraph = __nccwpck_require__(54721);
+
+function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
+
+function _interopNamespace(e) {
+  if (e && e.__esModule) return e;
+  var n = Object.create(null);
+  if (e) {
+    Object.keys(e).forEach(function (k) {
+      if (k !== 'default') {
+        var d = Object.getOwnPropertyDescriptor(e, k);
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
+        });
+      }
+    });
+  }
+  n["default"] = e;
+  return Object.freeze(n);
+}
+
+var fs__namespace = /*#__PURE__*/_interopNamespace(fs);
+var path__default = /*#__PURE__*/_interopDefault(path);
+var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
+
+var packageJson = {
+	name: "@changesets/config",
+	version: "3.0.3",
+	description: "Utilities for reading and parsing Changeset's config",
+	main: "dist/changesets-config.cjs.js",
+	module: "dist/changesets-config.esm.js",
+	exports: {
+		".": {
+			types: {
+				"import": "./dist/changesets-config.cjs.mjs",
+				"default": "./dist/changesets-config.cjs.js"
+			},
+			module: "./dist/changesets-config.esm.js",
+			"import": "./dist/changesets-config.cjs.mjs",
+			"default": "./dist/changesets-config.cjs.js"
+		},
+		"./package.json": "./package.json"
+	},
+	license: "MIT",
+	repository: "https://github.com/changesets/changesets/tree/main/packages/config",
+	files: [
+		"dist",
+		"schema.json"
+	],
+	dependencies: {
+		"@changesets/errors": "^0.2.0",
+		"@changesets/get-dependents-graph": "^2.1.2",
+		"@changesets/logger": "^0.1.1",
+		"@changesets/types": "^6.0.0",
+		"@manypkg/get-packages": "^1.1.3",
+		"fs-extra": "^7.0.1",
+		micromatch: "^4.0.2"
+	},
+	devDependencies: {
+		"@changesets/test-utils": "*",
+		"@types/micromatch": "^4.0.1",
+		"jest-in-case": "^1.0.2",
+		outdent: "^0.5.0"
+	}
+};
+
+let defaultWrittenConfig = {
+  $schema: `https://unpkg.com/@changesets/config@${packageJson.version}/schema.json`,
+  changelog: "@changesets/cli/changelog",
+  commit: false,
+  fixed: [],
+  linked: [],
+  access: "restricted",
+  baseBranch: "master",
+  updateInternalDependencies: "patch",
+  ignore: []
+};
+
+function flatten(arr) {
+  return [].concat(...arr);
+}
+
+function getNormalizedChangelogOption(thing) {
+  if (thing === false) {
+    return false;
+  }
+
+  if (typeof thing === "string") {
+    return [thing, null];
+  }
+
+  return thing;
+}
+
+function getNormalizedCommitOption(thing) {
+  if (thing === false) {
+    return false;
+  }
+
+  if (thing === true) {
+    return ["@changesets/cli/commit", {
+      skipCI: "version"
+    }];
+  }
+
+  if (typeof thing === "string") {
+    return [thing, null];
+  }
+
+  return thing;
+}
+
+function getUnmatchedPatterns(listOfPackageNamesOrGlob, pkgNames) {
+  return listOfPackageNamesOrGlob.filter(pkgNameOrGlob => !pkgNames.some(pkgName => micromatch__default["default"].isMatch(pkgName, pkgNameOrGlob)));
+}
+
+const havePackageGroupsCorrectShape = pkgGroups => {
+  return isArray(pkgGroups) && pkgGroups.every(arr => isArray(arr) && arr.every(pkgName => typeof pkgName === "string"));
+}; // TODO: it might be possible to remove this if improvements to `Array.isArray` ever land
+// related thread: github.com/microsoft/TypeScript/issues/36554
+
+
+function isArray(arg) {
+  return Array.isArray(arg);
+}
+
+let read = async (cwd, packages) => {
+  let json = await fs__namespace.readJSON(path__default["default"].join(cwd, ".changeset", "config.json"));
+  return parse(json, packages);
+};
+let parse = (json, packages) => {
+  var _json$changedFilePatt, _json$snapshot$prerel, _json$snapshot, _json$snapshot2, _json$___experimental, _json$___experimental2, _json$___experimental3, _json$___experimental4, _json$privatePackages, _json$privatePackages2;
+
+  let messages = [];
+  let pkgNames = packages.packages.map(({
+    packageJson
+  }) => packageJson.name);
+
+  if (json.changelog !== undefined && json.changelog !== false && typeof json.changelog !== "string" && !(isArray(json.changelog) && json.changelog.length === 2 && typeof json.changelog[0] === "string")) {
+    messages.push(`The \`changelog\` option is set as ${JSON.stringify(json.changelog, null, 2)} when the only valid values are undefined, false, a module path(e.g. "@changesets/cli/changelog" or "./some-module") or a tuple with a module path and config for the changelog generator(e.g. ["@changesets/cli/changelog", { someOption: true }])`);
+  }
+
+  let normalizedAccess = json.access;
+
+  if (json.access === "private") {
+    normalizedAccess = "restricted";
+    logger.warn('The `access` option is set as "private", but this is actually not a valid value - the correct form is "restricted".');
+  }
+
+  if (normalizedAccess !== undefined && normalizedAccess !== "restricted" && normalizedAccess !== "public") {
+    messages.push(`The \`access\` option is set as ${JSON.stringify(normalizedAccess, null, 2)} when the only valid values are undefined, "public" or "restricted"`);
+  }
+
+  if (json.commit !== undefined && typeof json.commit !== "boolean" && typeof json.commit !== "string" && !(isArray(json.commit) && json.commit.length === 2 && typeof json.commit[0] === "string")) {
+    messages.push(`The \`commit\` option is set as ${JSON.stringify(json.commit, null, 2)} when the only valid values are undefined or a boolean or a module path (e.g. "@changesets/cli/commit" or "./some-module") or a tuple with a module path and config for the commit message generator (e.g. ["@changesets/cli/commit", { "skipCI": "version" }])`);
+  }
+
+  if (json.baseBranch !== undefined && typeof json.baseBranch !== "string") {
+    messages.push(`The \`baseBranch\` option is set as ${JSON.stringify(json.baseBranch, null, 2)} but the \`baseBranch\` option can only be set as a string`);
+  }
+
+  if (json.changedFilePatterns !== undefined && (!isArray(json.changedFilePatterns) || !json.changedFilePatterns.every(pattern => typeof pattern === "string"))) {
+    messages.push(`The \`changedFilePatterns\` option is set as ${JSON.stringify(json.changedFilePatterns, null, 2)} but the \`changedFilePatterns\` option can only be set as an array of strings`);
+  }
+
+  let fixed = [];
+
+  if (json.fixed !== undefined) {
+    if (!havePackageGroupsCorrectShape(json.fixed)) {
+      messages.push(`The \`fixed\` option is set as ${JSON.stringify(json.fixed, null, 2)} when the only valid values are undefined or an array of arrays of package names`);
+    } else {
+      let foundPkgNames = new Set();
+      let duplicatedPkgNames = new Set();
+
+      for (let fixedGroup of json.fixed) {
+        messages.push(...getUnmatchedPatterns(fixedGroup, pkgNames).map(pkgOrGlob => `The package or glob expression "${pkgOrGlob}" specified in the \`fixed\` option does not match any package in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch.`));
+        let expandedFixedGroup = micromatch__default["default"](pkgNames, fixedGroup);
+        fixed.push(expandedFixedGroup);
+
+        for (let fixedPkgName of expandedFixedGroup) {
+          if (foundPkgNames.has(fixedPkgName)) {
+            duplicatedPkgNames.add(fixedPkgName);
+          }
+
+          foundPkgNames.add(fixedPkgName);
+        }
+      }
+
+      if (duplicatedPkgNames.size) {
+        duplicatedPkgNames.forEach(pkgName => {
+          messages.push(`The package "${pkgName}" is defined in multiple sets of fixed packages. Packages can only be defined in a single set of fixed packages. If you are using glob expressions, make sure that they are valid according to https://www.npmjs.com/package/micromatch.`);
+        });
+      }
+    }
+  }
+
+  let linked = [];
+
+  if (json.linked !== undefined) {
+    if (!havePackageGroupsCorrectShape(json.linked)) {
+      messages.push(`The \`linked\` option is set as ${JSON.stringify(json.linked, null, 2)} when the only valid values are undefined or an array of arrays of package names`);
+    } else {
+      let foundPkgNames = new Set();
+      let duplicatedPkgNames = new Set();
+
+      for (let linkedGroup of json.linked) {
+        messages.push(...getUnmatchedPatterns(linkedGroup, pkgNames).map(pkgOrGlob => `The package or glob expression "${pkgOrGlob}" specified in the \`linked\` option does not match any package in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch.`));
+        let expandedLinkedGroup = micromatch__default["default"](pkgNames, linkedGroup);
+        linked.push(expandedLinkedGroup);
+
+        for (let linkedPkgName of expandedLinkedGroup) {
+          if (foundPkgNames.has(linkedPkgName)) {
+            duplicatedPkgNames.add(linkedPkgName);
+          }
+
+          foundPkgNames.add(linkedPkgName);
+        }
+      }
+
+      if (duplicatedPkgNames.size) {
+        duplicatedPkgNames.forEach(pkgName => {
+          messages.push(`The package "${pkgName}" is defined in multiple sets of linked packages. Packages can only be defined in a single set of linked packages. If you are using glob expressions, make sure that they are valid according to https://www.npmjs.com/package/micromatch.`);
+        });
+      }
+    }
+  }
+
+  const allFixedPackages = new Set(flatten(fixed));
+  const allLinkedPackages = new Set(flatten(linked));
+  allFixedPackages.forEach(pkgName => {
+    if (allLinkedPackages.has(pkgName)) {
+      messages.push(`The package "${pkgName}" can be found in both fixed and linked groups. A package can only be either fixed or linked.`);
+    }
+  });
+
+  if (json.updateInternalDependencies !== undefined && !["patch", "minor"].includes(json.updateInternalDependencies)) {
+    messages.push(`The \`updateInternalDependencies\` option is set as ${JSON.stringify(json.updateInternalDependencies, null, 2)} but can only be 'patch' or 'minor'`);
+  }
+
+  if (json.ignore) {
+    if (!(isArray(json.ignore) && json.ignore.every(pkgName => typeof pkgName === "string"))) {
+      messages.push(`The \`ignore\` option is set as ${JSON.stringify(json.ignore, null, 2)} when the only valid values are undefined or an array of package names`);
+    } else {
+      messages.push(...getUnmatchedPatterns(json.ignore, pkgNames).map(pkgOrGlob => `The package or glob expression "${pkgOrGlob}" is specified in the \`ignore\` option but it is not found in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch.`)); // Validate that all dependents of ignored packages are listed in the ignore list
+
+      const dependentsGraph = getDependentsGraph.getDependentsGraph(packages);
+
+      for (const ignoredPackage of json.ignore) {
+        const dependents = dependentsGraph.get(ignoredPackage) || [];
+
+        for (const dependent of dependents) {
+          if (!json.ignore.includes(dependent)) {
+            messages.push(`The package "${dependent}" depends on the ignored package "${ignoredPackage}", but "${dependent}" is not being ignored. Please add "${dependent}" to the \`ignore\` option.`);
+          }
+        }
+      }
+    }
+  }
+
+  const {
+    snapshot
+  } = json;
+
+  if (snapshot !== undefined) {
+    if (snapshot.useCalculatedVersion !== undefined && typeof snapshot.useCalculatedVersion !== "boolean") {
+      messages.push(`The \`snapshot.useCalculatedVersion\` option is set as ${JSON.stringify(snapshot.useCalculatedVersion, null, 2)} when the only valid values are undefined or a boolean`);
+    }
+
+    if (snapshot.prereleaseTemplate !== undefined && typeof snapshot.prereleaseTemplate !== "string") {
+      messages.push(`The \`snapshot.prereleaseTemplate\` option is set as ${JSON.stringify(snapshot.prereleaseTemplate, null, 2)} when the only valid values are undefined, or a template string.`);
+    }
+  }
+
+  if (json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH !== undefined) {
+    const {
+      onlyUpdatePeerDependentsWhenOutOfRange,
+      updateInternalDependents,
+      useCalculatedVersionForSnapshots
+    } = json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH;
+
+    if (onlyUpdatePeerDependentsWhenOutOfRange !== undefined && typeof onlyUpdatePeerDependentsWhenOutOfRange !== "boolean") {
+      messages.push(`The \`onlyUpdatePeerDependentsWhenOutOfRange\` option is set as ${JSON.stringify(onlyUpdatePeerDependentsWhenOutOfRange, null, 2)} when the only valid values are undefined or a boolean`);
+    }
+
+    if (updateInternalDependents !== undefined && !["always", "out-of-range"].includes(updateInternalDependents)) {
+      messages.push(`The \`updateInternalDependents\` option is set as ${JSON.stringify(updateInternalDependents, null, 2)} but can only be 'always' or 'out-of-range'`);
+    }
+
+    if (useCalculatedVersionForSnapshots && useCalculatedVersionForSnapshots !== undefined) {
+      console.warn(`Experimental flag "useCalculatedVersionForSnapshots" is deprecated since snapshot feature became stable. Please use "snapshot.useCalculatedVersion" instead.`);
+
+      if (typeof useCalculatedVersionForSnapshots !== "boolean") {
+        messages.push(`The \`useCalculatedVersionForSnapshots\` option is set as ${JSON.stringify(useCalculatedVersionForSnapshots, null, 2)} when the only valid values are undefined or a boolean`);
+      }
+    }
+  }
+
+  if (messages.length) {
+    throw new errors.ValidationError(`Some errors occurred when validating the changesets config:\n` + messages.join("\n"));
+  }
+
+  let config = {
+    changelog: getNormalizedChangelogOption(json.changelog === undefined ? defaultWrittenConfig.changelog : json.changelog),
+    access: normalizedAccess === undefined ? defaultWrittenConfig.access : normalizedAccess,
+    commit: getNormalizedCommitOption(json.commit === undefined ? defaultWrittenConfig.commit : json.commit),
+    fixed,
+    linked,
+    baseBranch: json.baseBranch === undefined ? defaultWrittenConfig.baseBranch : json.baseBranch,
+    changedFilePatterns: (_json$changedFilePatt = json.changedFilePatterns) !== null && _json$changedFilePatt !== void 0 ? _json$changedFilePatt : ["**"],
+    updateInternalDependencies: json.updateInternalDependencies === undefined ? defaultWrittenConfig.updateInternalDependencies : json.updateInternalDependencies,
+    ignore: json.ignore === undefined ? defaultWrittenConfig.ignore : micromatch__default["default"](pkgNames, json.ignore),
+    bumpVersionsWithWorkspaceProtocolOnly: json.bumpVersionsWithWorkspaceProtocolOnly === true,
+    snapshot: {
+      prereleaseTemplate: (_json$snapshot$prerel = (_json$snapshot = json.snapshot) === null || _json$snapshot === void 0 ? void 0 : _json$snapshot.prereleaseTemplate) !== null && _json$snapshot$prerel !== void 0 ? _json$snapshot$prerel : null,
+      useCalculatedVersion: ((_json$snapshot2 = json.snapshot) === null || _json$snapshot2 === void 0 ? void 0 : _json$snapshot2.useCalculatedVersion) !== undefined ? json.snapshot.useCalculatedVersion : ((_json$___experimental = json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH) === null || _json$___experimental === void 0 ? void 0 : _json$___experimental.useCalculatedVersionForSnapshots) !== undefined ? (_json$___experimental2 = json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH) === null || _json$___experimental2 === void 0 ? void 0 : _json$___experimental2.useCalculatedVersionForSnapshots : false
+    },
+    ___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH: {
+      onlyUpdatePeerDependentsWhenOutOfRange: json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH === undefined || json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.onlyUpdatePeerDependentsWhenOutOfRange === undefined ? false : json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.onlyUpdatePeerDependentsWhenOutOfRange,
+      updateInternalDependents: (_json$___experimental3 = (_json$___experimental4 = json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH) === null || _json$___experimental4 === void 0 ? void 0 : _json$___experimental4.updateInternalDependents) !== null && _json$___experimental3 !== void 0 ? _json$___experimental3 : "out-of-range"
+    },
+    // TODO consider enabling this by default in the next major version
+    privatePackages: json.privatePackages === false ? {
+      tag: false,
+      version: false
+    } : json.privatePackages ? {
+      version: (_json$privatePackages = json.privatePackages.version) !== null && _json$privatePackages !== void 0 ? _json$privatePackages : true,
+      tag: (_json$privatePackages2 = json.privatePackages.tag) !== null && _json$privatePackages2 !== void 0 ? _json$privatePackages2 : false
+    } : {
+      version: true,
+      tag: false
+    }
+  };
+
+  if (config.privatePackages.version === false && config.privatePackages.tag === true) {
+    throw new errors.ValidationError(`The \`privatePackages.tag\` option is set to \`true\` but \`privatePackages.version\` is set to \`false\`. This is not allowed.`);
+  }
+
+  return config;
+};
+let fakePackage = {
+  dir: "",
+  packageJson: {
+    name: "",
+    version: ""
+  }
+};
+let defaultConfig = parse(defaultWrittenConfig, {
+  root: fakePackage,
+  tool: "root",
+  packages: [fakePackage]
+});
+
+exports.defaultConfig = defaultConfig;
+exports.defaultWrittenConfig = defaultWrittenConfig;
+exports.parse = parse;
+exports.read = read;
+
+
+/***/ }),
+
+/***/ 54721:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var Range = __nccwpck_require__(25287);
+var pc = __nccwpck_require__(88276);
+
+function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
+
+var Range__default = /*#__PURE__*/_interopDefault(Range);
+var pc__default = /*#__PURE__*/_interopDefault(pc);
+
+// This is a modified version of the graph-getting in bolt
+const DEPENDENCY_TYPES = ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"];
+
+const getAllDependencies = (config, ignoreDevDependencies) => {
+  const allDependencies = new Map();
+
+  for (const type of DEPENDENCY_TYPES) {
+    const deps = config[type];
+    if (!deps) continue;
+
+    for (const name of Object.keys(deps)) {
+      const depRange = deps[name];
+
+      if (type === "devDependencies" && (ignoreDevDependencies || depRange.startsWith("link:") || depRange.startsWith("file:"))) {
+        continue;
+      }
+
+      allDependencies.set(name, depRange);
+    }
+  }
+
+  return allDependencies;
+};
+
+const isProtocolRange = range => range.indexOf(":") !== -1;
+
+const getValidRange = potentialRange => {
+  if (isProtocolRange(potentialRange)) {
+    return null;
+  }
+
+  try {
+    return new Range__default["default"](potentialRange);
+  } catch (_unused) {
+    return null;
+  }
+};
+
+function getDependencyGraph(packages, {
+  ignoreDevDependencies = false,
+  bumpVersionsWithWorkspaceProtocolOnly = false
+} = {}) {
+  const graph = new Map();
+  let valid = true;
+  const packagesByName = {
+    [packages.root.packageJson.name]: packages.root
+  };
+  const queue = [packages.root];
+
+  for (const pkg of packages.packages) {
+    queue.push(pkg);
+    packagesByName[pkg.packageJson.name] = pkg;
+  }
+
+  for (const pkg of queue) {
+    const {
+      name
+    } = pkg.packageJson;
+    const dependencies = [];
+    const allDependencies = getAllDependencies(pkg.packageJson, ignoreDevDependencies);
+
+    for (let [depName, depRange] of allDependencies) {
+      const match = packagesByName[depName];
+      if (!match) continue;
+      const expected = match.packageJson.version;
+      const usesWorkspaceRange = depRange.startsWith("workspace:");
+
+      if (usesWorkspaceRange) {
+        depRange = depRange.replace(/^workspace:/, "");
+
+        if (depRange === "*" || depRange === "^" || depRange === "~") {
+          dependencies.push(depName);
+          continue;
+        }
+      } else if (bumpVersionsWithWorkspaceProtocolOnly) {
+        continue;
+      }
+
+      const range = getValidRange(depRange);
+
+      if (range && !range.test(expected) || isProtocolRange(depRange)) {
+        valid = false;
+        console.error(`Package ${pc__default["default"].cyan(`"${name}"`)} must depend on the current version of ${pc__default["default"].cyan(`"${depName}"`)}: ${pc__default["default"].green(`"${expected}"`)} vs ${pc__default["default"].red(`"${depRange}"`)}`);
+        continue;
+      } // `depRange` could have been a tag and if a tag has been used there might have been a reason for that
+      // we should not count this as a local monorepro dependant
+
+
+      if (!range) {
+        continue;
+      }
+
+      dependencies.push(depName);
+    }
+
+    graph.set(name, {
+      pkg,
+      dependencies
+    });
+  }
+
+  return {
+    graph,
+    valid
+  };
+}
+
+function getDependentsGraph(packages, opts) {
+  const graph = new Map();
+  const {
+    graph: dependencyGraph
+  } = getDependencyGraph(packages, opts);
+  const dependentsLookup = {
+    [packages.root.packageJson.name]: {
+      pkg: packages.root,
+      dependents: []
+    }
+  };
+  packages.packages.forEach(pkg => {
+    dependentsLookup[pkg.packageJson.name] = {
+      pkg,
+      dependents: []
+    };
+  });
+  packages.packages.forEach(pkg => {
+    const dependent = pkg.packageJson.name;
+    const valFromDependencyGraph = dependencyGraph.get(dependent);
+
+    if (valFromDependencyGraph) {
+      const dependencies = valFromDependencyGraph.dependencies;
+      dependencies.forEach(dependency => {
+        dependentsLookup[dependency].dependents.push(dependent);
+      });
+    }
+  });
+  Object.keys(dependentsLookup).forEach(key => {
+    graph.set(key, dependentsLookup[key]);
+  });
+  const simplifiedDependentsGraph = new Map();
+  graph.forEach((pkgInfo, pkgName) => {
+    simplifiedDependentsGraph.set(pkgName, pkgInfo.dependents);
+  });
+  return simplifiedDependentsGraph;
+}
+
+exports.getDependentsGraph = getDependentsGraph;
+
+
+/***/ }),
+
+/***/ 49180:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var assembleReleasePlan = __nccwpck_require__(3624);
+var readChangesets = __nccwpck_require__(8492);
+var config = __nccwpck_require__(37168);
+var getPackages = __nccwpck_require__(54393);
+var pre = __nccwpck_require__(80428);
+
+function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
+
+var assembleReleasePlan__default = /*#__PURE__*/_interopDefault(assembleReleasePlan);
+var readChangesets__default = /*#__PURE__*/_interopDefault(readChangesets);
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+async function getReleasePlan(cwd, sinceRef, passedConfig) {
+  const packages = await getPackages.getPackages(cwd);
+  const preState = await pre.readPreState(cwd);
+  const readConfig = await config.read(cwd, packages);
+  const config$1 = passedConfig ? _objectSpread2(_objectSpread2({}, readConfig), passedConfig) : readConfig;
+  const changesets = await readChangesets__default["default"](cwd, sinceRef);
+  return assembleReleasePlan__default["default"](changesets, packages, config$1, preState);
+}
+
+exports["default"] = getReleasePlan;
+
+
+/***/ }),
+
+/***/ 69674:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var spawn = __nccwpck_require__(54081);
+var fs = __nccwpck_require__(57147);
+var path = __nccwpck_require__(71017);
+var getPackages = __nccwpck_require__(54393);
+var errors = __nccwpck_require__(76249);
+var isSubdir = __nccwpck_require__(63093);
+var micromatch = __nccwpck_require__(39015);
+
+function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
+
+var spawn__default = /*#__PURE__*/_interopDefault(spawn);
+var fs__default = /*#__PURE__*/_interopDefault(fs);
+var path__default = /*#__PURE__*/_interopDefault(path);
+var isSubdir__default = /*#__PURE__*/_interopDefault(isSubdir);
+var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
+
+async function add(pathToFile, cwd) {
+  const gitCmd = await spawn__default["default"]("git", ["add", pathToFile], {
+    cwd
+  });
+
+  if (gitCmd.code !== 0) {
+    console.log(pathToFile, gitCmd.stderr.toString());
+  }
+
+  return gitCmd.code === 0;
+}
+async function commit(message, cwd) {
+  const gitCmd = await spawn__default["default"]("git", ["commit", "-m", message, "--allow-empty"], {
+    cwd
+  });
+  return gitCmd.code === 0;
+}
+async function getAllTags(cwd) {
+  const gitCmd = await spawn__default["default"]("git", ["tag"], {
+    cwd
+  });
+
+  if (gitCmd.code !== 0) {
+    throw new Error(gitCmd.stderr.toString());
+  }
+
+  const tags = gitCmd.stdout.toString().trim().split("\n");
+  return new Set(tags);
+} // used to create a single tag at a time for the current head only
+
+async function tag(tagStr, cwd) {
+  // NOTE: it's important we use the -m flag to create annotated tag otherwise 'git push --follow-tags' won't actually push
+  // the tags
+  const gitCmd = await spawn__default["default"]("git", ["tag", tagStr, "-m", tagStr], {
+    cwd
+  });
+  return gitCmd.code === 0;
+} // Find the commit where we diverged from `ref` at using `git merge-base`
+
+async function getDivergedCommit(cwd, ref) {
+  const cmd = await spawn__default["default"]("git", ["merge-base", ref, "HEAD"], {
+    cwd
+  });
+
+  if (cmd.code !== 0) {
+    throw new Error(`Failed to find where HEAD diverged from ${ref}. Does ${ref} exist?`);
+  }
+
+  return cmd.stdout.toString().trim();
+}
+/**
+ * Get the SHAs for the commits that added files, including automatically
+ * extending a shallow clone if necessary to determine any commits.
+ * @param gitPaths - Paths to fetch
+ * @param options - `cwd` and `short`
+ */
+
+async function getCommitsThatAddFiles(gitPaths, {
+  cwd,
+  short = false
+}) {
+  // Maps gitPath to commit SHA
+  const map = new Map(); // Paths we haven't completed processing on yet
+
+  let remaining = gitPaths;
+
+  do {
+    // Fetch commit information for all paths we don't have yet
+    const commitInfos = await Promise.all(remaining.map(async gitPath => {
+      const [commitSha, parentSha] = (await spawn__default["default"]("git", ["log", "--diff-filter=A", "--max-count=1", short ? "--pretty=format:%h:%p" : "--pretty=format:%H:%p", gitPath], {
+        cwd
+      })).stdout.toString().split(":");
+      return {
+        path: gitPath,
+        commitSha,
+        parentSha
+      };
+    })); // To collect commits without parents (usually because they're absent from
+    // a shallow clone).
+
+    let commitsWithMissingParents = [];
+
+    for (const info of commitInfos) {
+      if (info.commitSha) {
+        if (info.parentSha) {
+          // We have found the parent of the commit that added the file.
+          // Therefore we know that the commit is legitimate and isn't simply the boundary of a shallow clone.
+          map.set(info.path, info.commitSha);
+        } else {
+          commitsWithMissingParents.push(info);
+        }
+      }
+    }
+
+    if (commitsWithMissingParents.length === 0) {
+      break;
+    } // The commits we've found may be the real commits or they may be the boundary of
+    // a shallow clone.
+    // Can we deepen the clone?
+
+
+    if (await isRepoShallow({
+      cwd
+    })) {
+      // Yes.
+      await deepenCloneBy({
+        by: 50,
+        cwd
+      });
+      remaining = commitsWithMissingParents.map(p => p.path);
+    } else {
+      // It's not a shallow clone, so all the commit SHAs we have are legitimate.
+      for (const unresolved of commitsWithMissingParents) {
+        map.set(unresolved.path, unresolved.commitSha);
+      }
+
+      break;
+    }
+  } while (true);
+
+  return gitPaths.map(p => map.get(p));
+}
+async function isRepoShallow({
+  cwd
+}) {
+  const isShallowRepoOutput = (await spawn__default["default"]("git", ["rev-parse", "--is-shallow-repository"], {
+    cwd
+  })).stdout.toString().trim();
+
+  if (isShallowRepoOutput === "--is-shallow-repository") {
+    // We have an old version of Git (<2.15) which doesn't support `rev-parse --is-shallow-repository`
+    // In that case, we'll test for the existence of .git/shallow.
+    // Firstly, find the .git folder for the repo; note that this will be relative to the repo dir
+    const gitDir = (await spawn__default["default"]("git", ["rev-parse", "--git-dir"], {
+      cwd
+    })).stdout.toString().trim();
+    const fullGitDir = path__default["default"].resolve(cwd, gitDir); // Check for the existence of <gitDir>/shallow
+
+    return fs__default["default"].existsSync(path__default["default"].join(fullGitDir, "shallow"));
+  } else {
+    // We have a newer Git which supports `rev-parse --is-shallow-repository`. We'll use
+    // the output of that instead of messing with .git/shallow in case that changes in the future.
+    return isShallowRepoOutput === "true";
+  }
+}
+async function deepenCloneBy({
+  by,
+  cwd
+}) {
+  await spawn__default["default"]("git", ["fetch", `--deepen=${by}`], {
+    cwd
+  });
+}
+
+async function getRepoRoot({
+  cwd
+}) {
+  const {
+    stdout,
+    code,
+    stderr
+  } = await spawn__default["default"]("git", ["rev-parse", "--show-toplevel"], {
+    cwd
+  });
+
+  if (code !== 0) {
+    throw new Error(stderr.toString());
+  }
+
+  return stdout.toString().trim().replace(/\n|\r/g, "");
+}
+
+async function getChangedFilesSince({
+  cwd,
+  ref,
+  fullPath = false
+}) {
+  const divergedAt = await getDivergedCommit(cwd, ref); // Now we can find which files we added
+
+  const cmd = await spawn__default["default"]("git", ["diff", "--name-only", divergedAt], {
+    cwd
+  });
+
+  if (cmd.code !== 0) {
+    throw new Error(`Failed to diff against ${divergedAt}. Is ${divergedAt} a valid ref?`);
+  }
+
+  const files = cmd.stdout.toString().trim().split("\n").filter(a => a);
+  if (!fullPath) return files;
+  const repoRoot = await getRepoRoot({
+    cwd
+  });
+  return files.map(file => path__default["default"].resolve(repoRoot, file));
+} // below are less generic functions that we use in combination with other things we are doing
+
+async function getChangedChangesetFilesSinceRef({
+  cwd,
+  ref
+}) {
+  try {
+    const divergedAt = await getDivergedCommit(cwd, ref); // Now we can find which files we added
+
+    const cmd = await spawn__default["default"]("git", ["diff", "--name-only", "--diff-filter=d", divergedAt], {
+      cwd
+    });
+    let tester = /.changeset\/[^/]+\.md$/;
+    const files = cmd.stdout.toString().trim().split("\n").filter(file => tester.test(file));
+    return files;
+  } catch (err) {
+    if (err instanceof errors.GitError) return [];
+    throw err;
+  }
+}
+async function getChangedPackagesSinceRef({
+  cwd,
+  ref,
+  changedFilePatterns = ["**"]
+}) {
+  const changedFiles = await getChangedFilesSince({
+    ref,
+    cwd,
+    fullPath: true
+  });
+  return [...(await getPackages.getPackages(cwd)).packages] // sort packages by length of dir, so that we can check for subdirs first
+  .sort((pkgA, pkgB) => pkgB.dir.length - pkgA.dir.length).filter(pkg => {
+    const changedPackageFiles = [];
+
+    for (let i = changedFiles.length - 1; i >= 0; i--) {
+      const file = changedFiles[i];
+
+      if (isSubdir__default["default"](pkg.dir, file)) {
+        changedFiles.splice(i, 1);
+        const relativeFile = file.slice(pkg.dir.length + 1);
+        changedPackageFiles.push(relativeFile);
+      }
+    }
+
+    return changedPackageFiles.length > 0 && micromatch__default["default"](changedPackageFiles, changedFilePatterns).length > 0;
+  });
+}
+async function tagExists(tagStr, cwd) {
+  const gitCmd = await spawn__default["default"]("git", ["tag", "-l", tagStr], {
+    cwd
+  });
+  const output = gitCmd.stdout.toString().trim();
+  const tagExists = !!output;
+  return tagExists;
+}
+async function getCurrentCommitId({
+  cwd,
+  short = false
+}) {
+  return (await spawn__default["default"]("git", ["rev-parse", short && "--short", "HEAD"].filter(Boolean), {
+    cwd
+  })).stdout.toString().trim();
+}
+async function remoteTagExists(tagStr) {
+  const gitCmd = await spawn__default["default"]("git", ["ls-remote", "--tags", "origin", "-l", tagStr]);
+  const output = gitCmd.stdout.toString().trim();
+  const tagExists = !!output;
+  return tagExists;
+}
+
+exports.add = add;
+exports.commit = commit;
+exports.deepenCloneBy = deepenCloneBy;
+exports.getAllTags = getAllTags;
+exports.getChangedChangesetFilesSinceRef = getChangedChangesetFilesSinceRef;
+exports.getChangedFilesSince = getChangedFilesSince;
+exports.getChangedPackagesSinceRef = getChangedPackagesSinceRef;
+exports.getCommitsThatAddFiles = getCommitsThatAddFiles;
+exports.getCurrentCommitId = getCurrentCommitId;
+exports.getDivergedCommit = getDivergedCommit;
+exports.isRepoShallow = isRepoShallow;
+exports.remoteTagExists = remoteTagExists;
+exports.tag = tag;
+exports.tagExists = tagExists;
+
+
+/***/ }),
+
+/***/ 11376:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var pc = __nccwpck_require__(88276);
+var util = __nccwpck_require__(73837);
+
+function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
+
+var pc__default = /*#__PURE__*/_interopDefault(pc);
+var util__default = /*#__PURE__*/_interopDefault(util);
+
+let prefix = "🦋 ";
+
+function format(args, customPrefix) {
+  let fullPrefix = prefix + (customPrefix === undefined ? "" : " " + customPrefix);
+  return fullPrefix + util__default["default"].format("", ...args).split("\n").join("\n" + fullPrefix + " ");
+}
+
+function error(...args) {
+  console.error(format(args, pc__default["default"].red("error")));
+}
+function info(...args) {
+  console.info(format(args, pc__default["default"].cyan("info")));
+}
+function log(...args) {
+  console.log(format(args));
+}
+function success(...args) {
+  console.log(format(args, pc__default["default"].green("success")));
+}
+function warn(...args) {
+  console.warn(format(args, pc__default["default"].yellow("warn")));
+}
+
+exports.error = error;
+exports.info = info;
+exports.log = log;
+exports.prefix = prefix;
+exports.success = success;
+exports.warn = warn;
+
+
+/***/ }),
+
+/***/ 80428:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var fs = __nccwpck_require__(41621);
+var path = __nccwpck_require__(71017);
+var getPackages = __nccwpck_require__(54393);
+var errors = __nccwpck_require__(76249);
+
+function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
+
+function _interopNamespace(e) {
+  if (e && e.__esModule) return e;
+  var n = Object.create(null);
+  if (e) {
+    Object.keys(e).forEach(function (k) {
+      if (k !== 'default') {
+        var d = Object.getOwnPropertyDescriptor(e, k);
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
+        });
+      }
+    });
+  }
+  n["default"] = e;
+  return Object.freeze(n);
+}
+
+var fs__namespace = /*#__PURE__*/_interopNamespace(fs);
+var path__default = /*#__PURE__*/_interopDefault(path);
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+async function readPreState(cwd) {
+  let preStatePath = path__default["default"].resolve(cwd, ".changeset", "pre.json"); // TODO: verify that the pre state isn't broken
+
+  let preState;
+
+  try {
+    let contents = await fs__namespace.readFile(preStatePath, "utf8");
+
+    try {
+      preState = JSON.parse(contents);
+    } catch (err) {
+      if (err instanceof SyntaxError) {
+        console.error("error parsing json:", contents);
+      }
+
+      throw err;
+    }
+  } catch (err) {
+    if (err.code !== "ENOENT") {
+      throw err;
+    }
+  }
+
+  return preState;
+}
+async function exitPre(cwd) {
+  let preStatePath = path__default["default"].resolve(cwd, ".changeset", "pre.json"); // TODO: verify that the pre state isn't broken
+
+  let preState = await readPreState(cwd);
+
+  if (preState === undefined) {
+    throw new errors.PreExitButNotInPreModeError();
+  }
+
+  await fs__namespace.outputFile(preStatePath, JSON.stringify(_objectSpread2(_objectSpread2({}, preState), {}, {
+    mode: "exit"
+  }), null, 2) + "\n");
+}
+async function enterPre(cwd, tag) {
+  var _preState$changesets;
+
+  let packages = await getPackages.getPackages(cwd);
+  let preStatePath = path__default["default"].resolve(packages.root.dir, ".changeset", "pre.json");
+  let preState = await readPreState(packages.root.dir); // can't reenter if pre mode still exists, but we should allow exited pre mode to be reentered
+
+  if ((preState === null || preState === void 0 ? void 0 : preState.mode) === "pre") {
+    throw new errors.PreEnterButInPreModeError();
+  }
+
+  let newPreState = {
+    mode: "pre",
+    tag,
+    initialVersions: {},
+    changesets: (_preState$changesets = preState === null || preState === void 0 ? void 0 : preState.changesets) !== null && _preState$changesets !== void 0 ? _preState$changesets : []
+  };
+
+  for (let pkg of packages.packages) {
+    newPreState.initialVersions[pkg.packageJson.name] = pkg.packageJson.version;
+  }
+
+  await fs__namespace.outputFile(preStatePath, JSON.stringify(newPreState, null, 2) + "\n");
+}
+
+exports.enterPre = enterPre;
+exports.exitPre = exitPre;
+exports.readPreState = readPreState;
+
+
+/***/ }),
+
+/***/ 8492:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var fs = __nccwpck_require__(41621);
+var path = __nccwpck_require__(71017);
+var parse = __nccwpck_require__(2107);
+var git = __nccwpck_require__(69674);
+var pc = __nccwpck_require__(88276);
+var pFilter = __nccwpck_require__(25073);
+var logger = __nccwpck_require__(11376);
+
+function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
+
+function _interopNamespace(e) {
+  if (e && e.__esModule) return e;
+  var n = Object.create(null);
+  if (e) {
+    Object.keys(e).forEach(function (k) {
+      if (k !== 'default') {
+        var d = Object.getOwnPropertyDescriptor(e, k);
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
+        });
+      }
+    });
+  }
+  n["default"] = e;
+  return Object.freeze(n);
+}
+
+var fs__namespace = /*#__PURE__*/_interopNamespace(fs);
+var path__default = /*#__PURE__*/_interopDefault(path);
+var parse__default = /*#__PURE__*/_interopDefault(parse);
+var git__namespace = /*#__PURE__*/_interopNamespace(git);
+var pc__default = /*#__PURE__*/_interopDefault(pc);
+var pFilter__default = /*#__PURE__*/_interopDefault(pFilter);
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+let importantSeparator = pc__default["default"].red("===============================IMPORTANT!===============================");
+let importantEnd = pc__default["default"].red("----------------------------------------------------------------------");
+
+async function getOldChangesets(changesetBase, dirs) {
+  // this needs to support just not dealing with dirs that aren't set up properly
+  let changesets = await pFilter__default["default"](dirs, async (dir) => (await fs__namespace.lstat(path__default["default"].join(changesetBase, dir))).isDirectory());
+  const changesetContents = changesets.map(async changesetDir => {
+    const jsonPath = path__default["default"].join(changesetBase, changesetDir, "changes.json");
+    const [summary, json] = await Promise.all([fs__namespace.readFile(path__default["default"].join(changesetBase, changesetDir, "changes.md"), "utf-8"), fs__namespace.readJson(jsonPath)]);
+    return {
+      releases: json.releases,
+      summary,
+      id: changesetDir
+    };
+  });
+  return Promise.all(changesetContents);
+} // this function only exists while we wait for v1 changesets to be obsoleted
+// and should be deleted before v3
+
+
+async function getOldChangesetsAndWarn(changesetBase, dirs) {
+  let oldChangesets = await getOldChangesets(changesetBase, dirs);
+
+  if (oldChangesets.length === 0) {
+    return [];
+  }
+
+  logger.warn(importantSeparator);
+  logger.warn("There were old changesets from version 1 found");
+  logger.warn("These are being applied now but the dependents graph may have changed");
+  logger.warn("Make sure you validate all your dependencies");
+  logger.warn("In a future major version, we will no longer apply these old changesets, and will instead throw here");
+  logger.warn(importantEnd);
+  return oldChangesets;
+}
+
+async function filterChangesetsSinceRef(changesets, changesetBase, sinceRef) {
+  const newChangesets = await git__namespace.getChangedChangesetFilesSinceRef({
+    cwd: changesetBase,
+    ref: sinceRef
+  });
+  const newHashes = newChangesets.map(c => c.split("/")[1]);
+  return changesets.filter(dir => newHashes.includes(dir));
+}
+
+async function getChangesets(cwd, sinceRef) {
+  let changesetBase = path__default["default"].join(cwd, ".changeset");
+  let contents;
+
+  try {
+    contents = await fs__namespace["default"].readdir(changesetBase);
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      throw new Error("There is no .changeset directory in this project");
+    }
+
+    throw err;
+  }
+
+  if (sinceRef !== undefined) {
+    contents = await filterChangesetsSinceRef(contents, changesetBase, sinceRef);
+  }
+
+  let oldChangesetsPromise = getOldChangesetsAndWarn(changesetBase, contents);
+  let changesets = contents.filter(file => !file.startsWith(".") && file.endsWith(".md") && file !== "README.md");
+  const changesetContents = changesets.map(async file => {
+    const changeset = await fs__namespace["default"].readFile(path__default["default"].join(changesetBase, file), "utf-8");
+    return _objectSpread2(_objectSpread2({}, parse__default["default"](changeset)), {}, {
+      id: file.replace(".md", "")
+    });
+  });
+  return [...(await oldChangesetsPromise), ...(await Promise.all(changesetContents))];
+}
+
+exports["default"] = getChangesets;
+
+
+/***/ }),
+
+/***/ 57193:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+function shouldSkipPackage({
+  packageJson
+}, {
+  ignore,
+  allowPrivatePackages
+}) {
+  if (ignore.includes(packageJson.name)) {
+    return true;
+  }
+
+  if (packageJson.private && !allowPrivatePackages) {
+    return true;
+  }
+
+  return !packageJson.version;
+}
+
+exports.shouldSkipPackage = shouldSkipPackage;
+
+
+/***/ }),
+
+/***/ 88276:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+let argv = process.argv || [],
+	env = process.env
+let isColorSupported =
+	!("NO_COLOR" in env || argv.includes("--no-color")) &&
+	("FORCE_COLOR" in env ||
+		argv.includes("--color") ||
+		process.platform === "win32" ||
+		(require != null && (__nccwpck_require__(76224).isatty)(1) && env.TERM !== "dumb") ||
+		"CI" in env)
+
+let formatter =
+	(open, close, replace = open) =>
+	input => {
+		let string = "" + input
+		let index = string.indexOf(close, open.length)
+		return ~index
+			? open + replaceClose(string, close, replace, index) + close
+			: open + string + close
+	}
+
+let replaceClose = (string, close, replace, index) => {
+	let result = ""
+	let cursor = 0
+	do {
+		result += string.substring(cursor, index) + replace
+		cursor = index + close.length
+		index = string.indexOf(close, cursor)
+	} while (~index)
+	return result + string.substring(cursor)
+}
+
+let createColors = (enabled = isColorSupported) => {
+	let init = enabled ? formatter : () => String
+	return {
+		isColorSupported: enabled,
+		reset: init("\x1b[0m", "\x1b[0m"),
+		bold: init("\x1b[1m", "\x1b[22m", "\x1b[22m\x1b[1m"),
+		dim: init("\x1b[2m", "\x1b[22m", "\x1b[22m\x1b[2m"),
+		italic: init("\x1b[3m", "\x1b[23m"),
+		underline: init("\x1b[4m", "\x1b[24m"),
+		inverse: init("\x1b[7m", "\x1b[27m"),
+		hidden: init("\x1b[8m", "\x1b[28m"),
+		strikethrough: init("\x1b[9m", "\x1b[29m"),
+
+		black: init("\x1b[30m", "\x1b[39m"),
+		red: init("\x1b[31m", "\x1b[39m"),
+		green: init("\x1b[32m", "\x1b[39m"),
+		yellow: init("\x1b[33m", "\x1b[39m"),
+		blue: init("\x1b[34m", "\x1b[39m"),
+		magenta: init("\x1b[35m", "\x1b[39m"),
+		cyan: init("\x1b[36m", "\x1b[39m"),
+		white: init("\x1b[37m", "\x1b[39m"),
+		gray: init("\x1b[90m", "\x1b[39m"),
+
+		bgBlack: init("\x1b[40m", "\x1b[49m"),
+		bgRed: init("\x1b[41m", "\x1b[49m"),
+		bgGreen: init("\x1b[42m", "\x1b[49m"),
+		bgYellow: init("\x1b[43m", "\x1b[49m"),
+		bgBlue: init("\x1b[44m", "\x1b[49m"),
+		bgMagenta: init("\x1b[45m", "\x1b[49m"),
+		bgCyan: init("\x1b[46m", "\x1b[49m"),
+		bgWhite: init("\x1b[47m", "\x1b[49m"),
+
+		blackBright: init("\x1b[90m", "\x1b[39m"),
+		redBright: init("\x1b[91m", "\x1b[39m"),
+		greenBright: init("\x1b[92m", "\x1b[39m"),
+		yellowBright: init("\x1b[93m", "\x1b[39m"),
+		blueBright: init("\x1b[94m", "\x1b[39m"),
+		magentaBright: init("\x1b[95m", "\x1b[39m"),
+		cyanBright: init("\x1b[96m", "\x1b[39m"),
+		whiteBright: init("\x1b[97m", "\x1b[39m"),
+
+		bgBlackBright: init("\x1b[100m","\x1b[49m"),
+		bgRedBright: init("\x1b[101m","\x1b[49m"),
+		bgGreenBright: init("\x1b[102m","\x1b[49m"),
+		bgYellowBright: init("\x1b[103m","\x1b[49m"),
+		bgBlueBright: init("\x1b[104m","\x1b[49m"),
+		bgMagentaBright: init("\x1b[105m","\x1b[49m"),
+		bgCyanBright: init("\x1b[106m","\x1b[49m"),
+		bgWhiteBright: init("\x1b[107m","\x1b[49m"),
+	}
+}
+
+module.exports = createColors()
+module.exports.createColors = createColors
 
 
 /***/ }),
@@ -2583,2125 +4702,6 @@ exports.InternalError = InternalError;
 exports.PreEnterButInPreModeError = PreEnterButInPreModeError;
 exports.PreExitButNotInPreModeError = PreExitButNotInPreModeError;
 exports.ValidationError = ValidationError;
-
-
-/***/ }),
-
-/***/ 69256:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var assembleReleasePlan = __nccwpck_require__(47109);
-var readChangesets = __nccwpck_require__(21980);
-var config = __nccwpck_require__(72059);
-var getPackages = __nccwpck_require__(54393);
-var pre = __nccwpck_require__(8920);
-
-function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
-
-var assembleReleasePlan__default = /*#__PURE__*/_interopDefault(assembleReleasePlan);
-var readChangesets__default = /*#__PURE__*/_interopDefault(readChangesets);
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-async function getReleasePlan(cwd, sinceRef, passedConfig) {
-  const packages = await getPackages.getPackages(cwd);
-  const preState = await pre.readPreState(cwd);
-  const readConfig = await config.read(cwd, packages);
-  const config$1 = passedConfig ? _objectSpread2(_objectSpread2({}, readConfig), passedConfig) : readConfig;
-  const changesets = await readChangesets__default["default"](cwd, sinceRef);
-  return assembleReleasePlan__default["default"](changesets, packages, config$1, preState);
-}
-
-exports["default"] = getReleasePlan;
-
-
-/***/ }),
-
-/***/ 47109:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var errors = __nccwpck_require__(76249);
-var getDependentsGraph = __nccwpck_require__(98296);
-var shouldSkipPackage = __nccwpck_require__(97589);
-var semverParse = __nccwpck_require__(58257);
-var semverGt = __nccwpck_require__(93473);
-var semverSatisfies = __nccwpck_require__(81495);
-var semverInc = __nccwpck_require__(25009);
-
-function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
-
-var semverParse__default = /*#__PURE__*/_interopDefault(semverParse);
-var semverGt__default = /*#__PURE__*/_interopDefault(semverGt);
-var semverSatisfies__default = /*#__PURE__*/_interopDefault(semverSatisfies);
-var semverInc__default = /*#__PURE__*/_interopDefault(semverInc);
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-function getHighestReleaseType(releases) {
-  if (releases.length === 0) {
-    throw new Error(`Large internal Changesets error when calculating highest release type in the set of releases. Please contact the maintainers`);
-  }
-
-  let highestReleaseType = "none";
-
-  for (let release of releases) {
-    switch (release.type) {
-      case "major":
-        return "major";
-
-      case "minor":
-        highestReleaseType = "minor";
-        break;
-
-      case "patch":
-        if (highestReleaseType === "none") {
-          highestReleaseType = "patch";
-        }
-
-        break;
-    }
-  }
-
-  return highestReleaseType;
-}
-function getCurrentHighestVersion(packageGroup, packagesByName) {
-  let highestVersion;
-
-  for (let pkgName of packageGroup) {
-    let pkg = packagesByName.get(pkgName);
-
-    if (!pkg) {
-      console.error(`FATAL ERROR IN CHANGESETS! We were unable to version for package group: ${pkgName} in package group: ${packageGroup.toString()}`);
-      throw new Error(`fatal: could not resolve linked packages`);
-    }
-
-    if (highestVersion === undefined || semverGt__default["default"](pkg.packageJson.version, highestVersion)) {
-      highestVersion = pkg.packageJson.version;
-    }
-  }
-
-  return highestVersion;
-}
-
-/*
-  WARNING:
-  Important note for understanding how this package works:
-
-  We are doing some kind of wacky things with manipulating the objects within the
-  releases array, despite the fact that this was passed to us as an argument. We are
-  aware that this is generally bad practice, but have decided to to this here as
-  we control the entire flow of releases.
-
-  We could solve this by inlining this function, or by returning a deep-cloned then
-  modified array, but we decided both of those are worse than this solution.
-*/
-
-function applyLinks(releases, packagesByName, linked) {
-  let updated = false; // We do this for each set of linked packages
-
-  for (let linkedPackages of linked) {
-    // First we filter down to all the relevant releases for one set of linked packages
-    let releasingLinkedPackages = [...releases.values()].filter(release => linkedPackages.includes(release.name) && release.type !== "none"); // If we proceed any further we do extra work with calculating highestVersion for things that might
-    // not need one, as they only have workspace based packages
-
-    if (releasingLinkedPackages.length === 0) continue;
-    let highestReleaseType = getHighestReleaseType(releasingLinkedPackages);
-    let highestVersion = getCurrentHighestVersion(linkedPackages, packagesByName); // Finally, we update the packages so all of them are on the highest version
-
-    for (let linkedPackage of releasingLinkedPackages) {
-      if (linkedPackage.type !== highestReleaseType) {
-        updated = true;
-        linkedPackage.type = highestReleaseType;
-      }
-
-      if (linkedPackage.oldVersion !== highestVersion) {
-        updated = true;
-        linkedPackage.oldVersion = highestVersion;
-      }
-    }
-  }
-
-  return updated;
-}
-
-function incrementVersion(release, preInfo) {
-  if (release.type === "none") {
-    return release.oldVersion;
-  }
-
-  let version = semverInc__default["default"](release.oldVersion, release.type);
-
-  if (preInfo !== undefined && preInfo.state.mode !== "exit") {
-    let preVersion = preInfo.preVersions.get(release.name);
-
-    if (preVersion === undefined) {
-      throw new errors.InternalError(`preVersion for ${release.name} does not exist when preState is defined`);
-    } // why are we adding this ourselves rather than passing 'pre' + versionType to semver.inc?
-    // because semver.inc with prereleases is confusing and this seems easier
-
-
-    version += `-${preInfo.state.tag}.${preVersion}`;
-  }
-
-  return version;
-}
-
-/*
-  WARNING:
-  Important note for understanding how this package works:
-
-  We are doing some kind of wacky things with manipulating the objects within the
-  releases array, despite the fact that this was passed to us as an argument. We are
-  aware that this is generally bad practice, but have decided to to this here as
-  we control the entire flow of releases.
-
-  We could solve this by inlining this function, or by returning a deep-cloned then
-  modified array, but we decided both of those are worse than this solution.
-*/
-function determineDependents({
-  releases,
-  packagesByName,
-  dependencyGraph,
-  preInfo,
-  config
-}) {
-  let updated = false; // NOTE this is intended to be called recursively
-
-  let pkgsToSearch = [...releases.values()];
-
-  while (pkgsToSearch.length > 0) {
-    // nextRelease is our dependency, think of it as "avatar"
-    const nextRelease = pkgsToSearch.shift();
-    if (!nextRelease) continue; // pkgDependents will be a list of packages that depend on nextRelease ie. ['avatar-group', 'comment']
-
-    const pkgDependents = dependencyGraph.get(nextRelease.name);
-
-    if (!pkgDependents) {
-      throw new Error(`Error in determining dependents - could not find package in repository: ${nextRelease.name}`);
-    }
-
-    pkgDependents.map(dependent => {
-      let type;
-      const dependentPackage = packagesByName.get(dependent);
-      if (!dependentPackage) throw new Error("Dependency map is incorrect");
-
-      if (shouldSkipPackage.shouldSkipPackage(dependentPackage, {
-        ignore: config.ignore,
-        allowPrivatePackages: config.privatePackages.version
-      })) {
-        type = "none";
-      } else {
-        const dependencyVersionRanges = getDependencyVersionRanges(dependentPackage.packageJson, nextRelease);
-
-        for (const {
-          depType,
-          versionRange
-        } of dependencyVersionRanges) {
-          if (nextRelease.type === "none") {
-            continue;
-          } else if (shouldBumpMajor({
-            dependent,
-            depType,
-            versionRange,
-            releases,
-            nextRelease,
-            preInfo,
-            onlyUpdatePeerDependentsWhenOutOfRange: config.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.onlyUpdatePeerDependentsWhenOutOfRange
-          })) {
-            type = "major";
-          } else if ((!releases.has(dependent) || releases.get(dependent).type === "none") && (config.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.updateInternalDependents === "always" || !semverSatisfies__default["default"](incrementVersion(nextRelease, preInfo), versionRange))) {
-            switch (depType) {
-              case "dependencies":
-              case "optionalDependencies":
-              case "peerDependencies":
-                if (type !== "major" && type !== "minor") {
-                  type = "patch";
-                }
-
-                break;
-
-              case "devDependencies":
-                {
-                  // We don't need a version bump if the package is only in the devDependencies of the dependent package
-                  if (type !== "major" && type !== "minor" && type !== "patch") {
-                    type = "none";
-                  }
-                }
-            }
-          }
-        }
-      }
-
-      if (releases.has(dependent) && releases.get(dependent).type === type) {
-        type = undefined;
-      }
-
-      return {
-        name: dependent,
-        type,
-        pkgJSON: dependentPackage.packageJson
-      };
-    }).filter(dependentItem => !!dependentItem.type).forEach(({
-      name,
-      type,
-      pkgJSON
-    }) => {
-      // At this point, we know if we are making a change
-      updated = true;
-      const existing = releases.get(name); // For things that are being given a major bump, we check if we have already
-      // added them here. If we have, we update the existing item instead of pushing it on to search.
-      // It is safe to not add it to pkgsToSearch because it should have already been searched at the
-      // largest possible bump type.
-
-      if (existing && type === "major" && existing.type !== "major") {
-        existing.type = "major";
-        pkgsToSearch.push(existing);
-      } else {
-        let newDependent = {
-          name,
-          type,
-          oldVersion: pkgJSON.version,
-          changesets: []
-        };
-        pkgsToSearch.push(newDependent);
-        releases.set(name, newDependent);
-      }
-    });
-  }
-
-  return updated;
-}
-/*
-  Returns an array of objects in the shape { depType: DependencyType, versionRange: string }
-  The array can contain more than one elements in case a dependency appears in multiple
-  dependency lists. For example, a package that is both a peerDepenency and a devDependency.
-*/
-
-function getDependencyVersionRanges(dependentPkgJSON, dependencyRelease) {
-  const DEPENDENCY_TYPES = ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"];
-  const dependencyVersionRanges = [];
-
-  for (const type of DEPENDENCY_TYPES) {
-    var _dependentPkgJSON$typ;
-
-    const versionRange = (_dependentPkgJSON$typ = dependentPkgJSON[type]) === null || _dependentPkgJSON$typ === void 0 ? void 0 : _dependentPkgJSON$typ[dependencyRelease.name];
-    if (!versionRange) continue;
-
-    if (versionRange.startsWith("workspace:")) {
-      dependencyVersionRanges.push({
-        depType: type,
-        versionRange: // intentionally keep other workspace ranges untouched
-        // this has to be fixed but this should only be done when adding appropriate tests
-        versionRange === "workspace:*" ? // workspace:* actually means the current exact version, and not a wildcard similar to a reguler * range
-        dependencyRelease.oldVersion : versionRange.replace(/^workspace:/, "")
-      });
-    } else {
-      dependencyVersionRanges.push({
-        depType: type,
-        versionRange
-      });
-    }
-  }
-
-  return dependencyVersionRanges;
-}
-
-function shouldBumpMajor({
-  dependent,
-  depType,
-  versionRange,
-  releases,
-  nextRelease,
-  preInfo,
-  onlyUpdatePeerDependentsWhenOutOfRange
-}) {
-  // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
-  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
-  // 2. If onlyUpdatePeerDependentsWhenOutOfRange set to false, bump major regardless whether or not the version is leaving the range.
-  !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies__default["default"](incrementVersion(nextRelease, preInfo), versionRange)) && ( // bump major only if the dependent doesn't already has a major release.
-  !releases.has(dependent) || releases.has(dependent) && releases.get(dependent).type !== "major");
-}
-
-// This function takes in changesets and returns one release per
-function flattenReleases(changesets, packagesByName, config) {
-  let releases = new Map();
-  changesets.forEach(changeset => {
-    changeset.releases // Filter out skipped packages because they should not trigger a release
-    // If their dependencies need updates, they will be added to releases by `determineDependents()` with release type `none`
-    .filter(({
-      name
-    }) => !shouldSkipPackage.shouldSkipPackage(packagesByName.get(name), {
-      ignore: config.ignore,
-      allowPrivatePackages: config.privatePackages.version
-    })).forEach(({
-      name,
-      type
-    }) => {
-      let release = releases.get(name);
-      let pkg = packagesByName.get(name);
-
-      if (!pkg) {
-        throw new Error(`"${changeset.id}" changeset mentions a release for a package "${name}" but such a package could not be found.`);
-      }
-
-      if (!release) {
-        release = {
-          name,
-          type,
-          oldVersion: pkg.packageJson.version,
-          changesets: [changeset.id]
-        };
-      } else {
-        if (type === "major" || (release.type === "patch" || release.type === "none") && (type === "minor" || type === "patch")) {
-          release.type = type;
-        } // Check whether the bumpType will change
-        // If the bumpType has changed recalc newVersion
-        // push new changeset to releases
-
-
-        release.changesets.push(changeset.id);
-      }
-
-      releases.set(name, release);
-    });
-  });
-  return releases;
-}
-
-function matchFixedConstraint(releases, packagesByName, config) {
-  let updated = false;
-
-  for (let fixedPackages of config.fixed) {
-    let releasingFixedPackages = [...releases.values()].filter(release => fixedPackages.includes(release.name) && release.type !== "none");
-    if (releasingFixedPackages.length === 0) continue;
-    let highestReleaseType = getHighestReleaseType(releasingFixedPackages);
-    let highestVersion = getCurrentHighestVersion(fixedPackages, packagesByName); // Finally, we update the packages so all of them are on the highest version
-
-    for (let pkgName of fixedPackages) {
-      if (shouldSkipPackage.shouldSkipPackage(packagesByName.get(pkgName), {
-        ignore: config.ignore,
-        allowPrivatePackages: config.privatePackages.version
-      })) {
-        continue;
-      }
-
-      let release = releases.get(pkgName);
-
-      if (!release) {
-        updated = true;
-        releases.set(pkgName, {
-          name: pkgName,
-          type: highestReleaseType,
-          oldVersion: highestVersion,
-          changesets: []
-        });
-        continue;
-      }
-
-      if (release.type !== highestReleaseType) {
-        updated = true;
-        release.type = highestReleaseType;
-      }
-
-      if (release.oldVersion !== highestVersion) {
-        updated = true;
-        release.oldVersion = highestVersion;
-      }
-    }
-  }
-
-  return updated;
-}
-
-function getPreVersion(version) {
-  let parsed = semverParse__default["default"](version);
-  let preVersion = parsed.prerelease[1] === undefined ? -1 : parsed.prerelease[1];
-
-  if (typeof preVersion !== "number") {
-    throw new errors.InternalError("preVersion is not a number");
-  }
-
-  preVersion++;
-  return preVersion;
-}
-
-function getSnapshotSuffix(template, snapshotParameters) {
-  let snapshotRefDate = new Date();
-  const placeholderValues = {
-    commit: snapshotParameters.commit,
-    tag: snapshotParameters.tag,
-    timestamp: snapshotRefDate.getTime().toString(),
-    datetime: snapshotRefDate.toISOString().replace(/\.\d{3}Z$/, "").replace(/[^\d]/g, "")
-  }; // We need a special handling because we need to handle a case where `--snapshot` is used without any template,
-  // and the resulting version needs to be composed without a tag.
-
-  if (!template) {
-    return [placeholderValues.tag, placeholderValues.datetime].filter(Boolean).join("-");
-  }
-
-  const placeholders = Object.keys(placeholderValues);
-
-  if (!template.includes(`{tag}`) && placeholderValues.tag !== undefined) {
-    throw new Error(`Failed to compose snapshot version: "{tag}" placeholder is missing, but the snapshot parameter is defined (value: '${placeholderValues.tag}')`);
-  }
-
-  return placeholders.reduce((prev, key) => {
-    return prev.replace(new RegExp(`\\{${key}\\}`, "g"), () => {
-      const value = placeholderValues[key];
-
-      if (value === undefined) {
-        throw new Error(`Failed to compose snapshot version: "{${key}}" placeholder is used without having a value defined!`);
-      }
-
-      return value;
-    });
-  }, template);
-}
-
-function getSnapshotVersion(release, preInfo, useCalculatedVersion, snapshotSuffix) {
-  if (release.type === "none") {
-    return release.oldVersion;
-  }
-  /**
-   * Using version as 0.0.0 so that it does not hinder with other version release
-   * For example;
-   * if user has a regular pre-release at 1.0.0-beta.0 and then you had a snapshot pre-release at 1.0.0-canary-git-hash
-   * and a consumer is using the range ^1.0.0-beta, most people would expect that range to resolve to 1.0.0-beta.0
-   * but it'll actually resolve to 1.0.0-canary-hash. Using 0.0.0 solves this problem because it won't conflict with other versions.
-   *
-   * You can set `snapshot.useCalculatedVersion` flag to true to use calculated versions if you don't care about the above problem.
-   */
-
-
-  const baseVersion = useCalculatedVersion ? incrementVersion(release, preInfo) : `0.0.0`;
-  return `${baseVersion}-${snapshotSuffix}`;
-}
-
-function getNewVersion(release, preInfo) {
-  if (release.type === "none") {
-    return release.oldVersion;
-  }
-
-  return incrementVersion(release, preInfo);
-}
-
-function assembleReleasePlan(changesets, packages, config, // intentionally not using an optional parameter here so the result of `readPreState` has to be passed in here
-preState, // snapshot: undefined            ->  not using snaphot
-// snapshot: { tag: undefined }   ->  --snapshot (empty tag)
-// snapshot: { tag: "canary" }    ->  --snapshot canary
-snapshot) {
-  // TODO: remove `refined*` in the next major version of this package
-  // just use `config` and `snapshot` parameters directly, typed as: `config: Config, snapshot?: SnapshotReleaseParameters`
-  const refinedConfig = config.snapshot ? config : _objectSpread2(_objectSpread2({}, config), {}, {
-    snapshot: {
-      prereleaseTemplate: null,
-      useCalculatedVersion: config.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.useCalculatedVersionForSnapshots
-    }
-  });
-  const refinedSnapshot = typeof snapshot === "string" ? {
-    tag: snapshot
-  } : typeof snapshot === "boolean" ? {
-    tag: undefined
-  } : snapshot;
-  let packagesByName = new Map(packages.packages.map(x => [x.packageJson.name, x]));
-  const relevantChangesets = getRelevantChangesets(changesets, packagesByName, refinedConfig, preState);
-  const preInfo = getPreInfo(changesets, packagesByName, refinedConfig, preState); // releases is, at this point a list of all packages we are going to releases,
-  // flattened down to one release per package, having a reference back to their
-  // changesets, and with a calculated new versions
-
-  let releases = flattenReleases(relevantChangesets, packagesByName, refinedConfig);
-  let dependencyGraph = getDependentsGraph.getDependentsGraph(packages, {
-    bumpVersionsWithWorkspaceProtocolOnly: refinedConfig.bumpVersionsWithWorkspaceProtocolOnly
-  });
-  let releasesValidated = false;
-
-  while (releasesValidated === false) {
-    // The map passed in to determineDependents will be mutated
-    let dependentAdded = determineDependents({
-      releases,
-      packagesByName,
-      dependencyGraph,
-      preInfo,
-      config: refinedConfig
-    }); // `releases` might get mutated here
-
-    let fixedConstraintUpdated = matchFixedConstraint(releases, packagesByName, refinedConfig);
-    let linksUpdated = applyLinks(releases, packagesByName, refinedConfig.linked);
-    releasesValidated = !linksUpdated && !dependentAdded && !fixedConstraintUpdated;
-  }
-
-  if ((preInfo === null || preInfo === void 0 ? void 0 : preInfo.state.mode) === "exit") {
-    for (let pkg of packages.packages) {
-      // If a package had a prerelease, but didn't trigger a version bump in the regular release,
-      // we want to give it a patch release.
-      // Detailed explanation at https://github.com/changesets/changesets/pull/382#discussion_r434434182
-      if (preInfo.preVersions.get(pkg.packageJson.name) !== 0) {
-        const existingRelease = releases.get(pkg.packageJson.name);
-
-        if (!existingRelease) {
-          releases.set(pkg.packageJson.name, {
-            name: pkg.packageJson.name,
-            type: "patch",
-            oldVersion: pkg.packageJson.version,
-            changesets: []
-          });
-        } else if (existingRelease.type === "none" && !shouldSkipPackage.shouldSkipPackage(pkg, {
-          ignore: refinedConfig.ignore,
-          allowPrivatePackages: refinedConfig.privatePackages.version
-        })) {
-          existingRelease.type = "patch";
-        }
-      }
-    }
-  } // Caching the snapshot version here and use this if it is snapshot release
-
-
-  const snapshotSuffix = refinedSnapshot && getSnapshotSuffix(refinedConfig.snapshot.prereleaseTemplate, refinedSnapshot);
-  return {
-    changesets: relevantChangesets,
-    releases: [...releases.values()].map(incompleteRelease => {
-      return _objectSpread2(_objectSpread2({}, incompleteRelease), {}, {
-        newVersion: snapshotSuffix ? getSnapshotVersion(incompleteRelease, preInfo, refinedConfig.snapshot.useCalculatedVersion, snapshotSuffix) : getNewVersion(incompleteRelease, preInfo)
-      });
-    }),
-    preState: preInfo === null || preInfo === void 0 ? void 0 : preInfo.state
-  };
-}
-
-function getRelevantChangesets(changesets, packagesByName, config, preState) {
-  for (const changeset of changesets) {
-    // Using the following 2 arrays to decide whether a changeset
-    // contains both skipped and not skipped packages
-    const skippedPackages = [];
-    const notSkippedPackages = [];
-
-    for (const release of changeset.releases) {
-      if (shouldSkipPackage.shouldSkipPackage(packagesByName.get(release.name), {
-        ignore: config.ignore,
-        allowPrivatePackages: config.privatePackages.version
-      })) {
-        skippedPackages.push(release.name);
-      } else {
-        notSkippedPackages.push(release.name);
-      }
-    }
-
-    if (skippedPackages.length > 0 && notSkippedPackages.length > 0) {
-      throw new Error(`Found mixed changeset ${changeset.id}\n` + `Found ignored packages: ${skippedPackages.join(" ")}\n` + `Found not ignored packages: ${notSkippedPackages.join(" ")}\n` + "Mixed changesets that contain both ignored and not ignored packages are not allowed");
-    }
-  }
-
-  if (preState && preState.mode !== "exit") {
-    let usedChangesetIds = new Set(preState.changesets);
-    return changesets.filter(changeset => !usedChangesetIds.has(changeset.id));
-  }
-
-  return changesets;
-}
-
-function getHighestPreVersion(packageGroup, packagesByName) {
-  let highestPreVersion = 0;
-
-  for (let pkg of packageGroup) {
-    highestPreVersion = Math.max(getPreVersion(packagesByName.get(pkg).packageJson.version), highestPreVersion);
-  }
-
-  return highestPreVersion;
-}
-
-function getPreInfo(changesets, packagesByName, config, preState) {
-  if (preState === undefined) {
-    return;
-  }
-
-  let updatedPreState = _objectSpread2(_objectSpread2({}, preState), {}, {
-    changesets: changesets.map(changeset => changeset.id),
-    initialVersions: _objectSpread2({}, preState.initialVersions)
-  });
-
-  for (const [, pkg] of packagesByName) {
-    if (updatedPreState.initialVersions[pkg.packageJson.name] === undefined) {
-      updatedPreState.initialVersions[pkg.packageJson.name] = pkg.packageJson.version;
-    }
-  } // Populate preVersion
-  // preVersion is the map between package name and its next pre version number.
-
-
-  let preVersions = new Map();
-
-  for (const [, pkg] of packagesByName) {
-    preVersions.set(pkg.packageJson.name, getPreVersion(pkg.packageJson.version));
-  }
-
-  for (let fixedGroup of config.fixed) {
-    let highestPreVersion = getHighestPreVersion(fixedGroup, packagesByName);
-
-    for (let fixedPackage of fixedGroup) {
-      preVersions.set(fixedPackage, highestPreVersion);
-    }
-  }
-
-  for (let linkedGroup of config.linked) {
-    let highestPreVersion = getHighestPreVersion(linkedGroup, packagesByName);
-
-    for (let linkedPackage of linkedGroup) {
-      preVersions.set(linkedPackage, highestPreVersion);
-    }
-  }
-
-  return {
-    state: updatedPreState,
-    preVersions
-  };
-}
-
-exports["default"] = assembleReleasePlan;
-
-
-/***/ }),
-
-/***/ 72059:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var fs = __nccwpck_require__(41621);
-var path = __nccwpck_require__(71017);
-var micromatch = __nccwpck_require__(39015);
-var errors = __nccwpck_require__(76249);
-var logger = __nccwpck_require__(95889);
-var getDependentsGraph = __nccwpck_require__(98296);
-
-function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
-
-function _interopNamespace(e) {
-  if (e && e.__esModule) return e;
-  var n = Object.create(null);
-  if (e) {
-    Object.keys(e).forEach(function (k) {
-      if (k !== 'default') {
-        var d = Object.getOwnPropertyDescriptor(e, k);
-        Object.defineProperty(n, k, d.get ? d : {
-          enumerable: true,
-          get: function () { return e[k]; }
-        });
-      }
-    });
-  }
-  n["default"] = e;
-  return Object.freeze(n);
-}
-
-var fs__namespace = /*#__PURE__*/_interopNamespace(fs);
-var path__default = /*#__PURE__*/_interopDefault(path);
-var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
-
-var packageJson = {
-	name: "@changesets/config",
-	version: "3.0.3",
-	description: "Utilities for reading and parsing Changeset's config",
-	main: "dist/changesets-config.cjs.js",
-	module: "dist/changesets-config.esm.js",
-	exports: {
-		".": {
-			types: {
-				"import": "./dist/changesets-config.cjs.mjs",
-				"default": "./dist/changesets-config.cjs.js"
-			},
-			module: "./dist/changesets-config.esm.js",
-			"import": "./dist/changesets-config.cjs.mjs",
-			"default": "./dist/changesets-config.cjs.js"
-		},
-		"./package.json": "./package.json"
-	},
-	license: "MIT",
-	repository: "https://github.com/changesets/changesets/tree/main/packages/config",
-	files: [
-		"dist",
-		"schema.json"
-	],
-	dependencies: {
-		"@changesets/errors": "^0.2.0",
-		"@changesets/get-dependents-graph": "^2.1.2",
-		"@changesets/logger": "^0.1.1",
-		"@changesets/types": "^6.0.0",
-		"@manypkg/get-packages": "^1.1.3",
-		"fs-extra": "^7.0.1",
-		micromatch: "^4.0.2"
-	},
-	devDependencies: {
-		"@changesets/test-utils": "*",
-		"@types/micromatch": "^4.0.1",
-		"jest-in-case": "^1.0.2",
-		outdent: "^0.5.0"
-	}
-};
-
-let defaultWrittenConfig = {
-  $schema: `https://unpkg.com/@changesets/config@${packageJson.version}/schema.json`,
-  changelog: "@changesets/cli/changelog",
-  commit: false,
-  fixed: [],
-  linked: [],
-  access: "restricted",
-  baseBranch: "master",
-  updateInternalDependencies: "patch",
-  ignore: []
-};
-
-function flatten(arr) {
-  return [].concat(...arr);
-}
-
-function getNormalizedChangelogOption(thing) {
-  if (thing === false) {
-    return false;
-  }
-
-  if (typeof thing === "string") {
-    return [thing, null];
-  }
-
-  return thing;
-}
-
-function getNormalizedCommitOption(thing) {
-  if (thing === false) {
-    return false;
-  }
-
-  if (thing === true) {
-    return ["@changesets/cli/commit", {
-      skipCI: "version"
-    }];
-  }
-
-  if (typeof thing === "string") {
-    return [thing, null];
-  }
-
-  return thing;
-}
-
-function getUnmatchedPatterns(listOfPackageNamesOrGlob, pkgNames) {
-  return listOfPackageNamesOrGlob.filter(pkgNameOrGlob => !pkgNames.some(pkgName => micromatch__default["default"].isMatch(pkgName, pkgNameOrGlob)));
-}
-
-const havePackageGroupsCorrectShape = pkgGroups => {
-  return isArray(pkgGroups) && pkgGroups.every(arr => isArray(arr) && arr.every(pkgName => typeof pkgName === "string"));
-}; // TODO: it might be possible to remove this if improvements to `Array.isArray` ever land
-// related thread: github.com/microsoft/TypeScript/issues/36554
-
-
-function isArray(arg) {
-  return Array.isArray(arg);
-}
-
-let read = async (cwd, packages) => {
-  let json = await fs__namespace.readJSON(path__default["default"].join(cwd, ".changeset", "config.json"));
-  return parse(json, packages);
-};
-let parse = (json, packages) => {
-  var _json$changedFilePatt, _json$snapshot$prerel, _json$snapshot, _json$snapshot2, _json$___experimental, _json$___experimental2, _json$___experimental3, _json$___experimental4, _json$privatePackages, _json$privatePackages2;
-
-  let messages = [];
-  let pkgNames = packages.packages.map(({
-    packageJson
-  }) => packageJson.name);
-
-  if (json.changelog !== undefined && json.changelog !== false && typeof json.changelog !== "string" && !(isArray(json.changelog) && json.changelog.length === 2 && typeof json.changelog[0] === "string")) {
-    messages.push(`The \`changelog\` option is set as ${JSON.stringify(json.changelog, null, 2)} when the only valid values are undefined, false, a module path(e.g. "@changesets/cli/changelog" or "./some-module") or a tuple with a module path and config for the changelog generator(e.g. ["@changesets/cli/changelog", { someOption: true }])`);
-  }
-
-  let normalizedAccess = json.access;
-
-  if (json.access === "private") {
-    normalizedAccess = "restricted";
-    logger.warn('The `access` option is set as "private", but this is actually not a valid value - the correct form is "restricted".');
-  }
-
-  if (normalizedAccess !== undefined && normalizedAccess !== "restricted" && normalizedAccess !== "public") {
-    messages.push(`The \`access\` option is set as ${JSON.stringify(normalizedAccess, null, 2)} when the only valid values are undefined, "public" or "restricted"`);
-  }
-
-  if (json.commit !== undefined && typeof json.commit !== "boolean" && typeof json.commit !== "string" && !(isArray(json.commit) && json.commit.length === 2 && typeof json.commit[0] === "string")) {
-    messages.push(`The \`commit\` option is set as ${JSON.stringify(json.commit, null, 2)} when the only valid values are undefined or a boolean or a module path (e.g. "@changesets/cli/commit" or "./some-module") or a tuple with a module path and config for the commit message generator (e.g. ["@changesets/cli/commit", { "skipCI": "version" }])`);
-  }
-
-  if (json.baseBranch !== undefined && typeof json.baseBranch !== "string") {
-    messages.push(`The \`baseBranch\` option is set as ${JSON.stringify(json.baseBranch, null, 2)} but the \`baseBranch\` option can only be set as a string`);
-  }
-
-  if (json.changedFilePatterns !== undefined && (!isArray(json.changedFilePatterns) || !json.changedFilePatterns.every(pattern => typeof pattern === "string"))) {
-    messages.push(`The \`changedFilePatterns\` option is set as ${JSON.stringify(json.changedFilePatterns, null, 2)} but the \`changedFilePatterns\` option can only be set as an array of strings`);
-  }
-
-  let fixed = [];
-
-  if (json.fixed !== undefined) {
-    if (!havePackageGroupsCorrectShape(json.fixed)) {
-      messages.push(`The \`fixed\` option is set as ${JSON.stringify(json.fixed, null, 2)} when the only valid values are undefined or an array of arrays of package names`);
-    } else {
-      let foundPkgNames = new Set();
-      let duplicatedPkgNames = new Set();
-
-      for (let fixedGroup of json.fixed) {
-        messages.push(...getUnmatchedPatterns(fixedGroup, pkgNames).map(pkgOrGlob => `The package or glob expression "${pkgOrGlob}" specified in the \`fixed\` option does not match any package in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch.`));
-        let expandedFixedGroup = micromatch__default["default"](pkgNames, fixedGroup);
-        fixed.push(expandedFixedGroup);
-
-        for (let fixedPkgName of expandedFixedGroup) {
-          if (foundPkgNames.has(fixedPkgName)) {
-            duplicatedPkgNames.add(fixedPkgName);
-          }
-
-          foundPkgNames.add(fixedPkgName);
-        }
-      }
-
-      if (duplicatedPkgNames.size) {
-        duplicatedPkgNames.forEach(pkgName => {
-          messages.push(`The package "${pkgName}" is defined in multiple sets of fixed packages. Packages can only be defined in a single set of fixed packages. If you are using glob expressions, make sure that they are valid according to https://www.npmjs.com/package/micromatch.`);
-        });
-      }
-    }
-  }
-
-  let linked = [];
-
-  if (json.linked !== undefined) {
-    if (!havePackageGroupsCorrectShape(json.linked)) {
-      messages.push(`The \`linked\` option is set as ${JSON.stringify(json.linked, null, 2)} when the only valid values are undefined or an array of arrays of package names`);
-    } else {
-      let foundPkgNames = new Set();
-      let duplicatedPkgNames = new Set();
-
-      for (let linkedGroup of json.linked) {
-        messages.push(...getUnmatchedPatterns(linkedGroup, pkgNames).map(pkgOrGlob => `The package or glob expression "${pkgOrGlob}" specified in the \`linked\` option does not match any package in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch.`));
-        let expandedLinkedGroup = micromatch__default["default"](pkgNames, linkedGroup);
-        linked.push(expandedLinkedGroup);
-
-        for (let linkedPkgName of expandedLinkedGroup) {
-          if (foundPkgNames.has(linkedPkgName)) {
-            duplicatedPkgNames.add(linkedPkgName);
-          }
-
-          foundPkgNames.add(linkedPkgName);
-        }
-      }
-
-      if (duplicatedPkgNames.size) {
-        duplicatedPkgNames.forEach(pkgName => {
-          messages.push(`The package "${pkgName}" is defined in multiple sets of linked packages. Packages can only be defined in a single set of linked packages. If you are using glob expressions, make sure that they are valid according to https://www.npmjs.com/package/micromatch.`);
-        });
-      }
-    }
-  }
-
-  const allFixedPackages = new Set(flatten(fixed));
-  const allLinkedPackages = new Set(flatten(linked));
-  allFixedPackages.forEach(pkgName => {
-    if (allLinkedPackages.has(pkgName)) {
-      messages.push(`The package "${pkgName}" can be found in both fixed and linked groups. A package can only be either fixed or linked.`);
-    }
-  });
-
-  if (json.updateInternalDependencies !== undefined && !["patch", "minor"].includes(json.updateInternalDependencies)) {
-    messages.push(`The \`updateInternalDependencies\` option is set as ${JSON.stringify(json.updateInternalDependencies, null, 2)} but can only be 'patch' or 'minor'`);
-  }
-
-  if (json.ignore) {
-    if (!(isArray(json.ignore) && json.ignore.every(pkgName => typeof pkgName === "string"))) {
-      messages.push(`The \`ignore\` option is set as ${JSON.stringify(json.ignore, null, 2)} when the only valid values are undefined or an array of package names`);
-    } else {
-      messages.push(...getUnmatchedPatterns(json.ignore, pkgNames).map(pkgOrGlob => `The package or glob expression "${pkgOrGlob}" is specified in the \`ignore\` option but it is not found in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch.`)); // Validate that all dependents of ignored packages are listed in the ignore list
-
-      const dependentsGraph = getDependentsGraph.getDependentsGraph(packages);
-
-      for (const ignoredPackage of json.ignore) {
-        const dependents = dependentsGraph.get(ignoredPackage) || [];
-
-        for (const dependent of dependents) {
-          if (!json.ignore.includes(dependent)) {
-            messages.push(`The package "${dependent}" depends on the ignored package "${ignoredPackage}", but "${dependent}" is not being ignored. Please add "${dependent}" to the \`ignore\` option.`);
-          }
-        }
-      }
-    }
-  }
-
-  const {
-    snapshot
-  } = json;
-
-  if (snapshot !== undefined) {
-    if (snapshot.useCalculatedVersion !== undefined && typeof snapshot.useCalculatedVersion !== "boolean") {
-      messages.push(`The \`snapshot.useCalculatedVersion\` option is set as ${JSON.stringify(snapshot.useCalculatedVersion, null, 2)} when the only valid values are undefined or a boolean`);
-    }
-
-    if (snapshot.prereleaseTemplate !== undefined && typeof snapshot.prereleaseTemplate !== "string") {
-      messages.push(`The \`snapshot.prereleaseTemplate\` option is set as ${JSON.stringify(snapshot.prereleaseTemplate, null, 2)} when the only valid values are undefined, or a template string.`);
-    }
-  }
-
-  if (json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH !== undefined) {
-    const {
-      onlyUpdatePeerDependentsWhenOutOfRange,
-      updateInternalDependents,
-      useCalculatedVersionForSnapshots
-    } = json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH;
-
-    if (onlyUpdatePeerDependentsWhenOutOfRange !== undefined && typeof onlyUpdatePeerDependentsWhenOutOfRange !== "boolean") {
-      messages.push(`The \`onlyUpdatePeerDependentsWhenOutOfRange\` option is set as ${JSON.stringify(onlyUpdatePeerDependentsWhenOutOfRange, null, 2)} when the only valid values are undefined or a boolean`);
-    }
-
-    if (updateInternalDependents !== undefined && !["always", "out-of-range"].includes(updateInternalDependents)) {
-      messages.push(`The \`updateInternalDependents\` option is set as ${JSON.stringify(updateInternalDependents, null, 2)} but can only be 'always' or 'out-of-range'`);
-    }
-
-    if (useCalculatedVersionForSnapshots && useCalculatedVersionForSnapshots !== undefined) {
-      console.warn(`Experimental flag "useCalculatedVersionForSnapshots" is deprecated since snapshot feature became stable. Please use "snapshot.useCalculatedVersion" instead.`);
-
-      if (typeof useCalculatedVersionForSnapshots !== "boolean") {
-        messages.push(`The \`useCalculatedVersionForSnapshots\` option is set as ${JSON.stringify(useCalculatedVersionForSnapshots, null, 2)} when the only valid values are undefined or a boolean`);
-      }
-    }
-  }
-
-  if (messages.length) {
-    throw new errors.ValidationError(`Some errors occurred when validating the changesets config:\n` + messages.join("\n"));
-  }
-
-  let config = {
-    changelog: getNormalizedChangelogOption(json.changelog === undefined ? defaultWrittenConfig.changelog : json.changelog),
-    access: normalizedAccess === undefined ? defaultWrittenConfig.access : normalizedAccess,
-    commit: getNormalizedCommitOption(json.commit === undefined ? defaultWrittenConfig.commit : json.commit),
-    fixed,
-    linked,
-    baseBranch: json.baseBranch === undefined ? defaultWrittenConfig.baseBranch : json.baseBranch,
-    changedFilePatterns: (_json$changedFilePatt = json.changedFilePatterns) !== null && _json$changedFilePatt !== void 0 ? _json$changedFilePatt : ["**"],
-    updateInternalDependencies: json.updateInternalDependencies === undefined ? defaultWrittenConfig.updateInternalDependencies : json.updateInternalDependencies,
-    ignore: json.ignore === undefined ? defaultWrittenConfig.ignore : micromatch__default["default"](pkgNames, json.ignore),
-    bumpVersionsWithWorkspaceProtocolOnly: json.bumpVersionsWithWorkspaceProtocolOnly === true,
-    snapshot: {
-      prereleaseTemplate: (_json$snapshot$prerel = (_json$snapshot = json.snapshot) === null || _json$snapshot === void 0 ? void 0 : _json$snapshot.prereleaseTemplate) !== null && _json$snapshot$prerel !== void 0 ? _json$snapshot$prerel : null,
-      useCalculatedVersion: ((_json$snapshot2 = json.snapshot) === null || _json$snapshot2 === void 0 ? void 0 : _json$snapshot2.useCalculatedVersion) !== undefined ? json.snapshot.useCalculatedVersion : ((_json$___experimental = json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH) === null || _json$___experimental === void 0 ? void 0 : _json$___experimental.useCalculatedVersionForSnapshots) !== undefined ? (_json$___experimental2 = json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH) === null || _json$___experimental2 === void 0 ? void 0 : _json$___experimental2.useCalculatedVersionForSnapshots : false
-    },
-    ___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH: {
-      onlyUpdatePeerDependentsWhenOutOfRange: json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH === undefined || json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.onlyUpdatePeerDependentsWhenOutOfRange === undefined ? false : json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.onlyUpdatePeerDependentsWhenOutOfRange,
-      updateInternalDependents: (_json$___experimental3 = (_json$___experimental4 = json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH) === null || _json$___experimental4 === void 0 ? void 0 : _json$___experimental4.updateInternalDependents) !== null && _json$___experimental3 !== void 0 ? _json$___experimental3 : "out-of-range"
-    },
-    // TODO consider enabling this by default in the next major version
-    privatePackages: json.privatePackages === false ? {
-      tag: false,
-      version: false
-    } : json.privatePackages ? {
-      version: (_json$privatePackages = json.privatePackages.version) !== null && _json$privatePackages !== void 0 ? _json$privatePackages : true,
-      tag: (_json$privatePackages2 = json.privatePackages.tag) !== null && _json$privatePackages2 !== void 0 ? _json$privatePackages2 : false
-    } : {
-      version: true,
-      tag: false
-    }
-  };
-
-  if (config.privatePackages.version === false && config.privatePackages.tag === true) {
-    throw new errors.ValidationError(`The \`privatePackages.tag\` option is set to \`true\` but \`privatePackages.version\` is set to \`false\`. This is not allowed.`);
-  }
-
-  return config;
-};
-let fakePackage = {
-  dir: "",
-  packageJson: {
-    name: "",
-    version: ""
-  }
-};
-let defaultConfig = parse(defaultWrittenConfig, {
-  root: fakePackage,
-  tool: "root",
-  packages: [fakePackage]
-});
-
-exports.defaultConfig = defaultConfig;
-exports.defaultWrittenConfig = defaultWrittenConfig;
-exports.parse = parse;
-exports.read = read;
-
-
-/***/ }),
-
-/***/ 98296:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var Range = __nccwpck_require__(25287);
-var pc = __nccwpck_require__(64658);
-
-function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
-
-var Range__default = /*#__PURE__*/_interopDefault(Range);
-var pc__default = /*#__PURE__*/_interopDefault(pc);
-
-// This is a modified version of the graph-getting in bolt
-const DEPENDENCY_TYPES = ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"];
-
-const getAllDependencies = (config, ignoreDevDependencies) => {
-  const allDependencies = new Map();
-
-  for (const type of DEPENDENCY_TYPES) {
-    const deps = config[type];
-    if (!deps) continue;
-
-    for (const name of Object.keys(deps)) {
-      const depRange = deps[name];
-
-      if (type === "devDependencies" && (ignoreDevDependencies || depRange.startsWith("link:") || depRange.startsWith("file:"))) {
-        continue;
-      }
-
-      allDependencies.set(name, depRange);
-    }
-  }
-
-  return allDependencies;
-};
-
-const isProtocolRange = range => range.indexOf(":") !== -1;
-
-const getValidRange = potentialRange => {
-  if (isProtocolRange(potentialRange)) {
-    return null;
-  }
-
-  try {
-    return new Range__default["default"](potentialRange);
-  } catch (_unused) {
-    return null;
-  }
-};
-
-function getDependencyGraph(packages, {
-  ignoreDevDependencies = false,
-  bumpVersionsWithWorkspaceProtocolOnly = false
-} = {}) {
-  const graph = new Map();
-  let valid = true;
-  const packagesByName = {
-    [packages.root.packageJson.name]: packages.root
-  };
-  const queue = [packages.root];
-
-  for (const pkg of packages.packages) {
-    queue.push(pkg);
-    packagesByName[pkg.packageJson.name] = pkg;
-  }
-
-  for (const pkg of queue) {
-    const {
-      name
-    } = pkg.packageJson;
-    const dependencies = [];
-    const allDependencies = getAllDependencies(pkg.packageJson, ignoreDevDependencies);
-
-    for (let [depName, depRange] of allDependencies) {
-      const match = packagesByName[depName];
-      if (!match) continue;
-      const expected = match.packageJson.version;
-      const usesWorkspaceRange = depRange.startsWith("workspace:");
-
-      if (usesWorkspaceRange) {
-        depRange = depRange.replace(/^workspace:/, "");
-
-        if (depRange === "*" || depRange === "^" || depRange === "~") {
-          dependencies.push(depName);
-          continue;
-        }
-      } else if (bumpVersionsWithWorkspaceProtocolOnly) {
-        continue;
-      }
-
-      const range = getValidRange(depRange);
-
-      if (range && !range.test(expected) || isProtocolRange(depRange)) {
-        valid = false;
-        console.error(`Package ${pc__default["default"].cyan(`"${name}"`)} must depend on the current version of ${pc__default["default"].cyan(`"${depName}"`)}: ${pc__default["default"].green(`"${expected}"`)} vs ${pc__default["default"].red(`"${depRange}"`)}`);
-        continue;
-      } // `depRange` could have been a tag and if a tag has been used there might have been a reason for that
-      // we should not count this as a local monorepro dependant
-
-
-      if (!range) {
-        continue;
-      }
-
-      dependencies.push(depName);
-    }
-
-    graph.set(name, {
-      pkg,
-      dependencies
-    });
-  }
-
-  return {
-    graph,
-    valid
-  };
-}
-
-function getDependentsGraph(packages, opts) {
-  const graph = new Map();
-  const {
-    graph: dependencyGraph
-  } = getDependencyGraph(packages, opts);
-  const dependentsLookup = {
-    [packages.root.packageJson.name]: {
-      pkg: packages.root,
-      dependents: []
-    }
-  };
-  packages.packages.forEach(pkg => {
-    dependentsLookup[pkg.packageJson.name] = {
-      pkg,
-      dependents: []
-    };
-  });
-  packages.packages.forEach(pkg => {
-    const dependent = pkg.packageJson.name;
-    const valFromDependencyGraph = dependencyGraph.get(dependent);
-
-    if (valFromDependencyGraph) {
-      const dependencies = valFromDependencyGraph.dependencies;
-      dependencies.forEach(dependency => {
-        dependentsLookup[dependency].dependents.push(dependent);
-      });
-    }
-  });
-  Object.keys(dependentsLookup).forEach(key => {
-    graph.set(key, dependentsLookup[key]);
-  });
-  const simplifiedDependentsGraph = new Map();
-  graph.forEach((pkgInfo, pkgName) => {
-    simplifiedDependentsGraph.set(pkgName, pkgInfo.dependents);
-  });
-  return simplifiedDependentsGraph;
-}
-
-exports.getDependentsGraph = getDependentsGraph;
-
-
-/***/ }),
-
-/***/ 81162:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var spawn = __nccwpck_require__(54081);
-var fs = __nccwpck_require__(57147);
-var path = __nccwpck_require__(71017);
-var getPackages = __nccwpck_require__(54393);
-var errors = __nccwpck_require__(76249);
-var isSubdir = __nccwpck_require__(63093);
-var micromatch = __nccwpck_require__(39015);
-
-function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
-
-var spawn__default = /*#__PURE__*/_interopDefault(spawn);
-var fs__default = /*#__PURE__*/_interopDefault(fs);
-var path__default = /*#__PURE__*/_interopDefault(path);
-var isSubdir__default = /*#__PURE__*/_interopDefault(isSubdir);
-var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
-
-async function add(pathToFile, cwd) {
-  const gitCmd = await spawn__default["default"]("git", ["add", pathToFile], {
-    cwd
-  });
-
-  if (gitCmd.code !== 0) {
-    console.log(pathToFile, gitCmd.stderr.toString());
-  }
-
-  return gitCmd.code === 0;
-}
-async function commit(message, cwd) {
-  const gitCmd = await spawn__default["default"]("git", ["commit", "-m", message, "--allow-empty"], {
-    cwd
-  });
-  return gitCmd.code === 0;
-}
-async function getAllTags(cwd) {
-  const gitCmd = await spawn__default["default"]("git", ["tag"], {
-    cwd
-  });
-
-  if (gitCmd.code !== 0) {
-    throw new Error(gitCmd.stderr.toString());
-  }
-
-  const tags = gitCmd.stdout.toString().trim().split("\n");
-  return new Set(tags);
-} // used to create a single tag at a time for the current head only
-
-async function tag(tagStr, cwd) {
-  // NOTE: it's important we use the -m flag to create annotated tag otherwise 'git push --follow-tags' won't actually push
-  // the tags
-  const gitCmd = await spawn__default["default"]("git", ["tag", tagStr, "-m", tagStr], {
-    cwd
-  });
-  return gitCmd.code === 0;
-} // Find the commit where we diverged from `ref` at using `git merge-base`
-
-async function getDivergedCommit(cwd, ref) {
-  const cmd = await spawn__default["default"]("git", ["merge-base", ref, "HEAD"], {
-    cwd
-  });
-
-  if (cmd.code !== 0) {
-    throw new Error(`Failed to find where HEAD diverged from ${ref}. Does ${ref} exist?`);
-  }
-
-  return cmd.stdout.toString().trim();
-}
-/**
- * Get the SHAs for the commits that added files, including automatically
- * extending a shallow clone if necessary to determine any commits.
- * @param gitPaths - Paths to fetch
- * @param options - `cwd` and `short`
- */
-
-async function getCommitsThatAddFiles(gitPaths, {
-  cwd,
-  short = false
-}) {
-  // Maps gitPath to commit SHA
-  const map = new Map(); // Paths we haven't completed processing on yet
-
-  let remaining = gitPaths;
-
-  do {
-    // Fetch commit information for all paths we don't have yet
-    const commitInfos = await Promise.all(remaining.map(async gitPath => {
-      const [commitSha, parentSha] = (await spawn__default["default"]("git", ["log", "--diff-filter=A", "--max-count=1", short ? "--pretty=format:%h:%p" : "--pretty=format:%H:%p", gitPath], {
-        cwd
-      })).stdout.toString().split(":");
-      return {
-        path: gitPath,
-        commitSha,
-        parentSha
-      };
-    })); // To collect commits without parents (usually because they're absent from
-    // a shallow clone).
-
-    let commitsWithMissingParents = [];
-
-    for (const info of commitInfos) {
-      if (info.commitSha) {
-        if (info.parentSha) {
-          // We have found the parent of the commit that added the file.
-          // Therefore we know that the commit is legitimate and isn't simply the boundary of a shallow clone.
-          map.set(info.path, info.commitSha);
-        } else {
-          commitsWithMissingParents.push(info);
-        }
-      }
-    }
-
-    if (commitsWithMissingParents.length === 0) {
-      break;
-    } // The commits we've found may be the real commits or they may be the boundary of
-    // a shallow clone.
-    // Can we deepen the clone?
-
-
-    if (await isRepoShallow({
-      cwd
-    })) {
-      // Yes.
-      await deepenCloneBy({
-        by: 50,
-        cwd
-      });
-      remaining = commitsWithMissingParents.map(p => p.path);
-    } else {
-      // It's not a shallow clone, so all the commit SHAs we have are legitimate.
-      for (const unresolved of commitsWithMissingParents) {
-        map.set(unresolved.path, unresolved.commitSha);
-      }
-
-      break;
-    }
-  } while (true);
-
-  return gitPaths.map(p => map.get(p));
-}
-async function isRepoShallow({
-  cwd
-}) {
-  const isShallowRepoOutput = (await spawn__default["default"]("git", ["rev-parse", "--is-shallow-repository"], {
-    cwd
-  })).stdout.toString().trim();
-
-  if (isShallowRepoOutput === "--is-shallow-repository") {
-    // We have an old version of Git (<2.15) which doesn't support `rev-parse --is-shallow-repository`
-    // In that case, we'll test for the existence of .git/shallow.
-    // Firstly, find the .git folder for the repo; note that this will be relative to the repo dir
-    const gitDir = (await spawn__default["default"]("git", ["rev-parse", "--git-dir"], {
-      cwd
-    })).stdout.toString().trim();
-    const fullGitDir = path__default["default"].resolve(cwd, gitDir); // Check for the existence of <gitDir>/shallow
-
-    return fs__default["default"].existsSync(path__default["default"].join(fullGitDir, "shallow"));
-  } else {
-    // We have a newer Git which supports `rev-parse --is-shallow-repository`. We'll use
-    // the output of that instead of messing with .git/shallow in case that changes in the future.
-    return isShallowRepoOutput === "true";
-  }
-}
-async function deepenCloneBy({
-  by,
-  cwd
-}) {
-  await spawn__default["default"]("git", ["fetch", `--deepen=${by}`], {
-    cwd
-  });
-}
-
-async function getRepoRoot({
-  cwd
-}) {
-  const {
-    stdout,
-    code,
-    stderr
-  } = await spawn__default["default"]("git", ["rev-parse", "--show-toplevel"], {
-    cwd
-  });
-
-  if (code !== 0) {
-    throw new Error(stderr.toString());
-  }
-
-  return stdout.toString().trim().replace(/\n|\r/g, "");
-}
-
-async function getChangedFilesSince({
-  cwd,
-  ref,
-  fullPath = false
-}) {
-  const divergedAt = await getDivergedCommit(cwd, ref); // Now we can find which files we added
-
-  const cmd = await spawn__default["default"]("git", ["diff", "--name-only", divergedAt], {
-    cwd
-  });
-
-  if (cmd.code !== 0) {
-    throw new Error(`Failed to diff against ${divergedAt}. Is ${divergedAt} a valid ref?`);
-  }
-
-  const files = cmd.stdout.toString().trim().split("\n").filter(a => a);
-  if (!fullPath) return files;
-  const repoRoot = await getRepoRoot({
-    cwd
-  });
-  return files.map(file => path__default["default"].resolve(repoRoot, file));
-} // below are less generic functions that we use in combination with other things we are doing
-
-async function getChangedChangesetFilesSinceRef({
-  cwd,
-  ref
-}) {
-  try {
-    const divergedAt = await getDivergedCommit(cwd, ref); // Now we can find which files we added
-
-    const cmd = await spawn__default["default"]("git", ["diff", "--name-only", "--diff-filter=d", divergedAt], {
-      cwd
-    });
-    let tester = /.changeset\/[^/]+\.md$/;
-    const files = cmd.stdout.toString().trim().split("\n").filter(file => tester.test(file));
-    return files;
-  } catch (err) {
-    if (err instanceof errors.GitError) return [];
-    throw err;
-  }
-}
-async function getChangedPackagesSinceRef({
-  cwd,
-  ref,
-  changedFilePatterns = ["**"]
-}) {
-  const changedFiles = await getChangedFilesSince({
-    ref,
-    cwd,
-    fullPath: true
-  });
-  return [...(await getPackages.getPackages(cwd)).packages] // sort packages by length of dir, so that we can check for subdirs first
-  .sort((pkgA, pkgB) => pkgB.dir.length - pkgA.dir.length).filter(pkg => {
-    const changedPackageFiles = [];
-
-    for (let i = changedFiles.length - 1; i >= 0; i--) {
-      const file = changedFiles[i];
-
-      if (isSubdir__default["default"](pkg.dir, file)) {
-        changedFiles.splice(i, 1);
-        const relativeFile = file.slice(pkg.dir.length + 1);
-        changedPackageFiles.push(relativeFile);
-      }
-    }
-
-    return changedPackageFiles.length > 0 && micromatch__default["default"](changedPackageFiles, changedFilePatterns).length > 0;
-  });
-}
-async function tagExists(tagStr, cwd) {
-  const gitCmd = await spawn__default["default"]("git", ["tag", "-l", tagStr], {
-    cwd
-  });
-  const output = gitCmd.stdout.toString().trim();
-  const tagExists = !!output;
-  return tagExists;
-}
-async function getCurrentCommitId({
-  cwd,
-  short = false
-}) {
-  return (await spawn__default["default"]("git", ["rev-parse", short && "--short", "HEAD"].filter(Boolean), {
-    cwd
-  })).stdout.toString().trim();
-}
-async function remoteTagExists(tagStr) {
-  const gitCmd = await spawn__default["default"]("git", ["ls-remote", "--tags", "origin", "-l", tagStr]);
-  const output = gitCmd.stdout.toString().trim();
-  const tagExists = !!output;
-  return tagExists;
-}
-
-exports.add = add;
-exports.commit = commit;
-exports.deepenCloneBy = deepenCloneBy;
-exports.getAllTags = getAllTags;
-exports.getChangedChangesetFilesSinceRef = getChangedChangesetFilesSinceRef;
-exports.getChangedFilesSince = getChangedFilesSince;
-exports.getChangedPackagesSinceRef = getChangedPackagesSinceRef;
-exports.getCommitsThatAddFiles = getCommitsThatAddFiles;
-exports.getCurrentCommitId = getCurrentCommitId;
-exports.getDivergedCommit = getDivergedCommit;
-exports.isRepoShallow = isRepoShallow;
-exports.remoteTagExists = remoteTagExists;
-exports.tag = tag;
-exports.tagExists = tagExists;
-
-
-/***/ }),
-
-/***/ 95889:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var pc = __nccwpck_require__(64658);
-var util = __nccwpck_require__(73837);
-
-function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
-
-var pc__default = /*#__PURE__*/_interopDefault(pc);
-var util__default = /*#__PURE__*/_interopDefault(util);
-
-let prefix = "🦋 ";
-
-function format(args, customPrefix) {
-  let fullPrefix = prefix + (customPrefix === undefined ? "" : " " + customPrefix);
-  return fullPrefix + util__default["default"].format("", ...args).split("\n").join("\n" + fullPrefix + " ");
-}
-
-function error(...args) {
-  console.error(format(args, pc__default["default"].red("error")));
-}
-function info(...args) {
-  console.info(format(args, pc__default["default"].cyan("info")));
-}
-function log(...args) {
-  console.log(format(args));
-}
-function success(...args) {
-  console.log(format(args, pc__default["default"].green("success")));
-}
-function warn(...args) {
-  console.warn(format(args, pc__default["default"].yellow("warn")));
-}
-
-exports.error = error;
-exports.info = info;
-exports.log = log;
-exports.prefix = prefix;
-exports.success = success;
-exports.warn = warn;
-
-
-/***/ }),
-
-/***/ 8920:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var fs = __nccwpck_require__(41621);
-var path = __nccwpck_require__(71017);
-var getPackages = __nccwpck_require__(54393);
-var errors = __nccwpck_require__(76249);
-
-function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
-
-function _interopNamespace(e) {
-  if (e && e.__esModule) return e;
-  var n = Object.create(null);
-  if (e) {
-    Object.keys(e).forEach(function (k) {
-      if (k !== 'default') {
-        var d = Object.getOwnPropertyDescriptor(e, k);
-        Object.defineProperty(n, k, d.get ? d : {
-          enumerable: true,
-          get: function () { return e[k]; }
-        });
-      }
-    });
-  }
-  n["default"] = e;
-  return Object.freeze(n);
-}
-
-var fs__namespace = /*#__PURE__*/_interopNamespace(fs);
-var path__default = /*#__PURE__*/_interopDefault(path);
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-async function readPreState(cwd) {
-  let preStatePath = path__default["default"].resolve(cwd, ".changeset", "pre.json"); // TODO: verify that the pre state isn't broken
-
-  let preState;
-
-  try {
-    let contents = await fs__namespace.readFile(preStatePath, "utf8");
-
-    try {
-      preState = JSON.parse(contents);
-    } catch (err) {
-      if (err instanceof SyntaxError) {
-        console.error("error parsing json:", contents);
-      }
-
-      throw err;
-    }
-  } catch (err) {
-    if (err.code !== "ENOENT") {
-      throw err;
-    }
-  }
-
-  return preState;
-}
-async function exitPre(cwd) {
-  let preStatePath = path__default["default"].resolve(cwd, ".changeset", "pre.json"); // TODO: verify that the pre state isn't broken
-
-  let preState = await readPreState(cwd);
-
-  if (preState === undefined) {
-    throw new errors.PreExitButNotInPreModeError();
-  }
-
-  await fs__namespace.outputFile(preStatePath, JSON.stringify(_objectSpread2(_objectSpread2({}, preState), {}, {
-    mode: "exit"
-  }), null, 2) + "\n");
-}
-async function enterPre(cwd, tag) {
-  var _preState$changesets;
-
-  let packages = await getPackages.getPackages(cwd);
-  let preStatePath = path__default["default"].resolve(packages.root.dir, ".changeset", "pre.json");
-  let preState = await readPreState(packages.root.dir); // can't reenter if pre mode still exists, but we should allow exited pre mode to be reentered
-
-  if ((preState === null || preState === void 0 ? void 0 : preState.mode) === "pre") {
-    throw new errors.PreEnterButInPreModeError();
-  }
-
-  let newPreState = {
-    mode: "pre",
-    tag,
-    initialVersions: {},
-    changesets: (_preState$changesets = preState === null || preState === void 0 ? void 0 : preState.changesets) !== null && _preState$changesets !== void 0 ? _preState$changesets : []
-  };
-
-  for (let pkg of packages.packages) {
-    newPreState.initialVersions[pkg.packageJson.name] = pkg.packageJson.version;
-  }
-
-  await fs__namespace.outputFile(preStatePath, JSON.stringify(newPreState, null, 2) + "\n");
-}
-
-exports.enterPre = enterPre;
-exports.exitPre = exitPre;
-exports.readPreState = readPreState;
-
-
-/***/ }),
-
-/***/ 21980:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var fs = __nccwpck_require__(41621);
-var path = __nccwpck_require__(71017);
-var parse = __nccwpck_require__(2107);
-var git = __nccwpck_require__(81162);
-var pc = __nccwpck_require__(64658);
-var pFilter = __nccwpck_require__(25073);
-var logger = __nccwpck_require__(95889);
-
-function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
-
-function _interopNamespace(e) {
-  if (e && e.__esModule) return e;
-  var n = Object.create(null);
-  if (e) {
-    Object.keys(e).forEach(function (k) {
-      if (k !== 'default') {
-        var d = Object.getOwnPropertyDescriptor(e, k);
-        Object.defineProperty(n, k, d.get ? d : {
-          enumerable: true,
-          get: function () { return e[k]; }
-        });
-      }
-    });
-  }
-  n["default"] = e;
-  return Object.freeze(n);
-}
-
-var fs__namespace = /*#__PURE__*/_interopNamespace(fs);
-var path__default = /*#__PURE__*/_interopDefault(path);
-var parse__default = /*#__PURE__*/_interopDefault(parse);
-var git__namespace = /*#__PURE__*/_interopNamespace(git);
-var pc__default = /*#__PURE__*/_interopDefault(pc);
-var pFilter__default = /*#__PURE__*/_interopDefault(pFilter);
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-let importantSeparator = pc__default["default"].red("===============================IMPORTANT!===============================");
-let importantEnd = pc__default["default"].red("----------------------------------------------------------------------");
-
-async function getOldChangesets(changesetBase, dirs) {
-  // this needs to support just not dealing with dirs that aren't set up properly
-  let changesets = await pFilter__default["default"](dirs, async (dir) => (await fs__namespace.lstat(path__default["default"].join(changesetBase, dir))).isDirectory());
-  const changesetContents = changesets.map(async changesetDir => {
-    const jsonPath = path__default["default"].join(changesetBase, changesetDir, "changes.json");
-    const [summary, json] = await Promise.all([fs__namespace.readFile(path__default["default"].join(changesetBase, changesetDir, "changes.md"), "utf-8"), fs__namespace.readJson(jsonPath)]);
-    return {
-      releases: json.releases,
-      summary,
-      id: changesetDir
-    };
-  });
-  return Promise.all(changesetContents);
-} // this function only exists while we wait for v1 changesets to be obsoleted
-// and should be deleted before v3
-
-
-async function getOldChangesetsAndWarn(changesetBase, dirs) {
-  let oldChangesets = await getOldChangesets(changesetBase, dirs);
-
-  if (oldChangesets.length === 0) {
-    return [];
-  }
-
-  logger.warn(importantSeparator);
-  logger.warn("There were old changesets from version 1 found");
-  logger.warn("These are being applied now but the dependents graph may have changed");
-  logger.warn("Make sure you validate all your dependencies");
-  logger.warn("In a future major version, we will no longer apply these old changesets, and will instead throw here");
-  logger.warn(importantEnd);
-  return oldChangesets;
-}
-
-async function filterChangesetsSinceRef(changesets, changesetBase, sinceRef) {
-  const newChangesets = await git__namespace.getChangedChangesetFilesSinceRef({
-    cwd: changesetBase,
-    ref: sinceRef
-  });
-  const newHashes = newChangesets.map(c => c.split("/")[1]);
-  return changesets.filter(dir => newHashes.includes(dir));
-}
-
-async function getChangesets(cwd, sinceRef) {
-  let changesetBase = path__default["default"].join(cwd, ".changeset");
-  let contents;
-
-  try {
-    contents = await fs__namespace["default"].readdir(changesetBase);
-  } catch (err) {
-    if (err.code === "ENOENT") {
-      throw new Error("There is no .changeset directory in this project");
-    }
-
-    throw err;
-  }
-
-  if (sinceRef !== undefined) {
-    contents = await filterChangesetsSinceRef(contents, changesetBase, sinceRef);
-  }
-
-  let oldChangesetsPromise = getOldChangesetsAndWarn(changesetBase, contents);
-  let changesets = contents.filter(file => !file.startsWith(".") && file.endsWith(".md") && file !== "README.md");
-  const changesetContents = changesets.map(async file => {
-    const changeset = await fs__namespace["default"].readFile(path__default["default"].join(changesetBase, file), "utf-8");
-    return _objectSpread2(_objectSpread2({}, parse__default["default"](changeset)), {}, {
-      id: file.replace(".md", "")
-    });
-  });
-  return [...(await oldChangesetsPromise), ...(await Promise.all(changesetContents))];
-}
-
-exports["default"] = getChangesets;
-
-
-/***/ }),
-
-/***/ 97589:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-function shouldSkipPackage({
-  packageJson
-}, {
-  ignore,
-  allowPrivatePackages
-}) {
-  if (ignore.includes(packageJson.name)) {
-    return true;
-  }
-
-  if (packageJson.private && !allowPrivatePackages) {
-    return true;
-  }
-
-  return !packageJson.version;
-}
-
-exports.shouldSkipPackage = shouldSkipPackage;
-
-
-/***/ }),
-
-/***/ 64658:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-let argv = process.argv || [],
-	env = process.env
-let isColorSupported =
-	!("NO_COLOR" in env || argv.includes("--no-color")) &&
-	("FORCE_COLOR" in env ||
-		argv.includes("--color") ||
-		process.platform === "win32" ||
-		(require != null && (__nccwpck_require__(76224).isatty)(1) && env.TERM !== "dumb") ||
-		"CI" in env)
-
-let formatter =
-	(open, close, replace = open) =>
-	input => {
-		let string = "" + input
-		let index = string.indexOf(close, open.length)
-		return ~index
-			? open + replaceClose(string, close, replace, index) + close
-			: open + string + close
-	}
-
-let replaceClose = (string, close, replace, index) => {
-	let result = ""
-	let cursor = 0
-	do {
-		result += string.substring(cursor, index) + replace
-		cursor = index + close.length
-		index = string.indexOf(close, cursor)
-	} while (~index)
-	return result + string.substring(cursor)
-}
-
-let createColors = (enabled = isColorSupported) => {
-	let init = enabled ? formatter : () => String
-	return {
-		isColorSupported: enabled,
-		reset: init("\x1b[0m", "\x1b[0m"),
-		bold: init("\x1b[1m", "\x1b[22m", "\x1b[22m\x1b[1m"),
-		dim: init("\x1b[2m", "\x1b[22m", "\x1b[22m\x1b[2m"),
-		italic: init("\x1b[3m", "\x1b[23m"),
-		underline: init("\x1b[4m", "\x1b[24m"),
-		inverse: init("\x1b[7m", "\x1b[27m"),
-		hidden: init("\x1b[8m", "\x1b[28m"),
-		strikethrough: init("\x1b[9m", "\x1b[29m"),
-
-		black: init("\x1b[30m", "\x1b[39m"),
-		red: init("\x1b[31m", "\x1b[39m"),
-		green: init("\x1b[32m", "\x1b[39m"),
-		yellow: init("\x1b[33m", "\x1b[39m"),
-		blue: init("\x1b[34m", "\x1b[39m"),
-		magenta: init("\x1b[35m", "\x1b[39m"),
-		cyan: init("\x1b[36m", "\x1b[39m"),
-		white: init("\x1b[37m", "\x1b[39m"),
-		gray: init("\x1b[90m", "\x1b[39m"),
-
-		bgBlack: init("\x1b[40m", "\x1b[49m"),
-		bgRed: init("\x1b[41m", "\x1b[49m"),
-		bgGreen: init("\x1b[42m", "\x1b[49m"),
-		bgYellow: init("\x1b[43m", "\x1b[49m"),
-		bgBlue: init("\x1b[44m", "\x1b[49m"),
-		bgMagenta: init("\x1b[45m", "\x1b[49m"),
-		bgCyan: init("\x1b[46m", "\x1b[49m"),
-		bgWhite: init("\x1b[47m", "\x1b[49m"),
-
-		blackBright: init("\x1b[90m", "\x1b[39m"),
-		redBright: init("\x1b[91m", "\x1b[39m"),
-		greenBright: init("\x1b[92m", "\x1b[39m"),
-		yellowBright: init("\x1b[93m", "\x1b[39m"),
-		blueBright: init("\x1b[94m", "\x1b[39m"),
-		magentaBright: init("\x1b[95m", "\x1b[39m"),
-		cyanBright: init("\x1b[96m", "\x1b[39m"),
-		whiteBright: init("\x1b[97m", "\x1b[39m"),
-
-		bgBlackBright: init("\x1b[100m","\x1b[49m"),
-		bgRedBright: init("\x1b[101m","\x1b[49m"),
-		bgGreenBright: init("\x1b[102m","\x1b[49m"),
-		bgYellowBright: init("\x1b[103m","\x1b[49m"),
-		bgBlueBright: init("\x1b[104m","\x1b[49m"),
-		bgMagentaBright: init("\x1b[105m","\x1b[49m"),
-		bgCyanBright: init("\x1b[106m","\x1b[49m"),
-		bgWhiteBright: init("\x1b[107m","\x1b[49m"),
-	}
-}
-
-module.exports = createColors()
-module.exports.createColors = createColors
 
 
 /***/ }),
@@ -81832,14 +81832,6 @@ module.exports = require("fs");
 
 /***/ }),
 
-/***/ 73292:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs/promises");
-
-/***/ }),
-
 /***/ 13685:
 /***/ ((module) => {
 
@@ -81877,6 +81869,30 @@ module.exports = require("net");
 
 "use strict";
 module.exports = require("node:events");
+
+/***/ }),
+
+/***/ 87561:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs");
+
+/***/ }),
+
+/***/ 93977:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs/promises");
+
+/***/ }),
+
+/***/ 49411:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:path");
 
 /***/ }),
 
@@ -89056,8 +89072,7 @@ var __webpack_exports__ = {};
 var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-/* eslint-disable jsdoc/require-jsdoc */
-const path_1 = __nccwpck_require__(71017);
+const node_path_1 = __nccwpck_require__(49411);
 const util_1 = __nccwpck_require__(76786);
 const core_1 = __nccwpck_require__(37117);
 const execa_1 = __nccwpck_require__(30580);
@@ -89073,7 +89088,7 @@ async function bump() {
     await (0, execa_1.command)('node_modules/@changesets/cli/bin.js version');
 }
 async function updateRootPackageJson(version) {
-    await (0, util_2.transformFile)((0, path_1.resolve)('package.json'), packageJson => (0, util_1.formatJson)({
+    await (0, util_2.transformFile)((0, node_path_1.resolve)('package.json'), packageJson => (0, util_1.formatJson)({
         ...JSON.parse(packageJson),
         version: `${version}`
     }));

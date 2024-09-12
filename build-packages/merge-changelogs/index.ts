@@ -173,7 +173,6 @@ async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
 export async function mergeChangelogs(): Promise<void> {
   // TODO: use package for this
   const workspaces = getInput('workspaces').split(',');
-  info(`workspaces: ${workspaces}`);
   const workspacesWithVisibility = await Promise.all(
     workspaces.map(async workspace => {
       const packageJson = await readFile(resolve(workspace, 'package.json'), {
@@ -189,7 +188,6 @@ export async function mergeChangelogs(): Promise<void> {
   const changelogs = await Promise.all(
     pathsToPublicLogs.map(async file => readFile(file, { encoding: 'utf8' }))
   );
-  info(`changelogs: ${changelogs}`);
   const newChangelog = await formatChangelog(
     mergeMessages(changelogs.map(log => parseChangelog(log)).flat())
   );

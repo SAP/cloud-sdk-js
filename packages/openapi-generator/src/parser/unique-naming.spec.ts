@@ -3,7 +3,7 @@ import { ensureUniqueNames } from './unique-naming';
 
 describe('ensureUniqueNames', () => {
   describe('with strictNaming enabled', () => {
-    const options = { strictNaming: true,  schemaPrefix: '' };
+    const options = { strictNaming: true, schemaPrefix: '' };
     it('does not throw for empty list of names', () => {
       expect(() => ensureUniqueNames([], options)).not.toThrow();
     });

@@ -54,9 +54,7 @@ describe('parseOpenApiDocument', () => {
         packageName: '@sap/cloud-sdk-openapi-test-service',
         directoryName: 'test-service'
       },
-      { strictNaming: false,
-         schemaPrefix: ''
-       }
+      { strictNaming: false, schemaPrefix: '' }
     );
 
     expect(parsedDocument.schemas).toEqual([
@@ -123,9 +121,7 @@ describe('parseOpenApiDocument', () => {
         packageName: '@sap/cloud-sdk-openapi-test-service',
         directoryName: 'test-service'
       },
-      { strictNaming: false,
-         schemaPrefix: ''
-       }
+      { strictNaming: false, schemaPrefix: '' }
     );
 
     expect(parsedDocument.schemas).toEqual([

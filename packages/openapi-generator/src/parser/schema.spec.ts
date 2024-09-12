@@ -320,7 +320,10 @@ describe('parseSchema', () => {
       enum: [1, 2, 3, null],
       type: 'string'
     };
-    parseSchema(schema, await createTestRefs(), { strictNaming: false, schemaPrefix: '' });
+    parseSchema(schema, await createTestRefs(), {
+      strictNaming: false,
+      schemaPrefix: ''
+    });
     expect(logger.warn).toHaveBeenCalledWith(
       'null was used as a parameter in an enum, although the schema was not declared as nullable'
     );

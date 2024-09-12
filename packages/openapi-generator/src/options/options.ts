@@ -19,7 +19,7 @@ export interface OpenAPIGeneratorOptions {
    * Whether to generate ECMAScript modules instead of CommonJS modules.
    */
   generateESM?: boolean;
-    /**
+  /**
    * Prefix all schema names with a value.
    * @experimental
    */

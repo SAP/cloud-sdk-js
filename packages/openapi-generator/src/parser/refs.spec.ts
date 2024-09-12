@@ -10,7 +10,7 @@ describe('OpenApiDocumentRefs', () => {
         ...emptyDocument,
         components: { schemas: { typeName } }
       },
-      { strictNaming: true,  schemaPrefix: '' }
+      { strictNaming: true, schemaPrefix: '' }
     );
   });
 
@@ -85,7 +85,7 @@ describe('OpenApiDocumentRefs', () => {
           ...emptyDocument,
           components: { schemas: { '123456': {}, 'something.Else%': {} } }
         },
-        { strictNaming: false,  schemaPrefix: '' }
+        { strictNaming: false, schemaPrefix: '' }
       );
       expect(refs.getSchemaNaming('#/components/schemas/123456')).toEqual({
         fileName: 'schema-123456',
@@ -108,7 +108,7 @@ describe('OpenApiDocumentRefs', () => {
             schemas: { '123456': {}, schema123456: {}, schema12345_6: {} }
           }
         },
-        { strictNaming: false,  schemaPrefix: '' }
+        { strictNaming: false, schemaPrefix: '' }
       );
       expect(refs.getSchemaNaming('#/components/schemas/123456')).toEqual({
         fileName: 'schema-123456',
@@ -138,7 +138,7 @@ describe('OpenApiDocumentRefs', () => {
             ...emptyDocument,
             components: { schemas: { '123456': {} } }
           },
-          { strictNaming: true,  schemaPrefix: '' }
+          { strictNaming: true, schemaPrefix: '' }
         )
       ).rejects.toThrowError(
         'The service specification contains invalid schema names.'
@@ -151,7 +151,7 @@ describe('OpenApiDocumentRefs', () => {
           ...emptyDocument,
           components: { schemas: { name: {}, Name: {} } }
         },
-        { strictNaming: false,  schemaPrefix: '' }
+        { strictNaming: false, schemaPrefix: '' }
       );
       expect(refs.getSchemaNaming('#/components/schemas/name')).toEqual({
         fileName: 'name-1',
@@ -170,7 +170,7 @@ describe('OpenApiDocumentRefs', () => {
           ...emptyDocument,
           components: { schemas: { name400: {}, Name400: {} } }
         },
-        { strictNaming: false,  schemaPrefix: '' }
+        { strictNaming: false, schemaPrefix: '' }
       );
       expect(refs.getSchemaNaming('#/components/schemas/name400')).toEqual({
         fileName: 'name-400-1',

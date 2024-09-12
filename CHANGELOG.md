@@ -28,12 +28,6 @@
 
 - 
 
-# 3.21.0
-
-## New Functionalities
-
-- [connectivity] Dummy, should be removed after testing!!!! (a2923e3)
-
 # 3.20.0
 
 API Docs: https://sap.github.io/cloud-sdk/api/3.20.0

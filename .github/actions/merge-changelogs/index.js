@@ -71,8 +71,7 @@ function parseChangelog(changelog) {
 function writeHeader(version) {
     return `
 # ${version}
-
-API Docs: https://sap.github.io/cloud-sdk/api/${version}`;
+`;
 }
 function writeMessagesOfType(messages, type) {
     if (!messages.some(msg => msg.type === type)) {

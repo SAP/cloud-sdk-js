@@ -65,15 +65,13 @@ function parseContent(content, version, packageName) {
 function parseChangelog(changelog) {
     const packageName = getPackageName(changelog);
     const [latest] = splitByVersion(changelog);
-    (0, core_1.info)(`packageName: ${packageName}, latest: ${JSON.stringify(latest)}`);
     return parseContent(latest.content, latest.version, packageName).flat();
 }
-function writeHeader(version) {
+function formatHeader(version) {
     return `
-# ${version}
-`;
+# ${version}`;
 }
-function writeMessagesOfType(messages, type) {
+function formatMessagesOfType(messages, type) {
     if (!messages.some(msg => msg.type === type)) {
         return '';
     }
@@ -84,18 +82,7 @@ function writeMessagesOfType(messages, type) {
     const pluralizedType = type.slice(-1) === 'y' ? type.slice(0, -1) + 'ies' : type + 's';
     return `\n\n## ${pluralizedType}\n\n${formatted}`;
 }
-function createNewSection(version, messages) {
-    return (writeHeader(version) +
-        writeMessagesOfType(messages, 'Known Issue') +
-        writeMessagesOfType(messages, 'Compatibility Note') +
-        writeMessagesOfType(messages, 'New Functionality') +
-        writeMessagesOfType(messages, 'Improvement') +
-        writeMessagesOfType(messages, 'Fixed Issue') +
-        writeMessagesOfType(messages, 'Updated Dependencies') +
-        '\n\n');
-}
 function mergeMessages(parsedMessages) {
-    (0, core_1.info)('Merging messages');
     return parsedMessages.reduce((prev, curr) => {
         const sameMessage = prev.find(msg => msg.summary === curr.summary &&
             msg.dependencies === curr.dependencies &&
@@ -108,16 +95,16 @@ function mergeMessages(parsedMessages) {
         return [...prev, curr];
     }, []);
 }
-async function formatChangelog(parsedChangelogs) {
-    // const unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
-    // const missingFromUnifiedChangelog = parsedChangelogs.filter(
-    //   summary => !unifiedChangelog.includes(`# ${summary.version}`)
-    // );
-    (0, core_1.info)('Formatting changelog');
-    console.log(JSON.stringify(parsedChangelogs));
-    const version = parsedChangelogs[0].version;
-    // const versions = [...new Set(parsedChangelogs.map(msg => msg.version))];
-    return createNewSection(version, parsedChangelogs);
+async function formatChangelog(messages) {
+    const version = messages[0].version;
+    return (formatHeader(version) +
+        formatMessagesOfType(messages, 'Known Issue') +
+        formatMessagesOfType(messages, 'Compatibility Note') +
+        formatMessagesOfType(messages, 'New Functionality') +
+        formatMessagesOfType(messages, 'Improvement') +
+        formatMessagesOfType(messages, 'Fixed Issue') +
+        formatMessagesOfType(messages, 'Updated Dependencies') +
+        '\n\n');
 }
 async function mergeChangelogs() {
     // TODO: use package for this
@@ -131,12 +118,9 @@ async function mergeChangelogs() {
     const pathsToPublicLogs = workspacesWithVisibility
         .filter(({ isPublic }) => isPublic)
         .map(({ workspace }) => (0, path_1.resolve)(workspace, 'CHANGELOG.md'));
-    (0, core_1.info)(`pathsToPublicLogs: ${pathsToPublicLogs}`);
     const changelogs = await Promise.all(pathsToPublicLogs.map(async (file) => (0, promises_1.readFile)(file, { encoding: 'utf8' })));
-    (0, core_1.info)(`parsed changelogs: ${JSON.stringify(changelogs.map(log => parseChangelog(log)))}`);
     const newChangelog = await formatChangelog(mergeMessages(changelogs.map(log => parseChangelog(log)).flat()));
     (0, core_1.setOutput)('changelog', newChangelog);
-    (0, core_1.info)(newChangelog);
 }
 mergeChangelogs().catch(error => {
     (0, core_1.setFailed)(error.message);

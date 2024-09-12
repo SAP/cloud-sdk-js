@@ -60,25 +60,6 @@ describe('OpenApiDocumentRefs', () => {
       );
     });
 
-    it('gets the schema naming for reference object with a prefix', async () => {
-      refs = await createRefs(
-        {
-          ...emptyDocument,
-          components: { schemas: { typeName } }
-        },
-        { strictNaming: true, schemaPrefix: 'xyz' }
-      );
-
-      expect(
-        refs.getSchemaNaming({
-          $ref: '#/components/schemas/typeName'
-        })
-      ).toEqual({
-        schemaName: 'XyzTypeName',
-        fileName: 'type-name'
-      });
-    });
-
     it('renames a schema if needed due to illegal names', async () => {
       refs = await createRefs(
         {

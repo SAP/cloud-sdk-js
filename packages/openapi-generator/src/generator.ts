@@ -265,8 +265,7 @@ async function generateService(
     openApiDocument,
     serviceOptions,
     {
-      strictNaming: !options.skipValidation,
-      schemaPrefix: options.schemaPrefix
+      strictNaming: !options.skipValidation
     }
   );
 

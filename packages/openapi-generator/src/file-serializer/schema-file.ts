@@ -25,7 +25,7 @@ export function schemaFile(
     ${schemaDocumentation(namedSchema)}
     export type ${namedSchema.schemaName} = ${serializeSchema(
       namedSchema.schema
-    )};
+    )}${namedSchema.nullable ? ' | null' : ''};
   `;
 }
 

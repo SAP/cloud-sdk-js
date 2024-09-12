@@ -218,6 +218,11 @@ export interface OpenApiPersistedSchema extends SchemaNaming {
    * Denotes the schema properties.
    */
   schemaProperties: OpenApiSchemaProperties;
+
+  /**
+   * Denotes whether the schema is nullable.
+   */
+  nullable: boolean;
 }
 
 /**
@@ -337,6 +342,10 @@ export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
    * Denotes whether the parameter is required for the according object.
    */
   required: boolean;
+  /**
+   * Denotes whether the parameter is nullable.
+   */
+  nullable: boolean;
 }
 
 /**

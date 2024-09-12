@@ -94,9 +94,62 @@ describe('parseOpenApiDocument', () => {
         description: 'Schema Description',
         schemaName: 'SimpleSchema',
         fileName: 'simple-schema',
+        nullable: false,
         schema: {
           type: 'string'
         },
+        schemaProperties: {}
+      }
+    ]);
+  });
+
+  it('parses simple object persisted schema with nullable', async () => {
+    const components: OpenAPIV3.ComponentsObject = {
+      schemas: {
+        SimpleSchema: {
+          description: 'Schema Description',
+          type: 'object',
+          nullable: true,
+          properties: {
+            prop1: { type: 'string' }
+          },
+        }
+      }
+    };
+
+    const document: OpenAPIV3.Document = getDocument(
+      getResponse('SimpleSchema'),
+      components
+    );
+
+    const parsed = await parseOpenApiDocument(
+      document,
+      { directoryName: 'myService' } as ServiceOptions,
+      options
+    );
+    expect(parsed.schemas).toStrictEqual([
+      {
+        description: 'Schema Description',
+        schemaName: 'SimpleSchema',
+        fileName: 'simple-schema',
+        schema: {
+          additionalProperties: {
+            type: 'any',
+          },
+          properties: [
+             {
+              description: undefined,
+              name: 'prop1',
+              nullable: false,
+              required: false,
+              schema: {
+                type: 'string',
+              },
+              schemaProperties: {},
+            },
+          ]
+        },
+        nullable: true,
         schemaProperties: {}
       }
     ]);

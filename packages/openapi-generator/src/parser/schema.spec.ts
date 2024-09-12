@@ -45,6 +45,22 @@ describe('parseSchema', () => {
     ).toBe('My Description');
   });
 
+  it('parses simple schema with nullable property', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      type: 'object',
+      properties: { prop1: { description: 'My Description', type: 'string', nullable: true } }
+    };
+    expect(
+      (
+        parseSchema(
+          schema,
+          await createTestRefs(),
+          defaultOptions
+        ) as OpenApiObjectSchema
+      ).properties[0].nullable
+    ).toBe(true);
+  });
+
   it('parses array schema', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       type: 'array',
@@ -107,6 +123,7 @@ describe('parseSchema', () => {
             name: 'simpleProperty',
             description: undefined,
             required: true,
+            nullable: false,
             schema: {
               type: 'string'
             },
@@ -116,6 +133,7 @@ describe('parseSchema', () => {
             name: 'nestedObjectProperty',
             required: false,
             description: undefined,
+            nullable: false,
             schema: {
               additionalProperties: {
                 additionalProperties: { type: 'any' },
@@ -124,6 +142,7 @@ describe('parseSchema', () => {
                     name: 'simpleProperty',
                     description: undefined,
                     required: false,
+                    nullable: false,
                     schema: {
                       type: 'string'
                     },
@@ -150,7 +169,8 @@ describe('parseSchema', () => {
           deprecated: true,
           example: 'test',
           maxLength: 10,
-          default: 'testString'
+          default: 'testString',
+          nullable: false
         }
       }
     };
@@ -161,6 +181,7 @@ describe('parseSchema', () => {
             name: 'simpleProperty',
             description: undefined,
             required: true,
+            nullable: false,
             schema: {
               type: 'string'
             },

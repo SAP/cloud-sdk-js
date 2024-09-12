@@ -6,6 +6,7 @@ import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';
 import { ParserOptions } from './options';
 import { parseBound } from './swagger-parser-workaround';
+import { isReferenceObject } from '../schema-util';
 
 /**
  * Parse an OpenAPI document.
@@ -46,7 +47,8 @@ export function parseSchemas(
       ...refs.getSchemaNaming(`#/components/schemas/${name}`),
       schema: parseSchema(schema, refs, options),
       description: refs.resolveObject(schema).description,
-      schemaProperties: parseSchemaProperties(schema)
+      schemaProperties: parseSchemaProperties(schema),
+      nullable: (!isReferenceObject(schema) && schema.nullable) ?? false
     })
   );
 }

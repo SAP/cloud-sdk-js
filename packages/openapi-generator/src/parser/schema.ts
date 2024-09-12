@@ -161,6 +161,7 @@ function parseObjectSchemaProperties(
         description: isReferenceObject(propSchema)
           ? undefined
           : propSchema.description,
+        nullable: (!isReferenceObject(propSchema) && propSchema.nullable) ?? false,
         name: propName,
         required: schema.required?.includes(propName) || false,
         schemaProperties: { ...parseSchemaProperties(propSchema) }

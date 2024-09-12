@@ -62,7 +62,7 @@ function parseContent(content, version, packageName) {
 function parseChangelog(changelog) {
     const packageName = getPackageName(changelog);
     const [latest] = splitByVersion(changelog);
-    (0, core_1.info)('Parsing changelog');
+    (0, core_1.info)(`packageName: ${packageName}, latest: ${JSON.stringify(latest)}`);
     return parseContent(latest.content, latest.version, packageName).flat();
 }
 function writeHeader(version) {

@@ -163,6 +163,7 @@ async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
   //   summary => !unifiedChangelog.includes(`# ${summary.version}`)
   // );
   info('Formatting changelog');
+  console.log(JSON.stringify(parsedChangelogs));
   const version = parsedChangelogs[0].version;
   // const versions = [...new Set(parsedChangelogs.map(msg => msg.version))];
 

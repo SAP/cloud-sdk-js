@@ -112,6 +112,7 @@ async function formatChangelog(parsedChangelogs) {
     //   summary => !unifiedChangelog.includes(`# ${summary.version}`)
     // );
     (0, core_1.info)('Formatting changelog');
+    console.log(JSON.stringify(parsedChangelogs));
     const version = parsedChangelogs[0].version;
     // const versions = [...new Set(parsedChangelogs.map(msg => msg.version))];
     return createNewSection(version, parsedChangelogs);

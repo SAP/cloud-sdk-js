@@ -53,7 +53,7 @@ export function parseSchema(
   if (schema.allOf?.length) {
     if (schema.properties) {
       logger.info(
-        'Detected schema with allOf and properties in the same level. This was refactored to a schema with allOf only, also containing all the properties from the top level.'
+        'Detected schema with allOf and properties in the same level. This was refactored to a schema with allOf only, containing all the properties from the top level.'
       );
       schema.allOf.push({ properties: schema.properties });
       delete schema.properties;

@@ -50,7 +50,7 @@ jobs:
         uses: ./.github/actions/merge-changelogs
         with:
           workspaces: ${{ steps.get-workspaces.outputs.workspaces }}
-      - run: echo ${{ steps.merge-changelogs.outputs.changelog }}
+
       - run: yarn -s ts-node ${{ github.workspace }}/scripts/write-changelog.ts
         env:
           CHANGELOG: ${{ steps.merge-changelogs.outputs.changelog }}

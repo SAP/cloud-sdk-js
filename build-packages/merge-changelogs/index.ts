@@ -103,8 +103,7 @@ function parseChangelog(changelog: string): Change[] {
 function writeHeader(version: string) {
   return `
 # ${version}
-
-API Docs: https://sap.github.io/cloud-sdk/api/${version}`;
+`;
 }
 
 function writeMessagesOfType(

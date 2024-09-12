@@ -51,13 +51,6 @@ export function parseSchema(
   }
 
   if (schema.allOf?.length) {
-    if (schema.properties) {
-      logger.info(
-        'Detected schema with allOf and properties in the same level. This was refactored to a schema with allOf only, containing all the properties from the top level.'
-      );
-      schema.allOf.push({ properties: schema.properties });
-      delete schema.properties;
-    }
     return parseXOfSchema(schema, refs, 'allOf', options);
   }
 
@@ -65,10 +58,12 @@ export function parseSchema(
     return parseXOfSchema(schema, refs, 'anyOf', options);
   }
 
+  // An object schema should be parsed after allOf, anyOf, oneOf.
+  // When object.properties are at the same level with anyOf, oneOf, allOf, they should be treated as part of allOf, etc.
   if (
     schema.type === 'object' ||
     schema.properties ||
-    'additionalProperties' in schema
+    schema.additionalProperties
   ) {
     return parseObjectSchema(schema, refs, options);
   }
@@ -228,8 +223,19 @@ function parseXOfSchema(
   xOf: 'oneOf' | 'allOf' | 'anyOf',
   options: ParserOptions
 ): any {
+  let normalizedSchema: OpenAPIV3.NonArraySchemaObject = schema;
+  if (schema.properties || (schema.additionalProperties && typeof schema.additionalProperties === 'object')) {
+    logger.info(
+      `Detected schema with ${xOf} and properties in the same level. This was refactored to a schema with ${xOf} only, containing all the properties from the top level.`
+    );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { [xOf]: _, ...objectSchema } = schema;
+
+    normalizedSchema = { [xOf]: [...(schema[xOf] || []), objectSchema] };
+  }
   return {
-    [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry, refs, options))
+    [xOf]: (normalizedSchema[xOf] || []).map(entry => parseSchema({ ...entry,
+      required: [...('required' in entry && entry.required ? entry.required : []), ...(normalizedSchema.required || [])] }, refs, options))
   };
 }
 

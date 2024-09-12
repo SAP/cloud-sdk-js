@@ -7,6 +7,8 @@ import type { TestEntity } from './test-entity';
 /**
  * Representation of the 'TestEntity3' schema.
  */
-export type TestEntity3 = TestEntity & {
-  booleanProperty?: boolean;
-} & Record<string, any>;
+export type TestEntity3 =
+  | TestEntity
+  | ({
+      booleanProperty?: boolean;
+    } & Record<string, any>);

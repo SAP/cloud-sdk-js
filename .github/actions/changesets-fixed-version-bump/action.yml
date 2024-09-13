@@ -1,5 +1,5 @@
 name: 'Fixed version bump'
-description: 'Bumps version for fixed packages and the root package.json using changests.'
+description: 'Bumps version for fixed packages and the root package.json using changesets.'
 inputs:
   majorVersion:
     description: 'When setting a major version this needs to be set to the actual major version to avoid accidental major version bumps.'

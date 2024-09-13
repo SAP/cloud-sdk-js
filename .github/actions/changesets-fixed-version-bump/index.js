@@ -54,6 +54,27 @@ async function getNextVersion() {
 
 /***/ }),
 
+/***/ 38413:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+/* eslint-disable jsdoc/require-jsdoc */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.apiDocsDir = void 0;
+exports.transformFile = transformFile;
+const promises_1 = __nccwpck_require__(73292);
+const path_1 = __nccwpck_require__(71017);
+exports.apiDocsDir = (0, path_1.resolve)('knowledge-base', 'api-reference');
+async function transformFile(filePath, transformFn) {
+    const file = await (0, promises_1.readFile)(filePath, { encoding: 'utf8' });
+    const transformedFile = await transformFn(file);
+    await (0, promises_1.writeFile)(filePath, transformedFile, { encoding: 'utf8' });
+}
+
+
+/***/ }),
+
 /***/ 3624:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -81832,6 +81853,14 @@ module.exports = require("fs");
 
 /***/ }),
 
+/***/ 73292:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs/promises");
+
+/***/ }),
+
 /***/ 13685:
 /***/ ((module) => {
 
@@ -89084,11 +89113,12 @@ const node_path_1 = __nccwpck_require__(49411);
 const util_1 = __nccwpck_require__(76786);
 const core_1 = __nccwpck_require__(37117);
 const execa_1 = __nccwpck_require__(30580);
-const util_2 = __nccwpck_require__(50914);
+const util_2 = __nccwpck_require__(38413);
+const util_3 = __nccwpck_require__(50914);
 async function bump() {
-    const { version, bumpType } = await (0, util_2.getNextVersion)();
+    const { version, bumpType } = await (0, util_3.getNextVersion)();
     if (bumpType === 'major' && version !== (0, core_1.getInput)('majorVersion')) {
-        throw new Error(`Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input.`);
+        (0, core_1.setFailed)('Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input.');
     }
     (0, core_1.info)(`bumping to version ${version}`);
     (0, core_1.setOutput)('version', version);

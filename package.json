@@ -88,7 +88,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.8",
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.13",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.4",
@@ -109,9 +109,9 @@
     "semver": "^7.6.3",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "turbo": "^2.1.1",
-    "typedoc": "^0.26.0",
-    "typescript": "~5.5.4"
+    "turbo": "^2.1.2",
+    "typedoc": "^0.26.7",
+    "typescript": "~5.6.2"
   },
   "resolutions": {
     "@sap/cds": "^6.1.1",

@@ -97,6 +97,9 @@ function mergeMessages(parsedMessages) {
     }, []);
 }
 async function formatChangelog(messages) {
+    if (!messages.length) {
+        throw new Error('No messages found in changelogs');
+    }
     const version = messages[0].version;
     return (formatHeader(version) +
         formatMessagesOfType(messages, 'Known Issue') +

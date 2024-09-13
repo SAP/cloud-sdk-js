@@ -145,6 +145,10 @@ function mergeMessages(parsedMessages: Change[]): Change[] {
 }
 
 async function formatChangelog(messages: Change[]): Promise<string> {
+  if (!messages.length) {
+    throw new Error('No messages found in changelogs');
+  }
+
   const version = messages[0].version;
   return (
     formatHeader(version) +

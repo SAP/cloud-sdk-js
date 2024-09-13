@@ -1,16 +1,28 @@
 name: 'commit-and-tag'
-description: 'Commits and tags the current changes.'
+description: Commits and tags the current changes.
 inputs:
   version:
-    description: 'Version to use for the tag and commit message'
+    required: true
+    description: Version to use for the tag and commit message
+  user-email:
+    description: user e-mail address to use for the commit
+    default: sap-cloud-sdk@github.com
+  user-name:
+    description: User name to use for the commit
+    default: sap-cloud-sdk
 runs:
   using: 'composite'
   steps:
     - run: |
+        git config --global user.email "$USER_EMAIL"
+        git config --global user.name "$USER_NAME"
         git add -A
         git commit -m "v$VERSION"
         git tag "v$VERSION" -m "v$VERSION"
         git push --follow-tags
       shell: bash
+      # map inputs to environment variables to avoid shell injection
       env:
         VERSION: ${{ inputs.version }}
+        USER_EMAIL: ${{ inputs.user-email }}
+        USER_NAME: ${{ inputs.user-name }}

@@ -33,6 +33,7 @@ const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
     const currentVersion = getPackageVersion();
     (0, node_console_1.info)(`Current version: ${currentVersion}`);
+    (0, node_console_1.info)(`process.cwd(): ${process.cwd()}`);
     const releasePlan = await (0, get_release_plan_1.default)(process.cwd());
     (0, node_console_1.info)(`Release plan: ${JSON.stringify(releasePlan)}`);
     const versionIncreases = releasePlan.releases

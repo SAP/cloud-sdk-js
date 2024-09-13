@@ -34,6 +34,7 @@ export async function getNextVersion(): Promise<{
 }> {
   const currentVersion = getPackageVersion();
   info(`Current version: ${currentVersion}`);
+  info(`process.cwd(): ${process.cwd()}`);
   const releasePlan = await getReleasePlan(process.cwd());
 
   info(`Release plan: ${JSON.stringify(releasePlan)}`);

@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { setOutput, error, setFailed } from '@actions/core';
+import { setOutput, error, setFailed, info } from '@actions/core';
 import { getPackages } from '@manypkg/get-packages';
 
 export const validMessageTypes = [
@@ -163,6 +163,8 @@ export async function mergeChangelogs(): Promise<void> {
   const pathsToPublicLogs = packages
     .filter(({ packageJson }) => !packageJson.private)
     .map(({ relativeDir }) => resolve(relativeDir, 'CHANGELOG.md'));
+
+  info(`changelogs to merge: ${pathsToPublicLogs.join(', ')}`);
 
   const changelogs = await Promise.all(
     pathsToPublicLogs.map(async file => readFile(file, { encoding: 'utf8' }))

@@ -96,7 +96,12 @@ function serializeObjectSchemaForProperties(
     }`;
 }
 
-function serializeProperty(name: string, required: boolean, nullable: boolean, type: string) {
+function serializeProperty(
+  name: string,
+  required: boolean,
+  nullable: boolean,
+  type: string
+) {
   return `'${name}'${required ? '' : '?'}: ${type}${nullable ? ' | null' : ''};`;
 }
 

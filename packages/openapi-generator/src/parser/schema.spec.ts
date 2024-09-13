@@ -48,7 +48,9 @@ describe('parseSchema', () => {
   it('parses simple schema with nullable property', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       type: 'object',
-      properties: { prop1: { description: 'My Description', type: 'string', nullable: true } }
+      properties: {
+        prop1: { description: 'My Description', type: 'string', nullable: true }
+      }
     };
     expect(
       (

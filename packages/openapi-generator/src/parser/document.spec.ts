@@ -112,7 +112,7 @@ describe('parseOpenApiDocument', () => {
           nullable: true,
           properties: {
             prop1: { type: 'string' }
-          },
+          }
         }
       }
     };
@@ -134,19 +134,19 @@ describe('parseOpenApiDocument', () => {
         fileName: 'simple-schema',
         schema: {
           additionalProperties: {
-            type: 'any',
+            type: 'any'
           },
           properties: [
-             {
+            {
               description: undefined,
               name: 'prop1',
               nullable: false,
               required: false,
               schema: {
-                type: 'string',
+                type: 'string'
               },
-              schemaProperties: {},
-            },
+              schemaProperties: {}
+            }
           ]
         },
         nullable: true,

@@ -6,9 +6,12 @@ import { parseSchema } from './schema';
 import { ParserOptions } from './options';
 
 const logger = createLogger('openapi-generator');
-const allowedJsonMediaTypes = [
+const allowedMediaTypes = [
   'application/json',
-  'application/merge-patch+json'
+  'application/merge-patch+json',
+  'application/octet-stream',
+  'text/plain',
+  '*/*'
 ];
 /**
  * Parse the type of a resolved request body or response object.
@@ -18,7 +21,7 @@ const allowedJsonMediaTypes = [
  * @returns The type name of the request body if there is one.
  * @internal
  */
-export function parseApplicationJsonMediaType(
+export function parseTopLevelMediaType(
   bodyOrResponseObject:
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
@@ -29,7 +32,7 @@ export function parseApplicationJsonMediaType(
   if (bodyOrResponseObject) {
     const mediaType = getMediaTypeObject(
       bodyOrResponseObject,
-      allowedJsonMediaTypes
+      allowedMediaTypes
     );
     const schema = mediaType?.schema;
     if (schema) {
@@ -51,13 +54,13 @@ export function parseMediaType(
 ): OpenApiSchema | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
-    const jsonMediaType = parseApplicationJsonMediaType(
+    const parsedMediaType = parseTopLevelMediaType(
       bodyOrResponseObject,
       refs,
       options
     );
 
-    if (!jsonMediaType) {
+    if (!parsedMediaType) {
       logger.warn(
         `Could not parse '${allMediaTypes}', because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime.`
       );
@@ -66,12 +69,12 @@ export function parseMediaType(
 
     // There is only one media type
     if (allMediaTypes.length === 1) {
-      return jsonMediaType;
+      return parsedMediaType;
     }
 
-    return allMediaTypes.every(type => allowedJsonMediaTypes.includes(type))
-      ? jsonMediaType
-      : { anyOf: [jsonMediaType, { type: 'any' }] };
+    return allMediaTypes.every(type => allowedMediaTypes.includes(type))
+      ? parsedMediaType
+      : { anyOf: [parsedMediaType, { type: 'any' }] };
   }
 }
 /**

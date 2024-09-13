@@ -21,7 +21,7 @@ runs:
         git config --global user.name "$USER_NAME"
         git add -A
         git commit -m "v$VERSION"
-        git tag "v$VERSION" -m "v$VERSION"
+        git tag "v$VERSION" -m "v$TAG_MESSAGE"
         git push --follow-tags
       shell: bash
       # map inputs to environment variables to avoid shell injection
@@ -29,3 +29,4 @@ runs:
         VERSION: ${{ inputs.version }}
         USER_EMAIL: ${{ inputs.user-email }}
         USER_NAME: ${{ inputs.user-name }}
+        TAG_MESSAGE: ${{ inputs.tag-message }}

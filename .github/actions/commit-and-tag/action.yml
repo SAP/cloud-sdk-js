@@ -9,7 +9,7 @@ runs:
     - run: |
         git add -A
         git commit -m "v$VERSION"
-        git tag "v$VERSION"
+        git tag "v$VERSION" -m "v$VERSION"
         git push --follow-tags
       shell: bash
       env:

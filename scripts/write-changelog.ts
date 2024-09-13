@@ -15,6 +15,7 @@ async function writeChangelog(): Promise<void> {
       `# ${process.env.VERSION}` +
       '\n' +
       process.env.CHANGELOG +
+      '\n\n' +
       unifiedChangelog.split('\n').slice(30).join('\n'),
     { encoding: 'utf8' }
   );

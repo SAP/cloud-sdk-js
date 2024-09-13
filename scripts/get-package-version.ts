@@ -1,9 +1,12 @@
-import { PathLike, readFileSync } from 'fs';
+import { PathLike } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 
-export function getPackageVersion(pathToRootPackageJson?: number | PathLike) {
-  const packageJson = readFileSync(
+export async function getPackageVersion(
+  pathToRootPackageJson?: PathLike
+): Promise<string> {
+  const packageJson = await readFile(
     pathToRootPackageJson || 'package.json',
     'utf8'
   );
-  return JSON.parse(packageJson).version as string;
+  return JSON.parse(packageJson).version;
 }

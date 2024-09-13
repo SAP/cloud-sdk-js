@@ -11,19 +11,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getPackageVersion = getPackageVersion;
 exports.getNextVersion = getNextVersion;
-const promises_1 = __nccwpck_require__(93977);
 const node_console_1 = __nccwpck_require__(40027);
 const get_release_plan_1 = __importDefault(__nccwpck_require__(49180));
 const semver_1 = __nccwpck_require__(77546);
-async function getPackageVersion(pathToRootPackageJson) {
-    const packageJson = await (0, promises_1.readFile)(pathToRootPackageJson || 'package.json', 'utf8');
-    return JSON.parse(packageJson).version;
-}
+const get_package_version_1 = __nccwpck_require__(67761);
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
-    const currentVersion = await getPackageVersion();
+    const currentVersion = await (0, get_package_version_1.getPackageVersion)();
     (0, node_console_1.info)(`Current version: ${currentVersion}`);
     const bumpType = await getBumpType();
     (0, node_console_1.info)(`Bump type: ${bumpType}`);
@@ -43,6 +38,22 @@ async function getBumpType() {
         .map(({ type }) => bumpTypeOrder.indexOf(type))
         .sort((a, b) => b - a);
     return bumpTypeOrder[Math.min(...versionIncreases)];
+}
+
+
+/***/ }),
+
+/***/ 67761:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getPackageVersion = getPackageVersion;
+const promises_1 = __nccwpck_require__(93977);
+async function getPackageVersion(pathToRootPackageJson) {
+    const packageJson = await (0, promises_1.readFile)(pathToRootPackageJson || 'package.json', 'utf8');
+    return JSON.parse(packageJson).version;
 }
 
 

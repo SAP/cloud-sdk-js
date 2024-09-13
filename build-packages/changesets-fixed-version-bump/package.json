@@ -1,7 +1,7 @@
 {
   "name": "changesets-fixed-version-bump",
   "version": "1.0.0",
-  "description": "Bumps the version of the root package.json and packages according to changesets. Commits and pushes changes and creates a tag.",
+  "description": "Bumps the version of the root package.json and packages according to changesets.",
   "license": "Apache-2.0",
   "private": true,
   "scripts": {

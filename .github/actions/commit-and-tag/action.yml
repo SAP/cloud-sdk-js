@@ -1,11 +1,11 @@
-name: 'commit-and-tag'
+name: 'Commit and tag'
 description: Commits and tags the current changes.
 inputs:
   version:
     required: true
     description: Version to use for the tag and commit message
   user-email:
-    description: user e-mail address to use for the commit
+    description: User e-mail address to use for the commit
     default: sap-cloud-sdk@github.com
   user-name:
     description: User name to use for the commit

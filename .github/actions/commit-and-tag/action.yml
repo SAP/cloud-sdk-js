@@ -10,9 +10,6 @@ inputs:
   user-name:
     description: User name to use for the commit
     default: sap-cloud-sdk
-  tag-message:
-    description: Message to use for the tag
-    default: TAG
 runs:
   using: 'composite'
   steps:

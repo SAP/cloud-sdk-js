@@ -25,12 +25,7 @@ const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
     const currentVersion = await getPackageVersion();
     (0, node_console_1.info)(`Current version: ${currentVersion}`);
-    const releasePlan = await (0, get_release_plan_1.default)(process.cwd());
-    (0, node_console_1.info)(`Release plan: ${JSON.stringify(releasePlan)}`);
-    const versionIncreases = releasePlan.releases
-        .map(({ type }) => bumpTypeOrder.indexOf(type))
-        .sort((a, b) => b - a);
-    const bumpType = bumpTypeOrder[Math.min(...versionIncreases)];
+    const bumpType = await getBumpType();
     (0, node_console_1.info)(`Bump type: ${bumpType}`);
     if (bumpType === 'none' || !bumpType) {
         throw new Error(`No changesets to release`);
@@ -40,6 +35,14 @@ async function getNextVersion() {
         throw new Error(`Invalid new version -- current version: ${currentVersion}, bump type: ${bumpType}`);
     }
     return { version, bumpType };
+}
+async function getBumpType() {
+    const releasePlan = await (0, get_release_plan_1.default)(process.cwd());
+    (0, node_console_1.info)(`Release plan: ${JSON.stringify(releasePlan)}`);
+    const versionIncreases = releasePlan.releases
+        .map(({ type }) => bumpTypeOrder.indexOf(type))
+        .sort((a, b) => b - a);
+    return bumpTypeOrder[Math.min(...versionIncreases)];
 }
 
 
@@ -89101,7 +89104,7 @@ const util_3 = __nccwpck_require__(50914);
 async function bump() {
     const { version, bumpType } = await (0, util_3.getNextVersion)();
     if (bumpType === 'major' && version !== (0, core_1.getInput)('majorVersion')) {
-        (0, core_1.setFailed)('Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input.');
+        throw new Error('Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input.');
     }
     (0, core_1.info)(`bumping to version ${version}`);
     (0, core_1.setOutput)('version', version);

@@ -24,19 +24,14 @@ export async function getNextVersion(): Promise<{
 }> {
   const currentVersion = await getPackageVersion();
   info(`Current version: ${currentVersion}`);
-  const releasePlan = await getReleasePlan(process.cwd());
 
-  info(`Release plan: ${JSON.stringify(releasePlan)}`);
-
-  const versionIncreases = releasePlan.releases
-    .map(({ type }) => bumpTypeOrder.indexOf(type))
-    .sort((a, b) => b - a);
-  const bumpType = bumpTypeOrder[Math.min(...versionIncreases)];
+  const bumpType = await getBumpType();
   info(`Bump type: ${bumpType}`);
 
   if (bumpType === 'none' || !bumpType) {
     throw new Error(`No changesets to release`);
   }
+
   const version = inc(currentVersion, bumpType);
 
   if (!version) {
@@ -45,4 +40,14 @@ export async function getNextVersion(): Promise<{
     );
   }
   return { version, bumpType };
+}
+
+async function getBumpType() {
+  const releasePlan = await getReleasePlan(process.cwd());
+  info(`Release plan: ${JSON.stringify(releasePlan)}`);
+
+  const versionIncreases = releasePlan.releases
+    .map(({ type }) => bumpTypeOrder.indexOf(type))
+    .sort((a, b) => b - a);
+  return bumpTypeOrder[Math.min(...versionIncreases)];
 }

@@ -15,16 +15,20 @@ jobs:
         with:
           token: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
           ref: 'main'
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'yarn'
+
       - run: yarn install --frozen-lockfile
 
-      - name: Bump version
+      - name: bump version
         id: bump
         uses: ./.github/actions/changesets-fixed-version-bump
         with:
           majorVersion: ${{ inputs.majorVersion }}
+
       - run: |
           yarn ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
           yarn generate
@@ -32,7 +36,7 @@ jobs:
         env:
           NEXT_PACKAGE_VERSION: ${{ steps.bump.outputs.version }}
 
-      - name: Merge Changelogs
+      - name: merge Changelogs
         id: merge-changelogs
         uses: ./.github/actions/merge-changelogs
 
@@ -41,7 +45,7 @@ jobs:
           CHANGELOG: ${{ steps.merge-changelogs.outputs.changelog }}
           VERSION: ${{ steps.bump.outputs.version }}
 
-      - name: Commit and tag
+      - name: commit and tag
         uses: ./.github/actions/commit-and-tag
         with:
           version: ${{ steps.bump.outputs.version }}

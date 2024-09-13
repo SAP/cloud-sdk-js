@@ -51822,8 +51822,7 @@ async function commitAndTag(version) {
     (0, core_1.info)(`git tag`);
     await (0, git_1.tag)(`v${version}`, cwd);
     (0, core_1.info)(`git push`);
-    // TODO: reenable follow-tags
-    await (0, execa_1.command)('git push'); // --follow-tags');
+    await (0, execa_1.command)('git push --follow-tags');
 }
 commitAndTag((0, core_1.getInput)('version')).catch(err => {
     (0, core_1.error)(err);

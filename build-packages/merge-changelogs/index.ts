@@ -53,6 +53,7 @@ function assertGroups(
   commit?: string;
   type: (typeof validMessageTypes)[number];
 } {
+  // TODO: improve type checking, currently you have to match a long string, allow shortcuts
   if (!validMessageTypes.includes(groups?.type as any)) {
     error(
       groups?.type
@@ -88,6 +89,7 @@ function parseContent(
       version,
       summary: groups.summary.trim(),
       packageNames: [packageName],
+      // TODO: add link to commit
       commit: groups.commit ? `(${groups.commit})` : '',
       type: groups.type
     };
@@ -117,6 +119,7 @@ function formatMessagesOfType(
     )
     .join('\n');
 
+  // TODO: this is ugly, e.g. there is no plural for "New Functionality" => use type to title mapping instead
   const pluralizedType =
     type.slice(-1) === 'y' ? type.slice(0, -1) + 'ies' : type + 's';
   return `\n\n## ${pluralizedType}\n\n${formatted}`;

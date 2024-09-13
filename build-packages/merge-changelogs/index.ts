@@ -100,11 +100,6 @@ function parseChangelog(changelog: string): Change[] {
   return parseContent(latest.content, latest.version, packageName).flat();
 }
 
-function formatHeader(version: string) {
-  return `
-# ${version}`;
-}
-
 function formatMessagesOfType(
   messages: Change[],
   type: (typeof validMessageTypes)[number]
@@ -149,9 +144,7 @@ async function formatChangelog(messages: Change[]): Promise<string> {
     throw new Error('No messages found in changelogs');
   }
 
-  const version = messages[0].version;
   return (
-    formatHeader(version) +
     formatMessagesOfType(messages, 'Known Issue') +
     formatMessagesOfType(messages, 'Compatibility Note') +
     formatMessagesOfType(messages, 'New Functionality') +

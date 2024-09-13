@@ -68,10 +68,6 @@ function parseChangelog(changelog) {
     const [latest] = splitByVersion(changelog);
     return parseContent(latest.content, latest.version, packageName).flat();
 }
-function formatHeader(version) {
-    return `
-# ${version}`;
-}
 function formatMessagesOfType(messages, type) {
     if (!messages.some(msg => msg.type === type)) {
         return '';
@@ -100,9 +96,7 @@ async function formatChangelog(messages) {
     if (!messages.length) {
         throw new Error('No messages found in changelogs');
     }
-    const version = messages[0].version;
-    return (formatHeader(version) +
-        formatMessagesOfType(messages, 'Known Issue') +
+    return (formatMessagesOfType(messages, 'Known Issue') +
         formatMessagesOfType(messages, 'Compatibility Note') +
         formatMessagesOfType(messages, 'New Functionality') +
         formatMessagesOfType(messages, 'Improvement') +

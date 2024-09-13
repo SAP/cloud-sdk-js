@@ -43,6 +43,7 @@ jobs:
       - run: yarn -s ts-node ${{ github.workspace }}/scripts/write-changelog.ts
         env:
           CHANGELOG: ${{ steps.merge-changelogs.outputs.changelog }}
+          VERSION: ${{ steps.bump.outputs.version }}
 
       - name: Commit and tag
         uses: ./.github/actions/commit-and-tag

@@ -4,5 +4,13 @@ inputs:
   version:
     description: 'Version to use for the tag and commit message'
 runs:
-  using: 'node20'
-  main: 'index.js'
+  using: 'composite'
+  steps:
+    - run: |
+        git add -A
+        git commit -m "v$VERSION"
+        git tag "v$VERSION"
+        git push --follow-tags
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}

@@ -1,29 +1,19 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import { readFile, writeFile } from 'node:fs/promises';
-import { PathLike, readFileSync } from 'node:fs';
+import { PathLike } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { info } from 'node:console';
 import getReleasePlan from '@changesets/get-release-plan';
 import { inc } from 'semver';
 
-export function getPackageVersion(
-  pathToRootPackageJson?: number | PathLike
-): string {
-  const packageJson = readFileSync(
+export async function getPackageVersion(
+  pathToRootPackageJson?: PathLike
+): Promise<string> {
+  const packageJson = await readFile(
     pathToRootPackageJson || 'package.json',
     'utf8'
   );
   return JSON.parse(packageJson).version;
-}
-
-// TODO: this is currently duplicate (scripts/util.ts)
-export async function transformFile(
-  filePath: string,
-  transformFn: CallableFunction
-): Promise<void> {
-  const file = await readFile(filePath, { encoding: 'utf8' });
-  const transformedFile = await transformFn(file);
-  await writeFile(filePath, transformedFile, { encoding: 'utf8' });
 }
 
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'] as const;
@@ -32,9 +22,8 @@ export async function getNextVersion(): Promise<{
   version: string;
   bumpType: (typeof bumpTypeOrder)[number];
 }> {
-  const currentVersion = getPackageVersion();
+  const currentVersion = await getPackageVersion();
   info(`Current version: ${currentVersion}`);
-  info(`process.cwd(): ${process.cwd()}`);
   const releasePlan = await getReleasePlan(process.cwd());
 
   info(`Release plan: ${JSON.stringify(releasePlan)}`);

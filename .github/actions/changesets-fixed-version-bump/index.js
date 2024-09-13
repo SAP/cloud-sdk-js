@@ -12,28 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getPackageVersion = getPackageVersion;
-exports.transformFile = transformFile;
 exports.getNextVersion = getNextVersion;
 const promises_1 = __nccwpck_require__(93977);
-const node_fs_1 = __nccwpck_require__(87561);
 const node_console_1 = __nccwpck_require__(40027);
 const get_release_plan_1 = __importDefault(__nccwpck_require__(49180));
 const semver_1 = __nccwpck_require__(77546);
-function getPackageVersion(pathToRootPackageJson) {
-    const packageJson = (0, node_fs_1.readFileSync)(pathToRootPackageJson || 'package.json', 'utf8');
+async function getPackageVersion(pathToRootPackageJson) {
+    const packageJson = await (0, promises_1.readFile)(pathToRootPackageJson || 'package.json', 'utf8');
     return JSON.parse(packageJson).version;
-}
-// TODO: this is currently duplicate (scripts/util.ts)
-async function transformFile(filePath, transformFn) {
-    const file = await (0, promises_1.readFile)(filePath, { encoding: 'utf8' });
-    const transformedFile = await transformFn(file);
-    await (0, promises_1.writeFile)(filePath, transformedFile, { encoding: 'utf8' });
 }
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
-    const currentVersion = getPackageVersion();
+    const currentVersion = await getPackageVersion();
     (0, node_console_1.info)(`Current version: ${currentVersion}`);
-    (0, node_console_1.info)(`process.cwd(): ${process.cwd()}`);
     const releasePlan = await (0, get_release_plan_1.default)(process.cwd());
     (0, node_console_1.info)(`Release plan: ${JSON.stringify(releasePlan)}`);
     const versionIncreases = releasePlan.releases
@@ -81906,14 +81897,6 @@ module.exports = require("node:console");
 
 "use strict";
 module.exports = require("node:events");
-
-/***/ }),
-
-/***/ 87561:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("node:fs");
 
 /***/ }),
 

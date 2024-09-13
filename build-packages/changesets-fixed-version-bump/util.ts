@@ -2,6 +2,7 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { PathLike, readFileSync } from 'node:fs';
+import { info } from 'node:console';
 import getReleasePlan from '@changesets/get-release-plan';
 import { inc } from 'semver';
 
@@ -32,12 +33,16 @@ export async function getNextVersion(): Promise<{
   bumpType: (typeof bumpTypeOrder)[number];
 }> {
   const currentVersion = getPackageVersion();
+  info(`Current version: ${currentVersion}`);
   const releasePlan = await getReleasePlan(process.cwd());
+
+  info(`Release plan: ${JSON.stringify(releasePlan)}`);
 
   const versionIncreases = releasePlan.releases
     .map(({ type }) => bumpTypeOrder.indexOf(type))
     .sort((a, b) => b - a);
   const bumpType = bumpTypeOrder[Math.min(...versionIncreases)];
+  info(`Bump type: ${bumpType}`);
 
   if (bumpType === 'none' || !bumpType) {
     throw new Error(`No changesets to release`);

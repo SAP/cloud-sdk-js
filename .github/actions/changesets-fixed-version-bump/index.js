@@ -16,6 +16,7 @@ exports.transformFile = transformFile;
 exports.getNextVersion = getNextVersion;
 const promises_1 = __nccwpck_require__(93977);
 const node_fs_1 = __nccwpck_require__(87561);
+const node_console_1 = __nccwpck_require__(40027);
 const get_release_plan_1 = __importDefault(__nccwpck_require__(49180));
 const semver_1 = __nccwpck_require__(77546);
 function getPackageVersion(pathToRootPackageJson) {
@@ -31,11 +32,14 @@ async function transformFile(filePath, transformFn) {
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
     const currentVersion = getPackageVersion();
+    (0, node_console_1.info)(`Current version: ${currentVersion}`);
     const releasePlan = await (0, get_release_plan_1.default)(process.cwd());
+    (0, node_console_1.info)(`Release plan: ${JSON.stringify(releasePlan)}`);
     const versionIncreases = releasePlan.releases
         .map(({ type }) => bumpTypeOrder.indexOf(type))
         .sort((a, b) => b - a);
     const bumpType = bumpTypeOrder[Math.min(...versionIncreases)];
+    (0, node_console_1.info)(`Bump type: ${bumpType}`);
     if (bumpType === 'none' || !bumpType) {
         throw new Error(`No changesets to release`);
     }
@@ -81856,6 +81860,14 @@ module.exports = require("https");
 
 "use strict";
 module.exports = require("net");
+
+/***/ }),
+
+/***/ 40027:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:console");
 
 /***/ }),
 

@@ -54,7 +54,7 @@ definitions:
         type: integer
         description: An integer property
         required: false
-  TestEntity_2:
+  EntityXOfInheritance:
     type: object
     allOf:
       - $ref: '#/definitions/TestEntity'
@@ -66,7 +66,7 @@ definitions:
             type: integer
     required:
       - booleanProperty
-  TestEntity_3:
+  EntityXOfNormalizedWithObject:
     type: object
     anyOf:
       - $ref: '#/definitions/TestEntity'

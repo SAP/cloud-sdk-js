@@ -250,8 +250,7 @@ function normalizeSchema(
 ): OpenAPIV3.NonArraySchemaObject {
   if (
     schema.properties ||
-    (schema.additionalProperties &&
-      typeof schema.additionalProperties === 'object')
+    (schema.additionalProperties)
   ) {
     logger.info(
       `Detected schema with ${xOf} and properties in the same level. This was refactored to a schema with ${xOf} only, containing all the properties from the top level.`

@@ -69,7 +69,7 @@ definitions:
       - booleanProperty
   EntityXOfNormalizedWithObject:
     type: object
-    description: Entity with xOf and schema properties at same level. This is normalized to only xOf with schema properties inside xOf.
+    description: Entity with xOf and schema properties at same level. This is normalized to only xOf with schema properties inside xOf. Also works if only additionalProperties true is used.
     anyOf:
       - $ref: '#/definitions/TestEntity'
     properties:

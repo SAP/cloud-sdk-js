@@ -19,6 +19,7 @@ describe('collectRefs', () => {
               {
                 name: 'refProperty',
                 required: false,
+                nullable: false,
                 schema: {
                   $ref: 'ref1',
                   schemaName: 'Ref1'

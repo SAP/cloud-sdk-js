@@ -18,6 +18,7 @@ describe('serializeSchema for object schemas', () => {
           {
             name: 'simpleProperty',
             required: true,
+            nullable: true,
             schema: { type: 'integer' },
             schemaProperties: {
               minimum: 8
@@ -27,11 +28,13 @@ describe('serializeSchema for object schemas', () => {
           {
             name: 'nested-property',
             required: false,
+            nullable: false,
             schema: {
               properties: [
                 {
                   name: 'stringProperty',
                   required: false,
+                  nullable: false,
                   schema: { type: 'string' },
                   schemaProperties: {
                     pattern: '^[p{L}-.^_|~d]+$'
@@ -49,7 +52,7 @@ describe('serializeSchema for object schemas', () => {
             /**
              * Minimum: 8.
              */
-            'simpleProperty': number;
+            'simpleProperty': number | null;
             'nested-property'?: {
                   /**
                    * Pattern: "^[p{L}-.^_|~d]+$".
@@ -93,6 +96,7 @@ describe('serializeSchema for object schemas', () => {
           {
             name: 'simpleProperty',
             required: true,
+            nullable: false,
             schema: { type: 'integer' },
             schemaProperties: {}
           }
@@ -112,6 +116,7 @@ describe('serializeSchema for object schemas', () => {
         properties: [
           {
             name: 'objectArrayProp',
+            nullable: false,
             required: true,
             schema: {
               uniqueItems: false,
@@ -120,6 +125,7 @@ describe('serializeSchema for object schemas', () => {
                   {
                     name: 'name',
                     required: true,
+                    nullable: false,
                     schema: { type: 'string' },
                     schemaProperties: {}
                   }

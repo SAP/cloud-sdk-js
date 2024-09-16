@@ -96,8 +96,13 @@ function serializeObjectSchemaForProperties(
     }`;
 }
 
-function serializeProperty(name: string, required: boolean, type: string) {
-  return `'${name}'${required ? '' : '?'}: ${type};`;
+function serializeProperty(
+  name: string,
+  required: boolean,
+  nullable: boolean,
+  type: string
+) {
+  return `'${name}'${required ? '' : '?'}: ${type}${nullable ? ' | null' : ''};`;
 }
 
 function serializePropertyWithDocumentation(
@@ -107,6 +112,7 @@ function serializePropertyWithDocumentation(
   const serialized = serializeProperty(
     property.name,
     property.required,
+    property.nullable,
     serializeSchema(property.schema)
   );
   if (documentation) {

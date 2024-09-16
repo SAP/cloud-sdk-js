@@ -1,7 +1,7 @@
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { parseTopLevelMediaType, parseMediaType } from './media-type';
 
-const defaultOptions = { strictNaming: true };
+const defaultOptions = { strictNaming: true, schemaPrefix: '' };
 describe('parseTopLevelMediaType', () => {
   it('returns undefined if the media type is not supported', async () => {
     expect(

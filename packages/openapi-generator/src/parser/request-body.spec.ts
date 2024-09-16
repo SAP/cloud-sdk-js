@@ -2,7 +2,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { createTestRefs } from '../../test/test-util';
 import { parseRequestBody } from './request-body';
 
-const defaultOptions = { strictNaming: true };
+const defaultOptions = { strictNaming: true, schemaPrefix: '' };
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
     const logger = createLogger('openapi-generator');

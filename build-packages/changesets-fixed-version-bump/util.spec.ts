@@ -1,8 +1,8 @@
+import { resolve } from 'node:path';
 import mock from 'mock-fs';
-import { nextSdkVersion } from './util';
-import { resolve } from 'path';
+import { getNextVersion } from './util';
 
-describe('nextSdkVersion', () => {
+describe('getNextVersion', () => {
   afterEach(() => {
     mock.restore();
   });
@@ -24,7 +24,10 @@ describe('nextSdkVersion', () => {
       }
     });
 
-    expect(await nextSdkVersion()).toBe('1.2.4');
+    expect(await getNextVersion()).toEqual({
+      version: '1.2.4',
+      bumpType: 'patch'
+    });
   });
 
   it('should make a minor update', async () => {
@@ -37,7 +40,26 @@ describe('nextSdkVersion', () => {
       }
     });
 
-    expect(await nextSdkVersion()).toBe('1.3.0');
+    expect(await getNextVersion()).toEqual({
+      version: '1.3.0',
+      bumpType: 'minor'
+    });
+  });
+
+  it('should make a major update', async () => {
+    mock({
+      ...sharedMock,
+      '.changeset': {
+        'config.json': mock.load(resolve('..', '.changeset', 'config.json')),
+        'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': major\n" + '---',
+        'bob.md': '---\n' + "'@sap-cloud-sdk/connectivity': minor\n" + '---'
+      }
+    });
+
+    expect(await getNextVersion()).toEqual({
+      version: '2.0.0',
+      bumpType: 'major'
+    });
   });
 
   it('should throw an error, when no changesets exist', async () => {
@@ -48,18 +70,8 @@ describe('nextSdkVersion', () => {
       }
     });
 
-    await expect(nextSdkVersion()).rejects.toThrowErrorMatchingSnapshot();
-  });
-
-  it('should not make a major update', async () => {
-    mock({
-      ...sharedMock,
-      '.changeset': {
-        'config.json': mock.load(resolve('..', '.changeset', 'config.json')),
-        'carl.md': '---\n' + "'@sap-cloud-sdk/connectivity': major\n" + '---'
-      }
-    });
-
-    await expect(nextSdkVersion()).rejects.toThrowErrorMatchingSnapshot();
+    await expect(getNextVersion()).rejects.toThrowErrorMatchingInlineSnapshot(
+      `"Invalid new version -- the current version: 1.2.3 and the release type: none."`
+    );
   });
 });

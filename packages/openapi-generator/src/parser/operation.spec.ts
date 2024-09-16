@@ -8,7 +8,7 @@ import {
   parsePathPattern
 } from './operation';
 
-const defaultOptions = { strictNaming: true };
+const defaultOptions = { strictNaming: true, schemaPrefix: '' };
 describe('getRelevantParameters', () => {
   it('ignores cookie parameters', async () => {
     expect(
@@ -110,7 +110,8 @@ describe('parsePathParameters', () => {
   it('returns empty arrays if there are no parameters', async () => {
     expect(
       parsePathParameters([], await createTestRefs(), {
-        strictNaming: false
+        strictNaming: false,
+        schemaPrefix: ''
       })
     ).toEqual([]);
   });
@@ -129,7 +130,8 @@ describe('parsePathParameters', () => {
     };
     expect(
       parsePathParameters([pathParam1, pathParam2], refs, {
-        strictNaming: false
+        strictNaming: false,
+        schemaPrefix: ''
       })
     ).toEqual([
       { ...pathParam1, originalName: 'param1', schemaProperties: {} },

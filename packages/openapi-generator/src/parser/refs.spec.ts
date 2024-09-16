@@ -10,7 +10,7 @@ describe('OpenApiDocumentRefs', () => {
         ...emptyDocument,
         components: { schemas: { typeName } }
       },
-      { strictNaming: true }
+      { strictNaming: true, schemaPrefix: '' }
     );
   });
 
@@ -60,13 +60,32 @@ describe('OpenApiDocumentRefs', () => {
       );
     });
 
+    it('gets the schema naming for reference object with a prefix', async () => {
+      refs = await createRefs(
+        {
+          ...emptyDocument,
+          components: { schemas: { typeName } }
+        },
+        { strictNaming: true, schemaPrefix: 'xyz' }
+      );
+
+      expect(
+        refs.getSchemaNaming({
+          $ref: '#/components/schemas/typeName'
+        })
+      ).toEqual({
+        schemaName: 'XyzTypeName',
+        fileName: 'type-name'
+      });
+    });
+
     it('renames a schema if needed due to illegal names', async () => {
       refs = await createRefs(
         {
           ...emptyDocument,
           components: { schemas: { '123456': {}, 'something.Else%': {} } }
         },
-        { strictNaming: false }
+        { strictNaming: false, schemaPrefix: '' }
       );
       expect(refs.getSchemaNaming('#/components/schemas/123456')).toEqual({
         fileName: 'schema-123456',
@@ -89,7 +108,7 @@ describe('OpenApiDocumentRefs', () => {
             schemas: { '123456': {}, schema123456: {}, schema12345_6: {} }
           }
         },
-        { strictNaming: false }
+        { strictNaming: false, schemaPrefix: '' }
       );
       expect(refs.getSchemaNaming('#/components/schemas/123456')).toEqual({
         fileName: 'schema-123456',
@@ -119,7 +138,7 @@ describe('OpenApiDocumentRefs', () => {
             ...emptyDocument,
             components: { schemas: { '123456': {} } }
           },
-          { strictNaming: true }
+          { strictNaming: true, schemaPrefix: '' }
         )
       ).rejects.toThrowError(
         'The service specification contains invalid schema names.'
@@ -132,7 +151,7 @@ describe('OpenApiDocumentRefs', () => {
           ...emptyDocument,
           components: { schemas: { name: {}, Name: {} } }
         },
-        { strictNaming: false }
+        { strictNaming: false, schemaPrefix: '' }
       );
       expect(refs.getSchemaNaming('#/components/schemas/name')).toEqual({
         fileName: 'name-1',
@@ -151,7 +170,7 @@ describe('OpenApiDocumentRefs', () => {
           ...emptyDocument,
           components: { schemas: { name400: {}, Name400: {} } }
         },
-        { strictNaming: false }
+        { strictNaming: false, schemaPrefix: '' }
       );
       expect(refs.getSchemaNaming('#/components/schemas/name400')).toEqual({
         fileName: 'name-400-1',

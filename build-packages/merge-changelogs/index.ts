@@ -1,5 +1,8 @@
-import { writeFile, readFile } from 'fs/promises';
-import { resolve } from 'path';
+/* eslint-disable jsdoc/require-jsdoc */
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { setOutput, error, setFailed, info } from '@actions/core';
+import { getPackages } from '@manypkg/get-packages';
 
 export const validMessageTypes = [
   'Known Issue',
@@ -13,7 +16,7 @@ export const validMessageTypes = [
 interface Change {
   packageNames: string[];
   commit: string;
-  type: typeof validMessageTypes[number];
+  type: (typeof validMessageTypes)[number];
   version: string;
   summary: string;
   dependencies?: string;
@@ -25,26 +28,20 @@ interface ContentByVersion {
 }
 
 function getPackageName(changelog: string): string {
-  // Get package name without the @sap-cloud-sdk scope
-  const packageNameRegex = /^# @sap-cloud-sdk\/(?<packageName>.+)$/;
-  const firstLine = changelog.split('\n')[0];
-  const packageNameMatch = firstLine.match(packageNameRegex);
-
-  if (!packageNameMatch?.groups?.packageName) {
-    throw new Error('Changelog should have package name on first line');
-  }
-
-  return packageNameMatch.groups.packageName;
+  return changelog.split('\n')[0].split('/')[1];
 }
 
 function splitByVersion(changelog: string): ContentByVersion[] {
-  return changelog.split('\n## ').map(h2 => {
-    const [version, ...content] = h2.split('\n');
-    return {
-      version,
-      content: content.join('\n').trim()
-    };
-  });
+  return changelog
+    .split('\n## ')
+    .slice(1)
+    .map(h2 => {
+      const [version, ...content] = h2.split('\n');
+      return {
+        version,
+        content: content.join('\n').trim()
+      };
+    });
 }
 
 function assertGroups(
@@ -54,10 +51,11 @@ function assertGroups(
 ): asserts groups is {
   summary: string;
   commit?: string;
-  type: typeof validMessageTypes[number];
+  type: (typeof validMessageTypes)[number];
 } {
+  // TODO: improve type checking, currently you have to match a long string, allow shortcuts
   if (!validMessageTypes.includes(groups?.type as any)) {
-    console.error(
+    error(
       groups?.type
         ? `Error: Type [${groups?.type}] is not valid (${groups?.commit})`
         : `Error: No type was provided for "${groups?.summary} (${groups?.commit})"`
@@ -67,7 +65,7 @@ function assertGroups(
     );
   }
   if (typeof groups?.summary !== 'string' || groups?.summary.trim() === '') {
-    console.error(
+    error(
       `Error: Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}! (${groups?.commit})`
     );
     throw new Error(
@@ -91,6 +89,7 @@ function parseContent(
       version,
       summary: groups.summary.trim(),
       packageNames: [packageName],
+      // TODO: add link to commit
       commit: groups.commit ? `(${groups.commit})` : '',
       type: groups.type
     };
@@ -99,22 +98,13 @@ function parseContent(
 
 function parseChangelog(changelog: string): Change[] {
   const packageName = getPackageName(changelog);
-  const versions = splitByVersion(changelog);
-  return versions
-    .map(({ version, content }) => parseContent(content, version, packageName))
-    .flat();
+  const [latest] = splitByVersion(changelog);
+  return parseContent(latest.content, latest.version, packageName).flat();
 }
 
-function writeHeader(version: string) {
-  return `
-# ${version}
-
-API Docs: https://sap.github.io/cloud-sdk/api/${version}`;
-}
-
-function writeMessagesOfType(
+function formatMessagesOfType(
   messages: Change[],
-  type: typeof validMessageTypes[number]
+  type: (typeof validMessageTypes)[number]
 ): string {
   if (!messages.some(msg => msg.type === type)) {
     return '';
@@ -129,22 +119,10 @@ function writeMessagesOfType(
     )
     .join('\n');
 
+  // TODO: this is ugly, e.g. there is no plural for "New Functionality" => use type to title mapping instead
   const pluralizedType =
     type.slice(-1) === 'y' ? type.slice(0, -1) + 'ies' : type + 's';
   return `\n\n## ${pluralizedType}\n\n${formatted}`;
-}
-
-function createNewSection(version: string, messages: Change[]): string {
-  return (
-    writeHeader(version) +
-    writeMessagesOfType(messages, 'Known Issue') +
-    writeMessagesOfType(messages, 'Compatibility Note') +
-    writeMessagesOfType(messages, 'New Functionality') +
-    writeMessagesOfType(messages, 'Improvement') +
-    writeMessagesOfType(messages, 'Fixed Issue') +
-    writeMessagesOfType(messages, 'Updated Dependencies') +
-    '\n\n'
-  );
 }
 
 function mergeMessages(parsedMessages: Change[]): Change[] {
@@ -164,47 +142,40 @@ function mergeMessages(parsedMessages: Change[]): Change[] {
   }, [] as Change[]);
 }
 
-async function formatChangelog(parsedChangelogs: Change[]): Promise<string> {
-  const unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
-  const missingFromUnifiedChangelog = parsedChangelogs.filter(
-    summary => !unifiedChangelog.includes(`# ${summary.version}`)
+async function formatChangelog(messages: Change[]): Promise<string> {
+  if (!messages.length) {
+    throw new Error('No messages found in changelogs');
+  }
+
+  return (
+    formatMessagesOfType(messages, 'Known Issue') +
+    formatMessagesOfType(messages, 'Compatibility Note') +
+    formatMessagesOfType(messages, 'New Functionality') +
+    formatMessagesOfType(messages, 'Improvement') +
+    formatMessagesOfType(messages, 'Fixed Issue') +
+    formatMessagesOfType(messages, 'Updated Dependencies') +
+    '\n\n'
   );
-  const versions = [
-    ...new Set(missingFromUnifiedChangelog.map(msg => msg.version))
-  ];
-  return versions.reduce((changelog, version) => {
-    const newSection = createNewSection(
-      version,
-      missingFromUnifiedChangelog.filter(msg => msg.version === version)
-    );
-    return (
-      changelog.split('\n').slice(0, 30).join('\n') +
-      newSection +
-      changelog.split('\n').slice(30).join('\n')
-    );
-  }, unifiedChangelog);
 }
 
 export async function mergeChangelogs(): Promise<void> {
-  const workspaces: string[] = JSON.parse(
-    await readFile('package.json', { encoding: 'utf8' })
-  ).workspaces;
-  const workspacesWithVisibility = await Promise.all(
-    workspaces.map(async workspace => {
-      const packageJson = await readFile(resolve(workspace, 'package.json'), {
-        encoding: 'utf8'
-      });
-      return [!JSON.parse(packageJson).private, workspace] as const;
-    })
-  );
-  const pathsToPublicLogs = workspacesWithVisibility
-    .filter(([isPublic]) => isPublic)
-    .map(([, workspace]) => resolve(workspace, 'CHANGELOG.md'));
+  const { packages } = await getPackages(process.cwd());
+  const pathsToPublicLogs = packages
+    .filter(({ packageJson }) => !packageJson.private)
+    .map(({ relativeDir }) => resolve(relativeDir, 'CHANGELOG.md'));
+
+  info(`changelogs to merge: ${pathsToPublicLogs.join(', ')}`);
+
   const changelogs = await Promise.all(
     pathsToPublicLogs.map(async file => readFile(file, { encoding: 'utf8' }))
   );
+
   const newChangelog = await formatChangelog(
     mergeMessages(changelogs.map(log => parseChangelog(log)).flat())
   );
-  await writeFile('CHANGELOG.md', newChangelog);
+  setOutput('changelog', newChangelog);
 }
+
+mergeChangelogs().catch(error => {
+  setFailed(error.message);
+});

@@ -4,7 +4,7 @@ import { apiNameExtension } from '../extensions';
 import { parseApis } from './api';
 import { createRefs } from './refs';
 
-const options = { strictNaming: true };
+const options = { strictNaming: true, schemaPrefix: '' };
 describe('parseApis', () => {
   it('throws an error if there are APIs without paths', async () => {
     const refs = await createTestRefs();

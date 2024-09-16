@@ -5,7 +5,7 @@ import { OpenApiObjectSchema } from '../openapi-types';
 import { parseSchema, parseSchemaProperties } from './schema';
 
 describe('parseSchema', () => {
-  const defaultOptions = { strictNaming: true };
+  const defaultOptions = { strictNaming: true, schemaPrefix: '' };
 
   it('parses reference schema', async () => {
     const schema = { $ref: '#/components/schemas/test' };
@@ -343,7 +343,10 @@ describe('parseSchema', () => {
       enum: [1, 2, 3, null],
       type: 'string'
     };
-    parseSchema(schema, await createTestRefs(), { strictNaming: false });
+    parseSchema(schema, await createTestRefs(), {
+      strictNaming: false,
+      schemaPrefix: ''
+    });
     expect(logger.warn).toHaveBeenCalledWith(
       'null was used as a parameter in an enum, although the schema was not declared as nullable'
     );

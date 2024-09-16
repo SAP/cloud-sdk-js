@@ -7,26 +7,45 @@ on:
         description: Mandatory, when bumping a major version. Semver compatible version string (X.Y.Z). Must not be set for patch and minor version releases.
         required: false
 
-env:
-  INPUT_MAJOR_VERSION: ${{ inputs.majorVersion }}
-
 jobs:
   bump:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
           ref: 'main'
-      - uses: actions/setup-node@v3
+
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'yarn'
+
       - run: yarn install --frozen-lockfile
-      - name: Setup git
-        run: |
-          git config --global user.email "cloud-sdk-js@github.com"
-          git config --global user.name "cloud-sdk-js"
-      - name: Bump version
-        run: yarn run version
-      - name: Push
-        run: git push --follow-tags
+
+      - name: bump version
+        id: bump
+        uses: ./.github/actions/changesets-fixed-version-bump
+        with:
+          majorVersion: ${{ inputs.majorVersion }}
+
+      - run: |
+          yarn ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
+          yarn generate
+          yarn doc
+        env:
+          NEXT_PACKAGE_VERSION: ${{ steps.bump.outputs.version }}
+
+      - name: merge Changelogs
+        id: merge-changelogs
+        uses: ./.github/actions/merge-changelogs
+
+      - run: yarn -s ts-node ${{ github.workspace }}/scripts/write-changelog.ts
+        env:
+          CHANGELOG: ${{ steps.merge-changelogs.outputs.changelog }}
+          VERSION: ${{ steps.bump.outputs.version }}
+
+      - name: commit and tag
+        uses: ./.github/actions/commit-and-tag
+        with:
+          version: ${{ steps.bump.outputs.version }}

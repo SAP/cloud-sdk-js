@@ -5,10 +5,10 @@
  */
 import type { TestEntity } from './test-entity';
 /**
- * Representation of the 'EntityXOfNormalizedWithObject' schema.
+ * Entity with xOf and schema properties at same level. This is normalized to only xOf with schema properties inside xOf.
  */
 export type EntityXOfNormalizedWithObject =
   | TestEntity
   | ({
-      booleanProperty?: boolean;
+      booleanProperty: boolean;
     } & Record<string, any>);

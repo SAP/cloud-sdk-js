@@ -223,20 +223,8 @@ function parseXOfSchema(
   xOf: 'oneOf' | 'allOf' | 'anyOf',
   options: ParserOptions
 ): any {
-  let normalizedSchema: OpenAPIV3.NonArraySchemaObject = schema;
-  if (
-    schema.properties ||
-    (schema.additionalProperties &&
-      typeof schema.additionalProperties === 'object')
-  ) {
-    logger.info(
-      `Detected schema with ${xOf} and properties in the same level. This was refactored to a schema with ${xOf} only, containing all the properties from the top level.`
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [xOf]: _, ...objectSchema } = schema;
+  const normalizedSchema = normalizeSchema(schema, xOf);
 
-    normalizedSchema = { [xOf]: [...(schema[xOf] || []), objectSchema] };
-  }
   return {
     [xOf]: (normalizedSchema[xOf] || []).map(entry =>
       parseSchema(
@@ -252,6 +240,25 @@ function parseXOfSchema(
       )
     )
   };
+}
+
+function normalizeSchema(
+  schema: OpenAPIV3.NonArraySchemaObject,
+  xOf: 'oneOf' | 'allOf' | 'anyOf'
+): OpenAPIV3.NonArraySchemaObject {
+  if (
+    schema.properties ||
+    (schema.additionalProperties &&
+      typeof schema.additionalProperties === 'object')
+  ) {
+    logger.info(
+      `Detected schema with ${xOf} and properties in the same level. This was refactored to a schema with ${xOf} only, containing all the properties from the top level.`
+    );
+
+    const { [xOf]: xOfSchema = [], ...objectSchema } = schema;
+    return { [xOf]: [...xOfSchema, objectSchema] };
+  }
+  return schema;
 }
 
 /**

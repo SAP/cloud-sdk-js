@@ -5,7 +5,7 @@
  */
 import type { TestEntity } from './test-entity';
 /**
- * Representation of the 'EntityXOfInheritance' schema.
+ * Composition of extended properties (inheritance) and schema-specific properties together with required attribute.
  */
 export type EntityXOfInheritance = TestEntity & {
   booleanProperty: boolean;

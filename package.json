@@ -38,8 +38,10 @@
     "test-packages/test-services-e2e",
     "test-packages/type-tests",
     "test-packages/self-tests",
+    "build-packages/changesets-fixed-version-bump",
     "build-packages/check-pr",
-    "build-packages/get-changelog"
+    "build-packages/get-changelog",
+    "build-packages/merge-changelogs"
   ],
   "tsd": {
     "directory": "test-packages/type-tests/test-new"
@@ -57,9 +59,7 @@
     "generate": "turbo run generate --force",
     "readme": "turbo run readme",
     "doc": "ts-node scripts/generate-docs.ts",
-    "preversion": "ts-node scripts/before-bump.ts",
     "version": "changeset version",
-    "postversion": "yarn generate && yarn doc && ts-node scripts/after-bump.ts",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix --force",
     "checks": "turbo run check && yarn run check:circular && yarn run check:license && yarn run check:test-service",

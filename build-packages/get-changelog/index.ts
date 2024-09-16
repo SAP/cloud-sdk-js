@@ -1,8 +1,10 @@
 import { setOutput, setFailed } from '@actions/core';
 import { getChangelog } from '../../scripts/get-changelog';
 
-try {
-  setOutput('changelog', getChangelog());
-} catch (error) {
-  setFailed(error.message);
-}
+(async () => {
+  try {
+    setOutput('changelog', await getChangelog());
+  } catch (error) {
+    setFailed(error.message);
+  }
+})();

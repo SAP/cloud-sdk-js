@@ -42,14 +42,6 @@ export function parseSchema(
     return parseArraySchema(schema, refs, options);
   }
 
-  if (
-    schema.type === 'object' ||
-    schema.properties ||
-    'additionalProperties' in schema
-  ) {
-    return parseObjectSchema(schema, refs, options);
-  }
-
   if (schema.enum?.length) {
     return parseEnumSchema(schema, options);
   }
@@ -64,6 +56,16 @@ export function parseSchema(
 
   if (schema.anyOf?.length) {
     return parseXOfSchema(schema, refs, 'anyOf', options);
+  }
+
+  // An object schema should be parsed after allOf, anyOf, oneOf.
+  // When object.properties are at the same level with anyOf, oneOf, allOf, they should be treated as part of allOf, etc.
+  if (
+    schema.type === 'object' ||
+    schema.properties ||
+    schema.additionalProperties
+  ) {
+    return parseObjectSchema(schema, refs, options);
   }
 
   if (schema.not) {
@@ -223,9 +225,40 @@ function parseXOfSchema(
   xOf: 'oneOf' | 'allOf' | 'anyOf',
   options: ParserOptions
 ): any {
+  const normalizedSchema = normalizeSchema(schema, xOf);
+
   return {
-    [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry, refs, options))
+    [xOf]: (normalizedSchema[xOf] || []).map(entry =>
+      parseSchema(
+        {
+          ...entry,
+          required: [
+            // Add required properties from the entry.
+            ...('required' in entry && entry.required ? entry.required : []),
+            // Add required properties from the top level schema (xOf).
+            ...(normalizedSchema.required || [])
+          ]
+        },
+        refs,
+        options
+      )
+    )
   };
+}
+
+function normalizeSchema(
+  schema: OpenAPIV3.NonArraySchemaObject,
+  xOf: 'oneOf' | 'allOf' | 'anyOf'
+): OpenAPIV3.NonArraySchemaObject {
+  if (schema.properties || schema.additionalProperties) {
+    logger.info(
+      `Detected schema with ${xOf} and properties in the same level. This was refactored to a schema with ${xOf} only, containing all the properties from the top level.`
+    );
+
+    const { [xOf]: xOfSchema = [], ...objectSchema } = schema;
+    return { [xOf]: [...xOfSchema, objectSchema] };
+  }
+  return schema;
 }
 
 /**

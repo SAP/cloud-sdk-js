@@ -54,3 +54,26 @@ definitions:
         type: integer
         description: An integer property
         required: false
+  EntityXOfInheritance:
+    type: object
+    description: Composition of extended properties (inheritance) and schema-specific properties together with required attribute.
+    allOf:
+      - $ref: '#/definitions/TestEntity'
+      - properties:
+          booleanProperty:
+            type: boolean
+            required: false
+          integerProperty2:
+            type: integer
+    required:
+      - booleanProperty
+  EntityXOfNormalizedWithObject:
+    type: object
+    description: Entity with xOf and schema properties at same level. This is normalized to only xOf with schema properties inside xOf. Also works if only additionalProperties true is used.
+    anyOf:
+      - $ref: '#/definitions/TestEntity'
+    properties:
+      booleanProperty:
+        type: boolean
+    required:
+      - booleanProperty

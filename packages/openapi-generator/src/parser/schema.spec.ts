@@ -416,6 +416,110 @@ describe('parseSchema', () => {
     );
   });
 
+  it('parses xOf schema ignoring type:object at same level', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      type: 'object',
+      oneOf: [
+        { type: 'object' },
+        {
+          anyOf: [
+            { type: 'object' },
+            { allOf: [{ type: 'object' }, { type: 'string' }] }
+          ]
+        }
+      ]
+    };
+    expect(parseSchema(schema, await createTestRefs(), defaultOptions)).toEqual(
+      {
+        oneOf: [
+          emptyObjectSchema,
+          {
+            anyOf: [
+              emptyObjectSchema,
+              { allOf: [emptyObjectSchema, { type: 'string' }] }
+            ]
+          }
+        ]
+      }
+    );
+  });
+
+  it('normalizes xOf schemas with properties at same level', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      type: 'object',
+      properties: { prop1: { type: 'string' } },
+      oneOf: [
+        { type: 'object' },
+        {
+          allOf: [{ type: 'object' }, { type: 'string' }]
+        }
+      ]
+    };
+    expect(parseSchema(schema, await createTestRefs(), defaultOptions)).toEqual(
+      {
+        oneOf: [
+          emptyObjectSchema,
+          { allOf: [emptyObjectSchema, { type: 'string' }] },
+          {
+            additionalProperties: { type: 'any' },
+            properties: [
+              {
+                name: 'prop1',
+                description: undefined,
+                required: false,
+                schema: {
+                  type: 'string'
+                },
+                schemaProperties: {}
+              }
+            ]
+          }
+        ]
+      }
+    );
+  });
+
+  it('parses xOf schemas with required', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      oneOf: [
+        { type: 'object' },
+        {
+          allOf: [
+            { type: 'object', properties: { prop1: { type: 'string' } } },
+            { type: 'string' }
+          ],
+          required: ['prop1']
+        }
+      ]
+    };
+    expect(parseSchema(schema, await createTestRefs(), defaultOptions)).toEqual(
+      {
+        oneOf: [
+          emptyObjectSchema,
+          {
+            allOf: [
+              {
+                additionalProperties: { type: 'any' },
+                properties: [
+                  {
+                    name: 'prop1',
+                    description: undefined,
+                    required: true,
+                    schema: {
+                      type: 'string'
+                    },
+                    schemaProperties: {}
+                  }
+                ]
+              },
+              { type: 'string' }
+            ]
+          }
+        ]
+      }
+    );
+  });
+
   it('parses not schema', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       not: { type: 'object' }

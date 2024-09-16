@@ -231,7 +231,9 @@ function parseXOfSchema(
         {
           ...entry,
           required: [
+            // Add required properties from the entry.
             ...('required' in entry && entry.required ? entry.required : []),
+            // Add required properties from the top level schema (xOf).
             ...(normalizedSchema.required || [])
           ]
         },

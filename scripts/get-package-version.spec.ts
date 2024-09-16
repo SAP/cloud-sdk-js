@@ -7,19 +7,21 @@ describe('get package version', () => {
     mock.restore();
   });
 
-  it('returns the version of the package json in the same directory', () => {
+  it('returns the version of the package json in the same directory', async () => {
     mock({
       'package.json': `{ "version": "1.2.3" }`
     });
-    expect(getPackageVersion()).toBe('1.2.3');
+    expect(await getPackageVersion()).toEqual('1.2.3');
   });
 
-  it('returns the version of a designated package json', () => {
+  it('returns the version of a designated package json', async () => {
     mock({
       dir: {
         'package.json': `{ "version": "4.5.6" }`
       }
     });
-    expect(getPackageVersion(resolve('dir', 'package.json'))).toBe('4.5.6');
+    expect(await getPackageVersion(resolve('dir', 'package.json'))).toEqual(
+      '4.5.6'
+    );
   });
 });

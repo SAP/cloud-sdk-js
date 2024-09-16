@@ -1,13 +1,11 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
-import { isReferenceObject } from '../schema-util';
 import { parseSchema, parseSchemaProperties } from './schema';
 import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';
 import { ParserOptions } from './options';
 import { parseBound } from './swagger-parser-workaround';
-import { tr } from 'voca';
 
 /**
  * Parse an OpenAPI document.

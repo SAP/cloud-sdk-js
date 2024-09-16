@@ -7,6 +7,7 @@ import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';
 import { ParserOptions } from './options';
 import { parseBound } from './swagger-parser-workaround';
+import { tr } from 'voca';
 
 /**
  * Parse an OpenAPI document.
@@ -48,7 +49,7 @@ export function parseSchemas(
       schema: parseSchema(schema, refs, options),
       description: refs.resolveObject(schema).description,
       schemaProperties: parseSchemaProperties(schema),
-      nullable: (!isReferenceObject(schema) && schema.nullable) ?? false
+      nullable: 'nullable' in schema && schema.nullable ? true : false
     })
   );
 }

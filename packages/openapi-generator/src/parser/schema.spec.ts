@@ -467,6 +467,7 @@ describe('parseSchema', () => {
                 name: 'prop1',
                 description: undefined,
                 required: false,
+                nullable: false,
                 schema: {
                   type: 'string'
                 },
@@ -505,6 +506,7 @@ describe('parseSchema', () => {
                     name: 'prop1',
                     description: undefined,
                     required: true,
+                    nullable: false,
                     schema: {
                       type: 'string'
                     },

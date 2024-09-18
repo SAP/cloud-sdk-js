@@ -28,7 +28,7 @@ import { packageJson } from './file-serializer/package-json';
 import { readme } from './file-serializer/readme';
 import { schemaFile } from './file-serializer/schema-file';
 import { apiIndexFile, schemaIndexFile } from './file-serializer/index-file';
-import { OpenApiDocument } from './openapi-types';
+import { OpenApiDocument, OpenApiOneOfSchema } from './openapi-types';
 import { parseOpenApiDocument } from './parser/document';
 import { convertOpenApiSpec } from './document-converter';
 import { sdkMetadata } from './sdk-metadata';
@@ -38,6 +38,7 @@ import {
   ParsedGeneratorOptions,
   tsconfigJson
 } from './options';
+import { isAllOfSchema, isOneOfSchema, isReferenceObject } from './schema-util';
 
 const { mkdir } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -270,6 +271,8 @@ async function generateService(
     }
   );
 
+  sanitizeDiscriminatedSchemas(parsedOpenApiDocument);
+
   const serviceDir = resolve(options.outputDir, serviceOptions.directoryName);
   await generateSources(
     serviceDir,
@@ -280,6 +283,8 @@ async function generateService(
   );
   logger.info(`Successfully generated client for '${inputFilePath}'`);
 }
+
+
 
 async function generateReadme(
   serviceDir: string,

@@ -5,7 +5,7 @@ import { parseOpenApiDocument } from './document';
 import * as api from './api';
 
 const options = { strictNaming: true, schemaPrefix: '' };
-describe('parseOpenApiDocument', () => {
+describe('parseOpenApiDocument()', () => {
   it('does not modify input service specification', () => {
     const input: OpenAPIV3.Document = {
       ...emptyDocument,
@@ -97,6 +97,93 @@ describe('parseOpenApiDocument', () => {
         nullable: false,
         schema: {
           type: 'string'
+        },
+        schemaProperties: {}
+      }
+    ]);
+  });
+
+  it.only('parses discriminator schema with circular references', async () => {
+    const components: OpenAPIV3.ComponentsObject = {
+      schemas: {
+        DiscriminatorSchema: {
+          properties: {
+            discriminatingProp: { type: 'string' }
+          },
+          discriminator: {
+            propertyName: 'discriminatingProp',
+            mapping: {
+              a: '#/components/schemas/SchemaA'
+            }
+          }
+        },
+        SchemaA: {
+          allOf: [
+            { $ref: '#/components/schemas/DiscriminatorSchema' },
+            {
+              properties: {
+                b: { type: 'string' }
+              },
+              additionalProperties: false
+            }
+          ]
+        }
+      }
+    };
+
+    const document: OpenAPIV3.Document = getDocument(
+      getResponse('DiscriminatorSchema'),
+      components
+    );
+
+    const parsed = await parseOpenApiDocument(
+      document,
+      { directoryName: 'myService' } as ServiceOptions,
+      options
+    );
+    expect(parsed.schemas).toStrictEqual([
+      {
+        description: undefined,
+        schemaName: 'DiscriminatorSchema',
+        fileName: 'discriminator-schema',
+        nullable: false,
+        schema: {
+          oneOf: [],
+          discriminator: {
+            propertyName: 'discriminatingProp',
+            mapping: {
+              a: {
+                $ref: '#/components/schemas/SchemaA',
+                fileName: 'schema-a',
+                schemaName: 'SchemaA'
+              }
+            }
+          }
+        },
+        schemaProperties: {}
+      },
+      {
+        description: undefined,
+        schemaName: 'SchemaA',
+        fileName: 'schema-a',
+        nullable: false,
+        schema: {
+          allOf: [
+            {
+              properties: [
+                {
+                  name: 'b',
+                  description: undefined,
+                  nullable: false,
+                  required: false,
+                  schema: {
+                    type: 'string'
+                  },
+                  schemaProperties: {}
+                }
+              ]
+            }
+          ]
         },
         schemaProperties: {}
       }

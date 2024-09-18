@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 3.21.0
+
+### Minor Changes
+
+- d2a2394: [Improvement] Update generation of properties with `nullable: true` in the spec to include `type | null` in the output types.
+- d2a2394: [Improvement] Normalize schemas that have `allOf`, `anyOf`, or `oneOf` alongside properties defined at the same level.
+- 89f77cd: [Improvement] Configure generated OpenAPI clients to handle `text/plain`, `application/octet-stream`, and wildcard `*/*` content types in response headers.
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.21.0
+- @sap-cloud-sdk/openapi@3.21.0
+- @sap-cloud-sdk/util@3.21.0
+
 ## 3.20.0
 
 ### Patch Changes

@@ -27,6 +27,14 @@
 ### Implementation changed
 
 - 
+# 3.21.0
+
+
+## Improvements
+
+- [openapi-generator] Update generation of properties with `nullable: true` in the spec to include `type | null` in the output types. (d2a2394)
+- [openapi-generator] Normalize schemas that have `allOf`, `anyOf`, or `oneOf` alongside properties defined at the same level. (d2a2394)
+- [openapi-generator] Configure generated OpenAPI clients to handle `text/plain`, `application/octet-stream`, and wildcard `*/*` content types in response headers. (89f77cd)
 
 # 3.20.0
 

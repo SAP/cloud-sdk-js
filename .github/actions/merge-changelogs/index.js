@@ -52,7 +52,7 @@ function assertGroups(groups, packageName, version) {
 }
 function parseContent(content, version, packageName) {
     // Explanation: https://regex101.com/r/ikvIaa/2
-    const contentRegex = /- ((?<commit>.*):) (\[(?<type>.*?)\])? ?(?<summary>[^]*?)(?=(\n- |\n### |$))/g;
+    const contentRegex = /- ((?<commit>\w*):) (\[(?<type>.*?)\])? ?(?<summary>[^]*?)(?=(\n- |\n### |$))/g;
     return [...content.matchAll(contentRegex)].map(({ groups }) => {
         assertGroups(groups, packageName, version);
         return {

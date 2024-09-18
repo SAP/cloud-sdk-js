@@ -92,7 +92,7 @@ function validateChangesets(preamble, commitType, isBreaking, fileContents) {
         const matches = content.match(/\[([^\]]+)\]/g);
         return matches ? matches.map(match => match.slice(1, -1)) : [];
     });
-    if (preamble !== 'chore' && !changeTypes.length) {
+    if (!preamble.startsWith('chore') && !changeTypes.length) {
         return (0, core_1.setFailed)('Missing change type in changeset.');
     }
     const allChangeTypesMatch = changeTypes.every(type => allowedChangeTypes.includes(type));

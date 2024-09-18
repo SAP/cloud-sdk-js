@@ -3,6 +3,7 @@ import { OpenAPIV3 } from 'openapi-types';
 import { isReferenceObject } from '../schema-util';
 import {
   OpenApiArraySchema,
+  OpenApiDiscriminator,
   OpenApiEnumSchema,
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty,
@@ -46,7 +47,7 @@ export function parseSchema(
     return parseEnumSchema(schema, options);
   }
 
-  if (schema.oneOf?.length) {
+  if (schema.oneOf?.length || schema.discriminator) {
     return parseXOfSchema(schema, refs, 'oneOf', options);
   }
 
@@ -119,6 +120,9 @@ function parseObjectSchema(
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiObjectSchema {
+  if (schema.discriminator) {
+    return parseXOfSchema(schema, refs, 'oneOf', options);
+  }
   const properties = parseObjectSchemaProperties(schema, refs, options);
 
   if (schema.additionalProperties === false) {
@@ -227,7 +231,7 @@ function parseXOfSchema(
 ): any {
   const normalizedSchema = normalizeSchema(schema, xOf);
 
-  return {
+  const xOfSchema = {
     [xOf]: (normalizedSchema[xOf] || []).map(entry =>
       parseSchema(
         {
@@ -243,10 +247,52 @@ function parseXOfSchema(
         options
       )
     )
+    // TODO: is title right?
+    // discriminator: { ...schema.discriminator }
+  };
+
+  if (schema.discriminator && xOf !== 'allOf') {
+    return {
+      ...xOfSchema,
+      discriminator: parseDiscriminator(schema, refs, xOf, options)
+    };
+  }
+
+  return xOfSchema;
+}
+
+function parseDiscriminator(
+  schema: OpenAPIV3.NonArraySchemaObject,
+  refs: OpenApiDocumentRefs,
+  xOf: 'oneOf' | 'anyOf',
+  options: ParserOptions
+): OpenApiDiscriminator {
+  const { discriminator } = schema;
+
+  if (!discriminator) {
+    throw new Error(
+      'Could not parse discriminator schema without discriminator.'
+    );
+  }
+
+  const discriminatorMapping = getDiscriminatorMapping(schema, xOf);
+
+  return {
+    propertyName: discriminator.propertyName,
+    mapping: Object.entries(discriminatorMapping).reduce(
+      (mapping, [propertyValue, schemaMapping]) => ({
+        ...mapping,
+        [propertyValue]: parseSchema({ $ref: schemaMapping }, refs, options)
+      }),
+      {}
+    )
   };
 }
 
-function normalizeSchema(
+/**
+ * @internal
+ */
+export function normalizeSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   xOf: 'oneOf' | 'allOf' | 'anyOf'
 ): OpenAPIV3.NonArraySchemaObject {
@@ -293,4 +339,23 @@ export function parseSchemaProperties(
     }
     return properties;
   }, {});
+}
+
+function getDiscriminatorMapping(
+  schema: OpenAPIV3.NonArraySchemaObject,
+  xOf: 'oneOf' | 'anyOf'
+): Record<string, string> {
+  return (
+    schema.discriminator?.mapping ||
+    (schema[xOf] || [])
+      .filter(subSchema => isReferenceObject(subSchema))
+      .reduce((mapping, subSchema) => {
+        const originalSchemaName = subSchema.$ref.split('/').reverse()[0];
+
+        return {
+          ...mapping,
+          [originalSchemaName]: subSchema.$ref
+        };
+      }, {})
+  );
 }

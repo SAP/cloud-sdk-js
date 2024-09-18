@@ -2,7 +2,9 @@ import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
   OpenApiObjectSchema,
-  OpenApiObjectSchemaProperty
+  OpenApiObjectSchemaProperty,
+  OpenApiOneOfSchema,
+  OpenApiAnyOfSchema
 } from '../openapi-types';
 import { getType } from '../parser/type-mapping';
 import {
@@ -48,6 +50,10 @@ export function serializeSchema(schema: OpenApiSchema): string {
   }
 
   if (isOneOfSchema(schema)) {
+    if (schema.discriminator) {
+      return serializeXOfSchemaWithDiscriminator(schema);
+    }
+
     return schema.oneOf.map(type => serializeSchema(type)).join(' | ');
   }
 
@@ -56,6 +62,9 @@ export function serializeSchema(schema: OpenApiSchema): string {
   }
 
   if (isAnyOfSchema(schema)) {
+    if (schema.discriminator) {
+      return serializeXOfSchemaWithDiscriminator(schema);
+    }
     return schema.anyOf.map(type => serializeSchema(type)).join(' | ');
   }
 
@@ -137,4 +146,23 @@ export function schemaPropertyDocumentation(
   signature.push(...getSchemaPropertiesDocumentation(schema.schemaProperties));
 
   return documentationBlock`${signature.join(unixEOL)}`;
+}
+
+function serializeXOfSchemaWithDiscriminator(
+  schema: OpenApiOneOfSchema | OpenApiAnyOfSchema
+) {
+  const { discriminator } = schema;
+
+  if (!discriminator) {
+    throw new Error(
+      'Could not serialize discriminator schema without discriminator.'
+    );
+  }
+
+  return Object.entries(discriminator.mapping)
+    .map(
+      ([propertyValue, mappedSchema]) =>
+        `({ ${discriminator.propertyName}: '${propertyValue}' } & ${serializeSchema(mappedSchema)})`
+    )
+    .join(' | ');
 }

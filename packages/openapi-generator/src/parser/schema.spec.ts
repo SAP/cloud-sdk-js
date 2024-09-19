@@ -538,127 +538,131 @@ describe('schema parser', () => {
       });
     });
 
-    it('adds discriminator when discriminator has mapping', async () => {
-      const discriminator = {
-        propertyName: 'discriminatingProperty',
-        mapping: {
-          a: '#/components/schemas/SchemaA',
-          b: '#/components/schemas/SchemaB'
-        }
-      };
-      expect(
-        parseSchema(
-          {
-            oneOf: [
-              { $ref: '#/components/schemas/SchemaA' },
-              { $ref: '#/components/schemas/SchemaB' }
-            ],
-            discriminator
-          },
-          await createTestRefs({
-            schemas: {
-              SchemaA: { properties: { c: { type: 'string' } } },
-              SchemaB: { properties: { c: { type: 'integer' } } }
+    describe('schemas with discriminator', () => {
+      const components: OpenAPIV3.ComponentsObject = {
+        schemas: {
+          SchemaA: {
+            properties: {
+              c: { type: 'string' },
+              discriminatingProperty: { type: 'string' }
             }
-          }),
-          defaultOptions
-        )
-      ).toEqual(
-        expect.objectContaining({
-          discriminator: {
-            propertyName: discriminator.propertyName,
-            mapping: {
-              a: {
-                $ref: '#/components/schemas/SchemaA',
-                schemaName: 'SchemaA',
-                fileName: 'schema-a'
-              },
-              b: {
-                $ref: '#/components/schemas/SchemaB',
-                schemaName: 'SchemaB',
-                fileName: 'schema-b'
-              }
+          },
+          SchemaB: {
+            properties: {
+              c: { type: 'integer' },
+              discriminatingProperty: { type: 'string' }
             }
           }
-        })
-      );
-    });
-
-    it('adds discriminator mapping when discriminator has no mapping', async () => {
-      const discriminator = {
-        propertyName: 'discriminatingProperty',
-        mapping: {
-          SchemaA: '#/components/schemas/SchemaA',
-          SchemaB: '#/components/schemas/SchemaB'
         }
       };
-      expect(
-        parseSchema(
-          {
-            oneOf: [
-              { $ref: '#/components/schemas/SchemaA' },
-              { $ref: '#/components/schemas/SchemaB' }
-            ],
+
+      it('adds discriminator when discriminator has mapping', async () => {
+        const discriminator = {
+          propertyName: 'discriminatingProperty',
+          mapping: {
+            a: '#/components/schemas/SchemaA',
+            b: '#/components/schemas/SchemaB'
+          }
+        };
+        expect(
+          parseSchema(
+            {
+              oneOf: [
+                { $ref: '#/components/schemas/SchemaA' },
+                { $ref: '#/components/schemas/SchemaB' }
+              ],
+              discriminator
+            },
+            await createTestRefs(components),
+            defaultOptions
+          )
+        ).toEqual(
+          expect.objectContaining({
             discriminator: {
-              propertyName: discriminator.propertyName
-            }
-          },
-          await createTestRefs({
-            schemas: {
-              SchemaA: { properties: { c: { type: 'string' } } },
-              SchemaB: { properties: { c: { type: 'integer' } } }
-            }
-          }),
-          defaultOptions
-        )
-      ).toEqual(
-        expect.objectContaining({
-          discriminator: {
-            propertyName: discriminator.propertyName,
-            mapping: {
-              SchemaA: {
-                $ref: '#/components/schemas/SchemaA',
-                schemaName: 'SchemaA',
-                fileName: 'schema-a'
-              },
-              SchemaB: {
-                $ref: '#/components/schemas/SchemaB',
-                schemaName: 'SchemaB',
-                fileName: 'schema-b'
+              propertyName: discriminator.propertyName,
+              mapping: {
+                a: {
+                  $ref: '#/components/schemas/SchemaA',
+                  schemaName: 'SchemaA',
+                  fileName: 'schema-a'
+                },
+                b: {
+                  $ref: '#/components/schemas/SchemaB',
+                  schemaName: 'SchemaB',
+                  fileName: 'schema-b'
+                }
               }
             }
-          }
-        })
-      );
-    });
+          })
+        );
+      });
 
-    it('parses as oneOf if there is a discriminator', async () => {
-      const discriminator = {
-        propertyName: 'discriminatingProperty',
-        mapping: {
-          a: '#/components/schemas/SchemaA',
-          b: '#/components/schemas/SchemaB'
-        }
-      };
-      expect(
-        parseSchema(
-          {
-            type: 'object',
-            discriminator
-          },
-          await createTestRefs({
-            schemas: {
-              SchemaA: { properties: { c: { type: 'string' } } },
-              SchemaB: { properties: { c: { type: 'integer' } } }
+      it('adds discriminator mapping when discriminator has no mapping', async () => {
+        const discriminator = {
+          propertyName: 'discriminatingProperty',
+          mapping: {
+            SchemaA: '#/components/schemas/SchemaA',
+            SchemaB: '#/components/schemas/SchemaB'
+          }
+        };
+        expect(
+          parseSchema(
+            {
+              oneOf: [
+                { $ref: '#/components/schemas/SchemaA' },
+                { $ref: '#/components/schemas/SchemaB' }
+              ],
+              discriminator: {
+                propertyName: discriminator.propertyName
+              }
+            },
+            await createTestRefs(components),
+            defaultOptions
+          )
+        ).toEqual(
+          expect.objectContaining({
+            discriminator: {
+              propertyName: discriminator.propertyName,
+              mapping: {
+                SchemaA: {
+                  $ref: '#/components/schemas/SchemaA',
+                  schemaName: 'SchemaA',
+                  fileName: 'schema-a'
+                },
+                SchemaB: {
+                  $ref: '#/components/schemas/SchemaB',
+                  schemaName: 'SchemaB',
+                  fileName: 'schema-b'
+                }
+              }
             }
-          }),
-          defaultOptions
-        )
-      ).toEqual(
-        expect.objectContaining({
-          oneOf: []
-        })
-      );
+          })
+        );
+      });
+
+      it('parses as oneOf if there is a discriminator', async () => {
+        const discriminator = {
+          propertyName: 'discriminatingProperty',
+          mapping: {
+            a: '#/components/schemas/SchemaA',
+            b: '#/components/schemas/SchemaB'
+          }
+        };
+        expect(
+          parseSchema(
+            {
+              type: 'object',
+              discriminator
+            },
+            await createTestRefs(components),
+            defaultOptions
+          )
+        ).toEqual(
+          expect.objectContaining({
+            oneOf: []
+          })
+        );
+      });
     });
   });
 });

@@ -940,7 +940,7 @@
           "propertyName": "stringProperty",
           "mapping": {
             "simple": "#/components/schemas/SimpleTestEntity",
-            "other-simple": "#/components/schemas/TestEntity"
+            "other-simple": "#/components/schemas/OtherSimpleTestEntity"
           }
         }
       },

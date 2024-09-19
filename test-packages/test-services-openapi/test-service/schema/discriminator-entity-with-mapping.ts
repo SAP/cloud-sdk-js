@@ -5,10 +5,9 @@
  */
 import type { SimpleTestEntity } from './simple-test-entity';
 import type { OtherSimpleTestEntity } from './other-simple-test-entity';
-import type { TestEntity } from './test-entity';
 /**
  * Representation of the 'DiscriminatorEntityWithMapping' schema.
  */
 export type DiscriminatorEntityWithMapping =
   | ({ stringProperty: 'simple' } & SimpleTestEntity)
-  | ({ stringProperty: 'other-simple' } & TestEntity);
+  | ({ stringProperty: 'other-simple' } & OtherSimpleTestEntity);

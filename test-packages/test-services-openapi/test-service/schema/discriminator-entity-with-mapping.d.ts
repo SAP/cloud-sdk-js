@@ -13,5 +13,5 @@ export type DiscriminatorEntityWithMapping =
       stringProperty: 'simple';
     } & SimpleTestEntity)
   | ({
-      stringProperty: 'not-simple';
+      stringProperty: 'other-simple';
     } & TestEntity);

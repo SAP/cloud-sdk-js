@@ -76,22 +76,15 @@ async function sanitizeDiscriminatedSchemas(
             ) {
               return childChildSchema;
             }
+            // childChildSchema is the parent
             const resolvedReference =
               refs.resolveObject<OpenAPIV3.NonArraySchemaObject>(
                 childChildSchema
               );
-            if (!resolvedReference.discriminator) {
-              throw new Error(
-                `Incorrectly resolved discriminator schema ${discriminatorSchema.schemaName} to a schema without discriminator.`
-              );
-            }
+
             return parseObjectSchema(
               {
-                properties: resolvedReference.properties || {
-                  [resolvedReference.discriminator.propertyName]: {
-                    type: 'string'
-                  }
-                },
+                properties: resolvedReference.properties,
                 additionalProperties: false,
                 required: resolvedReference.required
               },

@@ -934,20 +934,20 @@
       "DiscriminatorEntityWithMapping": {
         "oneOf": [
           { "$ref": "#/components/schemas/SimpleTestEntity" },
-          { "$ref": "#/components/schemas/TestEntity" }
+          { "$ref": "#/components/schemas/OtherSimpleTestEntity" }
         ],
         "discriminator": {
           "propertyName": "stringProperty",
           "mapping": {
             "simple": "#/components/schemas/SimpleTestEntity",
-            "not-simple": "#/components/schemas/TestEntity"
+            "other-simple": "#/components/schemas/TestEntity"
           }
         }
       },
       "DiscriminatorEntityWithoutMapping": {
         "oneOf": [
           { "$ref": "#/components/schemas/SimpleTestEntity" },
-          { "$ref": "#/components/schemas/TestEntity" }
+          { "$ref": "#/components/schemas/OtherSimpleTestEntity" }
         ],
         "discriminator": {
           "propertyName": "stringProperty"
@@ -964,7 +964,8 @@
         },
         "properties": {
           "child": { "type": "string" }
-        }
+        },
+        "required": ["child"]
       },
       "DiscriminatorObjectEntityWorkaroundChildA": {
         "allOf": [

@@ -8,7 +8,7 @@
  * Representation of the 'DiscriminatorObjectEntityWorkaroundChildA' schema.
  */
 export type DiscriminatorObjectEntityWorkaroundChildA = {
-  child?: string;
+  child: string;
 } & {
   otherProperty?: string;
 } & Record<string, any>;

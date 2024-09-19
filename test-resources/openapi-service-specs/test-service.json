@@ -933,25 +933,41 @@
       },
       "DiscriminatorEntityWithMapping": {
         "oneOf": [
-          { "$ref": "#/components/schemas/SimpleTestEntity" },
-          { "$ref": "#/components/schemas/OtherSimpleTestEntity" }
+          { "$ref": "#/components/schemas/DiscriminatorEntityChildA" },
+          { "$ref": "#/components/schemas/DiscriminatorEntityChildB" }
         ],
         "discriminator": {
-          "propertyName": "stringProperty",
+          "propertyName": "type",
           "mapping": {
-            "simple": "#/components/schemas/SimpleTestEntity",
-            "other-simple": "#/components/schemas/OtherSimpleTestEntity"
+            "child-a": "#/components/schemas/DiscriminatorEntityChildA",
+            "child-b": "#/components/schemas/DiscriminatorEntityChildB"
           }
         }
       },
       "DiscriminatorEntityWithoutMapping": {
         "oneOf": [
-          { "$ref": "#/components/schemas/SimpleTestEntity" },
-          { "$ref": "#/components/schemas/OtherSimpleTestEntity" }
+          { "$ref": "#/components/schemas/DiscriminatorEntityChildA" },
+          { "$ref": "#/components/schemas/DiscriminatorEntityChildB" }
         ],
         "discriminator": {
-          "propertyName": "stringProperty"
+          "propertyName": "type"
         }
+      },
+      "DiscriminatorEntityChildA": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "otherProperty": { "type": "integer" }
+        },
+        "required": ["type"]
+      },
+      "DiscriminatorEntityChildB": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "otherProperty": { "type": "string" }
+        },
+        "required": ["type", "otherProperty"]
       },
       "DiscriminatorObjectEntityWorkaroundParent": {
         "type": "object",

@@ -30,6 +30,8 @@ __exportStar(require("./cyclic-parent"), exports);
 __exportStar(require("./cyclic-child"), exports);
 __exportStar(require("./discriminator-entity-with-mapping"), exports);
 __exportStar(require("./discriminator-entity-without-mapping"), exports);
+__exportStar(require("./discriminator-entity-child-a"), exports);
+__exportStar(require("./discriminator-entity-child-b"), exports);
 __exportStar(require("./discriminator-object-entity-workaround-parent"), exports);
 __exportStar(require("./discriminator-object-entity-workaround-child-a"), exports);
 __exportStar(require("./discriminator-object-entity-workaround-child-b"), exports);

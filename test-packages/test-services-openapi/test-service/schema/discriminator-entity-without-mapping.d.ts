@@ -3,15 +3,15 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import type { SimpleTestEntity } from './simple-test-entity';
-import type { OtherSimpleTestEntity } from './other-simple-test-entity';
+import type { DiscriminatorEntityChildA } from './discriminator-entity-child-a';
+import type { DiscriminatorEntityChildB } from './discriminator-entity-child-b';
 /**
  * Representation of the 'DiscriminatorEntityWithoutMapping' schema.
  */
 export type DiscriminatorEntityWithoutMapping =
   | ({
-      stringProperty: 'SimpleTestEntity';
-    } & SimpleTestEntity)
+      type: 'DiscriminatorEntityChildA';
+    } & DiscriminatorEntityChildA)
   | ({
-      stringProperty: 'OtherSimpleTestEntity';
-    } & OtherSimpleTestEntity);
+      type: 'DiscriminatorEntityChildB';
+    } & DiscriminatorEntityChildB);

@@ -248,8 +248,6 @@ function parseXOfSchema(
         options
       )
     )
-    // TODO: is title right?
-    // discriminator: { ...schema.discriminator }
   };
 
   if (schema.discriminator && xOf !== 'allOf') {

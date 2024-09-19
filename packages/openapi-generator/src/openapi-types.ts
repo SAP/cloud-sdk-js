@@ -290,13 +290,13 @@ export interface OpenApiObjectSchema {
 }
 
 /**
- * TODO: document.
+ * Parsed discriminator of a `oneOf` or `anyOf` schema.
+ * @internal
  */
 export type OpenApiDiscriminator = Omit<
   OpenAPIV3.DiscriminatorObject,
   'mapping'
 > & {
-  // originalRef: string;
   mapping: Record<string, OpenApiReferenceSchema>;
 };
 
@@ -310,7 +310,7 @@ export interface OpenApiOneOfSchema {
    */
   oneOf: OpenApiSchema[];
   /**
-   * TODO: document.
+   * Represents a discriminator.
    */
   discriminator?: OpenApiDiscriminator;
 }
@@ -336,7 +336,7 @@ export interface OpenApiAnyOfSchema {
    */
   anyOf: OpenApiSchema[];
   /**
-   * TODO: document.
+   * Represents a discriminator.
    */
   discriminator?: OpenApiDiscriminator;
 }

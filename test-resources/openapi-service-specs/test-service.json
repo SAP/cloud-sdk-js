@@ -930,6 +930,64 @@
         "properties": {
           "parent": { "$ref": "#/components/schemas/CyclicParent" }
         }
+      },
+      "DiscriminatorEntityWithMapping": {
+        "oneOf": [
+          { "$ref": "#/components/schemas/SimpleTestEntity" },
+          { "$ref": "#/components/schemas/TestEntity" }
+        ],
+        "discriminator": {
+          "propertyName": "stringProperty",
+          "mapping": {
+            "simple": "#/components/schemas/SimpleTestEntity",
+            "not-simple": "#/components/schemas/TestEntity"
+          }
+        }
+      },
+      "DiscriminatorEntityWithoutMapping": {
+        "oneOf": [
+          { "$ref": "#/components/schemas/SimpleTestEntity" },
+          { "$ref": "#/components/schemas/TestEntity" }
+        ],
+        "discriminator": {
+          "propertyName": "stringProperty"
+        }
+      },
+      "DiscriminatorObjectEntityWorkaroundParent": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "child",
+          "mapping": {
+            "a": "#/components/schemas/DiscriminatorObjectEntityWorkaroundChildA",
+            "b": "#/components/schemas/DiscriminatorObjectEntityWorkaroundChildB"
+          }
+        }
+      },
+      "DiscriminatorObjectEntityWorkaroundChildA": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DiscriminatorObjectEntityWorkaroundParent"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "otherProperty": { "type": "string" }
+            }
+          }
+        ]
+      },
+      "DiscriminatorObjectEntityWorkaroundChildB": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DiscriminatorObjectEntityWorkaroundParent"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "otherProperty": { "type": "integer" }
+            }
+          }
+        ]
       }
     }
   }

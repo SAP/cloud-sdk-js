@@ -12,3 +12,8 @@ export * from './simple-test-entity-with-symbols-1';
 export * from './complex-test-entity';
 export * from './cyclic-parent';
 export * from './cyclic-child';
+export * from './discriminator-entity-with-mapping';
+export * from './discriminator-entity-without-mapping';
+export * from './discriminator-object-entity-workaround-parent';
+export * from './discriminator-object-entity-workaround-child-a';
+export * from './discriminator-object-entity-workaround-child-b';

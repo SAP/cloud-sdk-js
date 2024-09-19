@@ -71,26 +71,22 @@ async function sanitizeDiscriminatedSchemas(
         childSchema.schema.allOf = childSchema.schema.allOf.map(
           childChildSchema => {
             if (
-              !isReferenceObject(childChildSchema) ||
-              childChildSchema.schemaName !== discriminatorSchema.schemaName
+              isReferenceObject(childChildSchema) &&
+              childChildSchema.schemaName == discriminatorSchema.schemaName
             ) {
-              return childChildSchema;
-            }
-            // childChildSchema is the parent
-            const resolvedReference =
-              refs.resolveObject<OpenAPIV3.NonArraySchemaObject>(
-                childChildSchema
-              );
+              // childChildSchema is the parent
+              const { properties, required } =
+                refs.resolveObject<OpenAPIV3.NonArraySchemaObject>(
+                  childChildSchema
+                );
 
-            return parseObjectSchema(
-              {
-                properties: resolvedReference.properties,
-                additionalProperties: false,
-                required: resolvedReference.required
-              },
-              refs,
-              options
-            );
+              return parseObjectSchema(
+                { properties, required, additionalProperties: false },
+                refs,
+                options
+              );
+            }
+            return childChildSchema;
           }
         );
       }

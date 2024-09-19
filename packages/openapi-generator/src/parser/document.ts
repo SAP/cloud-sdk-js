@@ -10,7 +10,11 @@ import {
   isOneOfSchema,
   isReferenceObject
 } from '../schema-util';
-import { parseSchema, parseSchemaProperties } from './schema';
+import {
+  parseObjectSchema,
+  parseSchema,
+  parseSchemaProperties
+} from './schema';
 import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';
 import { ParserOptions } from './options';
@@ -33,7 +37,7 @@ export async function parseOpenApiDocument(
   const document = (await parseBound(clonedContent)) as OpenAPIV3.Document;
   const refs = await createRefs(document, options);
   const schemas = parseSchemas(document, refs, options);
-  sanitizeDiscriminatedSchemas(schemas);
+  sanitizeDiscriminatedSchemas(schemas, refs, options);
 
   return {
     apis: parseApis(document, refs, options),
@@ -44,7 +48,11 @@ export async function parseOpenApiDocument(
   };
 }
 
-async function sanitizeDiscriminatedSchemas(schemas: OpenApiPersistedSchema[]) {
+async function sanitizeDiscriminatedSchemas(
+  schemas: OpenApiPersistedSchema[],
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
+) {
   const discriminatorSchemas = schemas
     .filter(({ schema }) => isOneOfSchema(schema) && schema.discriminator)
     .map(schema => ({
@@ -60,10 +68,37 @@ async function sanitizeDiscriminatedSchemas(schemas: OpenApiPersistedSchema[]) {
         schema => schema.schemaName === child.schemaName
       );
       if (isAllOfSchema(childSchema?.schema)) {
-        childSchema.schema.allOf = childSchema.schema.allOf.filter(
-          childChildSchema =>
-            !isReferenceObject(childChildSchema) ||
-            childChildSchema.schemaName !== discriminatorSchema.schemaName
+        childSchema.schema.allOf = childSchema.schema.allOf.map(
+          childChildSchema => {
+            if (
+              !isReferenceObject(childChildSchema) ||
+              childChildSchema.schemaName !== discriminatorSchema.schemaName
+            ) {
+              return childChildSchema;
+            }
+            const resolvedReference =
+              refs.resolveObject<OpenAPIV3.NonArraySchemaObject>(
+                childChildSchema
+              );
+            if (!resolvedReference.discriminator) {
+              throw new Error(
+                `Incorrectly resolved discriminator schema ${discriminatorSchema.schemaName} to a schema without discriminator.`
+              );
+            }
+            return parseObjectSchema(
+              {
+                properties: resolvedReference.properties || {
+                  [resolvedReference.discriminator.propertyName]: {
+                    type: 'string'
+                  }
+                },
+                additionalProperties: false,
+                required: resolvedReference.required
+              },
+              refs,
+              options
+            );
+          }
         );
       }
     });

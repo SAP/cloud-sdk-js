@@ -961,6 +961,9 @@
             "a": "#/components/schemas/DiscriminatorObjectEntityWorkaroundChildA",
             "b": "#/components/schemas/DiscriminatorObjectEntityWorkaroundChildB"
           }
+        },
+        "properties": {
+          "child": { "type": "string" }
         }
       },
       "DiscriminatorObjectEntityWorkaroundChildA": {

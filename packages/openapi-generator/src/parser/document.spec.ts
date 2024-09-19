@@ -115,7 +115,8 @@ describe('parseOpenApiDocument()', () => {
             mapping: {
               a: '#/components/schemas/SchemaA'
             }
-          }
+          },
+          required: ['discriminatingProp']
         },
         SchemaA: {
           allOf: [
@@ -169,6 +170,20 @@ describe('parseOpenApiDocument()', () => {
         nullable: false,
         schema: {
           allOf: [
+            {
+              properties: [
+                {
+                  name: 'discriminatingProp',
+                  description: undefined,
+                  nullable: false,
+                  required: true,
+                  schema: {
+                    type: 'string'
+                  },
+                  schemaProperties: {}
+                }
+              ]
+            },
             {
               properties: [
                 {

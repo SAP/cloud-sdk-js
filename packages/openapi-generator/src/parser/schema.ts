@@ -109,13 +109,14 @@ function parseArraySchema(
 }
 
 /**
+ * @internal
  * Parse a schema to an object schema.
  * @param schema - Original schema representing an object.
  * @param refs - Object representing cross references throughout the document.
  * @param options - Options that were set for service generation.
  * @returns The recursively parsed object schema.
  */
-function parseObjectSchema(
+export function parseObjectSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   refs: OpenApiDocumentRefs,
   options: ParserOptions

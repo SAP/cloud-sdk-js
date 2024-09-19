@@ -103,7 +103,7 @@ describe('parseOpenApiDocument()', () => {
     ]);
   });
 
-  it.only('parses discriminator schema with circular references', async () => {
+  it('parses discriminator schema with circular references', async () => {
     const components: OpenAPIV3.ComponentsObject = {
       schemas: {
         DiscriminatorSchema: {

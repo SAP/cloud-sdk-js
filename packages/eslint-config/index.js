@@ -42,6 +42,7 @@ module.exports = {
     '@typescript-eslint/array-type': 'error',
     '@typescript-eslint/consistent-type-assertions': 'error',
     '@typescript-eslint/consistent-type-definitions': 'error',
+    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/explicit-member-accessibility': [
       'off',
       {

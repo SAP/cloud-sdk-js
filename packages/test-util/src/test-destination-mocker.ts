@@ -1,11 +1,11 @@
+import type { Destination } from '@sap-cloud-sdk/connectivity/internal';
 import {
-  Destination,
   validateNameAvailable,
   setDestinationsInEnv
 } from '@sap-cloud-sdk/connectivity/internal';
+import type { GetTestDestinationOptions } from './test-destination-provider';
 import {
   getTestDestinationByAlias,
-  GetTestDestinationOptions,
   getTestDestinations
 } from './test-destination-provider';
 

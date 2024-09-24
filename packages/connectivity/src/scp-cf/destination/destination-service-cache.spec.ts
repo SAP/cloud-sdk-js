@@ -11,7 +11,7 @@ import {
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import { decodeJwt } from '../jwt';
-import { Destination } from './destination-service-types';
+import type { Destination } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 import { fetchDestinations } from './destination-service';
 

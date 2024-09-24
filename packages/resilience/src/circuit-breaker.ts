@@ -1,7 +1,11 @@
 import CircuitBreaker from 'opossum';
 // eslint-disable-next-line import/named
-import { AxiosError } from 'axios';
-import { MiddlewareContext, Middleware, MiddlewareOptions } from './middleware';
+import type { AxiosError } from 'axios';
+import type {
+  MiddlewareContext,
+  Middleware,
+  MiddlewareOptions
+} from './middleware';
 
 /**
  * Map of all existing circuit breakers.

@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-internal-modules
-import {
+import type {
   ParsedOptions,
   Options,
-  getCommonCliOptions,
   CommonGeneratorOptions
 } from '@sap-cloud-sdk/generator-common/internal';
+import { getCommonCliOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * Options to configure OData client generation when using the generator programmatically.

@@ -1,4 +1,5 @@
-import { lstatSync, PathLike, readdirSync, existsSync } from 'fs';
+import type { PathLike } from 'fs';
+import { lstatSync, readdirSync, existsSync } from 'fs';
 import { join, extname, parse } from 'path';
 
 const validFileExtensions = ['.edmx', '.xml'];

@@ -4,7 +4,7 @@ import {
   getXsuaaService,
   getXsuaaServiceCredentials
 } from './xsuaa';
-import { ServiceCredentials } from './environment-accessor-types';
+import type { ServiceCredentials } from './environment-accessor-types';
 
 const clientId = 'sb-jwt-app';
 

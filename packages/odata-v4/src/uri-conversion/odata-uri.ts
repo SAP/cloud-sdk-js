@@ -1,13 +1,13 @@
-import {
-  createODataUri as createODataUriBase,
+import type {
   EntityApi,
   EntityBase,
   Expandable,
   ODataUri,
   Selectable
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
-import { Entity } from '../entity';
+import { createODataUri as createODataUriBase } from '@sap-cloud-sdk/odata-common/internal';
+import type { DeSerializers } from '../de-serializers';
+import type { Entity } from '../entity';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
 

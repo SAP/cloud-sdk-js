@@ -1,4 +1,4 @@
-import { VariableStatementStructure } from 'ts-morph';
+import type { VariableStatementStructure } from 'ts-morph';
 import {
   breakfastEntity,
   breakfastTime,

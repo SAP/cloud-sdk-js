@@ -1,4 +1,4 @@
-import { OpenApiDocument } from '../openapi-types';
+import type { OpenApiDocument } from '../openapi-types';
 import { readme } from './readme';
 
 describe('readme', () => {

@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
-import { DefaultDeSerializers } from '../de-serializers';
+import type { DefaultDeSerializers } from '../de-serializers';
 const regexUuid = '\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}';
 const responseBoundary = 'responseBoundary';
 

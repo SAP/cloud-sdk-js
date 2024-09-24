@@ -1,9 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { OpenAPIV3 } from 'openapi-types';
-import { OpenApiSchema } from '../openapi-types';
-import { OpenApiDocumentRefs } from './refs';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenApiSchema } from '../openapi-types';
+import type { OpenApiDocumentRefs } from './refs';
 import { parseSchema } from './schema';
-import { ParserOptions } from './options';
+import type { ParserOptions } from './options';
 
 const logger = createLogger('openapi-generator');
 const allowedMediaTypes = [

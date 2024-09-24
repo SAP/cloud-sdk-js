@@ -1,5 +1,5 @@
-import { EntityBase } from '../entity-base';
-import { FilterFunctionParameterType } from './filter-function-base';
+import type { EntityBase } from '../entity-base';
+import type { FilterFunctionParameterType } from './filter-function-base';
 import { OrderableFilterFunction } from './orderable-filter-function';
 
 /**

@@ -1,9 +1,6 @@
-import {
-  StructureKind,
-  VariableDeclarationKind,
-  VariableStatementStructure
-} from 'ts-morph';
-import { VdmOperation } from '../vdm-types';
+import type { VariableStatementStructure } from 'ts-morph';
+import { StructureKind, VariableDeclarationKind } from 'ts-morph';
+import type { VdmOperation } from '../vdm-types';
 
 /**
  * @internal

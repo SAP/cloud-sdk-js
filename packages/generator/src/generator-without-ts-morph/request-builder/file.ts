@@ -1,6 +1,7 @@
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
-import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
-import { VdmEntity } from '../../vdm-types';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import { unixEOL } from '@sap-cloud-sdk/util';
+import type { VdmEntity } from '../../vdm-types';
 import { requestBuilderClass } from './class';
 import { requestBuilderImportDeclarations } from './imports';
 

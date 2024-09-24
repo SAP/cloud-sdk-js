@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { AllDestinations } from './destination-accessor-types';
+import type { AllDestinations } from './destination-accessor-types';
 import {
   alwaysProvider,
   alwaysSubscriber,

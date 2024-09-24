@@ -1,4 +1,4 @@
-import { JwtPayload } from './jsonwebtoken-type';
+import type { JwtPayload } from './jsonwebtoken-type';
 import { getTenantId } from './jwt';
 
 /**

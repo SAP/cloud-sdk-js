@@ -4,8 +4,8 @@ import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
 import type { Field, Link } from './selectable';
-import { DeSerializers } from './de-serializers';
-import { EntityApi } from './entity-api';
+import type { DeSerializers } from './de-serializers';
+import type { EntityApi } from './entity-api';
 
 /**
  * Helper type to extract the {@link @sap-cloud-sdk/util!ODataVersion} from a given entity so ODataVersionOf<MyVersion2Entity> is `v2`.

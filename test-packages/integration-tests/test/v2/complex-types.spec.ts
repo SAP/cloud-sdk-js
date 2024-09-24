@@ -4,7 +4,7 @@ import {
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
-import { HttpDestination } from '@sap-cloud-sdk/connectivity';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { asc } from '@sap-cloud-sdk/odata-common';
 import {

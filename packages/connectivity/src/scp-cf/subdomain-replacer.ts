@@ -1,5 +1,5 @@
 import { URL } from 'url';
-import { JwtPayload } from './jsonwebtoken-type';
+import type { JwtPayload } from './jsonwebtoken-type';
 
 /**
  * @internal

@@ -1,4 +1,4 @@
-import {
+import type {
   OpenApiReferenceSchema,
   OpenApiSchemaProperties
 } from './openapi-types';

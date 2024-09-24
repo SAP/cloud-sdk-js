@@ -4,7 +4,7 @@ import {
   isDestinationConfiguration,
   parseDestination
 } from './destination';
-import { DestinationFetchOptions } from './destination-accessor-types';
+import type { DestinationFetchOptions } from './destination-accessor-types';
 import type { Destination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,

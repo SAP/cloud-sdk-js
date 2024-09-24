@@ -11,14 +11,14 @@ import {
   circuitBreakers,
   circuitBreaker
 } from '@sap-cloud-sdk/resilience/internal';
-import {
+import type {
   DestinationWithName,
-  registerDestination,
   Destination,
   HttpDestination
 } from '@sap-cloud-sdk/connectivity';
+import { registerDestination } from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
-import { ProxyConfiguration } from '@sap-cloud-sdk/connectivity/src';
+import type { ProxyConfiguration } from '@sap-cloud-sdk/connectivity/src';
 import { responseWithPublicKey } from '../../connectivity/src/scp-cf/jwt.spec';
 import {
   basicMultipleResponse,
@@ -39,7 +39,7 @@ import {
   xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
 import * as csrf from './csrf-token-middleware';
-import {
+import type {
   DestinationHttpRequestConfig,
   HttpMiddleware,
   HttpMiddlewareOptions,

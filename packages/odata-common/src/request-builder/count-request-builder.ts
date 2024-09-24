@@ -1,8 +1,8 @@
-import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { EntityBase } from '../entity-base';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import type { HttpResponse } from '@sap-cloud-sdk/http-client';
+import type { EntityBase } from '../entity-base';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
-import { DeSerializers } from '../de-serializers/de-serializers';
+import type { DeSerializers } from '../de-serializers/de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 

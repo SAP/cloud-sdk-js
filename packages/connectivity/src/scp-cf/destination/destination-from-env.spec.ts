@@ -5,7 +5,7 @@ import {
   unmockDestinationsEnv
 } from '../../../../../test-resources/test/test-util/request-mocker';
 import { signedJwt } from '../../../../../test-resources/test/test-util';
-import { Destination } from './destination-service-types';
+import type { Destination } from './destination-service-types';
 import {
   getDestinationFromEnvByName,
   getDestinationsFromEnv,

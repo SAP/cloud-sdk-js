@@ -1,10 +1,10 @@
 // eslint-disable-next-line max-classes-per-file
-import {
-  OperationRequestBuilderBase,
+import type {
   ODataRequestConfig,
   OperationParameters
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
+import { OperationRequestBuilderBase } from '@sap-cloud-sdk/odata-common/internal';
+import type { DeSerializers } from '../de-serializers';
 import {
   ODataFunctionRequestConfig,
   ODataActionRequestConfig

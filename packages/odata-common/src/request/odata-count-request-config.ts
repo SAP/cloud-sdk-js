@@ -1,6 +1,6 @@
 import { createLogger, pick, removeTrailingSlashes } from '@sap-cloud-sdk/util';
-import { DeSerializers } from '../de-serializers';
-import { EntityBase } from '../entity-base';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityBase } from '../entity-base';
 import type { GetAllRequestBuilderBase } from '../request-builder';
 import { ODataRequestConfig } from './odata-request-config';
 

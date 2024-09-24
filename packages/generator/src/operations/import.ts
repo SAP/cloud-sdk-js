@@ -1,6 +1,7 @@
-import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import type { ImportDeclarationStructure } from 'ts-morph';
+import { StructureKind } from 'ts-morph';
 import voca from 'voca';
-import {
+import type {
   VdmOperationReturnType,
   VdmOperation,
   VdmServiceMetadata

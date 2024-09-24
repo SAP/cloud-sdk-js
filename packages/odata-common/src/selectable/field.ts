@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../entity-base';
+import type { EntityBase, Constructable } from '../entity-base';
 
 /**
  * Optional settings for fields.

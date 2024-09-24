@@ -1,4 +1,4 @@
-import {
+import type {
   EdmxEntitySetBase,
   EdmxEntityTypeBase,
   EdmxNamed,
@@ -14,9 +14,9 @@ import {
   isUpdatable
 } from '../../generator-utils';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
-import {
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type { SwaggerMetadata } from '../../swagger-parser/swagger-types';
+import type {
   VdmComplexType,
   VdmEntity,
   VdmEnumType,

@@ -1,6 +1,6 @@
 import { identity, isNullish } from '@sap-cloud-sdk/util';
-import BigNumber from 'bignumber.js';
-import { DeSerializer, DeSerializers } from './de-serializers';
+import type BigNumber from 'bignumber.js';
+import type { DeSerializer, DeSerializers } from './de-serializers';
 import {
   serializeFromBigNumber,
   deserializeToNumber,

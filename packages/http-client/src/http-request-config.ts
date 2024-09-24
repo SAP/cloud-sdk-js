@@ -1,5 +1,5 @@
 import { createLogger, exclude, mergeIgnoreCase } from '@sap-cloud-sdk/util';
-import { OriginOptionsInternal } from './http-client-types';
+import type { OriginOptionsInternal } from './http-client-types';
 
 const logger = createLogger({
   package: 'http-client',

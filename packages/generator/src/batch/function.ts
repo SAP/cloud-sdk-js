@@ -1,10 +1,10 @@
-import {
+import type {
   FunctionDeclarationOverloadStructure,
-  FunctionDeclarationStructure,
-  StructureKind
+  FunctionDeclarationStructure
 } from 'ts-morph';
+import { StructureKind } from 'ts-morph';
 import { addLeadingNewline, getFunctionDoc } from '../typedoc';
-import { VdmServiceMetadata } from '../vdm-types';
+import type { VdmServiceMetadata } from '../vdm-types';
 
 /**
  * @internal

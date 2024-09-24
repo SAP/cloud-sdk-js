@@ -1,11 +1,12 @@
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
-import { resilience, MiddlewareContext } from '@sap-cloud-sdk/resilience';
-import { JwtPayload } from './jsonwebtoken-type';
-import {
+import type { MiddlewareContext } from '@sap-cloud-sdk/resilience';
+import { resilience } from '@sap-cloud-sdk/resilience';
+import type { JwtPayload } from './jsonwebtoken-type';
+import type {
   Service,
   ServiceCredentials
 } from './environment-accessor/environment-accessor-types';
-import { ClientCredentialsResponse } from './xsuaa-service-types';
+import type { ClientCredentialsResponse } from './xsuaa-service-types';
 import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
 import { decodeJwt, getSubdomain, getTenantId } from './jwt';
 

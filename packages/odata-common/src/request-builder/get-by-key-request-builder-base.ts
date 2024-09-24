@@ -2,17 +2,17 @@ import {
   ErrorWithCause,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { v4 as uuid } from 'uuid';
-import { EntityBase } from '../entity-base';
-import { EntityDeserializer } from '../entity-deserializer';
-import { ResponseDataAccessor } from '../response-data-accessor';
+import type { EntityBase } from '../entity-base';
+import type { EntityDeserializer } from '../entity-deserializer';
+import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataGetByKeyRequestConfig } from '../request/odata-get-by-key-request-config';
-import { Selectable } from '../selectable';
-import { ODataUri } from '../uri-conversion';
-import { DeSerializers } from '../de-serializers/de-serializers';
-import { EntityApi } from '../entity-api';
-import {
+import type { Selectable } from '../selectable';
+import type { ODataUri } from '../uri-conversion';
+import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { EntityApi } from '../entity-api';
+import type {
   BatchReference,
   WithBatchReference
 } from '../request/odata-request-traits';

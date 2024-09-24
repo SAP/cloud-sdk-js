@@ -1,5 +1,5 @@
-import { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
-import { OpenApiDocument } from '../openapi-types';
+import type { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
+import type { OpenApiDocument } from '../openapi-types';
 import { apiSpecificCodeSample } from './code-sample';
 import { getMainApi, getMainOperation } from './code-sample-util';
 

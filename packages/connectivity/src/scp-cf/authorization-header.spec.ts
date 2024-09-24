@@ -5,7 +5,7 @@ import {
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { buildAuthorizationHeaders } from './authorization-header';
 import * as destinationImport from './destination/destination';
-import { Destination } from './destination';
+import type { Destination } from './destination';
 
 const principalPropagationDestination = {
   url: '',

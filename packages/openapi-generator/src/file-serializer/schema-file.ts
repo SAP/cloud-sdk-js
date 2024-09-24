@@ -1,10 +1,10 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
-import {
-  serializeImports,
+import type {
   Import,
   CreateFileOptions
 } from '@sap-cloud-sdk/generator-common/internal';
-import { OpenApiPersistedSchema } from '../openapi-types';
+import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
+import type { OpenApiPersistedSchema } from '../openapi-types';
 import { collectRefs, getSchemaPropertiesDocumentation } from '../schema-util';
 import { serializeSchema } from './schema';
 

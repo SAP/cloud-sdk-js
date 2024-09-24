@@ -1,16 +1,13 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import {
   deserializeBatchResponse,
   parseBatchResponse,
   BatchRequestBuilder
 } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  DeSerializers,
-  DefaultDeSerializers,
-  entityDeserializer
-} from '../de-serializers';
-import { BatchResponse } from '../batch-response';
+import type { DeSerializers, DefaultDeSerializers } from '../de-serializers';
+import { entityDeserializer } from '../de-serializers';
+import type { BatchResponse } from '../batch-response';
 import { responseDataAccessor } from './response-data-accessor';
 
 /**

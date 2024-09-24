@@ -1,5 +1,5 @@
 import { breakfastEntity } from '../../../test/test-util/data-model';
-import { VdmProperty } from '../../vdm-types';
+import type { VdmProperty } from '../../vdm-types';
 import { requestBuilderClass } from './class';
 
 describe('request builder class', () => {

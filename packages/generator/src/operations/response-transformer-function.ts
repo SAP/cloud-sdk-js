@@ -1,4 +1,4 @@
-import { VdmOperationReturnType } from '../vdm-types';
+import type { VdmOperationReturnType } from '../vdm-types';
 
 /**
  * @internal

@@ -1,8 +1,8 @@
-import { Readable } from 'stream';
-import { Url } from 'url';
-import { ConnectionOptions } from 'tls';
-import net from 'net';
-import {
+import type { Readable } from 'stream';
+import type { Url } from 'url';
+import type { ConnectionOptions } from 'tls';
+import type net from 'net';
+import type {
   AuthenticationType,
   DestinationProxyType,
   ProxyConfiguration

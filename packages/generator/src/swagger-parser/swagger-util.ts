@@ -1,5 +1,5 @@
-import { ApiBusinessHubMetadata } from '../vdm-types';
-import { SwaggerMetadata } from './swagger-types';
+import type { ApiBusinessHubMetadata } from '../vdm-types';
+import type { SwaggerMetadata } from './swagger-types';
 
 /**
  * @internal

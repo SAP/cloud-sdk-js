@@ -1,6 +1,7 @@
-import { createServer, Server } from 'https';
+import type { Server } from 'https';
+import { createServer } from 'https';
 import { promisify } from 'util';
-import {
+import type {
   DestinationCertificate,
   HttpDestination
 } from '@sap-cloud-sdk/connectivity';

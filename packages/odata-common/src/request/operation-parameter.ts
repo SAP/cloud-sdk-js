@@ -1,4 +1,4 @@
-import { EdmTypeShared } from '../edm-types';
+import type { EdmTypeShared } from '../edm-types';
 
 /**
  * Internal representation of operation parameters. It adds metadata to the value.

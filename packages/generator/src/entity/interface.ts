@@ -1,9 +1,9 @@
-import {
+import type {
   InterfaceDeclarationStructure,
-  PropertySignatureStructure,
-  StructureKind
+  PropertySignatureStructure
 } from 'ts-morph';
-import {
+import { StructureKind } from 'ts-morph';
+import type {
   VdmEntity,
   VdmNavigationProperty,
   VdmProperty,

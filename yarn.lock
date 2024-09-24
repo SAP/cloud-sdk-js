@@ -1445,13 +1445,13 @@
     node-cache "^5.1.0"
     verror "1.10.0"
 
-"@sap/xsenv@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-5.2.0.tgz#376c43112f6217302e94104e46349d29742abafe"
-  integrity sha512-okXo4LMIO/n3IqGWcOHVQd2J4o5oirynBfhm07wf5nkQYL0YE4oYOrhgkH2uZPd6hMNfjr0lAT0VS/tgO9lW6g==
+"@sap/xsenv@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-5.3.0.tgz#be99b847a609b786084991b9bb19e2febed59be2"
+  integrity sha512-2UqioTBYe7XTvrskulaqVvoQ8WUA06Ofumxfa545DlB9gZyvvdL0ncQDU9EWrqFKE6U/e+kdQRpaMfRnrM5ykQ==
   dependencies:
-    debug "4.3.5"
-    node-cache "^5.1.0"
+    debug "4.3.7"
+    node-cache "^5.1.2"
     verror "1.10.1"
 
 "@sap/xssec@^4.2.4":
@@ -3273,7 +3273,7 @@ debug@3.1.0:
   dependencies:
     ms "2.0.0"
 
-debug@4, debug@^4.0.0, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4, debug@^4.3.6, debug@^4.3.7, debug@~4.3.1:
+debug@4, debug@4.3.7, debug@^4.0.0, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4, debug@^4.3.6, debug@^4.3.7, debug@~4.3.1:
   version "4.3.7"
   resolved "https://registry.npmjs.org/debug/-/debug-4.3.7.tgz#87945b4151a011d76d95a198d7111c865c360a52"
   integrity sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==
@@ -3284,13 +3284,6 @@ debug@4.3.3:
   version "4.3.3"
   resolved "https://registry.npmjs.org/debug/-/debug-4.3.3.tgz#04266e0b70a98d4462e6e288e38259213332b664"
   integrity sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==
-  dependencies:
-    ms "2.1.2"
-
-debug@4.3.5:
-  version "4.3.5"
-  resolved "https://registry.npmjs.org/debug/-/debug-4.3.5.tgz#e83444eceb9fedd4a1da56d671ae2446a01a6e1e"
-  integrity sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==
   dependencies:
     ms "2.1.2"
 
@@ -6819,7 +6812,7 @@ node-addon-api@^7.0.0:
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-7.1.0.tgz#71f609369379c08e251c558527a107107b5e0fdb"
   integrity sha512-mNcltoe1R8o7STTegSOHdnJNN7s5EUvhoS7ShnTHDyOSd+8H+UdWODq6qSv67PjC8Zc5JRT8+oLAMCr0SIXw7g==
 
-node-cache@^5.1.0:
+node-cache@^5.1.0, node-cache@^5.1.2:
   version "5.1.2"
   resolved "https://registry.npmjs.org/node-cache/-/node-cache-5.1.2.tgz#f264dc2ccad0a780e76253a694e9fd0ed19c398d"
   integrity sha512-t1QzWwnk4sjLWaQAS8CHgOJ+RAfmHpxFWmc36IWTiWHQfs0w5JDMBS1b1ZxQteo0vVVuWJvIUKHDkkeK7vIGCg==

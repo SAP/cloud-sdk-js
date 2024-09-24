@@ -1,5 +1,5 @@
-import { EdmTypeShared } from '@sap-cloud-sdk/odata-common';
-import { DeSerializers } from './de-serializers';
+import type { EdmTypeShared } from '@sap-cloud-sdk/odata-common';
+import type { DeSerializers } from './de-serializers';
 
 /**
  * Convert a value with edm format to one with typescript format. This function is typically used when deserializing an OData response.

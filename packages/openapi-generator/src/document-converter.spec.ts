@@ -1,4 +1,4 @@
-import { OpenAPIV2, OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV2, OpenAPIV3 } from 'openapi-types';
 import mock from 'mock-fs';
 import { convertDocToOpenApiV3, parseFileAsJson } from './document-converter';
 

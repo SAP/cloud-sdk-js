@@ -3,7 +3,7 @@ import {
   filterCustomRequestConfig,
   mergeOptionsWithPriority
 } from './http-request-config';
-import { OriginOptionsInternal } from './http-client-types';
+import type { OriginOptionsInternal } from './http-client-types';
 
 const logger = createLogger('http-request-config');
 

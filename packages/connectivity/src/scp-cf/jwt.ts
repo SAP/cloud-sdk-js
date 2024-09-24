@@ -1,4 +1,4 @@
-import { IncomingMessage } from 'http';
+import type { IncomingMessage } from 'http';
 import {
   createLogger,
   ErrorWithCause,
@@ -8,8 +8,12 @@ import { createSecurityContext } from '@sap/xssec';
 import { decode } from 'jsonwebtoken';
 import { Cache } from './cache';
 import { getServiceCredentials, getXsuaaService } from './environment-accessor';
-import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
-import { TokenKey } from './xsuaa-service-types';
+import type {
+  Jwt,
+  JwtPayload,
+  JwtWithPayloadObject
+} from './jsonwebtoken-type';
+import type { TokenKey } from './xsuaa-service-types';
 import { getIssuerSubdomain } from './subdomain-replacer';
 
 const logger = createLogger({

@@ -1,6 +1,7 @@
-import { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
 import { emptyDocument } from '../../test/test-util';
-import { createRefs, OpenApiDocumentRefs } from './refs';
+import type { OpenApiDocumentRefs } from './refs';
+import { createRefs } from './refs';
 describe('OpenApiDocumentRefs', () => {
   let refs: OpenApiDocumentRefs;
   const typeName: OpenAPIV3.SchemaObject = { type: 'string' };

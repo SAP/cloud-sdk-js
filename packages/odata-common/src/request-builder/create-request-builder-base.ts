@@ -1,6 +1,6 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import type { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { v4 as uuid } from 'uuid';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion';
@@ -8,10 +8,10 @@ import type { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request/odata-create-request-config';
-import { Link } from '../selectable';
-import { DeSerializers } from '../de-serializers/de-serializers';
-import { EntityApi } from '../entity-api';
-import {
+import type { Link } from '../selectable';
+import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { EntityApi } from '../entity-api';
+import type {
   BatchReference,
   WithBatchReference
 } from '../request/odata-request-traits';

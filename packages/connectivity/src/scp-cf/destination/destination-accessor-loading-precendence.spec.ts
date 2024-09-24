@@ -1,12 +1,8 @@
-import {
-  MockServiceBindings,
-  mockServiceBindings
-} from '../../../../../test-resources/test/test-util';
+import type { MockServiceBindings } from '../../../../../test-resources/test/test-util';
+import { mockServiceBindings } from '../../../../../test-resources/test/test-util';
 import { getDestination, useOrFetchDestination } from './destination-accessor';
-import {
-  DestinationWithName,
-  registerDestination
-} from './destination-from-registration';
+import type { DestinationWithName } from './destination-from-registration';
+import { registerDestination } from './destination-from-registration';
 import { registerDestinationCache } from './register-destination-cache';
 
 function mockEnvDestinations() {

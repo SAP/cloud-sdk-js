@@ -1,6 +1,6 @@
-import { Selectable } from '@sap-cloud-sdk/odata-common';
-import { DeSerializers } from '../de-serializers';
-import { Entity } from '../entity';
+import type { Selectable } from '@sap-cloud-sdk/odata-common';
+import type { DeSerializers } from '../de-serializers';
+import type { Entity } from '../entity';
 
 /**
  * Get an object containing the given Selectables as query parameter, or an empty object if none were given.

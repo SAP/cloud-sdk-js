@@ -1,4 +1,8 @@
-import { VdmEntity, VdmProperty, VdmServiceMetadata } from '../../vdm-types';
+import type {
+  VdmEntity,
+  VdmProperty,
+  VdmServiceMetadata
+} from '../../vdm-types';
 import { createPropertyFieldType } from '../../entity';
 import { navigationPropertyTypes } from './navigation-properties';
 

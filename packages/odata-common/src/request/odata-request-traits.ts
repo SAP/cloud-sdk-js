@@ -1,9 +1,9 @@
-import { EntityBase } from '../entity-base';
-import { Selectable } from '../selectable';
-import { Orderable } from '../order';
-import { Filterable } from '../filter';
-import { DeSerializers } from '../de-serializers';
-import { EntityApi } from '../entity-api';
+import type { EntityBase } from '../entity-base';
+import type { Selectable } from '../selectable';
+import type { Orderable } from '../order';
+import type { Filterable } from '../filter';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityApi } from '../entity-api';
 
 /**
  * Interface implemented by OData requests needing keys to identify an entity like `getByKey`, `delete` or `update`.

@@ -1,5 +1,5 @@
 import { readPrettierConfig } from '@sap-cloud-sdk/generator-common/internal';
-import { OpenApiApi, OpenApiReferenceSchema } from '../openapi-types';
+import type { OpenApiApi, OpenApiReferenceSchema } from '../openapi-types';
 import { apiDocumentation, apiFile } from './api-file';
 
 const singleOperationApi: OpenApiApi = {

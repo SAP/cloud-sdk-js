@@ -1,5 +1,5 @@
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
-import { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import type { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import {
   batch,
   changeset,

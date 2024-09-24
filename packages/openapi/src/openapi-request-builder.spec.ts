@@ -1,7 +1,7 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import {
-  HttpDestination,
   parseDestination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';

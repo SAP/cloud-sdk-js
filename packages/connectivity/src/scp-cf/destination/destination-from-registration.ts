@@ -5,12 +5,11 @@ import {
   defaultTenantId,
   getTenantId
 } from '../jwt';
-import { DestinationFetchOptions } from './destination-accessor-types';
-import {
-  IsolationStrategy,
-  getDefaultIsolationStrategy
-} from './destination-cache';
-import { Destination, isHttpDestination } from './destination-service-types';
+import type { DestinationFetchOptions } from './destination-accessor-types';
+import type { IsolationStrategy } from './destination-cache';
+import { getDefaultIsolationStrategy } from './destination-cache';
+import type { Destination } from './destination-service-types';
+import { isHttpDestination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
   proxyStrategy

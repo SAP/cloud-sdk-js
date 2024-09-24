@@ -1,6 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { decodeJwt } from '../jwt';
-import { Destination, DestinationAuthToken } from './destination-service-types';
+import type {
+  Destination,
+  DestinationAuthToken
+} from './destination-service-types';
 
 const logger = createLogger({
   package: 'connectivity',

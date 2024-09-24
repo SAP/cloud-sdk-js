@@ -1,15 +1,17 @@
-import {
+import type {
   Expandable,
+  EntityApi
+} from '@sap-cloud-sdk/odata-common/internal';
+import {
   OneToManyLink,
   AllFields,
   Link,
   and,
   createGetFilter,
-  getOrderBy,
-  EntityApi
+  getOrderBy
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
-import { Entity } from '../entity';
+import type { DeSerializers } from '../de-serializers';
+import type { Entity } from '../entity';
 import { getSelect } from './get-select';
 import { uriConverter } from './uri-value-converter';
 

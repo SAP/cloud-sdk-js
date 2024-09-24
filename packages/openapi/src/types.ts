@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 
 /**
  * Type of the parameters of a given function

@@ -1,6 +1,6 @@
 import { promises } from 'fs';
 import { parse } from 'path';
-import { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
 import { convert } from 'swagger2openapi';
 import { load } from 'js-yaml';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';

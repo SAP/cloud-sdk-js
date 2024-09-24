@@ -3,7 +3,7 @@ import {
   complexMeal,
   complexMealWithDesert
 } from '../../test/test-util/data-model';
-import { VdmComplexType } from '../vdm-types';
+import type { VdmComplexType } from '../vdm-types';
 import { importDeclarations } from './imports';
 
 describe('complex type imports', () => {

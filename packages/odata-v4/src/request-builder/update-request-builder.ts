@@ -1,15 +1,17 @@
 import { identity } from '@sap-cloud-sdk/util';
-import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import {
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import type { HttpResponse } from '@sap-cloud-sdk/http-client';
+import type {
   EntityIdentifiable,
-  EntityApi,
+  EntityApi
+} from '@sap-cloud-sdk/odata-common/internal';
+import {
   UpdateRequestBuilderBase,
   entitySerializer
 } from '@sap-cloud-sdk/odata-common/internal';
-import { Entity } from '../entity';
+import type { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import type { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 
 /**

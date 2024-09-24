@@ -6,10 +6,8 @@ import {
   ErrorWithCause,
   unixEOL
 } from '@sap-cloud-sdk/util';
-import prettier, {
-  BuiltInParserName,
-  Options as PrettierOptions
-} from 'prettier';
+import type { BuiltInParserName, Options as PrettierOptions } from 'prettier';
+import prettier from 'prettier';
 import { getCopyrightHeader } from '../util';
 
 const { writeFile, readFile } = promises;

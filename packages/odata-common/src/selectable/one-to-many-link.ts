@@ -1,9 +1,9 @@
 import type { EntityBase } from '../entity-base';
 import { FilterLink } from '../filter/filter-link';
-import { Orderable } from '../order/orderable';
+import type { Orderable } from '../order/orderable';
 import type { Filterable } from '../filter';
-import { DeSerializers } from '../de-serializers/de-serializers';
-import { EntityApi, EntityType } from '../entity-api';
+import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { EntityApi, EntityType } from '../entity-api';
 import { Link } from './link';
 
 /**

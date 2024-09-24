@@ -1,4 +1,4 @@
-import { VdmProperty } from '../vdm-types';
+import type { VdmProperty } from '../vdm-types';
 
 /**
  * @internal

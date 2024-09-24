@@ -1,8 +1,6 @@
-import {
-  CreateFileOptions,
-  readPrettierConfig
-} from '@sap-cloud-sdk/generator-common/internal';
-import {
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
+import { readPrettierConfig } from '@sap-cloud-sdk/generator-common/internal';
+import type {
   OpenApiObjectSchemaProperty,
   OpenApiPersistedSchema
 } from '../openapi-types';

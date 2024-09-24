@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Cache } from './cache';
-import { ClientCredentialsResponse } from './xsuaa-service-types';
+import type { ClientCredentialsResponse } from './xsuaa-service-types';
 
 const logger = createLogger({
   package: 'connectivity',

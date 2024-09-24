@@ -1,5 +1,5 @@
 import { durationRegexV4 } from '@sap-cloud-sdk/odata-common/internal';
-import { Time } from '@sap-cloud-sdk/odata-common';
+import type { Time } from '@sap-cloud-sdk/odata-common';
 import moment from 'moment';
 /**
  * @internal

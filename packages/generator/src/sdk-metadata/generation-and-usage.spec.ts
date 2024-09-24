@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { writeFile, readFile, removeSync } from 'fs-extra';
 import execa from 'execa';
-import { VdmServiceMetadata } from '../vdm-types';
+import type { VdmServiceMetadata } from '../vdm-types';
 import { getApiSpecificUsage } from './generation-and-usage';
 import { entityCodeSample } from './code-samples';
 

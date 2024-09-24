@@ -1,8 +1,8 @@
 import { parse } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { basePathFromSwagger } from './swagger-parser/swagger-util';
-import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
+import type { ServiceMetadata } from './edmx-parser/edmx-file-reader';
 
 const logger = createLogger({
   package: 'generator',

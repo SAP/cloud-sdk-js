@@ -1,30 +1,32 @@
 import moment from 'moment';
 import { upperCaseSnakeCase } from '@sap-cloud-sdk/util';
-import { EntityBase } from '../entity-base';
-import { EdmTypeShared } from '../edm-types';
-import {
+import type { EntityBase } from '../entity-base';
+import type { EdmTypeShared } from '../edm-types';
+import type {
   FilterLambdaExpression,
-  isFilterLambdaExpression,
   Filterable,
   FilterList,
-  isFilterList,
-  isBooleanFilterFunction,
   FilterLink,
-  isFilterLink,
-  isUnaryFilter,
   UnaryFilter,
-  FilterFunction,
   FilterFunctionParameterType,
-  Filter,
-  isFilter
+  Filter
 } from '../filter';
 import {
+  isFilterLambdaExpression,
+  isFilterList,
+  isBooleanFilterFunction,
+  isFilterLink,
+  isUnaryFilter,
+  FilterFunction,
+  isFilter
+} from '../filter';
+import type {
   DefaultDeSerializers,
   DeSerializers,
   UriConverter
 } from '../de-serializers';
 import { ComplexTypeField, OneToManyLink } from '../selectable';
-import { EntityApi } from '../entity-api';
+import type { EntityApi } from '../entity-api';
 
 type GetFilterType = <
   EntityT extends EntityBase,

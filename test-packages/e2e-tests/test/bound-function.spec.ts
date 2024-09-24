@@ -1,8 +1,8 @@
-import {
+import type {
   TestEntity,
-  TestEntityWithMultipleKeys,
-  testService
+  TestEntityWithMultipleKeys
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import { getByKey } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/operations';
 
 const url = 'http://localhost:4004/';

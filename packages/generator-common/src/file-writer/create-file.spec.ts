@@ -3,9 +3,9 @@ import { resolve } from 'path';
 import mock from 'mock-fs';
 import prettier from 'prettier';
 import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
+import type { CreateFileOptions } from './create-file';
 import {
   createFile,
-  CreateFileOptions,
   defaultPrettierConfig,
   readPrettierConfig
 } from './create-file';

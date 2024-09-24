@@ -1,30 +1,28 @@
 /* eslint-disable max-classes-per-file */
 // eslint-disable-next-line import/named
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 import {
   isNullish,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import {
-  useOrFetchDestination,
-  HttpDestinationOrFetchOptions
-} from '@sap-cloud-sdk/connectivity';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import { useOrFetchDestination } from '@sap-cloud-sdk/connectivity';
 import {
   assertHttpDestination,
   noDestinationErrorMessage
 } from '@sap-cloud-sdk/connectivity/internal';
-import {
+import type {
   Method,
   HttpResponse,
   HttpRequestConfigWithOrigin,
-  executeHttpRequest,
   CustomRequestConfig
 } from '@sap-cloud-sdk/http-client';
-import {
-  filterCustomRequestConfig,
+import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
+import type {
   OriginOptions,
   HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
+import { filterCustomRequestConfig } from '@sap-cloud-sdk/http-client/internal';
 
 /**
  * Request builder for OpenAPI requests.

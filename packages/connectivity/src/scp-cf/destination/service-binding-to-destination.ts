@@ -1,11 +1,11 @@
-import { Service } from '../environment-accessor/environment-accessor-types';
+import type { Service } from '../environment-accessor/environment-accessor-types';
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
 import type {
   ServiceBindingTransformFunction,
   ServiceBindingTransformOptions
 } from './destination-from-vcap';
-import { Destination } from './destination-service-types';
+import type { Destination } from './destination-service-types';
 
 /**
  * @internal

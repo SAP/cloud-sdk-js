@@ -1,9 +1,12 @@
-import { PathLike, readdirSync, readFileSync } from 'fs';
+import type { PathLike } from 'fs';
+import { readdirSync, readFileSync } from 'fs';
 import path, { basename, join, parse } from 'path';
 import { XMLParser } from 'fast-xml-parser';
-import { ODataVersion, removeFileExtension } from '@sap-cloud-sdk/util';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import { removeFileExtension } from '@sap-cloud-sdk/util';
 import { forceArray } from '../generator-utils';
-import { readSwaggerFile, SwaggerMetadata } from '../swagger-parser';
+import type { SwaggerMetadata } from '../swagger-parser';
+import { readSwaggerFile } from '../swagger-parser';
 import { getMergedPropertyWithNamespace } from './common';
 /**
  * @internal

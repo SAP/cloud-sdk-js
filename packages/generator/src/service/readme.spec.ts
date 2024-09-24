@@ -1,5 +1,5 @@
 import { getExpectedHelpfulLinks } from '../../test/test-util/readme-util';
-import {
+import type {
   ApiBusinessHubMetadata,
   VdmOperation,
   VdmServiceMetadata

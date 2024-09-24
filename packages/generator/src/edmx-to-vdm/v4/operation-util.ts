@@ -1,4 +1,4 @@
-import { EdmxOperation } from '../../edmx-parser/v4/edm-types';
+import type { EdmxOperation } from '../../edmx-parser/v4/edm-types';
 import { stripNamespace } from '../edmx-to-vdm-util';
 
 /**

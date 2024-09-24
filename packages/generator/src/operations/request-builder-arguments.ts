@@ -1,4 +1,4 @@
-import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
+import type { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import { cannotDeserialize } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 

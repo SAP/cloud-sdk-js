@@ -1,18 +1,19 @@
-import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import type { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { first } from '@sap-cloud-sdk/util';
-import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
-import { EntityApi } from '../../entity-api';
-import { EntityBase } from '../../entity-base';
-import { ODataRequestConfig } from '../../request';
+import type { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
+import type { EntityApi } from '../../entity-api';
+import type { EntityBase } from '../../entity-base';
+import type { ODataRequestConfig } from '../../request';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
-import { ODataRequest } from '../../request/odata-request';
-import { OperationRequestBuilderBase } from '../operation-request-builder-base';
-import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
-import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
+import type { ODataRequest } from '../../request/odata-request';
+import type { OperationRequestBuilderBase } from '../operation-request-builder-base';
+import type { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
+import type { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { MethodRequestBuilder } from '../request-builder-base';
-import { BatchChangeSet, ChangesetBuilderTypes } from './batch-change-set';
-import { BatchSubRequestPathType } from './batch-request-options';
+import type { ChangesetBuilderTypes } from './batch-change-set';
+import { BatchChangeSet } from './batch-change-set';
+import type { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';
 
 /**

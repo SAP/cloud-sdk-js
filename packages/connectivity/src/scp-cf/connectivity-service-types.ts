@@ -1,4 +1,4 @@
-import { Protocol } from './protocol';
+import type { Protocol } from './protocol';
 
 /**
  * Proxy settings for connecting to an on-premise destination via connectivity proxy or web proxies.

@@ -1,5 +1,5 @@
 import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
-import { VdmEntity, VdmOperation, VdmParameter } from '../vdm-types';
+import type { VdmEntity, VdmOperation, VdmParameter } from '../vdm-types';
 
 /**
  * @internal

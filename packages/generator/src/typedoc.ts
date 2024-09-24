@@ -1,6 +1,6 @@
 import { unixEOL, titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot } from './generator-utils';
-import {
+import type {
   VdmComplexType,
   VdmEntity,
   VdmEnumType,

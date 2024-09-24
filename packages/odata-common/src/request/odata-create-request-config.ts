@@ -1,8 +1,8 @@
-import { EntityBase } from '../entity-base';
-import { ODataUri } from '../uri-conversion';
-import { Link } from '../selectable';
-import { DeSerializers } from '../de-serializers';
-import { EntityApi } from '../entity-api';
+import type { EntityBase } from '../entity-base';
+import type { ODataUri } from '../uri-conversion';
+import type { Link } from '../selectable';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityApi } from '../entity-api';
 import { ODataRequestConfig } from './odata-request-config';
 
 /**

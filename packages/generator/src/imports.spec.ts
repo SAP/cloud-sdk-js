@@ -1,9 +1,10 @@
-import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import type { ImportDeclarationStructure } from 'ts-morph';
+import { StructureKind } from 'ts-morph';
 import {
   bigNumberImport,
   momentImport
 } from '../test/test-util/import-declaration-structures';
-import { VdmNavigationProperty, VdmProperty } from './vdm-types';
+import type { VdmNavigationProperty, VdmProperty } from './vdm-types';
 import {
   complexTypeImportDeclarations,
   navPropertyFieldTypeImportNames,

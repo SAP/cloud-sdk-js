@@ -1,10 +1,10 @@
-import {
+import type {
   WriteResponses as WriteResponsesCommon,
   ReadResponse as ReadResponseCommon,
   WriteResponse as WriteResponseCommon,
   ErrorResponse
 } from '@sap-cloud-sdk/odata-common';
-import { DefaultDeSerializers, DeSerializers } from './de-serializers';
+import type { DefaultDeSerializers, DeSerializers } from './de-serializers';
 
 /**
  * Union of the possible batch responses: {@link @sap-cloud-sdk/odata-common!ReadResponse | ReadResponseCommon}, {@link @sap-cloud-sdk/odata-common!WriteResponses | WriteResponsesCommon} and {@link @sap-cloud-sdk/odata-common!ErrorResponse}.

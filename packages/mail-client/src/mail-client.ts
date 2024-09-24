@@ -1,15 +1,17 @@
-import {
+import type {
   Destination,
-  DestinationOrFetchOptions,
-  toDestinationNameUrl
+  DestinationOrFetchOptions
 } from '@sap-cloud-sdk/connectivity';
+import { toDestinationNameUrl } from '@sap-cloud-sdk/connectivity';
 import { resolveDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { createLogger } from '@sap-cloud-sdk/util';
-import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
-import { SocksClient, SocksClientOptions, SocksProxy } from 'socks';
+import type { SentMessageInfo, Transporter } from 'nodemailer';
+import nodemailer from 'nodemailer';
+import type { SocksClientOptions, SocksProxy } from 'socks';
+import { SocksClient } from 'socks';
 // eslint-disable-next-line import/no-internal-modules
 import type { Options } from 'nodemailer/lib/smtp-pool';
-import {
+import type {
   MailClientOptions,
   MailConfig,
   MailDestination,

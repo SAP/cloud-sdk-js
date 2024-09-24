@@ -1,5 +1,5 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
-import { VdmOperationReturnType } from '../vdm-types';
+import type { VdmOperationReturnType } from '../vdm-types';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 const returnTypeEntity: VdmOperationReturnType = {

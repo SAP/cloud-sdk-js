@@ -1,6 +1,7 @@
-import { OpenAPIV3 } from 'openapi-types';
-import { createRefs, OpenApiDocumentRefs } from '../src/parser/refs';
-import { OpenApiDocument } from '../src/openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenApiDocumentRefs } from '../src/parser/refs';
+import { createRefs } from '../src/parser/refs';
+import type { OpenApiDocument } from '../src/openapi-types';
 
 export const emptyDocument = {
   openapi: '3.0.0',

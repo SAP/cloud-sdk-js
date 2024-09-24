@@ -1,9 +1,9 @@
+import type { Client } from '@sap-cloud-sdk/generator-common/internal';
 import {
   getSdkMetadataClient,
-  Client,
   getSdkVersion
 } from '@sap-cloud-sdk/generator-common/internal';
-import { OpenApiDocument } from '../openapi-types';
+import type { OpenApiDocument } from '../openapi-types';
 import { getApiSpecificUsage } from './generation-and-usage';
 
 /**

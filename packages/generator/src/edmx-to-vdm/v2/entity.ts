@@ -4,17 +4,17 @@ import {
   navigationPropertyBase,
   transformEntityBase
 } from '../common/entity';
-import {
+import type {
   VdmComplexType,
   VdmEntity,
   VdmNavigationProperty
 } from '../../vdm-types';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type {
   EdmxEntitySetBase,
   JoinedEntityMetadata
 } from '../../edmx-parser/common/edmx-types';
-import {
+import type {
   EdmxAssociation,
   EdmxAssociationSet,
   EdmxEntityTypeV2,
@@ -27,7 +27,7 @@ import {
   parseEntitySetsV2,
   parseEntityTypes
 } from '../../edmx-parser/v2/edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import type { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { stripNamespace } from '../edmx-to-vdm-util';
 
 /**

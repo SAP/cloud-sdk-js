@@ -19,7 +19,7 @@ describe('parseTopLevelMediaType', () => {
     expect(
       parseTopLevelMediaType(
         {
-          content: { 'application/json': { schema: { type: 'object' } } }
+          content: { 'application/json;charset=utf-8': { schema: { type: 'object' } } }
         },
         await createTestRefs(),
         defaultOptions

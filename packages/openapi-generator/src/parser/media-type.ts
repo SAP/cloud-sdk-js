@@ -104,7 +104,7 @@ function getMediaTypeObject(
 ): OpenAPIV3.MediaTypeObject | undefined {
   if (bodyOrResponseObject?.content) {
     return Object.entries(bodyOrResponseObject.content).find(([key]) =>
-      contentType.includes(key)
+      contentType.includes(key.split(';')[0])
     )?.[1];
   }
   return undefined;

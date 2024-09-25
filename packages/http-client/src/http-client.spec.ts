@@ -19,7 +19,7 @@ import type {
 import { registerDestination } from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
 import type { ProxyConfiguration } from '@sap-cloud-sdk/connectivity/src';
-import { responseWithPublicKey } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt.spec';
+import { responseWithPublicKey } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt/verify.spec';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,

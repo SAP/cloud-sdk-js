@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import type { JwtPayload } from '../jsonwebtoken-type';
-import { audiences, decodeJwt } from '../jwt';
+import { audiences, decodeJwt } from '../jwt/jwt';
 import type { ServiceCredentials } from './environment-accessor-types';
 import { getServiceBindings } from './service-bindings';
 

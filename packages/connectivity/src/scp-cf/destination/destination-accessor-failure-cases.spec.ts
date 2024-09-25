@@ -22,7 +22,6 @@ import {
   destinationName,
   oauthMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
-import * as jwt from '../jwt';
 import {
   getAllDestinationsFromDestinationService,
   getDestination
@@ -34,9 +33,7 @@ describe('Failure cases', () => {
       xsuaa: [xsuaaBindingMock]
     });
 
-    jest
-      .spyOn(jwt, 'verifyJwt')
-      .mockResolvedValue(jwt.decodeJwt(subscriberServiceToken));
+    mockVerifyJwt();
 
     await expect(
       getDestination({

@@ -5,16 +5,16 @@ import { createLogger, last } from '@sap-cloud-sdk/util';
 import type {
   BasicProxyConfiguration,
   Destination,
-  DestinationCertificate
+  DestinationCertificate,
+  HttpDestination
 } from '../scp-cf';
-import { getProtocolOrDefault } from '../scp-cf';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
-import type { HttpDestination } from '../scp-cf/destination';
+import { getProtocolOrDefault } from '../scp-cf/get-protocol';
 import {
   addProxyConfigurationInternet,
   getProxyConfig,
   proxyStrategy
-} from '../scp-cf/destination';
+} from '../scp-cf/destination/http-proxy-util';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import type { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 

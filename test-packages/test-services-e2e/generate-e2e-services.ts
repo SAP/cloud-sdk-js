@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate } from '@sap-cloud-sdk/generator';
 
@@ -13,7 +13,7 @@ const generatorConfigOData = {
   generateSdkMetadata: false
 };
 
-async function generateE2E() {
+async function generateE2e() {
   await generate({
     ...generatorConfigOData,
     input: resolve(
@@ -55,7 +55,7 @@ async function generateE2E() {
   });
 }
 
-generateE2E().catch(reason => {
+generateE2e().catch(reason => {
   logger.error(`Unhandled rejection at: ${reason}`);
   process.exit(1);
 });

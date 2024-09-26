@@ -2,6 +2,7 @@ import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
+// eslint-disable-next-line import/default
 import prettier from 'prettier';
 import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/internal';
 import { emptyDocument } from '../test/test-util';

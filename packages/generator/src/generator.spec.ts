@@ -3,6 +3,7 @@ import { promises } from 'fs';
 import { transports } from 'winston';
 import type { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
+// eslint-disable-next-line import/default
 import prettier from 'prettier';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/dist/options-parser';
@@ -120,7 +121,7 @@ describe('generator', () => {
       });
     });
 
-    it('recommends to install odata packages', async () => {
+    it('recommends to install OData packages', async () => {
       expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(
         '"Did you forget to install "@sap-cloud-sdk/odata-v2"?"'
       );

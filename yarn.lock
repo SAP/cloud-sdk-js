@@ -752,11 +752,6 @@
   resolved "https://registry.npmjs.org/@eslint-community/regexpp/-/regexpp-4.10.0.tgz#548f6de556857c8bb73bbee70c35dc82a2e74d63"
   integrity sha512-Cu96Sd2By9mCNTx2iyKOmq10v22jUVQv0lQnlGNy16oE9589yE+QADPbrMGCkA51cKZSg3Pu/aTJVTGfL/qjUA==
 
-"@eslint-stylistic/metadata@2.8.0":
-  version "2.8.0"
-  resolved "https://registry.npmjs.org/@eslint-stylistic/metadata/-/metadata-2.8.0.tgz#1a6668b7de47a6853a8f47da2bea56292deaecd1"
-  integrity sha512-/AvE8Jdp+t6T9WjMmPvbKKGNr+pzx7gkZskCOuU9/auO4TaSU1ukdDN4rE6kNXjNJqeRK8HaLbJkNLeGYf0cjw==
-
 "@eslint/eslintrc@^2.1.4":
   version "2.1.4"
   resolved "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-2.1.4.tgz#388a269f0f25c1b6adc317b5a2c55714894c70ad"
@@ -1541,14 +1536,6 @@
   integrity sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==
   dependencies:
     "@sinonjs/commons" "^3.0.0"
-
-"@stylistic/eslint-plugin-migrate@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.npmjs.org/@stylistic/eslint-plugin-migrate/-/eslint-plugin-migrate-2.8.0.tgz#8522d3d6428962139cc4aa5d41d7fd508c900f5a"
-  integrity sha512-XPxnm/ezY+ZbaCIXkUnpGsRe6LDAogj21UugrsyR03ZL50TGnsWWOAzL5rca4meML7Hgs42LexLVdPytJ5Bphg==
-  dependencies:
-    "@eslint-stylistic/metadata" "2.8.0"
-    "@typescript-eslint/utils" "^8.4.0"
 
 "@stylistic/eslint-plugin@^2.8.0":
   version "2.8.0"

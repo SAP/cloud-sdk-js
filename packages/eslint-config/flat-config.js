@@ -2,27 +2,27 @@
 const jsdoc = require('eslint-plugin-jsdoc');
 const regex = require('eslint-plugin-regex');
 const unusedImports = require('eslint-plugin-unused-imports');
-const importeslint = require('eslint-plugin-import');
-const tseslint = require('typescript-eslint');
+const importEslint = require('eslint-plugin-import');
+const tsEslint = require('typescript-eslint');
 const eslint = require('@eslint/js');
 const stylistic = require('@stylistic/eslint-plugin');
 
 const flatConfig = [
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tsEslint.configs.recommended,
   {
     linterOptions: {
       reportUnusedDisableDirectives: 'warn'
     },
     languageOptions: {
-      parser: tseslint.parser,
+      parser: tsEslint.parser,
       sourceType: 'module'
     },
     files: ['**/*.ts'],
     ignores: ['**/*.d.ts', '**/dist/**/*', '**/node_modules/**/*'],
     plugins: {
-      '@typescript-eslint': tseslint.plugin,
-      import: importeslint,
+      '@typescript-eslint': tsEslint.plugin,
+      import: importEslint,
       'unused-imports': unusedImports,
       jsdoc,
       regex,

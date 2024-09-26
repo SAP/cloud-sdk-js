@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { ServiceCredentials } from '@sap-cloud-sdk/connectivity';
+import type { ServiceCredentials } from '@sap-cloud-sdk/connectivity';
 
 export function mockClientCredentialsGrantCall(
   uri: string,
@@ -87,7 +87,7 @@ export function mockRefreshTokenGrantCall(
 
 function xsuaaRequestHeaders(additionalHeaders: Record<string, string> = {}) {
   return {
-    Accept: 'application/json',
+    accept: 'application/json',
     ...additionalHeaders
   };
 }

@@ -1,7 +1,9 @@
 import { createLogger, last } from '@sap-cloud-sdk/util';
-import type { EdmxProperty } from '../edmx-parser/common/edmx-types';
-import type { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
-import type { EdmxFunctionImportV2 } from '../edmx-parser/v2/edm-types';
+import type {
+  EdmxProperty,
+  EdmxMetadata,
+  EdmxFunctionImportV2
+} from '../edmx-parser';
 import {
   edmToFieldType,
   edmToTsType,

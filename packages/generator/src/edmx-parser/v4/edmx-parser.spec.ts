@@ -9,7 +9,7 @@ import {
   parseEnumTypes,
   parseOperationImports,
   parseOperations
-} from '../v4';
+} from './edmx-parser';
 
 describe('edmx-edmx-parser', () => {
   it('parses IsBound  with default false', () => {

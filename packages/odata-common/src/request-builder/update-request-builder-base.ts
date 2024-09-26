@@ -7,16 +7,16 @@ import { v4 as uuid } from 'uuid';
 import type { EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import type { EntitySerializer } from '../entity-serializer';
-import type { ODataRequest } from '../request/odata-request';
-import { ODataUpdateRequestConfig } from '../request/odata-update-request-config';
-import type { ODataUri } from '../uri-conversion';
-import type { Selectable } from '../selectable';
-import type { DeSerializers } from '../de-serializers/de-serializers';
-import type { EntityApi } from '../entity-api';
 import type {
+  ODataRequest,
   BatchReference,
   WithBatchReference
-} from '../request/odata-request-traits';
+} from '../request';
+import { ODataUpdateRequestConfig } from '../request';
+import type { ODataUri } from '../uri-conversion';
+import type { Selectable } from '../selectable';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityApi } from '../entity-api';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**

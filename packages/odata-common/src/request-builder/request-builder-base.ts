@@ -10,8 +10,8 @@ import {
 } from '@sap-cloud-sdk/connectivity/internal';
 import type { HttpMiddleware } from '@sap-cloud-sdk/http-client/internal';
 import type { CustomRequestConfig } from '@sap-cloud-sdk/http-client';
-import { ODataRequest } from '../request/odata-request';
-import type { ODataRequestConfig } from '../request/odata-request-config';
+import { ODataRequest } from '../request';
+import type { ODataRequestConfig } from '../request';
 
 /**
  * Base class for all request builders.

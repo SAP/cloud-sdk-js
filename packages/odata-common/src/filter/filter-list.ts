@@ -1,5 +1,6 @@
 import type { DeSerializers } from '../de-serializers';
 import type { EntityBase, EntityIdentifiable } from '../entity-base';
+// eslint-disable-next-line import/no-internal-modules
 import { OneToManyLink } from '../selectable/one-to-many-link';
 import type { Filterable } from './filterable';
 

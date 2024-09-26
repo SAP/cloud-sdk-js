@@ -7,14 +7,11 @@ import type { ODataUri } from '../uri-conversion';
 import type { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
-import { ODataCreateRequestConfig } from '../request/odata-create-request-config';
+import { ODataCreateRequestConfig } from '../request';
 import type { Link } from '../selectable';
-import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
-import type {
-  BatchReference,
-  WithBatchReference
-} from '../request/odata-request-traits';
+import type { BatchReference, WithBatchReference } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**

@@ -12,7 +12,7 @@ import {
   externalImportDeclarationsTsMorph,
   mergeImportDeclarations
 } from '../imports';
-import { cannotDeserialize } from '../edmx-to-vdm/common';
+import { cannotDeserialize } from '../edmx-to-vdm';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 function complexTypeRelatedImports(returnTypes: VdmOperationReturnType[]) {

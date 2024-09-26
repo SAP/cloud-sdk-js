@@ -9,7 +9,8 @@ import type {
   AuthenticationType,
   Destination,
   DestinationAuthToken
-} from './destination/destination-service-types';
+} from './destination';
+// eslint-disable-next-line import/no-internal-modules
 import { sanitizeDestination } from './destination/destination';
 
 const logger = createLogger({

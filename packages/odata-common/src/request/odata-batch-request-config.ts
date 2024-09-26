@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import type { BatchSubRequestPathType } from '../request-builder/batch/batch-request-options';
+import type { BatchSubRequestPathType } from '../request-builder';
 import { ODataRequestConfig } from './odata-request-config';
 
 /**

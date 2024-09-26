@@ -23,7 +23,7 @@ import {
   typesForCollection,
   enumTypeForName
 } from '../edmx-to-vdm-util';
-import type { EdmxComplexTypeBase } from '../../edmx-parser/common';
+import type { EdmxComplexTypeBase } from '../../edmx-parser';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
 
 /**

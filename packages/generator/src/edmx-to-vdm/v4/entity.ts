@@ -1,12 +1,9 @@
-import type { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import type {
+  ServiceMetadata,
   EdmxEntitySet,
   EdmxEntityTypeV4
-} from '../../edmx-parser/v4/edm-types';
-import {
-  parseEntitySetsV4,
-  parseEntityType
-} from '../../edmx-parser/v4/edmx-parser';
+} from '../../edmx-parser';
+import { parseEntitySetsV4, parseEntityType } from '../../edmx-parser';
 import type { ServiceNameFormatter } from '../../service-name-formatter';
 import type {
   VdmComplexType,
@@ -20,7 +17,7 @@ import {
   joinEntityMetadata,
   navigationPropertyBase,
   transformEntityBase
-} from '../common/entity';
+} from '../common';
 import { isCollectionType } from '../edmx-to-vdm-util';
 import { generateBoundOperations } from './operation';
 

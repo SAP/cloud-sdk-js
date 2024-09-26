@@ -1,6 +1,6 @@
 import type { EntityApi } from '@sap-cloud-sdk/odata-common';
 import { entityDeserializer } from '../de-serializers';
-import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { DeSerializers } from '../de-serializers';
 import type { Entity } from '../entity';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
 

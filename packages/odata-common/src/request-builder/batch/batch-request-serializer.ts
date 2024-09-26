@@ -1,10 +1,9 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
-import { ODataRequest } from '../../request/odata-request';
-import type { ODataRequestConfig } from '../../request/odata-request-config';
+import { ODataRequest } from '../../request';
+import type { ODataRequestConfig, WithBatchReference } from '../../request';
 import type { MethodRequestBuilder } from '../request-builder-base';
 import type { DeSerializers } from '../../de-serializers';
-import type { WithBatchReference } from '../../request';
 import type { BatchRequestBuilder } from './batch-request-builder';
 import type {
   BatchRequestSerializationOptions,

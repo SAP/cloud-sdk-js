@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import type { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt, decodeOrMakeJwt } from '../jwt';
-import type { Service } from '../environment-accessor/environment-accessor-types';
+import type { Service } from '../environment-accessor';
 import { getServiceBindingByInstanceName } from '../environment-accessor';
 import type { CachingOptions } from '../cache';
 import {

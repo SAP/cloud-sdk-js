@@ -6,7 +6,7 @@ import type {
   EdmxParameter,
   EdmxProperty,
   JoinedEntityMetadata
-} from '../edmx-parser/common';
+} from '../edmx-parser';
 import type {
   SwaggerDescribed,
   SwaggerPath,

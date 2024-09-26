@@ -1,8 +1,9 @@
 import type { EntityBase } from '../entity-base';
+// eslint-disable-next-line import/no-internal-modules
 import { FilterLink } from '../filter/filter-link';
-import type { Orderable } from '../order/orderable';
+import type { Orderable } from '../order';
 import type { Filterable } from '../filter';
-import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { DeSerializers } from '../de-serializers';
 import type { EntityApi, EntityType } from '../entity-api';
 import { Link } from './link';
 

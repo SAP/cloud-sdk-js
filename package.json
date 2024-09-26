@@ -69,6 +69,8 @@
     "check:test-service": "yarn generate && yarn ts-node scripts/check-test-service-for-changes.ts",
     "check:public-api": "turbo run check:public-api",
     "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",
+    "eslint-config": "yarn workspace @sap-cloud-sdk/eslint-config",
+    "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",
     "generator": "yarn workspace @sap-cloud-sdk/generator",
     "generator-common": "yarn workspace @sap-cloud-sdk/generator-common",
     "http-client": "yarn workspace @sap-cloud-sdk/http-client",

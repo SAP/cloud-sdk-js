@@ -5,7 +5,7 @@ const unusedImports = require('eslint-plugin-unused-imports');
 const importeslint = require('eslint-plugin-import');
 const tseslint = require('typescript-eslint');
 const eslint = require('@eslint/js');
-const stylistic = require('@stylistic');
+const stylistic = require('@stylistic/eslint-plugin');
 
 const flatConfig = [
   eslint.configs.recommended,

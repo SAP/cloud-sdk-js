@@ -20,7 +20,7 @@
     "test:e2e": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'",
+    "check:dependencies": "depcheck . --ignores='express,better-sqlite3,@sap/cds'",
     "generate-edmx": "cds compile srv -s TestService -2 edmx > TestService.edmx"
   },
   "devDependencies": {
@@ -47,8 +47,7 @@
     "moment": "^2.30.1",
     "openapi-backend": "^5.11.0",
     "pm2": "^5.4.2",
-    "smtp-server": "3.13.5",
-    "sqlite3": "^5.1.7"
+    "smtp-server": "3.13.5"
   },
   "cds": {
     "cdsc": {

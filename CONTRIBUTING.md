@@ -131,3 +131,9 @@ Due to legal reasons, contributors will be asked to accept a DCO before they sub
 ## Release Process
 
 Information on the release process can be found in the [release documentation](./knowledge-base/how-tos/0001-release.md).
+
+## Contributing with AI-generated Code
+
+As artificial intelligence evolves, AI-generated code is becoming valuable for many software projects, including open-source initiatives. While we recognize the potential benefits of incorporating AI-generated content into our open-source projects there a certain requirements that need to be reflected and adhered to when making contributions.
+
+Please see our [Guideline for AI-generated code contributions to SAP Open Source Software Projects](https://github.com/SAP/.github/blob/main/CONTRIBUTING_USING_GENAI.md) for more details.

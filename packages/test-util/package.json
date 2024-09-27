@@ -38,7 +38,7 @@
     "@sap-cloud-sdk/util": "^3.21.0"
   },
   "devDependencies": {
-    "mock-fs": "^5.2.0",
+    "mock-fs": "^5.3.0",
     "typescript": "~5.6.2"
   }
 }

@@ -98,7 +98,7 @@ export function mockRefreshTokenGrantCall(
 
 function xsuaaRequestHeaders(additionalHeaders: Record<string, string> = {}) {
   return {
-    Accept: 'application/json',
+    accept: 'application/json',
     ...additionalHeaders
   };
 }

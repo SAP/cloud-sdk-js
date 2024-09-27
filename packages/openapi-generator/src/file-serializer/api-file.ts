@@ -1,10 +1,10 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
-import {
-  serializeImports,
+import type {
   Import,
   CreateFileOptions
 } from '@sap-cloud-sdk/generator-common/internal';
-import {
+import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
+import type {
   OpenApiApi,
   OpenApiOperation,
   OpenApiReferenceSchema

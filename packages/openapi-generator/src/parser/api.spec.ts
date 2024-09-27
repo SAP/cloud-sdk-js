@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
 import { createTestRefs, emptyDocument } from '../../test/test-util';
 import { apiNameExtension } from '../extensions';
 import { parseApis } from './api';

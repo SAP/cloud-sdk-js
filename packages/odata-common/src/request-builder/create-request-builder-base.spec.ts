@@ -1,7 +1,5 @@
-import {
-  CommonEntity,
-  CommonEntityApi
-} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import type { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import { CommonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { createRequestBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 const mockBatchId = '<content-id>';
 jest.mock('uuid', () => ({

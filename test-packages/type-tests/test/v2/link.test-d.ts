@@ -2,8 +2,8 @@
 /* eslint-disable import/no-internal-modules */
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { expectType } from 'tsd';
-import { TestEntitySingleLinkApi } from '@sap-cloud-sdk/test-services-odata-v2/test-service/TestEntitySingleLinkApi';
-import { TestEntityLvl2MultiLinkApi } from '@sap-cloud-sdk/test-services-odata-v2/test-service/TestEntityLvl2MultiLinkApi';
+import type { TestEntitySingleLinkApi } from '@sap-cloud-sdk/test-services-odata-v2/test-service/TestEntitySingleLinkApi';
+import type { TestEntityLvl2MultiLinkApi } from '@sap-cloud-sdk/test-services-odata-v2/test-service/TestEntityLvl2MultiLinkApi';
 import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
 
 const custom = {

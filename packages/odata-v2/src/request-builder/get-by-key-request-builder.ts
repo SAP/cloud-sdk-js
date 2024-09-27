@@ -1,14 +1,11 @@
-import {
+import type {
   EntityApi,
-  EntityIdentifiable,
-  GetByKeyRequestBuilderBase
+  EntityIdentifiable
 } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  DefaultDeSerializers,
-  DeSerializers,
-  entityDeserializer
-} from '../de-serializers';
-import { Entity } from '../entity';
+import { GetByKeyRequestBuilderBase } from '@sap-cloud-sdk/odata-common/internal';
+import type { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { entityDeserializer } from '../de-serializers';
+import type { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 

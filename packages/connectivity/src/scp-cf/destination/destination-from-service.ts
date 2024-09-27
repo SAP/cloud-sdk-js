@@ -1,15 +1,16 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
+import type { Service } from '../environment-accessor';
 import {
-  Service,
   getDestinationServiceCredentials,
   getServiceBinding
 } from '../environment-accessor';
 import { exchangeToken, shouldExchangeToken } from '../identity-service';
-import { JwtPair, getSubdomain, isXsuaaToken } from '../jwt';
+import type { JwtPair } from '../jwt';
+import { getSubdomain, isXsuaaToken } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken } from '../token-accessor';
-import {
+import type {
   DestinationFetchOptions,
   DestinationsByType
 } from './destination-accessor-types';
@@ -22,22 +23,20 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
+import type { AuthAndExchangeTokens } from './destination-service';
 import {
-  AuthAndExchangeTokens,
   fetchCertificate,
   fetchDestinationWithTokenRetrieval,
   fetchDestinationWithoutTokenRetrieval
 } from './destination-service';
-import {
-  assertHttpDestination,
-  Destination
-} from './destination-service-types';
+import type { Destination } from './destination-service-types';
+import { assertHttpDestination } from './destination-service-types';
 import { getProviderServiceToken } from './get-provider-token';
+import type { SubscriberToken } from './get-subscriber-token';
 import {
   getRequiredSubscriberToken,
   getSubscriberToken,
-  hasTokens,
-  SubscriberToken
+  hasTokens
 } from './get-subscriber-token';
 import {
   addProxyConfigurationInternet,

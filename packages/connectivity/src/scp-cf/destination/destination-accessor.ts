@@ -2,24 +2,19 @@ import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { exchangeToken, shouldExchangeToken } from '../identity-service';
 import { getDestinationServiceCredentials } from '../environment-accessor';
 import { getSubdomain } from '../jwt';
-import {
-  DestinationOrFetchOptions,
-  sanitizeDestination,
-  toDestinationNameUrl
-} from './destination';
-import { Destination } from './destination-service-types';
+import type { DestinationOrFetchOptions } from './destination';
+import { sanitizeDestination, toDestinationNameUrl } from './destination';
+import type { Destination } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
-import {
-  DestinationForServiceBindingOptions,
-  searchServiceBindingForDestination
-} from './destination-from-vcap';
+import type { DestinationForServiceBindingOptions } from './destination-from-vcap';
+import { searchServiceBindingForDestination } from './destination-from-vcap';
 import { getDestinationFromDestinationService } from './destination-from-service';
-import {
+import type {
   DestinationFetchOptions,
-  isDestinationFetchOptions,
   AllDestinationOptions,
   DestinationWithoutToken
 } from './destination-accessor-types';
+import { isDestinationFetchOptions } from './destination-accessor-types';
 import { searchRegisteredDestination } from './destination-from-registration';
 import { getSubscriberToken } from './get-subscriber-token';
 import { getProviderServiceToken } from './get-provider-token';

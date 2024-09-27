@@ -3,9 +3,9 @@ import {
   changeset
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
-import { HttpDestination } from '@sap-cloud-sdk/connectivity';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { ErrorResponse } from '@sap-cloud-sdk/odata-common';
+import type { ErrorResponse } from '@sap-cloud-sdk/odata-common';
 import {
   createAsChildOfRequest,
   createRequest,

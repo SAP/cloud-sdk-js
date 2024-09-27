@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 import { getBasePath } from './service-base-path';
 
 describe('options-per-service', () => {

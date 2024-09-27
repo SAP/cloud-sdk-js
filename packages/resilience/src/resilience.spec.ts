@@ -1,8 +1,10 @@
 // eslint-disable-next-line import/named
-import axios, { AxiosResponse, RawAxiosRequestConfig } from 'axios';
+import type { AxiosResponse, RawAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import nock from 'nock';
 import { circuitBreakers } from './circuit-breaker';
-import { MiddlewareContext, executeWithMiddleware } from './middleware';
+import type { MiddlewareContext } from './middleware';
+import { executeWithMiddleware } from './middleware';
 import { resilience } from './resilience';
 import { retry } from './retry';
 import { timeout } from './timeout';

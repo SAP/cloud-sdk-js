@@ -31,7 +31,7 @@ import {
   mockJwtBearerToken,
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
-import {
+import type {
   AuthenticationType,
   Destination,
   DestinationAuthToken
@@ -43,10 +43,10 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import { getDestinationFromDestinationService } from './destination-from-service';
+import type { IsolationStrategy } from './destination-cache';
 import {
   destinationCache,
   getDestinationCacheKey,
-  IsolationStrategy,
   setDestinationCache
 } from './destination-cache';
 import { getDestination } from './destination-accessor';

@@ -11,8 +11,8 @@ import {
   xsuaaBindingMock
 } from '../../../../../test-resources/test/test-util';
 import { certAsString } from '../../../../../test-resources/test/test-util/test-certificate';
+import type { DestinationWithName } from './destination-from-registration';
 import {
-  DestinationWithName,
   registerDestination,
   searchRegisteredDestination
 } from './destination-from-registration';

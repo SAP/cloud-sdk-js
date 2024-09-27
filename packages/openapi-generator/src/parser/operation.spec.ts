@@ -1,6 +1,6 @@
-import { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
-import { OpenApiParameter } from '../openapi-types';
+import type { OpenApiParameter } from '../openapi-types';
 import {
   parseParameters,
   getRelevantParameters,

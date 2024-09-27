@@ -1,17 +1,15 @@
 import { URL } from 'node:url';
 import { createLogger, sanitizeRecord } from '@sap-cloud-sdk/util';
-import { Protocol, getProtocol } from '../protocol';
-import {
+import type { Protocol } from '../protocol';
+import { getProtocol } from '../protocol';
+import type {
   BasicProxyConfiguration,
   ProxyConfiguration
 } from '../connectivity-service-types';
 import { basicHeader } from '../authorization-header';
 import { getProtocolOrDefault } from '../get-protocol';
-import {
-  Destination,
-  HttpDestination,
-  isHttpDestination
-} from './destination-service-types';
+import type { Destination, HttpDestination } from './destination-service-types';
+import { isHttpDestination } from './destination-service-types';
 
 const logger = createLogger({
   package: 'connectivity',

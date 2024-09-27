@@ -1,15 +1,13 @@
-import { join, parse } from 'path';
-import { promises } from 'fs';
+import { join, parse } from 'node:path';
+import { promises } from 'node:fs';
 import {
   codeBlock,
   createLogger,
   ErrorWithCause,
   unixEOL
 } from '@sap-cloud-sdk/util';
-import prettier, {
-  BuiltInParserName,
-  Options as PrettierOptions
-} from 'prettier';
+import type { BuiltInParserName, Options as PrettierOptions } from 'prettier';
+import { format } from 'prettier';
 import { getCopyrightHeader } from '../util';
 
 const { writeFile, readFile } = promises;
@@ -112,7 +110,7 @@ async function formatWithPrettier(
 
   if (parser) {
     try {
-      return prettier.format(content, { ...prettierOptions, parser });
+      return format(content, { ...prettierOptions, parser });
     } catch (e) {
       logger.warn(
         `Error in prettify file ${fileName} - emit unformatted content`

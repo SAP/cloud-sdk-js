@@ -1,25 +1,27 @@
-import {
+import type {
   TestComplexType,
   TestEntity,
-  testFunctionImportComplexReturnType,
-  testFunctionImportComplexReturnTypeCollection,
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestFunctionImportComplexReturnTypeParameters,
-  testFunctionImportEdmReturnType,
-  testFunctionImportEdmReturnTypeCollection,
   TestFunctionImportEdmReturnTypeCollectionParameters,
   TestFunctionImportEdmReturnTypeParameters,
+  TestFunctionImportEntityReturnTypeParameters,
+  TestFunctionImportNoReturnTypeParameters
+} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import {
+  testFunctionImportComplexReturnType,
+  testFunctionImportComplexReturnTypeCollection,
+  testFunctionImportEdmReturnType,
+  testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType,
   testFunctionImportEntityReturnTypeCollection,
-  TestFunctionImportEntityReturnTypeParameters,
-  TestFunctionImportNoReturnTypeParameters,
   testFunctionImportSharedEntityReturnType,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { expectError, expectType } from 'tsd';
-import { OperationRequestBuilder } from '@sap-cloud-sdk/odata-v2';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { DefaultDeSerializerV2 } from '../duplicated-types';
+import type { OperationRequestBuilder } from '@sap-cloud-sdk/odata-v2';
+import type { HttpResponse } from '@sap-cloud-sdk/http-client';
+import type { DefaultDeSerializerV2 } from '../duplicated-types';
 
 const edmReturnTypeRequestBuilder = testFunctionImportEdmReturnType({});
 expectType<

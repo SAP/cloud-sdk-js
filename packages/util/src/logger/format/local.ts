@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { format } from 'winston';
-import { TransformableInfo } from 'logform';
+import type { TransformableInfo } from 'logform';
 
 const { combine, timestamp, cli, printf } = format;
 

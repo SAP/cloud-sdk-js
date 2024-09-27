@@ -1,9 +1,12 @@
 import { existsSync, promises as fsPromises } from 'fs';
 import { dirname, join, resolve } from 'path';
+import type {
+  CreateFileOptions,
+  OptionsPerService
+} from '@sap-cloud-sdk/generator-common/internal';
 import {
   copyFiles,
   createFile,
-  CreateFileOptions,
   formatTsConfig,
   getSdkMetadataFileNames,
   getSdkVersion,
@@ -14,8 +17,7 @@ import {
   transpileDirectory,
   parseOptions,
   getRelPathWithPosixSeparator,
-  writeOptionsPerService,
-  OptionsPerService
+  writeOptionsPerService
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   createLogger,
@@ -24,12 +26,12 @@ import {
   splitInChunks
 } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
+import type { ProjectOptions } from 'ts-morph';
 import {
   IndentationText,
   ModuleKind,
   ModuleResolutionKind,
   Project,
-  ProjectOptions,
   QuoteKind,
   ScriptTarget
 } from 'ts-morph';
@@ -38,11 +40,8 @@ import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
 import { enumTypeSourceFile } from './enum-type/file';
 import { sourceFile } from './file-generator';
-import {
-  GeneratorOptions,
-  cliOptions,
-  ParsedGeneratorOptions
-} from './options';
+import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
+import { cliOptions } from './options';
 import { hasEntities } from './generator-utils';
 import { entityApiFile } from './generator-without-ts-morph';
 import { requestBuilderSourceFile } from './generator-without-ts-morph/request-builder/file';
@@ -53,7 +52,7 @@ import { parseAllServices } from './service-generator';
 import { indexFile } from './service/index-file';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
-import { VdmServiceMetadata } from './vdm-types';
+import type { VdmServiceMetadata } from './vdm-types';
 
 const { mkdir, readdir } = fsPromises;
 

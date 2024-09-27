@@ -1,18 +1,18 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { JwtPayload } from './jsonwebtoken-type';
-import { Protocol } from './protocol';
-import {
+import type { JwtPayload } from './jsonwebtoken-type';
+import type { Protocol } from './protocol';
+import type {
   ProxyConfiguration,
   ProxyConfigurationHeaders
 } from './connectivity-service-types';
-import {
+import type {
   AuthenticationType,
   Destination
 } from './destination/destination-service-types';
 import { getServiceBindings } from './environment-accessor';
-import { Service } from './environment-accessor/environment-accessor-types';
+import type { Service } from './environment-accessor/environment-accessor-types';
 import { serviceToken } from './token-accessor';
-import { SubscriberToken } from './destination';
+import type { SubscriberToken } from './destination';
 
 const logger = createLogger({
   package: 'connectivity',

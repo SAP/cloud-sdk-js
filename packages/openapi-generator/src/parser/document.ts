@@ -1,10 +1,3 @@
-import { OpenAPIV3 } from 'openapi-types';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
-import {
-  OpenApiDocument,
-  OpenApiOneOfSchema,
-  OpenApiPersistedSchema
-} from '../openapi-types';
 import {
   isAllOfSchema,
   isOneOfSchema,
@@ -15,9 +8,17 @@ import {
   parseSchema,
   parseSchemaProperties
 } from './schema';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type {
+  OpenApiDocument,
+  OpenApiPersistedSchema,
+  OpenApiOneOfSchema
+} from '../openapi-types';
 import { parseApis } from './api';
-import { createRefs, OpenApiDocumentRefs } from './refs';
-import { ParserOptions } from './options';
+import type { OpenApiDocumentRefs } from './refs';
+import { createRefs } from './refs';
+import type { ParserOptions } from './options';
 import { parseBound } from './swagger-parser-workaround';
 
 /**

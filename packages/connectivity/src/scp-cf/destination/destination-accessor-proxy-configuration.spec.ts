@@ -27,7 +27,7 @@ import {
 import { getDestination } from './destination-accessor';
 import * as ProxyUtil from './http-proxy-util';
 import { alwaysProvider } from './destination-selection-strategies';
-import { Destination } from './destination-service-types';
+import type { Destination } from './destination-service-types';
 import { destinationCache } from './destination-cache';
 import { destinationServiceCache } from './destination-service-cache';
 

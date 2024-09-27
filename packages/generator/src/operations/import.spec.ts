@@ -1,5 +1,5 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
-import { VdmServiceMetadata } from '../vdm-types';
+import type { VdmServiceMetadata } from '../vdm-types';
 import { operationDeclarations } from './import';
 
 describe('import declarations for operations', () => {

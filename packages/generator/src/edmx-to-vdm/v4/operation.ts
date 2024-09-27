@@ -1,16 +1,13 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
-  EdmxParameter,
-  parseOperationImports,
-  parseOperations
-} from '../../edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import type { EdmxParameter } from '../../edmx-parser';
+import { parseOperationImports, parseOperations } from '../../edmx-parser';
+import type { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import type {
   EdmxOperation,
   EdmxOperationImport,
   EdmxReturnType
 } from '../../edmx-parser/v4/edm-types';
-import { ServiceNameFormatter } from '../../service-name-formatter';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
 import { getSwaggerDefinitionForOperation } from '../../swagger-parser/swagger-parser';
 import type {
   VdmComplexType,

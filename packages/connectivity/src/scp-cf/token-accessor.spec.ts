@@ -29,7 +29,7 @@ import {
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { jwtBearerToken, serviceToken } from './token-accessor';
-import { ClientCredentialsResponse } from './xsuaa-service-types';
+import type { ClientCredentialsResponse } from './xsuaa-service-types';
 import { clearXsuaaServices } from './environment-accessor';
 
 describe('token accessor', () => {

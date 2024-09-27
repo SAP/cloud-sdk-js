@@ -1,9 +1,9 @@
-import { HttpDestination } from '@sap-cloud-sdk/connectivity';
-import {
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
+import type {
   DestinationWithName,
-  RegisterDestinationOptions,
-  registerDestination
+  RegisterDestinationOptions
 } from '@sap-cloud-sdk/connectivity/src/scp-cf';
+import { registerDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import axios from 'axios';
 import mock from 'mock-fs';

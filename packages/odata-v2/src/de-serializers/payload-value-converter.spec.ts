@@ -4,7 +4,7 @@ import {
   deserializeToNumber,
   serializeFromNumber
 } from '@sap-cloud-sdk/odata-common/internal';
-import { EdmType } from '../edm-types';
+import type { EdmType } from '../edm-types';
 import { defaultDeSerializers } from '../de-serializers';
 import { edmToTs, tsToEdm } from './payload-value-converter';
 

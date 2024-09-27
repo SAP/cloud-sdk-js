@@ -1,6 +1,6 @@
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import type { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmServiceEntities } from '../../vdm-types';
+import type { VdmServiceEntities } from '../../vdm-types';
 import { generateUnboundOperations } from './operation';
 import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';

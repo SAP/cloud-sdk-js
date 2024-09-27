@@ -1,5 +1,5 @@
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import {
+import type { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import type {
   EdmxEntitySet,
   EdmxEntityTypeV4
 } from '../../edmx-parser/v4/edm-types';
@@ -7,8 +7,8 @@ import {
   parseEntitySetsV4,
   parseEntityType
 } from '../../edmx-parser/v4/edmx-parser';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type {
   VdmComplexType,
   VdmEntity,
   VdmPartialEntity,

@@ -1,4 +1,4 @@
-import { DestinationServiceCredentials } from './environment-accessor-types';
+import type { DestinationServiceCredentials } from './environment-accessor-types';
 import { getServiceCredentials } from './service-credentials';
 
 /**

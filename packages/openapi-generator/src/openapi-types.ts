@@ -1,5 +1,5 @@
 import type { OpenAPIV3 } from 'openapi-types';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * Representation of an OpenAPI specification/document.

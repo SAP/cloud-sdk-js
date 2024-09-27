@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
+import type {
   MiddlewareContext,
   Middleware,
   MiddlewareOptions,

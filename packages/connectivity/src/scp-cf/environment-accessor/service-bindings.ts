@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
-import { Service } from './environment-accessor-types';
+import type { Service } from './environment-accessor-types';
 
 const logger = createLogger({
   package: 'connectivity',

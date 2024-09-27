@@ -1,6 +1,10 @@
 import { resolve } from 'path';
-import { ClassDeclaration, FunctionDeclaration, SourceFile } from 'ts-morph';
-import { ODataVersion } from '@sap-cloud-sdk/util';
+import type {
+  ClassDeclaration,
+  FunctionDeclaration,
+  SourceFile
+} from 'ts-morph';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
 import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { generateProject } from '../../src/generator';
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';

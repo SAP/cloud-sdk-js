@@ -1,6 +1,7 @@
-import { codeBlock, ODataVersion } from '@sap-cloud-sdk/util';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import { codeBlock } from '@sap-cloud-sdk/util';
 import voca from 'voca';
-import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
+import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import { matchEntity } from '../entity-api/match-entity';
 import {
   getGenericTypes,

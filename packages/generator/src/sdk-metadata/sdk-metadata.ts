@@ -1,9 +1,9 @@
+import type { Client } from '@sap-cloud-sdk/generator-common/internal';
 import {
   getSdkMetadataClient,
-  Client,
   getSdkVersion
 } from '@sap-cloud-sdk/generator-common/internal';
-import { VdmServiceMetadata } from '../vdm-types';
+import type { VdmServiceMetadata } from '../vdm-types';
 import { getApiSpecificUsage } from './generation-and-usage';
 
 /**

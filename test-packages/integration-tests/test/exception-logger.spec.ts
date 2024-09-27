@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import execa from 'execa';
 import { createLogger, kibana, local } from '@sap-cloud-sdk/util';
-import { Logger } from 'winston';
+import type { Logger } from 'winston';
 
 describe('exception logger', () => {
   let logger: Logger;

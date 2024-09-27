@@ -1,9 +1,9 @@
 import { first } from '@sap-cloud-sdk/util';
 import voca from 'voca';
-import { EdmxReturnType } from '../../edmx-parser/v4';
+import type { EdmxReturnType } from '../../edmx-parser/v4';
 import { isNullableProperty } from '../../generator-utils';
 import { getApiName } from '../../generator-without-ts-morph/service';
-import {
+import type {
   VdmComplexType,
   VdmPartialEntity,
   VdmOperationReturnType

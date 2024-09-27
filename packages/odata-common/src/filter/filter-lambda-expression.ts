@@ -1,6 +1,6 @@
-import { DeSerializers } from '../de-serializers';
-import { EntityBase } from '../entity-base';
-import { FilterList } from './filter-list';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityBase } from '../entity-base';
+import type { FilterList } from './filter-list';
 import type { Filterable } from './filterable';
 
 /**

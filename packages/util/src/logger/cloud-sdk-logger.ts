@@ -1,11 +1,7 @@
-import { Format } from 'logform';
-import {
-  Container,
-  Logger,
-  LoggerOptions as WinstonLoggerOptions,
-  transports
-} from 'winston';
-import TransportStream from 'winston-transport';
+import type { Format } from 'logform';
+import type { Logger, LoggerOptions as WinstonLoggerOptions } from 'winston';
+import { Container, transports } from 'winston';
+import type TransportStream from 'winston-transport';
 import { kibana, local } from './format';
 const loggerReference = 'sap-cloud-sdk-logger';
 const exceptionLoggerId = 'sap-cloud-sdk-exception-logger';

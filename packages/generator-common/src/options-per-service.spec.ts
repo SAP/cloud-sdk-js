@@ -10,11 +10,11 @@ jest.mock('path', () => {
 });
 
 import mock from 'mock-fs';
+import type { OptionsPerService } from './options-per-service';
 import {
   getOptionsPerService,
   getOriginalOptionsPerService,
-  getServiceOptions,
-  OptionsPerService
+  getServiceOptions
 } from './options-per-service';
 
 describe('getOriginalOptionsPerService', () => {

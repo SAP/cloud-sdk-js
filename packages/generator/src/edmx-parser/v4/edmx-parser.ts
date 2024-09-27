@@ -8,7 +8,7 @@ import {
 } from '../common/edmx-parser';
 import { forceArray } from '../../generator-utils';
 import { stripNamespace } from '../../edmx-to-vdm/edmx-to-vdm-util';
-import {
+import type {
   EdmxComplexType,
   EdmxDerivedType,
   EdmxEntitySet,

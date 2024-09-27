@@ -4,13 +4,14 @@ import {
   getOptionsPerService,
   getRelPathWithPosixSeparator
 } from '@sap-cloud-sdk/generator-common/internal';
-import { ParsedGeneratorOptions } from './options';
-import {
-  readEdmxAndSwaggerFile,
-  ServiceMetadata
-} from './edmx-parser/edmx-file-reader';
+import type { ParsedGeneratorOptions } from './options';
+import type { ServiceMetadata } from './edmx-parser/edmx-file-reader';
+import { readEdmxAndSwaggerFile } from './edmx-parser/edmx-file-reader';
 import { apiBusinessHubMetadata } from './swagger-parser/swagger-util';
-import { VdmServiceMetadata, VdmServicePackageMetaData } from './vdm-types';
+import type {
+  VdmServiceMetadata,
+  VdmServicePackageMetaData
+} from './vdm-types';
 import { isV2Metadata } from './edmx-to-vdm/edmx-to-vdm-util';
 import { getServiceEntitiesV2 } from './edmx-to-vdm/v2';
 import { getServiceEntitiesV4 } from './edmx-to-vdm/v4';

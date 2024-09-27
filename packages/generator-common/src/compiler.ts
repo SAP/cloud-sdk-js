@@ -2,20 +2,23 @@ import { parse, resolve } from 'path';
 import { existsSync, promises } from 'fs';
 import { EOL } from 'os';
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
+import type {
   CompilerOptions,
-  createProgram,
   Diagnostic,
-  getPreEmitDiagnostics,
-  ModuleKind,
-  ModuleResolutionKind,
   NodeArray,
-  ScriptTarget,
   Statement,
   WriteFileCallback
 } from 'typescript';
+import {
+  createProgram,
+  getPreEmitDiagnostics,
+  ModuleKind,
+  ModuleResolutionKind,
+  ScriptTarget
+} from 'typescript';
 import { glob } from 'glob';
-import { createFile, CreateFileOptions, getFileExtension } from './file-writer';
+import type { CreateFileOptions } from './file-writer';
+import { createFile, getFileExtension } from './file-writer';
 
 const logger = createLogger('compiler');
 const { mkdir } = promises;

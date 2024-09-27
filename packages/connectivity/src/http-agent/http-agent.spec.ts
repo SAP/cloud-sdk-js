@@ -1,8 +1,8 @@
 import { X509Certificate } from 'node:crypto';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { DestinationCertificate } from '../scp-cf';
-import { HttpDestination } from '../scp-cf/destination';
+import type { DestinationCertificate } from '../scp-cf';
+import type { HttpDestination } from '../scp-cf/destination';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
 import { getAgentConfigAsync } from './http-agent';

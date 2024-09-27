@@ -1,21 +1,20 @@
-import {
+import type {
   EntityIdentifiable,
-  GetAllRequestBuilderBase,
-  ODataGetAllRequestConfig,
   Filterable,
   Expandable,
   EntityApi,
-  toFilterableList,
-  and,
   EntityBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { Entity } from '../entity';
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  entityDeserializer
-} from '../de-serializers';
+  GetAllRequestBuilderBase,
+  ODataGetAllRequestConfig,
+  toFilterableList,
+  and
+} from '@sap-cloud-sdk/odata-common/internal';
+import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
+import type { Entity } from '../entity';
+import type { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { entityDeserializer } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 

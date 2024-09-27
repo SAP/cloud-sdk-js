@@ -1,4 +1,4 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
 import {

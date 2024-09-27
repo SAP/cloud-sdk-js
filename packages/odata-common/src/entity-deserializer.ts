@@ -3,18 +3,19 @@ import {
   createLogger,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import { createValueDeserializer, DeSerializers } from './de-serializers';
-import {
-  EntityBase,
-  isExpandedProperty,
-  isSelectedProperty
-} from './entity-base';
-import { EdmTypeShared, isEdmType } from './edm-types';
-import {
+import type { DeSerializers } from './de-serializers';
+import { createValueDeserializer } from './de-serializers';
+import type { EntityBase } from './entity-base';
+import { isExpandedProperty, isSelectedProperty } from './entity-base';
+import type { EdmTypeShared } from './edm-types';
+import { isEdmType } from './edm-types';
+import type {
   ComplexTypeNamespace,
-  isComplexTypeNameSpace,
   PropertyMetadata,
-  Field,
+  Field
+} from './selectable';
+import {
+  isComplexTypeNameSpace,
   Link,
   EdmTypeField,
   EnumField,
@@ -22,7 +23,7 @@ import {
   ComplexTypeField,
   OneToOneLink
 } from './selectable';
-import { EntityApi, EntityType } from './entity-api';
+import type { EntityApi, EntityType } from './entity-api';
 
 const logger = createLogger({
   package: 'odata-common',

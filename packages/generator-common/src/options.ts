@@ -1,10 +1,10 @@
+import type { ServiceType } from './options-parser';
 import {
   buildResolveInputGlob,
   resolveGlob,
   resolveOptionsPerService,
   resolvePath,
-  resolveRequiredPath,
-  ServiceType
+  resolveRequiredPath
 } from './options-parser';
 
 function getReadmeText(serviceType: ServiceType): string {

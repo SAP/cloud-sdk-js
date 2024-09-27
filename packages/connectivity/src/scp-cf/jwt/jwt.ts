@@ -1,16 +1,14 @@
-import { IncomingMessage } from 'http';
-import {
-  createLogger,
-  ErrorWithCause,
-  pickValueIgnoreCase
-} from '@sap-cloud-sdk/util';
-import { createSecurityContext } from '@sap/xssec';
+import type { IncomingMessage } from 'http';
+import { createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
 import { decode } from 'jsonwebtoken';
-import { Cache } from './cache';
-import { getServiceCredentials, getXsuaaService } from './environment-accessor';
-import { Jwt, JwtPayload, JwtWithPayloadObject } from './jsonwebtoken-type';
-import { TokenKey } from './xsuaa-service-types';
-import { getIssuerSubdomain } from './subdomain-replacer';
+import { Cache } from '../cache';
+import type {
+  Jwt,
+  JwtPayload,
+  JwtWithPayloadObject
+} from '../jsonwebtoken-type';
+import type { TokenKey } from '../xsuaa-service-types';
+import { getIssuerSubdomain } from '../subdomain-replacer';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -176,45 +174,6 @@ function validateAuthHeader(header: string | undefined): boolean {
 }
 
 /**
- * Verifies the given JWT and returns the decoded payload.
- * @param jwt - JWT to be verified
- * @param options - Options to control certain aspects of JWT verification behavior.
- * @returns A Promise to the decoded and verified JWT.
- * @internal
- */
-export async function verifyJwt(
-  jwt: string,
-  options?: VerifyJwtOptions
-): Promise<JwtPayload> {
-  const disableCache = !{ ...defaultVerifyJwtOptions, ...options }
-    .cacheVerificationKeys;
-
-  const xsuaaService = getXsuaaService({ disableCache, jwt });
-
-  const { token } = await createSecurityContext(xsuaaService, {
-    jwt
-  }).catch(e => {
-    throw new ErrorWithCause('Failed to verify JWT.', e);
-  });
-
-  return token.payload;
-}
-
-/**
- * Options to control certain aspects of JWT verification behavior.
- */
-export interface VerifyJwtOptions {
-  /**
-   * The verification keys are cached if set to true.
-   */
-  cacheVerificationKeys?: boolean;
-}
-
-const defaultVerifyJwtOptions: VerifyJwtOptions = {
-  cacheVerificationKeys: true
-};
-
-/**
  * 15 minutes is the default value used by the xssec lib.
  * @internal
  */
@@ -283,40 +242,4 @@ export function isUserToken(token: JwtPair | undefined): token is JwtPair {
 
 function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
   return typeof decoded.payload !== 'string';
-}
-
-/**
- * This method either decodes the given JWT or tries to retrieve the tenant from a service binding (XSUAA, IAS or destination) as `zid`.
- * @param options - Options passed to register the destination containing the JWT.
- * @returns The decoded JWT or a dummy JWT containing the tenant identifier (zid).
- * @internal
- */
-export function decodeOrMakeJwt(
-  jwt?: string | JwtPayload
-): JwtPayload | undefined {
-  if (jwt) {
-    const decodedJwt = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
-    if (getTenantId(decodedJwt)) {
-      return decodedJwt;
-    }
-  }
-
-  const providerTenantId = getTenantIdFromBinding();
-
-  // This is returning a JWT with an XSUAA style zid.
-  // It might make sense to check whether the binding was IAS and then rather return app_tid, as it would be in a IAS token.
-  if (providerTenantId) {
-    return { zid: providerTenantId };
-  }
-}
-/**
- * @internal
- * @returns The tenant identifier from the XSUAA, identity or destination service binding.
- */
-export function getTenantIdFromBinding(): string | undefined {
-  return (
-    getServiceCredentials('xsuaa')?.tenantid ||
-    getServiceCredentials('identity')?.app_tid ||
-    getServiceCredentials('destination')?.tenantid
-  );
 }

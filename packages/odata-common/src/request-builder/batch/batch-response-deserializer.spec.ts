@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { EntityDeserializer } from '../../entity-deserializer';
-import { ResponseDataAccessor } from '../../response-data-accessor';
+import type { EntityDeserializer } from '../../entity-deserializer';
+import type { ResponseDataAccessor } from '../../response-data-accessor';
 import {
   BatchResponseDeserializer,
   parseEntityNameFromMetadataUri

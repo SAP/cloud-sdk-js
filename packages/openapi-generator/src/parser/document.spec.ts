@@ -1,5 +1,5 @@
-import { OpenAPIV3 } from 'openapi-types';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 import { emptyDocument } from '../../test/test-util';
 import { parseOpenApiDocument } from './document';
 import * as api from './api';

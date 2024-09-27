@@ -1,5 +1,5 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
-import {
+import type {
   OpenApiSchema,
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty,

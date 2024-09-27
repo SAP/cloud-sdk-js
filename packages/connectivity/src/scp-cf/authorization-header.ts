@@ -5,7 +5,7 @@ import {
   encodeBase64,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import {
+import type {
   AuthenticationType,
   Destination,
   DestinationAuthToken

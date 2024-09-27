@@ -1,10 +1,8 @@
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
-import {
-  DestinationWithName,
-  registerDestination
-} from '@sap-cloud-sdk/connectivity';
-import { DestinationConfiguration } from '@sap-cloud-sdk/connectivity/internal';
+import type { DestinationWithName } from '@sap-cloud-sdk/connectivity';
+import { registerDestination } from '@sap-cloud-sdk/connectivity';
+import type { DestinationConfiguration } from '@sap-cloud-sdk/connectivity/internal';
 import * as tokenAccessor from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
 import {
   mockFetchDestinationCalls,
@@ -16,7 +14,7 @@ import {
   isMailSentInSequential,
   sendMail
 } from './mail-client';
-import {
+import type {
   MailDestination,
   MailConfig,
   MailClientOptions

@@ -1,6 +1,6 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import { getFunctionDoc, getRequestBuilderDescription } from '../../typedoc';
-import { VdmEntity } from '../../vdm-types';
+import type { VdmEntity } from '../../vdm-types';
 
 /**
  * @internal

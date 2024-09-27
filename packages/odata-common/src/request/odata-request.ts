@@ -9,22 +9,21 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import { Destination, sanitizeDestination } from '@sap-cloud-sdk/connectivity';
-import {
+import type { Destination } from '@sap-cloud-sdk/connectivity';
+import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
+import type {
   HttpResponse,
-  HttpRequestConfigWithOrigin,
-  executeHttpRequest
+  HttpRequestConfigWithOrigin
 } from '@sap-cloud-sdk/http-client';
+import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
+import type { OriginOptions } from '@sap-cloud-sdk/http-client/internal';
 import {
   filterCustomRequestConfig,
-  OriginOptions,
   mergeOptionsWithPriority
 } from '@sap-cloud-sdk/http-client/internal';
-import {
-  assertHttpDestination,
-  HttpDestination
-} from '@sap-cloud-sdk/connectivity/internal';
-import { ODataRequestConfig } from './odata-request-config';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
+import { assertHttpDestination } from '@sap-cloud-sdk/connectivity/internal';
+import type { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 
 /**

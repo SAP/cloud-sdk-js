@@ -3,7 +3,7 @@ import {
   packageDescription,
   parseOptions
 } from '@sap-cloud-sdk/generator-common/internal';
-import { VdmServiceMetadata } from '../vdm-types';
+import type { VdmServiceMetadata } from '../vdm-types';
 import { parseService } from '../service-generator';
 import { createOptions } from '../../test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';

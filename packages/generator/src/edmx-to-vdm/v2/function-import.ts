@@ -1,10 +1,10 @@
-import { ServiceNameFormatter } from '../../service-name-formatter';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformOperationBase } from '../common/operation';
 import { parseOperationReturnType } from '../common/operation-return-type';
-import { VdmComplexType, VdmEntity, VdmOperation } from '../../vdm-types';
+import type { VdmComplexType, VdmEntity, VdmOperation } from '../../vdm-types';
 import { getSwaggerDefinitionForOperation } from '../../swagger-parser/swagger-parser';
 import { parseFunctionImportsV2 } from '../../edmx-parser/v2/edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import type { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 
 const extractResponse = (functionName: string) => (response: string) =>

@@ -210,7 +210,11 @@ describe('openapi-request-builder', () => {
         .get(/.*/)
         .reply(200, 'iss token used on the way')
     ];
-    const requestBuilder = new OpenApiRequestBuilder('get', '/test');
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test', {
+      body: {
+        limit: 100
+      }
+    });
     const response = await requestBuilder.executeRaw({
       destinationName: 'ERNIE-UND-CERT',
       iss: onlyIssuerXsuaaUrl
@@ -223,7 +227,10 @@ describe('openapi-request-builder', () => {
         middleware: [],
         url: '/test',
         headers: { requestConfig: {} },
-        params: { requestConfig: {} }
+        params: { requestConfig: {} },
+        data: {
+          limit: 100
+        }
       },
       { fetchCsrfToken: false }
     );

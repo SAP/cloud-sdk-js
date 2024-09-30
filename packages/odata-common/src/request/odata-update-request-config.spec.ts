@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid';
 import { updateRequestConfig } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
-import type { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { commonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
-import type { DefaultDeSerializers } from '../de-serializers';
 import { testEntityResourcePath } from '../../test/test-util';
+import type { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import type { DefaultDeSerializers } from '../de-serializers';
 import type { ODataUpdateRequestConfig } from './odata-update-request-config';
 
 describe('ODataUpdateRequestConfig', () => {

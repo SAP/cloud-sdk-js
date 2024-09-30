@@ -1,3 +1,6 @@
+import { createODataUri as createODataUriBase } from '@sap-cloud-sdk/odata-common/internal';
+import { getExpand } from './get-expand';
+import { getSelect } from './get-select';
 import type {
   EntityApi,
   EntityBase,
@@ -5,11 +8,8 @@ import type {
   ODataUri,
   Selectable
 } from '@sap-cloud-sdk/odata-common/internal';
-import { createODataUri as createODataUriBase } from '@sap-cloud-sdk/odata-common/internal';
 import type { DeSerializers } from '../de-serializers';
 import type { Entity } from '../entity';
-import { getExpand } from './get-expand';
-import { getSelect } from './get-select';
 
 /**
  * Instance of the {@link ODataUri} conversion interface for OData v4.

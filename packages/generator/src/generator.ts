@@ -1,9 +1,5 @@
 import { existsSync, promises as fsPromises } from 'fs';
 import { dirname, join, resolve } from 'path';
-import type {
-  CreateFileOptions,
-  OptionsPerService
-} from '@sap-cloud-sdk/generator-common/internal';
 import {
   copyFiles,
   createFile,
@@ -26,7 +22,6 @@ import {
   splitInChunks
 } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
-import type { ProjectOptions } from 'ts-morph';
 import {
   IndentationText,
   ModuleKind,
@@ -40,7 +35,6 @@ import { complexTypeSourceFile } from './complex-type';
 import { entitySourceFile } from './entity';
 import { enumTypeSourceFile } from './enum-type';
 import { sourceFile } from './file-generator';
-import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
 import { cliOptions } from './options';
 import { hasEntities } from './generator-utils';
 import {
@@ -52,6 +46,12 @@ import { operationsSourceFile } from './operations';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
 import { indexFile, packageJson, readme } from './service';
+import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
+import type { ProjectOptions } from 'ts-morph';
+import type {
+  CreateFileOptions,
+  OptionsPerService
+} from '@sap-cloud-sdk/generator-common/internal';
 import type { VdmServiceMetadata } from './vdm-types';
 
 const { mkdir, readdir } = fsPromises;

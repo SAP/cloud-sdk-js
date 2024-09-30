@@ -1,4 +1,6 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { getServiceBindings } from './environment-accessor';
+import { serviceToken } from './token-accessor';
 import type { JwtPayload } from './jsonwebtoken-type';
 import type { Protocol } from './protocol';
 import type {
@@ -10,9 +12,7 @@ import type {
   Destination,
   SubscriberToken
 } from './destination';
-import { getServiceBindings } from './environment-accessor';
 import type { Service } from './environment-accessor';
-import { serviceToken } from './token-accessor';
 
 const logger = createLogger({
   package: 'connectivity',

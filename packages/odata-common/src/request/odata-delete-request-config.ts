@@ -1,8 +1,8 @@
+import { ODataRequestConfig } from './odata-request-config';
 import type { DeSerializers } from '../de-serializers';
 import type { EntityBase } from '../entity-base';
 import type { ODataUri } from '../uri-conversion';
 import type { EntityApi } from '../entity-api';
-import { ODataRequestConfig } from './odata-request-config';
 import type { WithKeys, WithETag } from './odata-request-traits';
 
 /**

@@ -3,8 +3,8 @@ import {
   certificateMultipleResponse,
   certificateSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
-import type { DestinationConfiguration } from './destination';
 import { parseDestination, sanitizeDestination } from './destination';
+import type { DestinationConfiguration } from './destination';
 import type { Destination } from './destination-service-types';
 
 describe('parseDestination', () => {

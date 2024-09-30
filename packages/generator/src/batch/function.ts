@@ -1,9 +1,9 @@
+import { StructureKind } from 'ts-morph';
+import { addLeadingNewline, getFunctionDoc } from '../typedoc';
 import type {
   FunctionDeclarationOverloadStructure,
   FunctionDeclarationStructure
 } from 'ts-morph';
-import { StructureKind } from 'ts-morph';
-import { addLeadingNewline, getFunctionDoc } from '../typedoc';
 import type { VdmServiceMetadata } from '../vdm-types';
 
 /**

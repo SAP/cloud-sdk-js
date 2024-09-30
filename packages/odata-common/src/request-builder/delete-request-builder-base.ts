@@ -1,15 +1,15 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import { v4 as uuid } from 'uuid';
+import { EntityBase } from '../entity-base';
+import { ODataDeleteRequestConfig } from '../request';
+import { MethodRequestBuilder } from './request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { v4 as uuid } from 'uuid';
 import type { EntityIdentifiable } from '../entity-base';
-import { EntityBase } from '../entity-base';
 import type { ODataUri } from '../uri-conversion';
-import { ODataDeleteRequestConfig } from '../request';
 import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
 import type { BatchReference, WithBatchReference } from '../request';
-import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4.
  * @typeParam EntityT - Type of the entity to be deleted

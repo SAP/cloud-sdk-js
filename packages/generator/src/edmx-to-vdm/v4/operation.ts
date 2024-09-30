@@ -1,4 +1,15 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { parseOperationImports, parseOperations } from '../../edmx-parser';
+import { getSwaggerDefinitionForOperation } from '../../swagger-parser';
+import { transformOperationBase, parseOperationReturnType } from '../common';
+import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
+import { findOperationByImportName } from './operation-util';
+import type {
+  VdmComplexType,
+  VdmOperation,
+  VdmPartialEntity
+} from '../../vdm-types';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
 import type {
   EdmxParameter,
   ServiceMetadata,
@@ -6,17 +17,6 @@ import type {
   EdmxOperationImport,
   EdmxReturnType
 } from '../../edmx-parser';
-import { parseOperationImports, parseOperations } from '../../edmx-parser';
-import type { ServiceNameFormatter } from '../../service-name-formatter';
-import { getSwaggerDefinitionForOperation } from '../../swagger-parser';
-import type {
-  VdmComplexType,
-  VdmOperation,
-  VdmPartialEntity
-} from '../../vdm-types';
-import { transformOperationBase, parseOperationReturnType } from '../common';
-import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
-import { findOperationByImportName } from './operation-util';
 
 const logger = createLogger({
   package: 'generator',

@@ -2,12 +2,12 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import mock from 'mock-fs';
 import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
-import type { CreateFileOptions } from './create-file';
 import {
   createFile,
   defaultPrettierConfig,
   readPrettierConfig
 } from './create-file';
+import type { CreateFileOptions } from './create-file';
 
 describe('createFile', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../../node_modules');

@@ -1,3 +1,4 @@
+import { filterFunction } from './filter-function';
 import type moment from 'moment';
 import type BigNumber from 'bignumber.js';
 import type { DeSerializers } from '../de-serializers';
@@ -5,7 +6,6 @@ import type { EntityBase } from '../entity-base';
 import type { Field } from '../selectable';
 import type { StringFilterFunction } from './string-filter-function';
 import type { BooleanFilterFunction } from './boolean-filter-function';
-import { filterFunction } from './filter-function';
 import type { NumberFilterFunction } from './number-filter-function';
 
 /* String Functions */

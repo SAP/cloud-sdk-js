@@ -1,6 +1,6 @@
-import type { JwtPair } from '../jwt';
 import { decodeJwt } from '../jwt';
 import { serviceToken } from '../token-accessor';
+import type { JwtPair } from '../jwt';
 import type { DestinationOptions } from './destination-accessor-types';
 
 /**

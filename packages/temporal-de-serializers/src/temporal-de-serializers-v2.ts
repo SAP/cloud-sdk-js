@@ -1,6 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill';
-import type { DeSerializer } from '@sap-cloud-sdk/odata-common/internal';
 import { durationRegexV2 } from '@sap-cloud-sdk/odata-common/internal';
+import type { DeSerializer } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Temporal (de-)serializers for Odata-v2.

@@ -5,8 +5,8 @@ import {
   parseEntitySetsBase,
   parseEntityTypesBase
 } from '../common';
-import type { EdmxComplexTypeBase, EdmxEntitySetBase } from '../common';
 import { forceArray } from '../../generator-utils';
+import type { EdmxComplexTypeBase, EdmxEntitySetBase } from '../common';
 import type {
   EdmxAssociation,
   EdmxAssociationSet,

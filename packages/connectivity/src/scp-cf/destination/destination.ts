@@ -1,6 +1,6 @@
+import { isDestinationFetchOptions } from './destination-accessor-types';
 import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
-import { isDestinationFetchOptions } from './destination-accessor-types';
 import type { DestinationForServiceBindingOptions } from './destination-from-vcap';
 import type {
   AuthenticationType,

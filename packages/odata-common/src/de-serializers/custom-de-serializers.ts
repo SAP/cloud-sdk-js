@@ -1,3 +1,4 @@
+import { defaultDeSerializers } from './default-de-serializers';
 import type BigNumber from 'bignumber.js';
 import type {
   DeserializedType,
@@ -5,7 +6,6 @@ import type {
   DeSerializers
 } from './de-serializers';
 import type { DefaultDeSerializers } from './default-de-serializers';
-import { defaultDeSerializers } from './default-de-serializers';
 
 /**
  * Infers the deserialized type for an EDM type, based on custom (de-)serializers.

@@ -1,7 +1,7 @@
 import { parse } from 'path';
+import { createFile } from '@sap-cloud-sdk/generator-common/internal';
 import type { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
 import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
-import { createFile } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal

@@ -1,6 +1,6 @@
-import type { DestinationOptions } from './destination';
 import { decodeJwt, isXsuaaToken } from './jwt';
 import { jwtBearerToken } from './token-accessor';
+import type { DestinationOptions } from './destination';
 
 /**
  * @internal

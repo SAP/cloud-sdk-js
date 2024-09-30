@@ -1,11 +1,11 @@
 import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
-import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import {
   addNavigationPropertyFieldsFunction,
   navigationPropertyFieldsVariable
 } from './navigation-properties';
 import { getSchema } from './schema';
 import { getSchemaType } from './schema-type';
+import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 
 /**
  * @internal

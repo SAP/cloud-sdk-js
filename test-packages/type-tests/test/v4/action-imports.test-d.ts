@@ -1,18 +1,18 @@
-import type {
-  TestActionImportMultipleParameterComplexReturnTypeParameters,
-  TestActionImportNoParameterNoReturnTypeParameters,
-  TestActionImportNullableTestParameters,
-  TestActionImportUnsupportedEdmTypesParameters
-} from '@sap-cloud-sdk/test-services-odata-v4/test-service/operations';
 import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,
   testActionImportNullableTest,
   testActionImportUnsupportedEdmTypes
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service/operations';
-import type { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { testService } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { expectError, expectType } from 'tsd';
+import type { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import type {
+  TestActionImportMultipleParameterComplexReturnTypeParameters,
+  TestActionImportNoParameterNoReturnTypeParameters,
+  TestActionImportNullableTestParameters,
+  TestActionImportUnsupportedEdmTypesParameters
+} from '@sap-cloud-sdk/test-services-odata-v4/test-service/operations';
 import type { OperationRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import type { DefaultDeSerializersV4 } from '../duplicated-types';
 

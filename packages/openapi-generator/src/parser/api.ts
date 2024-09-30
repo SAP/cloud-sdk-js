@@ -1,12 +1,12 @@
 import { flat, pascalCase } from '@sap-cloud-sdk/util';
-import type { OpenAPIV3 } from 'openapi-types';
-import type { OpenApiApi } from '../openapi-types';
 import { methods } from '../openapi-types';
 import { apiNameExtension, defaultApiName } from '../extensions';
 import { parseOperation } from './operation';
-import type { OperationInfo } from './parsing-info';
 import { nameOperations } from './operation-naming';
 import { ensureUniqueNames } from './unique-naming';
+import type { OperationInfo } from './parsing-info';
+import type { OpenApiApi } from '../openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
 import type { ParserOptions } from './options';
 

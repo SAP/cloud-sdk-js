@@ -1,7 +1,3 @@
-import type {
-  Expandable,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
 import {
   OneToManyLink,
   AllFields,
@@ -10,10 +6,14 @@ import {
   createGetFilter,
   getOrderBy
 } from '@sap-cloud-sdk/odata-common/internal';
-import type { DeSerializers } from '../de-serializers';
-import type { Entity } from '../entity';
 import { getSelect } from './get-select';
 import { uriConverter } from './uri-value-converter';
+import type {
+  Expandable,
+  EntityApi
+} from '@sap-cloud-sdk/odata-common/internal';
+import type { DeSerializers } from '../de-serializers';
+import type { Entity } from '../entity';
 
 function prependDollar(param: string): string {
   return `$${param}`;

@@ -1,9 +1,4 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
-import type {
-  OpenApiSchema,
-  OpenApiObjectSchema,
-  OpenApiObjectSchemaProperty
-} from '../openapi-types';
 import { getType } from '../parser';
 import {
   isReferenceObject,
@@ -16,6 +11,11 @@ import {
   isNotSchema,
   getSchemaPropertiesDocumentation
 } from '../schema-util';
+import type {
+  OpenApiSchema,
+  OpenApiObjectSchema,
+  OpenApiObjectSchemaProperty
+} from '../openapi-types';
 
 /**
  * Serialize a schema.

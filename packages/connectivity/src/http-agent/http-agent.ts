@@ -2,12 +2,6 @@ import { readFile } from 'fs/promises';
 import http from 'http';
 import https from 'https';
 import { createLogger, last } from '@sap-cloud-sdk/util';
-import type {
-  BasicProxyConfiguration,
-  Destination,
-  DestinationCertificate,
-  HttpDestination
-} from '../scp-cf';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 // eslint-disable-next-line import/no-internal-modules
 import { getProtocolOrDefault } from '../scp-cf/get-protocol';
@@ -19,6 +13,12 @@ import {
 } from '../scp-cf/destination/http-proxy-util';
 // eslint-disable-next-line import/no-internal-modules
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
+import type {
+  BasicProxyConfiguration,
+  Destination,
+  DestinationCertificate,
+  HttpDestination
+} from '../scp-cf';
 import type { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({

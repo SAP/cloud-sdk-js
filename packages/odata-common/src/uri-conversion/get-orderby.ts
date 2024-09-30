@@ -1,6 +1,6 @@
+import { OrderLink } from '../order';
 import type { EntityBase } from '../entity-base';
 import type { Orderable, Order } from '../order';
-import { OrderLink } from '../order';
 import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
 

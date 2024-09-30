@@ -1,5 +1,5 @@
-import type { ImportDeclarationStructure } from 'ts-morph';
 import { StructureKind } from 'ts-morph';
+import type { ImportDeclarationStructure } from 'ts-morph';
 
 export const momentImport = {
   kind: StructureKind.ImportDeclaration,

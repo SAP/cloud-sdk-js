@@ -1,7 +1,6 @@
 import { join, resolve } from 'path';
 import { promises } from 'fs';
 import { transports } from 'winston';
-import type { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
 import { createLogger } from '@sap-cloud-sdk/util';
@@ -22,6 +21,7 @@ import {
   generateProject,
   getInstallODataErrorMessage
 } from './generator';
+import type { SourceFile } from 'ts-morph';
 
 const { readFile } = promises;
 

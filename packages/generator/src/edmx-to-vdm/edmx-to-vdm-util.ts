@@ -1,14 +1,14 @@
 import { createLogger, last } from '@sap-cloud-sdk/util';
-import type {
-  EdmxProperty,
-  EdmxMetadata,
-  EdmxFunctionImportV2
-} from '../edmx-parser';
 import {
   edmToFieldType,
   edmToTsType,
   getFallbackEdmTypeIfNeeded
 } from '../generator-utils';
+import type {
+  EdmxProperty,
+  EdmxMetadata,
+  EdmxFunctionImportV2
+} from '../edmx-parser';
 import type {
   VdmComplexType,
   VdmEnumType,

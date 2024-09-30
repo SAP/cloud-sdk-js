@@ -1,12 +1,12 @@
-import type {
-  EntityBase,
-  Filterable,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
 import {
   FilterLambdaExpression,
   and,
   toFilterableList
+} from '@sap-cloud-sdk/odata-common/internal';
+import type {
+  EntityBase,
+  Filterable,
+  EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
 import type { DeSerializers } from '../de-serializers';
 import type { Entity } from '../entity';

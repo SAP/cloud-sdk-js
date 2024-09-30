@@ -3,13 +3,13 @@ import {
   TestComplexTypeField,
   TestEntity
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import { defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import { FieldBuilder } from '@sap-cloud-sdk/odata-common';
+import { expectType } from 'tsd';
 import type {
   CollectionField,
   OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
-import { defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
-import { FieldBuilder } from '@sap-cloud-sdk/odata-common';
-import { expectType } from 'tsd';
 import type {
   AnyDeSerializerV4,
   DefaultDeSerializersV4

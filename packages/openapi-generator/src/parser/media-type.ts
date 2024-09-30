@@ -1,8 +1,8 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { parseSchema } from './schema';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiSchema } from '../openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
-import { parseSchema } from './schema';
 import type { ParserOptions } from './options';
 
 const logger = createLogger('openapi-generator');

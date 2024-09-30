@@ -1,5 +1,5 @@
-import type { EdmxOperation } from '../../edmx-parser';
 import { stripNamespace } from '../edmx-to-vdm-util';
+import type { EdmxOperation } from '../../edmx-parser';
 
 /**
  * @internal

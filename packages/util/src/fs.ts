@@ -1,7 +1,7 @@
-import type { PathLike } from 'fs';
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { createLogger } from './logger';
+import type { PathLike } from 'fs';
 
 const logger = createLogger({
   package: 'util',

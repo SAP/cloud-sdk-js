@@ -1,3 +1,4 @@
+import { ODataFunctionRequestConfig } from './odata-function-request-config';
 import type {
   ODataUri,
   OperationParameters,
@@ -7,7 +8,6 @@ import type {
   EntityBase
 } from '@sap-cloud-sdk/odata-common';
 import type { DeSerializers } from '../de-serializers';
-import { ODataFunctionRequestConfig } from './odata-function-request-config';
 
 /**
  * Function request configuration for an entity type.

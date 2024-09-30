@@ -1,7 +1,7 @@
+import { parseMediaType } from './media-type';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiSchema } from '../openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
-import { parseMediaType } from './media-type';
 import type { ParserOptions } from './options';
 
 /**

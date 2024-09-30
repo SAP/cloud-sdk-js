@@ -1,7 +1,7 @@
 import { transformComplexTypesBase } from '../common';
+import { parseComplexTypesV2 } from '../../edmx-parser';
 import type { ServiceNameFormatter } from '../../service-name-formatter';
 import type { VdmComplexType } from '../../vdm-types';
-import { parseComplexTypesV2 } from '../../edmx-parser';
 import type { ServiceMetadata } from '../../edmx-parser';
 
 /**

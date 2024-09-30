@@ -1,17 +1,4 @@
-import type {
-  ServiceMetadata,
-  EdmxEntitySet,
-  EdmxEntityTypeV4
-} from '../../edmx-parser';
 import { parseEntitySetsV4, parseEntityType } from '../../edmx-parser';
-import type { ServiceNameFormatter } from '../../service-name-formatter';
-import type {
-  VdmComplexType,
-  VdmEntity,
-  VdmPartialEntity,
-  VdmEnumType,
-  VdmNavigationProperty
-} from '../../vdm-types';
 import {
   createEntityClassNames,
   joinEntityMetadata,
@@ -20,6 +7,19 @@ import {
 } from '../common';
 import { isCollectionType } from '../edmx-to-vdm-util';
 import { generateBoundOperations } from './operation';
+import type {
+  VdmComplexType,
+  VdmEntity,
+  VdmPartialEntity,
+  VdmEnumType,
+  VdmNavigationProperty
+} from '../../vdm-types';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type {
+  ServiceMetadata,
+  EdmxEntitySet,
+  EdmxEntityTypeV4
+} from '../../edmx-parser';
 
 /**
  * @internal

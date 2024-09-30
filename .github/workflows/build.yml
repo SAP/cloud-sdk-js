@@ -29,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
@@ -60,12 +60,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'yarn'
       - name: REUSE Compliance Check
-        uses: fsfe/reuse-action@v4
+        uses: fsfe/reuse-action@v1.1
       - run: yarn install --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
@@ -102,7 +102,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'yarn'
@@ -165,7 +165,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'yarn'
@@ -189,7 +189,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'yarn'

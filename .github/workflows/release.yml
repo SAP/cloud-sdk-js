@@ -13,7 +13,7 @@ jobs:
           ref: 'main'
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           registry-url: 'https://registry.npmjs.org'
       - run: yarn install --frozen-lockfile
       - name: Legacy Release

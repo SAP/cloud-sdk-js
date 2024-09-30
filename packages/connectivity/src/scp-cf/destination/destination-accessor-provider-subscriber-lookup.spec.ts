@@ -1,6 +1,4 @@
-import type { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { createLogger } from '@sap-cloud-sdk/util';
-import type { AxiosError } from 'axios';
 import nock from 'nock';
 import {
   mockFetchDestinationCalls,
@@ -28,23 +26,25 @@ import {
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import * as identityService from '../identity-service';
-import type { DestinationConfiguration } from './destination';
 import { parseDestination } from './destination';
 import {
   getAllDestinationsFromDestinationService,
   getDestination
 } from './destination-accessor';
-import type {
-  DestinationFetchOptions,
-  DestinationWithoutToken
-} from './destination-accessor-types';
 import { getDestinationFromDestinationService } from './destination-from-service';
-import type { DestinationSelectionStrategy } from './destination-selection-strategies';
 import {
   alwaysProvider,
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
+import type {
+  DestinationFetchOptions,
+  DestinationWithoutToken
+} from './destination-accessor-types';
+import type { DestinationSelectionStrategy } from './destination-selection-strategies';
+import type { DestinationConfiguration } from './destination';
+import type { AxiosError } from 'axios';
+import type { ErrorWithCause } from '@sap-cloud-sdk/util';
 import type { Destination } from './destination-service-types';
 
 const destName = 'DESTINATION';

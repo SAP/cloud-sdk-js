@@ -1,12 +1,12 @@
+import { parseSchema, parseSchemaProperties } from './schema';
+import { parseApis } from './api';
+import { createRefs } from './refs';
+import { parseBound } from './swagger-parser-workaround';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 import type { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
-import { parseSchema, parseSchemaProperties } from './schema';
-import { parseApis } from './api';
 import type { OpenApiDocumentRefs } from './refs';
-import { createRefs } from './refs';
 import type { ParserOptions } from './options';
-import { parseBound } from './swagger-parser-workaround';
 
 /**
  * Parse an OpenAPI document.

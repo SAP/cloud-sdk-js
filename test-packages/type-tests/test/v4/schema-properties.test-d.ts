@@ -1,6 +1,6 @@
-import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { testService } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { expectType } from 'tsd';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import type {
   OneToManyLink,
   OneToOneLink,

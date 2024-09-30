@@ -4,6 +4,13 @@ import {
   navigationPropertyBase,
   transformEntityBase
 } from '../common';
+import {
+  parseAssociation,
+  parseAssociationSets,
+  parseEntitySetsV2,
+  parseEntityTypes
+} from '../../edmx-parser';
+import { stripNamespace } from '../edmx-to-vdm-util';
 import type {
   VdmComplexType,
   VdmEntity,
@@ -20,13 +27,6 @@ import type {
   JoinedAssociationMetadata,
   ServiceMetadata
 } from '../../edmx-parser';
-import {
-  parseAssociation,
-  parseAssociationSets,
-  parseEntitySetsV2,
-  parseEntityTypes
-} from '../../edmx-parser';
-import { stripNamespace } from '../edmx-to-vdm-util';
 
 /**
  * @internal

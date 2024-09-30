@@ -1,12 +1,12 @@
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { UnaryFilter } from './unary-filter';
+import { FilterList } from './filter-list';
 import type { EntityBase } from '../entity-base';
 import type { OneToManyLink } from '../selectable';
 import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
 import type { BooleanFilterFunction } from './boolean-filter-function';
 import type { Filter } from './filter';
-import { UnaryFilter } from './unary-filter';
-import { FilterList } from './filter-list';
 import type { FilterLambdaExpression } from './filter-lambda-expression';
 import type { FilterLink } from './filter-link';
 

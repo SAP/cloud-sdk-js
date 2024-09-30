@@ -1,13 +1,13 @@
-import type { OpenAPIV3 } from 'openapi-types';
 import { filterDuplicatesRight } from '@sap-cloud-sdk/util';
 import { reservedJsKeywords } from '@sap-cloud-sdk/generator-common/internal';
-import type { OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { parseRequestBody } from './request-body';
-import type { OpenApiDocumentRefs } from './refs';
 import { parseSchema } from './schema';
 import { parseResponses } from './responses';
-import type { OperationInfo } from './parsing-info';
 import { ensureUniqueNames } from './unique-naming';
+import type { OperationInfo } from './parsing-info';
+import type { OpenApiDocumentRefs } from './refs';
+import type { OpenApiOperation, OpenApiParameter } from '../openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
 import type { ParserOptions } from './options';
 
 /**

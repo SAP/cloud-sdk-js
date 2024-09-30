@@ -1,19 +1,19 @@
 import { first } from '@sap-cloud-sdk/util';
 import voca from 'voca';
-import type { EdmxReturnType } from '../../edmx-parser';
 import { isNullableProperty } from '../../generator-utils';
 // eslint-disable-next-line import/no-internal-modules
 import { getApiName } from '../../generator-without-ts-morph/service';
-import type {
-  VdmComplexType,
-  VdmPartialEntity,
-  VdmOperationReturnType
-} from '../../vdm-types';
 import {
   getTypeMappingActionFunction,
   isCollectionType,
   parseTypeName
 } from '../edmx-to-vdm-util';
+import type {
+  VdmComplexType,
+  VdmPartialEntity,
+  VdmOperationReturnType
+} from '../../vdm-types';
+import type { EdmxReturnType } from '../../edmx-parser';
 
 /**
  * @internal

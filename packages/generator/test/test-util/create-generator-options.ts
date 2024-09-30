@@ -1,9 +1,9 @@
 import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
+import { cliOptions } from '../../src/options';
 import type {
   GeneratorOptions,
   ParsedGeneratorOptions
 } from '../../src/options';
-import { cliOptions } from '../../src/options';
 
 export function createOptions(
   options?: Partial<GeneratorOptions>

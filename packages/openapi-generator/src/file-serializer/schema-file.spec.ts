@@ -1,11 +1,11 @@
-import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { readPrettierConfig } from '@sap-cloud-sdk/generator-common/internal';
+import { schemaDocumentation, schemaFile } from './schema-file';
+import { schemaPropertyDocumentation } from './schema';
 import type {
   OpenApiObjectSchemaProperty,
   OpenApiPersistedSchema
 } from '../openapi-types';
-import { schemaDocumentation, schemaFile } from './schema-file';
-import { schemaPropertyDocumentation } from './schema';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 const schema = {
   schemaName: 'MySchema',

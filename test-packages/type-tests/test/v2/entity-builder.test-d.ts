@@ -1,6 +1,6 @@
-import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { expectError, expectType } from 'tsd';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import type { EntityBuilderType } from '@sap-cloud-sdk/odata-common';
 import type { DefaultDeSerializerV2 } from '../duplicated-types';
 

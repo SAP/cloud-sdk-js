@@ -1,6 +1,4 @@
 import { createLogger, upperCaseSnakeCase } from '@sap-cloud-sdk/util';
-import type { EntityBase } from './entity-base';
-import type { ComplexTypeNamespace, PropertyMetadata } from './selectable';
 import {
   isComplexTypeNameSpace,
   EdmTypeField,
@@ -10,10 +8,12 @@ import {
   CollectionField,
   EnumField
 } from './selectable';
-import type { EdmTypeShared } from './edm-types';
 import { isEdmType } from './edm-types';
-import type { DeSerializers } from './de-serializers';
 import { createValueSerializer } from './de-serializers';
+import type { EntityBase } from './entity-base';
+import type { ComplexTypeNamespace, PropertyMetadata } from './selectable';
+import type { EdmTypeShared } from './edm-types';
+import type { DeSerializers } from './de-serializers';
 import type { EntityApi } from './entity-api';
 
 const logger = createLogger({

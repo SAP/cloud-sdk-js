@@ -1,13 +1,13 @@
+// eslint-disable-next-line import/no-internal-modules
+import { Link } from '../selectable/link';
+import { Order } from './order';
 import type { DeSerializers } from '../de-serializers';
 import type { EntityBase } from '../entity-base';
 import type {
   ComplexTypePropertyFields,
   SimpleTypeFields
 } from '../selectable';
-// eslint-disable-next-line import/no-internal-modules
-import { Link } from '../selectable/link';
 import type { EntityApi } from '../entity-api';
-import { Order } from './order';
 import type { OrderLink } from './order-link';
 
 /**

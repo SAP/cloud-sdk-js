@@ -2,18 +2,18 @@ import {
   ErrorWithCause,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import { v4 as uuid } from 'uuid';
+import { ODataGetByKeyRequestConfig } from '../request';
+import { GetRequestBuilderBase } from './get-request-builder-base';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { EntityBase } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
-import { ODataGetByKeyRequestConfig } from '../request';
 import type { Selectable } from '../selectable';
 import type { ODataUri } from '../uri-conversion';
 import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
 import type { BatchReference, WithBatchReference } from '../request';
-import { GetRequestBuilderBase } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  * @typeParam EntityT - Type of the entity to be requested

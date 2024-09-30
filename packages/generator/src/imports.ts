@@ -1,8 +1,8 @@
-import type { ODataVersion } from '@sap-cloud-sdk/util';
 import { unique } from '@sap-cloud-sdk/util';
-import type { ImportDeclarationStructure } from 'ts-morph';
 import { StructureKind } from 'ts-morph';
 import { linkClass } from './generator-utils';
+import type { ImportDeclarationStructure } from 'ts-morph';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type {
   VdmMappedEdmType,
   VdmNavigationProperty,

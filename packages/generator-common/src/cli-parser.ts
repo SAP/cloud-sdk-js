@@ -1,6 +1,6 @@
 import yargs from 'yargs';
-import type { Option } from './options-parser';
 import { getOptionsWithoutDefaults } from './options-parser';
+import type { Option } from './options-parser';
 
 /**
  * @internal

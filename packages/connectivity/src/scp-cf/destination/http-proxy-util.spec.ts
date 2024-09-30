@@ -1,12 +1,12 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { basicHeader } from '../authorization-header';
-import type { BasicProxyConfiguration } from '../connectivity-service-types';
 import {
   addProxyConfigurationInternet,
   getProxyConfig,
   parseProxyEnv,
   proxyStrategy
 } from './http-proxy-util';
+import type { BasicProxyConfiguration } from '../connectivity-service-types';
 import type { HttpDestination } from './destination-service-types';
 
 describe('proxy-util', () => {

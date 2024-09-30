@@ -1,7 +1,7 @@
 import { testService } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
-import type { DateFilterFunction, Entity } from '@sap-cloud-sdk/odata-v4';
 import { filterFunction, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 import { expectError, expectType } from 'tsd';
+import type { DateFilterFunction, Entity } from '@sap-cloud-sdk/odata-v4';
 import type {
   BooleanFilterFunction,
   CollectionFilterFunction,

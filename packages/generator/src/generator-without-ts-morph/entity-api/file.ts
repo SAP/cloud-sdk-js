@@ -1,7 +1,5 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import type { Import } from '@sap-cloud-sdk/generator-common/internal';
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
-import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import {
   navPropertyFieldTypeImportNames,
   propertyFieldTypeImportNames,
@@ -9,6 +7,8 @@ import {
 } from '../../imports';
 import { odataImport, complexTypeImports, enumTypeImports } from './imports';
 import { classContent } from './class';
+import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
+import type { Import } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal

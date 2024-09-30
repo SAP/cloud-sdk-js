@@ -1,3 +1,4 @@
+import { ODataRequestConfig } from './odata-request-config';
 import type { EntityBase } from '../entity-base';
 import type { Selectable } from '../selectable';
 import type { Filterable } from '../filter';
@@ -6,7 +7,6 @@ import type { Orderable } from '../order';
 import type { ODataUri } from '../uri-conversion';
 import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
-import { ODataRequestConfig } from './odata-request-config';
 import type { WithGetAllRestrictions } from './odata-request-traits';
 
 /**

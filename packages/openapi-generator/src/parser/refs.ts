@@ -1,13 +1,13 @@
-import type { OpenAPIV3 } from 'openapi-types';
-import type { $Refs } from '@apidevtools/swagger-parser';
 import { pascalCase, kebabCase } from '@sap-cloud-sdk/util';
 import { isReferenceObject } from '../schema-util';
-import type { SchemaNaming } from '../openapi-types';
-import type { SchemaRefMapping } from './parsing-info';
 import { ensureUniqueNames } from './unique-naming';
-import type { ParserOptions } from './options';
 import { ensureValidSchemaNames } from './schema-naming';
 import { resolveBound } from './swagger-parser-workaround';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { $Refs } from '@apidevtools/swagger-parser';
+import type { SchemaNaming } from '../openapi-types';
+import type { SchemaRefMapping } from './parsing-info';
+import type { ParserOptions } from './options';
 
 /**
  * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.

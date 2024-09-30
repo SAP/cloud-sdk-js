@@ -1,6 +1,6 @@
+import { OrderableFilterFunction } from './orderable-filter-function';
 import type { EntityBase } from '../entity-base';
 import type { FilterFunctionParameterType } from './filter-function-base';
-import { OrderableFilterFunction } from './orderable-filter-function';
 
 /**
  * Representation of a filter function, that returns a value of type string.

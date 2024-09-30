@@ -1,9 +1,9 @@
+import { getCommonCliOptions } from '@sap-cloud-sdk/generator-common/internal';
 import type {
   ParsedOptions,
   Options,
   CommonGeneratorOptions
 } from '@sap-cloud-sdk/generator-common/internal';
-import { getCommonCliOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * Options to configure OData client generation when using the generator programmatically.

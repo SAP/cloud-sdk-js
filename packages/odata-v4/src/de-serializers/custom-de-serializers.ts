@@ -1,3 +1,4 @@
+import { defaultDeSerializers } from './default-de-serializers';
 import type {
   Time,
   CustomOrDefaultType as CustomOrDefaultTypeCommon
@@ -6,7 +7,6 @@ import type BigNumber from 'bignumber.js';
 import type moment from 'moment';
 import type { DeSerializers } from './de-serializers';
 import type { DefaultDeSerializers } from './default-de-serializers';
-import { defaultDeSerializers } from './default-de-serializers';
 
 /**
  * Get a complete set of (de-)serializers, that consists of the given partial custom (de-)serializers and default (de-)serializers (aka. default (de-)serializers merged with custom (de-)serializers).

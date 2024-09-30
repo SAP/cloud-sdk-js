@@ -1,3 +1,9 @@
+import {
+  createFilterFunction,
+  numberReturnTypeMapping,
+  CollectionFilterFunction
+} from '@sap-cloud-sdk/odata-common/internal';
+import { DateFilterFunction } from './filter';
 import type moment from 'moment';
 import type {
   FilterFunctionParameterType,
@@ -6,13 +12,7 @@ import type {
   StringFilterFunction,
   FilterFunctionReturnType as FilterFunctionReturnTypeBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  createFilterFunction,
-  numberReturnTypeMapping,
-  CollectionFilterFunction
-} from '@sap-cloud-sdk/odata-common/internal';
 import type { Entity } from './entity';
-import { DateFilterFunction } from './filter';
 // eslint-disable valid-jsdoc
 
 export function filterFunction<EntityT extends Entity>(

@@ -1,6 +1,6 @@
+import SwaggerParser, { parse, resolve } from '@apidevtools/swagger-parser';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { $Refs } from '@apidevtools/swagger-parser';
-import SwaggerParser, { parse, resolve } from '@apidevtools/swagger-parser';
 
 /**
  * These to methods are a workaround until the swagger-parser is updated: https://github.com/APIDevTools/swagger-parser/issues/186

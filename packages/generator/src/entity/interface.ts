@@ -1,15 +1,15 @@
+import { StructureKind } from 'ts-morph';
+import { getPropertyType } from './class';
 import type {
   InterfaceDeclarationStructure,
   PropertySignatureStructure
 } from 'ts-morph';
-import { StructureKind } from 'ts-morph';
 import type {
   VdmEntity,
   VdmNavigationProperty,
   VdmProperty,
   VdmServiceMetadata
 } from '../vdm-types';
-import { getPropertyType } from './class';
 
 /**
  * @internal

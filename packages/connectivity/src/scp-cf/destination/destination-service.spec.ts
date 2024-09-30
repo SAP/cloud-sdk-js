@@ -4,12 +4,10 @@ import nock from 'nock';
 import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 // eslint-disable-next-line import/named
-import type { RawAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
 import { privateKey } from '../../../../../test-resources/test/test-util/keys';
-import type { DestinationConfiguration } from './destination';
 import { parseDestination } from './destination';
 import {
   fetchCertificate,
@@ -17,6 +15,8 @@ import {
   fetchDestinationWithoutTokenRetrieval,
   fetchDestinations
 } from './destination-service';
+import type { DestinationConfiguration } from './destination';
+import type { RawAxiosRequestConfig } from 'axios';
 import type { Destination } from './destination-service-types';
 
 const jwt = jwt123.sign(

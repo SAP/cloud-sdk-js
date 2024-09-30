@@ -1,5 +1,5 @@
-import type { OrderableEdmTypeField } from '@sap-cloud-sdk/odata-common/internal';
 import { CustomField as CustomFieldBase } from '@sap-cloud-sdk/odata-common/internal';
+import type { OrderableEdmTypeField } from '@sap-cloud-sdk/odata-common/internal';
 import type { DeSerializers } from '../de-serializers';
 import type { Entity } from '../entity';
 

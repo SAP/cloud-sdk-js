@@ -162,7 +162,21 @@ const flatConfig = [
         }
       ],
       'import/export': 'error',
-      'import/order': 'error',
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+            'object',
+            'type'
+          ]
+        }
+      ],
       'import/no-duplicates': 'error',
       'unused-imports/no-unused-imports': 'error',
       'arrow-body-style': 'error',

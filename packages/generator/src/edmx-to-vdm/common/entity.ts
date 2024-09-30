@@ -1,9 +1,3 @@
-import type {
-  EdmxEntitySetBase,
-  EdmxEntityTypeBase,
-  EdmxNamed,
-  JoinedEntityMetadata
-} from '../../edmx-parser';
 import {
   edmToFieldType,
   edmToTsType,
@@ -14,16 +8,6 @@ import {
   isUpdatable
 } from '../../generator-utils';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
-import type { ServiceNameFormatter } from '../../service-name-formatter';
-import type { SwaggerMetadata } from '../../swagger-parser';
-import type {
-  VdmComplexType,
-  VdmEntity,
-  VdmEnumType,
-  VdmMappedEdmType,
-  VdmNavigationProperty,
-  VdmProperty
-} from '../../vdm-types';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
   checkCollectionKind,
@@ -37,6 +21,22 @@ import {
   parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';
+import type {
+  EdmxEntitySetBase,
+  EdmxEntityTypeBase,
+  EdmxNamed,
+  JoinedEntityMetadata
+} from '../../edmx-parser';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type { SwaggerMetadata } from '../../swagger-parser';
+import type {
+  VdmComplexType,
+  VdmEntity,
+  VdmEnumType,
+  VdmMappedEdmType,
+  VdmNavigationProperty,
+  VdmProperty
+} from '../../vdm-types';
 
 /**
  * @internal

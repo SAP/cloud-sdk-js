@@ -2,9 +2,9 @@ import type { DeSerializers } from '../de-serializers';
 import type { EntityBase } from '../entity-base';
 import type {
   ComplexTypePropertyFields,
-  SimpleTypeFields,
-  Link
+  SimpleTypeFields
 } from '../selectable';
+import { Link } from '../selectable';
 import type { EntityApi } from '../entity-api';
 import { Order } from './order';
 import type { OrderLink } from './order-link';

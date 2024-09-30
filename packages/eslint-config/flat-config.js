@@ -155,8 +155,12 @@ const flatConfig = [
       ],
       'import/no-self-import': 'error',
       'import/no-cycle': 'error',
-      'import/no-useless-path-segments': 'error',
-      'import/no-relative-parent-imports': 'error',
+      'import/no-useless-path-segments': [
+        'error',
+        {
+          noUselessIndex: true
+        }
+      ],
       'import/export': 'error',
       'import/order': 'error',
       'import/no-duplicates': 'error',
@@ -236,6 +240,10 @@ const flatConfig = [
     settings: {
       jsdoc: {
         ignoreInternal: true
+      },
+      'import/resolver': {
+        typescript: true,
+        node: true
       }
     }
   },

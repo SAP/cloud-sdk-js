@@ -35,23 +35,23 @@ import {
   QuoteKind,
   ScriptTarget
 } from 'ts-morph';
-import { batchSourceFile } from './batch/file';
-import { complexTypeSourceFile } from './complex-type/file';
-import { entitySourceFile } from './entity/file';
-import { enumTypeSourceFile } from './enum-type/file';
+import { batchSourceFile } from './batch';
+import { complexTypeSourceFile } from './complex-type';
+import { entitySourceFile } from './entity';
+import { enumTypeSourceFile } from './enum-type';
 import { sourceFile } from './file-generator';
 import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
 import { cliOptions } from './options';
 import { hasEntities } from './generator-utils';
-import { entityApiFile } from './generator-without-ts-morph';
-import { requestBuilderSourceFile } from './generator-without-ts-morph/request-builder/file';
-import { serviceFile } from './generator-without-ts-morph/service/file';
-import { operationsSourceFile } from './operations/file';
+import {
+  entityApiFile,
+  requestBuilderSourceFile,
+  serviceFile
+} from './generator-without-ts-morph';
+import { operationsSourceFile } from './operations';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
-import { indexFile } from './service/index-file';
-import { packageJson } from './service/package-json';
-import { readme } from './service/readme';
+import { indexFile, packageJson, readme } from './service';
 import type { VdmServiceMetadata } from './vdm-types';
 
 const { mkdir, readdir } = fsPromises;

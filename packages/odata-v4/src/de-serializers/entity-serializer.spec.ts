@@ -2,8 +2,8 @@ import BigNumber from 'bignumber.js';
 import { entitySerializer } from '@sap-cloud-sdk/odata-common';
 import { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEnumType';
-import { defaultDeSerializers } from '../de-serializers';
 import { testEntityApi, testEntitySingleLinkApi } from '../../test/test-util';
+import { defaultDeSerializers } from './default-de-serializers';
 
 describe('entity-serializer', () => {
   const { serializeEntity, serializeComplexType } =

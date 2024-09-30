@@ -2,7 +2,7 @@ import { codeBlock } from '@sap-cloud-sdk/util';
 import type { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
 import voca from 'voca';
 import type { VdmOperation } from '../vdm-types';
-import { getApiName } from '../generator-without-ts-morph/service';
+import { getApiName } from '../generator-without-ts-morph';
 import { getOperationParams } from './code-sample-util';
 
 /**

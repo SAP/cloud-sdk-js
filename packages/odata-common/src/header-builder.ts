@@ -6,8 +6,7 @@
  * @returns Key-value pairs where the key is the name of a header property and the value is the respective value.
  */
 import type { OriginOptions } from '@sap-cloud-sdk/http-client';
-import type { ODataRequest } from './request/odata-request';
-import type { ODataRequestConfig } from './request/odata-request-config';
+import type { ODataRequest, ODataRequestConfig } from './request';
 
 /**
  * Create Headers from request object.

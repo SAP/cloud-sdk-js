@@ -3,7 +3,7 @@ import type {
   EdmxEntityTypeBase,
   EdmxNamed,
   JoinedEntityMetadata
-} from '../../edmx-parser/common';
+} from '../../edmx-parser';
 import {
   edmToFieldType,
   edmToTsType,
@@ -15,7 +15,7 @@ import {
 } from '../../generator-utils';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
 import type { ServiceNameFormatter } from '../../service-name-formatter';
-import type { SwaggerMetadata } from '../../swagger-parser/swagger-types';
+import type { SwaggerMetadata } from '../../swagger-parser';
 import type {
   VdmComplexType,
   VdmEntity,

@@ -1,4 +1,4 @@
-import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { DeSerializers } from '../de-serializers';
 import type { EdmTypeShared } from '../edm-types';
 import type {
   EntityBase,

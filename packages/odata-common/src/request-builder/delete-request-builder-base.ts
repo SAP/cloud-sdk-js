@@ -5,13 +5,10 @@ import { v4 as uuid } from 'uuid';
 import type { EntityIdentifiable } from '../entity-base';
 import { EntityBase } from '../entity-base';
 import type { ODataUri } from '../uri-conversion';
-import { ODataDeleteRequestConfig } from '../request/odata-delete-request-config';
-import type { DeSerializers } from '../de-serializers/de-serializers';
+import { ODataDeleteRequestConfig } from '../request';
+import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
-import type {
-  BatchReference,
-  WithBatchReference
-} from '../request/odata-request-traits';
+import type { BatchReference, WithBatchReference } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4.

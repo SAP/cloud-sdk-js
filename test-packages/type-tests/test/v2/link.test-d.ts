@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable import/no-internal-modules */
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { expectType } from 'tsd';
 import type { TestEntitySingleLinkApi } from '@sap-cloud-sdk/test-services-odata-v2/test-service/TestEntitySingleLinkApi';

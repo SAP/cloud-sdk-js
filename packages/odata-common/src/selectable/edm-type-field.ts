@@ -1,5 +1,5 @@
 import type { EntityBase, EntityIdentifiable } from '../entity-base';
-import { Filter } from '../filter/filter';
+import { Filter } from '../filter';
 import type { EdmTypeShared } from '../edm-types';
 import type { DeSerializers, DeserializedType } from '../de-serializers';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';

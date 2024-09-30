@@ -9,10 +9,7 @@ import {
 import type { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
-import type {
-  Service,
-  XsuaaServiceCredentials
-} from './environment-accessor/environment-accessor-types';
+import type { Service, XsuaaServiceCredentials } from './environment-accessor';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 
 /**

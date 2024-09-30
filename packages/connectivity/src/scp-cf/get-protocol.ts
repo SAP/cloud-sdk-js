@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import type { HttpDestination } from './destination/destination-service-types';
+import type { HttpDestination } from './destination';
 import type { Protocol } from './protocol';
 import { getProtocol } from './protocol';
 

@@ -7,12 +7,12 @@ import type {
 } from './connectivity-service-types';
 import type {
   AuthenticationType,
-  Destination
-} from './destination/destination-service-types';
+  Destination,
+  SubscriberToken
+} from './destination';
 import { getServiceBindings } from './environment-accessor';
-import type { Service } from './environment-accessor/environment-accessor-types';
+import type { Service } from './environment-accessor';
 import { serviceToken } from './token-accessor';
-import type { SubscriberToken } from './destination';
 
 const logger = createLogger({
   package: 'connectivity',

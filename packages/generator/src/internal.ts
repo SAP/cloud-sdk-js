@@ -12,7 +12,6 @@ export * from './generator-utils';
 // Had to be added for public API check
 // generator-without-ts-morph will be removed once we finished the migration to template-based generation
 export * from './generator-without-ts-morph';
-export * from './generator-without-ts-morph/request-builder';
 export * from './imports';
 export * from './input-path-provider';
 export * from './internal-prefix';

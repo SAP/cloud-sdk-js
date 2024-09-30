@@ -1,8 +1,6 @@
 import type { DeSerializers } from './de-serializers';
 import type { EntityBase, ODataVersionOf } from './entity-base';
-import type { OneToManyLink } from './selectable/one-to-many-link';
-import type { AllFields } from './selectable/all-fields';
-import type { OneToOneLink } from './selectable/one-to-one-link';
+import type { OneToManyLink, OneToOneLink, AllFields } from './selectable';
 import type { EntityApi } from './entity-api';
 
 /**

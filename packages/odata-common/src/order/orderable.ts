@@ -4,7 +4,8 @@ import type {
   ComplexTypePropertyFields,
   SimpleTypeFields
 } from '../selectable';
-import { Link } from '../selectable';
+// eslint-disable-next-line import/no-internal-modules
+import { Link } from '../selectable/link';
 import type { EntityApi } from '../entity-api';
 import { Order } from './order';
 import type { OrderLink } from './order-link';

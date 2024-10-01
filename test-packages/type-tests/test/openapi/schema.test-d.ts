@@ -2,8 +2,9 @@ import { expectType } from 'tsd';
 import type {
   DiscriminatorEntityWithMapping,
   DiscriminatorEntityWithoutMapping,
-  DiscriminatorObjectEntityWorkaroundParent
-, SimpleTestEntity } from '@sap-cloud-sdk/test-services-openapi/test-service';
+  DiscriminatorObjectEntityWorkaroundParent,
+  SimpleTestEntity
+} from '@sap-cloud-sdk/test-services-openapi/test-service';
 
 const simpleTestEntity: SimpleTestEntity = { stringProperty: 'prop' };
 

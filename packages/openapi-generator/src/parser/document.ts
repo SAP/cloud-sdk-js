@@ -8,6 +8,9 @@ import {
   parseSchema,
   parseSchemaProperties
 } from './schema';
+import { parseApis } from './api';
+import { createRefs } from './refs';
+import { parseBound } from './swagger-parser-workaround';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 import type {
@@ -15,11 +18,8 @@ import type {
   OpenApiPersistedSchema,
   OpenApiOneOfSchema
 } from '../openapi-types';
-import { parseApis } from './api';
 import type { OpenApiDocumentRefs } from './refs';
-import { createRefs } from './refs';
 import type { ParserOptions } from './options';
-import { parseBound } from './swagger-parser-workaround';
 
 /**
  * Parse an OpenAPI document.
@@ -73,7 +73,7 @@ async function sanitizeDiscriminatedSchemas(
           childChildSchema => {
             if (
               isReferenceObject(childChildSchema) &&
-              childChildSchema.schemaName == discriminatorSchema.schemaName
+              childChildSchema.schemaName === discriminatorSchema.schemaName
             ) {
               // childChildSchema is the parent
               const { properties, required } =

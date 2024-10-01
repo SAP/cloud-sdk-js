@@ -31,11 +31,6 @@ import {
   mockJwtBearerToken,
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
-import type {
-  AuthenticationType,
-  Destination,
-  DestinationAuthToken
-} from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 import {
   alwaysProvider,
@@ -43,7 +38,6 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import { getDestinationFromDestinationService } from './destination-from-service';
-import type { IsolationStrategy } from './destination-cache';
 import {
   destinationCache,
   getDestinationCacheKey,
@@ -51,6 +45,12 @@ import {
 } from './destination-cache';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';
+import type { IsolationStrategy } from './destination-cache';
+import type {
+  AuthenticationType,
+  Destination,
+  DestinationAuthToken
+} from './destination-service-types';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',

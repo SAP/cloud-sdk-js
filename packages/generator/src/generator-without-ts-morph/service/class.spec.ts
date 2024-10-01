@@ -1,5 +1,5 @@
-import type { VdmOperation, VdmServiceMetadata } from '../../vdm-types';
 import { serviceClass } from './class';
+import type { VdmOperation, VdmServiceMetadata } from '../../vdm-types';
 
 describe('class', () => {
   const service: VdmServiceMetadata = {

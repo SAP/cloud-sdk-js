@@ -1,7 +1,6 @@
-/* eslint-disable import/no-internal-modules */
-import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { expectType } from 'tsd';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import type {
   Link,
   OneToOneLink,

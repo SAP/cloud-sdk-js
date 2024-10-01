@@ -5,22 +5,22 @@ import {
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/named
-import type { RawAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import axios from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
-import type { Middleware, MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import { resilience } from '@sap-cloud-sdk/resilience';
 import * as asyncRetry from 'async-retry';
 import { decodeJwt, getTenantId, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { buildAuthorizationHeaders } from '../authorization-header';
-import type { DestinationConfiguration, DestinationJson } from './destination';
 import { parseCertificate, parseDestination } from './destination';
+import { destinationServiceCache } from './destination-service-cache';
+import type { DestinationConfiguration, DestinationJson } from './destination';
 import type {
   DestinationFetchOptions,
   DestinationsByType
 } from './destination-accessor-types';
-import { destinationServiceCache } from './destination-service-cache';
+import type { Middleware, MiddlewareContext } from '@sap-cloud-sdk/resilience';
+import type { RawAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import type {
   Destination,
   DestinationCertificate

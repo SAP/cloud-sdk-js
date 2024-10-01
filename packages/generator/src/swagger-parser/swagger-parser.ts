@@ -1,6 +1,6 @@
-import type { PathLike } from 'fs';
 import { readFileSync } from 'fs';
 import path from 'path';
+import type { PathLike } from 'fs';
 import type { SwaggerMetadata, SwaggerPath } from './swagger-types';
 
 /**

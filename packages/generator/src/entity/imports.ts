@@ -1,5 +1,3 @@
-import type { ODataVersion } from '@sap-cloud-sdk/util';
-import type { ImportDeclarationStructure } from 'ts-morph';
 import { StructureKind } from 'ts-morph';
 import {
   complexTypeImportDeclarations,
@@ -8,6 +6,8 @@ import {
   odataImportDeclarationTsMorph
 } from '../imports';
 import { operationDeclarations } from '../operations';
+import type { ImportDeclarationStructure } from 'ts-morph';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
 /**

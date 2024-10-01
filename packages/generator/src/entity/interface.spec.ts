@@ -1,4 +1,3 @@
-import { entityTypeInterface } from '../entity';
 import {
   breakfastEntity,
   breakfastTime,
@@ -7,6 +6,7 @@ import {
   numberOfEggs,
   toBrunch
 } from '../../test/test-util/data-model';
+import { entityTypeInterface } from './interface';
 
 describe('entity interface generator', () => {
   it('creates an interface', () => {

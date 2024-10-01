@@ -1,10 +1,10 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
+import { serializeSchema } from './schema';
 import type {
   OpenApiOperation,
   OpenApiParameter,
   OpenApiRequestBody
 } from '../openapi-types';
-import { serializeSchema } from './schema';
 
 /**
  * Serialize an operation to a string.

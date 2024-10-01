@@ -1,4 +1,5 @@
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { MethodRequestBuilder } from './request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type {
@@ -7,11 +8,12 @@ import type {
   EntityBase
 } from '../entity-base';
 import type { Selectable } from '../selectable';
-import type { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
-import type { ODataGetByKeyRequestConfig } from '../request/odata-get-by-key-request-config';
-import type { DeSerializers } from '../de-serializers/de-serializers';
+import type {
+  ODataGetAllRequestConfig,
+  ODataGetByKeyRequestConfig
+} from '../request';
+import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
-import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * @internal

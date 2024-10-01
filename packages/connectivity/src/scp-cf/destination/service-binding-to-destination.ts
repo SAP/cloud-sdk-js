@@ -1,6 +1,6 @@
-import type { Service } from '../environment-accessor/environment-accessor-types';
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
+import type { Service } from '../environment-accessor';
 import type {
   ServiceBindingTransformFunction,
   ServiceBindingTransformOptions

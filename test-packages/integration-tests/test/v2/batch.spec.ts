@@ -3,9 +3,7 @@ import {
   changeset
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
-import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import type { ErrorResponse } from '@sap-cloud-sdk/odata-common';
 import {
   createAsChildOfRequest,
   createRequest,
@@ -28,6 +26,8 @@ import {
   multiChangesetBatchResponse,
   multiRetrieveResponse
 } from '../test-data/batch/responses';
+import type { ErrorResponse } from '@sap-cloud-sdk/odata-common';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
 const basePath = '/sap/opu/odata/sap/API_TEST_SRV';

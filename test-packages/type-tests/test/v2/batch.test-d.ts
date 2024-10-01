@@ -2,18 +2,18 @@ import {
   changeset as otherServiceChangeset,
   multipleSchemasService
 } from '@sap-cloud-sdk/test-services-odata-v2/multiple-schemas-service';
-import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import {
   batch,
   changeset as testEntityChangeset,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2/internal';
+import { expectType } from 'tsd';
 import type {
   ReadResponse,
   WriteResponses
 } from '@sap-cloud-sdk/odata-v2/internal';
-import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2/internal';
-import { expectType } from 'tsd';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import type { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
 import type {
   BatchResponse,

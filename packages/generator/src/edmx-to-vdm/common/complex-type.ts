@@ -4,12 +4,6 @@ import {
   getFallbackEdmTypeIfNeeded,
   isNullableProperty
 } from '../../generator-utils';
-import type { ServiceNameFormatter } from '../../service-name-formatter';
-import type {
-  VdmComplexType,
-  VdmMappedEdmType,
-  VdmEnumType
-} from '../../vdm-types';
 import { propertyDescription } from '../description-util';
 import {
   checkCollectionKind,
@@ -23,8 +17,14 @@ import {
   typesForCollection,
   enumTypeForName
 } from '../edmx-to-vdm-util';
-import type { EdmxComplexTypeBase } from '../../edmx-parser/common';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type {
+  VdmComplexType,
+  VdmMappedEdmType,
+  VdmEnumType
+} from '../../vdm-types';
+import type { EdmxComplexTypeBase } from '../../edmx-parser';
 
 /**
  * @internal

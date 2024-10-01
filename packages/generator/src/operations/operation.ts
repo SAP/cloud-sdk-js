@@ -1,12 +1,12 @@
+import { StructureKind } from 'ts-morph';
+import { cannotDeserialize } from '../edmx-to-vdm';
+import { getRequestBuilderArguments } from './request-builder-arguments';
+import { operationReturnType } from './return-type';
+import type { VdmOperation, VdmServiceMetadata } from '../vdm-types';
 import type {
   FunctionDeclarationStructure,
   FunctionLikeDeclarationStructure
 } from 'ts-morph';
-import { StructureKind } from 'ts-morph';
-import { cannotDeserialize } from '../edmx-to-vdm/common';
-import type { VdmOperation, VdmServiceMetadata } from '../vdm-types';
-import { getRequestBuilderArguments } from './request-builder-arguments';
-import { operationReturnType } from './return-type';
 
 const parameterName = 'parameters';
 

@@ -1,11 +1,9 @@
-import type { Time } from '@sap-cloud-sdk/odata-common/internal';
 import {
   convertToUriForEdmString,
   defaultDeSerializersRaw as defaultDeSerializersCommon,
   wrapDefaultDeSerializers
 } from '@sap-cloud-sdk/odata-common/internal';
 import { identity } from '@sap-cloud-sdk/util';
-import type BigNumber from 'bignumber.js';
 import {
   serializeToDate,
   deserializeDateTimeOffsetToMoment,
@@ -16,6 +14,8 @@ import {
   serializeToTime,
   deserializeDateToMoment
 } from './converters';
+import type BigNumber from 'bignumber.js';
+import type { Time } from '@sap-cloud-sdk/odata-common/internal';
 import type { DeSerializers } from './de-serializers';
 
 /**

@@ -1,14 +1,14 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import type {
-  ClassDeclarationStructure,
-  PropertyDeclarationStructure
-} from 'ts-morph';
 import { Scope, StructureKind } from 'ts-morph';
 import { getGenericParameters } from '../generator-utils';
 import {
   getComplexTypeFieldDescription,
   getComplexTypePropertyDescription
 } from '../typedoc';
+import type {
+  ClassDeclarationStructure,
+  PropertyDeclarationStructure
+} from 'ts-morph';
 import type { VdmComplexType, VdmProperty } from '../vdm-types';
 
 /**

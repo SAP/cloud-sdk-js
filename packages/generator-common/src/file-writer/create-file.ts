@@ -6,9 +6,9 @@ import {
   ErrorWithCause,
   unixEOL
 } from '@sap-cloud-sdk/util';
-import type { BuiltInParserName, Options as PrettierOptions } from 'prettier';
 import { format } from 'prettier';
 import { getCopyrightHeader } from '../util';
+import type { BuiltInParserName, Options as PrettierOptions } from 'prettier';
 
 const { writeFile, readFile } = promises;
 const logger = createLogger('create-file');

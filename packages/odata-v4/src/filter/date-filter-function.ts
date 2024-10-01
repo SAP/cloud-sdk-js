@@ -1,9 +1,9 @@
+import { OrderableFilterFunction } from '@sap-cloud-sdk/odata-common/internal';
 import type moment from 'moment';
 import type {
   EntityBase,
   FilterFunctionParameterType
 } from '@sap-cloud-sdk/odata-common/internal';
-import { OrderableFilterFunction } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Representation of a filter function, that returns a value of type date. This supports DateTimeOffset values.

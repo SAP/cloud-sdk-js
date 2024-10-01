@@ -1,12 +1,12 @@
-import type { OpenAPIV3 } from 'openapi-types';
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
-import type { OpenApiParameter } from '../openapi-types';
 import {
   parseParameters,
   getRelevantParameters,
   parsePathParameters,
   parsePathPattern
 } from './operation';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenApiParameter } from '../openapi-types';
 
 const defaultOptions = { strictNaming: true, schemaPrefix: '' };
 describe('getRelevantParameters', () => {

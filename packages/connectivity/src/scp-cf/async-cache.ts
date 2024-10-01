@@ -1,5 +1,5 @@
-import type { CacheEntry } from './cache';
 import { Cache } from './cache';
+import type { CacheEntry } from './cache';
 
 /**
  * Generic async cache interface.

@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/named
-import type { AxiosResponse, RawAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import nock from 'nock';
 import { circuitBreakers, circuitBreaker } from './circuit-breaker';
-import type { MiddlewareContext } from './middleware';
 import { executeWithMiddleware } from './middleware';
+import type { MiddlewareContext } from './middleware';
+import type { AxiosResponse, RawAxiosRequestConfig } from 'axios';
 
 describe('circuit-breaker', () => {
   beforeEach(() => {

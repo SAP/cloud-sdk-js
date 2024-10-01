@@ -1,9 +1,9 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
-import type { Import } from '@sap-cloud-sdk/generator-common/internal';
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
 import { hasEntities } from '../../generator-utils';
-import type { VdmServiceMetadata } from '../../vdm-types';
 import { serviceBuilder, serviceClass } from './class';
+import type { VdmServiceMetadata } from '../../vdm-types';
+import type { Import } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal

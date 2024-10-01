@@ -155,10 +155,28 @@ const flatConfig = [
       ],
       'import/no-self-import': 'error',
       'import/no-cycle': 'error',
-      'import/no-useless-path-segments': 'error',
-      'import/no-relative-parent-imports': 'error',
+      'import/no-useless-path-segments': [
+        'error',
+        {
+          noUselessIndex: true
+        }
+      ],
       'import/export': 'error',
-      'import/order': 'error',
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+            'object',
+            'type'
+          ]
+        }
+      ],
       'import/no-duplicates': 'error',
       'unused-imports/no-unused-imports': 'error',
       'arrow-body-style': 'error',
@@ -236,6 +254,10 @@ const flatConfig = [
     settings: {
       jsdoc: {
         ignoreInternal: true
+      },
+      'import/resolver': {
+        typescript: true,
+        node: true
       }
     }
   },

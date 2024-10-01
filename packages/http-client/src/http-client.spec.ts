@@ -11,14 +11,8 @@ import {
   circuitBreakers,
   circuitBreaker
 } from '@sap-cloud-sdk/resilience/internal';
-import type {
-  DestinationWithName,
-  Destination,
-  HttpDestination
-} from '@sap-cloud-sdk/connectivity';
 import { registerDestination } from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
-import type { ProxyConfiguration } from '@sap-cloud-sdk/connectivity/src';
 import { responseWithPublicKey } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt/verify.spec';
 import {
   basicMultipleResponse,
@@ -39,14 +33,6 @@ import {
   xsuaaBindingMock
 } from '../../../test-resources/test/test-util';
 import * as csrf from './csrf-token-middleware';
-import type {
-  DestinationHttpRequestConfig,
-  HttpMiddleware,
-  HttpMiddlewareOptions,
-  HttpRequestConfig,
-  HttpRequestConfigWithOrigin,
-  HttpResponse
-} from './http-client-types';
 import {
   buildHttpRequest,
   buildRequestWithMergedHeadersAndQueryParameters,
@@ -56,6 +42,20 @@ import {
   executeHttpRequestWithOrigin,
   buildHttpRequestConfigWithOrigin
 } from './http-client';
+import type {
+  DestinationHttpRequestConfig,
+  HttpMiddleware,
+  HttpMiddlewareOptions,
+  HttpRequestConfig,
+  HttpRequestConfigWithOrigin,
+  HttpResponse
+} from './http-client-types';
+import type { ProxyConfiguration } from '@sap-cloud-sdk/connectivity/src';
+import type {
+  DestinationWithName,
+  Destination,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity';
 
 describe('generic http client', () => {
   const httpsDestination: HttpDestination = {

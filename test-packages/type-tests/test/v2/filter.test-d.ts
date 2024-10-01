@@ -1,10 +1,10 @@
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { and, or } from '@sap-cloud-sdk/odata-v2';
+import { expectError, expectType } from 'tsd';
 import type {
   TestEntity,
   TestEntityMultiLink
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { and, or } from '@sap-cloud-sdk/odata-v2';
-import { expectError, expectType } from 'tsd';
 import type {
   Filter,
   FilterLink,

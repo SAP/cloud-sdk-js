@@ -49,6 +49,11 @@ export async function parseOpenApiDocument(
   };
 }
 
+type OpenApiPersistedSchemaWithDiscriminator = OpenApiPersistedSchema & {
+  schema: OpenApiOneOfSchema &
+    Required<Pick<OpenApiOneOfSchema, 'discriminator'>>;
+};
+
 async function sanitizeDiscriminatedSchemas(
   schemas: OpenApiPersistedSchema[],
   refs: OpenApiDocumentRefs,
@@ -56,40 +61,38 @@ async function sanitizeDiscriminatedSchemas(
 ) {
   const discriminatorSchemas = schemas
     .filter(({ schema }) => isOneOfSchema(schema) && schema.discriminator)
-    .map(schema => ({
-      children: Object.values(
-        (schema.schema as OpenApiOneOfSchema).discriminator!.mapping
-      ),
-      schemaName: schema.schemaName
+    // type is known because of the filter above
+    .map(({ schema, schemaName }: OpenApiPersistedSchemaWithDiscriminator) => ({
+      children: Object.values(schema.discriminator.mapping),
+      schemaName,
+      propertyName: schema.discriminator.propertyName
     }));
 
   discriminatorSchemas.forEach(discriminatorSchema => {
-    discriminatorSchema.children.forEach(child => {
-      const childSchema = schemas.find(
-        schema => schema.schemaName === child.schemaName
+    discriminatorSchema.children.forEach(childRef => {
+      const child = schemas.find(
+        schema => schema.schemaName === childRef.schemaName
       );
-      if (isAllOfSchema(childSchema?.schema)) {
-        childSchema.schema.allOf = childSchema.schema.allOf.map(
-          childChildSchema => {
-            if (
-              isReferenceObject(childChildSchema) &&
-              childChildSchema.schemaName === discriminatorSchema.schemaName
-            ) {
-              // childChildSchema is the parent
-              const { properties, required } =
-                refs.resolveObject<OpenAPIV3.NonArraySchemaObject>(
-                  childChildSchema
-                );
+      if (isAllOfSchema(child?.schema)) {
+        child.schema.allOf = child.schema.allOf.map(grandChild => {
+          // is grandChild is the parent, aka. circular reference
+          if (
+            isReferenceObject(grandChild) &&
+            grandChild.schemaName === discriminatorSchema.schemaName
+          ) {
+            const { properties = {}, required } =
+              refs.resolveObject<OpenAPIV3.NonArraySchemaObject>(grandChild);
 
-              return parseObjectSchema(
-                { properties, required, additionalProperties: false },
-                refs,
-                options
-              );
-            }
-            return childChildSchema;
+            properties[discriminatorSchema.propertyName] = { type: 'string' };
+
+            return parseObjectSchema(
+              { properties, required, additionalProperties: false },
+              refs,
+              options
+            );
           }
-        );
+          return grandChild;
+        });
       }
     });
   });

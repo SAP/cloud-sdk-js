@@ -1,6 +1,6 @@
 import { format } from 'winston';
-import type { TransformableInfo } from 'logform';
 import { getMessageOrStack } from './local';
+import type { TransformableInfo } from 'logform';
 
 const { combine, timestamp, json } = format;
 

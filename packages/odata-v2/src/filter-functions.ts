@@ -1,3 +1,11 @@
+import {
+  filterFunction,
+  filterFunctions as filterFunctionsCommon
+} from '@sap-cloud-sdk/odata-common/internal';
+import {
+  defaultDeSerializers,
+  mergeDefaultDeSerializersWith
+} from './de-serializers';
 import type {
   Field,
   StringFilterFunction,
@@ -6,16 +14,8 @@ import type {
   Time,
   FilterFunctionNames as FilterFunctionNamesCommon
 } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  filterFunction,
-  filterFunctions as filterFunctionsCommon
-} from '@sap-cloud-sdk/odata-common/internal';
 import type BigNumber from 'bignumber.js';
 import type { DeSerializers } from './de-serializers';
-import {
-  defaultDeSerializers,
-  mergeDefaultDeSerializersWith
-} from './de-serializers';
 import type { Entity } from './entity';
 
 /* String Functions */

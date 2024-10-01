@@ -1,5 +1,15 @@
 import moment from 'moment';
 import { upperCaseSnakeCase } from '@sap-cloud-sdk/util';
+import {
+  isFilterLambdaExpression,
+  isFilterList,
+  isBooleanFilterFunction,
+  isFilterLink,
+  isUnaryFilter,
+  FilterFunction,
+  isFilter
+} from '../filter';
+import { ComplexTypeField, OneToManyLink } from '../selectable';
 import type { EntityBase } from '../entity-base';
 import type { EdmTypeShared } from '../edm-types';
 import type {
@@ -11,21 +21,11 @@ import type {
   FilterFunctionParameterType,
   Filter
 } from '../filter';
-import {
-  isFilterLambdaExpression,
-  isFilterList,
-  isBooleanFilterFunction,
-  isFilterLink,
-  isUnaryFilter,
-  FilterFunction,
-  isFilter
-} from '../filter';
 import type {
   DefaultDeSerializers,
   DeSerializers,
   UriConverter
 } from '../de-serializers';
-import { ComplexTypeField, OneToManyLink } from '../selectable';
 import type { EntityApi } from '../entity-api';
 
 type GetFilterType = <

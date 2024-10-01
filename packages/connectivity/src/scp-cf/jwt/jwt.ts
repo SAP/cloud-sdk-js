@@ -1,14 +1,14 @@
-import type { IncomingMessage } from 'http';
 import { createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
 import { decode } from 'jsonwebtoken';
 import { Cache } from '../cache';
+import { getIssuerSubdomain } from '../subdomain-replacer';
 import type {
   Jwt,
   JwtPayload,
   JwtWithPayloadObject
 } from '../jsonwebtoken-type';
 import type { TokenKey } from '../xsuaa-service-types';
-import { getIssuerSubdomain } from '../subdomain-replacer';
+import type { IncomingMessage } from 'http';
 
 const logger = createLogger({
   package: 'connectivity',

@@ -1,7 +1,7 @@
-import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { readPrettierConfig } from '@sap-cloud-sdk/generator-common/internal';
-import type { OpenApiDocument } from '../openapi-types';
 import { apiIndexFile, schemaIndexFile } from './index-file';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type { OpenApiDocument } from '../openapi-types';
 
 describe('index-file', () => {
   describe('apiIndexFile', () => {

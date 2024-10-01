@@ -1,9 +1,9 @@
+import { StructureKind } from 'ts-morph';
+import { getPropertyDescription, addLeadingNewline } from '../typedoc';
 import type {
   InterfaceDeclarationStructure,
   PropertySignatureStructure
 } from 'ts-morph';
-import { StructureKind } from 'ts-morph';
-import { getPropertyDescription, addLeadingNewline } from '../typedoc';
 import type { VdmComplexType, VdmProperty } from '../vdm-types';
 
 /**

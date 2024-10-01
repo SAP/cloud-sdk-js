@@ -1,17 +1,17 @@
 /* eslint-disable max-classes-per-file */
 
-import type { EdmTypeShared, OrderableEdmType } from '../edm-types';
 import { isOrderableEdmType } from '../edm-types';
-import type { Constructable, EntityBase } from '../entity-base';
-import type { DeSerializers } from '../de-serializers';
 import { ComplexTypeField } from './complex-type-field';
 import { EdmTypeField } from './edm-type-field';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
-import type { CollectionFieldType } from './collection-field';
 import { CollectionField } from './collection-field';
+import { EnumField } from './enum-field';
+import type { EdmTypeShared, OrderableEdmType } from '../edm-types';
+import type { Constructable, EntityBase } from '../entity-base';
+import type { DeSerializers } from '../de-serializers';
+import type { CollectionFieldType } from './collection-field';
 import type { ConstructorOrField } from './constructor-or-field';
 import type { FieldOptions } from './field';
-import { EnumField } from './enum-field';
 
 /**
  * Constructor function creating a {@link ComplexTypeField}.

@@ -1,4 +1,4 @@
-import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { DeSerializers } from '../de-serializers';
 import type { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityApi } from '../entity-api';
 

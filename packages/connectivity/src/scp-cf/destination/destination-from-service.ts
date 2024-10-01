@@ -1,19 +1,13 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
-import type { Service } from '../environment-accessor';
 import {
   getDestinationServiceCredentials,
   getServiceBinding
 } from '../environment-accessor';
 import { exchangeToken, shouldExchangeToken } from '../identity-service';
-import type { JwtPair } from '../jwt';
 import { getSubdomain, isXsuaaToken } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken } from '../token-accessor';
-import type {
-  DestinationFetchOptions,
-  DestinationsByType
-} from './destination-accessor-types';
 import {
   destinationCache,
   getDefaultIsolationStrategy
@@ -23,16 +17,13 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import type { AuthAndExchangeTokens } from './destination-service';
 import {
   fetchCertificate,
   fetchDestinationWithTokenRetrieval,
   fetchDestinationWithoutTokenRetrieval
 } from './destination-service';
-import type { Destination } from './destination-service-types';
 import { assertHttpDestination } from './destination-service-types';
 import { getProviderServiceToken } from './get-provider-token';
-import type { SubscriberToken } from './get-subscriber-token';
 import {
   getRequiredSubscriberToken,
   getSubscriberToken,
@@ -43,6 +34,15 @@ import {
   proxyStrategy
 } from './http-proxy-util';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import type { SubscriberToken } from './get-subscriber-token';
+import type { Destination } from './destination-service-types';
+import type { AuthAndExchangeTokens } from './destination-service';
+import type {
+  DestinationFetchOptions,
+  DestinationsByType
+} from './destination-accessor-types';
+import type { JwtPair } from '../jwt';
+import type { Service } from '../environment-accessor';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 

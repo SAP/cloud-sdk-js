@@ -1,8 +1,8 @@
+import { Field } from './field';
+import { FieldBuilder } from './field-builder';
 import type { DeSerializers } from '../de-serializers';
 import type { EntityBase, Constructable } from '../entity-base';
 import type { EdmTypeField } from './edm-type-field';
-import { Field } from './field';
-import { FieldBuilder } from './field-builder';
 import type { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 /**

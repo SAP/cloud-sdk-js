@@ -1,7 +1,7 @@
 import { documentationBlock } from '@sap-cloud-sdk/util';
-import type { VdmEntity, VdmProperty } from '../../vdm-types';
 import { addLeadingNewline, getStaticPropertyDescription } from '../../typedoc';
 import { createPropertyFieldInitializerForEntity } from '../../entity';
+import type { VdmEntity, VdmProperty } from '../../vdm-types';
 
 /**
  * @internal

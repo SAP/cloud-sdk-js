@@ -1,5 +1,4 @@
 import nock from 'nock';
-import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,
@@ -12,6 +11,7 @@ import {
 import { entitySerializer } from '@sap-cloud-sdk/odata-common';
 import { defaultDestination } from '../../../../test-resources/test/test-util/request-mocker';
 import { defaultDeSerializers } from '../de-serializers';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const host = 'https://example.com';

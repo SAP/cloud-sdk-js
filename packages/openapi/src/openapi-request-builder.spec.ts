@@ -1,6 +1,5 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
-import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import {
   parseDestination,
   sanitizeDestination
@@ -18,6 +17,7 @@ import {
   mockFetchDestinationCalls
 } from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 const destination: HttpDestination = {
   url: 'http://example.com'

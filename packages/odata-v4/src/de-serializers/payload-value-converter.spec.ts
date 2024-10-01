@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { defaultDeSerializers } from '../de-serializers';
+import { defaultDeSerializers } from './default-de-serializers';
 import { edmToTs, tsToEdm } from './payload-value-converter';
 
 describe('edmToTs()', () => {

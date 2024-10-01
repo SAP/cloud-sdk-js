@@ -1,6 +1,6 @@
 import { getServiceCredentials } from '../environment-accessor';
-import type { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt, getTenantId } from './jwt';
+import type { JwtPayload } from '../jsonwebtoken-type';
 
 /**
  * This method either decodes the given JWT or tries to retrieve the tenant from a service binding (XSUAA, IAS or destination) as `zid`.

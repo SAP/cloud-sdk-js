@@ -1,16 +1,16 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
-import type {
-  Import,
-  CreateFileOptions
-} from '@sap-cloud-sdk/generator-common/internal';
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
+import { collectRefs, getUniqueRefs } from '../schema-util';
+import { serializeOperation } from './operation';
 import type {
   OpenApiApi,
   OpenApiOperation,
   OpenApiReferenceSchema
 } from '../openapi-types';
-import { collectRefs, getUniqueRefs } from '../schema-util';
-import { serializeOperation } from './operation';
+import type {
+  Import,
+  CreateFileOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * Serialize an API representation to a string representing the resulting API file.

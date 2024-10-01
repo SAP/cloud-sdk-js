@@ -1,16 +1,16 @@
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { isOrderable, asc } from '../order';
+import { CountRequestBuilder } from './count-request-builder';
+import { GetRequestBuilderBase } from './get-request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { EntityBase } from '../entity-base';
 import type { Selectable } from '../selectable';
 import type { OrderableAndOrderableInput } from '../order';
-import { isOrderable, asc } from '../order';
-import type { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
+import type { ODataGetAllRequestConfig } from '../request';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
-import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
-import { CountRequestBuilder } from './count-request-builder';
-import { GetRequestBuilderBase } from './get-request-builder-base';
 
 /**
  * Base class for the get all request builders {@link @sap-cloud-sdk/odata-v2!GetAllRequestBuilder | GetAllRequestBuilderV2} and {@link @sap-cloud-sdk/odata-v4!GetAllRequestBuilder | GetAllRequestBuilderV4}.

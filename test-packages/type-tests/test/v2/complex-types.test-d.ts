@@ -1,11 +1,11 @@
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common';
+import { expectError, expectType } from 'tsd';
+import type { OrderableEdmTypeField } from '@sap-cloud-sdk/odata-common';
 import type {
   TestComplexTypeField,
   TestEntity
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import type { OrderableEdmTypeField } from '@sap-cloud-sdk/odata-common';
-import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common';
-import { expectError, expectType } from 'tsd';
 import type { GetAllRequestBuilder } from '@sap-cloud-sdk/odata-v2';
 import type {
   AnyDeserializerV2,

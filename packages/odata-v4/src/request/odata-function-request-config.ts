@@ -1,10 +1,10 @@
+import { ODataFunctionRequestConfig as ODataFunctionRequestConfigBase } from '@sap-cloud-sdk/odata-common';
 import type {
   ODataUri,
   OperationParameter,
   OperationParameters,
   RequestMethodType
 } from '@sap-cloud-sdk/odata-common';
-import { ODataFunctionRequestConfig as ODataFunctionRequestConfigBase } from '@sap-cloud-sdk/odata-common';
 import type { DeSerializers } from '../de-serializers';
 
 /**

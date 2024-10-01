@@ -1,8 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import type { JwtPayload } from '../jsonwebtoken-type';
+// eslint-disable-next-line import/no-internal-modules
 import { audiences, decodeJwt } from '../jwt/jwt';
-import type { ServiceCredentials } from './environment-accessor-types';
 import { getServiceBindings } from './service-bindings';
+import type { JwtPayload } from '../jsonwebtoken-type';
+import type { ServiceCredentials } from './environment-accessor-types';
 
 const logger = createLogger({
   package: 'connectivity',

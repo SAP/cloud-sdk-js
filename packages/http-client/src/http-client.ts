@@ -1,18 +1,10 @@
 import * as http from 'http';
 import * as https from 'https';
-import type {
-  Destination,
-  HttpDestinationOrFetchOptions
-} from '@sap-cloud-sdk/connectivity';
 import {
   buildHeadersForDestination,
   getAgentConfigAsync,
   getTenantId
 } from '@sap-cloud-sdk/connectivity';
-import type {
-  DestinationConfiguration,
-  HttpDestination
-} from '@sap-cloud-sdk/connectivity/internal';
 import {
   assertHttpDestination,
   getAdditionalHeaders,
@@ -29,6 +21,9 @@ import {
   unixEOL
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
+import { isHttpRequestConfigWithOrigin } from './http-client-types';
+import { mergeOptionsWithPriority } from './http-request-config';
+import { csrf } from './csrf-token-middleware';
 import type {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -42,9 +37,14 @@ import type {
   OriginOptionsInternal,
   ParameterEncoder
 } from './http-client-types';
-import { isHttpRequestConfigWithOrigin } from './http-client-types';
-import { mergeOptionsWithPriority } from './http-request-config';
-import { csrf } from './csrf-token-middleware';
+import type {
+  DestinationConfiguration,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity/internal';
+import type {
+  Destination,
+  HttpDestinationOrFetchOptions
+} from '@sap-cloud-sdk/connectivity';
 
 const logger = createLogger({
   package: 'http-client',

@@ -1,21 +1,18 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import { v4 as uuid } from 'uuid';
+import { ODataCreateRequestConfig } from '../request';
+import { MethodRequestBuilder } from './request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { v4 as uuid } from 'uuid';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion';
 import type { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
-import { ODataCreateRequestConfig } from '../request/odata-create-request-config';
 import type { Link } from '../selectable';
-import type { DeSerializers } from '../de-serializers/de-serializers';
+import type { DeSerializers } from '../de-serializers';
 import type { EntityApi } from '../entity-api';
-import type {
-  BatchReference,
-  WithBatchReference
-} from '../request/odata-request-traits';
-import { MethodRequestBuilder } from './request-builder-base';
+import type { BatchReference, WithBatchReference } from '../request';
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.

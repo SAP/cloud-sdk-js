@@ -1,8 +1,8 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
 import { getTenantId, userId } from '../jwt';
+import { AsyncCache } from '../async-cache';
 import type { JwtPayload } from '../jsonwebtoken-type';
 import type { AsyncCacheInterface } from '../async-cache';
-import { AsyncCache } from '../async-cache';
 import type { Destination } from './destination-service-types';
 import type { DestinationsByType } from './destination-accessor-types';
 import type { SubscriberToken } from './get-subscriber-token';

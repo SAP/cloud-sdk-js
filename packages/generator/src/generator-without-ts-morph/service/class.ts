@@ -1,13 +1,14 @@
-import type { ODataVersion } from '@sap-cloud-sdk/util';
 import { codeBlock } from '@sap-cloud-sdk/util';
 import voca from 'voca';
-import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
+// eslint-disable-next-line import/no-internal-modules
 import { matchEntity } from '../entity-api/match-entity';
 import {
   getGenericTypes,
   getGenericTypesWithDefault
 } from '../de-serializers-generic-types';
 import { hasEntities } from '../../generator-utils';
+import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
 
 /**
  * @internal

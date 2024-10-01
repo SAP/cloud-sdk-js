@@ -979,9 +979,15 @@
           }
         },
         "properties": {
-          "child": { "type": "string" }
+          "child": {
+            "$ref": "#/components/schemas/DiscriminatorObjectEntityWorkaroundChildType"
+          }
         },
         "required": ["child"]
+      },
+      "DiscriminatorObjectEntityWorkaroundChildType": {
+        "type": "string",
+        "enum": ["a", "b"]
       },
       "DiscriminatorObjectEntityWorkaroundChildA": {
         "allOf": [
@@ -1006,6 +1012,26 @@
             "properties": {
               "otherProperty": { "type": "integer" }
             }
+          }
+        ]
+      },
+      "DiscriminatorObjectEntityWorkaroundParentOnlyType": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "child",
+          "mapping": {
+            "a": "#/components/schemas/DiscriminatorObjectEntityWorkaroundChildOnlyType"
+          }
+        },
+        "properties": {
+          "child": { "type": "string" }
+        },
+        "required": ["child"]
+      },
+      "DiscriminatorObjectEntityWorkaroundChildOnlyType": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DiscriminatorObjectEntityWorkaroundParent"
           }
         ]
       }

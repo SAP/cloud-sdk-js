@@ -17,5 +17,8 @@ export * from './discriminator-entity-without-mapping';
 export * from './discriminator-entity-child-a';
 export * from './discriminator-entity-child-b';
 export * from './discriminator-object-entity-workaround-parent';
+export * from './discriminator-object-entity-workaround-child-type';
 export * from './discriminator-object-entity-workaround-child-a';
 export * from './discriminator-object-entity-workaround-child-b';
+export * from './discriminator-object-entity-workaround-parent-only-type';
+export * from './discriminator-object-entity-workaround-child-only-type';

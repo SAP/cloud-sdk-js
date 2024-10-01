@@ -50,12 +50,11 @@ describe('DeleteRequestBuilder', () => {
       testEntityApi
     );
 
-    const deleteRequest = new DeleteRequestBuilder(
-      testEntityApi,
-      entity
-    ).execute(defaultDestination);
+    const deleteRequest = new DeleteRequestBuilder(testEntityApi, entity);
 
-    await expect(deleteRequest).resolves.toBe(undefined);
+    await expect(deleteRequest.execute(defaultDestination)).resolves.toBe(
+      undefined
+    );
   });
 
   it('delete request with version identifier on the request should resolve', async () => {

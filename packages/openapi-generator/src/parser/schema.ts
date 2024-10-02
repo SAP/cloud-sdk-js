@@ -4,6 +4,7 @@ import { getType } from './type-mapping';
 import type { OpenAPIV3 } from 'openapi-types';
 import type {
   OpenApiArraySchema,
+  OpenApiDiscriminator,
   OpenApiEnumSchema,
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty,
@@ -46,7 +47,7 @@ export function parseSchema(
     return parseEnumSchema(schema, options);
   }
 
-  if (schema.oneOf?.length) {
+  if (schema.oneOf?.length || schema.discriminator) {
     return parseXOfSchema(schema, refs, 'oneOf', options);
   }
 
@@ -108,17 +109,21 @@ function parseArraySchema(
 }
 
 /**
+ * @internal
  * Parse a schema to an object schema.
  * @param schema - Original schema representing an object.
  * @param refs - Object representing cross references throughout the document.
  * @param options - Options that were set for service generation.
  * @returns The recursively parsed object schema.
  */
-function parseObjectSchema(
+export function parseObjectSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiObjectSchema {
+  if (schema.discriminator) {
+    return parseXOfSchema(schema, refs, 'oneOf', options);
+  }
   const properties = parseObjectSchemaProperties(schema, refs, options);
 
   if (schema.additionalProperties === false) {
@@ -227,7 +232,7 @@ function parseXOfSchema(
 ): any {
   const normalizedSchema = normalizeSchema(schema, xOf);
 
-  return {
+  const xOfSchema = {
     [xOf]: (normalizedSchema[xOf] || []).map(entry =>
       parseSchema(
         {
@@ -244,12 +249,55 @@ function parseXOfSchema(
       )
     )
   };
+
+  if (schema.discriminator && xOf !== 'allOf') {
+    return {
+      ...xOfSchema,
+      discriminator: parseDiscriminator(schema, refs, xOf, options)
+    };
+  }
+
+  return xOfSchema;
 }
 
-function normalizeSchema(
+function parseDiscriminator(
+  schema: OpenAPIV3.NonArraySchemaObject,
+  refs: OpenApiDocumentRefs,
+  xOf: 'oneOf' | 'anyOf',
+  options: ParserOptions
+): OpenApiDiscriminator {
+  const { discriminator } = schema;
+
+  if (!discriminator) {
+    throw new Error(
+      'Could not parse discriminator schema without discriminator.'
+    );
+  }
+
+  const discriminatorMapping = getDiscriminatorMapping(schema, xOf);
+
+  return {
+    propertyName: discriminator.propertyName,
+    mapping: Object.entries(discriminatorMapping).reduce(
+      (mapping, [propertyValue, schemaMapping]) => ({
+        ...mapping,
+        [propertyValue]: parseSchema({ $ref: schemaMapping }, refs, options)
+      }),
+      {}
+    )
+  };
+}
+
+/**
+ * @internal
+ */
+export function normalizeSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   xOf: 'oneOf' | 'allOf' | 'anyOf'
 ): OpenAPIV3.NonArraySchemaObject {
+  if (schema.discriminator) {
+    return schema;
+  }
   if (schema.properties || schema.additionalProperties) {
     logger.info(
       `Detected schema with ${xOf} and properties in the same level. This was refactored to a schema with ${xOf} only, containing all the properties from the top level.`
@@ -293,4 +341,23 @@ export function parseSchemaProperties(
     }
     return properties;
   }, {});
+}
+
+function getDiscriminatorMapping(
+  schema: OpenAPIV3.NonArraySchemaObject,
+  xOf: 'oneOf' | 'anyOf'
+): Record<string, string> {
+  return (
+    schema.discriminator?.mapping ||
+    (schema[xOf] || [])
+      .filter(subSchema => isReferenceObject(subSchema))
+      .reduce((mapping, subSchema) => {
+        const originalSchemaName = subSchema.$ref.split('/').reverse()[0];
+
+        return {
+          ...mapping,
+          [originalSchemaName]: subSchema.$ref
+        };
+      }, {})
+  );
 }

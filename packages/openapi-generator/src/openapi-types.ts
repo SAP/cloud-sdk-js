@@ -290,6 +290,17 @@ export interface OpenApiObjectSchema {
 }
 
 /**
+ * Parsed discriminator of a `oneOf` or `anyOf` schema.
+ * @internal
+ */
+export type OpenApiDiscriminator = Omit<
+  OpenAPIV3.DiscriminatorObject,
+  'mapping'
+> & {
+  mapping: Record<string, OpenApiReferenceSchema>;
+};
+
+/**
  * Represents a type where one of the given schemas can be chosen exclusively.
  * @internal
  */
@@ -298,6 +309,10 @@ export interface OpenApiOneOfSchema {
    * Represents the schemas to chose from.
    */
   oneOf: OpenApiSchema[];
+  /**
+   * Represents a discriminator.
+   */
+  discriminator?: OpenApiDiscriminator;
 }
 
 /**
@@ -320,6 +335,10 @@ export interface OpenApiAnyOfSchema {
    * Represents the schemas to chose from.
    */
   anyOf: OpenApiSchema[];
+  /**
+   * Represents a discriminator.
+   */
+  discriminator?: OpenApiDiscriminator;
 }
 
 /**

@@ -253,7 +253,7 @@ describe('serializeSchema for xOf schemas', () => {
     ).toEqual('InclusiveOr1 | InclusiveOr2');
   });
 
-  it('serializes array schema for anyOfOf with discriminator', () => {
+  it('serializes array schema for anyOf with discriminator', () => {
     const anyOf = [
       {
         $ref: '#/components/schemas/InclusiveOr1',

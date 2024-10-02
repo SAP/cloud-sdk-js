@@ -1031,7 +1031,7 @@
       "DiscriminatorObjectEntityWorkaroundChildOnlyType": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/DiscriminatorObjectEntityWorkaroundParent"
+            "$ref": "#/components/schemas/DiscriminatorObjectEntityWorkaroundParentOnlyType"
           }
         ]
       }

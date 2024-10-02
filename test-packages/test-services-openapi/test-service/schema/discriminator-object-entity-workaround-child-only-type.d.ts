@@ -3,9 +3,9 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import type { DiscriminatorObjectEntityWorkaroundParent } from './discriminator-object-entity-workaround-parent';
 /**
  * Representation of the 'DiscriminatorObjectEntityWorkaroundChildOnlyType' schema.
  */
-export type DiscriminatorObjectEntityWorkaroundChildOnlyType =
-  DiscriminatorObjectEntityWorkaroundParent;
+export type DiscriminatorObjectEntityWorkaroundChildOnlyType = {
+  child: string;
+};

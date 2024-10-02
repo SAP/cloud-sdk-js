@@ -75,7 +75,7 @@ async function sanitizeDiscriminatedSchemas(
       );
       if (isAllOfSchema(child?.schema)) {
         child.schema.allOf = child.schema.allOf.map(grandChild => {
-          // is grandChild is the parent, aka. circular reference
+          // if grandChild is the parent, aka. circular reference
           if (
             isReferenceObject(grandChild) &&
             grandChild.schemaName === discriminatorSchema.schemaName

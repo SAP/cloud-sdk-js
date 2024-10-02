@@ -54,6 +54,7 @@ type OpenApiPersistedSchemaWithDiscriminator = OpenApiPersistedSchema & {
     Required<Pick<OpenApiOneOfSchema, 'discriminator'>>;
 };
 
+// Some specs include incorrect discriminator definitions based on the schema type `object`, that circularly reference their parent type.
 async function sanitizeDiscriminatedSchemas(
   schemas: OpenApiPersistedSchema[],
   refs: OpenApiDocumentRefs,

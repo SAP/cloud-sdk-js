@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/eslint-config
 
+## 3.22.0
+
+### Minor Changes
+
+- a729a72: [Fixed Issue] Fix incorrect resolution of imports for TypeScript. This may result in a lot more findings.
+- 252c338: [New Functionality] Add `@typescript-eslint/consistent-type-imports` to the ruleset.
+- a729a72: [Compatibility Note] Remove `import/no-relative-parent-imports` rule that has never worked correctly as provided.
+
 ## 3.21.0
 
 ## 3.20.0

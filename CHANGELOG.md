@@ -27,6 +27,22 @@
 ### Implementation changed
 
 - 
+# 3.22.0
+
+
+## Compatibility Notes
+
+- [eslint-config] Remove `import/no-relative-parent-imports` rule that has never worked correctly as provided. (a729a72)
+
+## New Functionalities
+
+- [eslint-config] Add `@typescript-eslint/consistent-type-imports` to the ruleset. (252c338)
+- [openapi-generator] Add support for discriminator properties in schemas that include `oneOf` and `anyOf`. Also add support for incorrect usage of the discriminator property with schemas of type `object`. (d073a48)
+
+## Fixed Issues
+
+- [eslint-config] Fix incorrect resolution of imports for TypeScript. This may result in a lot more findings. (a729a72)
+- [openapi-generator] Ignore charset parameter in media types given in OpenAPI specification. (c4153b9)
 
 # 3.21.0
 

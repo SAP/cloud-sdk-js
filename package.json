@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "3.21.0",
+  "version": "3.22.0",
   "private": true,
   "sideEffects": false,
   "packageManager": "yarn@1.22.18",
@@ -70,7 +70,6 @@
     "check:public-api": "turbo run check:public-api",
     "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",
     "eslint-config": "yarn workspace @sap-cloud-sdk/eslint-config",
-    "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",
     "generator": "yarn workspace @sap-cloud-sdk/generator",
     "generator-common": "yarn workspace @sap-cloud-sdk/generator-common",
     "http-client": "yarn workspace @sap-cloud-sdk/http-client",

@@ -339,7 +339,7 @@ function retryDestination(
       },
       {
         retries: 3,
-        onRetry: (err: ErrorWithCause) =>
+        onRetry: (err: Error) =>
           logger.warn(
             `Failed to retrieve destination ${destinationName} - doing a retry. Original Error ${err.message}`
           )

@@ -4,7 +4,6 @@ import {
   propertyExists,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-// eslint-disable-next-line import/named
 import axios from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience } from '@sap-cloud-sdk/resilience';
@@ -340,7 +339,7 @@ function retryDestination(
       },
       {
         retries: 3,
-        onRetry: err =>
+        onRetry: (err: any) =>
           logger.warn(
             `Failed to retrieve destination ${destinationName} - doing a retry. Original Error ${err.message}`
           )

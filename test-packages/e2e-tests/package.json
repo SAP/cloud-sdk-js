@@ -40,7 +40,7 @@
     "execa": "^5.0.0",
     "express": "^4.21.0",
     "fs-extra": "^11.2.0",
-    "http-proxy-middleware": "^3.0.2",
+    "http-proxy-middleware": "^3.0.3",
     "json-schema-faker": "^0.5.6",
     "mock-fs": "^5.3.0",
     "moment": "^2.30.1",

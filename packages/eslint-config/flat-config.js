@@ -26,7 +26,7 @@ const flatConfig = [
       'unused-imports': unusedImports,
       jsdoc,
       regex,
-      stylistic
+      '@stylistic': stylistic
     },
     rules: {
       'regex/invalid': [

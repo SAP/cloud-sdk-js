@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/eslint-config
 
+## 3.22.1
+
+### Patch Changes
+
+- 9b4f89f: [Fixed Issue] Fix incorrect reference of the stylistic plugin in the flat config.
+
 ## 3.22.0
 
 ### Minor Changes

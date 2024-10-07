@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/generator-common
 
+## 3.22.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.22.1
+
 ## 3.22.0
 
 ### Patch Changes

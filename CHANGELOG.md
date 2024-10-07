@@ -27,7 +27,13 @@
 ### Implementation changed
 
 - 
-# 3.22.0
+# 3.22.0# 3.22.1
+
+
+## Fixed Issues
+
+- [eslint-config] Fix incorrect reference of the stylistic plugin in the flat config. (9b4f89f)
+
 
 
 ## Compatibility Notes

@@ -46,7 +46,7 @@
     "voca": "^1.4.1"
   },
   "devDependencies": {
-    "typescript": "~5.6.2",
+    "typescript": "~5.6.3",
     "@sap-cloud-sdk/test-services-odata-common": "^3.22.1"
   }
 }

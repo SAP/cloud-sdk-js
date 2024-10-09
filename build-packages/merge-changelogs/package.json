@@ -13,7 +13,7 @@
     "all": "yarn && yarn run lint && yarn run compile"
   },
   "dependencies": {
-    "@actions/core": "^1.11.0",
+    "@actions/core": "^1.11.1",
     "@manypkg/get-packages": "^2.2.2"
   },
   "devDependencies": {

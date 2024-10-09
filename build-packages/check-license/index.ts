@@ -2,7 +2,7 @@ import { info, setFailed } from '@actions/core';
 import { ModuleInfos, init } from 'license-checker';
 
 // Here all permissive FLOSS licenses are ok, see https://en.wikipedia.org/wiki/Permissive_software_license
-// We just added the most common ones here. If one is in the wiki list and not here add it.
+// We just added the most common ones here. If one is in the wiki list and not here, add it.
 const allowedLicenses = [
   'MIT',
   'Apache',

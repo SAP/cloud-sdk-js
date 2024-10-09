@@ -81,7 +81,7 @@ jobs:
         name: Circular dependency Check
       - run: yarn doc
         name: API Doc Check
-      - run: yarn check:license
+      - uses: ./.github/actions/check-license
         name: License Check
       - if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
         name: Slack Notify

@@ -51,28 +51,27 @@ function isSapDependency(dependency) {
 }
 
 async function checkLicenses() {
-    try {
-        const licenses = await getLicenses();
-        const notAllowedDependencies = Object.entries(licenses)
-            .filter(([, licenseInfo]) => !isAllowedLicense(licenseInfo.licenses))
-            .filter(([packageName]) => !isSapDependency(packageName));
+  try {
+    const licenses = await getLicenses();
+    const notAllowedDependencies = Object.entries(licenses)
+      .filter(([, licenseInfo]) => !isAllowedLicense(licenseInfo.licenses))
+      .filter(([packageName]) => !isSapDependency(packageName));
 
-        if (notAllowedDependencies.length) {
-            notAllowedDependencies.forEach(notAllowedDependency => {
-                setFailed(
-                    `Not allowed license ${notAllowedDependency[1].licenses} found for dependency: ${notAllowedDependency[0]}.`
-                );
-            });
-            setFailed(
-            'Check if the faulty licenses are in the FLOSS list: https://en.wikipedia.org/wiki/Category:Free_and_open-source_software_licenses and update the check script accordingly.'
-            );
-            process.exit(1);
-        }
-        info('License check complete.');
-    } catch (error) {
-        setFailed(`Could not check licenses. ${error}`);
-      }
-  
+    if (notAllowedDependencies.length) {
+      notAllowedDependencies.forEach(notAllowedDependency => {
+        setFailed(
+          `Not allowed license ${notAllowedDependency[1].licenses} found for dependency: ${notAllowedDependency[0]}.`
+        );
+      });
+      setFailed(
+        'Check if the faulty licenses are in the FLOSS list: https://en.wikipedia.org/wiki/Category:Free_and_open-source_software_licenses and update the check script accordingly.'
+      );
+      process.exit(1);
+    }
+    info('License check complete.');
+  } catch (error) {
+    setFailed(`Could not check licenses. ${error}`);
+  }
 }
 
 checkLicenses();

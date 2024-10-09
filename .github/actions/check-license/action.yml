@@ -1,0 +1,12 @@
+name: 'Check License'
+description: 'Checks if the licenses of the dependencies are allowed.'
+inputs:
+  dependencies:
+    description: 'All project dependencies.'
+    required: true
+outputs:
+  disallowed-license:
+    description: 'All disallowed licences found in dependencies.'
+runs:
+  using: 'node20'
+  main: 'index.js'

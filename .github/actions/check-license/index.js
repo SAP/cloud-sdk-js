@@ -43365,7 +43365,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __nccwpck_require__(7255);
 const license_checker_1 = __nccwpck_require__(621);
 // Here all permissive FLOSS licenses are ok, see https://en.wikipedia.org/wiki/Permissive_software_license
-// We just added the most common ones here. If one is in the wiki list and not here add it.
+// We just added the most common ones here. If one is in the wiki list and not here, add it.
 const allowedLicenses = [
     'MIT',
     'Apache',

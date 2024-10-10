@@ -78,10 +78,14 @@ describe('mail client', () => {
   });
 
   it('should work with destination from service - proxy-type OnPremise', async () => {
-    mockSocketConnection();
+    const { connection } = mockSocketConnection();
     jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
+
+    jest.spyOn(mockTransport, 'sendMail').mockImplementation(() => {
+      connection.socket.on('data', () => {});
+    });
 
     const mailOptions1: MailConfig = {
       from: 'from2@example.com',
@@ -245,7 +249,11 @@ describe('mail client', () => {
       const spyCreateTransport = jest
         .spyOn(nodemailer, 'createTransport')
         .mockReturnValue(mockTransport as any);
-      const spySendMail = jest.spyOn(mockTransport, 'sendMail');
+      const spySendMail = jest
+        .spyOn(mockTransport, 'sendMail')
+        .mockImplementation(() => {
+          connection.socket.on('data', () => {});
+        });
 
       const spyCloseTransport = jest.spyOn(mockTransport, 'close');
       const spyEndSocket = jest.spyOn(connection.socket, 'end');
@@ -305,14 +313,18 @@ describe('mail client', () => {
       const req = sendMail(destination, mailOptions, {
         sdkOptions: { parallel: false }
       });
-      // jest.useFakeTimers();
-      // jest.advanceTimersByTime(1000);
 
-      await expect(req).rejects.toThrow();
-    }, 10000);
+      await expect(req).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Failed to re-emit greeting message. No data listener found."'
+      );
+    }, 15000);
 
     it('should throw if greeting (really) was not received', async () => {
-      mockSocketConnection(true);
+      const { connection } = mockSocketConnection(true);
+
+      jest.spyOn(mockTransport, 'sendMail').mockImplementation(() => {
+        connection.socket.on('data', () => {});
+      });
 
       await expect(() =>
         sendMail(destination, mailOptions, {

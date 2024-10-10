@@ -3,6 +3,7 @@ import { resolveDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { createLogger } from '@sap-cloud-sdk/util';
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
+import retry from 'async-retry';
 import {
   customAuthRequestHandler,
   customAuthResponseHandler
@@ -22,8 +23,6 @@ import type {
   Destination,
   DestinationOrFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-
-import retry from 'async-retry';
 
 const logger = createLogger({
   package: 'mail-client',

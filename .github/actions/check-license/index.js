@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 527:
+/***/ 2470:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -32,7 +32,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.issue = exports.issueCommand = void 0;
 const os = __importStar(__nccwpck_require__(857));
-const utils_1 = __nccwpck_require__(5859);
+const utils_1 = __nccwpck_require__(274);
 /**
  * Commands
  *
@@ -104,7 +104,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 7255:
+/***/ 7184:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -143,12 +143,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.platform = exports.toPlatformPath = exports.toWin32Path = exports.toPosixPath = exports.markdownSummary = exports.summary = exports.getIDToken = exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.notice = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
-const command_1 = __nccwpck_require__(527);
-const file_command_1 = __nccwpck_require__(7914);
-const utils_1 = __nccwpck_require__(5859);
+const command_1 = __nccwpck_require__(2470);
+const file_command_1 = __nccwpck_require__(9933);
+const utils_1 = __nccwpck_require__(274);
 const os = __importStar(__nccwpck_require__(857));
 const path = __importStar(__nccwpck_require__(6928));
-const oidc_utils_1 = __nccwpck_require__(7653);
+const oidc_utils_1 = __nccwpck_require__(5950);
 /**
  * The code to exit an action
  */
@@ -433,29 +433,29 @@ exports.getIDToken = getIDToken;
 /**
  * Summary exports
  */
-var summary_1 = __nccwpck_require__(8750);
+var summary_1 = __nccwpck_require__(2491);
 Object.defineProperty(exports, "summary", ({ enumerable: true, get: function () { return summary_1.summary; } }));
 /**
  * @deprecated use core.summary
  */
-var summary_2 = __nccwpck_require__(8750);
+var summary_2 = __nccwpck_require__(2491);
 Object.defineProperty(exports, "markdownSummary", ({ enumerable: true, get: function () { return summary_2.markdownSummary; } }));
 /**
  * Path exports
  */
-var path_utils_1 = __nccwpck_require__(5699);
+var path_utils_1 = __nccwpck_require__(5828);
 Object.defineProperty(exports, "toPosixPath", ({ enumerable: true, get: function () { return path_utils_1.toPosixPath; } }));
 Object.defineProperty(exports, "toWin32Path", ({ enumerable: true, get: function () { return path_utils_1.toWin32Path; } }));
 Object.defineProperty(exports, "toPlatformPath", ({ enumerable: true, get: function () { return path_utils_1.toPlatformPath; } }));
 /**
  * Platform utilities exports
  */
-exports.platform = __importStar(__nccwpck_require__(9019));
+exports.platform = __importStar(__nccwpck_require__(7396));
 //# sourceMappingURL=core.js.map
 
 /***/ }),
 
-/***/ 7914:
+/***/ 9933:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -491,7 +491,7 @@ exports.prepareKeyValueMessage = exports.issueFileCommand = void 0;
 const crypto = __importStar(__nccwpck_require__(6982));
 const fs = __importStar(__nccwpck_require__(9896));
 const os = __importStar(__nccwpck_require__(857));
-const utils_1 = __nccwpck_require__(5859);
+const utils_1 = __nccwpck_require__(274);
 function issueFileCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -524,7 +524,7 @@ exports.prepareKeyValueMessage = prepareKeyValueMessage;
 
 /***/ }),
 
-/***/ 7653:
+/***/ 5950:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -542,7 +542,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OidcClient = void 0;
 const http_client_1 = __nccwpck_require__(9920);
 const auth_1 = __nccwpck_require__(4220);
-const core_1 = __nccwpck_require__(7255);
+const core_1 = __nccwpck_require__(7184);
 class OidcClient {
     static createHttpClient(allowRetry = true, maxRetry = 10) {
         const requestOptions = {
@@ -608,7 +608,7 @@ exports.OidcClient = OidcClient;
 
 /***/ }),
 
-/***/ 5699:
+/***/ 5828:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -677,7 +677,7 @@ exports.toPlatformPath = toPlatformPath;
 
 /***/ }),
 
-/***/ 9019:
+/***/ 7396:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -778,7 +778,7 @@ exports.getDetails = getDetails;
 
 /***/ }),
 
-/***/ 8750:
+/***/ 2491:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -1068,7 +1068,7 @@ exports.summary = _summary;
 
 /***/ }),
 
-/***/ 5859:
+/***/ 274:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -43362,7 +43362,7 @@ var __webpack_exports__ = {};
 var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __nccwpck_require__(7255);
+const core_1 = __nccwpck_require__(7184);
 const license_checker_1 = __nccwpck_require__(621);
 // Here all permissive FLOSS licenses are ok, see https://en.wikipedia.org/wiki/Permissive_software_license
 // We just added the most common ones here. If one is in the wiki list and not here, add it.
@@ -43409,12 +43409,12 @@ function isSapDependency(dependency) {
 async function checkLicenses() {
     try {
         const licenses = await getLicenses();
-        const notAllowedDependencies = Object.entries(licenses)
+        const disallowedDependencies = Object.entries(licenses)
             .filter(([, licenseInfo]) => !isAllowedLicense(licenseInfo.licenses))
             .filter(([packageName]) => !isSapDependency(packageName));
-        if (notAllowedDependencies.length) {
-            notAllowedDependencies.forEach(notAllowedDependency => {
-                (0, core_1.setFailed)(`Not allowed license ${notAllowedDependency[1].licenses} found for dependency: ${notAllowedDependency[0]}.`);
+        if (disallowedDependencies.length) {
+            disallowedDependencies.forEach(disallowedDependency => {
+                (0, core_1.setFailed)(`Disallowed license ${disallowedDependency[1].licenses} found for dependency: ${disallowedDependency[0]}.`);
             });
             (0, core_1.setFailed)('Check if the faulty licenses are in the FLOSS list: https://en.wikipedia.org/wiki/Category:Free_and_open-source_software_licenses and update the check script accordingly.');
             process.exit(1);

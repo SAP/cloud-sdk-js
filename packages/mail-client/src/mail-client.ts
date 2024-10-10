@@ -286,7 +286,7 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 
-  let response: Promise<MailResponse[]> = isMailSentInSequential(
+  const response: Promise<MailResponse[]> = isMailSentInSequential(
     mailClientOptions
   )
     ? sendMailInSequential(transport, mailConfigsFromDestination, mailConfigs)

@@ -241,18 +241,15 @@ describe('mail client', () => {
     };
 
     it('should create transport/socket, send mails and close the transport/socket', async () => {
-      const { mockSocket, createConnectionSpy } = mockSocketConnection();
+      const { connection, createConnectionSpy } = mockSocketConnection();
       const spyCreateTransport = jest
         .spyOn(nodemailer, 'createTransport')
         .mockReturnValue(mockTransport as any);
-      const spySendMail = jest
-        .spyOn(mockTransport, 'sendMail')
-        .mockImplementation(() => {
-          mockSocket.socket.on('data', () => {});
-        });
+      const spySendMail = jest.spyOn(mockTransport, 'sendMail');
+
       const spyCloseTransport = jest.spyOn(mockTransport, 'close');
-      const spyEndSocket = jest.spyOn(mockSocket.socket, 'end');
-      const spyDestroySocket = jest.spyOn(mockSocket.socket, 'destroy');
+      const spyEndSocket = jest.spyOn(connection.socket, 'end');
+      const spyDestroySocket = jest.spyOn(connection.socket, 'destroy');
 
       await expect(
         sendMail(destination, mailOptions, { sdkOptions: { parallel: false } })
@@ -267,25 +264,22 @@ describe('mail client', () => {
     });
 
     it('should resend greeting', async () => {
-      const { mockSocket } = mockSocketConnection();
+      const { connection } = mockSocketConnection();
       jest
         .spyOn(nodemailer, 'createTransport')
         .mockReturnValue(mockTransport as any);
-      jest.spyOn(mockTransport, 'sendMail').mockImplementation(() => {
-        mockSocket.socket.on('data', () => {});
-      });
 
       const req = sendMail(destination, mailOptions, {
         sdkOptions: { parallel: false }
       });
 
       // The socket emits data for the first time before nodemailer listens to it.
-      // We re-emit the data a second time once there is a listener for it.
-      // In this test we listen for the data event to check that it in fact emits a second time.
+      // We re-emit the data until a listener listened for it.
+      // In this test we listen for the data event to check that we in fact re-emit the message.
       const emitsTwice = new Promise(resolve => {
         let dataEmitCount = 0;
         const collectedData: string[] = [];
-        mockSocket.socket.on('data', data => {
+        connection.socket.on('data', data => {
           dataEmitCount++;
           collectedData.push(data.toString());
           if (dataEmitCount === 2) {
@@ -300,6 +294,22 @@ describe('mail client', () => {
       ]);
       await expect(req).resolves.not.toThrow();
     });
+
+    it('should fail if nodemailer never listens to greeting', async () => {
+      mockSocketConnection();
+
+      jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+
+      const req = sendMail(destination, mailOptions, {
+        sdkOptions: { parallel: false }
+      });
+      // jest.useFakeTimers();
+      // jest.advanceTimersByTime(1000);
+
+      await expect(req).rejects.toThrow();
+    }, 10000);
 
     it('should throw if greeting (really) was not received', async () => {
       mockSocketConnection(true);
@@ -376,7 +386,7 @@ function mockSocketConnection(fail = false) {
     destroy = jest.fn();
   }
 
-  const mockSocket = {
+  const connection = {
     socket: new MockSocket()
   };
   const createConnectionSpy = jest
@@ -384,13 +394,13 @@ function mockSocketConnection(fail = false) {
     .mockImplementation(() => {
       setImmediate(() => {
         if (fail) {
-          mockSocket.socket.emit('error', 'Something went wrong');
+          connection.socket.emit('error', 'Something went wrong');
         } else {
-          mockSocket.socket.emit('data', '220 smtp.gmail.com ESMTP');
+          connection.socket.emit('data', '220 smtp.gmail.com ESMTP');
         }
       });
-      return mockSocket as any;
+      return connection as any;
     });
 
-  return { mockSocket, createConnectionSpy };
+  return { connection, createConnectionSpy };
 }

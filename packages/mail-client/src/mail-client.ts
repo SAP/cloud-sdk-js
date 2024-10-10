@@ -172,17 +172,17 @@ function retrieveGreeting(socket: Socket): Promise<Buffer> {
 async function resendGreetingUntilReceived(socket: Socket): Promise<void> {
   const greeting = await retrieveGreeting(socket);
 
-  retry(
+  await retry(
     () => {
       // resend the greeting message until a listener is attached
       // note: this is dangerous because there could be another listener that is not the mailer
-      if (socket.listenerCount('data')) {
-        socket.emit('data', greeting);
-        return;
+      if (!socket.emit('data', greeting)) {
+        throw new Error(
+          'Failed to re-emit greeting message. No data listener found.'
+        );
       }
     },
-    // default greeting timeout from nodemailer
-    { maxRetryTime: 30 * 1000 }
+    { maxRetryTime: 5000 }
   );
 }
 

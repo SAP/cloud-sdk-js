@@ -97,7 +97,7 @@ describe('generator', () => {
         project = await generateProject(createParsedOptions(options));
         await generate(options);
         throw new Error('Should not go here.');
-      } catch (e) {
+      } catch {
         const optionsPerService = await readFile(
           'someDir/test-service-options.json',
           { encoding: 'utf-8' }

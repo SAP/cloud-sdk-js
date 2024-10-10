@@ -13,6 +13,7 @@ const custom = {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const deSerializer = mergeDefaultDeSerializersWith(custom);
 
 const { testEntityApi } = testService(custom);

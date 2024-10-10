@@ -28,7 +28,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         'import/no-internal-modules': 'off',
-        'no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-expressions': 'off',
         'jsdoc/require-jsdoc': 'off',
         'import/no-relative-parent-imports': 'off'
       }

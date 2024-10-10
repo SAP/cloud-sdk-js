@@ -66,7 +66,7 @@
     "checks": "turbo run check && yarn run check:circular && yarn run check:license && yarn run check:test-service",
     "check:circular": "madge --extensions ts --ts-config=./tsconfig.json --circular --exclude 'dist|test-packages|connectivity/src/scp-cf/environment-accessor.ts|http-client/src/csrf-token-header.ts' ./packages",
     "check:dependencies": "turbo run check:dependencies",
-    "check:license": "ts-node scripts/check-licenses.ts",
+    "check:license": "node ./.github/actions/check-license/index.js",
     "check:test-service": "yarn generate && yarn ts-node scripts/check-test-service-for-changes.ts",
     "check:public-api": "turbo run check:public-api",
     "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",

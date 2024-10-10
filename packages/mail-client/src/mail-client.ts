@@ -23,6 +23,8 @@ import type {
   DestinationOrFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 
+import retry from 'async-retry';
+
 const logger = createLogger({
   package: 'mail-client',
   messageContext: 'mail-client'
@@ -171,20 +173,18 @@ function retrieveGreeting(socket: Socket): Promise<Buffer> {
 async function resendGreetingUntilReceived(socket: Socket): Promise<void> {
   const greeting = await retrieveGreeting(socket);
 
-  // resend the greeting message every second until a listener is attached
-  const intervalId = setInterval(() => {
-    // note: this is dangerous because there could be another listener that is not the mailer
-    if (socket.listenerCount('data')) {
-      socket.emit('data', greeting);
-      clearInterval(intervalId);
-      clearTimeout(timeoutId);
-    }
-  }, 1000);
-
-  const timeoutId = setTimeout(() => {
-    clearInterval(intervalId);
+  retry(
+    () => {
+      // resend the greeting message until a listener is attached
+      // note: this is dangerous because there could be another listener that is not the mailer
+      if (socket.listenerCount('data')) {
+        socket.emit('data', greeting);
+        return;
+      }
+    },
     // default greeting timeout from nodemailer
-  }, 30 * 1000);
+    { maxRetryTime: 30 * 1000 }
+  );
 }
 
 function createTransport(

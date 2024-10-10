@@ -240,7 +240,7 @@ describe('mail client', () => {
       to: 'to1@example.com'
     };
 
-    it('[OnPrem] should create transport/socket, send mails and close the transport/socket', async () => {
+    it('should create transport/socket, send mails and close the transport/socket', async () => {
       const { mockSocket, createConnectionSpy } = mockSocketConnection();
       const spyCreateTransport = jest
         .spyOn(nodemailer, 'createTransport')
@@ -266,7 +266,7 @@ describe('mail client', () => {
       expect(spyDestroySocket).toHaveBeenCalledTimes(1);
     });
 
-    it('[OnPrem] should resend greeting', async () => {
+    it('should resend greeting', async () => {
       const { mockSocket } = mockSocketConnection();
       jest
         .spyOn(nodemailer, 'createTransport')
@@ -279,21 +279,29 @@ describe('mail client', () => {
         sdkOptions: { parallel: false }
       });
 
-      const emitsTwice = new Promise<void>(resolve => {
+      // The socket emits data for the first time before nodemailer listens to it.
+      // We re-emit the data a second time once there is a listener for it.
+      // In this test we listen for the data event to check that it in fact emits a second time.
+      const emitsTwice = new Promise(resolve => {
         let dataEmitCount = 0;
+        const collectedData: string[] = [];
         mockSocket.socket.on('data', data => {
-          dataEmitCount += data.toString().includes('220') ? 1 : 0;
+          dataEmitCount++;
+          collectedData.push(data.toString());
           if (dataEmitCount === 2) {
-            resolve();
+            resolve(collectedData);
           }
         });
       });
 
-      await expect(emitsTwice).resolves.not.toThrow();
+      await expect(emitsTwice).resolves.toEqual([
+        '220 smtp.gmail.com ESMTP',
+        '220 smtp.gmail.com ESMTP'
+      ]);
       await expect(req).resolves.not.toThrow();
     });
 
-    it('[OnPrem] should throw if greeting (really) was not received', async () => {
+    it('should throw if greeting (really) was not received', async () => {
       mockSocketConnection(true);
 
       await expect(() =>
@@ -306,11 +314,11 @@ describe('mail client', () => {
 });
 
 describe('isMailSentInSequential', () => {
-  it('should return false when the mail client options is undefined', () => {
+  it('should return false when the mail client options are undefined', () => {
     expect(isMailSentInSequential()).toBe(false);
   });
 
-  it('should return false when the sdk options is undefined', () => {
+  it('should return false when the sdk options are undefined', () => {
     const mailClientOptions: MailClientOptions = {};
     expect(isMailSentInSequential(mailClientOptions)).toBe(false);
   });

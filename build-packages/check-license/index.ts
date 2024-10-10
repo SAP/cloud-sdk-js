@@ -43,11 +43,16 @@ function isAllowedLicense(licenses) {
 
 function isSapDependency(dependency) {
   // Exclude root package from license check
-  if (dependency.startsWith('sap-cloud-sdk')) {
+  if (
+    dependency.startsWith('sap-cloud-sdk') ||
+    dependency.startsWith('sap-ai-sdk')
+  ) {
     return true;
   }
   const [scope] = dependency.split('/');
-  return scope === '@sap' || scope === '@sap-cloud-sdk';
+  return (
+    scope === '@sap' || scope === '@sap-cloud-sdk' || scope === '@sap-ai-sdk'
+  );
 }
 
 async function checkLicenses() {

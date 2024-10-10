@@ -53,14 +53,14 @@ function isSapDependency(dependency) {
 async function checkLicenses() {
   try {
     const licenses = await getLicenses();
-    const notAllowedDependencies = Object.entries(licenses)
+    const disallowedDependencies = Object.entries(licenses)
       .filter(([, licenseInfo]) => !isAllowedLicense(licenseInfo.licenses))
       .filter(([packageName]) => !isSapDependency(packageName));
 
-    if (notAllowedDependencies.length) {
-      notAllowedDependencies.forEach(notAllowedDependency => {
+    if (disallowedDependencies.length) {
+      disallowedDependencies.forEach(disallowedDependency => {
         setFailed(
-          `Not allowed license ${notAllowedDependency[1].licenses} found for dependency: ${notAllowedDependency[0]}.`
+          `Disallowed license ${disallowedDependency[1].licenses} found for dependency: ${disallowedDependency[0]}.`
         );
       });
       setFailed(

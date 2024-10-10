@@ -93650,10 +93650,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.kibana = void 0;
 const winston_1 = __nccwpck_require__(19308);
 const local_1 = __nccwpck_require__(8004);
-const { combine, timestamp, json } = winston_1.format;
-// This is a hack to ensure that error logging works in browsers. Necessary due to: https://github.com/winstonjs/logform/issues/97
-// eslint-disable-next-line import/no-internal-modules
-const errors = winston_1.format.errors || __nccwpck_require__(81925);
+const { combine, timestamp, json, errors } = winston_1.format;
 /**
  * Format for logging in Kibana.
  */
@@ -93683,10 +93680,7 @@ exports.local = void 0;
 exports.getMessageOrStack = getMessageOrStack;
 const chalk_1 = __importDefault(__nccwpck_require__(32325));
 const winston_1 = __nccwpck_require__(19308);
-const { combine, timestamp, cli, printf } = winston_1.format;
-// This is a hack to ensure that error logging works in browsers. Necessary due to: https://github.com/winstonjs/logform/issues/97
-// eslint-disable-next-line import/no-internal-modules
-const errors = winston_1.format.errors || __nccwpck_require__(81925);
+const { combine, timestamp, cli, printf, errors } = winston_1.format;
 /**
  * Format for local logging.
  */

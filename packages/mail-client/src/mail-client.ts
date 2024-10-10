@@ -141,9 +141,6 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   };
   const { socket } = await SocksClient.createConnection(connectionOptions);
 
-  // Workaround for incorrect order of events in nodemailer https://github.com/nodemailer/nodemailer/issues/1684
-  await resendGreetingUntilReceived(socket);
-
   return socket;
 }
 
@@ -169,10 +166,11 @@ function retrieveGreeting(socket: Socket): Promise<Buffer> {
   });
 }
 
-async function resendGreetingUntilReceived(socket: Socket): Promise<void> {
-  const greeting = await retrieveGreeting(socket);
-
-  await retry(
+async function resendGreetingUntilReceived(
+  greeting: Buffer,
+  socket: Socket
+): Promise<void> {
+  return retry(
     () => {
       // resend the greeting message until a listener is attached
       // note: this is dangerous because there could be another listener that is not the mailer
@@ -276,32 +274,29 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
   let socket: Socket | undefined;
+  let resendGreeting: Promise<void> | undefined;
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
+    // Workaround for incorrect order of events in nodemailer https://github.com/nodemailer/nodemailer/issues/1684
+    const greeting = await retrieveGreeting(socket);
+    resendGreeting = resendGreetingUntilReceived(greeting, socket);
   }
-  const transport = await createTransport(
-    mailDestination,
-    mailClientOptions,
-    socket
-  );
+  const transport = createTransport(mailDestination, mailClientOptions, socket);
 
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 
-  let response: MailResponse[];
-  if (isMailSentInSequential(mailClientOptions)) {
-    response = await sendMailInSequential(
-      transport,
-      mailConfigsFromDestination,
-      mailConfigs
-    );
-  } else {
-    response = await sendMailInParallel(
-      transport,
-      mailConfigsFromDestination,
-      mailConfigs
-    );
+  let response: Promise<MailResponse[]> = isMailSentInSequential(
+    mailClientOptions
+  )
+    ? sendMailInSequential(transport, mailConfigsFromDestination, mailConfigs)
+    : sendMailInParallel(transport, mailConfigsFromDestination, mailConfigs);
+
+  if (resendGreeting) {
+    await resendGreeting;
   }
+
+  await response;
 
   teardown(transport, socket);
   return response;

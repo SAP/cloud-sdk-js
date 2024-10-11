@@ -19,7 +19,7 @@ jobs:
           node-version: 22
           cache: 'yarn'
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile --ignore-engines
       - name: Run Lint
         run: yarn lint:fix
       - name: Commit Changes if needed

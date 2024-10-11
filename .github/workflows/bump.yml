@@ -21,7 +21,7 @@ jobs:
           node-version: 22
           cache: 'yarn'
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --ignore-engines
 
       - name: bump version
         id: bump

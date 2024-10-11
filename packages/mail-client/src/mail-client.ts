@@ -286,17 +286,21 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 
-  const response: Promise<MailResponse[]> = isMailSentInSequential(
-    mailClientOptions
-  )
-    ? sendMailInSequential(transport, mailConfigsFromDestination, mailConfigs)
-    : sendMailInParallel(transport, mailConfigsFromDestination, mailConfigs);
+  const response = isMailSentInSequential(mailClientOptions)
+    ? await sendMailInSequential(
+        transport,
+        mailConfigsFromDestination,
+        mailConfigs
+      )
+    : await sendMailInParallel(
+        transport,
+        mailConfigsFromDestination,
+        mailConfigs
+      );
 
   if (resendGreeting) {
     await resendGreeting;
   }
-
-  await response;
 
   teardown(transport, socket);
   return response;

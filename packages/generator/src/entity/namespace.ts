@@ -1,10 +1,4 @@
 import { unixEOL, unique } from '@sap-cloud-sdk/util';
-import type {
-  ModuleDeclarationStructure,
-  VariableStatementStructure,
-  OptionalKind,
-  VariableDeclarationStructure
-} from 'ts-morph';
 import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import { isOrderableEdmType } from '@sap-cloud-sdk/odata-common';
 import { getGenericParameters, linkClass } from '../generator-utils';
@@ -14,6 +8,12 @@ import {
   getStaticPropertyDescription,
   addLeadingNewline
 } from '../typedoc';
+import type {
+  ModuleDeclarationStructure,
+  VariableStatementStructure,
+  OptionalKind,
+  VariableDeclarationStructure
+} from 'ts-morph';
 import type {
   VdmEntity,
   VdmNavigationProperty,

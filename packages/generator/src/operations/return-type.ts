@@ -1,5 +1,5 @@
-import type { VdmOperation } from '../vdm-types';
 import { cannotDeserialize } from '../edmx-to-vdm';
+import type { VdmOperation } from '../vdm-types';
 /**
  * @internal
  */

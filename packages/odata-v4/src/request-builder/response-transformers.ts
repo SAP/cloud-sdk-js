@@ -1,8 +1,8 @@
+import { entityDeserializer } from '../de-serializers';
+import { getSingleResult, getCollectionResult } from './response-data-accessor';
 import type { EntityApi } from '@sap-cloud-sdk/odata-common';
 import type { Entity } from '../entity';
 import type { DeSerializers } from '../de-serializers';
-import { entityDeserializer } from '../de-serializers';
-import { getSingleResult, getCollectionResult } from './response-data-accessor';
 
 /**
  * Transform the payload of the OData response to undefined.

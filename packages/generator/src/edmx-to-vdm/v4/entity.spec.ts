@@ -1,3 +1,6 @@
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { generateComplexTypesV4 } from './complex-type';
+import { generateEntitiesV4 } from './entity';
 import type { ServiceMetadata } from '../../edmx-parser';
 import type { EdmxProperty } from '../../edmx-parser/common';
 import type {
@@ -6,9 +9,6 @@ import type {
   EdmxEntityTypeV4,
   EdmxOperation
 } from '../../edmx-parser/v4';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { generateComplexTypesV4 } from './complex-type';
-import { generateEntitiesV4 } from './entity';
 
 describe('entity', () => {
   it('transforms collection type properties for primitive types', () => {

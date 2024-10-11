@@ -2,11 +2,11 @@ import {
   CommonComplexTypeField,
   CommonEntity
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
-import type { DeSerializers } from '../de-serializers';
 import { defaultDeSerializers } from '../de-serializers';
+import { OrderableEdmTypeField } from './orderable-edm-type-field';
+import type { DeSerializers } from '../de-serializers';
 import type { EntityBase } from '../entity-base';
 import type { Filter } from '../filter';
-import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 export function checkFilter<
   EntityT extends EntityBase,

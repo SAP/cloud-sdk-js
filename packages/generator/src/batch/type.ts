@@ -1,7 +1,7 @@
-import type { TypeAliasDeclarationStructure } from 'ts-morph';
 import { StructureKind } from 'ts-morph';
-import type { VdmServiceMetadata } from '../vdm-types';
 import { operationReturnType } from '../operations';
+import type { TypeAliasDeclarationStructure } from 'ts-morph';
+import type { VdmServiceMetadata } from '../vdm-types';
 
 /**
  * @internal

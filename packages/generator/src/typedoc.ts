@@ -1,5 +1,6 @@
 import { unixEOL, titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot } from './generator-utils';
+import { getServiceName } from './service-generator';
 import type {
   VdmComplexType,
   VdmEntity,
@@ -9,7 +10,6 @@ import type {
   VdmPropertyValueConstraints,
   VdmServiceMetadata
 } from './vdm-types';
-import { getServiceName } from './service-generator';
 
 /**
  * @internal

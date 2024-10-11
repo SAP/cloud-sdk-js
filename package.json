@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "3.21.0",
+  "version": "3.22.1",
   "private": true,
   "sideEffects": false,
   "packageManager": "yarn@1.22.18",
@@ -39,6 +39,7 @@
     "test-packages/type-tests",
     "test-packages/self-tests",
     "build-packages/changesets-fixed-version-bump",
+    "build-packages/check-license",
     "build-packages/check-pr",
     "build-packages/get-changelog",
     "build-packages/merge-changelogs"
@@ -65,12 +66,11 @@
     "checks": "turbo run check && yarn run check:circular && yarn run check:license && yarn run check:test-service",
     "check:circular": "madge --extensions ts --ts-config=./tsconfig.json --circular --exclude 'dist|test-packages|connectivity/src/scp-cf/environment-accessor.ts|http-client/src/csrf-token-header.ts' ./packages",
     "check:dependencies": "turbo run check:dependencies",
-    "check:license": "ts-node scripts/check-licenses.ts",
+    "check:license": "node ./.github/actions/check-license/index.js",
     "check:test-service": "yarn generate && yarn ts-node scripts/check-test-service-for-changes.ts",
     "check:public-api": "turbo run check:public-api",
     "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",
     "eslint-config": "yarn workspace @sap-cloud-sdk/eslint-config",
-    "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",
     "generator": "yarn workspace @sap-cloud-sdk/generator",
     "generator-common": "yarn workspace @sap-cloud-sdk/generator-common",
     "http-client": "yarn workspace @sap-cloud-sdk/http-client",
@@ -89,12 +89,12 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.8",
+    "@changesets/cli": "^2.27.9",
     "@types/jest": "^29.5.13",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.4",
-    "@types/node": "^18.19.54",
+    "@types/node": "^18.19.55",
     "@types/uuid": "^10.0.0",
     "@types/voca": "^1.4.6",
     "axios": "^1.7.7",
@@ -107,13 +107,13 @@
     "license-checker": "^25.0.1",
     "madge": "^8.0.0",
     "prettier": "^3.3.3",
-    "puppeteer": "^23.4.1",
+    "puppeteer": "^23.5.3",
     "semver": "^7.6.3",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "turbo": "^2.1.2",
-    "typedoc": "^0.26.7",
-    "typescript": "~5.6.2"
+    "turbo": "^2.1.3",
+    "typedoc": "^0.26.8",
+    "typescript": "~5.6.3"
   },
   "resolutions": {
     "@sap/cds": "^6.1.1",

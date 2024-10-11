@@ -1,6 +1,6 @@
+import { FilterFunction } from './filter-function-base';
 import type { EntityBase } from '../entity-base';
 import type { FilterFunctionParameterType } from './filter-function-base';
-import { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 
 /**

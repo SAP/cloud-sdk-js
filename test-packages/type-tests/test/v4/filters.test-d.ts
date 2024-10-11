@@ -1,11 +1,11 @@
-import type { OneToManyLink } from '@sap-cloud-sdk/odata-v4';
 import { and, any } from '@sap-cloud-sdk/odata-v4';
-import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import {
   TestEnumType,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { expectError, expectType } from 'tsd';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import type { OneToManyLink } from '@sap-cloud-sdk/odata-v4';
 import type { Filter, FilterList } from '@sap-cloud-sdk/odata-common';
 import type { TestEntityMultiLinkApi } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntityMultiLinkApi';
 import type {

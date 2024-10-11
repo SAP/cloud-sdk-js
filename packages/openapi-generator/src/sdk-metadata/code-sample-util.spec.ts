@@ -1,9 +1,4 @@
 import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
-import type {
-  OpenApiApi,
-  OpenApiOperation,
-  OpenApiParameter
-} from '../openapi-types';
 import {
   getGetAllOperation,
   getGetOperation,
@@ -11,6 +6,11 @@ import {
   getMainOperation,
   getOperationParamCode
 } from './code-sample-util';
+import type {
+  OpenApiApi,
+  OpenApiOperation,
+  OpenApiParameter
+} from '../openapi-types';
 
 describe('code-sample-util api', () => {
   const pathParam1 = { name: 'path-Param1' };

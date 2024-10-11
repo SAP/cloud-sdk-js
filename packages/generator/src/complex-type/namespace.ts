@@ -1,9 +1,9 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
+import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import type {
   ModuleDeclarationStructure,
   VariableStatementStructure
 } from 'ts-morph';
-import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import type { VdmComplexType } from '../vdm-types';
 
 /**

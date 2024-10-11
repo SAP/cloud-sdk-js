@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { expectType } from 'tsd';
+import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
 import type { TestEntitySingleLinkApi } from '@sap-cloud-sdk/test-services-odata-v2/test-service/TestEntitySingleLinkApi';
 import type { TestEntityLvl2MultiLinkApi } from '@sap-cloud-sdk/test-services-odata-v2/test-service/TestEntityLvl2MultiLinkApi';
-import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
 
 const custom = {
   'Edm.Binary': {
@@ -13,6 +13,7 @@ const custom = {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const deSerializer = mergeDefaultDeSerializersWith(custom);
 
 const { testEntityApi } = testService(custom);

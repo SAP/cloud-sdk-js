@@ -1,7 +1,7 @@
-import type { EntityBase } from '../entity-base';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { NumberFilterFunction } from './number-filter-function';
 import { StringFilterFunction } from './string-filter-function';
+import type { EntityBase } from '../entity-base';
 import type { FilterFunctionParameterType } from './filter-function-base';
 
 export function filterFunction<EntityT extends EntityBase>(

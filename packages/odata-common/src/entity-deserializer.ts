@@ -3,17 +3,9 @@ import {
   createLogger,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import type { DeSerializers } from './de-serializers';
 import { createValueDeserializer } from './de-serializers';
-import type { EntityBase } from './entity-base';
 import { isExpandedProperty, isSelectedProperty } from './entity-base';
-import type { EdmTypeShared } from './edm-types';
 import { isEdmType } from './edm-types';
-import type {
-  ComplexTypeNamespace,
-  PropertyMetadata,
-  Field
-} from './selectable';
 import {
   isComplexTypeNameSpace,
   Link,
@@ -22,6 +14,14 @@ import {
   CollectionField,
   ComplexTypeField,
   OneToOneLink
+} from './selectable';
+import type { DeSerializers } from './de-serializers';
+import type { EntityBase } from './entity-base';
+import type { EdmTypeShared } from './edm-types';
+import type {
+  ComplexTypeNamespace,
+  PropertyMetadata,
+  Field
 } from './selectable';
 import type { EntityApi, EntityType } from './entity-api';
 

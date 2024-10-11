@@ -5,10 +5,7 @@ import {
   defaultTenantId,
   getTenantId
 } from '../jwt';
-import type { DestinationFetchOptions } from './destination-accessor-types';
-import type { IsolationStrategy } from './destination-cache';
 import { getDefaultIsolationStrategy } from './destination-cache';
-import type { Destination } from './destination-service-types';
 import { isHttpDestination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
@@ -16,6 +13,9 @@ import {
 } from './http-proxy-util';
 import { registerDestinationCache } from './register-destination-cache';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import type { Destination } from './destination-service-types';
+import type { IsolationStrategy } from './destination-cache';
+import type { DestinationFetchOptions } from './destination-accessor-types';
 
 const logger = createLogger({
   package: 'connectivity',

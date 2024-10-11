@@ -7,10 +7,6 @@ import {
   setLogLevel,
   ErrorWithCause
 } from '@sap-cloud-sdk/util';
-import type {
-  CreateFileOptions,
-  ServiceOptions
-} from '@sap-cloud-sdk/generator-common/internal';
 import {
   getSdkMetadataFileNames,
   getSdkVersion,
@@ -33,12 +29,16 @@ import {
   apiIndexFile,
   schemaIndexFile
 } from './file-serializer';
-import type { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { sdkMetadata } from './sdk-metadata';
-import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
 import { cliOptions, tsconfigJson } from './options';
+import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
+import type { OpenApiDocument } from './openapi-types';
+import type {
+  CreateFileOptions,
+  ServiceOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 
 const { mkdir } = promisesFs;
 const logger = createLogger('openapi-generator');

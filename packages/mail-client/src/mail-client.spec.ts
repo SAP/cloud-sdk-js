@@ -1,8 +1,7 @@
+import { EventEmitter } from 'node:stream';
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
-import type { DestinationWithName } from '@sap-cloud-sdk/connectivity';
 import { registerDestination } from '@sap-cloud-sdk/connectivity';
-import type { DestinationConfiguration } from '@sap-cloud-sdk/connectivity/internal';
 import * as tokenAccessor from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
 import {
   mockFetchDestinationCalls,
@@ -14,6 +13,8 @@ import {
   isMailSentInSequential,
   sendMail
 } from './mail-client';
+import type { DestinationConfiguration } from '@sap-cloud-sdk/connectivity/internal';
+import type { DestinationWithName } from '@sap-cloud-sdk/connectivity';
 import type {
   MailDestination,
   MailConfig,
@@ -25,15 +26,6 @@ describe('mail client', () => {
     jest.resetAllMocks();
   });
 
-  const mockSocket = {
-    socket: {
-      _readableState: {
-        readableListening: false
-      },
-      end: jest.fn(),
-      destroy: jest.fn()
-    }
-  };
   const mockTransport = {
     sendMail: jest.fn(),
     close: jest.fn(),
@@ -86,12 +78,15 @@ describe('mail client', () => {
   });
 
   it('should work with destination from service - proxy-type OnPremise', async () => {
-    jest
-      .spyOn(SocksClient, 'createConnection')
-      .mockReturnValue(mockSocket as any);
+    const { connection } = mockSocketConnection();
     jest
       .spyOn(nodemailer, 'createTransport')
       .mockReturnValue(mockTransport as any);
+
+    jest.spyOn(mockTransport, 'sendMail').mockImplementation(() => {
+      connection.socket.on('data', () => {});
+    });
+
     const mailOptions1: MailConfig = {
       from: 'from2@example.com',
       to: 'to2@example.com'
@@ -215,27 +210,17 @@ describe('mail client', () => {
     await expect(
       sendMail(destination, [mailOptions1, mailOptions2], mailClientOptions)
     ).resolves.not.toThrow();
-    expect(spyCreateTransport).toBeCalledTimes(1);
-    expect(spyCreateTransport).toBeCalledWith(
+    expect(spyCreateTransport).toHaveBeenCalledTimes(1);
+    expect(spyCreateTransport).toHaveBeenCalledWith(
       expect.objectContaining(mailClientOptions)
     );
-    expect(spySendMail).toBeCalledTimes(2);
-    expect(spySendMail).toBeCalledWith(mailOptions1);
-    expect(spySendMail).toBeCalledWith(mailOptions2);
-    expect(spyCloseTransport).toBeCalledTimes(1);
+    expect(spySendMail).toHaveBeenCalledTimes(2);
+    expect(spySendMail).toHaveBeenCalledWith(mailOptions1);
+    expect(spySendMail).toHaveBeenCalledWith(mailOptions2);
+    expect(spyCloseTransport).toHaveBeenCalledTimes(1);
   });
 
-  it('[OnPrem] should create transport/socket, send mails and close the transport/socket', async () => {
-    const spyCreateSocket = jest
-      .spyOn(SocksClient, 'createConnection')
-      .mockReturnValue(mockSocket as any);
-    const spyCreateTransport = jest
-      .spyOn(nodemailer, 'createTransport')
-      .mockReturnValue(mockTransport as any);
-    const spySendMail = jest.spyOn(mockTransport, 'sendMail');
-    const spyCloseTransport = jest.spyOn(mockTransport, 'close');
-    const spyEndSocket = jest.spyOn(mockSocket.socket, 'end');
-    const spyDestroySocket = jest.spyOn(mockSocket.socket, 'destroy');
+  describe('on premise', () => {
     const destination: any = {
       originalProperties: {
         'mail.password': 'password',
@@ -258,25 +243,104 @@ describe('mail client', () => {
       from: 'from1@example.com',
       to: 'to1@example.com'
     };
-    await expect(
-      sendMail(destination, mailOptions, { sdkOptions: { parallel: false } })
-    ).resolves.not.toThrow();
-    expect(spyCreateSocket).toBeCalledTimes(1);
-    expect(spyCreateTransport).toBeCalledTimes(1);
-    expect(spySendMail).toBeCalledTimes(1);
-    expect(spySendMail).toBeCalledWith(mailOptions);
-    expect(spyCloseTransport).toBeCalledTimes(1);
-    expect(spyEndSocket).toBeCalledTimes(1);
-    expect(spyDestroySocket).toBeCalledTimes(1);
+
+    it('should create transport/socket, send mails and close the transport/socket', async () => {
+      const { connection, createConnectionSpy } = mockSocketConnection();
+      const spyCreateTransport = jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+      const spySendMail = jest
+        .spyOn(mockTransport, 'sendMail')
+        .mockImplementation(() => {
+          connection.socket.on('data', () => {});
+        });
+
+      const spyCloseTransport = jest.spyOn(mockTransport, 'close');
+      const spyEndSocket = jest.spyOn(connection.socket, 'end');
+      const spyDestroySocket = jest.spyOn(connection.socket, 'destroy');
+
+      await expect(
+        sendMail(destination, mailOptions, { sdkOptions: { parallel: false } })
+      ).resolves.not.toThrow();
+      expect(createConnectionSpy).toHaveBeenCalledTimes(1);
+      expect(spyCreateTransport).toHaveBeenCalledTimes(1);
+      expect(spySendMail).toHaveBeenCalledTimes(1);
+      expect(spySendMail).toHaveBeenCalledWith(mailOptions);
+      expect(spyCloseTransport).toHaveBeenCalledTimes(1);
+      expect(spyEndSocket).toHaveBeenCalledTimes(1);
+      expect(spyDestroySocket).toHaveBeenCalledTimes(1);
+    });
+
+    it('should resend greeting', async () => {
+      const { connection } = mockSocketConnection();
+      jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+
+      const req = sendMail(destination, mailOptions, {
+        sdkOptions: { parallel: false }
+      });
+
+      // The socket emits data for the first time before nodemailer listens to it.
+      // We re-emit the data until a listener listened for it.
+      // In this test we listen for the data event to check that we in fact re-emit the message.
+      const emitsTwice = new Promise(resolve => {
+        let dataEmitCount = 0;
+        const collectedData: string[] = [];
+        connection.socket.on('data', data => {
+          dataEmitCount++;
+          collectedData.push(data.toString());
+          if (dataEmitCount === 2) {
+            resolve(collectedData);
+          }
+        });
+      });
+
+      await expect(emitsTwice).resolves.toEqual([
+        '220 smtp.gmail.com ESMTP',
+        '220 smtp.gmail.com ESMTP'
+      ]);
+      await expect(req).resolves.not.toThrow();
+    });
+
+    it('should fail if nodemailer never listens to greeting', async () => {
+      mockSocketConnection();
+
+      jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+
+      const req = sendMail(destination, mailOptions, {
+        sdkOptions: { parallel: false }
+      });
+
+      await expect(req).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Failed to re-emit greeting message. No data listener found."'
+      );
+    }, 15000);
+
+    it('should throw if greeting (really) was not received', async () => {
+      const { connection } = mockSocketConnection(true);
+
+      jest.spyOn(mockTransport, 'sendMail').mockImplementation(() => {
+        connection.socket.on('data', () => {});
+      });
+
+      await expect(() =>
+        sendMail(destination, mailOptions, {
+          sdkOptions: { parallel: false }
+        })
+      ).rejects.toThrowErrorMatchingInlineSnapshot('"Something went wrong"');
+    });
   });
 });
 
 describe('isMailSentInSequential', () => {
-  it('should return false when the mail client options is undefined', () => {
+  it('should return false when the mail client options are undefined', () => {
     expect(isMailSentInSequential()).toBe(false);
   });
 
-  it('should return false when the sdk options is undefined', () => {
+  it('should return false when the sdk options are undefined', () => {
     const mailClientOptions: MailClientOptions = {};
     expect(isMailSentInSequential(mailClientOptions)).toBe(false);
   });
@@ -326,4 +390,29 @@ function isValidSocksProxy(proxy) {
     proxy.port <= 65535 &&
     (proxy.type === 4 || proxy.type === 5)
   );
+}
+
+function mockSocketConnection(fail = false) {
+  class MockSocket extends EventEmitter {
+    end = jest.fn();
+    destroy = jest.fn();
+  }
+
+  const connection = {
+    socket: new MockSocket()
+  };
+  const createConnectionSpy = jest
+    .spyOn(SocksClient, 'createConnection')
+    .mockImplementation(() => {
+      setImmediate(() => {
+        if (fail) {
+          connection.socket.emit('error', 'Something went wrong');
+        } else {
+          connection.socket.emit('data', '220 smtp.gmail.com ESMTP');
+        }
+      });
+      return connection as any;
+    });
+
+  return { connection, createConnectionSpy };
 }

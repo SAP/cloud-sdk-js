@@ -1,13 +1,13 @@
+import { v4 as uuid } from 'uuid';
+import { MethodRequestBuilder } from './request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { v4 as uuid } from 'uuid';
 import type {
   ODataRequestConfig,
   BatchReference,
   WithBatchReference
 } from '../request';
 import type { DeSerializers } from '../de-serializers';
-import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Create OData request to execute an action or function.

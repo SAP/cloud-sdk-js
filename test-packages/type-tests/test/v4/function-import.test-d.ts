@@ -1,6 +1,6 @@
-import type { TestFunctionImportNullableTestParameters } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { testFunctionImportNullableTest } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { expectError, expectType } from 'tsd';
+import type { TestFunctionImportNullableTestParameters } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import type { OperationRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import type { DefaultDeSerializersV4 } from '../duplicated-types';
 

@@ -1,6 +1,4 @@
-import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import type { GetAllRequestBuilder } from '@sap-cloud-sdk/odata-v2';
 import {
   filterFunctions,
   length,
@@ -8,6 +6,8 @@ import {
   substringOf
 } from '@sap-cloud-sdk/odata-v2';
 import { expectError, expectType } from 'tsd';
+import type { GetAllRequestBuilder } from '@sap-cloud-sdk/odata-v2';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import type {
   BooleanFilterFunction,
   EntityBase,

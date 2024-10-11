@@ -1,11 +1,11 @@
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common';
+import { expectError, expectType } from 'tsd';
 import type {
   TestEntity,
   TestEntityMultiLink,
   TestEntityRequestBuilder
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common';
-import { expectError, expectType } from 'tsd';
 import type {
   CreateRequestBuilder,
   GetAllRequestBuilder,

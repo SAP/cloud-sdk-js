@@ -1,11 +1,11 @@
-import type { EntityBase } from '../entity-base';
 import { Filter } from '../filter';
+import { Field } from './field';
+import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
+import type { EntityBase } from '../entity-base';
 import type { EdmTypeShared } from '../edm-types';
 import type { DeSerializers } from '../de-serializers';
 import type { FieldOptions } from './field';
-import { Field } from './field';
 import type { ConstructorOrField } from './constructor-or-field';
-import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 
 /**
  * Represents a property with an enum value.

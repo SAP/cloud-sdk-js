@@ -1,9 +1,9 @@
+import { operationDocumentation, serializeOperation } from './operation';
 import type {
   OpenApiOperation,
   OpenApiParameter,
   OpenApiReferenceSchema
 } from '../openapi-types';
-import { operationDocumentation, serializeOperation } from './operation';
 
 describe('serializeOperation', () => {
   it('serializes operation with path, query and header parameters', () => {

@@ -27,7 +27,7 @@ jobs:
       matrix:
         node-version: [18, 20, 22]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: git fetch --depth=1
       - uses: actions/setup-node@v4
         with:
@@ -58,7 +58,7 @@ jobs:
     if: inputs.canary-release == false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: git fetch --depth=1
       - uses: actions/setup-node@v4
         with:
@@ -81,7 +81,7 @@ jobs:
         name: Circular dependency Check
       - run: yarn doc
         name: API Doc Check
-      - run: yarn check:license
+      - uses: ./.github/actions/check-license
         name: License Check
       - if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
         name: Slack Notify
@@ -100,7 +100,7 @@ jobs:
     if: inputs.canary-release == false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: git fetch --depth=1
       - uses: actions/setup-node@v4
         with:
@@ -119,7 +119,7 @@ jobs:
     steps:
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v1.3.6
+        uses: dependabot/fetch-metadata@v2.2.0
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
       - name: Approve a PR
@@ -139,7 +139,7 @@ jobs:
       skip-release: ${{ steps.date-check.outputs.skip-release }}
     needs: [tests, checks, e2e-tests]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: git fetch --depth=1
       - id: date-check
         name: Check if latest commit is within 24 hrs
@@ -164,7 +164,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [canary-release-pre-check]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: git fetch --depth=1
       - uses: actions/setup-node@v4
         with:
@@ -188,7 +188,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [tests, checks]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: git fetch --depth=1
       - uses: actions/setup-node@v4
         with:

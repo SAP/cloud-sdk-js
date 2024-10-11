@@ -1,5 +1,5 @@
-import type { Selectable } from '@sap-cloud-sdk/odata-common';
 import { Link } from '@sap-cloud-sdk/odata-common';
+import type { Selectable } from '@sap-cloud-sdk/odata-common';
 import type { DeSerializers } from '../de-serializers';
 import type { Entity } from '../entity';
 

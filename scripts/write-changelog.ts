@@ -12,6 +12,7 @@ async function writeChangelog(): Promise<void> {
   await writeFile(
     'CHANGELOG.md',
     unifiedChangelog.split('\n').slice(0, 30).join('\n') +
+      '\n' +
       `# ${process.env.VERSION}` +
       '\n' +
       process.env.CHANGELOG +

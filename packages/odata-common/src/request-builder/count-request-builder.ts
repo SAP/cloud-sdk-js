@@ -1,9 +1,9 @@
+import { ODataCountRequestConfig } from '../request';
+import { MethodRequestBuilder } from './request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { EntityBase } from '../entity-base';
-import { ODataCountRequestConfig } from '../request';
 import type { DeSerializers } from '../de-serializers';
-import { MethodRequestBuilder } from './request-builder-base';
 import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 
 /**

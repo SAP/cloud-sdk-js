@@ -1,6 +1,7 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { ODataRequest } from '../../request';
+import { BatchChangeSet } from './batch-change-set';
 import type { ODataRequestConfig, WithBatchReference } from '../../request';
 import type { MethodRequestBuilder } from '../request-builder-base';
 import type { DeSerializers } from '../../de-serializers';
@@ -9,7 +10,6 @@ import type {
   BatchRequestSerializationOptions,
   BatchSubRequestPathType
 } from './batch-request-options';
-import { BatchChangeSet } from './batch-change-set';
 
 /**
  * Serialize change set to string.

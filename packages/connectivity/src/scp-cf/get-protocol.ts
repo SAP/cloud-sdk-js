@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { getProtocol } from './protocol';
 import type { HttpDestination } from './destination';
 import type { Protocol } from './protocol';
-import { getProtocol } from './protocol';
 
 const logger = createLogger({
   package: 'connectivity',

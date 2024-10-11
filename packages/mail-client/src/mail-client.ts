@@ -3,10 +3,12 @@ import { resolveDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { createLogger } from '@sap-cloud-sdk/util';
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
+import retry from 'async-retry';
 import {
   customAuthRequestHandler,
   customAuthResponseHandler
 } from './socket-proxy';
+import type { Socket } from 'node:net';
 import type { SentMessageInfo, Transporter } from 'nodemailer';
 import type { SocksClientOptions, SocksProxy } from 'socks';
 // eslint-disable-next-line import/no-internal-modules
@@ -15,8 +17,7 @@ import type {
   MailClientOptions,
   MailConfig,
   MailDestination,
-  MailResponse,
-  SocksSocket
+  MailResponse
 } from './mail-client-types';
 import type {
   Destination,
@@ -129,9 +130,7 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
   };
 }
 
-async function createSocket(
-  mailDestination: MailDestination
-): Promise<SocksSocket> {
+async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   const connectionOptions: SocksClientOptions = {
     proxy: buildSocksProxy(mailDestination),
     command: 'connect',
@@ -140,20 +139,55 @@ async function createSocket(
       port: mailDestination.port!
     }
   };
-  const socketConnection =
-    await SocksClient.createConnection(connectionOptions);
+  const { socket } = await SocksClient.createConnection(connectionOptions);
 
-  const socksSocket = socketConnection.socket as SocksSocket;
-  // Setting `_readableListening` to true in the next line makes the socket readable.
-  // Otherwise nodemailer is not able to receive the SMTP greeting message and send emails.
-  socksSocket._readableState.readableListening = true;
-  return socksSocket;
+  return socket;
+}
+
+function retrieveGreeting(socket: Socket): Promise<Buffer> {
+  logger.debug('Waiting for SMTP greeting message...');
+  return new Promise((resolve, reject) => {
+    const onData = data => {
+      logger.debug(`Data received from mail socket: ${data?.toString()}`);
+      if (data?.toString().startsWith('220')) {
+        logger.debug('Removing mail socket listeners...');
+        socket.removeListener('data', onData);
+        socket.removeListener('error', onError);
+        resolve(data);
+      }
+    };
+
+    const onError = err => {
+      reject(new Error(err));
+    };
+
+    socket.on('data', onData);
+    socket.on('error', onError);
+  });
+}
+
+async function resendGreetingUntilReceived(
+  greeting: Buffer,
+  socket: Socket
+): Promise<void> {
+  return retry(
+    () => {
+      // resend the greeting message until a listener is attached
+      // note: this is dangerous because there could be another listener that is not the mailer
+      if (!socket.emit('data', greeting)) {
+        throw new Error(
+          'Failed to re-emit greeting message. No data listener found.'
+        );
+      }
+    },
+    { maxRetryTime: 5000 }
+  );
 }
 
 function createTransport(
   mailDestination: MailDestination,
   mailClientOptions?: MailClientOptions,
-  socket?: SocksSocket
+  socket?: Socket
 ): Transporter<SentMessageInfo> {
   const baseOptions: Options = {
     pool: true,
@@ -239,42 +273,40 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   mailConfigs: T[],
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
-  let socket: SocksSocket | undefined;
+  let socket: Socket | undefined;
+  let resendGreeting: Promise<void> | undefined;
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
+    // Workaround for incorrect order of events in nodemailer https://github.com/nodemailer/nodemailer/issues/1684
+    const greeting = await retrieveGreeting(socket);
+    resendGreeting = resendGreetingUntilReceived(greeting, socket);
   }
-  const transport = await createTransport(
-    mailDestination,
-    mailClientOptions,
-    socket
-  );
+  const transport = createTransport(mailDestination, mailClientOptions, socket);
 
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 
-  let response: MailResponse[];
-  if (isMailSentInSequential(mailClientOptions)) {
-    response = await sendMailInSequential(
-      transport,
-      mailConfigsFromDestination,
-      mailConfigs
-    );
-  } else {
-    response = await sendMailInParallel(
-      transport,
-      mailConfigsFromDestination,
-      mailConfigs
-    );
+  const response = isMailSentInSequential(mailClientOptions)
+    ? await sendMailInSequential(
+        transport,
+        mailConfigsFromDestination,
+        mailConfigs
+      )
+    : await sendMailInParallel(
+        transport,
+        mailConfigsFromDestination,
+        mailConfigs
+      );
+
+  if (resendGreeting) {
+    await resendGreeting;
   }
 
   teardown(transport, socket);
   return response;
 }
 
-function teardown(
-  transport: Transporter<SentMessageInfo>,
-  socket?: SocksSocket
-) {
+function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
   transport.close();
   logger.debug('SMTP transport connection closed.');
   if (socket) {

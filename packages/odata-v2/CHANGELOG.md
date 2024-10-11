@@ -1,5 +1,14 @@
 # @sap-cloud-sdk/odata-v2
 
+## 3.22.2
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.22.2
+- @sap-cloud-sdk/http-client@3.22.2
+- @sap-cloud-sdk/odata-common@3.22.2
+- @sap-cloud-sdk/util@3.22.2
+
 ## 3.22.1
 
 ### Patch Changes

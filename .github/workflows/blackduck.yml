@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 22
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --ignore-engines
       - run: sudo apt-get install jq
       - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
       - name: Blackduck Scan

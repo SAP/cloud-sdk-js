@@ -13,9 +13,9 @@ jobs:
           ref: 'main'
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           registry-url: 'https://registry.npmjs.org'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --ignore-engines
       - name: Legacy Release
         if: startsWith(github.ref, 'refs/tags/v1') || startsWith(github.ref, 'refs/tags/v2')
         run: |

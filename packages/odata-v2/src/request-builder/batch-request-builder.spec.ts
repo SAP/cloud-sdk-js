@@ -76,13 +76,12 @@ HTTP/1.1 200 OK
     const response = await batch(
       operations.testFunctionImportGet({} as any)
     ).execute({ url: baseUrl });
+    expect(response[0].isReadResponse()).toBeTruthy();
     if (response[0].isReadResponse()) {
       const casted = testFunctionImportGet({} as any).responseTransformer(
         response[0].body
       );
       expect(casted).toEqual('MyText');
-    } else {
-      throw new Error('Should be readResponse');
     }
   });
 
@@ -137,11 +136,10 @@ HTTP/1.1 200 OK
     const response = await batch(
       testEntityApi.requestBuilder().getAll()
     ).execute({ url: baseUrl });
+    expect(response[0].isReadResponse()).toBeTruthy();
     if (response[0].isReadResponse()) {
       const casted = response[0].as(testEntityApi);
       expect(casted[0].stringProperty).toEqual('4711');
-    } else {
-      throw new Error('Should be readResponse');
     }
   });
 });

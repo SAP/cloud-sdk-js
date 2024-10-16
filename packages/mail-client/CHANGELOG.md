@@ -1,5 +1,27 @@
 # @sap-cloud-sdk/mail-client
 
+## 3.22.2
+
+### Patch Changes
+
+- 7f8ce79: [Fixed Issue] Fix sending e-mails through socks proxies in Node 20 and higher.
+  - @sap-cloud-sdk/connectivity@3.22.2
+  - @sap-cloud-sdk/util@3.22.2
+
+## 3.22.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.22.1
+- @sap-cloud-sdk/util@3.22.1
+
+## 3.22.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.22.0
+- @sap-cloud-sdk/util@3.22.0
+
 ## 3.21.0
 
 ### Patch Changes

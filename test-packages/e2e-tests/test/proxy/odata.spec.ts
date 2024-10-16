@@ -1,20 +1,19 @@
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { destination as e2eDestination } from '../test-util';
 import { testEntityApi } from '../test-utils/test-entity-operations';
+import {
+  proxyBearAuth,
+  proxyHost,
+  proxyPort,
+  proxyUser,
+  proxyPassword
+} from './proxy-server-config';
 import type {
   ProxyConfiguration,
   HttpDestination
 } from '@sap-cloud-sdk/connectivity';
 import type { ErrorWithCause } from '@sap-cloud-sdk/util';
 import type { AxiosError } from 'axios';
-/* eslint-disable  @typescript-eslint/no-var-requires */
-const {
-  proxyBearAuth,
-  proxyHost,
-  proxyPort,
-  proxyUser,
-  proxyPassword
-} = require('./proxy-server-config');
 
 const onPremDestination: HttpDestination = {
   url: e2eDestination?.url,

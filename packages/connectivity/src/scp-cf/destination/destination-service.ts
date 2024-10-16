@@ -4,11 +4,10 @@ import {
   propertyExists,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-// eslint-disable-next-line import/named
 import axios from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience } from '@sap-cloud-sdk/resilience';
-import * as asyncRetry from 'async-retry';
+import asyncRetry from 'async-retry';
 import { decodeJwt, getTenantId, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { buildAuthorizationHeaders } from '../authorization-header';
@@ -313,7 +312,7 @@ function retryDestination(
 > {
   return options => arg => {
     let retryCount = 1;
-    return asyncRetry.default(
+    return asyncRetry(
       async bail => {
         try {
           const destination = await options.fn(arg);
@@ -340,7 +339,7 @@ function retryDestination(
       },
       {
         retries: 3,
-        onRetry: err =>
+        onRetry: (err: Error) =>
           logger.warn(
             `Failed to retrieve destination ${destinationName} - doing a retry. Original Error ${err.message}`
           )

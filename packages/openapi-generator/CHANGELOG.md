@@ -1,5 +1,34 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 3.22.2
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.22.2
+- @sap-cloud-sdk/openapi@3.22.2
+- @sap-cloud-sdk/util@3.22.2
+
+## 3.22.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.22.1
+- @sap-cloud-sdk/openapi@3.22.1
+- @sap-cloud-sdk/util@3.22.1
+
+## 3.22.0
+
+### Minor Changes
+
+- d073a48: [New Functionality] Add support for discriminator properties in schemas that include `oneOf` and `anyOf`. Also add support for incorrect usage of the discriminator property with schemas of type `object`.
+- c4153b9: [Fixed Issue] Ignore charset parameter in media types given in OpenAPI specification.
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.22.0
+- @sap-cloud-sdk/openapi@3.22.0
+- @sap-cloud-sdk/util@3.22.0
+
 ## 3.21.0
 
 ### Minor Changes

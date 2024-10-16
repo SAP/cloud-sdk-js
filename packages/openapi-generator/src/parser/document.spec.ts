@@ -5,7 +5,7 @@ import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/option
 import type { OpenAPIV3 } from 'openapi-types';
 
 const options = { strictNaming: true, schemaPrefix: '' };
-describe('parseOpenApiDocument', () => {
+describe('parseOpenApiDocument()', () => {
   it('does not modify input service specification', () => {
     const input: OpenAPIV3.Document = {
       ...emptyDocument,
@@ -97,6 +97,108 @@ describe('parseOpenApiDocument', () => {
         nullable: false,
         schema: {
           type: 'string'
+        },
+        schemaProperties: {}
+      }
+    ]);
+  });
+
+  it('parses discriminator schema with circular references', async () => {
+    const components: OpenAPIV3.ComponentsObject = {
+      schemas: {
+        DiscriminatorSchema: {
+          properties: {
+            discriminatingProp: { type: 'string' }
+          },
+          discriminator: {
+            propertyName: 'discriminatingProp',
+            mapping: {
+              a: '#/components/schemas/SchemaA'
+            }
+          },
+          required: ['discriminatingProp']
+        },
+        SchemaA: {
+          allOf: [
+            { $ref: '#/components/schemas/DiscriminatorSchema' },
+            {
+              properties: {
+                b: { type: 'string' }
+              },
+              additionalProperties: false
+            }
+          ]
+        }
+      }
+    };
+
+    const document: OpenAPIV3.Document = getDocument(
+      getResponse('DiscriminatorSchema'),
+      components
+    );
+
+    const parsed = await parseOpenApiDocument(
+      document,
+      { directoryName: 'myService' } as ServiceOptions,
+      options
+    );
+    expect(parsed.schemas).toStrictEqual([
+      {
+        description: undefined,
+        schemaName: 'DiscriminatorSchema',
+        fileName: 'discriminator-schema',
+        nullable: false,
+        schema: {
+          oneOf: [],
+          discriminator: {
+            propertyName: 'discriminatingProp',
+            mapping: {
+              a: {
+                $ref: '#/components/schemas/SchemaA',
+                fileName: 'schema-a',
+                schemaName: 'SchemaA'
+              }
+            }
+          }
+        },
+        schemaProperties: {}
+      },
+      {
+        description: undefined,
+        schemaName: 'SchemaA',
+        fileName: 'schema-a',
+        nullable: false,
+        schema: {
+          allOf: [
+            {
+              properties: [
+                {
+                  name: 'discriminatingProp',
+                  description: undefined,
+                  nullable: false,
+                  required: true,
+                  schema: {
+                    type: 'string'
+                  },
+                  schemaProperties: {}
+                }
+              ]
+            },
+            {
+              properties: [
+                {
+                  name: 'b',
+                  description: undefined,
+                  nullable: false,
+                  required: false,
+                  schema: {
+                    type: 'string'
+                  },
+                  schemaProperties: {}
+                }
+              ]
+            }
+          ]
         },
         schemaProperties: {}
       }

@@ -119,13 +119,12 @@ HTTP/1.1 200 OK
       requestBuilder
     ]);
     const response = await batch(changeSet).execute({ url: baseUrl });
+    expect(response[0].isWriteResponses()).toBeTruthy();
     if (response[0].isWriteResponses()) {
       const casted = testFunctionImportPost({} as any).responseTransformer(
         response[0].responses[0].body
       );
       expect(casted).toBe(true);
-    } else {
-      throw new Error('Should be writeResponse');
     }
   });
 

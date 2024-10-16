@@ -164,7 +164,7 @@ HTTP/1.1 200 OK
     nock(defaultHost).head(`/${request.relativeServiceUrl()}`).reply(200);
 
     nock(defaultHost)
-      .post(`/${request.relativeServiceUrl()}`, () => true)
+      .post(`/${request.relativeServiceUrl()}`)
       // .query({})
       // .delay(0)
       .reply(500, { d: undefined });

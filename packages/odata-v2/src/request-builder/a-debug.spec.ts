@@ -12,8 +12,7 @@ import {
 import { createODataUri as createODataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
 import {
   defaultDestination,
-  defaultHost,
-  defaultRequestHeaders
+  defaultHost
 } from '../../../../test-resources/test/test-util';
 import { CreateRequestBuilder } from './create-request-builder';
 import type { DefaultDeSerializers } from '../de-serializers';
@@ -182,21 +181,3 @@ HTTP/1.1 200 OK
     );
   });
 });
-
-function getRequestHeaders(
-  method: string,
-  additionalHeaders?: Record<string, any>,
-  headers?: Record<string, any>
-) {
-  if (headers) {
-    return { reqheaders: headers };
-  }
-
-  if (additionalHeaders) {
-    const initialHeaders =
-      method === 'get'
-        ? defaultRequestHeaders
-        : { ...defaultRequestHeaders, 'x-csrf-token': 'mocked-x-csrf-token' };
-    return { reqheaders: { ...initialHeaders, ...additionalHeaders } };
-  }
-}

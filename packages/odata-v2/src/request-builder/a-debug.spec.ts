@@ -10,11 +10,10 @@ import {
   defaultHost
 } from '../../../../test-resources/test/test-util';
 import { CreateRequestBuilder } from './create-request-builder';
-const regexUuid = '\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}';
 const responseBoundary = 'responseBoundary';
 
 describe('debug', () => {
-  const { batch, testEntityApi, operations } = testService();
+  const { batch, testEntityApi } = testService();
 
   const getHeader = contentType => `Content-Type: ${contentType}
 Content-Length: 3886
@@ -31,27 +30,6 @@ dataserviceversion: 2.0`;
 ${getHeader('application/http')}
 
 {"d":{"results":[{"StringProperty":"4711"}]}}
---${responseBoundary}--
-`;
-
-  const functionImportResponse = `--${responseBoundary}
-${getHeader('application/http')}
-
-{"d": {"TestFunctionImportGET":"MyText"}}
-
---${responseBoundary}--
-`;
-
-  const postResponse = `--${responseBoundary}
-${getHeader('multipart/mixed; boundary=batchId')}
-
---batchId
---partId
-HTTP/1.1 200 OK
-
-{"d": {"TestFunctionImportPOST":true}}
---batchId
-
 --${responseBoundary}--
 `;
 

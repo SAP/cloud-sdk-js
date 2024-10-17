@@ -41,6 +41,7 @@ ${getHeader('application/http')}
       .reply(202, getAllResponse, {
         'content-type': `multipart/mixed; boundary=${responseBoundary}`
       });
+
     const response = await batch(
       testEntityApi.requestBuilder().getAll()
     ).execute({ url: baseUrl });

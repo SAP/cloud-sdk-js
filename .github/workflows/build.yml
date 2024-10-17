@@ -37,19 +37,19 @@ jobs:
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
-      # - run: yarn test:integration
-      # - run: yarn test:self
-      # - run: yarn test:build-packages
-      # - run: yarn test:type
-      - if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
-        name: Slack Notify
-        uses: rtCamp/action-slack-notify@v2.3.0
+      - if: ${{ success() }}
+        run: yarn test:unit
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_USERNAME: SDK Pipeline Bot
-          SLACK_TITLE: Build tests ${{ job.status }} (${{ matrix.version }})
-          SLACK_MESSAGE: 'Test failed'
-          MSG_MINIMAL: event,actions url
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_MSG_AUTHOR: ' '
-          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
+          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
+      - if: ${{ success() }}
+        run: yarn test:unit
+        env:
+          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
+      - if: ${{ success() }}
+        run: yarn test:unit
+        env:
+          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
+      - if: ${{ success() }}
+        run: yarn test:unit
+        env:
+          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}

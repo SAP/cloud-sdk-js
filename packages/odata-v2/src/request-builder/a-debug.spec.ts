@@ -1,10 +1,6 @@
-import {
-  testFunctionImportPost,
-  testService
-} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
 import {
-  BatchChangeSet,
   ODataCreateRequestConfig,
   ODataRequest
 } from '@sap-cloud-sdk/odata-common';
@@ -14,7 +10,6 @@ import {
   defaultHost
 } from '../../../../test-resources/test/test-util';
 import { CreateRequestBuilder } from './create-request-builder';
-import type { DefaultDeSerializers } from '../de-serializers';
 const regexUuid = '\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}';
 const responseBoundary = 'responseBoundary';
 
@@ -61,48 +56,6 @@ HTTP/1.1 200 OK
 `;
 
   const baseUrl = 'https://some.sdk.test.url.com';
-
-  it('batch works with POST function imports', async () => {
-    const body = [
-      `--batch_${regexUuid}`,
-      `Content-Type: multipart/mixed; boundary=changeset_${regexUuid}`,
-      '',
-      `--changeset_${regexUuid}`,
-      'Content-Type: application/http',
-      'Content-Transfer-Encoding: binary',
-      `Content-Id: ${regexUuid}`,
-      '',
-      "POST /sap/opu/odata/sap/API_TEST_SRV/TestFunctionImportPOST\\?SimpleParam='someValue' HTTP/1.1",
-      'Content-Type: application/json',
-      'Accept: application/json',
-      '',
-      '',
-      '',
-      `--changeset_${regexUuid}--`,
-      `--batch_${regexUuid}--`,
-      ''
-    ].join('\r\n');
-    nock(baseUrl)
-      .post('/sap/opu/odata/sap/API_TEST_SRV/$batch', new RegExp(body))
-      .reply(202, postResponse, {
-        'content-type': `multipart/mixed; boundary=${responseBoundary}`
-      });
-
-    const requestBuilder = testFunctionImportPost({
-      simpleParam: 'someValue'
-    });
-    const changeSet = new BatchChangeSet<DefaultDeSerializers>([
-      requestBuilder
-    ]);
-    const response = await batch(changeSet).execute({ url: baseUrl });
-    expect(response[0].isWriteResponses()).toBeTruthy();
-    if (response[0].isWriteResponses()) {
-      const casted = testFunctionImportPost({} as any).responseTransformer(
-        response[0].responses[0].body
-      );
-      expect(casted).toBe(true);
-    }
-  });
 
   it('executes a getAll request', async () => {
     nock(baseUrl)

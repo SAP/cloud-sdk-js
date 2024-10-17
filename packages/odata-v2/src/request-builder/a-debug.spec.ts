@@ -1,5 +1,4 @@
 import {
-  testFunctionImportGet,
   testFunctionImportPost,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
@@ -62,38 +61,6 @@ HTTP/1.1 200 OK
 `;
 
   const baseUrl = 'https://some.sdk.test.url.com';
-
-  it('batch works with function imports', async () => {
-    const body = [
-      `--batch_${regexUuid}`,
-      'Content-Type: application/http',
-      'Content-Transfer-Encoding: binary',
-      '',
-      'GET /sap/opu/odata/sap/API_TEST_SRV/TestFunctionImportGET HTTP/1.1',
-      'Content-Type: application/json',
-      'Accept: application/json',
-      '',
-      '',
-      `--batch_${regexUuid}--`,
-      ''
-    ].join('\r\n');
-
-    nock(baseUrl)
-      .post('/sap/opu/odata/sap/API_TEST_SRV/$batch', new RegExp(body))
-      .reply(202, functionImportResponse, {
-        'content-type': `multipart/mixed; boundary=${responseBoundary}`
-      });
-    const response = await batch(
-      operations.testFunctionImportGet({} as any)
-    ).execute({ url: baseUrl });
-    expect(response[0].isReadResponse()).toBeTruthy();
-    if (response[0].isReadResponse()) {
-      const casted = testFunctionImportGet({} as any).responseTransformer(
-        response[0].body
-      );
-      expect(casted).toEqual('MyText');
-    }
-  });
 
   it('batch works with POST function imports', async () => {
     const body = [

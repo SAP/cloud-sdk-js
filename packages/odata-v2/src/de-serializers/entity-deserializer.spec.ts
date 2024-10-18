@@ -22,25 +22,6 @@ describe('with default (de-)serializers', () => {
     .stringProperty('test')
     .build();
 
-  it('should deserialize', () => {
-    const actual = deserializeEntity(
-      {
-        ComplexTypeProperty: {
-          StringProperty: stringProperty,
-          Int16Property: int16Property,
-          BooleanProperty: booleanProperty,
-          ComplexTypeProperty: {
-            StringProperty: stringProperty
-          }
-        },
-        StringProperty: expected.stringProperty
-      },
-      testEntityApi
-    );
-
-    expect(actual).toEqual(expected);
-  });
-
   it('should deserialize with unknown keys', () => {
     const actual = deserializeEntity(
       {

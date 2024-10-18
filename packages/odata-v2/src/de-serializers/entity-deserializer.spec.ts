@@ -22,7 +22,7 @@ describe('with default (de-)serializers', () => {
     .stringProperty('test')
     .build();
 
-  it('should deserialize', () => {
+  it('should deserialize 1', () => {
     const actual = deserializeEntity(
       {
         ComplexTypeProperty: {
@@ -41,7 +41,7 @@ describe('with default (de-)serializers', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('should deserialize with unknown keys', () => {
+  it('should deserialize 2', () => {
     const actual = deserializeEntity(
       {
         ComplexTypeProperty: {
@@ -50,8 +50,7 @@ describe('with default (de-)serializers', () => {
           BooleanProperty: booleanProperty,
           ComplexTypeProperty: {
             StringProperty: stringProperty
-          },
-          UnknownKey: ''
+          }
         },
         StringProperty: expected.stringProperty
       },

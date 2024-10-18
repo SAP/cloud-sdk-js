@@ -5,61 +5,59 @@ import { entityDeserializer } from './entity-deserializer';
 describe('with default (de-)serializers', () => {
   const { deserializeEntity } = entityDeserializer(defaultDeSerializers);
 
-  describe('entity with complex type field', () => {
-    const stringProperty = 'prop';
-    const int16Property = 16;
-    const booleanProperty = false;
+  const stringProperty = 'prop';
+  const int16Property = 16;
+  const booleanProperty = false;
 
-    const expected = testEntityApi
-      .entityBuilder()
-      .complexTypeProperty({
-        stringProperty,
-        int16Property,
-        booleanProperty,
-        complexTypeProperty: {
-          stringProperty
-        }
-      })
-      .stringProperty('test')
-      .build();
+  const expected = testEntityApi
+    .entityBuilder()
+    .complexTypeProperty({
+      stringProperty,
+      int16Property,
+      booleanProperty,
+      complexTypeProperty: {
+        stringProperty
+      }
+    })
+    .stringProperty('test')
+    .build();
 
-    it('should deserialize', () => {
-      const actual = deserializeEntity(
-        {
+  it('should deserialize', () => {
+    const actual = deserializeEntity(
+      {
+        ComplexTypeProperty: {
+          StringProperty: stringProperty,
+          Int16Property: int16Property,
+          BooleanProperty: booleanProperty,
           ComplexTypeProperty: {
-            StringProperty: stringProperty,
-            Int16Property: int16Property,
-            BooleanProperty: booleanProperty,
-            ComplexTypeProperty: {
-              StringProperty: stringProperty
-            }
-          },
-          StringProperty: expected.stringProperty
+            StringProperty: stringProperty
+          }
         },
-        testEntityApi
-      );
+        StringProperty: expected.stringProperty
+      },
+      testEntityApi
+    );
 
-      expect(actual).toEqual(expected);
-    });
+    expect(actual).toEqual(expected);
+  });
 
-    it('should deserialize with unknown keys', () => {
-      const actual = deserializeEntity(
-        {
+  it('should deserialize with unknown keys', () => {
+    const actual = deserializeEntity(
+      {
+        ComplexTypeProperty: {
+          StringProperty: stringProperty,
+          Int16Property: int16Property,
+          BooleanProperty: booleanProperty,
           ComplexTypeProperty: {
-            StringProperty: stringProperty,
-            Int16Property: int16Property,
-            BooleanProperty: booleanProperty,
-            ComplexTypeProperty: {
-              StringProperty: stringProperty
-            },
-            UnknownKey: ''
+            StringProperty: stringProperty
           },
-          StringProperty: expected.stringProperty
+          UnknownKey: ''
         },
-        testEntityApi
-      );
+        StringProperty: expected.stringProperty
+      },
+      testEntityApi
+    );
 
-      expect(actual).toEqual(expected);
-    });
+    expect(actual).toEqual(expected);
   });
 });

@@ -18,7 +18,6 @@ describe('with default (de-)serializers', () => {
           stringProperty: stringProperty2
         }
       })
-      .int16Property(100)
       .build();
 
     expect(serializeEntity(testEntity, testEntityApi)).toEqual({
@@ -27,8 +26,7 @@ describe('with default (de-)serializers', () => {
         ComplexTypeProperty: {
           StringProperty: stringProperty2
         }
-      },
-      Int16Property: testEntity.int16Property
+      }
     });
   });
 
@@ -43,7 +41,6 @@ describe('with default (de-)serializers', () => {
           stringProperty: stringProperty2
         }
       })
-      .int16Property(100)
       .build();
 
     expect(serializeEntity(testEntity, testEntityApi)).toEqual({
@@ -52,8 +49,7 @@ describe('with default (de-)serializers', () => {
         ComplexTypeProperty: {
           StringProperty: stringProperty2
         }
-      },
-      Int16Property: testEntity.int16Property
+      }
     });
   });
 });

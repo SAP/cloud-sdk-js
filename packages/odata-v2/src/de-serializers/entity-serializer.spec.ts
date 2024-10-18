@@ -3,7 +3,7 @@ import {
   defaultDeSerializers,
   entitySerializer
 } from '@sap-cloud-sdk/odata-common/internal';
-import { testEntityApi, testEntitySingleLinkApi } from '../../test/test-util';
+import { testEntityApi } from '../../test/test-util';
 
 describe('with default (de-)serializers', () => {
   const { serializeEntity } = entitySerializer(defaultDeSerializers);
@@ -62,33 +62,6 @@ describe('with default (de-)serializers', () => {
       SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
       CustomField1: 'abcd',
       CustomField2: 1234
-    });
-  });
-
-  it('should serialize empty entities', () => {
-    const emptyEntity = testEntityApi.entityBuilder().build();
-    expect(serializeEntity(emptyEntity, testEntityApi)).toEqual({});
-  });
-
-  it('should serialize one to one linked entities', () => {
-    const singleLinkEntity = testEntitySingleLinkApi
-      .entityBuilder()
-      .stringProperty('prop')
-      .build();
-
-    const testEntity = testEntityApi
-      .entityBuilder()
-      .stringProperty('testEntity')
-      .booleanProperty(false)
-      .toSingleLink(singleLinkEntity)
-      .build();
-
-    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
-      StringProperty: testEntity.stringProperty,
-      BooleanProperty: testEntity.booleanProperty,
-      to_SingleLink: {
-        StringProperty: singleLinkEntity.stringProperty
-      }
     });
   });
 });

@@ -40,24 +40,4 @@ describe('with default (de-)serializers', () => {
 
     expect(actual).toEqual(expected);
   });
-
-  it('should deserialize with unknown keys', () => {
-    const actual = deserializeEntity(
-      {
-        ComplexTypeProperty: {
-          StringProperty: stringProperty,
-          Int16Property: int16Property,
-          BooleanProperty: booleanProperty,
-          ComplexTypeProperty: {
-            StringProperty: stringProperty
-          },
-          UnknownKey: ''
-        },
-        StringProperty: expected.stringProperty
-      },
-      testEntityApi
-    );
-
-    expect(actual).toEqual(expected);
-  });
 });

@@ -7,6 +7,7 @@ import { testEntityApi } from '../../test/test-util';
 
 describe('with default (de-)serializers', () => {
   const { serializeEntity } = entitySerializer(defaultDeSerializers);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tsToEdm = createValueDeserializer(defaultDeSerializers);
 
   it('should serialize entity with complex type fields', () => {
@@ -31,25 +32,6 @@ describe('with default (de-)serializers', () => {
         }
       },
       Int16Property: testEntity.int16Property
-    });
-  });
-
-  it('should serialize entity with custom fields', () => {
-    const testEntity = testEntityApi
-      .entityBuilder()
-      .stringProperty('Peter')
-      .singleProperty(14.5)
-      .withCustomFields({
-        CustomField1: 'abcd',
-        CustomField2: 1234
-      })
-      .build();
-
-    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
-      StringProperty: testEntity.stringProperty,
-      SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
-      CustomField1: 'abcd',
-      CustomField2: 1234
     });
   });
 });

@@ -39,73 +39,73 @@ jobs:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - if: ${{ success() }}
         run: |
-          yarn odata-v2 jest clear-cache
+          yarn odata-v2 jest --clearCache
           yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}

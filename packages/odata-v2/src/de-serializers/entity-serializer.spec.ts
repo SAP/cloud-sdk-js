@@ -6,7 +6,20 @@ import { testEntityApi } from '../../test/test-util';
 
 describe('with default (de-)serializers', () => {
   const { serializeEntity } = entitySerializer(defaultDeSerializers);
-  it('should serialize simple entity', () => {
+  it('should serialize simple entity 1', () => {
+    const testEntity = testEntityApi
+      .entityBuilder()
+      .stringProperty('test')
+      .int16Property(100)
+      .build();
+
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
+      StringProperty: testEntity.stringProperty,
+      Int16Property: testEntity.int16Property
+    });
+  });
+
+  it('should serialize simple entity 2', () => {
     const testEntity = testEntityApi
       .entityBuilder()
       .stringProperty('test')

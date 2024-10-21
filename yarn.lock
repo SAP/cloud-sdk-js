@@ -8584,10 +8584,10 @@ smart-buffer@^4.2.0:
   resolved "https://registry.npmjs.org/smart-buffer/-/smart-buffer-4.2.0.tgz#6e1d71fa4f18c05f7d0ff216dd16a481d0e8d9ae"
   integrity sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==
 
-smtp-server@3.13.5:
-  version "3.13.5"
-  resolved "https://registry.npmjs.org/smtp-server/-/smtp-server-3.13.5.tgz#4d44a23a77b1d7328a56cbb88f6c6b09e1c48dac"
-  integrity sha512-1+Jkr5Wx9dyWY2MCJ0DauyVM0gn3uN5ldAmRef/k/zwv/SaogDIhzqAdAMbU3dZPv2wfqcj7VAGvZL8RYw+naQ==
+smtp-server@3.13.6:
+  version "3.13.6"
+  resolved "https://registry.npmjs.org/smtp-server/-/smtp-server-3.13.6.tgz#779aa22fd3746bb8b94d25ab78447b6e4b7d5b78"
+  integrity sha512-dqbSPKn3PCq3Gp5hxBM99u7PET7cQSAWrauhtArJbc+zrf5xNEOjm9+Ob3lySySrRoIEvNE0dz+w2H/xWFJNRw==
   dependencies:
     base32.js "0.1.0"
     ipv6-normalize "1.0.1"

@@ -4,12 +4,23 @@ import {
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
-import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
+import {
+  BatchChangeSet,
+  ODataCreateRequestConfig,
+  ODataRequest
+} from '@sap-cloud-sdk/odata-common';
+import { createODataUri as createODataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
+import {
+  defaultDestination,
+  defaultHost,
+  defaultRequestHeaders
+} from '../../../../test-resources/test/test-util';
+import { CreateRequestBuilder } from './create-request-builder';
 import type { DefaultDeSerializers } from '../de-serializers';
 const regexUuid = '\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}';
 const responseBoundary = 'responseBoundary';
 
-describe('batch request', () => {
+describe('debug', () => {
   const { batch, testEntityApi, operations } = testService();
 
   const getHeader = contentType => `Content-Type: ${contentType}
@@ -142,4 +153,50 @@ HTTP/1.1 200 OK
       expect(casted[0].stringProperty).toEqual('4711');
     }
   });
+
+  it('create', async () => {
+    const requestConfig = new ODataCreateRequestConfig(
+      testEntityApi,
+      createODataUriV2(testEntityApi.deSerializers)
+    );
+
+    const request = new ODataRequest(requestConfig, defaultDestination);
+
+    nock(defaultHost).head(`/${request.relativeServiceUrl()}`).reply(200);
+
+    nock(defaultHost)
+      .post(`/${request.relativeServiceUrl()}`, () => true)
+      // .query({})
+      // .delay(0)
+      .reply(500, { d: undefined });
+
+    const someEntity = testEntityApi.entityBuilder().stringProperty('').build();
+
+    const createRequest = new CreateRequestBuilder(
+      testEntityApi,
+      someEntity
+    ).execute(defaultDestination);
+
+    await expect(createRequest).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Create request failed!"'
+    );
+  });
 });
+
+function getRequestHeaders(
+  method: string,
+  additionalHeaders?: Record<string, any>,
+  headers?: Record<string, any>
+) {
+  if (headers) {
+    return { reqheaders: headers };
+  }
+
+  if (additionalHeaders) {
+    const initialHeaders =
+      method === 'get'
+        ? defaultRequestHeaders
+        : { ...defaultRequestHeaders, 'x-csrf-token': 'mocked-x-csrf-token' };
+    return { reqheaders: { ...initialHeaders, ...additionalHeaders } };
+  }
+}

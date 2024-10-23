@@ -1,6 +1,6 @@
 import yargs from 'yargs';
 import { setFailed } from '@actions/core';
-import { checkApiOfPackage } from './check-public-api.js';
+import { checkApiOfPackage } from './check-public-api';
 
 async function runPublicApiCheckScript() {
   try {

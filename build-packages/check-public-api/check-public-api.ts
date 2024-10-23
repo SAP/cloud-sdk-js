@@ -12,7 +12,7 @@ import {
   readIncludeExcludeWithDefaults,
   transpileDirectory,
   defaultPrettierConfig
-} from '@sap-cloud-sdk/generator-common/internal.js';
+} from '@sap-cloud-sdk/generator-common/internal';
 
 const { readFile, lstat, readdir } = promises;
 

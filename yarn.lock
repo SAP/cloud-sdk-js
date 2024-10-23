@@ -667,17 +667,17 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.2.23":
-  version "0.2.23"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.23.tgz#1f9a45fa669a060f57245cc84e1a76c2499ef0fc"
-  integrity sha512-cx5SOyncwMCuLyfJC12GI5I1+4O6RnHxDhYk+BsT5ZZDjpS0UMdebvdcVEk9bMcZNZkczAiJweDUuDtdx98d8w==
+"@definitelytyped/dtslint@^0.2.24":
+  version "0.2.24"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.24.tgz#c224841d5743d08b10e5d74de21ac78eb80306d8"
+  integrity sha512-uFPMMly2oUx0fUJMxgCQqUJ7SG0RZ9sIza9ljrPSyCE04RbPtCimKxyMy2whIo8abWe1A7qfdldDw/C2oD0KDA==
   dependencies:
     "@arethetypeswrong/cli" "0.15.1"
     "@arethetypeswrong/core" "0.15.1"
-    "@definitelytyped/header-parser" "0.2.12"
+    "@definitelytyped/header-parser" "0.2.13"
     "@definitelytyped/typescript-packages" "0.1.4"
     "@definitelytyped/typescript-versions" "0.1.4"
-    "@definitelytyped/utils" "0.1.7"
+    "@definitelytyped/utils" "0.1.8"
     "@typescript-eslint/eslint-plugin" "^7.14.1"
     "@typescript-eslint/parser" "^7.14.1"
     "@typescript-eslint/types" "^7.14.1"
@@ -688,13 +688,13 @@
     semver "^7.5.4"
     strip-json-comments "^3.1.1"
 
-"@definitelytyped/header-parser@0.2.12":
-  version "0.2.12"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.12.tgz#5babc9e90f177a10b261f14c889c9f41b1ee252f"
-  integrity sha512-UYtSXiLMhzRFKh7xHMkgiWsscgHxIndmjetaptZMMS0EOvfhUTuEM68GpjiCtz5shXw22Vacs1vDTAkKGDhNmg==
+"@definitelytyped/header-parser@0.2.13":
+  version "0.2.13"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.13.tgz#3f369a4be8e56f80b7dc97555f12b87638f8e415"
+  integrity sha512-m7YEtGhwAjmQyJQFQ7q8+hTGTiC/WrdRATvw8fyTwgW+RiWUt8MAeehuFj4txnCYXDcLO0ozuW5gNrLoYR4Ubg==
   dependencies:
     "@definitelytyped/typescript-versions" "0.1.4"
-    "@definitelytyped/utils" "0.1.7"
+    "@definitelytyped/utils" "0.1.8"
     semver "^7.5.4"
 
 "@definitelytyped/typescript-packages@0.1.4":
@@ -719,10 +719,10 @@
   resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.1.4.tgz#8428552461a578f02150f1a6db5b5522db9f108e"
   integrity sha512-4Rz5kCpyxofwXCtBQaNfmWYXZcH0sMJxpbIgJzS+PAxgFCAa9W+2Jil7rrkpzsjx9E7+zOPukbXBXjyXohcyuQ==
 
-"@definitelytyped/utils@0.1.7":
-  version "0.1.7"
-  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.1.7.tgz#166d73dd49aa80b161bed2e573878a52c0e95da1"
-  integrity sha512-t58AeNg6+mvyMnBHyPC6JQqWMW0Iwyb+vlpBz4V0d0iDY9H8gGCnLFg9vtN1nC+JXfTXBlf9efu9unMUeaPCiA==
+"@definitelytyped/utils@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/@definitelytyped/utils/-/utils-0.1.8.tgz#08a80e4ae221e2ca941b9f148167a43dad94ea48"
+  integrity sha512-4JINx4Rttha29f50PBsJo48xZXx/He5yaIWJRwVarhYAN947+S84YciHl+AIhQNRPAFkg8+5qFngEGtKxQDWXA==
   dependencies:
     "@qiwi/npm-registry-client" "^8.9.1"
     "@types/node" "^18.19.7"
@@ -782,10 +782,10 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@eslint/js@^9.12.0":
-  version "9.12.0"
-  resolved "https://registry.npmjs.org/@eslint/js/-/js-9.12.0.tgz#69ca3ca9fab9a808ec6d67b8f6edb156cbac91e1"
-  integrity sha512-eohesHH8WFRUprDNyEREgqP6beG6htMeUYeCpkEgBCieCMme5r9zFWjzAJp//9S+Kub4rqE+jXe9Cp1a7IYIIA==
+"@eslint/js@^9.13.0":
+  version "9.13.0"
+  resolved "https://registry.npmjs.org/@eslint/js/-/js-9.13.0.tgz#c5f89bcd57eb54d5d4fa8b77693e9c28dc97e547"
+  integrity sha512-IFLyoY4d72Z5y/6o/BazFBezupzI/taV8sGumxTAVw3lXG9A6md1Dc34T9s1FoD/an9pJH8RHbAxsaEbBed9lA==
 
 "@exodus/schemasafe@^1.0.0-rc.2":
   version "1.3.0"
@@ -1505,10 +1505,10 @@
     node-cache "^5.1.2"
     verror "1.10.1"
 
-"@sap/xssec@^4.2.4":
-  version "4.2.4"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.4.tgz#d0a26ec8c7a1325d441fcaa02c02a076eb519b27"
-  integrity sha512-WW+nOFLa4SRBapqa9y3dLUqZploHA/lN9pkPHoa3qzpb0Q9YupZCI++aP39HR0bDYsztoRg/xVryViReJkk3Dg==
+"@sap/xssec@^4.2.6":
+  version "4.2.6"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.6.tgz#90610ff8f0d7bb88a7178c03c031b9716d524817"
+  integrity sha512-HqQmrAffEWKpOAffenK7e4uJfILDaHnMjFy435tQzZRoWb+PAmpHOhxtvvr3ROAlVu/iUii+ocsH/F/4K5/6yw==
   dependencies:
     debug "^4.3.4"
     jwt-decode "^4"
@@ -1778,9 +1778,9 @@
   integrity sha512-ju/75+YPkNE5vX1iPer+qtI1eI/LqJVYZgOsmSHI1iiEM1bQL5Gh1lEvyjR9T7ZXVE1FwJa2doWJEEmPNwbZkw==
 
 "@types/lodash@>=4.14.200":
-  version "4.17.10"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.10.tgz#64f3edf656af2fe59e7278b73d3e62404144a6e6"
-  integrity sha512-YpS0zzoduEhuOWjAotS6A5AVCva7X4lVlYLF0FYHAY9sdraBfnatttHItlWeZdGhuEkf+OzMNg2ZYAx8t+52uQ==
+  version "4.17.12"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.12.tgz#25d71312bf66512105d71e55d42e22c36bcfc689"
+  integrity sha512-sviUmCE8AYdaF/KIHLDJBQgeYzPBI0vf/17NaYehBJfYD1j6/L95Slh07NlyK2iNyBNaEkb3En2jRt+a8y3xZQ==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -1811,10 +1811,10 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-12.20.55.tgz#c329cbd434c42164f846b909bd6f85b5537f6240"
   integrity sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==
 
-"@types/node@^18.19.56", "@types/node@^18.19.7":
-  version "18.19.56"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.19.56.tgz#e46d3e6e5417d3b89e89ee6207d3c2cba7ad1ef2"
-  integrity sha512-4EMJlWwwGnVPflJAtM14p9eVSa6BOv5b92mCsh5zcM1UagNtEtrbbtaE6WE1tw2TabavatnwqXjlIpcAEuJJNg==
+"@types/node@^18.19.58", "@types/node@^18.19.7":
+  version "18.19.58"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.19.58.tgz#260cda6182b24d788afe3a27a7be65c457e67319"
+  integrity sha512-2ryJttbOAWCYuZMdk4rmZZ6oqE+GSL5LxbaTVe4PCs0FUrHObZZAQL4ihMw9/cH1Pn8lSQ9TXVhsM4LrnfZ0aA==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1891,16 +1891,16 @@
   dependencies:
     "@types/node" "*"
 
-"@typescript-eslint/eslint-plugin@8.10.0":
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.10.0.tgz#9c8218ed62f9a322df10ded7c34990f014df44f2"
-  integrity sha512-phuB3hoP7FFKbRXxjl+DRlQDuJqhpOnm5MmtROXyWi3uS/Xg2ZXqiQfcG2BJHiN4QKyzdOJi3NEn/qTnjUlkmQ==
+"@typescript-eslint/eslint-plugin@8.11.0":
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.11.0.tgz#c3f087d20715fa94310b30666c08b3349e0ab084"
+  integrity sha512-KhGn2LjW1PJT2A/GfDpiyOfS4a8xHQv2myUagTM5+zsormOmBlYsnQ6pobJ8XxJmh6hnHwa2Mbe3fPrDJoDhbA==
   dependencies:
     "@eslint-community/regexpp" "^4.10.0"
-    "@typescript-eslint/scope-manager" "8.10.0"
-    "@typescript-eslint/type-utils" "8.10.0"
-    "@typescript-eslint/utils" "8.10.0"
-    "@typescript-eslint/visitor-keys" "8.10.0"
+    "@typescript-eslint/scope-manager" "8.11.0"
+    "@typescript-eslint/type-utils" "8.11.0"
+    "@typescript-eslint/utils" "8.11.0"
+    "@typescript-eslint/visitor-keys" "8.11.0"
     graphemer "^1.4.0"
     ignore "^5.3.1"
     natural-compare "^1.4.0"
@@ -1921,15 +1921,15 @@
     natural-compare "^1.4.0"
     ts-api-utils "^1.3.0"
 
-"@typescript-eslint/parser@8.10.0", "@typescript-eslint/parser@^8.8.1":
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.10.0.tgz#3cbe7206f5e42835878a74a76da533549f977662"
-  integrity sha512-E24l90SxuJhytWJ0pTQydFT46Nk0Z+bsLKo/L8rtQSL93rQ6byd1V/QbDpHUTdLPOMsBCcYXZweADNCfOCmOAg==
+"@typescript-eslint/parser@8.11.0", "@typescript-eslint/parser@^8.8.1":
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.11.0.tgz#2ad1481388dc1c937f50b2d138c9ca57cc6c5cce"
+  integrity sha512-lmt73NeHdy1Q/2ul295Qy3uninSqi6wQI18XwSpm8w0ZbQXUpjCAWP1Vlv/obudoBiIjJVjlztjQ+d/Md98Yxg==
   dependencies:
-    "@typescript-eslint/scope-manager" "8.10.0"
-    "@typescript-eslint/types" "8.10.0"
-    "@typescript-eslint/typescript-estree" "8.10.0"
-    "@typescript-eslint/visitor-keys" "8.10.0"
+    "@typescript-eslint/scope-manager" "8.11.0"
+    "@typescript-eslint/types" "8.11.0"
+    "@typescript-eslint/typescript-estree" "8.11.0"
+    "@typescript-eslint/visitor-keys" "8.11.0"
     debug "^4.3.4"
 
 "@typescript-eslint/parser@^7.14.1":
@@ -1951,13 +1951,13 @@
     "@typescript-eslint/types" "7.18.0"
     "@typescript-eslint/visitor-keys" "7.18.0"
 
-"@typescript-eslint/scope-manager@8.10.0":
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-8.10.0.tgz#606ffe18314d7b5c2f118f2f02aaa2958107a19c"
-  integrity sha512-AgCaEjhfql9MDKjMUxWvH7HjLeBqMCBfIaBbzzIcBbQPZE7CPh1m6FF+L75NUMJFMLYhCywJXIDEMa3//1A0dw==
+"@typescript-eslint/scope-manager@8.11.0":
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-8.11.0.tgz#9d399ce624118966732824878bc9a83593a30405"
+  integrity sha512-Uholz7tWhXmA4r6epo+vaeV7yjdKy5QFCERMjs1kMVsLRKIrSdM6o21W2He9ftp5PP6aWOVpD5zvrvuHZC0bMQ==
   dependencies:
-    "@typescript-eslint/types" "8.10.0"
-    "@typescript-eslint/visitor-keys" "8.10.0"
+    "@typescript-eslint/types" "8.11.0"
+    "@typescript-eslint/visitor-keys" "8.11.0"
 
 "@typescript-eslint/type-utils@7.18.0":
   version "7.18.0"
@@ -1969,13 +1969,13 @@
     debug "^4.3.4"
     ts-api-utils "^1.3.0"
 
-"@typescript-eslint/type-utils@8.10.0":
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-8.10.0.tgz#99f1d2e21f8c74703e7d9c4a67a87271eaf57597"
-  integrity sha512-PCpUOpyQSpxBn230yIcK+LeCQaXuxrgCm2Zk1S+PTIRJsEfU6nJ0TtwyH8pIwPK/vJoA+7TZtzyAJSGBz+s/dg==
+"@typescript-eslint/type-utils@8.11.0":
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-8.11.0.tgz#b7f9e6120c1ddee8a1a07615646642ad85fc91b5"
+  integrity sha512-ItiMfJS6pQU0NIKAaybBKkuVzo6IdnAhPFZA/2Mba/uBjuPQPet/8+zh5GtLHwmuFRShZx+8lhIs7/QeDHflOg==
   dependencies:
-    "@typescript-eslint/typescript-estree" "8.10.0"
-    "@typescript-eslint/utils" "8.10.0"
+    "@typescript-eslint/typescript-estree" "8.11.0"
+    "@typescript-eslint/utils" "8.11.0"
     debug "^4.3.4"
     ts-api-utils "^1.3.0"
 
@@ -1984,10 +1984,10 @@
   resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-7.18.0.tgz#b90a57ccdea71797ffffa0321e744f379ec838c9"
   integrity sha512-iZqi+Ds1y4EDYUtlOOC+aUmxnE9xS/yCigkjA7XpTKV6nCBd3Hp/PRGGmdwnfkV2ThMyYldP1wRpm/id99spTQ==
 
-"@typescript-eslint/types@8.10.0":
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.10.0.tgz#eb29c4bc2ed23489348c297469c76d28c38fb618"
-  integrity sha512-k/E48uzsfJCRRbGLapdZgrX52csmWJ2rcowwPvOZ8lwPUv3xW6CcFeJAXgx4uJm+Ge4+a4tFOkdYvSpxhRhg1w==
+"@typescript-eslint/types@8.11.0":
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.11.0.tgz#7c766250502097f49bbc2e651132e6bf489e20b8"
+  integrity sha512-tn6sNMHf6EBAYMvmPUaKaVeYvhUsrE6x+bXQTxjQRp360h1giATU0WvgeEys1spbvb5R+VpNOZ+XJmjD8wOUHw==
 
 "@typescript-eslint/typescript-estree@7.18.0", "@typescript-eslint/typescript-estree@^7.14.1", "@typescript-eslint/typescript-estree@^7.6.0":
   version "7.18.0"
@@ -2003,13 +2003,13 @@
     semver "^7.6.0"
     ts-api-utils "^1.3.0"
 
-"@typescript-eslint/typescript-estree@8.10.0":
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-8.10.0.tgz#36cc66e06c5f44d6781f95cb03b132e985273a33"
-  integrity sha512-3OE0nlcOHaMvQ8Xu5gAfME3/tWVDpb/HxtpUZ1WeOAksZ/h/gwrBzCklaGzwZT97/lBbbxJ16dMA98JMEngW4w==
+"@typescript-eslint/typescript-estree@8.11.0":
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-8.11.0.tgz#35fe5d3636fc5727c52429393415412e552e222b"
+  integrity sha512-yHC3s1z1RCHoCz5t06gf7jH24rr3vns08XXhfEqzYpd6Hll3z/3g23JRi0jM8A47UFKNc3u/y5KIMx8Ynbjohg==
   dependencies:
-    "@typescript-eslint/types" "8.10.0"
-    "@typescript-eslint/visitor-keys" "8.10.0"
+    "@typescript-eslint/types" "8.11.0"
+    "@typescript-eslint/visitor-keys" "8.11.0"
     debug "^4.3.4"
     fast-glob "^3.3.2"
     is-glob "^4.0.3"
@@ -2027,15 +2027,15 @@
     "@typescript-eslint/types" "7.18.0"
     "@typescript-eslint/typescript-estree" "7.18.0"
 
-"@typescript-eslint/utils@8.10.0", "@typescript-eslint/utils@^8.8.0":
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.10.0.tgz#d78d1ce3ea3d2a88a2593ebfb1c98490131d00bf"
-  integrity sha512-Oq4uZ7JFr9d1ZunE/QKy5egcDRXT/FrS2z/nlxzPua2VHFtmMvFNDvpq1m/hq0ra+T52aUezfcjGRIB7vNJF9w==
+"@typescript-eslint/utils@8.11.0", "@typescript-eslint/utils@^8.8.0":
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.11.0.tgz#4480d1e9f2bb18ea3510c79f870a1aefc118103d"
+  integrity sha512-CYiX6WZcbXNJV7UNB4PLDIBtSdRmRI/nb0FMyqHPTQD1rMjA0foPLaPUV39C/MxkTd/QKSeX+Gb34PPsDVC35g==
   dependencies:
     "@eslint-community/eslint-utils" "^4.4.0"
-    "@typescript-eslint/scope-manager" "8.10.0"
-    "@typescript-eslint/types" "8.10.0"
-    "@typescript-eslint/typescript-estree" "8.10.0"
+    "@typescript-eslint/scope-manager" "8.11.0"
+    "@typescript-eslint/types" "8.11.0"
+    "@typescript-eslint/typescript-estree" "8.11.0"
 
 "@typescript-eslint/visitor-keys@7.18.0":
   version "7.18.0"
@@ -2045,12 +2045,12 @@
     "@typescript-eslint/types" "7.18.0"
     eslint-visitor-keys "^3.4.3"
 
-"@typescript-eslint/visitor-keys@8.10.0":
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.10.0.tgz#7ce4c0c3b82140415c9cd9babe09e0000b4e9979"
-  integrity sha512-k8nekgqwr7FadWk548Lfph6V3r9OVqjzAIVskE7orMZR23cGJjAOVazsZSJW+ElyjfTM4wx/1g88Mi70DDtG9A==
+"@typescript-eslint/visitor-keys@8.11.0":
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.11.0.tgz#273de1cbffe63d9f9cd7dfc20b5a5af66310cb92"
+  integrity sha512-EaewX6lxSjRJnc+99+dqzTeoDZUfyrA52d2/HRrkI830kgovWsmIiTfmr0NZorzqic7ga+1bS60lRBUgR3n/Bw==
   dependencies:
-    "@typescript-eslint/types" "8.10.0"
+    "@typescript-eslint/types" "8.11.0"
     eslint-visitor-keys "^3.4.3"
 
 "@ungap/structured-clone@^1.2.0":
@@ -8589,10 +8589,10 @@ smart-buffer@^4.2.0:
   resolved "https://registry.npmjs.org/smart-buffer/-/smart-buffer-4.2.0.tgz#6e1d71fa4f18c05f7d0ff216dd16a481d0e8d9ae"
   integrity sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==
 
-smtp-server@3.13.5:
-  version "3.13.5"
-  resolved "https://registry.npmjs.org/smtp-server/-/smtp-server-3.13.5.tgz#4d44a23a77b1d7328a56cbb88f6c6b09e1c48dac"
-  integrity sha512-1+Jkr5Wx9dyWY2MCJ0DauyVM0gn3uN5ldAmRef/k/zwv/SaogDIhzqAdAMbU3dZPv2wfqcj7VAGvZL8RYw+naQ==
+smtp-server@3.13.6:
+  version "3.13.6"
+  resolved "https://registry.npmjs.org/smtp-server/-/smtp-server-3.13.6.tgz#779aa22fd3746bb8b94d25ab78447b6e4b7d5b78"
+  integrity sha512-dqbSPKn3PCq3Gp5hxBM99u7PET7cQSAWrauhtArJbc+zrf5xNEOjm9+Ob3lySySrRoIEvNE0dz+w2H/xWFJNRw==
   dependencies:
     base32.js "0.1.0"
     ipv6-normalize "1.0.1"
@@ -9325,47 +9325,47 @@ tunnel@^0.0.6:
   resolved "https://registry.npmjs.org/tunnel/-/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
   integrity sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==
 
-turbo-darwin-64@2.1.3:
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/turbo-darwin-64/-/turbo-darwin-64-2.1.3.tgz#217d4270b475ab902dc96c72491789697130a248"
-  integrity sha512-ouJOm0g0YyoBuhmikEujVCBGo3Zr0lbSOWFIsQtWUTItC88F2w2byhjtsYGPXQwMlTbXwmoBU2lOCfWNkeEwHQ==
+turbo-darwin-64@2.2.3:
+  version "2.2.3"
+  resolved "https://registry.npmjs.org/turbo-darwin-64/-/turbo-darwin-64-2.2.3.tgz#f0ced75ed031091e52851cbe8bb05d21a161a22b"
+  integrity sha512-Rcm10CuMKQGcdIBS3R/9PMeuYnv6beYIHqfZFeKWVYEWH69sauj4INs83zKMTUiZJ3/hWGZ4jet9AOwhsssLyg==
 
-turbo-darwin-arm64@2.1.3:
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-2.1.3.tgz#a1b22f510c141e62d388c9c7c870aa306b9cc350"
-  integrity sha512-j2FOJsK4LAOtHQlb3Oom0yWB/Vi0nF1ljInr311mVzHoFAJRZtfW2fRvdZRb/lBUwjSp8be58qWHzANIcrA0OA==
+turbo-darwin-arm64@2.2.3:
+  version "2.2.3"
+  resolved "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-2.2.3.tgz#0b4741383ab5070d8383891a65861a8869cc7202"
+  integrity sha512-+EIMHkuLFqUdJYsA3roj66t9+9IciCajgj+DVek+QezEdOJKcRxlvDOS2BUaeN8kEzVSsNiAGnoysFWYw4K0HA==
 
-turbo-linux-64@2.1.3:
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/turbo-linux-64/-/turbo-linux-64-2.1.3.tgz#0c7033602d66f0ea8f87cdc9cd73fd74b4bbe880"
-  integrity sha512-ubRHkI1gSel7H7wsmxKK8C9UlLWqg/2dkCC88LFupaK6TKgvBKqDqA0Z1M9C/escK0Jsle2k0H8bybV9OYIl4Q==
+turbo-linux-64@2.2.3:
+  version "2.2.3"
+  resolved "https://registry.npmjs.org/turbo-linux-64/-/turbo-linux-64-2.2.3.tgz#2b339db50c12bc52ce99139c156d5555717a209d"
+  integrity sha512-UBhJCYnqtaeOBQLmLo8BAisWbc9v9daL9G8upLR+XGj6vuN/Nz6qUAhverN4Pyej1g4Nt1BhROnj6GLOPYyqxQ==
 
-turbo-linux-arm64@2.1.3:
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/turbo-linux-arm64/-/turbo-linux-arm64-2.1.3.tgz#88e46f1594c7424b19a9319bad2142b9c0740e95"
-  integrity sha512-LffUL+e5wv7BtD6DgnM2kKOlDkMo2eRjhbAjVnrCD3wi2ug0tl6NDzajnHHjtaMyOnIf4AvzSKdLWsBxafGBQA==
+turbo-linux-arm64@2.2.3:
+  version "2.2.3"
+  resolved "https://registry.npmjs.org/turbo-linux-arm64/-/turbo-linux-arm64-2.2.3.tgz#a4daf6e0872a4e2652e2d05d68ad18cee5b10e94"
+  integrity sha512-hJYT9dN06XCQ3jBka/EWvvAETnHRs3xuO/rb5bESmDfG+d9yQjeTMlhRXKrr4eyIMt6cLDt1LBfyi+6CQ+VAwQ==
 
-turbo-windows-64@2.1.3:
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-2.1.3.tgz#50acf6edcfc3613c5d93ec5368cf1d11b86aa241"
-  integrity sha512-S9SvcZZoaq5jKr6kA6eF7/xgQhVn8Vh7PVy5lono9zybvhyL4eY++y2PaLToIgL8G9IcbLmgOC73ExNjFBg9XQ==
+turbo-windows-64@2.2.3:
+  version "2.2.3"
+  resolved "https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-2.2.3.tgz#d44b3385948bd0f2ef5c2d53391f142bdd467b18"
+  integrity sha512-NPrjacrZypMBF31b4HE4ROg4P3nhMBPHKS5WTpMwf7wydZ8uvdEHpESVNMOtqhlp857zbnKYgP+yJF30H3N2dQ==
 
-turbo-windows-arm64@2.1.3:
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/turbo-windows-arm64/-/turbo-windows-arm64-2.1.3.tgz#6ef8b984974b3bcb58a95028320edc0fce89df9d"
-  integrity sha512-twlEo8lRrGbrR6T/ZklUIquW3IlFCEtywklgVA81aIrSBm56+GEVpSrHhIlsx1hiYeSNrs+GpDwZGe+V7fvEVQ==
+turbo-windows-arm64@2.2.3:
+  version "2.2.3"
+  resolved "https://registry.npmjs.org/turbo-windows-arm64/-/turbo-windows-arm64-2.2.3.tgz#d0625ec53f467013a6f259f87f7fc4ae8670aaa4"
+  integrity sha512-fnNrYBCqn6zgKPKLHu4sOkihBI/+0oYFr075duRxqUZ+1aLWTAGfHZLgjVeLh3zR37CVzuerGIPWAEkNhkWEIw==
 
-turbo@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/turbo/-/turbo-2.1.3.tgz#48b2b603ff66f3b632c476b4890277b4c23feeb5"
-  integrity sha512-lY0yj2GH2a2a3NExZ3rGe+rHUVeFE2aXuRAue57n+08E7Z7N7YCmynju0kPC1grAQzERmoLpKrmzmWd+PNiADw==
+turbo@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.npmjs.org/turbo/-/turbo-2.2.3.tgz#0f45612d62526c98c75da0682aa8c26b902b5e07"
+  integrity sha512-5lDvSqIxCYJ/BAd6rQGK/AzFRhBkbu4JHVMLmGh/hCb7U3CqSnr5Tjwfy9vc+/5wG2DJ6wttgAaA7MoCgvBKZQ==
   optionalDependencies:
-    turbo-darwin-64 "2.1.3"
-    turbo-darwin-arm64 "2.1.3"
-    turbo-linux-64 "2.1.3"
-    turbo-linux-arm64 "2.1.3"
-    turbo-windows-64 "2.1.3"
-    turbo-windows-arm64 "2.1.3"
+    turbo-darwin-64 "2.2.3"
+    turbo-darwin-arm64 "2.2.3"
+    turbo-linux-64 "2.2.3"
+    turbo-linux-arm64 "2.2.3"
+    turbo-windows-64 "2.2.3"
+    turbo-windows-arm64 "2.2.3"
 
 tv4@^1.3.0:
   version "1.3.0"
@@ -9544,14 +9544,14 @@ typedoc@^0.26.10:
   resolved "https://registry.npmjs.org/typescript/-/typescript-5.7.0-dev.20240822.tgz#f011e449f106abe96f12e81e25d9cc3e80b92f21"
   integrity sha512-JL60efPDEbshbweVXX18Ic5g+9iVbf2Nc3xh3eBGbLjrt5+x6KZzB3c2d+J5PoqOzPjbFATCT2FQ3W8vEGOXTg==
 
-typescript-eslint@^8.10.0:
-  version "8.10.0"
-  resolved "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.10.0.tgz#7f7d51577e9b93538cc8801f2cbfdd66098a00e7"
-  integrity sha512-YIu230PeN7z9zpu/EtqCIuRVHPs4iSlqW6TEvjbyDAE3MZsSl2RXBo+5ag+lbABCG8sFM1WVKEXhlQ8Ml8A3Fw==
+typescript-eslint@^8.11.0:
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.11.0.tgz#74a0551972d675b4141672cec3acc5139b7399c0"
+  integrity sha512-cBRGnW3FSlxaYwU8KfAewxFK5uzeOAp0l2KebIlPDOT5olVi65KDG/yjBooPBG0kGW/HLkoz1c/iuBFehcS3IA==
   dependencies:
-    "@typescript-eslint/eslint-plugin" "8.10.0"
-    "@typescript-eslint/parser" "8.10.0"
-    "@typescript-eslint/utils" "8.10.0"
+    "@typescript-eslint/eslint-plugin" "8.11.0"
+    "@typescript-eslint/parser" "8.11.0"
+    "@typescript-eslint/utils" "8.11.0"
 
 typescript@5.3.3:
   version "5.3.3"

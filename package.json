@@ -41,6 +41,7 @@
     "build-packages/changesets-fixed-version-bump",
     "build-packages/check-license",
     "build-packages/check-pr",
+    "build-packages/check-public-api",
     "build-packages/get-changelog",
     "build-packages/merge-changelogs"
   ],

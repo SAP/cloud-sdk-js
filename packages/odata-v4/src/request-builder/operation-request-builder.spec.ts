@@ -107,12 +107,12 @@ describe('operation request builder', () => {
 
       nock(host)
         .post(`${basePath}/TestActionImportNoParameterNoReturnType`)
-        .reply(204, {});
+        .reply(204);
 
       const actual = await testActionImportNoParameterNoReturnType(
         {}
       ).executeRaw(destination);
-      expect(actual.data).toEqual({});
+      expect(actual.status).toEqual(204);
       expect(actual.request.method).toBe('POST');
     });
   });

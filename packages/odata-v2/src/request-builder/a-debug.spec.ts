@@ -18,7 +18,7 @@ describe('debug', () => {
     const someEntity = testEntityApi.entityBuilder().stringProperty('').build();
 
     const createRequest = new CreateRequestBuilder(testEntityApi, someEntity)
-      .skipCsrfTokenFetching()
+      // .skipCsrfTokenFetching()
       .executeRaw(defaultDestination);
 
     // axios.post(

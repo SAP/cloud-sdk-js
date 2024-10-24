@@ -29,10 +29,6 @@ describe('GetAllRequestBuilder', () => {
       const rawResponse = { d: { results: [entityData1, entityData2] } };
       // ///
 
-      nock('http://example.com')
-        .head('/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/')
-        .reply(200, undefined, mockedBuildHeaderResponse);
-
       nock('http://example.com', undefined)
         .get('/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity', undefined)
         .query({})

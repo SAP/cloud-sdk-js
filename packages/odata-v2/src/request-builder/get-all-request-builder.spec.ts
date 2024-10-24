@@ -26,7 +26,6 @@ describe('GetAllRequestBuilder', () => {
         EnumProperty: 'Enum1'
       };
       const rawResponse = { d: { results: [entityData1, entityData2] } };
-      // ///
 
       nock('http://example.com', undefined)
         .get('/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity', undefined)
@@ -34,13 +33,10 @@ describe('GetAllRequestBuilder', () => {
         .delay(0)
         .reply(200, rawResponse, undefined);
 
-      // ///
-
       const actual = await axios.get(
         'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity'
       );
 
-      // const actual = await requestBuilder.executeRaw(defaultDestination);
       expect(actual.data).toEqual(rawResponse);
       expect(actual.request.method).toBe('GET');
     });

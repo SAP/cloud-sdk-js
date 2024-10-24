@@ -1,7 +1,4 @@
-import {
-  ODataGetAllRequestConfig,
-  ODataRequest
-} from '@sap-cloud-sdk/odata-common';
+import { ODataRequest } from '@sap-cloud-sdk/odata-common';
 import nock from 'nock';
 import {
   defaultDestination,
@@ -12,7 +9,6 @@ import {
   defaultRequestHeaders
 } from '../../../../test-resources/test/test-util';
 import { testEntityApi } from '../../test/test-util';
-import { createODataUri } from '../uri-conversion';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 import type { DefaultDeSerializers } from '../de-serializers';
 import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';

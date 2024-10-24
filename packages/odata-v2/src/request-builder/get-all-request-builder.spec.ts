@@ -5,19 +5,9 @@ import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2
 } from '../../../../test-resources/test/test-util';
-import { testEntityApi } from '../../test/test-util';
-import { GetAllRequestBuilder } from './get-all-request-builder';
-import type { DefaultDeSerializers } from '../de-serializers';
-import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 describe('GetAllRequestBuilder', () => {
-  let requestBuilder: GetAllRequestBuilder<TestEntity, DefaultDeSerializers>;
-
   afterEach(() => {
     unmockDestinationsEnv();
-  });
-
-  beforeEach(() => {
-    requestBuilder = new GetAllRequestBuilder(testEntityApi);
   });
 
   describe('executeRaw', () => {

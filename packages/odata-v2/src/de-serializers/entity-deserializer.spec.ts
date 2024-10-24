@@ -13,15 +13,13 @@ describe('with default (de-)serializers', () => {
       .complexTypeProperty({
         stringProperty
       })
-      .stringProperty('test')
       .build();
 
     const actual = deserializeEntity(
       {
         ComplexTypeProperty: {
           StringProperty: stringProperty
-        },
-        StringProperty: expected.stringProperty
+        }
       },
       testEntityApi
     );

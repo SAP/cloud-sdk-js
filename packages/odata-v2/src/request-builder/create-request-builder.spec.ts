@@ -260,8 +260,8 @@ describe('CreateRequestBuilder', () => {
   it('throws an error when request execution fails', async () => {
     mockCreateRequest(
       {
-        body: () => true,
-        statusCode: 500
+        statusCode: 500,
+        path: 'A_TestEntity'
       },
       testEntityApi
     );

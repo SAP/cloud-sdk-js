@@ -1,10 +1,7 @@
 import nock from 'nock';
 import axios from 'axios';
-import {
-  unmockDestinationsEnv,
-  createOriginalTestEntityData1,
-  createOriginalTestEntityData2
-} from '../../../../test-resources/test/test-util';
+import { unmockDestinationsEnv } from '../../../../test-resources/test/test-util';
+
 describe('GetAllRequestBuilder', () => {
   afterEach(() => {
     unmockDestinationsEnv();
@@ -12,8 +9,22 @@ describe('GetAllRequestBuilder', () => {
 
   describe('executeRaw', () => {
     it('returns request and raw response', async () => {
-      const entityData1 = createOriginalTestEntityData1();
-      const entityData2 = createOriginalTestEntityData2();
+      const entityData1 = {
+        KeyPropertyGuid: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+        KeyPropertyString: 'ABCDE',
+        StringProperty: 'FGHIJ',
+        BooleanProperty: false,
+        Int16Property: 13
+      };
+
+      const entityData2 = {
+        KeyPropertyGuid: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+        KeyPropertyString: '12345',
+        StringProperty: '6789',
+        BooleanProperty: true,
+        Int16Property: 42,
+        EnumProperty: 'Enum1'
+      };
       const rawResponse = { d: { results: [entityData1, entityData2] } };
       // ///
 

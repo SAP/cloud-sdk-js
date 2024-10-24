@@ -35,10 +35,10 @@ describe('GetAllRequestBuilder', () => {
       const rawResponse = { d: { results: [entityData1, entityData2] } };
       // ///
 
-      const requestConfig = new ODataGetAllRequestConfig(
-        testEntityApi,
-        createODataUri(testEntityApi.deSerializers)
-      );
+      // const requestConfig = new ODataGetAllRequestConfig(
+      //   testEntityApi,
+      //   createODataUri(testEntityApi.deSerializers)
+      // );
       // mockRequest(requestConfig, {
       //   responseBody: rawResponse,
       //   path: 'A_TestEntity',

@@ -35,7 +35,6 @@ describe('debug', () => {
     //     }
     //   }
     // );
-    //
 
     await expect(createRequest).rejects.toThrowErrorMatchingInlineSnapshot(
       '"post request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! "'

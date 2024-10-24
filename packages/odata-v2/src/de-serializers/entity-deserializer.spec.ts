@@ -9,35 +9,20 @@ describe('with default (de-)serializers', () => {
   const int16Property = 16;
   const booleanProperty = false;
 
+  const expected = testEntityApi
+    .entityBuilder()
+    .complexTypeProperty({
+      stringProperty,
+      int16Property,
+      booleanProperty,
+      complexTypeProperty: {
+        stringProperty
+      }
+    })
+    .stringProperty('test')
+    .build();
+
   it('should deserialize 1', () => {
-    const expected = testEntityApi
-      .entityBuilder()
-      .stringProperty('test')
-      .build();
-
-    const actual = deserializeEntity(
-      {
-        StringProperty: expected.stringProperty
-      },
-      testEntityApi
-    );
-
-    expect(actual).toEqual(expected);
-  });
-
-  it('should deserialize 2', () => {
-    const expected = testEntityApi
-      .entityBuilder()
-      .complexTypeProperty({
-        stringProperty,
-        int16Property,
-        booleanProperty,
-        complexTypeProperty: {
-          stringProperty
-        }
-      })
-      .build();
-
     const actual = deserializeEntity(
       {
         ComplexTypeProperty: {
@@ -47,7 +32,27 @@ describe('with default (de-)serializers', () => {
           ComplexTypeProperty: {
             StringProperty: stringProperty
           }
-        }
+        },
+        StringProperty: expected.stringProperty
+      },
+      testEntityApi
+    );
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should deserialize 2', () => {
+    const actual = deserializeEntity(
+      {
+        ComplexTypeProperty: {
+          StringProperty: stringProperty,
+          Int16Property: int16Property,
+          BooleanProperty: booleanProperty,
+          ComplexTypeProperty: {
+            StringProperty: stringProperty
+          }
+        },
+        StringProperty: expected.stringProperty
       },
       testEntityApi
     );

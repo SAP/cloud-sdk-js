@@ -21,21 +21,23 @@ describe('GetAllRequestBuilder', () => {
     requestBuilder = new GetAllRequestBuilder(testEntityApi);
   });
 
-  it('returns request and raw response', async () => {
-    const entityData1 = createOriginalTestEntityData1();
-    const entityData2 = createOriginalTestEntityData2();
-    const rawResponse = { d: { results: [entityData1, entityData2] } };
+  describe('executeRaw', () => {
+    it('returns request and raw response', async () => {
+      const entityData1 = createOriginalTestEntityData1();
+      const entityData2 = createOriginalTestEntityData2();
+      const rawResponse = { d: { results: [entityData1, entityData2] } };
 
-    mockGetRequest(
-      {
-        responseBody: rawResponse,
-        path: 'A_TestEntity'
-      },
-      testEntityApi
-    );
+      mockGetRequest(
+        {
+          responseBody: rawResponse,
+          path: 'A_TestEntity'
+        },
+        testEntityApi
+      );
 
-    const actual = await requestBuilder.executeRaw(defaultDestination);
-    expect(actual.data).toEqual(rawResponse);
-    expect(actual.request.method).toBe('GET');
+      const actual = await requestBuilder.executeRaw(defaultDestination);
+      expect(actual.data).toEqual(rawResponse);
+      expect(actual.request.method).toBe('GET');
+    });
   });
 });

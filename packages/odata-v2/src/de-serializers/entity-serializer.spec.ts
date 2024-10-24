@@ -1,8 +1,6 @@
-import {
-  defaultDeSerializers,
-  entitySerializer
-} from '@sap-cloud-sdk/odata-common/internal';
+import { entitySerializer } from '@sap-cloud-sdk/odata-common/internal';
 import { testEntityApi } from '../../test/test-util';
+import { defaultDeSerializers } from './default-de-serializers';
 
 describe('with default (de-)serializers', () => {
   const { serializeEntity } = entitySerializer(defaultDeSerializers);

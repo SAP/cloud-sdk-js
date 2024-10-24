@@ -1,12 +1,7 @@
 import nock from 'nock';
-import { defaultDestination } from '../../../../test-resources/test/test-util';
-import { testEntityApi } from '../../test/test-util';
-import { CreateRequestBuilder } from './create-request-builder';
-// import axios from axios;
+import axios from 'axios';
 
 describe('debug', () => {
-  // const { testEntityApi } = testService();
-
   it('create', async () => {
     nock('http://example.com')
       .head('/sap/opu/odata/sap/API_TEST_SRV')
@@ -18,15 +13,22 @@ describe('debug', () => {
       .delay(0)
       .reply(500, { d: undefined });
 
-    const someEntity = testEntityApi.entityBuilder().stringProperty('').build();
+    // const someEntity = testEntityApi.entityBuilder().stringProperty('').build();
 
-    const createRequest = new CreateRequestBuilder(
-      testEntityApi,
-      someEntity
-    ).executeRaw(defaultDestination);
+    // new CreateRequestBuilder(
+    //   testEntityApi,
+    //   someEntity
+    // ).executeRaw(defaultDestination);
+
+    const createRequest = axios.post(
+      'http://example.com/sap/opu/odata/sap/API_TEST_SRV',
+      {
+        stringProperty: ''
+      }
+    );
 
     await expect(createRequest).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"post request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! "'
+      '"Request failed with status code 500"'
     );
   });
 });

@@ -230,17 +230,13 @@ export function mockRequest(
 
   mockHeaderRequest({ request, path });
 
-  const url = path
-    ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`, false)
-    : buildNockUrl(request.relativeServiceUrl());
-
-  const scope = nock(
-    host,
-    getRequestHeaders(method, additionalHeaders, headers)
-  );
-
-  const interceptor = body ? scope[method](url, body) : scope[method](url);
-  return interceptor
+  return nock(host, getRequestHeaders(method, additionalHeaders, headers))
+    [method](
+      path
+        ? buildNockUrl(`${request.relativeServiceUrl()}/${path}`, false)
+        : buildNockUrl(request.relativeServiceUrl()),
+      body
+    )
     .query(query)
     .delay(delay)
     .reply(statusCode, responseBody, responseHeaders);

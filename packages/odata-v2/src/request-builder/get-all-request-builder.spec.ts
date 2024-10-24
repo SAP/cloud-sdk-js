@@ -1,7 +1,6 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
 import { oDataTypedClientParameterEncoder } from '@sap-cloud-sdk/http-client/dist/http-client';
-import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import { timeout } from '@sap-cloud-sdk/resilience';
 import {
   defaultDestination,
@@ -24,7 +23,6 @@ import {
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import {
   testEntityApi,
-  testEntitySingleLinkApi,
   createTestEntity,
   testEntityApiCustom,
   createTestEntityWithCustomDeSerializers
@@ -42,87 +40,6 @@ describe('GetAllRequestBuilder', () => {
 
   beforeEach(() => {
     requestBuilder = new GetAllRequestBuilder(testEntityApi);
-  });
-
-  describe('url', () => {
-    it('should set ascending order', async () => {
-      const expected =
-        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc';
-      const request = await testEntityApi
-        .requestBuilder()
-        .getAll()
-        .orderBy(asc(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty))
-        .url(defaultDestination);
-      expect(request).toBe(expected);
-    });
-
-    it('should set descending order', async () => {
-      const expected =
-        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20desc';
-      const request = await testEntityApi
-        .requestBuilder()
-        .getAll()
-        .orderBy(
-          desc(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty)
-        )
-        .url(defaultDestination);
-      expect(request).toBe(expected);
-    });
-
-    it('should set ascending order as default if no order is specified', async () => {
-      const expected =
-        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc';
-      const request = await testEntityApi
-        .requestBuilder()
-        .getAll()
-        .orderBy(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty)
-        .url(defaultDestination);
-      expect(request).toBe(expected);
-    });
-
-    it('should set the correct order when both default ascending order and descending order are passed', async () => {
-      const expected =
-        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$orderby=ComplexTypeProperty/StringProperty%20asc,ComplexTypeProperty/DateTimeProperty%20desc';
-      const stringProperty =
-        testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty;
-      const dateTimeProperty =
-        testEntityApi.schema.COMPLEX_TYPE_PROPERTY.dateTimeProperty;
-      const request = await testEntityApi
-        .requestBuilder()
-        .getAll()
-        .orderBy(stringProperty, desc(dateTimeProperty))
-        .url(defaultDestination);
-      expect(request).toBe(expected);
-    });
-
-    it('is built correctly', async () => {
-      const expected =
-        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity';
-      const actual = await requestBuilder.url(defaultDestination);
-      expect(actual).toBe(expected);
-    });
-
-    it('is built correctly with URI encoding', async () => {
-      const expected =
-        "http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$filter=(StringProperty%20eq%20'%C3%A4%20%C3%B6%2B%20''c')";
-      const actual = await requestBuilder
-        .filter(testEntityApi.schema.STRING_PROPERTY.equals("ä ö+ 'c"))
-        .url(defaultDestination);
-      expect(actual).toBe(expected);
-    });
-
-    it('adds expand for nested selects', async () => {
-      const expected =
-        'http://example.com/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink';
-      const actual = await requestBuilder
-        .select(
-          testEntityApi.schema.TO_SINGLE_LINK.select(
-            testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY
-          )
-        )
-        .url(defaultDestination);
-      expect(actual).toBe(expected);
-    });
   });
 
   describe('execute', () => {

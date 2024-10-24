@@ -2,6 +2,7 @@ import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service'
 import nock from 'nock';
 import { defaultDestination } from '../../../../test-resources/test/test-util';
 import { CreateRequestBuilder } from './create-request-builder';
+// import axios from axios;
 
 describe('debug', () => {
   const { testEntityApi } = testService();
@@ -22,10 +23,10 @@ describe('debug', () => {
     const createRequest = new CreateRequestBuilder(
       testEntityApi,
       someEntity
-    ).execute(defaultDestination);
+    ).executeRaw(defaultDestination);
 
     await expect(createRequest).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Create request failed!"'
+      '"post request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! "'
     );
   });
 });

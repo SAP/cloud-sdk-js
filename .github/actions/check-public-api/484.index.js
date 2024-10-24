@@ -1330,8 +1330,8 @@ var public_default = public_exports;
 
 
 
-const prettier_require = (0,external_module_.createRequire)("file:///Users/i824643/Development/cloud-sdk-js/node_modules/prettier/index.mjs");
-const prettier_filename = (0,external_url_.fileURLToPath)("file:///Users/i824643/Development/cloud-sdk-js/node_modules/prettier/index.mjs");
+const prettier_require = (0,external_module_.createRequire)("file:///home/runner/work/cloud-sdk-js/cloud-sdk-js/node_modules/prettier/index.mjs");
+const prettier_filename = (0,external_url_.fileURLToPath)("file:///home/runner/work/cloud-sdk-js/cloud-sdk-js/node_modules/prettier/index.mjs");
 const prettier_dirname = (0,external_path_.dirname)(prettier_filename);
 
 var __create = Object.create;

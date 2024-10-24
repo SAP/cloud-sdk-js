@@ -1,5 +1,7 @@
 import nock from 'nock';
-import axios from 'axios';
+import { defaultDestination } from '../../../../test-resources/test/test-util';
+import { testEntityApi } from '../../test/test-util';
+import { CreateRequestBuilder } from './create-request-builder';
 
 describe('debug', () => {
   it('create', async () => {
@@ -13,22 +15,29 @@ describe('debug', () => {
       .delay(0)
       .reply(500, { d: undefined });
 
-    // const someEntity = testEntityApi.entityBuilder().stringProperty('').build();
+    const someEntity = testEntityApi.entityBuilder().stringProperty('').build();
 
-    // new CreateRequestBuilder(
-    //   testEntityApi,
-    //   someEntity
-    // ).executeRaw(defaultDestination);
+    const createRequest = new CreateRequestBuilder(testEntityApi, someEntity)
+      .skipCsrfTokenFetching()
+      .executeRaw(defaultDestination);
 
-    const createRequest = axios.post(
-      'http://example.com/sap/opu/odata/sap/API_TEST_SRV',
-      {
-        stringProperty: ''
-      }
-    );
+    // axios.post(
+    //   'http://example.com/sap/opu/odata/sap/API_TEST_SRV',
+    //   {
+    //     stringProperty: ''
+    //   },
+    //   {
+    //     headers: {
+    //       'content-type': 'application/json',
+    //       accept: 'application/json',
+    //       authorization: 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+    //       'sap-client': '123'
+    //     }
+    //   }
+    // );
 
     await expect(createRequest).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Request failed with status code 500"'
+      '"post request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! "'
     );
   });
 });

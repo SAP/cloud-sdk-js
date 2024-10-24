@@ -1,28 +1,387 @@
-import yargs from 'yargs';
-import { setFailed } from '@actions/core';
-import { checkApiOfPackage } from './check-public-api';
+/* eslint-disable jsdoc/require-jsdoc */
 
-async function runPublicApiCheckScript() {
+import { join, resolve, parse, basename, dirname, posix, sep } from 'path';
+import { promises, existsSync } from 'fs';
+import { glob } from 'glob';
+import { info, warning, error, getInput } from '@actions/core';
+import { flatten, unixEOL } from '@sap-cloud-sdk/util';
+import mock from 'mock-fs';
+import {
+  readCompilerOptions,
+  readIncludeExcludeWithDefaults,
+  transpileDirectory,
+  defaultPrettierConfig
+} from '@sap-cloud-sdk/generator-common/internal';
+import type { CompilerOptions } from 'typescript';
+
+const { readFile, lstat, readdir } = promises;
+
+const pathToTsConfigRoot = join(__dirname, '../../../tsconfig.json');
+const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
+export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
+export const regexExportedInternal = /\.\/([\w-]+)/g;
+
+export interface ExportedObject {
+  name: string;
+  type: string;
+  path: string;
+}
+
+function paths(pathToPackage: string): {
+  pathToSource: string;
+  pathToTsConfig: string;
+  pathToNodeModules: string;
+  pathCompiled: string;
+} {
+  return {
+    pathToSource: join(pathToPackage, 'src'),
+    pathToTsConfig: join(pathToPackage, 'tsconfig.json'),
+    pathToNodeModules: join(pathToPackage, 'node_modules'),
+    pathCompiled: 'dist'
+  };
+}
+
+function mockFileSystem(pathToPackage: string) {
+  const { pathToSource, pathToTsConfig, pathToNodeModules } =
+    paths(pathToPackage);
+  mock({
+    [pathToTsConfig]: mock.load(pathToTsConfig),
+    [pathToSource]: mock.load(pathToSource),
+    [pathRootNodeModules]: mock.load(pathRootNodeModules),
+    [pathToNodeModules]: mock.load(pathToNodeModules),
+    [pathToTsConfigRoot]: mock.load(pathToTsConfigRoot)
+  });
+}
+
+/**
+ * Read the compiler options from the root and cwd tsconfig.json.
+ * @param pathToPackage - Path to the package under investigation.
+ * @returns The compiler options.
+ */
+async function getCompilerOptions(
+  pathToPackage: string
+): Promise<CompilerOptions> {
+  const { pathToSource, pathToTsConfig, pathCompiled } = paths(pathToPackage);
+  const compilerOptions = await readCompilerOptions(pathToTsConfig);
+  const compilerOptionsRoot = await readCompilerOptions(pathToTsConfigRoot);
+  return {
+    ...compilerOptionsRoot,
+    ...compilerOptions,
+    stripInternal: true,
+    rootDir: pathToSource,
+    outDir: pathCompiled
+  };
+}
+
+function getIgnoredPaths() {
+  const ignoredPaths = getInput('ignore-paths');
+  if (ignoredPaths) {
+    return ignoredPaths.split(',');
+  }
+  return [];
+}
+
+/**
+ * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
+ * @param allExportedIndex - Names of the object imported by the index.ts.
+ * @param allExportedTypes - Exported object by the .d.ts files.
+ * @returns True if the two sets export the same objects.
+ */
+function compareApisAndLog(
+  allExportedIndex: string[],
+  allExportedTypes: ExportedObject[]
+): boolean {
+  let setsAreEqual = true;
+
+  allExportedTypes.forEach(exportedType => {
+    const normalizedPath = exportedType.path.split(sep).join(posix.sep);
+    const ignoredPaths = getIgnoredPaths();
+
+    const isPathMatched = ignoredPaths.length
+      ? ignoredPaths.some(ignoredPath =>
+          normalizedPath.includes(ignoredPath.split(sep).join(posix.sep))
+        )
+      : false;
+    if (
+      !allExportedIndex.find(nameInIndex => exportedType.name === nameInIndex)
+    ) {
+      if (isPathMatched) {
+        warning(
+          `The ${exportedType.type} "${exportedType.name}" in file: ${exportedType.path} is not exported in the index.ts.`
+        );
+        return;
+      }
+      error(
+        `The ${exportedType.type} "${exportedType.name}" in file: ${exportedType.path} is neither listed in the index.ts nor marked as internal.`
+      );
+      setsAreEqual = false;
+    }
+  });
+
+  allExportedIndex.forEach(nameInIndex => {
+    if (
+      !allExportedTypes.find(exportedType => exportedType.name === nameInIndex)
+    ) {
+      error(
+        `The object "${nameInIndex}" is exported from the index.ts but marked as @internal.`
+      );
+      setsAreEqual = false;
+    }
+  });
+  info(`We have found ${allExportedIndex.length} exports.`);
+  info(`Public api: ${allExportedIndex.sort().join(`,${unixEOL}`)}`);
+
+  return setsAreEqual;
+}
+
+/**
+ * Executes the public API check for a given package.
+ * @param pathToPackage - Path to the package.
+ */
+export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   try {
-    const argv = yargs(process.argv.slice(2))
-      .option('strict', {
-        type: 'boolean',
-        default: false,
-        description: 'Enable strict mode'
-      })
-      .option('pathsToIgnore', {
-        type: 'string',
-        description: 'Comma-separated paths to ignore',
-        default: ''
-      }).argv;
+    info(`Check package: ${pathToPackage}`);
+    const { pathToSource, pathCompiled, pathToTsConfig } = paths(pathToPackage);
+    mockFileSystem(pathToPackage);
+    const opts = await getCompilerOptions(pathToPackage);
+    const includeExclude = await readIncludeExcludeWithDefaults(pathToTsConfig);
+    await transpileDirectory(
+      pathToSource,
+      {
+        compilerOptions: opts,
+        // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
+        createFileOptions: {
+          overwrite: true,
+          prettierOptions: defaultPrettierConfig,
+          usePrettier: false
+        }
+      },
+      { exclude: includeExclude?.exclude, include: ['**/*.ts'] }
+    );
 
-    const { strict, pathsToIgnore } = await argv;
-    const pathsToIgnoreOnCheck = pathsToIgnore ? pathsToIgnore.split(',') : [];
+    const forceInternalExports = getInput('force-internal-exports') === 'true';
 
-    checkApiOfPackage(process.cwd(), strict, pathsToIgnoreOnCheck);
-  } catch (error) {
-    setFailed(error);
+    if (forceInternalExports) {
+      await checkBarrelRecursive(pathToSource);
+    }
+
+    const indexFilePath = join(pathToSource, 'index.ts');
+    checkIndexFileExists(indexFilePath);
+
+    const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
+    const allExportedIndex = await parseIndexFile(
+      indexFilePath,
+      forceInternalExports
+    );
+
+    const setsAreEqual = compareApisAndLog(allExportedIndex, allExportedTypes);
+    mock.restore();
+    if (!setsAreEqual) {
+      process.exit(1);
+    }
+    info(
+      `The index.ts of package ${pathToPackage} is in sync with the type annotations.`
+    );
+  } finally {
+    mock.restore();
   }
 }
 
-runPublicApiCheckScript();
+export function checkIndexFileExists(indexFilePath: string): void {
+  if (!existsSync(indexFilePath)) {
+    error('No index.ts file found in root.');
+  }
+}
+
+/**
+ * Get the paths of all `.d.ts` files.
+ * @param cwd - Directory which is scanned for type definitions.
+ * @returns Paths to the `.d.ts` files excluding `index.d.ts` files.
+ */
+export async function typeDescriptorPaths(cwd: string): Promise<string[]> {
+  const files = await glob('**/*.d.ts', { cwd });
+  return files
+    .filter(file => !file.endsWith('index.d.ts'))
+    .map(file => join(cwd, file));
+}
+
+/**
+ * Execute the parseTypeDefinitionFile for all files in the cwd.
+ * @param pathCompiled - Path to the compiled sources containing the .d.ts files.
+ * @returns Information on the exported objects.
+ */
+export async function parseTypeDefinitionFiles(
+  pathCompiled: string
+): Promise<ExportedObject[]> {
+  const typeDefinitionPaths = await typeDescriptorPaths(pathCompiled);
+  const result = await Promise.all(
+    typeDefinitionPaths.map(async pathTypeDefinition => {
+      const fileContent = await readFile(pathTypeDefinition, 'utf8');
+      const types = parseExportedObjectsInFile(fileContent);
+      return types.map(type => ({ path: pathTypeDefinition, ...type }));
+    })
+  );
+  return flatten(result);
+}
+
+/**
+ * Parses a '.d.ts' or '.ts' file for the exported objects in it.
+ * @param fileContent - Content of the file to be processed.
+ * @returns List of exported object.
+ */
+export function parseExportedObjectsInFile(
+  fileContent: string
+): Omit<ExportedObject, 'path'>[] {
+  const normalized = fileContent.replace(/\n+/g, '');
+  return [
+    'function',
+    'const',
+    'enum',
+    'class',
+    'abstract class',
+    'type',
+    'interface'
+  ].reduce<Omit<ExportedObject, 'path'>[]>((allObjects, objectType) => {
+    const regex =
+      objectType === 'interface'
+        ? new RegExp(`export ${objectType} (\\w+)`, 'g')
+        : new RegExp(`export (?:declare )?${objectType} (\\w+)`, 'g');
+    const exported = captureGroupsFromGlobalRegex(regex, normalized).map(
+      element => ({ name: element, type: objectType })
+    );
+    return [...allObjects, ...exported];
+  }, []);
+}
+
+/**
+ * Parse a barrel file for the exported objects.
+ * It selects all string in \{\} e.g. export \{a,b,c\} from './xyz' will result in [a,b,c].
+ * /\/\*[\s\S]*?\*\/|\/\/.*|[\s]+/g - Matches single-line comments or multi-line comments or whitespaces.
+ * @param fileContent - Content of the index file to be parsed.
+ * @param regex - Regular expression used for matching exports.
+ * @returns List of objects exported by the given index file.
+ */
+export function parseBarrelFile(fileContent: string, regex: RegExp): string[] {
+  const normalized = fileContent.replace(/\/\*[\s\S]*?\*\/|\/\/.*|[\s]+/g, '');
+  const groups = captureGroupsFromGlobalRegex(regex, normalized);
+
+  return flatten(groups.map(group => group.split(',')));
+}
+
+function checkInternalReExports(fileContent: string, filePath: string): void {
+  const internalReExports = parseBarrelFile(
+    fileContent,
+    /\{([\w,]+)\}from'.*\/internal'/g
+  );
+  if (internalReExports.length) {
+    error(
+      `Re-exporting internal modules is not allowed. ${internalReExports
+        .map(reExport => `'${reExport}'`)
+        .join(', ')} exported in '${filePath}'.`
+    );
+  }
+}
+
+export async function parseIndexFile(
+  filePath: string,
+  forceInternalExports: boolean
+): Promise<string[]> {
+  const cwd = dirname(filePath);
+  const fileContent = await readFile(filePath, 'utf-8');
+  checkInternalReExports(fileContent, filePath);
+  const localExports = forceInternalExports
+    ? parseBarrelFile(fileContent, regexExportedIndex)
+    : [
+        ...parseBarrelFile(fileContent, regexExportedIndex),
+        ...parseExportedObjectsInFile(fileContent).map(obj => obj.name)
+      ];
+  const starFiles = captureGroupsFromGlobalRegex(
+    /export \* from '([\w/.]+)'/g,
+    fileContent
+  );
+  const starFileExports = await Promise.all(
+    starFiles.map(async relativeFilePath =>
+      parseIndexFile(
+        resolve(cwd, `${relativeFilePath}.ts`),
+        forceInternalExports
+      )
+    )
+  );
+  return [...localExports, ...starFileExports.flat()];
+}
+
+function captureGroupsFromGlobalRegex(regex: RegExp, str: string): string[] {
+  const groups = Array.from(str.matchAll(regex));
+  return groups.map(group => group[1]);
+}
+
+export async function checkBarrelRecursive(cwd: string): Promise<void> {
+  (await readdir(cwd, { withFileTypes: true }))
+    .filter(dirent => dirent.isDirectory())
+    .forEach(async subDir => {
+      if (subDir.name !== '__snapshots__') {
+        await checkBarrelRecursive(join(cwd, subDir.name));
+      }
+    });
+  await exportAllInBarrel(
+    cwd,
+    parse(cwd).name === 'src' ? 'internal.ts' : 'index.ts'
+  );
+}
+
+export async function exportAllInBarrel(
+  cwd: string,
+  barrelFileName: string
+): Promise<void> {
+  const barrelFilePath = join(cwd, barrelFileName);
+  if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
+    const dirContents = (
+      await glob('*', {
+        ignore: [
+          '**/*.spec.ts',
+          '__snapshots__',
+          'internal.ts',
+          'index.ts',
+          'cli.ts',
+          '**/*.md'
+        ],
+        cwd
+      })
+    ).map(name => basename(name, '.ts'));
+    const exportedFiles = parseBarrelFile(
+      await readFile(barrelFilePath, 'utf8'),
+      regexExportedInternal
+    );
+    if (compareBarrels(dirContents, exportedFiles, barrelFilePath)) {
+      error(`'${barrelFileName}' is not in sync.`);
+    }
+  } else {
+    error(`No '${barrelFileName}' file found in '${cwd}'.`);
+  }
+}
+
+function compareBarrels(
+  dirContents: string[],
+  exportedFiles: string[],
+  barrelFilePath: string
+) {
+  const missingBarrelExports = dirContents.filter(
+    x => !exportedFiles.includes(x)
+  );
+  missingBarrelExports.forEach(tsFiles =>
+    error(`'${tsFiles}' is not exported in '${barrelFilePath}'.`)
+  );
+
+  const extraBarrelExports = exportedFiles.filter(
+    x => !dirContents.includes(x)
+  );
+  extraBarrelExports.forEach(exports =>
+    error(
+      `'${exports}' is exported from the '${barrelFilePath}' but does not exist in this directory.`
+    )
+  );
+
+  return missingBarrelExports.length || extraBarrelExports.length;
+}
+
+checkApiOfPackage('./packages/resilience');

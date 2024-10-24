@@ -6,13 +6,13 @@ import { glob } from 'glob';
 import { info, warning, error } from '@actions/core';
 import { flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
-import { CompilerOptions } from 'typescript';
 import {
   readCompilerOptions,
   readIncludeExcludeWithDefaults,
   transpileDirectory,
   defaultPrettierConfig
 } from '@sap-cloud-sdk/generator-common/internal';
+import type { CompilerOptions } from 'typescript';
 
 const { readFile, lstat, readdir } = promises;
 
@@ -154,10 +154,12 @@ export async function checkApiOfPackage(
           usePrettier: false
         }
       },
-      { exclude: includeExclude?.exclude!, include: ['**/*.ts'] }
+      { exclude: includeExclude?.exclude, include: ['**/*.ts'] }
     );
 
-    if (strict) await checkBarrelRecursive(pathToSource);
+    if (strict) {
+      await checkBarrelRecursive(pathToSource);
+    }
 
     const indexFilePath = join(pathToSource, 'index.ts');
     checkIndexFileExists(indexFilePath);
@@ -279,7 +281,7 @@ function checkInternalReExports(fileContent: string, filePath: string): void {
 
 export async function parseIndexFile(
   filePath: string,
-  strict: Boolean
+  strict: boolean
 ): Promise<string[]> {
   const cwd = dirname(filePath);
   const fileContent = await readFile(filePath, 'utf-8');

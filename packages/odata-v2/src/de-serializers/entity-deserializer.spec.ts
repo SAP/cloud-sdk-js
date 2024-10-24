@@ -10,17 +10,11 @@ describe('with default (de-)serializers', () => {
   it('should deserialize 1', () => {
     const expected = testEntityApi
       .entityBuilder()
-      .complexTypeProperty({
-        stringProperty
-      })
       .stringProperty('test')
       .build();
 
     const actual = deserializeEntity(
       {
-        ComplexTypeProperty: {
-          StringProperty: stringProperty
-        },
         StringProperty: expected.stringProperty
       },
       testEntityApi

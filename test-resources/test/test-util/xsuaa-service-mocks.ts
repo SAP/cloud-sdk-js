@@ -1,3 +1,4 @@
+import https from 'node:https';
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import type { ServiceCredentials } from '@sap-cloud-sdk/connectivity';
@@ -30,6 +31,7 @@ export function mockClientCredentialsGrantWithCertCall(
   serviceCredentials: ServiceCredentials,
   zoneId?: string
 ) {
+  jest.spyOn(https, 'request');
   return nock(uri, {
     reqheaders: xsuaaRequestHeaders(zoneId ? { zid: zoneId } : {})
   })
@@ -38,9 +40,18 @@ export function mockClientCredentialsGrantWithCertCall(
       client_id: serviceCredentials.clientid
     })
     .reply(responseCode, function () {
-      const agentOptions = (this.req as any).options.agent.options;
-      expect(agentOptions.cert).toEqual(serviceCredentials.certificate);
-      expect(agentOptions.key).toEqual(serviceCredentials.key);
+      expect(https.request).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          agent: expect.objectContaining({
+            options: expect.objectContaining({
+              key: serviceCredentials.key,
+              cert: serviceCredentials.certificate
+            })
+          })
+        }),
+        expect.anything()
+      );
       return response;
     });
 }

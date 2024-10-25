@@ -210,16 +210,18 @@ describe('GetAllRequestBuilder', () => {
       mockGetRequest(
         {
           responseBody: { error: 'ERROR' },
-          statusCode: 500
+          statusCode: 500,
+          path: 'A_TestEntity'
         },
         testEntityApi
       );
 
       const getAllRequest = requestBuilder.execute(defaultDestination);
 
-      await expect(getAllRequest).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"get request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! "'
-      );
+      await expect(getAllRequest).rejects.toThrowErrorMatchingInlineSnapshot(`
+"get request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! 
+"ERROR""
+`);
     });
 
     it('considers custom timeout on the request', async () => {

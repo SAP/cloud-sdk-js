@@ -193,7 +193,7 @@ describe('GetByKeyRequestBuilder', () => {
   });
 
   it('throws a useful error when request execution fails', async () => {
-    nock(/.*/).get(/.*/).reply(500);
+    nock(defaultDestination.url).get(/.*/).reply(500);
 
     const getByKeyRequest = new GetByKeyRequestBuilder(testEntityApi, {
       KeyPropertyGuid: uuid(),

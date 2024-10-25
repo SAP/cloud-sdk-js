@@ -3,6 +3,7 @@ import * as httpClient from '@sap-cloud-sdk/http-client';
 import { oDataTypedClientParameterEncoder } from '@sap-cloud-sdk/http-client/dist/http-client';
 import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import { timeout } from '@sap-cloud-sdk/resilience';
+import { parseDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf/destination/destination';
 import {
   defaultDestination,
   mockCountRequest,
@@ -21,7 +22,6 @@ import {
   createOriginalTestEntityDataWithLinks,
   mockFetchDestinationCalls
 } from '../../../../test-resources/test/test-util';
-import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import {
   testEntityApi,
   testEntitySingleLinkApi,
@@ -205,6 +205,7 @@ describe('GetAllRequestBuilder', () => {
     mockGetRequest(
       {
         responseBody: { error: 'ERROR' },
+        path: 'A_TestEntity',
         statusCode: 500
       },
       testEntityApi
@@ -212,9 +213,10 @@ describe('GetAllRequestBuilder', () => {
 
     const getAllRequest = requestBuilder.execute(defaultDestination);
 
-    await expect(getAllRequest).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"get request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! "'
-    );
+    await expect(getAllRequest).rejects.toThrowErrorMatchingInlineSnapshot(`
+"get request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! 
+"ERROR""
+`);
   });
 
   it('considers custom timeout on the request', async () => {

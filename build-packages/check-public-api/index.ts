@@ -17,7 +17,6 @@ import type { CompilerOptions } from 'typescript';
 const { readFile, lstat, readdir } = promises;
 
 const pathToTsConfigRoot = join(__dirname, '../../../tsconfig.json');
-const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
 export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
 
@@ -47,7 +46,6 @@ function mockFileSystem(pathToPackage: string) {
   mock({
     [pathToTsConfig]: mock.load(pathToTsConfig),
     [pathToSource]: mock.load(pathToSource),
-    [pathRootNodeModules]: mock.load(pathRootNodeModules),
     [pathToNodeModules]: mock.load(pathToNodeModules),
     [pathToTsConfigRoot]: mock.load(pathToTsConfigRoot)
   });

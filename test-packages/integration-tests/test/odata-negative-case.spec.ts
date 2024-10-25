@@ -18,13 +18,13 @@ describe('odata negative tests', () => {
       await promises.mkdir(testOutputRootDir);
     }
     if (existsSync(testDir)) {
-      await promises.rmdir(testDir, { recursive: true });
+      await promises.rm(testDir, { recursive: true });
     }
     await promises.mkdir(testDir);
   });
 
   afterAll(async () => {
-    await promises.rmdir(testDir, { recursive: true });
+    await promises.rm(testDir, { recursive: true });
   });
 
   it('should fail on faulty edmx', async () => {

@@ -21,8 +21,8 @@ function mockCsrfTokenRequest(
   })
     .head(
       path
-        ? `${TestEntity._defaultBasePath}/${path}`
-        : TestEntity._defaultBasePath
+        ? `${TestEntity._defaultBasePath}/${path}/`
+        : `${TestEntity._defaultBasePath}/`
     )
     .reply(200, '', {
       'x-csrf-token': csrfToken,

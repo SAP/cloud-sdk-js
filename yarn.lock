@@ -6802,10 +6802,10 @@ mkdirp@^3.0.1:
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-3.0.1.tgz#e44e4c5607fb279c168241713cc6e0fea9adcb50"
   integrity sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==
 
-mock-fs@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.npmjs.org/mock-fs/-/mock-fs-5.3.0.tgz#7dfc95ce5528aff8e10fa117161b91d8129e0e9e"
-  integrity sha512-IMvz1X+RF7vf+ur7qUenXMR7/FSKSIqS3HqFHXcyNI7G0FbpFO8L5lfsUJhl+bhK1AiulVHWKUSxebWauPA+xQ==
+mock-fs@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.npmjs.org/mock-fs/-/mock-fs-5.4.0.tgz#c1d91d6d8dc19269a0fe86e8b777521d990c2ed7"
+  integrity sha512-3ROPnEMgBOkusBMYQUW2rnT3wZwsgfOKzJDLvx/TZ7FL1WmWvwSwn3j4aDR5fLDGtgcc1WF0Z1y0di7c9L4FKw==
 
 mock-json-schema@^1.0.7:
   version "1.1.1"

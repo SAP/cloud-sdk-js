@@ -73,12 +73,9 @@ async function getCompilerOptions(
   };
 }
 
-function getIgnoredPaths() {
-  const ignoredPaths = getInput('ignore-paths');
-  if (ignoredPaths) {
-    return ignoredPaths.split(',');
-  }
-  return [];
+function getListFromInput(inputKey: string) {
+  const input = getInput(inputKey);
+  return input ? input.split(',') : [];
 }
 
 /**
@@ -95,7 +92,7 @@ function compareApisAndLog(
 
   allExportedTypes.forEach(exportedType => {
     const normalizedPath = exportedType.path.split(sep).join(posix.sep);
-    const ignoredPaths = getIgnoredPaths();
+    const ignoredPaths = getListFromInput('ignored-paths');
 
     const isPathMatched = ignoredPaths.length
       ? ignoredPaths.some(ignoredPath =>
@@ -381,8 +378,14 @@ function compareBarrels(
 
 async function runCheckApi() {
   const { packages } = await getPackages(process.cwd());
-  const packagesToCheck = packages.filter(pkg =>
-    pkg.relativeDir.startsWith('packages')
+  const excludedPackages = getListFromInput('excluded-packages').map(pkg =>
+    pkg.split(sep).join(posix.sep)
+  );
+
+  const packagesToCheck = packages.filter(
+    pkg =>
+      pkg.relativeDir.startsWith('packages') &&
+      !excludedPackages.includes(pkg.relativeDir.split(sep).join(posix.sep))
   );
   for (const pkg of packagesToCheck) {
     try {

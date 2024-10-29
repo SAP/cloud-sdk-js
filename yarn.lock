@@ -9664,10 +9664,10 @@ utils-merge@1.0.1:
   resolved "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
 
-uuid@^11.0.1:
-  version "11.0.1"
-  resolved "https://registry.npmjs.org/uuid/-/uuid-11.0.1.tgz#a527e188c4c11a7ff5d139e59f229a9f90440669"
-  integrity sha512-wt9UB5EcLhnboy1UvA1mvGPXkIIrHSu+3FmUksARfdVw9tuPf3CH/CohxO0Su1ApoKAeT6BVzAJIvjTuQVSmuQ==
+uuid@^11.0.2:
+  version "11.0.2"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-11.0.2.tgz#a8d68ba7347d051e7ea716cc8dcbbab634d66875"
+  integrity sha512-14FfcOJmqdjbBPdDjFQyk/SdT4NySW4eM0zcG+HqbHP5jzuH56xO3J1DGhgs/cEMCfwYi3HQI1gnTO62iaG+tQ==
 
 uuid@^3.3.2:
   version "3.4.0"

@@ -1,8 +1,5 @@
 import nock from 'nock';
 import {
-  EntityApi,
-  EntityBase,
-  GetAllRequestBuilderBase,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
   ODataGetAllRequestConfig,
@@ -11,11 +8,16 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { createODataUri as createODataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
 import { createODataUri as createODataUriV4 } from '@sap-cloud-sdk/odata-v4/internal';
-import {
+import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
+import type {
   HttpDestination,
-  Destination,
-  basicHeader
+  Destination
 } from '@sap-cloud-sdk/connectivity/internal';
+import type {
+  EntityApi,
+  EntityBase,
+  GetAllRequestBuilderBase
+} from '@sap-cloud-sdk/odata-common/internal';
 
 const defaultCsrfToken = 'mocked-x-csrf-token';
 
@@ -66,7 +68,16 @@ interface MockRequestParams {
   responseBody?: Record<string, any>;
   responseHeaders?: Record<string, any>;
   query?: Record<string, any>;
-  method?: string;
+  method?:
+    | 'get'
+    | 'post'
+    | 'put'
+    | 'head'
+    | 'patch'
+    | 'merge'
+    | 'delete'
+    | 'options';
+
   headers?: Record<string, any>;
   delay?: number;
 }
@@ -82,7 +93,7 @@ export function mockCreateRequest<T extends EntityApi<EntityBase, any>>(
   return mockRequest(requestConfig, {
     ...params,
     statusCode: params.statusCode || 200,
-    method: params.method || 'post',
+    method: params.method || ('post' as const),
     responseBody: { d: params.responseBody || params.body }
   });
 }

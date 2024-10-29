@@ -19,7 +19,7 @@ function mockCsrfTokenRequest(host: string, sapClient: string, path?: string) {
       'sap-client': sapClient
     }
   })
-    .head(path ? `${basePath}/${path}` : basePath)
+    .head(path ? `${basePath}/${path}/` : `${basePath}/`)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']

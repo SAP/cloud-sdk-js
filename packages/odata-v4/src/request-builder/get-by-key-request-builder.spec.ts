@@ -95,9 +95,9 @@ describe('GetByKeyRequestBuilder', () => {
     expect(actual[0].somethingTheSdkDoesNotSupport).toBe('SomeValue');
   });
 
-  it('ETag should be pulled from @odata.etag', async () => {
+  it('eTag should be pulled from @odata.etag', async () => {
     const entityData = createOriginalTestEntityDataV4_1();
-    const versionIdentifier = 'etagInMetadata';
+    const versionIdentifier = 'eTagInMetadata';
     entityData['@odata.etag'] = versionIdentifier;
     const expected = createTestEntity(entityData);
     const response = {
@@ -129,10 +129,10 @@ describe('GetByKeyRequestBuilder', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('ETag should be pulled from response header when json payload has no @odata.etag property', async () => {
+  it('eTag should be pulled from response header when json payload has no @odata.etag property', async () => {
     const entityData = createOriginalTestEntityDataV4_1();
     const expected = createTestEntity(entityData);
-    const versionIdentifier = 'etagInHeader';
+    const versionIdentifier = 'eTagInHeader';
     expected.setVersionIdentifier(versionIdentifier);
     const response = {
       KeyPropertyGuid: entityData.KeyPropertyGuid,
@@ -150,7 +150,7 @@ describe('GetByKeyRequestBuilder', () => {
           expected.keyDateProperty
         ),
         responseBody: response,
-        responseHeaders: { Etag: versionIdentifier }
+        responseHeaders: { etag: versionIdentifier }
       },
       testEntityApi
     );

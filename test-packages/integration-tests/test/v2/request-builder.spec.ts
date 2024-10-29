@@ -43,7 +43,7 @@ function mockCsrfTokenRequest(path?: string) {
       'x-csrf-token': 'Fetch'
     }
   })
-    .head(path ? `${basePath}/${path}` : basePath)
+    .head(path ? `${basePath}/${path}/` : `${basePath}/`)
     .reply(200, '', mockedBuildHeaderResponse);
 }
 
@@ -440,15 +440,27 @@ describe('Request Builder', () => {
   it('sending OData request should not break when x-csrf-token or cookies are not defined in csrf fetch response', async () => {
     const response = singleTestEntityResponse();
 
+    destination = { ...destination, url: 'https://example.com' };
+
     nock(destination.url, {
       reqheaders: {
         authorization: basicHeader(destination.username, destination.password),
         'x-csrf-token': 'Fetch',
-        'sap-client': destination.sapClient as string
+        'sap-client': destination.sapClient
       }
     })
-      .get(`${basePath}/${entityName}`)
-      .reply(200, undefined, undefined);
+      .head(`${basePath}/${entityName}/`)
+      .reply(200);
+
+    nock(destination.url, {
+      reqheaders: {
+        authorization: basicHeader(destination.username, destination.password),
+        'x-csrf-token': 'Fetch',
+        'sap-client': destination.sapClient
+      }
+    })
+      .head(`${basePath}/${entityName}`)
+      .reply(200);
 
     nock(destination.url, {
       reqheaders: {
@@ -473,10 +485,14 @@ describe('Request Builder', () => {
           .int16Property(145)
           .booleanProperty(true)
           .build()
-      )
-      .execute(destination);
+      );
 
-    await expect(request).resolves.not.toThrow();
+    // try {
+    //   await request.execute(destination);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    await expect(request.execute(destination)).resolves.not.toThrow();
   });
 
   it('should allow setting custom headers', async () => {

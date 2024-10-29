@@ -8,9 +8,8 @@ import { flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 import {
   readCompilerOptions,
-  readIncludeExcludeWithDefaults,
-  transpileDirectory,
-  defaultPrettierConfig
+  defaultPrettierConfig,
+  transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
 import type { CompilerOptions } from 'typescript';
 import { getPackages } from '@manypkg/get-packages';
@@ -142,23 +141,18 @@ function compareApisAndLog(
 export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   try {
     info(`Check package: ${pathToPackage}`);
-    const { pathToSource, pathCompiled, pathToTsConfig } = paths(pathToPackage);
+    const { pathToSource, pathCompiled } = paths(pathToPackage);
     mockFileSystem(pathToPackage);
     const opts = await getCompilerOptions(pathToPackage);
-    const includeExclude = await readIncludeExcludeWithDefaults(pathToTsConfig);
-    await transpileDirectory(
-      pathToSource,
-      {
-        compilerOptions: opts,
-        // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
-        createFileOptions: {
-          overwrite: true,
-          prettierOptions: defaultPrettierConfig,
-          usePrettier: false
-        }
-      },
-      { exclude: includeExclude?.exclude, include: ['**/*.ts'] }
-    );
+    await transpileDirectory(pathToSource, {
+      compilerOptions: opts,
+      // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
+      createFileOptions: {
+        overwrite: true,
+        prettierOptions: defaultPrettierConfig,
+        usePrettier: false
+      }
+    });
 
     const forceInternalExports = getInput('force-internal-exports') === 'true';
 

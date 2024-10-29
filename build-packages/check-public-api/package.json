@@ -6,7 +6,7 @@
     "private": true,
     "scripts": {
       "compile": "tsc -p tsconfig.json",
-      "postcompile": "ncc build lib/build-packages/check-public-api/index.js --out ../../.github/actions/check-public-api/",
+      "postcompile": "esbuild index.ts --bundle --outfile=../../.github/actions/check-public-api/index.js --platform=node --target=es2021",
       "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
       "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
       "check:dependencies": "depcheck --skip-missing=true .",
@@ -22,9 +22,8 @@
       "mock-fs": "^4.13.4"
     },
     "devDependencies": {
-      "@types/node": "^18.19.58",
-      "@vercel/ncc": "^0.34.0",
       "depcheck": "^1.4.7",
+      "esbuild": "0.24.0",
       "eslint": "^8.57.0",
       "prettier": "^3.3.3",
       "typescript": "~5.6.3"

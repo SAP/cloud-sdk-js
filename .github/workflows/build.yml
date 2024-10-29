@@ -64,9 +64,6 @@ jobs:
         with:
           node-version: 22
           cache: 'yarn'
-      # TODO: remove this additional check once ready to merge
-      - uses: ./.github/actions/check-public-api
-        name: Check public api
       - name: REUSE Compliance Check
         uses: fsfe/reuse-action@v4
       - run: yarn install --frozen-lockfile --ignore-engines

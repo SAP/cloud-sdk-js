@@ -6780,6 +6780,11 @@ mkdirp@^3.0.1:
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-3.0.1.tgz#e44e4c5607fb279c168241713cc6e0fea9adcb50"
   integrity sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==
 
+mock-fs@^4.13.4:
+  version "4.14.0"
+  resolved "https://registry.npmjs.org/mock-fs/-/mock-fs-4.14.0.tgz#ce5124d2c601421255985e6e94da80a7357b1b18"
+  integrity sha512-qYvlv/exQ4+svI3UOvPUpLDF0OMX5euvUH0Ny4N5QyRyhNdgAgUrVH3iUINSzEPLvx0kbo/Bp28GJKIqvE7URw==
+
 mock-fs@^5.3.0:
   version "5.3.0"
   resolved "https://registry.npmjs.org/mock-fs/-/mock-fs-5.3.0.tgz#7dfc95ce5528aff8e10fa117161b91d8129e0e9e"

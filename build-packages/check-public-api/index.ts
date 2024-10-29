@@ -3,7 +3,7 @@
 import { join, resolve, parse, basename, dirname, posix, sep } from 'path';
 import { promises, existsSync } from 'fs';
 import { glob } from 'glob';
-import { info, warning, error, getInput } from '@actions/core';
+import { info, warning, error, getInput, setFailed } from '@actions/core';
 import { flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 import {
@@ -13,10 +13,12 @@ import {
   defaultPrettierConfig
 } from '@sap-cloud-sdk/generator-common/internal';
 import type { CompilerOptions } from 'typescript';
+import { getPackages } from '@manypkg/get-packages';
 
 const { readFile, lstat, readdir } = promises;
 
 const pathToTsConfigRoot = join(__dirname, '../../../tsconfig.json');
+const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
 export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
 
@@ -46,6 +48,7 @@ function mockFileSystem(pathToPackage: string) {
   mock({
     [pathToTsConfig]: mock.load(pathToTsConfig),
     [pathToSource]: mock.load(pathToSource),
+    [pathRootNodeModules]: mock.load(pathRootNodeModules),
     [pathToNodeModules]: mock.load(pathToNodeModules),
     [pathToTsConfigRoot]: mock.load(pathToTsConfigRoot)
   });
@@ -178,7 +181,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
       process.exit(1);
     }
     info(
-      `The index.ts of package ${pathToPackage} is in sync with the type annotations.`
+      `The index.ts of package ${pathToPackage} is in sync with the type annotations.\n`
     );
   } finally {
     mock.restore();
@@ -382,4 +385,21 @@ function compareBarrels(
   return missingBarrelExports.length || extraBarrelExports.length;
 }
 
-checkApiOfPackage('./packages/resilience');
+async function runCheckApi() {
+  const { packages } = await getPackages(process.cwd());
+  const packagesToCheck = packages.filter(pkg =>
+    pkg.relativeDir.startsWith('packages')
+  );
+  for (const pkg of packagesToCheck) {
+    try {
+      await checkApiOfPackage(pkg.dir);
+    } catch (error) {
+      setFailed(`API check failed for ${pkg.relativeDir}: ${error}`);
+      process.exit(1);
+    }
+  }
+}
+
+(async function () {
+  await runCheckApi();
+})();

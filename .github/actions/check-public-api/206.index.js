@@ -3,7 +3,7 @@ exports.id = 206;
 exports.ids = [206];
 exports.modules = {
 
-/***/ 2824:
+/***/ 1206:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);

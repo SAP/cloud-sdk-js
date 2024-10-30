@@ -1,5 +1,5 @@
 import mock from 'mock-fs';
-import path, { posix } from 'path';
+import path from 'path';
 import * as core from '@actions/core';
 import {
   checkBarrelRecursive,
@@ -56,9 +56,8 @@ describe('check-public-api', () => {
     });
 
     it('fails if a file is not exported in barrel file', async () => {
-      const dir1 = 'dir1';
       mock({
-        [dir1]: {
+        dir1: {
           file1: '',
           'index.ts': "export * from './file1';",
           dir2: {
@@ -69,9 +68,11 @@ describe('check-public-api', () => {
         }
       });
 
-      await exportAllInBarrel(posix.join(dir1), 'index.ts');
+      await exportAllInBarrel('dir1', 'index.ts');
+
       expect(errorSpy).toHaveBeenCalledWith(
-        "No 'index.ts' file found in 'dir1'."
+        "'dir2' is not exported in 'dir1/index.ts'.",
+        "'index.ts' is not in sync."
       );
     });
   });

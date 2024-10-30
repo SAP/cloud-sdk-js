@@ -1,5 +1,5 @@
 import mock from 'mock-fs';
-import path, { posix} from 'path';
+import path, { posix } from 'path';
 import * as core from '@actions/core';
 import {
   checkBarrelRecursive,
@@ -70,7 +70,9 @@ describe('check-public-api', () => {
       });
 
       await exportAllInBarrel(posix.join(dir1), 'index.ts');
-      expect(errorSpy).toHaveBeenCalledWith("No 'index.ts' file found in 'dir1'.");
+      expect(errorSpy).toHaveBeenCalledWith(
+        "No 'index.ts' file found in 'dir1'."
+      );
     });
   });
 

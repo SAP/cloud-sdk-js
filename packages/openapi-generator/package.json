@@ -33,7 +33,6 @@
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi'",
-    "check:public-api": "ts-node ../../scripts/check-public-api-cli.ts",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {

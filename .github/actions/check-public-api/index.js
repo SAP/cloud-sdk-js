@@ -278,9 +278,9 @@ function compareBarrels(dirContents, exportedFiles, barrelFilePath) {
 }
 async function runCheckApi() {
     const { packages } = await (0, get_packages_1.getPackages)(process.cwd());
-    const excludedPackages = getListFromInput('excluded-packages').map(pkg => pkg.split(path_1.sep).join(path_1.posix.sep));
+    const excludedPackages = getListFromInput('excluded-packages');
     const packagesToCheck = packages.filter(pkg => pkg.relativeDir.startsWith('packages') &&
-        !excludedPackages.includes(pkg.relativeDir.split(path_1.sep).join(path_1.posix.sep)));
+        !excludedPackages.some(excl => pkg.relativeDir.includes(excl)));
     for (const pkg of packagesToCheck) {
         try {
             await checkApiOfPackage(pkg.dir);
@@ -291,9 +291,11 @@ async function runCheckApi() {
         }
     }
 }
-(async function () {
-    await runCheckApi();
-})();
+if (require.main === require.cache[eval('__filename')]) {
+    (async function () {
+        await runCheckApi();
+    })();
+}
 
 
 /***/ }),

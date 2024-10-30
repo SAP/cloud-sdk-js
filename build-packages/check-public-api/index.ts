@@ -378,14 +378,12 @@ function compareBarrels(
 
 async function runCheckApi() {
   const { packages } = await getPackages(process.cwd());
-  const excludedPackages = getListFromInput('excluded-packages').map(pkg =>
-    pkg.split(sep).join(posix.sep)
-  );
+  const excludedPackages = getListFromInput('excluded-packages');
 
   const packagesToCheck = packages.filter(
     pkg =>
       pkg.relativeDir.startsWith('packages') &&
-      !excludedPackages.includes(pkg.relativeDir.split(sep).join(posix.sep))
+      !excludedPackages.some(excl => pkg.relativeDir.includes(excl))
   );
   for (const pkg of packagesToCheck) {
     try {
@@ -397,6 +395,8 @@ async function runCheckApi() {
   }
 }
 
-(async function () {
-  await runCheckApi();
-})();
+if (require.main === module) {
+  (async function () {
+    await runCheckApi();
+  })();
+}

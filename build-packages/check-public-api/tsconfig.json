@@ -12,6 +12,6 @@
       "module": "Node16",
       "lib": ["ES2021", "dom"]
     },
-    "include": ["*.ts"],
+    "include": ["index.ts"],
     "exclude": []
   }

@@ -1,4 +1,5 @@
 import mock from 'mock-fs';
+import path from 'path';
 import * as core from '@actions/core';
 import {
   checkBarrelRecursive,
@@ -103,9 +104,9 @@ describe('check-public-api', () => {
     });
 
     expect(await typeDescriptorPaths('dir1')).toEqual([
-      'dir1\\file1.d.ts',
-      'dir1\\dir2\\file3.d.ts',
-      'dir1\\dir2\\file2.d.ts'
+      path.normalize('dir1/file1.d.ts'),
+      path.normalize('dir1/dir2/file3.d.ts'),
+      path.normalize('dir1/dir2/file2.d.ts')
     ]);
   });
 

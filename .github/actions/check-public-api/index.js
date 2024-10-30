@@ -71,7 +71,7 @@ async function getCompilerOptions(pathToPackage) {
 }
 function getListFromInput(inputKey) {
     const input = (0, core_1.getInput)(inputKey);
-    return input ? input.split(',') : [];
+    return input ? input.split(',').map(item => item.trim()) : [];
 }
 /**
  * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.

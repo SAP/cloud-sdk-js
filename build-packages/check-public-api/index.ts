@@ -75,7 +75,7 @@ async function getCompilerOptions(
 
 function getListFromInput(inputKey: string) {
   const input = getInput(inputKey);
-  return input ? input.split(',') : [];
+  return input ? input.split(',').map(item => item.trim()) : [];
 }
 
 /**

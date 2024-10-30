@@ -71,8 +71,9 @@ describe('check-public-api', () => {
       await exportAllInBarrel('dir1', 'index.ts');
 
       expect(errorSpy).toHaveBeenCalledWith(
-        "No 'index.ts' file found in 'dir1'."
+        "'dir2' is not exported in 'dir1/index.ts'."
       );
+      expect(errorSpy).toHaveBeenCalledWith("'index.ts' is not in sync.");
     });
   });
 

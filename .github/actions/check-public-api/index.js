@@ -30,8 +30,8 @@ const mock_fs_1 = __importDefault(__nccwpck_require__(6699));
 const internal_1 = __nccwpck_require__(81583);
 const get_packages_1 = __nccwpck_require__(30886);
 const { readFile, lstat, readdir } = fs_1.promises;
-const pathToTsConfigRoot = (0, path_1.join)(__dirname, '../../../tsconfig.json');
-const pathRootNodeModules = (0, path_1.resolve)(__dirname, '../../../node_modules');
+const pathToTsConfigRoot = (0, path_1.join)(process.cwd(), 'tsconfig.json');
+const pathRootNodeModules = (0, path_1.join)(process.cwd(), 'node_modules');
 exports.regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 exports.regexExportedInternal = /\.\/([\w-]+)/g;
 function paths(pathToPackage) {

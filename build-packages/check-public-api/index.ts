@@ -16,8 +16,8 @@ import { getPackages } from '@manypkg/get-packages';
 
 const { readFile, lstat, readdir } = promises;
 
-const pathToTsConfigRoot = join(__dirname, '../../../tsconfig.json');
-const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
+const pathToTsConfigRoot = join(process.cwd(), 'tsconfig.json');
+const pathRootNodeModules = join(process.cwd(), 'node_modules');
 export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
 

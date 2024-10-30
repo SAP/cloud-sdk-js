@@ -90,10 +90,10 @@ function compareApisAndLog(
   allExportedTypes: ExportedObject[]
 ): boolean {
   let setsAreEqual = true;
+  const ignoredPaths = getListFromInput('ignored-paths');
 
   allExportedTypes.forEach(exportedType => {
     const normalizedPath = exportedType.path.split(sep).join(posix.sep);
-    const ignoredPaths = getListFromInput('ignored-paths');
 
     const isPathMatched = ignoredPaths.length
       ? ignoredPaths.some(ignoredPath =>
@@ -294,7 +294,7 @@ export async function parseIndexFile(
         ...parseExportedObjectsInFile(fileContent).map(obj => obj.name)
       ];
   const starFiles = captureGroupsFromGlobalRegex(
-    /export \* from '([\w/.]+)'/g,
+    /export \* from '([\w\/.-]+)'/g,
     fileContent
   );
   const starFileExports = await Promise.all(

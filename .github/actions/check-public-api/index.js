@@ -81,9 +81,9 @@ function getListFromInput(inputKey) {
  */
 function compareApisAndLog(allExportedIndex, allExportedTypes) {
     let setsAreEqual = true;
+    const ignoredPaths = getListFromInput('ignored-paths');
     allExportedTypes.forEach(exportedType => {
         const normalizedPath = exportedType.path.split(path_1.sep).join(path_1.posix.sep);
-        const ignoredPaths = getListFromInput('ignored-paths');
         const isPathMatched = ignoredPaths.length
             ? ignoredPaths.some(ignoredPath => normalizedPath.includes(ignoredPath.split(path_1.sep).join(path_1.posix.sep)))
             : false;
@@ -229,7 +229,7 @@ async function parseIndexFile(filePath, forceInternalExports) {
             ...parseBarrelFile(fileContent, exports.regexExportedIndex),
             ...parseExportedObjectsInFile(fileContent).map(obj => obj.name)
         ];
-    const starFiles = captureGroupsFromGlobalRegex(/export \* from '([\w/.]+)'/g, fileContent);
+    const starFiles = captureGroupsFromGlobalRegex(/export \* from '([\w\/.-]+)'/g, fileContent);
     const starFileExports = await Promise.all(starFiles.map(async (relativeFilePath) => {
         const filePath = relativeFilePath.endsWith('.js')
             ? (0, path_1.resolve)(cwd, `${relativeFilePath.slice(0, -3)}.ts`)

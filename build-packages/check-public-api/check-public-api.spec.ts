@@ -70,10 +70,11 @@ describe('check-public-api', () => {
 
       await exportAllInBarrel('dir1', 'index.ts');
 
+      expect(errorSpy).toHaveBeenCalledTimes(2);
       expect(errorSpy).toHaveBeenCalledWith(
-        "'dir2' is not exported in 'dir1/index.ts'.",
-        "'index.ts' is not in sync."
+        "'dir2' is not exported in 'dir1/index.ts'."
       );
+      expect(errorSpy).toHaveBeenCalledWith("'index.ts' is not in sync.");
     });
   });
 

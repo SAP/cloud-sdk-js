@@ -76,7 +76,7 @@ jobs:
       - uses: ./.github/actions/check-public-api
         with:
             force-internal-exports: 'true'
-            excluded-packages: '["packages/eslint-config", "packages/util", "packages/test-util"]'
+            excluded-packages: 'packages/eslint-config, packages/util, packages/test-util'
         name: Check public api
       - run: yarn test:self
         name: Self tests for tools

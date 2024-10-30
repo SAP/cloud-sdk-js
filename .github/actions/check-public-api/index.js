@@ -113,9 +113,10 @@ function compareApisAndLog(allExportedIndex, allExportedTypes) {
 async function checkApiOfPackage(pathToPackage) {
     try {
         (0, core_1.info)(`Check package: ${pathToPackage}`);
-        const { pathToSource, pathCompiled } = paths(pathToPackage);
+        const { pathToSource, pathCompiled, pathToTsConfig } = paths(pathToPackage);
         mockFileSystem(pathToPackage);
         const opts = await getCompilerOptions(pathToPackage);
+        const includeExclude = await (0, internal_1.readIncludeExcludeWithDefaults)(pathToTsConfig);
         await (0, internal_1.transpileDirectory)(pathToSource, {
             compilerOptions: opts,
             // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
@@ -124,7 +125,7 @@ async function checkApiOfPackage(pathToPackage) {
                 prettierOptions: internal_1.defaultPrettierConfig,
                 usePrettier: false
             }
-        });
+        }, { exclude: includeExclude?.exclude, include: ['**/*.ts'] });
         const forceInternalExports = (0, core_1.getInput)('force-internal-exports') === 'true';
         if (forceInternalExports) {
             await checkBarrelRecursive(pathToSource);
@@ -229,7 +230,12 @@ async function parseIndexFile(filePath, forceInternalExports) {
             ...parseExportedObjectsInFile(fileContent).map(obj => obj.name)
         ];
     const starFiles = captureGroupsFromGlobalRegex(/export \* from '([\w/.]+)'/g, fileContent);
-    const starFileExports = await Promise.all(starFiles.map(async (relativeFilePath) => parseIndexFile((0, path_1.resolve)(cwd, `${relativeFilePath}.ts`), forceInternalExports)));
+    const starFileExports = await Promise.all(starFiles.map(async (relativeFilePath) => {
+        const filePath = relativeFilePath.endsWith('.js')
+            ? (0, path_1.resolve)(cwd, `${relativeFilePath.slice(0, -3)}.ts`)
+            : (0, path_1.resolve)(cwd, `${relativeFilePath}.ts`);
+        return parseIndexFile(filePath, forceInternalExports);
+    }));
     return [...localExports, ...starFileExports.flat()];
 }
 function captureGroupsFromGlobalRegex(regex, str) {

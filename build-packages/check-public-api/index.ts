@@ -9,6 +9,7 @@ import mock from 'mock-fs';
 import {
   readCompilerOptions,
   defaultPrettierConfig,
+  readIncludeExcludeWithDefaults,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
 import type { CompilerOptions } from 'typescript';
@@ -138,18 +139,23 @@ function compareApisAndLog(
 export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   try {
     info(`Check package: ${pathToPackage}`);
-    const { pathToSource, pathCompiled } = paths(pathToPackage);
+    const { pathToSource, pathCompiled, pathToTsConfig } = paths(pathToPackage);
     mockFileSystem(pathToPackage);
     const opts = await getCompilerOptions(pathToPackage);
-    await transpileDirectory(pathToSource, {
-      compilerOptions: opts,
-      // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
-      createFileOptions: {
-        overwrite: true,
-        prettierOptions: defaultPrettierConfig,
-        usePrettier: false
-      }
-    });
+    const includeExclude = await readIncludeExcludeWithDefaults(pathToTsConfig);
+    await transpileDirectory(
+      pathToSource,
+      {
+        compilerOptions: opts,
+        // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
+        createFileOptions: {
+          overwrite: true,
+          prettierOptions: defaultPrettierConfig,
+          usePrettier: false
+        }
+      },
+      { exclude: includeExclude?.exclude!, include: ['**/*.ts'] }
+    );
 
     const forceInternalExports = getInput('force-internal-exports') === 'true';
 
@@ -292,12 +298,13 @@ export async function parseIndexFile(
     fileContent
   );
   const starFileExports = await Promise.all(
-    starFiles.map(async relativeFilePath =>
-      parseIndexFile(
-        resolve(cwd, `${relativeFilePath}.ts`),
-        forceInternalExports
-      )
-    )
+    starFiles.map(async relativeFilePath => {
+      const filePath = relativeFilePath.endsWith('.js')
+        ? resolve(cwd, `${relativeFilePath.slice(0, -3)}.ts`)
+        : resolve(cwd, `${relativeFilePath}.ts`);
+
+      return parseIndexFile(filePath, forceInternalExports);
+    })
   );
   return [...localExports, ...starFileExports.flat()];
 }

@@ -76,6 +76,12 @@ function getCredentials(
   destination: Destination,
   originalProperties: Record<string, any>
 ): { username: string; password: string } {
+  if (
+    destination.proxyType === 'OnPremise' &&
+    destination.authentication === 'NoAuthentication'
+  ) {
+    return { username: '', password: '' };
+  }
   const username = originalProperties['mail.user'];
   const password = originalProperties['mail.password'];
 

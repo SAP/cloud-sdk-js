@@ -40,6 +40,7 @@ describe('check-public-api', () => {
       mock({
         src: {
           file1: '',
+          'internal.ts': '',
           dir2: {
             file2: ''
           }

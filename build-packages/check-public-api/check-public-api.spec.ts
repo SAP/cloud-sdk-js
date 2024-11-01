@@ -23,21 +23,17 @@ describe('check-public-api', () => {
     mock.restore();
   });
 
-  it('checkIndexFileExists fails if index file is not in root', () => {
-    mock({
-      root: {
-        dir1: {
-          'index.ts': ''
-        }
-      }
-    });
-    checkIndexFileExists('root/index.ts');
-    expect(errorSpy).toHaveBeenCalledWith('No index.ts file found in root.');
-  });
-
   describe('exportAllInBarrel', () => {
-    afterEach(() => {
-      mock.restore();
+    it('checkIndexFileExists fails if index file is not in root', () => {
+      mock({
+        root: {
+          dir1: {
+            'index.ts': ''
+          }
+        }
+      });
+      checkIndexFileExists('root/index.ts');
+      expect(errorSpy).toHaveBeenCalledWith('No index.ts file found in root.');
     });
 
     it('fails if internal.ts is not present in root', async () => {
@@ -75,41 +71,41 @@ describe('check-public-api', () => {
       );
       expect(errorSpy).toHaveBeenCalledWith("'index.ts' is not in sync.");
     });
-  });
 
-  it('checkBarrelRecursive passes recursive check for barrel file exports', () => {
-    mock({
-      dir1: {
-        file1: '',
-        'index.ts': "export * from './file1'; export * from './dir2';",
-        dir2: {
-          file2: '',
-          file3: '',
-          'index.ts': "export * from './file2';export * from './file3';"
+    it('checkBarrelRecursive passes recursive check for barrel file exports', () => {
+      mock({
+        dir1: {
+          file1: '',
+          'index.ts': "export * from './file1'; export * from './dir2';",
+          dir2: {
+            file2: '',
+            file3: '',
+            'index.ts': "export * from './file2';export * from './file3';"
+          }
         }
-      }
-    });
-    checkBarrelRecursive('dir1');
-  });
-
-  it('typeDescriptorPaths finds the .d.ts files and excludes index.d.ts', async () => {
-    mock({
-      dir1: {
-        'file1.d.ts': '',
-        'index.d.ts': '',
-        dir2: {
-          'file2.d.ts': '',
-          'file3.d.ts': '',
-          'index.d.ts': ''
-        }
-      }
+      });
+      checkBarrelRecursive('dir1');
     });
 
-    expect(await typeDescriptorPaths('dir1')).toEqual([
-      path.normalize('dir1/file1.d.ts'),
-      path.normalize('dir1/dir2/file3.d.ts'),
-      path.normalize('dir1/dir2/file2.d.ts')
-    ]);
+    it('typeDescriptorPaths finds the .d.ts files and excludes index.d.ts', async () => {
+      mock({
+        dir1: {
+          'file1.d.ts': '',
+          'index.d.ts': '',
+          dir2: {
+            'file2.d.ts': '',
+            'file3.d.ts': '',
+            'index.d.ts': ''
+          }
+        }
+      });
+
+      expect(await typeDescriptorPaths('dir1')).toEqual([
+        path.normalize('dir1/file1.d.ts'),
+        path.normalize('dir1/dir2/file3.d.ts'),
+        path.normalize('dir1/dir2/file2.d.ts')
+      ]);
+    });
   });
 
   describe('parseExportedObjectsInFile', () => {
@@ -157,8 +153,6 @@ describe('check-public-api', () => {
   });
 
   describe('parseIndexFile', () => {
-    afterEach(() => mock.restore());
-
     it('parses referenced star imports', async () => {
       mock({
         'index.ts': "export * from './common';export * from './subdir/ref';",

@@ -2,7 +2,7 @@ import { filterDuplicatesRight } from '@sap-cloud-sdk/util';
 import { reservedJsKeywords } from '@sap-cloud-sdk/generator-common/internal';
 import { parseRequestBody } from './request-body';
 import { parseSchema } from './schema';
-import { parseResponses } from './responses';
+import { parseResponses, parseErrorResponses } from './responses';
 import { ensureUniqueNames } from './unique-naming';
 import type { OperationInfo } from './parsing-info';
 import type { OpenApiDocumentRefs } from './refs';
@@ -25,6 +25,11 @@ export function parseOperation(
 ): OpenApiOperation {
   const requestBody = parseRequestBody(operation.requestBody, refs, options);
   const response = parseResponses(operation.responses, refs, options);
+  const errorResponses = parseErrorResponses(
+    operation.responses,
+    refs,
+    options
+  );
   const relevantParameters = getRelevantParameters(
     [...(pathItemParameters || []), ...(operation.parameters || [])],
     refs
@@ -52,7 +57,8 @@ export function parseOperation(
     pathParameters,
     pathPattern: parsePathPattern(pathPattern, pathParameters),
     operationId: operation.operationId!,
-    tags: operation.tags!
+    tags: operation.tags!,
+    errorResponses: errorResponses
   };
 }
 

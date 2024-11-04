@@ -98,6 +98,11 @@ export interface OpenApiOperation
    * Header parameters available for this operation.
    */
   headerParameters: OpenApiParameter[];
+
+  /**
+   * Schema of the error response for a given request.
+   */
+  errorResponses?: OpenApiSchema[];
 }
 
 const supportedMethods = {

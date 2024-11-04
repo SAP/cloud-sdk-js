@@ -43,27 +43,26 @@ export const ${api.name} = {
 function collectRefsFromOperations(
   operations: OpenApiOperation[]
 ): OpenApiReferenceSchema[] {
-  return getUniqueRefs(
-    operations.reduce(
-      (referenceTypes, operation) => [
-        ...referenceTypes,
-        ...collectRefs(
-          ...[
-            operation.requestBody?.schema,
-            operation.response,
-            ...operation.queryParameters.map(({ schema }) => schema)
-          ]
-        )
-      ],
-      []
-    )
+  const newLocal = operations.reduce(
+    (referenceTypes, operation) => [
+      ...referenceTypes,
+      ...collectRefs(
+        ...[
+          operation.requestBody?.schema,
+          operation.response,
+          ...(operation.errorResponses ?? []),
+          ...operation.queryParameters.map(({ schema }) => schema)
+        ]
+      )
+    ],
+    []
   );
+  return getUniqueRefs(newLocal);
 }
 
 function getImports(api: OpenApiApi, options?: CreateFileOptions): Import[] {
-  const refs = collectRefsFromOperations(api.operations).map(
-    requestBodyType => requestBodyType.schemaName
-  );
+  const newLocal_1 = collectRefsFromOperations(api.operations);
+  const refs = newLocal_1.map(requestBodyType => requestBodyType.schemaName);
 
   const refImports = {
     names: refs,

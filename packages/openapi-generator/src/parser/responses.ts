@@ -32,3 +32,29 @@ export function parseResponses(
     type: 'any'
   };
 }
+
+/**
+ * @internal
+ */
+export function parseErrorResponses(
+  responses: OpenAPIV3.ResponsesObject | undefined,
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
+): OpenApiSchema[] {
+  if (responses) {
+    const responseSchemas = Object.entries(responses)
+      .filter(
+        ([statusCode]) =>
+          statusCode.startsWith('4') ||
+          statusCode.startsWith('5') ||
+          statusCode === 'default'
+      )
+      .map(([, response]) => refs.resolveObject(response))
+      .map(response => parseMediaType(response, refs, options))
+      // Undefined responses are filtered
+      .filter(response => response) as OpenApiSchema[];
+    return responseSchemas;
+  } else {
+    return [];
+  }
+}

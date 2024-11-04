@@ -6090,10 +6090,10 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.npmjs.org/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
-json-schema-faker@^0.5.6:
-  version "0.5.6"
-  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.6.tgz#731e5a8616bf2b4b53206a6ae18578a5fccc43a5"
-  integrity sha512-u/cFC26/GDxh2vPiAC8B8xVvpXAW+QYtG2mijEbKrimCk8IHtiwQBjCE8TwvowdhALWq9IcdIWZ+/8ocXvdL3Q==
+json-schema-faker@^0.5.7:
+  version "0.5.7"
+  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.7.tgz#247fe5fd6af08d34b73365365e915742a0542e57"
+  integrity sha512-OcXpQnpsbYpIIyevqos/4GD1Cbom07fxWVIDqIcTeAAufeeShTSlPbDkA4VdTRKEwuaW2gdaR9d4PBUcelPpvA==
   dependencies:
     json-schema-ref-parser "^6.1.0"
     jsonpath-plus "^7.2.0"

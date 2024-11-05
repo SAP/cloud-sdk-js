@@ -40,7 +40,6 @@ describe('check-public-api', () => {
       mock({
         src: {
           file1: '',
-          'internal.ts': '',
           dir2: {
             file2: ''
           }
@@ -68,7 +67,7 @@ describe('check-public-api', () => {
       await exportAllInBarrel('dir1', 'index.ts');
 
       expect(errorSpy).toHaveBeenCalledWith(
-        "'dir2' is not exported in 'dir1/index.ts'."
+        `'dir2' is not exported in '${path.normalize('dir1/index.ts')}'.`
       );
       expect(errorSpy).toHaveBeenCalledWith("'index.ts' is not in sync.");
     });

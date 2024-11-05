@@ -9,8 +9,8 @@
       "postcompile": "ncc build lib/index.js --external prettier --external typescript  --out ../../.github/actions/check-public-api/",
       "test": "yarn test:unit",
       "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
-      "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
-      "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
+      "lint": "eslint && prettier --check **/*.ts",
+      "lint:fix": "eslint --fix --quiet && prettier --write **/*.ts",
       "check:dependencies": "depcheck --skip-missing=true .",
       "all": "yarn && yarn run lint && yarn run compile"
     },

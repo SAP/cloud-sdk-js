@@ -30,10 +30,20 @@ const mock_fs_1 = __importDefault(__nccwpck_require__(6699));
 const internal_1 = __nccwpck_require__(81583);
 const get_packages_1 = __nccwpck_require__(30886);
 const { readFile, lstat, readdir } = fs_1.promises;
+const localConfigPath = (0, path_1.join)(process.cwd(), 'build-packages/check-public-api/local-config.json');
 const pathToTsConfigRoot = (0, path_1.join)(process.cwd(), 'tsconfig.json');
 const pathRootNodeModules = (0, path_1.join)(process.cwd(), 'node_modules');
 exports.regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 exports.regexExportedInternal = /\.\/([\w-]+)/g;
+const localConfig = (() => {
+    try {
+        return JSON.parse((0, fs_1.readFileSync)(localConfigPath, 'utf8'));
+    }
+    catch (error) {
+        (0, core_1.warning)('Error reading local config file:', error);
+        return {};
+    }
+})();
 function paths(pathToPackage) {
     return {
         pathToSource: (0, path_1.join)(pathToPackage, 'src'),
@@ -70,8 +80,17 @@ async function getCompilerOptions(pathToPackage) {
     };
 }
 function getListFromInput(inputKey) {
-    const input = (0, core_1.getInput)(inputKey);
+    const input = (0, core_1.getInput)(inputKey) || localConfig[inputKey];
     return input ? input.split(',').map(item => item.trim()) : [];
+}
+function fileExists(filename) {
+    try {
+        (0, fs_1.accessSync)(filename);
+        return true;
+    }
+    catch (error) {
+        return false;
+    }
 }
 /**
  * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
@@ -126,7 +145,8 @@ async function checkApiOfPackage(pathToPackage) {
                 usePrettier: false
             }
         }, { exclude: includeExclude?.exclude, include: ['**/*.ts'] });
-        const forceInternalExports = (0, core_1.getInput)('force-internal-exports') === 'true';
+        const forceInternalExports = (0, core_1.getInput)('force-internal-exports') === 'true' ||
+            localConfig['force-internal-exports'] === 'true';
         if (forceInternalExports) {
             await checkBarrelRecursive(pathToSource);
         }
@@ -254,7 +274,7 @@ async function checkBarrelRecursive(cwd) {
 }
 async function exportAllInBarrel(cwd, barrelFileName) {
     const barrelFilePath = (0, path_1.join)(cwd, barrelFileName);
-    if ((0, fs_1.existsSync)(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
+    if (fileExists(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
         const dirContents = (await (0, glob_1.glob)('*', {
             ignore: [
                 '**/*.spec.ts',

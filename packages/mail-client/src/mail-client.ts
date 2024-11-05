@@ -278,8 +278,10 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   if (mailDestination.proxyType === 'OnPremise') {
     socket = await createSocket(mailDestination);
     // Workaround for incorrect order of events in nodemailer https://github.com/nodemailer/nodemailer/issues/1684
-    const greeting = await retrieveGreeting(socket);
-    resendGreeting = resendGreetingUntilReceived(greeting, socket);
+    if (mailDestination.port === 587) {
+      const greeting = await retrieveGreeting(socket);
+      resendGreeting = resendGreetingUntilReceived(greeting, socket);
+    }
   }
   const transport = createTransport(mailDestination, mailClientOptions, socket);
 

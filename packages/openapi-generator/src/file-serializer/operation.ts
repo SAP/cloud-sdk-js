@@ -26,11 +26,11 @@ export function serializeOperation(operation: OpenApiOperation): string {
   const responseType = serializeSchema(operation.response);
   return codeBlock`
 ${operationDocumentation(operation)}
-${operation.operationId}: (${serializeOperationSignature(
+${operation.operationId}: Object.assign((${serializeOperationSignature(
     operation
   )}) => new OpenApiRequestBuilder<${responseType}>(
   ${requestBuilderParams.join(',\n')}
-)`;
+))`;
 }
 
 function serializeOperationSignature(operation: OpenApiOperation): string {

@@ -43,26 +43,28 @@ export const ${api.name} = {
 function collectRefsFromOperations(
   operations: OpenApiOperation[]
 ): OpenApiReferenceSchema[] {
-  const newLocal = operations.reduce(
-    (referenceTypes, operation) => [
-      ...referenceTypes,
-      ...collectRefs(
-        ...[
-          operation.requestBody?.schema,
-          operation.response,
-          ...(operation.errorResponses ?? []),
-          ...operation.queryParameters.map(({ schema }) => schema)
-        ]
-      )
-    ],
-    []
+  return getUniqueRefs(
+    operations.reduce(
+      (referenceTypes, operation) => [
+        ...referenceTypes,
+        ...collectRefs(
+          ...[
+            operation.requestBody?.schema,
+            operation.response,
+            ...(operation.errorResponses ?? []),
+            ...operation.queryParameters.map(({ schema }) => schema)
+          ]
+        )
+      ],
+      []
+    )
   );
-  return getUniqueRefs(newLocal);
 }
 
 function getImports(api: OpenApiApi, options?: CreateFileOptions): Import[] {
-  const newLocal_1 = collectRefsFromOperations(api.operations);
-  const refs = newLocal_1.map(requestBodyType => requestBodyType.schemaName);
+  const refs = collectRefsFromOperations(api.operations).map(
+    requestBodyType => requestBodyType.schemaName
+  );
 
   const refImports = {
     names: refs,
@@ -74,7 +76,22 @@ function getImports(api: OpenApiApi, options?: CreateFileOptions): Import[] {
     moduleIdentifier: '@sap-cloud-sdk/openapi'
   };
 
-  return [openApiImports, refImports];
+  const imports: Import[] = [openApiImports, refImports];
+
+  const hasErrorResponses = api.operations.some(
+    (operation) => operation.errorResponses && operation.errorResponses.length
+  );
+
+  if (hasErrorResponses) {
+    const errorHandlingImports = {
+      names: ['AxiosError'],
+      moduleIdentifier: 'axios',
+      typeOnly: true
+    };
+    imports.push(errorHandlingImports);
+  }
+
+  return imports;
 }
 
 /**

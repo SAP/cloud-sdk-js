@@ -40,21 +40,26 @@ export function parseErrorResponses(
   responses: OpenAPIV3.ResponsesObject | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
-): OpenApiSchema[] {
+): Record<string, OpenApiSchema> {
   if (responses) {
-    const responseSchemas = Object.entries(responses)
+    const errorSchemas = Object.entries(responses)
       .filter(
         ([statusCode]) =>
           statusCode.startsWith('4') ||
           statusCode.startsWith('5') ||
           statusCode === 'default'
       )
-      .map(([, response]) => refs.resolveObject(response))
-      .map(response => parseMediaType(response, refs, options))
+      .map(([statusCode, response]) => [
+        statusCode,
+        parseMediaType(refs.resolveObject(response), refs, options)
+      ])
       // Undefined responses are filtered
-      .filter(response => response) as OpenApiSchema[];
-    return responseSchemas;
+      .filter(([response]) => response) as [string, OpenApiSchema][];
+    return errorSchemas.reduce((acc, [statusCode, response]) => {
+      acc[statusCode] = response;
+      return acc;
+    }, {});
   } else {
-    return [];
+    return {};
   }
 }

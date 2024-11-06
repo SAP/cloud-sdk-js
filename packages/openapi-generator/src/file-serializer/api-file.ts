@@ -51,7 +51,7 @@ function collectRefsFromOperations(
           ...[
             operation.requestBody?.schema,
             operation.response,
-            ...(operation.errorResponses ?? []),
+            ...(Object.values(operation.errorResponses ?? {}) ?? []),
             ...operation.queryParameters.map(({ schema }) => schema)
           ]
         )

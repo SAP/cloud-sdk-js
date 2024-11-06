@@ -102,7 +102,7 @@ export interface OpenApiOperation
   /**
    * Schema of the error response for a given request.
    */
-  errorResponses?: OpenApiSchema[];
+  errorResponses?: Record<string, OpenApiSchema>;
 }
 
 const supportedMethods = {

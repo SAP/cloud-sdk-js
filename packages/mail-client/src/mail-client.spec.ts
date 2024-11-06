@@ -239,6 +239,19 @@ describe('mail client', () => {
         'proxy-authorization': 'jwt'
       }
     };
+
+    const destination465: any = {
+      ...destination,
+      originalProperties: {
+        ...destination.originalProperties,
+        'mail.smtp.port': '465'
+      },
+      proxyConfiguration: {
+        ...destination.proxyConfiguration,
+        port: 465
+      }
+    }
+
     const mailOptions: MailConfig = {
       from: 'from1@example.com',
       to: 'to1@example.com'
@@ -271,7 +284,7 @@ describe('mail client', () => {
       expect(spyDestroySocket).toHaveBeenCalledTimes(1);
     });
 
-    it('should resend greeting', async () => {
+    it('should resend greeting if port 587', async () => {
       const { connection } = mockSocketConnection();
       jest
         .spyOn(nodemailer, 'createTransport')
@@ -303,7 +316,36 @@ describe('mail client', () => {
       await expect(req).resolves.not.toThrow();
     });
 
-    it('should fail if nodemailer never listens to greeting', async () => {
+    it('should not try to resend greeting if port 465', async () => {
+      const { connection } = mockSocketConnection();
+      jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+
+      const req = sendMail(destination465, mailOptions, {
+        sdkOptions: { parallel: false }
+      });
+
+      const dataEmit = new Promise((resolve, reject) => {
+        let dataEmitCount = 0;
+        const collectedData: string[] = [];
+        connection.socket.on('data', data => {
+          dataEmitCount++;
+          collectedData.push(data.toString());
+          if (dataEmitCount === 2) {
+            reject('Should not emit data twice');
+          }
+        });
+        setTimeout(() => resolve(collectedData), 4000);
+      });
+      
+      await expect(dataEmit).resolves.toEqual([
+        '220 smtp.gmail.com ESMTP'
+      ]);
+      await expect(req).resolves.not.toThrow();
+    });
+
+    it('should fail if nodemailer never listens to greeting when using port 587', async () => {
       mockSocketConnection();
 
       jest

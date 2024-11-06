@@ -3,7 +3,8 @@ import { serializeSchema } from './schema';
 import type {
   OpenApiOperation,
   OpenApiParameter,
-  OpenApiRequestBody
+  OpenApiRequestBody,
+  OpenApiSchema
 } from '../openapi-types';
 
 /**
@@ -24,13 +25,41 @@ export function serializeOperation(operation: OpenApiOperation): string {
   }
 
   const responseType = serializeSchema(operation.response);
-  return codeBlock`
-${operationDocumentation(operation)}
-${operation.operationId}: Object.assign((${serializeOperationSignature(
+  let temp = `(${serializeOperationSignature(
     operation
   )}) => new OpenApiRequestBuilder<${responseType}>(
-  ${requestBuilderParams.join(',\n')}
-))`;
+${requestBuilderParams.join(',\n')}
+)`;
+
+  if (operation.errorResponses) {
+    const typeGuard = Object.entries(operation.errorResponses)
+      .map(([key, value]) => buildTypeGuard(key, value))
+      .join('\n');
+    temp = `Object.assign(${temp},
+  { errorHandler: {
+   ${typeGuard}
+   };
+    })`;
+  }
+  const newLocal = `
+${operationDocumentation(operation)}
+${operation.operationId}: ${temp}`;
+  return codeBlock`${newLocal}`;
+}
+
+function buildTypeGuard(statusCode: string, errorSchema: OpenApiSchema) {
+  let typeGuard = '';
+  switch (statusCode) {
+    case 'default':
+      typeGuard = `isInternalError(err: any): err is AxiosError<${serializeSchema(errorSchema)}> {
+        return (
+          err.response.statusCode >= 400 && err.response.statusCode < 600
+        );
+      }`;
+      break;
+    default:
+  }
+  return typeGuard;
 }
 
 function serializeOperationSignature(operation: OpenApiOperation): string {

@@ -31,15 +31,12 @@ export function serializeOperation(operation: OpenApiOperation): string {
 ${requestBuilderParams.join(',\n')}
 )`;
 
-  if (operation.errorResponses) {
-    const typeGuard = Object.entries(operation.errorResponses)
+  if (Object.keys(operation.errorResponses ?? {}).length) {
+    const typeGuard = Object.entries(operation.errorResponses ?? {})
       .map(([key, value]) => buildTypeGuard(key, value))
       .join('\n');
     temp = `Object.assign(${temp},
-  { errorHandler: {
-   ${typeGuard}
-   };
-    })`;
+    { errorHandler: {}})`;
   }
   const newLocal = `
 ${operationDocumentation(operation)}

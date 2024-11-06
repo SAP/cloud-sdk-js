@@ -29,7 +29,8 @@ describe('mail client', () => {
   const mockTransport = {
     sendMail: jest.fn(),
     close: jest.fn(),
-    verify: jest.fn()
+    verify: jest.fn(),
+    set: jest.fn()
   };
 
   it('should work with destination from service - proxy-type Internet', async () => {
@@ -258,30 +259,22 @@ describe('mail client', () => {
     };
 
     it('should create transport/socket, send mails and close the transport/socket', async () => {
-      const { connection, createConnectionSpy } = mockSocketConnection();
       const spyCreateTransport = jest
         .spyOn(nodemailer, 'createTransport')
         .mockReturnValue(mockTransport as any);
       const spySendMail = jest
         .spyOn(mockTransport, 'sendMail')
-        .mockImplementation(() => {
-          connection.socket.on('data', () => {});
-        });
+        .mockImplementation(() => {});
 
       const spyCloseTransport = jest.spyOn(mockTransport, 'close');
-      const spyEndSocket = jest.spyOn(connection.socket, 'end');
-      const spyDestroySocket = jest.spyOn(connection.socket, 'destroy');
 
       await expect(
         sendMail(destination, mailOptions, { sdkOptions: { parallel: false } })
       ).resolves.not.toThrow();
-      expect(createConnectionSpy).toHaveBeenCalledTimes(1);
       expect(spyCreateTransport).toHaveBeenCalledTimes(1);
       expect(spySendMail).toHaveBeenCalledTimes(1);
       expect(spySendMail).toHaveBeenCalledWith(mailOptions);
       expect(spyCloseTransport).toHaveBeenCalledTimes(1);
-      expect(spyEndSocket).toHaveBeenCalledTimes(1);
-      expect(spyDestroySocket).toHaveBeenCalledTimes(1);
     });
   });
 });

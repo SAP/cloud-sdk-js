@@ -250,7 +250,7 @@ describe('mail client', () => {
         ...destination.proxyConfiguration,
         port: 465
       }
-    }
+    };
 
     const mailOptions: MailConfig = {
       from: 'from1@example.com',
@@ -338,10 +338,8 @@ describe('mail client', () => {
         });
         setTimeout(() => resolve(collectedData), 4000);
       });
-      
-      await expect(dataEmit).resolves.toEqual([
-        '220 smtp.gmail.com ESMTP'
-      ]);
+
+      await expect(dataEmit).resolves.toEqual(['220 smtp.gmail.com ESMTP']);
       await expect(req).resolves.not.toThrow();
     });
 

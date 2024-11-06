@@ -58,7 +58,7 @@ export function parseOperation(
     pathPattern: parsePathPattern(pathPattern, pathParameters),
     operationId: operation.operationId!,
     tags: operation.tags!,
-    errorResponses: errorResponses
+    errorResponses
   };
 }
 

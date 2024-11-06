@@ -59,7 +59,6 @@ export function parseErrorResponses(
       acc[statusCode] = response;
       return acc;
     }, {});
-  } else {
-    return {};
   }
+  return {};
 }

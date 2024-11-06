@@ -76,22 +76,19 @@ function getImports(api: OpenApiApi, options?: CreateFileOptions): Import[] {
     moduleIdentifier: '@sap-cloud-sdk/openapi'
   };
 
-  const imports: Import[] = [openApiImports, refImports];
-
   const hasErrorResponses = api.operations.some(
-    (operation) => operation.errorResponses && operation.errorResponses.length
+    operation => Object.keys(operation.errorResponses ?? {}).length
   );
 
   if (hasErrorResponses) {
-    const errorHandlingImports = {
+    const axiosImport = {
       names: ['AxiosError'],
       moduleIdentifier: 'axios',
       typeOnly: true
     };
-    imports.push(errorHandlingImports);
+    return [openApiImports, refImports, axiosImport];
   }
-
-  return imports;
+  return [openApiImports, refImports];
 }
 
 /**

@@ -50,7 +50,7 @@ function buildTypeGuard(statusCode: string, errorSchema: OpenApiSchema) {
     case 'default':
       typeGuard = `isInternalError(err: any): err is AxiosError<${serializeSchema(errorSchema)}> {
         return (
-          err.response.statusCode >= 400 && err.response.statusCode < 600
+          err.response.status >= 400 && err.response.status < 600
         );
       }`;
       break;

@@ -3,7 +3,6 @@ import { resolveDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { createLogger } from '@sap-cloud-sdk/util';
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
-import retry from 'async-retry';
 import {
   customAuthRequestHandler,
   customAuthResponseHandler
@@ -140,68 +139,23 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
     }
   };
   const { socket } = await SocksClient.createConnection(connectionOptions);
-
   return socket;
-}
-
-function retrieveGreeting(socket: Socket): Promise<Buffer> {
-  logger.debug('Waiting for SMTP greeting message...');
-  return new Promise((resolve, reject) => {
-    const onData = data => {
-      logger.debug(`Data received from mail socket: ${data?.toString()}`);
-      if (data?.toString().startsWith('220')) {
-        logger.debug('Removing mail socket listeners...');
-        socket.removeListener('data', onData);
-        socket.removeListener('error', onError);
-        resolve(data);
-      }
-    };
-
-    const onError = err => {
-      reject(new Error(err));
-    };
-
-    socket.on('data', onData);
-    socket.on('error', onError);
-  });
-}
-
-async function resendGreetingUntilReceived(
-  greeting: Buffer,
-  socket: Socket
-): Promise<void> {
-  return retry(
-    () => {
-      // resend the greeting message until a listener is attached
-      // note: this is dangerous because there could be another listener that is not the mailer
-      if (!socket.emit('data', greeting)) {
-        throw new Error(
-          'Failed to re-emit greeting message. No data listener found.'
-        );
-      }
-    },
-    { maxRetryTime: 5000 }
-  );
 }
 
 function createTransport(
   mailDestination: MailDestination,
-  mailClientOptions?: MailClientOptions,
-  socket?: Socket
+  mailClientOptions?: MailClientOptions
 ): Transporter<SentMessageInfo> {
-  const baseOptions: Options = {
+  const baseOptions = {
     pool: true,
     auth: {
       user: mailDestination.username,
       pass: mailDestination.password
     },
     host: mailDestination.host,
-    port: mailDestination.port
+    port: mailDestination.port,
+    proxy: `socks5://${mailDestination.proxyConfiguration?.host}:${mailDestination.proxyConfiguration?.port}`
   };
-
-  if (mailDestination.proxyType === 'OnPremise' && socket) {
-    baseOptions.connection = socket;
-  }
 
   return nodemailer.createTransport({
     ...baseOptions,
@@ -231,8 +185,7 @@ async function sendMailInSequential<T extends MailConfig>(
       ...mailConfigs[mailConfigIndex]
     });
     logger.debug(
-      `...email ${mailConfigIndex + 1}/${mailConfigs.length} for subject "${
-        mailConfigs[mailConfigIndex].subject
+      `...email ${mailConfigIndex + 1}/${mailConfigs.length} for subject "${mailConfigs[mailConfigIndex].subject
       }" was sent successfully.`
     );
   }
@@ -259,8 +212,7 @@ async function sendMailInParallel<T extends MailConfig>(
   return Promise.all(promises).then(responses => {
     responses.forEach((_, responseIndex) =>
       logger.debug(
-        `...email ${responseIndex + 1}/${mailConfigs.length} for subject "${
-          mailConfigs[responseIndex].subject
+        `...email ${responseIndex + 1}/${mailConfigs.length} for subject "${mailConfigs[responseIndex].subject
         }" was sent successfully`
       )
     );
@@ -274,35 +226,26 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
   let socket: Socket | undefined;
-  let resendGreeting: Promise<void> | undefined;
-  if (mailDestination.proxyType === 'OnPremise') {
+  const transport = createTransport(mailDestination, mailClientOptions);
+  transport.set('proxy_handler_socks5', async (_, __, callback) => {
     socket = await createSocket(mailDestination);
-    // Workaround for incorrect order of events in nodemailer https://github.com/nodemailer/nodemailer/issues/1684
-    if (mailDestination.port === 587) {
-      const greeting = await retrieveGreeting(socket);
-      resendGreeting = resendGreetingUntilReceived(greeting, socket);
-    }
-  }
-  const transport = createTransport(mailDestination, mailClientOptions, socket);
+    callback(null, { connection: socket });
+  });
 
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 
   const response = isMailSentInSequential(mailClientOptions)
     ? await sendMailInSequential(
-        transport,
-        mailConfigsFromDestination,
-        mailConfigs
-      )
+      transport,
+      mailConfigsFromDestination,
+      mailConfigs
+    )
     : await sendMailInParallel(
-        transport,
-        mailConfigsFromDestination,
-        mailConfigs
-      );
-
-  if (resendGreeting) {
-    await resendGreeting;
-  }
+      transport,
+      mailConfigsFromDestination,
+      mailConfigs
+    );
 
   teardown(transport, socket);
   return response;

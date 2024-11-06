@@ -36,7 +36,7 @@ ${requestBuilderParams.join(',\n')}
       .map(([key, value]) => buildTypeGuard(key, value))
       .join('\n');
     temp = `Object.assign(${temp},
-    { errorHandler: {}})`;
+    { errorHandler: {${typeGuard}}})`;
   }
   const newLocal = `
 ${operationDocumentation(operation)}

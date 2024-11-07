@@ -11,7 +11,6 @@ import type { Socket } from 'node:net';
 import type { SentMessageInfo, Transporter } from 'nodemailer';
 import type { SocksClientOptions, SocksProxy } from 'socks';
 // eslint-disable-next-line import/no-internal-modules
-import type { Options } from 'nodemailer/lib/smtp-pool';
 import type {
   MailClientOptions,
   MailConfig,
@@ -185,7 +184,8 @@ async function sendMailInSequential<T extends MailConfig>(
       ...mailConfigs[mailConfigIndex]
     });
     logger.debug(
-      `...email ${mailConfigIndex + 1}/${mailConfigs.length} for subject "${mailConfigs[mailConfigIndex].subject
+      `...email ${mailConfigIndex + 1}/${mailConfigs.length} for subject "${
+        mailConfigs[mailConfigIndex].subject
       }" was sent successfully.`
     );
   }
@@ -212,7 +212,8 @@ async function sendMailInParallel<T extends MailConfig>(
   return Promise.all(promises).then(responses => {
     responses.forEach((_, responseIndex) =>
       logger.debug(
-        `...email ${responseIndex + 1}/${mailConfigs.length} for subject "${mailConfigs[responseIndex].subject
+        `...email ${responseIndex + 1}/${mailConfigs.length} for subject "${
+          mailConfigs[responseIndex].subject
         }" was sent successfully`
       )
     );
@@ -237,15 +238,15 @@ async function sendMailWithNodemailer<T extends MailConfig>(
 
   const response = isMailSentInSequential(mailClientOptions)
     ? await sendMailInSequential(
-      transport,
-      mailConfigsFromDestination,
-      mailConfigs
-    )
+        transport,
+        mailConfigsFromDestination,
+        mailConfigs
+      )
     : await sendMailInParallel(
-      transport,
-      mailConfigsFromDestination,
-      mailConfigs
-    );
+        transport,
+        mailConfigsFromDestination,
+        mailConfigs
+      );
 
   teardown(transport, socket);
   return response;

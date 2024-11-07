@@ -241,18 +241,6 @@ describe('mail client', () => {
       }
     };
 
-    const destination465: any = {
-      ...destination,
-      originalProperties: {
-        ...destination.originalProperties,
-        'mail.smtp.port': '465'
-      },
-      proxyConfiguration: {
-        ...destination.proxyConfiguration,
-        port: 465
-      }
-    };
-
     const mailOptions: MailConfig = {
       from: 'from1@example.com',
       to: 'to1@example.com'

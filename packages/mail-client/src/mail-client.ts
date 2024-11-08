@@ -21,7 +21,6 @@ import type {
   Destination,
   DestinationOrFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import SMTPPool from 'nodemailer/lib/smtp-pool';
 
 const logger = createLogger({
   package: 'mail-client',
@@ -146,7 +145,7 @@ function createTransport(
   mailDestination: MailDestination,
   mailClientOptions?: MailClientOptions
 ): Transporter<SentMessageInfo> {
-  let baseOptions: SMTPPool.Options = {
+  const baseOptions = {
     pool: true,
     auth: {
       user: mailDestination.username,
@@ -160,7 +159,7 @@ function createTransport(
     mailClientOptions = {
       ...mailClientOptions,
       proxy: `socks5://${mailDestination.proxyConfiguration?.host}:${mailDestination.proxyConfiguration?.port}`
-    }
+    };
   }
 
   return nodemailer.createTransport({

@@ -1545,10 +1545,10 @@
     node-cache "^5.1.2"
     verror "1.10.1"
 
-"@sap/xssec@^4.2.6":
-  version "4.2.6"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.6.tgz#90610ff8f0d7bb88a7178c03c031b9716d524817"
-  integrity sha512-HqQmrAffEWKpOAffenK7e4uJfILDaHnMjFy435tQzZRoWb+PAmpHOhxtvvr3ROAlVu/iUii+ocsH/F/4K5/6yw==
+"@sap/xssec@^4.2.7":
+  version "4.2.7"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.7.tgz#2d10d9a9d867fe3b8961a7ae5d5281402ea5f5d2"
+  integrity sha512-RCBFma3jiLIJ1naAPFNLQWMIkKwQENiwSsdEtffs2Q+RhH+AnLiaXAqxtXGlO/N+Lg53WANEIcLThYRkttQ00w==
   dependencies:
     debug "^4.3.4"
     jwt-decode "^4"
@@ -9693,10 +9693,10 @@ utils-merge@1.0.1:
   resolved "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
 
-uuid@^11.0.2:
-  version "11.0.2"
-  resolved "https://registry.npmjs.org/uuid/-/uuid-11.0.2.tgz#a8d68ba7347d051e7ea716cc8dcbbab634d66875"
-  integrity sha512-14FfcOJmqdjbBPdDjFQyk/SdT4NySW4eM0zcG+HqbHP5jzuH56xO3J1DGhgs/cEMCfwYi3HQI1gnTO62iaG+tQ==
+uuid@^11.0.3:
+  version "11.0.3"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-11.0.3.tgz#248451cac9d1a4a4128033e765d137e2b2c49a3d"
+  integrity sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==
 
 uuid@^3.3.2:
   version "3.4.0"

@@ -93681,6 +93681,7 @@ exports.local = void 0;
 exports.getMessageOrStack = getMessageOrStack;
 const chalk_1 = __importDefault(__nccwpck_require__(32325));
 const winston_1 = __nccwpck_require__(19308);
+const nullish_1 = __nccwpck_require__(52597);
 const { combine, timestamp, cli, printf, errors } = winston_1.format;
 /**
  * Format for local logging.
@@ -93708,9 +93709,14 @@ exports.local = combine(errors({ stack: true }), timestamp(), (0, winston_1.form
  * @internal
  */
 function getMessageOrStack(info) {
-    return info.stack && info.level === 'error'
+    const isString = (value) => typeof value === 'string';
+    return !(0, nullish_1.isNullish)(info.stack) &&
+        isString(info.stack) &&
+        info.level === 'error'
         ? info.stack
-        : info.message;
+        : !(0, nullish_1.isNullish)(info.message) && isString(info.message)
+            ? info.message
+            : '';
 }
 function localTransformer(info) {
     return {

@@ -18,7 +18,7 @@ function kibanaTransformer(info: TransformableInfo): TransformableInfo {
   return {
     ...info,
     msg: getMessageOrStack(info),
-    written_ts: new Date(info.timestamp).getTime(),
+    written_ts: new Date(info.timestamp as string).getTime(),
     written_at: info.timestamp
   };
 }

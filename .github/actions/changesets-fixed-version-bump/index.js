@@ -85830,11 +85830,10 @@ exports.local = combine(errors({ stack: true }), timestamp(), (0, winston_1.form
  */
 function getMessageOrStack(info) {
     const isString = (value) => typeof value === 'string';
-    return !(0, nullish_1.isNullish)(info.stack) &&
-        isString(info.stack) &&
-        info.level === 'error'
+    const hasStack = !(0, nullish_1.isNullish)(info.stack) && info.level === 'error';
+    return hasStack && isString(info.stack)
         ? info.stack
-        : !(0, nullish_1.isNullish)(info.message) && isString(info.message)
+        : isString(info.message)
             ? info.message
             : '';
 }

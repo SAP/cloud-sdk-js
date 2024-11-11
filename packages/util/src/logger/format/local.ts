@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { format } from 'winston';
+import { isNullish } from '../../nullish';
 import type { TransformableInfo } from 'logform';
 
 const { combine, timestamp, cli, printf, errors } = format;
@@ -12,14 +13,19 @@ export const local = combine(
   timestamp(),
   format(localTransformer)(),
   cli(),
-  printf(info => {
+  printf((info: TransformableInfo) => {
+    // Ensure custom_fields is an object and has messageContext
     const messageContext =
-      info.custom_fields && info.custom_fields.messageContext
+      info.custom_fields &&
+      typeof info.custom_fields === 'object' &&
+      'messageContext' in info.custom_fields
         ? `${chalk.blue(`(${info.custom_fields.messageContext})`)}: `
         : '';
-    const trimmedMessage = info.message.replace(/^\s*/, '');
+    // Type guard to ensure message is a string
+    const message = typeof info.message === 'string' ? info.message : '';
+    const trimmedMessage = message.replace(/^\s*/, '');
     const paddingLength =
-      info.message.length - trimmedMessage.length + messageContext.length;
+      message.length - trimmedMessage.length + messageContext.length;
     if (info.error) {
       info.level = chalk.inverse(info.level);
     }
@@ -35,7 +41,16 @@ export const local = combine(
  * @internal
  */
 export function getMessageOrStack(info: TransformableInfo): string {
-  return info.stack && info.level === 'error' ? info.stack : info.message;
+  const isString = (value: unknown): value is string =>
+    typeof value === 'string';
+
+  return !isNullish(info.stack) &&
+    isString(info.stack) &&
+    info.level === 'error'
+    ? info.stack
+    : !isNullish(info.message) && isString(info.message)
+      ? info.message
+      : '';
 }
 
 function localTransformer(info: TransformableInfo): TransformableInfo {

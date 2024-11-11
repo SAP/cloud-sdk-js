@@ -93685,12 +93685,17 @@ const { combine, timestamp, cli, printf, errors } = winston_1.format;
 /**
  * Format for local logging.
  */
-exports.local = combine(errors({ stack: true }), timestamp(), (0, winston_1.format)(localTransformer)(), cli(), printf(info => {
-    const messageContext = info.custom_fields && info.custom_fields.messageContext
+exports.local = combine(errors({ stack: true }), timestamp(), (0, winston_1.format)(localTransformer)(), cli(), printf((info) => {
+    // Ensure custom_fields is an object and has messageContext
+    const messageContext = info.custom_fields &&
+        typeof info.custom_fields === 'object' &&
+        'messageContext' in info.custom_fields
         ? `${chalk_1.default.blue(`(${info.custom_fields.messageContext})`)}: `
         : '';
-    const trimmedMessage = info.message.replace(/^\s*/, '');
-    const paddingLength = info.message.length - trimmedMessage.length + messageContext.length;
+    // Type guard to ensure message is a string
+    const message = typeof info.message === 'string' ? info.message : '';
+    const trimmedMessage = message.replace(/^\s*/, '');
+    const paddingLength = message.length - trimmedMessage.length + messageContext.length;
     if (info.error) {
         info.level = chalk_1.default.inverse(info.level);
     }
@@ -93703,7 +93708,9 @@ exports.local = combine(errors({ stack: true }), timestamp(), (0, winston_1.form
  * @internal
  */
 function getMessageOrStack(info) {
-    return info.stack && info.level === 'error' ? info.stack : info.message;
+    return info.stack && info.level === 'error'
+        ? info.stack
+        : info.message;
 }
 function localTransformer(info) {
     return {

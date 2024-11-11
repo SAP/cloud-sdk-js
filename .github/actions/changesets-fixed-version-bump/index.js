@@ -82674,6 +82674,7 @@ class Logger extends Transform {
 
         if (meta.message) info.message = `${info.message} ${meta.message}`;
         if (meta.stack) info.stack = meta.stack;
+        if (meta.cause) info.cause = meta.cause;
 
         this.write(info);
         return this;
@@ -93764,7 +93765,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"application/1d-interleaved-parityfec
 /***/ ((module) => {
 
 "use strict";
-module.exports = {"version":"3.15.0"};
+module.exports = {"version":"3.17.0"};
 
 /***/ })
 

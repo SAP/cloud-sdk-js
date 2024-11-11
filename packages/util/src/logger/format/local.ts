@@ -44,11 +44,11 @@ export function getMessageOrStack(info: TransformableInfo): string {
   const isString = (value: unknown): value is string =>
     typeof value === 'string';
 
-  return !isNullish(info.stack) &&
-    isString(info.stack) &&
-    info.level === 'error'
+  const hasStack = !isNullish(info.stack) && info.level === 'error';
+
+  return hasStack && isString(info.stack)
     ? info.stack
-    : !isNullish(info.message) && isString(info.message)
+    : isString(info.message)
       ? info.message
       : '';
 }

@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { format } from 'winston';
+import { isNullish } from '../../nullish';
 import type { TransformableInfo } from 'logform';
 
 const { combine, timestamp, cli, printf, errors } = format;
@@ -40,9 +41,16 @@ export const local = combine(
  * @internal
  */
 export function getMessageOrStack(info: TransformableInfo): string {
-  return info.stack && info.level === 'error'
-    ? (info.stack as string)
-    : (info.message as string);
+  const isString = (value: unknown): value is string =>
+    typeof value === 'string';
+
+  return !isNullish(info.stack) &&
+    isString(info.stack) &&
+    info.level === 'error'
+    ? info.stack
+    : !isNullish(info.message) && isString(info.message)
+      ? info.message
+      : '';
 }
 
 function localTransformer(info: TransformableInfo): TransformableInfo {

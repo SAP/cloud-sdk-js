@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import { format } from 'winston';
-import { isNullish } from '../../nullish';
 import type { TransformableInfo } from 'logform';
 
 const { combine, timestamp, cli, printf, errors } = format;
@@ -43,14 +42,18 @@ export const local = combine(
 export function getMessageOrStack(info: TransformableInfo): string {
   const isString = (value: unknown): value is string =>
     typeof value === 'string';
+  // Check if it's an error with a stack trace
+  const hasStackTrace = info.stack && info.level === 'error';
 
-  const hasStack = !isNullish(info.stack) && info.level === 'error';
+  if (hasStackTrace && isString(info.stack)) {
+    return info.stack;
+  }
 
-  return hasStack && isString(info.stack)
-    ? info.stack
-    : isString(info.message)
-      ? info.message
-      : '';
+  if (isString(info.message)) {
+    return info.message;
+  }
+
+  return '';
 }
 
 function localTransformer(info: TransformableInfo): TransformableInfo {

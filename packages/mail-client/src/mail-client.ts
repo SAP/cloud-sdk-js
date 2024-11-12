@@ -181,7 +181,6 @@ function createTransport(
   });
 }
 
-
 function buildMailConfigsFromDestination(
   mailDestination: MailDestination
 ): Partial<MailConfig> {

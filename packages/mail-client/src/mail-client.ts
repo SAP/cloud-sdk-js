@@ -129,6 +129,9 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
   };
 }
 
+/**
+ * @internal
+ */
 export function buildSocksProxyUrl(mailDestination: MailDestination): string {
   if (!mailDestination.proxyConfiguration) {
     throw Error(

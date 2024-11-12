@@ -129,6 +129,15 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
   };
 }
 
+export function buildSocksProxyUrl(mailDestination: MailDestination): string {
+  if (!mailDestination.proxyConfiguration) {
+    throw Error(
+      'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
+    );
+  }
+  return `socks5://${mailDestination.proxyConfiguration?.host}:${mailDestination.proxyConfiguration?.port}`;
+}
+
 async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   const connectionOptions: SocksClientOptions = {
     proxy: buildSocksProxy(mailDestination),
@@ -157,15 +166,9 @@ function createTransport(
   };
 
   if (mailDestination.proxyType === 'OnPremise') {
-    if (!mailDestination.proxyConfiguration) {
-      throw Error(
-        'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
-      );
-    }
-
     mailClientOptions = {
       ...(mailClientOptions || {}),
-      proxy: `socks5://${mailDestination.proxyConfiguration.host}:${mailDestination.proxyConfiguration.port}`
+      proxy: buildSocksProxyUrl(mailDestination)
     };
   }
 
@@ -174,6 +177,7 @@ function createTransport(
     ...mailClientOptions
   });
 }
+
 
 function buildMailConfigsFromDestination(
   mailDestination: MailDestination

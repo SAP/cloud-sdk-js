@@ -10,6 +10,7 @@ import {
 } from '../../../test-resources/test/test-util';
 import {
   buildSocksProxy,
+  buildSocksProxyUrl,
   isMailSentInSequential,
   sendMail
 } from './mail-client';
@@ -306,6 +307,19 @@ describe('buildSocksProxy', () => {
     };
     const proxy = buildSocksProxy(dest);
     expect(isValidSocksProxy(proxy)).toBe(true);
+  });
+
+  it('build valid socks proxy url', () => {
+    const dest: MailDestination = {
+      proxyConfiguration: {
+        host: 'www.proxy.com',
+        port: 12345,
+        protocol: 'socks',
+        'proxy-authorization': 'jwt'
+      }
+    };
+    const proxyUrl = buildSocksProxyUrl(dest);
+    expect(proxyUrl).toBe('socks5://www.proxy.com:12345');
   });
 });
 

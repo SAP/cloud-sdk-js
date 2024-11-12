@@ -250,10 +250,7 @@ describe('mail client', () => {
       const spyCreateTransport = jest
         .spyOn(nodemailer, 'createTransport')
         .mockReturnValue(mockTransport as any);
-      const spySendMail = jest
-        .spyOn(mockTransport, 'sendMail')
-        .mockImplementation(() => {});
-
+      const spySendMail = jest.spyOn(mockTransport, 'sendMail');
       const spyCloseTransport = jest.spyOn(mockTransport, 'close');
 
       await expect(

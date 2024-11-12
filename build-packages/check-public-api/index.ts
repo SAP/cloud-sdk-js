@@ -169,8 +169,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
       { exclude: includeExclude?.exclude!, include: ['**/*.ts'] }
     );
 
-    const forceInternalExports =
-      getInput('force_internal_exports') === 'true';
+    const forceInternalExports = getInput('force_internal_exports') === 'true';
 
     if (forceInternalExports) {
       await checkBarrelRecursive(pathToSource);

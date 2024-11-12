@@ -18376,1289 +18376,6 @@ module.exports = (...arguments_) => {
 
 /***/ }),
 
-/***/ 184:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports["default"] = asyncify;
-
-var _initialParams = __nccwpck_require__(78790);
-
-var _initialParams2 = _interopRequireDefault(_initialParams);
-
-var _setImmediate = __nccwpck_require__(87775);
-
-var _setImmediate2 = _interopRequireDefault(_setImmediate);
-
-var _wrapAsync = __nccwpck_require__(60048);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Take a sync function and make it async, passing its return value to a
- * callback. This is useful for plugging sync functions into a waterfall,
- * series, or other async functions. Any arguments passed to the generated
- * function will be passed to the wrapped function (except for the final
- * callback argument). Errors thrown will be passed to the callback.
- *
- * If the function passed to `asyncify` returns a Promise, that promises's
- * resolved/rejected state will be used to call the callback, rather than simply
- * the synchronous return value.
- *
- * This also means you can asyncify ES2017 `async` functions.
- *
- * @name asyncify
- * @static
- * @memberOf module:Utils
- * @method
- * @alias wrapSync
- * @category Util
- * @param {Function} func - The synchronous function, or Promise-returning
- * function to convert to an {@link AsyncFunction}.
- * @returns {AsyncFunction} An asynchronous wrapper of the `func`. To be
- * invoked with `(args..., callback)`.
- * @example
- *
- * // passing a regular synchronous function
- * async.waterfall([
- *     async.apply(fs.readFile, filename, "utf8"),
- *     async.asyncify(JSON.parse),
- *     function (data, next) {
- *         // data is the result of parsing the text.
- *         // If there was a parsing error, it would have been caught.
- *     }
- * ], callback);
- *
- * // passing a function returning a promise
- * async.waterfall([
- *     async.apply(fs.readFile, filename, "utf8"),
- *     async.asyncify(function (contents) {
- *         return db.model.create(contents);
- *     }),
- *     function (model, next) {
- *         // `model` is the instantiated model object.
- *         // If there was an error, this function would be skipped.
- *     }
- * ], callback);
- *
- * // es2017 example, though `asyncify` is not needed if your JS environment
- * // supports async functions out of the box
- * var q = async.queue(async.asyncify(async function(file) {
- *     var intermediateStep = await processFile(file);
- *     return await somePromise(intermediateStep)
- * }));
- *
- * q.push(files);
- */
-function asyncify(func) {
-    if ((0, _wrapAsync.isAsync)(func)) {
-        return function (...args /*, callback*/) {
-            const callback = args.pop();
-            const promise = func.apply(this, args);
-            return handlePromise(promise, callback);
-        };
-    }
-
-    return (0, _initialParams2.default)(function (args, callback) {
-        var result;
-        try {
-            result = func.apply(this, args);
-        } catch (e) {
-            return callback(e);
-        }
-        // if result is Promise object
-        if (result && typeof result.then === 'function') {
-            return handlePromise(result, callback);
-        } else {
-            callback(null, result);
-        }
-    });
-}
-
-function handlePromise(promise, callback) {
-    return promise.then(value => {
-        invokeCallback(callback, null, value);
-    }, err => {
-        invokeCallback(callback, err && (err instanceof Error || err.message) ? err : new Error(err));
-    });
-}
-
-function invokeCallback(callback, error, value) {
-    try {
-        callback(error, value);
-    } catch (err) {
-        (0, _setImmediate2.default)(e => {
-            throw e;
-        }, err);
-    }
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 37582:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-
-var _isArrayLike = __nccwpck_require__(6674);
-
-var _isArrayLike2 = _interopRequireDefault(_isArrayLike);
-
-var _breakLoop = __nccwpck_require__(61493);
-
-var _breakLoop2 = _interopRequireDefault(_breakLoop);
-
-var _eachOfLimit = __nccwpck_require__(84531);
-
-var _eachOfLimit2 = _interopRequireDefault(_eachOfLimit);
-
-var _once = __nccwpck_require__(96511);
-
-var _once2 = _interopRequireDefault(_once);
-
-var _onlyOnce = __nccwpck_require__(67817);
-
-var _onlyOnce2 = _interopRequireDefault(_onlyOnce);
-
-var _wrapAsync = __nccwpck_require__(60048);
-
-var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
-
-var _awaitify = __nccwpck_require__(94506);
-
-var _awaitify2 = _interopRequireDefault(_awaitify);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// eachOf implementation optimized for array-likes
-function eachOfArrayLike(coll, iteratee, callback) {
-    callback = (0, _once2.default)(callback);
-    var index = 0,
-        completed = 0,
-        { length } = coll,
-        canceled = false;
-    if (length === 0) {
-        callback(null);
-    }
-
-    function iteratorCallback(err, value) {
-        if (err === false) {
-            canceled = true;
-        }
-        if (canceled === true) return;
-        if (err) {
-            callback(err);
-        } else if (++completed === length || value === _breakLoop2.default) {
-            callback(null);
-        }
-    }
-
-    for (; index < length; index++) {
-        iteratee(coll[index], index, (0, _onlyOnce2.default)(iteratorCallback));
-    }
-}
-
-// a generic version of eachOf which can handle array, object, and iterator cases.
-function eachOfGeneric(coll, iteratee, callback) {
-    return (0, _eachOfLimit2.default)(coll, Infinity, iteratee, callback);
-}
-
-/**
- * Like [`each`]{@link module:Collections.each}, except that it passes the key (or index) as the second argument
- * to the iteratee.
- *
- * @name eachOf
- * @static
- * @memberOf module:Collections
- * @method
- * @alias forEachOf
- * @category Collection
- * @see [async.each]{@link module:Collections.each}
- * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - A function to apply to each
- * item in `coll`.
- * The `key` is the item's key, or index in the case of an array.
- * Invoked with (item, key, callback).
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- * @returns {Promise} a promise, if a callback is omitted
- * @example
- *
- * // dev.json is a file containing a valid json object config for dev environment
- * // dev.json is a file containing a valid json object config for test environment
- * // prod.json is a file containing a valid json object config for prod environment
- * // invalid.json is a file with a malformed json object
- *
- * let configs = {}; //global variable
- * let validConfigFileMap = {dev: 'dev.json', test: 'test.json', prod: 'prod.json'};
- * let invalidConfigFileMap = {dev: 'dev.json', test: 'test.json', invalid: 'invalid.json'};
- *
- * // asynchronous function that reads a json file and parses the contents as json object
- * function parseFile(file, key, callback) {
- *     fs.readFile(file, "utf8", function(err, data) {
- *         if (err) return calback(err);
- *         try {
- *             configs[key] = JSON.parse(data);
- *         } catch (e) {
- *             return callback(e);
- *         }
- *         callback();
- *     });
- * }
- *
- * // Using callbacks
- * async.forEachOf(validConfigFileMap, parseFile, function (err) {
- *     if (err) {
- *         console.error(err);
- *     } else {
- *         console.log(configs);
- *         // configs is now a map of JSON data, e.g.
- *         // { dev: //parsed dev.json, test: //parsed test.json, prod: //parsed prod.json}
- *     }
- * });
- *
- * //Error handing
- * async.forEachOf(invalidConfigFileMap, parseFile, function (err) {
- *     if (err) {
- *         console.error(err);
- *         // JSON parse error exception
- *     } else {
- *         console.log(configs);
- *     }
- * });
- *
- * // Using Promises
- * async.forEachOf(validConfigFileMap, parseFile)
- * .then( () => {
- *     console.log(configs);
- *     // configs is now a map of JSON data, e.g.
- *     // { dev: //parsed dev.json, test: //parsed test.json, prod: //parsed prod.json}
- * }).catch( err => {
- *     console.error(err);
- * });
- *
- * //Error handing
- * async.forEachOf(invalidConfigFileMap, parseFile)
- * .then( () => {
- *     console.log(configs);
- * }).catch( err => {
- *     console.error(err);
- *     // JSON parse error exception
- * });
- *
- * // Using async/await
- * async () => {
- *     try {
- *         let result = await async.forEachOf(validConfigFileMap, parseFile);
- *         console.log(configs);
- *         // configs is now a map of JSON data, e.g.
- *         // { dev: //parsed dev.json, test: //parsed test.json, prod: //parsed prod.json}
- *     }
- *     catch (err) {
- *         console.log(err);
- *     }
- * }
- *
- * //Error handing
- * async () => {
- *     try {
- *         let result = await async.forEachOf(invalidConfigFileMap, parseFile);
- *         console.log(configs);
- *     }
- *     catch (err) {
- *         console.log(err);
- *         // JSON parse error exception
- *     }
- * }
- *
- */
-function eachOf(coll, iteratee, callback) {
-    var eachOfImplementation = (0, _isArrayLike2.default)(coll) ? eachOfArrayLike : eachOfGeneric;
-    return eachOfImplementation(coll, (0, _wrapAsync2.default)(iteratee), callback);
-}
-
-exports["default"] = (0, _awaitify2.default)(eachOf, 3);
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 84531:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-
-var _eachOfLimit2 = __nccwpck_require__(25083);
-
-var _eachOfLimit3 = _interopRequireDefault(_eachOfLimit2);
-
-var _wrapAsync = __nccwpck_require__(60048);
-
-var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
-
-var _awaitify = __nccwpck_require__(94506);
-
-var _awaitify2 = _interopRequireDefault(_awaitify);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * The same as [`eachOf`]{@link module:Collections.eachOf} but runs a maximum of `limit` async operations at a
- * time.
- *
- * @name eachOfLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.eachOf]{@link module:Collections.eachOf}
- * @alias forEachOfLimit
- * @category Collection
- * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - An async function to apply to each
- * item in `coll`. The `key` is the item's key, or index in the case of an
- * array.
- * Invoked with (item, key, callback).
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- * @returns {Promise} a promise, if a callback is omitted
- */
-function eachOfLimit(coll, limit, iteratee, callback) {
-    return (0, _eachOfLimit3.default)(limit)(coll, (0, _wrapAsync2.default)(iteratee), callback);
-}
-
-exports["default"] = (0, _awaitify2.default)(eachOfLimit, 4);
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 77031:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-
-var _eachOfLimit = __nccwpck_require__(84531);
-
-var _eachOfLimit2 = _interopRequireDefault(_eachOfLimit);
-
-var _awaitify = __nccwpck_require__(94506);
-
-var _awaitify2 = _interopRequireDefault(_awaitify);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * The same as [`eachOf`]{@link module:Collections.eachOf} but runs only a single async operation at a time.
- *
- * @name eachOfSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.eachOf]{@link module:Collections.eachOf}
- * @alias forEachOfSeries
- * @category Collection
- * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * Invoked with (item, key, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. Invoked with (err).
- * @returns {Promise} a promise, if a callback is omitted
- */
-function eachOfSeries(coll, iteratee, callback) {
-    return (0, _eachOfLimit2.default)(coll, 1, iteratee, callback);
-}
-exports["default"] = (0, _awaitify2.default)(eachOfSeries, 3);
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 77422:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-
-var _eachOf = __nccwpck_require__(37582);
-
-var _eachOf2 = _interopRequireDefault(_eachOf);
-
-var _withoutIndex = __nccwpck_require__(93830);
-
-var _withoutIndex2 = _interopRequireDefault(_withoutIndex);
-
-var _wrapAsync = __nccwpck_require__(60048);
-
-var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
-
-var _awaitify = __nccwpck_require__(94506);
-
-var _awaitify2 = _interopRequireDefault(_awaitify);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Applies the function `iteratee` to each item in `coll`, in parallel.
- * The `iteratee` is called with an item from the list, and a callback for when
- * it has finished. If the `iteratee` passes an error to its `callback`, the
- * main `callback` (for the `each` function) is immediately called with the
- * error.
- *
- * Note, that since this function applies `iteratee` to each item in parallel,
- * there is no guarantee that the iteratee functions will complete in order.
- *
- * @name each
- * @static
- * @memberOf module:Collections
- * @method
- * @alias forEach
- * @category Collection
- * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to
- * each item in `coll`. Invoked with (item, callback).
- * The array index is not passed to the iteratee.
- * If you need the index, use `eachOf`.
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- * @returns {Promise} a promise, if a callback is omitted
- * @example
- *
- * // dir1 is a directory that contains file1.txt, file2.txt
- * // dir2 is a directory that contains file3.txt, file4.txt
- * // dir3 is a directory that contains file5.txt
- * // dir4 does not exist
- *
- * const fileList = [ 'dir1/file2.txt', 'dir2/file3.txt', 'dir/file5.txt'];
- * const withMissingFileList = ['dir1/file1.txt', 'dir4/file2.txt'];
- *
- * // asynchronous function that deletes a file
- * const deleteFile = function(file, callback) {
- *     fs.unlink(file, callback);
- * };
- *
- * // Using callbacks
- * async.each(fileList, deleteFile, function(err) {
- *     if( err ) {
- *         console.log(err);
- *     } else {
- *         console.log('All files have been deleted successfully');
- *     }
- * });
- *
- * // Error Handling
- * async.each(withMissingFileList, deleteFile, function(err){
- *     console.log(err);
- *     // [ Error: ENOENT: no such file or directory ]
- *     // since dir4/file2.txt does not exist
- *     // dir1/file1.txt could have been deleted
- * });
- *
- * // Using Promises
- * async.each(fileList, deleteFile)
- * .then( () => {
- *     console.log('All files have been deleted successfully');
- * }).catch( err => {
- *     console.log(err);
- * });
- *
- * // Error Handling
- * async.each(fileList, deleteFile)
- * .then( () => {
- *     console.log('All files have been deleted successfully');
- * }).catch( err => {
- *     console.log(err);
- *     // [ Error: ENOENT: no such file or directory ]
- *     // since dir4/file2.txt does not exist
- *     // dir1/file1.txt could have been deleted
- * });
- *
- * // Using async/await
- * async () => {
- *     try {
- *         await async.each(files, deleteFile);
- *     }
- *     catch (err) {
- *         console.log(err);
- *     }
- * }
- *
- * // Error Handling
- * async () => {
- *     try {
- *         await async.each(withMissingFileList, deleteFile);
- *     }
- *     catch (err) {
- *         console.log(err);
- *         // [ Error: ENOENT: no such file or directory ]
- *         // since dir4/file2.txt does not exist
- *         // dir1/file1.txt could have been deleted
- *     }
- * }
- *
- */
-function eachLimit(coll, iteratee, callback) {
-    return (0, _eachOf2.default)(coll, (0, _withoutIndex2.default)((0, _wrapAsync2.default)(iteratee)), callback);
-}
-
-exports["default"] = (0, _awaitify2.default)(eachLimit, 3);
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 98729:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports["default"] = asyncEachOfLimit;
-
-var _breakLoop = __nccwpck_require__(61493);
-
-var _breakLoop2 = _interopRequireDefault(_breakLoop);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// for async generators
-function asyncEachOfLimit(generator, limit, iteratee, callback) {
-    let done = false;
-    let canceled = false;
-    let awaiting = false;
-    let running = 0;
-    let idx = 0;
-
-    function replenish() {
-        //console.log('replenish')
-        if (running >= limit || awaiting || done) return;
-        //console.log('replenish awaiting')
-        awaiting = true;
-        generator.next().then(({ value, done: iterDone }) => {
-            //console.log('got value', value)
-            if (canceled || done) return;
-            awaiting = false;
-            if (iterDone) {
-                done = true;
-                if (running <= 0) {
-                    //console.log('done nextCb')
-                    callback(null);
-                }
-                return;
-            }
-            running++;
-            iteratee(value, idx, iterateeCallback);
-            idx++;
-            replenish();
-        }).catch(handleError);
-    }
-
-    function iterateeCallback(err, result) {
-        //console.log('iterateeCallback')
-        running -= 1;
-        if (canceled) return;
-        if (err) return handleError(err);
-
-        if (err === false) {
-            done = true;
-            canceled = true;
-            return;
-        }
-
-        if (result === _breakLoop2.default || done && running <= 0) {
-            done = true;
-            //console.log('done iterCb')
-            return callback(null);
-        }
-        replenish();
-    }
-
-    function handleError(err) {
-        if (canceled) return;
-        awaiting = false;
-        done = true;
-        callback(err);
-    }
-
-    replenish();
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 94506:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports["default"] = awaitify;
-// conditionally promisify a function.
-// only return a promise if a callback is omitted
-function awaitify(asyncFn, arity) {
-    if (!arity) arity = asyncFn.length;
-    if (!arity) throw new Error('arity is undefined');
-    function awaitable(...args) {
-        if (typeof args[arity - 1] === 'function') {
-            return asyncFn.apply(this, args);
-        }
-
-        return new Promise((resolve, reject) => {
-            args[arity - 1] = (err, ...cbArgs) => {
-                if (err) return reject(err);
-                resolve(cbArgs.length > 1 ? cbArgs : cbArgs[0]);
-            };
-            asyncFn.apply(this, args);
-        });
-    }
-
-    return awaitable;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 61493:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-// A temporary value used to identify if the loop should be broken.
-// See #1064, #1293
-const breakLoop = {};
-exports["default"] = breakLoop;
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 25083:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-
-var _once = __nccwpck_require__(96511);
-
-var _once2 = _interopRequireDefault(_once);
-
-var _iterator = __nccwpck_require__(21760);
-
-var _iterator2 = _interopRequireDefault(_iterator);
-
-var _onlyOnce = __nccwpck_require__(67817);
-
-var _onlyOnce2 = _interopRequireDefault(_onlyOnce);
-
-var _wrapAsync = __nccwpck_require__(60048);
-
-var _asyncEachOfLimit = __nccwpck_require__(98729);
-
-var _asyncEachOfLimit2 = _interopRequireDefault(_asyncEachOfLimit);
-
-var _breakLoop = __nccwpck_require__(61493);
-
-var _breakLoop2 = _interopRequireDefault(_breakLoop);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports["default"] = limit => {
-    return (obj, iteratee, callback) => {
-        callback = (0, _once2.default)(callback);
-        if (limit <= 0) {
-            throw new RangeError('concurrency limit cannot be less than 1');
-        }
-        if (!obj) {
-            return callback(null);
-        }
-        if ((0, _wrapAsync.isAsyncGenerator)(obj)) {
-            return (0, _asyncEachOfLimit2.default)(obj, limit, iteratee, callback);
-        }
-        if ((0, _wrapAsync.isAsyncIterable)(obj)) {
-            return (0, _asyncEachOfLimit2.default)(obj[Symbol.asyncIterator](), limit, iteratee, callback);
-        }
-        var nextElem = (0, _iterator2.default)(obj);
-        var done = false;
-        var canceled = false;
-        var running = 0;
-        var looping = false;
-
-        function iterateeCallback(err, value) {
-            if (canceled) return;
-            running -= 1;
-            if (err) {
-                done = true;
-                callback(err);
-            } else if (err === false) {
-                done = true;
-                canceled = true;
-            } else if (value === _breakLoop2.default || done && running <= 0) {
-                done = true;
-                return callback(null);
-            } else if (!looping) {
-                replenish();
-            }
-        }
-
-        function replenish() {
-            looping = true;
-            while (running < limit && !done) {
-                var elem = nextElem();
-                if (elem === null) {
-                    done = true;
-                    if (running <= 0) {
-                        callback(null);
-                    }
-                    return;
-                }
-                running += 1;
-                iteratee(elem.value, elem.key, (0, _onlyOnce2.default)(iterateeCallback));
-            }
-            looping = false;
-        }
-
-        replenish();
-    };
-};
-
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 92738:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-
-exports["default"] = function (coll) {
-    return coll[Symbol.iterator] && coll[Symbol.iterator]();
-};
-
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 78790:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-
-exports["default"] = function (fn) {
-    return function (...args /*, callback*/) {
-        var callback = args.pop();
-        return fn.call(this, args, callback);
-    };
-};
-
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 6674:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports["default"] = isArrayLike;
-function isArrayLike(value) {
-    return value && typeof value.length === 'number' && value.length >= 0 && value.length % 1 === 0;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 21760:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports["default"] = createIterator;
-
-var _isArrayLike = __nccwpck_require__(6674);
-
-var _isArrayLike2 = _interopRequireDefault(_isArrayLike);
-
-var _getIterator = __nccwpck_require__(92738);
-
-var _getIterator2 = _interopRequireDefault(_getIterator);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function createArrayIterator(coll) {
-    var i = -1;
-    var len = coll.length;
-    return function next() {
-        return ++i < len ? { value: coll[i], key: i } : null;
-    };
-}
-
-function createES2015Iterator(iterator) {
-    var i = -1;
-    return function next() {
-        var item = iterator.next();
-        if (item.done) return null;
-        i++;
-        return { value: item.value, key: i };
-    };
-}
-
-function createObjectIterator(obj) {
-    var okeys = obj ? Object.keys(obj) : [];
-    var i = -1;
-    var len = okeys.length;
-    return function next() {
-        var key = okeys[++i];
-        if (key === '__proto__') {
-            return next();
-        }
-        return i < len ? { value: obj[key], key } : null;
-    };
-}
-
-function createIterator(coll) {
-    if ((0, _isArrayLike2.default)(coll)) {
-        return createArrayIterator(coll);
-    }
-
-    var iterator = (0, _getIterator2.default)(coll);
-    return iterator ? createES2015Iterator(iterator) : createObjectIterator(coll);
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 96511:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports["default"] = once;
-function once(fn) {
-    function wrapper(...args) {
-        if (fn === null) return;
-        var callFn = fn;
-        fn = null;
-        callFn.apply(this, args);
-    }
-    Object.assign(wrapper, fn);
-    return wrapper;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 67817:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports["default"] = onlyOnce;
-function onlyOnce(fn) {
-    return function (...args) {
-        if (fn === null) throw new Error("Callback was already called.");
-        var callFn = fn;
-        fn = null;
-        callFn.apply(this, args);
-    };
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 40729:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-
-var _isArrayLike = __nccwpck_require__(6674);
-
-var _isArrayLike2 = _interopRequireDefault(_isArrayLike);
-
-var _wrapAsync = __nccwpck_require__(60048);
-
-var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
-
-var _awaitify = __nccwpck_require__(94506);
-
-var _awaitify2 = _interopRequireDefault(_awaitify);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports["default"] = (0, _awaitify2.default)((eachfn, tasks, callback) => {
-    var results = (0, _isArrayLike2.default)(tasks) ? [] : {};
-
-    eachfn(tasks, (task, key, taskCb) => {
-        (0, _wrapAsync2.default)(task)((err, ...result) => {
-            if (result.length < 2) {
-                [result] = result;
-            }
-            results[key] = result;
-            taskCb(err);
-        });
-    }, err => callback(err, results));
-}, 3);
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 87775:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports.fallback = fallback;
-exports.wrap = wrap;
-/* istanbul ignore file */
-
-var hasQueueMicrotask = exports.hasQueueMicrotask = typeof queueMicrotask === 'function' && queueMicrotask;
-var hasSetImmediate = exports.hasSetImmediate = typeof setImmediate === 'function' && setImmediate;
-var hasNextTick = exports.hasNextTick = typeof process === 'object' && typeof process.nextTick === 'function';
-
-function fallback(fn) {
-    setTimeout(fn, 0);
-}
-
-function wrap(defer) {
-    return (fn, ...args) => defer(() => fn(...args));
-}
-
-var _defer;
-
-if (hasQueueMicrotask) {
-    _defer = queueMicrotask;
-} else if (hasSetImmediate) {
-    _defer = setImmediate;
-} else if (hasNextTick) {
-    _defer = process.nextTick;
-} else {
-    _defer = fallback;
-}
-
-exports["default"] = wrap(_defer);
-
-/***/ }),
-
-/***/ 93830:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports["default"] = _withoutIndex;
-function _withoutIndex(iteratee) {
-    return (value, index, callback) => iteratee(value, callback);
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 60048:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports.isAsyncIterable = exports.isAsyncGenerator = exports.isAsync = undefined;
-
-var _asyncify = __nccwpck_require__(184);
-
-var _asyncify2 = _interopRequireDefault(_asyncify);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function isAsync(fn) {
-    return fn[Symbol.toStringTag] === 'AsyncFunction';
-}
-
-function isAsyncGenerator(fn) {
-    return fn[Symbol.toStringTag] === 'AsyncGenerator';
-}
-
-function isAsyncIterable(obj) {
-    return typeof obj[Symbol.asyncIterator] === 'function';
-}
-
-function wrapAsync(asyncFn) {
-    if (typeof asyncFn !== 'function') throw new Error('expected a function');
-    return isAsync(asyncFn) ? (0, _asyncify2.default)(asyncFn) : asyncFn;
-}
-
-exports["default"] = wrapAsync;
-exports.isAsync = isAsync;
-exports.isAsyncGenerator = isAsyncGenerator;
-exports.isAsyncIterable = isAsyncIterable;
-
-/***/ }),
-
-/***/ 92059:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports["default"] = series;
-
-var _parallel2 = __nccwpck_require__(40729);
-
-var _parallel3 = _interopRequireDefault(_parallel2);
-
-var _eachOfSeries = __nccwpck_require__(77031);
-
-var _eachOfSeries2 = _interopRequireDefault(_eachOfSeries);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Run the functions in the `tasks` collection in series, each one running once
- * the previous function has completed. If any functions in the series pass an
- * error to its callback, no more functions are run, and `callback` is
- * immediately called with the value of the error. Otherwise, `callback`
- * receives an array of results when `tasks` have completed.
- *
- * It is also possible to use an object instead of an array. Each property will
- * be run as a function, and the results will be passed to the final `callback`
- * as an object instead of an array. This can be a more readable way of handling
- *  results from {@link async.series}.
- *
- * **Note** that while many implementations preserve the order of object
- * properties, the [ECMAScript Language Specification](http://www.ecma-international.org/ecma-262/5.1/#sec-8.6)
- * explicitly states that
- *
- * > The mechanics and order of enumerating the properties is not specified.
- *
- * So if you rely on the order in which your series of functions are executed,
- * and want this to work on all platforms, consider using an array.
- *
- * @name series
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Array|Iterable|AsyncIterable|Object} tasks - A collection containing
- * [async functions]{@link AsyncFunction} to run in series.
- * Each function can complete with any number of optional `result` values.
- * @param {Function} [callback] - An optional callback to run once all the
- * functions have completed. This function gets a results array (or object)
- * containing all the result arguments passed to the `task` callbacks. Invoked
- * with (err, result).
- * @return {Promise} a promise, if no callback is passed
- * @example
- *
- * //Using Callbacks
- * async.series([
- *     function(callback) {
- *         setTimeout(function() {
- *             // do some async task
- *             callback(null, 'one');
- *         }, 200);
- *     },
- *     function(callback) {
- *         setTimeout(function() {
- *             // then do another async task
- *             callback(null, 'two');
- *         }, 100);
- *     }
- * ], function(err, results) {
- *     console.log(results);
- *     // results is equal to ['one','two']
- * });
- *
- * // an example using objects instead of arrays
- * async.series({
- *     one: function(callback) {
- *         setTimeout(function() {
- *             // do some async task
- *             callback(null, 1);
- *         }, 200);
- *     },
- *     two: function(callback) {
- *         setTimeout(function() {
- *             // then do another async task
- *             callback(null, 2);
- *         }, 100);
- *     }
- * }, function(err, results) {
- *     console.log(results);
- *     // results is equal to: { one: 1, two: 2 }
- * });
- *
- * //Using Promises
- * async.series([
- *     function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'one');
- *         }, 200);
- *     },
- *     function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'two');
- *         }, 100);
- *     }
- * ]).then(results => {
- *     console.log(results);
- *     // results is equal to ['one','two']
- * }).catch(err => {
- *     console.log(err);
- * });
- *
- * // an example using an object instead of an array
- * async.series({
- *     one: function(callback) {
- *         setTimeout(function() {
- *             // do some async task
- *             callback(null, 1);
- *         }, 200);
- *     },
- *     two: function(callback) {
- *         setTimeout(function() {
- *             // then do another async task
- *             callback(null, 2);
- *         }, 100);
- *     }
- * }).then(results => {
- *     console.log(results);
- *     // results is equal to: { one: 1, two: 2 }
- * }).catch(err => {
- *     console.log(err);
- * });
- *
- * //Using async/await
- * async () => {
- *     try {
- *         let results = await async.series([
- *             function(callback) {
- *                 setTimeout(function() {
- *                     // do some async task
- *                     callback(null, 'one');
- *                 }, 200);
- *             },
- *             function(callback) {
- *                 setTimeout(function() {
- *                     // then do another async task
- *                     callback(null, 'two');
- *                 }, 100);
- *             }
- *         ]);
- *         console.log(results);
- *         // results is equal to ['one','two']
- *     }
- *     catch (err) {
- *         console.log(err);
- *     }
- * }
- *
- * // an example using an object instead of an array
- * async () => {
- *     try {
- *         let results = await async.parallel({
- *             one: function(callback) {
- *                 setTimeout(function() {
- *                     // do some async task
- *                     callback(null, 1);
- *                 }, 200);
- *             },
- *            two: function(callback) {
- *                 setTimeout(function() {
- *                     // then do another async task
- *                     callback(null, 2);
- *                 }, 100);
- *            }
- *         });
- *         console.log(results);
- *         // results is equal to: { one: 1, two: 2 }
- *     }
- *     catch (err) {
- *         console.log(err);
- *     }
- * }
- *
- */
-function series(tasks, callback) {
-    return (0, _parallel3.default)(_eachOfSeries2.default, tasks, callback);
-}
-module.exports = exports.default;
-
-/***/ }),
-
 /***/ 61288:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -82119,7 +80836,7 @@ module.exports = function (opts = {}) {
 
 
 const os = __nccwpck_require__(70857);
-const asyncForEach = __nccwpck_require__(77422);
+const asyncForEach = __nccwpck_require__(84942);
 const debug = __nccwpck_require__(46479)('winston:exception');
 const once = __nccwpck_require__(254);
 const stackTrace = __nccwpck_require__(16064);
@@ -82434,7 +81151,7 @@ module.exports = class ExceptionStream extends Writable {
 
 
 const { Stream, Transform } = __nccwpck_require__(12727);
-const asyncForEach = __nccwpck_require__(77422);
+const asyncForEach = __nccwpck_require__(84942);
 const { LEVEL, SPLAT } = __nccwpck_require__(31544);
 const isStream = __nccwpck_require__(81011);
 const ExceptionHandler = __nccwpck_require__(74367);
@@ -83180,7 +81897,7 @@ module.exports = Profiler;
 
 
 const os = __nccwpck_require__(70857);
-const asyncForEach = __nccwpck_require__(77422);
+const asyncForEach = __nccwpck_require__(84942);
 const debug = __nccwpck_require__(46479)('winston:rejection');
 const once = __nccwpck_require__(254);
 const stackTrace = __nccwpck_require__(16064);
@@ -83766,7 +82483,7 @@ module.exports = class Console extends TransportStream {
 
 const fs = __nccwpck_require__(79896);
 const path = __nccwpck_require__(16928);
-const asyncSeries = __nccwpck_require__(92059);
+const asyncSeries = __nccwpck_require__(27067);
 const zlib = __nccwpck_require__(43106);
 const { MESSAGE } = __nccwpck_require__(31544);
 const { Stream, PassThrough } = __nccwpck_require__(12727);
@@ -84923,6 +83640,1289 @@ module.exports = class Stream extends TransportStream {
   }
 };
 
+
+/***/ }),
+
+/***/ 5944:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports["default"] = asyncify;
+
+var _initialParams = __nccwpck_require__(10982);
+
+var _initialParams2 = _interopRequireDefault(_initialParams);
+
+var _setImmediate = __nccwpck_require__(91327);
+
+var _setImmediate2 = _interopRequireDefault(_setImmediate);
+
+var _wrapAsync = __nccwpck_require__(50000);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Take a sync function and make it async, passing its return value to a
+ * callback. This is useful for plugging sync functions into a waterfall,
+ * series, or other async functions. Any arguments passed to the generated
+ * function will be passed to the wrapped function (except for the final
+ * callback argument). Errors thrown will be passed to the callback.
+ *
+ * If the function passed to `asyncify` returns a Promise, that promises's
+ * resolved/rejected state will be used to call the callback, rather than simply
+ * the synchronous return value.
+ *
+ * This also means you can asyncify ES2017 `async` functions.
+ *
+ * @name asyncify
+ * @static
+ * @memberOf module:Utils
+ * @method
+ * @alias wrapSync
+ * @category Util
+ * @param {Function} func - The synchronous function, or Promise-returning
+ * function to convert to an {@link AsyncFunction}.
+ * @returns {AsyncFunction} An asynchronous wrapper of the `func`. To be
+ * invoked with `(args..., callback)`.
+ * @example
+ *
+ * // passing a regular synchronous function
+ * async.waterfall([
+ *     async.apply(fs.readFile, filename, "utf8"),
+ *     async.asyncify(JSON.parse),
+ *     function (data, next) {
+ *         // data is the result of parsing the text.
+ *         // If there was a parsing error, it would have been caught.
+ *     }
+ * ], callback);
+ *
+ * // passing a function returning a promise
+ * async.waterfall([
+ *     async.apply(fs.readFile, filename, "utf8"),
+ *     async.asyncify(function (contents) {
+ *         return db.model.create(contents);
+ *     }),
+ *     function (model, next) {
+ *         // `model` is the instantiated model object.
+ *         // If there was an error, this function would be skipped.
+ *     }
+ * ], callback);
+ *
+ * // es2017 example, though `asyncify` is not needed if your JS environment
+ * // supports async functions out of the box
+ * var q = async.queue(async.asyncify(async function(file) {
+ *     var intermediateStep = await processFile(file);
+ *     return await somePromise(intermediateStep)
+ * }));
+ *
+ * q.push(files);
+ */
+function asyncify(func) {
+    if ((0, _wrapAsync.isAsync)(func)) {
+        return function (...args /*, callback*/) {
+            const callback = args.pop();
+            const promise = func.apply(this, args);
+            return handlePromise(promise, callback);
+        };
+    }
+
+    return (0, _initialParams2.default)(function (args, callback) {
+        var result;
+        try {
+            result = func.apply(this, args);
+        } catch (e) {
+            return callback(e);
+        }
+        // if result is Promise object
+        if (result && typeof result.then === 'function') {
+            return handlePromise(result, callback);
+        } else {
+            callback(null, result);
+        }
+    });
+}
+
+function handlePromise(promise, callback) {
+    return promise.then(value => {
+        invokeCallback(callback, null, value);
+    }, err => {
+        invokeCallback(callback, err && (err instanceof Error || err.message) ? err : new Error(err));
+    });
+}
+
+function invokeCallback(callback, error, value) {
+    try {
+        callback(error, value);
+    } catch (err) {
+        (0, _setImmediate2.default)(e => {
+            throw e;
+        }, err);
+    }
+}
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 72270:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _isArrayLike = __nccwpck_require__(498);
+
+var _isArrayLike2 = _interopRequireDefault(_isArrayLike);
+
+var _breakLoop = __nccwpck_require__(98997);
+
+var _breakLoop2 = _interopRequireDefault(_breakLoop);
+
+var _eachOfLimit = __nccwpck_require__(88787);
+
+var _eachOfLimit2 = _interopRequireDefault(_eachOfLimit);
+
+var _once = __nccwpck_require__(11743);
+
+var _once2 = _interopRequireDefault(_once);
+
+var _onlyOnce = __nccwpck_require__(77033);
+
+var _onlyOnce2 = _interopRequireDefault(_onlyOnce);
+
+var _wrapAsync = __nccwpck_require__(50000);
+
+var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
+
+var _awaitify = __nccwpck_require__(22218);
+
+var _awaitify2 = _interopRequireDefault(_awaitify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// eachOf implementation optimized for array-likes
+function eachOfArrayLike(coll, iteratee, callback) {
+    callback = (0, _once2.default)(callback);
+    var index = 0,
+        completed = 0,
+        { length } = coll,
+        canceled = false;
+    if (length === 0) {
+        callback(null);
+    }
+
+    function iteratorCallback(err, value) {
+        if (err === false) {
+            canceled = true;
+        }
+        if (canceled === true) return;
+        if (err) {
+            callback(err);
+        } else if (++completed === length || value === _breakLoop2.default) {
+            callback(null);
+        }
+    }
+
+    for (; index < length; index++) {
+        iteratee(coll[index], index, (0, _onlyOnce2.default)(iteratorCallback));
+    }
+}
+
+// a generic version of eachOf which can handle array, object, and iterator cases.
+function eachOfGeneric(coll, iteratee, callback) {
+    return (0, _eachOfLimit2.default)(coll, Infinity, iteratee, callback);
+}
+
+/**
+ * Like [`each`]{@link module:Collections.each}, except that it passes the key (or index) as the second argument
+ * to the iteratee.
+ *
+ * @name eachOf
+ * @static
+ * @memberOf module:Collections
+ * @method
+ * @alias forEachOf
+ * @category Collection
+ * @see [async.each]{@link module:Collections.each}
+ * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
+ * @param {AsyncFunction} iteratee - A function to apply to each
+ * item in `coll`.
+ * The `key` is the item's key, or index in the case of an array.
+ * Invoked with (item, key, callback).
+ * @param {Function} [callback] - A callback which is called when all
+ * `iteratee` functions have finished, or an error occurs. Invoked with (err).
+ * @returns {Promise} a promise, if a callback is omitted
+ * @example
+ *
+ * // dev.json is a file containing a valid json object config for dev environment
+ * // dev.json is a file containing a valid json object config for test environment
+ * // prod.json is a file containing a valid json object config for prod environment
+ * // invalid.json is a file with a malformed json object
+ *
+ * let configs = {}; //global variable
+ * let validConfigFileMap = {dev: 'dev.json', test: 'test.json', prod: 'prod.json'};
+ * let invalidConfigFileMap = {dev: 'dev.json', test: 'test.json', invalid: 'invalid.json'};
+ *
+ * // asynchronous function that reads a json file and parses the contents as json object
+ * function parseFile(file, key, callback) {
+ *     fs.readFile(file, "utf8", function(err, data) {
+ *         if (err) return calback(err);
+ *         try {
+ *             configs[key] = JSON.parse(data);
+ *         } catch (e) {
+ *             return callback(e);
+ *         }
+ *         callback();
+ *     });
+ * }
+ *
+ * // Using callbacks
+ * async.forEachOf(validConfigFileMap, parseFile, function (err) {
+ *     if (err) {
+ *         console.error(err);
+ *     } else {
+ *         console.log(configs);
+ *         // configs is now a map of JSON data, e.g.
+ *         // { dev: //parsed dev.json, test: //parsed test.json, prod: //parsed prod.json}
+ *     }
+ * });
+ *
+ * //Error handing
+ * async.forEachOf(invalidConfigFileMap, parseFile, function (err) {
+ *     if (err) {
+ *         console.error(err);
+ *         // JSON parse error exception
+ *     } else {
+ *         console.log(configs);
+ *     }
+ * });
+ *
+ * // Using Promises
+ * async.forEachOf(validConfigFileMap, parseFile)
+ * .then( () => {
+ *     console.log(configs);
+ *     // configs is now a map of JSON data, e.g.
+ *     // { dev: //parsed dev.json, test: //parsed test.json, prod: //parsed prod.json}
+ * }).catch( err => {
+ *     console.error(err);
+ * });
+ *
+ * //Error handing
+ * async.forEachOf(invalidConfigFileMap, parseFile)
+ * .then( () => {
+ *     console.log(configs);
+ * }).catch( err => {
+ *     console.error(err);
+ *     // JSON parse error exception
+ * });
+ *
+ * // Using async/await
+ * async () => {
+ *     try {
+ *         let result = await async.forEachOf(validConfigFileMap, parseFile);
+ *         console.log(configs);
+ *         // configs is now a map of JSON data, e.g.
+ *         // { dev: //parsed dev.json, test: //parsed test.json, prod: //parsed prod.json}
+ *     }
+ *     catch (err) {
+ *         console.log(err);
+ *     }
+ * }
+ *
+ * //Error handing
+ * async () => {
+ *     try {
+ *         let result = await async.forEachOf(invalidConfigFileMap, parseFile);
+ *         console.log(configs);
+ *     }
+ *     catch (err) {
+ *         console.log(err);
+ *         // JSON parse error exception
+ *     }
+ * }
+ *
+ */
+function eachOf(coll, iteratee, callback) {
+    var eachOfImplementation = (0, _isArrayLike2.default)(coll) ? eachOfArrayLike : eachOfGeneric;
+    return eachOfImplementation(coll, (0, _wrapAsync2.default)(iteratee), callback);
+}
+
+exports["default"] = (0, _awaitify2.default)(eachOf, 3);
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 88787:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _eachOfLimit2 = __nccwpck_require__(50555);
+
+var _eachOfLimit3 = _interopRequireDefault(_eachOfLimit2);
+
+var _wrapAsync = __nccwpck_require__(50000);
+
+var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
+
+var _awaitify = __nccwpck_require__(22218);
+
+var _awaitify2 = _interopRequireDefault(_awaitify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * The same as [`eachOf`]{@link module:Collections.eachOf} but runs a maximum of `limit` async operations at a
+ * time.
+ *
+ * @name eachOfLimit
+ * @static
+ * @memberOf module:Collections
+ * @method
+ * @see [async.eachOf]{@link module:Collections.eachOf}
+ * @alias forEachOfLimit
+ * @category Collection
+ * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
+ * @param {number} limit - The maximum number of async operations at a time.
+ * @param {AsyncFunction} iteratee - An async function to apply to each
+ * item in `coll`. The `key` is the item's key, or index in the case of an
+ * array.
+ * Invoked with (item, key, callback).
+ * @param {Function} [callback] - A callback which is called when all
+ * `iteratee` functions have finished, or an error occurs. Invoked with (err).
+ * @returns {Promise} a promise, if a callback is omitted
+ */
+function eachOfLimit(coll, limit, iteratee, callback) {
+    return (0, _eachOfLimit3.default)(limit)(coll, (0, _wrapAsync2.default)(iteratee), callback);
+}
+
+exports["default"] = (0, _awaitify2.default)(eachOfLimit, 4);
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 35239:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _eachOfLimit = __nccwpck_require__(88787);
+
+var _eachOfLimit2 = _interopRequireDefault(_eachOfLimit);
+
+var _awaitify = __nccwpck_require__(22218);
+
+var _awaitify2 = _interopRequireDefault(_awaitify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * The same as [`eachOf`]{@link module:Collections.eachOf} but runs only a single async operation at a time.
+ *
+ * @name eachOfSeries
+ * @static
+ * @memberOf module:Collections
+ * @method
+ * @see [async.eachOf]{@link module:Collections.eachOf}
+ * @alias forEachOfSeries
+ * @category Collection
+ * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
+ * @param {AsyncFunction} iteratee - An async function to apply to each item in
+ * `coll`.
+ * Invoked with (item, key, callback).
+ * @param {Function} [callback] - A callback which is called when all `iteratee`
+ * functions have finished, or an error occurs. Invoked with (err).
+ * @returns {Promise} a promise, if a callback is omitted
+ */
+function eachOfSeries(coll, iteratee, callback) {
+    return (0, _eachOfLimit2.default)(coll, 1, iteratee, callback);
+}
+exports["default"] = (0, _awaitify2.default)(eachOfSeries, 3);
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 84942:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _eachOf = __nccwpck_require__(72270);
+
+var _eachOf2 = _interopRequireDefault(_eachOf);
+
+var _withoutIndex = __nccwpck_require__(85574);
+
+var _withoutIndex2 = _interopRequireDefault(_withoutIndex);
+
+var _wrapAsync = __nccwpck_require__(50000);
+
+var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
+
+var _awaitify = __nccwpck_require__(22218);
+
+var _awaitify2 = _interopRequireDefault(_awaitify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Applies the function `iteratee` to each item in `coll`, in parallel.
+ * The `iteratee` is called with an item from the list, and a callback for when
+ * it has finished. If the `iteratee` passes an error to its `callback`, the
+ * main `callback` (for the `each` function) is immediately called with the
+ * error.
+ *
+ * Note, that since this function applies `iteratee` to each item in parallel,
+ * there is no guarantee that the iteratee functions will complete in order.
+ *
+ * @name each
+ * @static
+ * @memberOf module:Collections
+ * @method
+ * @alias forEach
+ * @category Collection
+ * @param {Array|Iterable|AsyncIterable|Object} coll - A collection to iterate over.
+ * @param {AsyncFunction} iteratee - An async function to apply to
+ * each item in `coll`. Invoked with (item, callback).
+ * The array index is not passed to the iteratee.
+ * If you need the index, use `eachOf`.
+ * @param {Function} [callback] - A callback which is called when all
+ * `iteratee` functions have finished, or an error occurs. Invoked with (err).
+ * @returns {Promise} a promise, if a callback is omitted
+ * @example
+ *
+ * // dir1 is a directory that contains file1.txt, file2.txt
+ * // dir2 is a directory that contains file3.txt, file4.txt
+ * // dir3 is a directory that contains file5.txt
+ * // dir4 does not exist
+ *
+ * const fileList = [ 'dir1/file2.txt', 'dir2/file3.txt', 'dir/file5.txt'];
+ * const withMissingFileList = ['dir1/file1.txt', 'dir4/file2.txt'];
+ *
+ * // asynchronous function that deletes a file
+ * const deleteFile = function(file, callback) {
+ *     fs.unlink(file, callback);
+ * };
+ *
+ * // Using callbacks
+ * async.each(fileList, deleteFile, function(err) {
+ *     if( err ) {
+ *         console.log(err);
+ *     } else {
+ *         console.log('All files have been deleted successfully');
+ *     }
+ * });
+ *
+ * // Error Handling
+ * async.each(withMissingFileList, deleteFile, function(err){
+ *     console.log(err);
+ *     // [ Error: ENOENT: no such file or directory ]
+ *     // since dir4/file2.txt does not exist
+ *     // dir1/file1.txt could have been deleted
+ * });
+ *
+ * // Using Promises
+ * async.each(fileList, deleteFile)
+ * .then( () => {
+ *     console.log('All files have been deleted successfully');
+ * }).catch( err => {
+ *     console.log(err);
+ * });
+ *
+ * // Error Handling
+ * async.each(fileList, deleteFile)
+ * .then( () => {
+ *     console.log('All files have been deleted successfully');
+ * }).catch( err => {
+ *     console.log(err);
+ *     // [ Error: ENOENT: no such file or directory ]
+ *     // since dir4/file2.txt does not exist
+ *     // dir1/file1.txt could have been deleted
+ * });
+ *
+ * // Using async/await
+ * async () => {
+ *     try {
+ *         await async.each(files, deleteFile);
+ *     }
+ *     catch (err) {
+ *         console.log(err);
+ *     }
+ * }
+ *
+ * // Error Handling
+ * async () => {
+ *     try {
+ *         await async.each(withMissingFileList, deleteFile);
+ *     }
+ *     catch (err) {
+ *         console.log(err);
+ *         // [ Error: ENOENT: no such file or directory ]
+ *         // since dir4/file2.txt does not exist
+ *         // dir1/file1.txt could have been deleted
+ *     }
+ * }
+ *
+ */
+function eachLimit(coll, iteratee, callback) {
+    return (0, _eachOf2.default)(coll, (0, _withoutIndex2.default)((0, _wrapAsync2.default)(iteratee)), callback);
+}
+
+exports["default"] = (0, _awaitify2.default)(eachLimit, 3);
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 1417:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports["default"] = asyncEachOfLimit;
+
+var _breakLoop = __nccwpck_require__(98997);
+
+var _breakLoop2 = _interopRequireDefault(_breakLoop);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// for async generators
+function asyncEachOfLimit(generator, limit, iteratee, callback) {
+    let done = false;
+    let canceled = false;
+    let awaiting = false;
+    let running = 0;
+    let idx = 0;
+
+    function replenish() {
+        //console.log('replenish')
+        if (running >= limit || awaiting || done) return;
+        //console.log('replenish awaiting')
+        awaiting = true;
+        generator.next().then(({ value, done: iterDone }) => {
+            //console.log('got value', value)
+            if (canceled || done) return;
+            awaiting = false;
+            if (iterDone) {
+                done = true;
+                if (running <= 0) {
+                    //console.log('done nextCb')
+                    callback(null);
+                }
+                return;
+            }
+            running++;
+            iteratee(value, idx, iterateeCallback);
+            idx++;
+            replenish();
+        }).catch(handleError);
+    }
+
+    function iterateeCallback(err, result) {
+        //console.log('iterateeCallback')
+        running -= 1;
+        if (canceled) return;
+        if (err) return handleError(err);
+
+        if (err === false) {
+            done = true;
+            canceled = true;
+            return;
+        }
+
+        if (result === _breakLoop2.default || done && running <= 0) {
+            done = true;
+            //console.log('done iterCb')
+            return callback(null);
+        }
+        replenish();
+    }
+
+    function handleError(err) {
+        if (canceled) return;
+        awaiting = false;
+        done = true;
+        callback(err);
+    }
+
+    replenish();
+}
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 22218:
+/***/ ((module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports["default"] = awaitify;
+// conditionally promisify a function.
+// only return a promise if a callback is omitted
+function awaitify(asyncFn, arity) {
+    if (!arity) arity = asyncFn.length;
+    if (!arity) throw new Error('arity is undefined');
+    function awaitable(...args) {
+        if (typeof args[arity - 1] === 'function') {
+            return asyncFn.apply(this, args);
+        }
+
+        return new Promise((resolve, reject) => {
+            args[arity - 1] = (err, ...cbArgs) => {
+                if (err) return reject(err);
+                resolve(cbArgs.length > 1 ? cbArgs : cbArgs[0]);
+            };
+            asyncFn.apply(this, args);
+        });
+    }
+
+    return awaitable;
+}
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 98997:
+/***/ ((module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+// A temporary value used to identify if the loop should be broken.
+// See #1064, #1293
+const breakLoop = {};
+exports["default"] = breakLoop;
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 50555:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _once = __nccwpck_require__(11743);
+
+var _once2 = _interopRequireDefault(_once);
+
+var _iterator = __nccwpck_require__(4864);
+
+var _iterator2 = _interopRequireDefault(_iterator);
+
+var _onlyOnce = __nccwpck_require__(77033);
+
+var _onlyOnce2 = _interopRequireDefault(_onlyOnce);
+
+var _wrapAsync = __nccwpck_require__(50000);
+
+var _asyncEachOfLimit = __nccwpck_require__(1417);
+
+var _asyncEachOfLimit2 = _interopRequireDefault(_asyncEachOfLimit);
+
+var _breakLoop = __nccwpck_require__(98997);
+
+var _breakLoop2 = _interopRequireDefault(_breakLoop);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports["default"] = limit => {
+    return (obj, iteratee, callback) => {
+        callback = (0, _once2.default)(callback);
+        if (limit <= 0) {
+            throw new RangeError('concurrency limit cannot be less than 1');
+        }
+        if (!obj) {
+            return callback(null);
+        }
+        if ((0, _wrapAsync.isAsyncGenerator)(obj)) {
+            return (0, _asyncEachOfLimit2.default)(obj, limit, iteratee, callback);
+        }
+        if ((0, _wrapAsync.isAsyncIterable)(obj)) {
+            return (0, _asyncEachOfLimit2.default)(obj[Symbol.asyncIterator](), limit, iteratee, callback);
+        }
+        var nextElem = (0, _iterator2.default)(obj);
+        var done = false;
+        var canceled = false;
+        var running = 0;
+        var looping = false;
+
+        function iterateeCallback(err, value) {
+            if (canceled) return;
+            running -= 1;
+            if (err) {
+                done = true;
+                callback(err);
+            } else if (err === false) {
+                done = true;
+                canceled = true;
+            } else if (value === _breakLoop2.default || done && running <= 0) {
+                done = true;
+                return callback(null);
+            } else if (!looping) {
+                replenish();
+            }
+        }
+
+        function replenish() {
+            looping = true;
+            while (running < limit && !done) {
+                var elem = nextElem();
+                if (elem === null) {
+                    done = true;
+                    if (running <= 0) {
+                        callback(null);
+                    }
+                    return;
+                }
+                running += 1;
+                iteratee(elem.value, elem.key, (0, _onlyOnce2.default)(iterateeCallback));
+            }
+            looping = false;
+        }
+
+        replenish();
+    };
+};
+
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 88738:
+/***/ ((module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+exports["default"] = function (coll) {
+    return coll[Symbol.iterator] && coll[Symbol.iterator]();
+};
+
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 10982:
+/***/ ((module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+exports["default"] = function (fn) {
+    return function (...args /*, callback*/) {
+        var callback = args.pop();
+        return fn.call(this, args, callback);
+    };
+};
+
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 498:
+/***/ ((module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports["default"] = isArrayLike;
+function isArrayLike(value) {
+    return value && typeof value.length === 'number' && value.length >= 0 && value.length % 1 === 0;
+}
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 4864:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports["default"] = createIterator;
+
+var _isArrayLike = __nccwpck_require__(498);
+
+var _isArrayLike2 = _interopRequireDefault(_isArrayLike);
+
+var _getIterator = __nccwpck_require__(88738);
+
+var _getIterator2 = _interopRequireDefault(_getIterator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function createArrayIterator(coll) {
+    var i = -1;
+    var len = coll.length;
+    return function next() {
+        return ++i < len ? { value: coll[i], key: i } : null;
+    };
+}
+
+function createES2015Iterator(iterator) {
+    var i = -1;
+    return function next() {
+        var item = iterator.next();
+        if (item.done) return null;
+        i++;
+        return { value: item.value, key: i };
+    };
+}
+
+function createObjectIterator(obj) {
+    var okeys = obj ? Object.keys(obj) : [];
+    var i = -1;
+    var len = okeys.length;
+    return function next() {
+        var key = okeys[++i];
+        if (key === '__proto__') {
+            return next();
+        }
+        return i < len ? { value: obj[key], key } : null;
+    };
+}
+
+function createIterator(coll) {
+    if ((0, _isArrayLike2.default)(coll)) {
+        return createArrayIterator(coll);
+    }
+
+    var iterator = (0, _getIterator2.default)(coll);
+    return iterator ? createES2015Iterator(iterator) : createObjectIterator(coll);
+}
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 11743:
+/***/ ((module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports["default"] = once;
+function once(fn) {
+    function wrapper(...args) {
+        if (fn === null) return;
+        var callFn = fn;
+        fn = null;
+        callFn.apply(this, args);
+    }
+    Object.assign(wrapper, fn);
+    return wrapper;
+}
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 77033:
+/***/ ((module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports["default"] = onlyOnce;
+function onlyOnce(fn) {
+    return function (...args) {
+        if (fn === null) throw new Error("Callback was already called.");
+        var callFn = fn;
+        fn = null;
+        callFn.apply(this, args);
+    };
+}
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 6457:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _isArrayLike = __nccwpck_require__(498);
+
+var _isArrayLike2 = _interopRequireDefault(_isArrayLike);
+
+var _wrapAsync = __nccwpck_require__(50000);
+
+var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
+
+var _awaitify = __nccwpck_require__(22218);
+
+var _awaitify2 = _interopRequireDefault(_awaitify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports["default"] = (0, _awaitify2.default)((eachfn, tasks, callback) => {
+    var results = (0, _isArrayLike2.default)(tasks) ? [] : {};
+
+    eachfn(tasks, (task, key, taskCb) => {
+        (0, _wrapAsync2.default)(task)((err, ...result) => {
+            if (result.length < 2) {
+                [result] = result;
+            }
+            results[key] = result;
+            taskCb(err);
+        });
+    }, err => callback(err, results));
+}, 3);
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 91327:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.fallback = fallback;
+exports.wrap = wrap;
+/* istanbul ignore file */
+
+var hasQueueMicrotask = exports.hasQueueMicrotask = typeof queueMicrotask === 'function' && queueMicrotask;
+var hasSetImmediate = exports.hasSetImmediate = typeof setImmediate === 'function' && setImmediate;
+var hasNextTick = exports.hasNextTick = typeof process === 'object' && typeof process.nextTick === 'function';
+
+function fallback(fn) {
+    setTimeout(fn, 0);
+}
+
+function wrap(defer) {
+    return (fn, ...args) => defer(() => fn(...args));
+}
+
+var _defer;
+
+if (hasQueueMicrotask) {
+    _defer = queueMicrotask;
+} else if (hasSetImmediate) {
+    _defer = setImmediate;
+} else if (hasNextTick) {
+    _defer = process.nextTick;
+} else {
+    _defer = fallback;
+}
+
+exports["default"] = wrap(_defer);
+
+/***/ }),
+
+/***/ 85574:
+/***/ ((module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports["default"] = _withoutIndex;
+function _withoutIndex(iteratee) {
+    return (value, index, callback) => iteratee(value, callback);
+}
+module.exports = exports.default;
+
+/***/ }),
+
+/***/ 50000:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.isAsyncIterable = exports.isAsyncGenerator = exports.isAsync = undefined;
+
+var _asyncify = __nccwpck_require__(5944);
+
+var _asyncify2 = _interopRequireDefault(_asyncify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isAsync(fn) {
+    return fn[Symbol.toStringTag] === 'AsyncFunction';
+}
+
+function isAsyncGenerator(fn) {
+    return fn[Symbol.toStringTag] === 'AsyncGenerator';
+}
+
+function isAsyncIterable(obj) {
+    return typeof obj[Symbol.asyncIterator] === 'function';
+}
+
+function wrapAsync(asyncFn) {
+    if (typeof asyncFn !== 'function') throw new Error('expected a function');
+    return isAsync(asyncFn) ? (0, _asyncify2.default)(asyncFn) : asyncFn;
+}
+
+exports["default"] = wrapAsync;
+exports.isAsync = isAsync;
+exports.isAsyncGenerator = isAsyncGenerator;
+exports.isAsyncIterable = isAsyncIterable;
+
+/***/ }),
+
+/***/ 27067:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports["default"] = series;
+
+var _parallel2 = __nccwpck_require__(6457);
+
+var _parallel3 = _interopRequireDefault(_parallel2);
+
+var _eachOfSeries = __nccwpck_require__(35239);
+
+var _eachOfSeries2 = _interopRequireDefault(_eachOfSeries);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Run the functions in the `tasks` collection in series, each one running once
+ * the previous function has completed. If any functions in the series pass an
+ * error to its callback, no more functions are run, and `callback` is
+ * immediately called with the value of the error. Otherwise, `callback`
+ * receives an array of results when `tasks` have completed.
+ *
+ * It is also possible to use an object instead of an array. Each property will
+ * be run as a function, and the results will be passed to the final `callback`
+ * as an object instead of an array. This can be a more readable way of handling
+ *  results from {@link async.series}.
+ *
+ * **Note** that while many implementations preserve the order of object
+ * properties, the [ECMAScript Language Specification](http://www.ecma-international.org/ecma-262/5.1/#sec-8.6)
+ * explicitly states that
+ *
+ * > The mechanics and order of enumerating the properties is not specified.
+ *
+ * So if you rely on the order in which your series of functions are executed,
+ * and want this to work on all platforms, consider using an array.
+ *
+ * @name series
+ * @static
+ * @memberOf module:ControlFlow
+ * @method
+ * @category Control Flow
+ * @param {Array|Iterable|AsyncIterable|Object} tasks - A collection containing
+ * [async functions]{@link AsyncFunction} to run in series.
+ * Each function can complete with any number of optional `result` values.
+ * @param {Function} [callback] - An optional callback to run once all the
+ * functions have completed. This function gets a results array (or object)
+ * containing all the result arguments passed to the `task` callbacks. Invoked
+ * with (err, result).
+ * @return {Promise} a promise, if no callback is passed
+ * @example
+ *
+ * //Using Callbacks
+ * async.series([
+ *     function(callback) {
+ *         setTimeout(function() {
+ *             // do some async task
+ *             callback(null, 'one');
+ *         }, 200);
+ *     },
+ *     function(callback) {
+ *         setTimeout(function() {
+ *             // then do another async task
+ *             callback(null, 'two');
+ *         }, 100);
+ *     }
+ * ], function(err, results) {
+ *     console.log(results);
+ *     // results is equal to ['one','two']
+ * });
+ *
+ * // an example using objects instead of arrays
+ * async.series({
+ *     one: function(callback) {
+ *         setTimeout(function() {
+ *             // do some async task
+ *             callback(null, 1);
+ *         }, 200);
+ *     },
+ *     two: function(callback) {
+ *         setTimeout(function() {
+ *             // then do another async task
+ *             callback(null, 2);
+ *         }, 100);
+ *     }
+ * }, function(err, results) {
+ *     console.log(results);
+ *     // results is equal to: { one: 1, two: 2 }
+ * });
+ *
+ * //Using Promises
+ * async.series([
+ *     function(callback) {
+ *         setTimeout(function() {
+ *             callback(null, 'one');
+ *         }, 200);
+ *     },
+ *     function(callback) {
+ *         setTimeout(function() {
+ *             callback(null, 'two');
+ *         }, 100);
+ *     }
+ * ]).then(results => {
+ *     console.log(results);
+ *     // results is equal to ['one','two']
+ * }).catch(err => {
+ *     console.log(err);
+ * });
+ *
+ * // an example using an object instead of an array
+ * async.series({
+ *     one: function(callback) {
+ *         setTimeout(function() {
+ *             // do some async task
+ *             callback(null, 1);
+ *         }, 200);
+ *     },
+ *     two: function(callback) {
+ *         setTimeout(function() {
+ *             // then do another async task
+ *             callback(null, 2);
+ *         }, 100);
+ *     }
+ * }).then(results => {
+ *     console.log(results);
+ *     // results is equal to: { one: 1, two: 2 }
+ * }).catch(err => {
+ *     console.log(err);
+ * });
+ *
+ * //Using async/await
+ * async () => {
+ *     try {
+ *         let results = await async.series([
+ *             function(callback) {
+ *                 setTimeout(function() {
+ *                     // do some async task
+ *                     callback(null, 'one');
+ *                 }, 200);
+ *             },
+ *             function(callback) {
+ *                 setTimeout(function() {
+ *                     // then do another async task
+ *                     callback(null, 'two');
+ *                 }, 100);
+ *             }
+ *         ]);
+ *         console.log(results);
+ *         // results is equal to ['one','two']
+ *     }
+ *     catch (err) {
+ *         console.log(err);
+ *     }
+ * }
+ *
+ * // an example using an object instead of an array
+ * async () => {
+ *     try {
+ *         let results = await async.parallel({
+ *             one: function(callback) {
+ *                 setTimeout(function() {
+ *                     // do some async task
+ *                     callback(null, 1);
+ *                 }, 200);
+ *             },
+ *            two: function(callback) {
+ *                 setTimeout(function() {
+ *                     // then do another async task
+ *                     callback(null, 2);
+ *                 }, 100);
+ *            }
+ *         });
+ *         console.log(results);
+ *         // results is equal to: { one: 1, two: 2 }
+ *     }
+ *     catch (err) {
+ *         console.log(err);
+ *     }
+ * }
+ *
+ */
+function series(tasks, callback) {
+    return (0, _parallel3.default)(_eachOfSeries2.default, tasks, callback);
+}
+module.exports = exports.default;
 
 /***/ }),
 

@@ -26,7 +26,7 @@ const fs_1 = __nccwpck_require__(79896);
 const glob_1 = __nccwpck_require__(90447);
 const core_1 = __nccwpck_require__(7184);
 const util_1 = __nccwpck_require__(11238);
-const mock_fs_1 = __importDefault(__nccwpck_require__(6699));
+const mock_fs_1 = __importDefault(__nccwpck_require__(55850));
 const internal_1 = __nccwpck_require__(81583);
 const get_packages_1 = __nccwpck_require__(30886);
 const { readFile, lstat, readdir } = fs_1.promises;
@@ -35,15 +35,6 @@ const pathToTsConfigRoot = (0, path_1.join)(process.cwd(), 'tsconfig.json');
 const pathRootNodeModules = (0, path_1.join)(process.cwd(), 'node_modules');
 exports.regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 exports.regexExportedInternal = /\.\/([\w-]+)/g;
-const localConfig = (() => {
-    try {
-        return JSON.parse((0, fs_1.readFileSync)(localConfigPath, 'utf8'));
-    }
-    catch (error) {
-        (0, core_1.warning)('Error reading local config file:', error);
-        return {};
-    }
-})();
 function paths(pathToPackage) {
     return {
         pathToSource: (0, path_1.join)(pathToPackage, 'src'),
@@ -80,17 +71,8 @@ async function getCompilerOptions(pathToPackage) {
     };
 }
 function getListFromInput(inputKey) {
-    const input = (0, core_1.getInput)(inputKey) || localConfig[inputKey];
+    const input = (0, core_1.getInput)(inputKey);
     return input ? input.split(',').map(item => item.trim()) : [];
-}
-function fileExists(filename) {
-    try {
-        (0, fs_1.accessSync)(filename);
-        return true;
-    }
-    catch (error) {
-        return false;
-    }
 }
 /**
  * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
@@ -100,7 +82,7 @@ function fileExists(filename) {
  */
 function compareApisAndLog(allExportedIndex, allExportedTypes) {
     let setsAreEqual = true;
-    const ignoredPaths = getListFromInput('ignored-paths');
+    const ignoredPaths = getListFromInput('ignored_paths');
     allExportedTypes.forEach(exportedType => {
         const normalizedPath = exportedType.path.split(path_1.sep).join(path_1.posix.sep);
         const isPathMatched = ignoredPaths.length
@@ -145,8 +127,7 @@ async function checkApiOfPackage(pathToPackage) {
                 usePrettier: false
             }
         }, { exclude: includeExclude?.exclude, include: ['**/*.ts'] });
-        const forceInternalExports = (0, core_1.getInput)('force-internal-exports') === 'true' ||
-            localConfig['force-internal-exports'] === 'true';
+        const forceInternalExports = (0, core_1.getInput)('force_internal_exports') === 'true';
         if (forceInternalExports) {
             await checkBarrelRecursive(pathToSource);
         }
@@ -274,7 +255,7 @@ async function checkBarrelRecursive(cwd) {
 }
 async function exportAllInBarrel(cwd, barrelFileName) {
     const barrelFilePath = (0, path_1.join)(cwd, barrelFileName);
-    if (fileExists(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
+    if ((0, fs_1.existsSync)(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
         const dirContents = (await (0, glob_1.glob)('*', {
             ignore: [
                 '**/*.spec.ts',
@@ -304,7 +285,7 @@ function compareBarrels(dirContents, exportedFiles, barrelFilePath) {
 }
 async function runCheckApi() {
     const { packages } = await (0, get_packages_1.getPackages)(process.cwd());
-    const excludedPackages = getListFromInput('excluded-packages');
+    const excludedPackages = getListFromInput('excluded_packages');
     const packagesToCheck = packages.filter(pkg => pkg.relativeDir.startsWith('packages') &&
         !excludedPackages.some(excl => pkg.relativeDir.includes(excl)));
     for (const pkg of packagesToCheck) {
@@ -844,3133 +825,6 @@ function validatePackages(packages) {
 exports.PackageJsonMissingNameError = PackageJsonMissingNameError;
 exports.getPackages = getPackages;
 exports.getPackagesSync = getPackagesSync;
-
-
-/***/ }),
-
-/***/ 42682:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const path = __nccwpck_require__(16928);
-
-const File = __nccwpck_require__(65521);
-const FileDescriptor = __nccwpck_require__(98162);
-const Directory = __nccwpck_require__(90344);
-const SymbolicLink = __nccwpck_require__(20968);
-const FSError = __nccwpck_require__(13073);
-const constants = __nccwpck_require__(49140);
-const getPathParts = (__nccwpck_require__(76716).getPathParts);
-const bufferFrom = (__nccwpck_require__(87813)/* .from */ .H);
-const bufferAlloc = (__nccwpck_require__(87813)/* .alloc */ .c);
-
-const MODE_TO_KTYPE = {
-  [constants.S_IFREG]: constants.UV_DIRENT_FILE,
-  [constants.S_IFDIR]: constants.UV_DIRENT_DIR,
-  [constants.S_IFBLK]: constants.UV_DIRENT_BLOCK,
-  [constants.S_IFCHR]: constants.UV_DIRENT_CHAR,
-  [constants.S_IFLNK]: constants.UV_DIRENT_LINK,
-  [constants.S_IFIFO]: constants.UV_DIRENT_FIFO,
-  [constants.S_IFSOCK]: constants.UV_DIRENT_SOCKET
-};
-
-/** Workaround for optimizations in node 8+ */
-const fsBinding = process.binding('fs');
-const kUsePromises = fsBinding.kUsePromises;
-let statValues;
-if (fsBinding.statValues) {
-  statValues = fsBinding.statValues; // node 10+
-} else if (fsBinding.getStatValues) {
-  statValues = fsBinding.getStatValues(); // node 8
-} else {
-  statValues = [];
-}
-
-// nodejs v6,8,10 and v12 before v12.10.0 has length 28
-// nodejs v12.10.0+ has length 36
-const statContainsNs = statValues.length > 28;
-
-/** Introduction of BigUint64Array in 10.5 */
-let BigUint64Array;
-if (global.BigUint64Array) {
-  BigUint64Array = global.BigUint64Array;
-} else {
-  BigUint64Array = function() {};
-}
-
-const MAX_LINKS = 50;
-
-/**
- * Call the provided function and either return the result or call the callback
- * with it (depending on if a callback is provided).
- * @param {function()} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @param {Object} thisArg This argument for the following function.
- * @param {function()} func Function to call.
- * @return {*} Return (if callback is not provided).
- */
-function maybeCallback(callback, ctx, thisArg, func) {
-  let err = null;
-  let val;
-
-  if (kUsePromises && callback === kUsePromises) {
-    // support nodejs v10+ fs.promises
-    try {
-      val = func.call(thisArg);
-    } catch (e) {
-      err = e;
-    }
-    return new Promise(function(resolve, reject) {
-      process.nextTick(function() {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(val);
-        }
-      });
-    });
-  } else if (callback && typeof callback === 'function') {
-    try {
-      val = func.call(thisArg);
-    } catch (e) {
-      err = e;
-    }
-    process.nextTick(function() {
-      if (val === undefined) {
-        callback(err);
-      } else {
-        callback(err, val);
-      }
-    });
-  } else if (ctx && typeof ctx === 'object') {
-    try {
-      return func.call(thisArg);
-    } catch (e) {
-      // default to errno for UNKNOWN
-      ctx.code = e.code || 'UNKNOWN';
-      ctx.errno = e.errno || FSError.codes.UNKNOWN.errno;
-    }
-  } else {
-    return func.call(thisArg);
-  }
-}
-
-/**
- * set syscall property on context object, only for nodejs v10+.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @param {String} syscall Name of syscall.
- */
-function markSyscall(ctx, syscall) {
-  if (ctx && typeof ctx === 'object') {
-    ctx.syscall = syscall;
-  }
-}
-
-/**
- * Handle FSReqWrap oncomplete.
- * @param {Function} callback The callback.
- * @return {Function} The normalized callback.
- */
-function normalizeCallback(callback) {
-  if (callback && typeof callback.oncomplete === 'function') {
-    // Unpack callback from FSReqWrap
-    callback = callback.oncomplete.bind(callback);
-  }
-  return callback;
-}
-
-/**
- * Handle stat optimizations introduced in Node 8.
- * See https://github.com/nodejs/node/pull/11665.
- * @param {Function} callback The callback.
- * @return {Function} The wrapped callback.
- */
-function wrapStatsCallback(callback) {
-  if (callback && typeof callback.oncomplete === 'function') {
-    // Unpack callback from FSReqWrap
-    callback = callback.oncomplete.bind(callback);
-  }
-  if (typeof callback === 'function') {
-    return function(err, stats) {
-      if (stats) {
-        fillStatsArray(stats, statValues);
-      }
-      callback.apply(this, arguments);
-    };
-  } else {
-    return callback;
-  }
-}
-
-function getDirentType(mode) {
-  const ktype = MODE_TO_KTYPE[mode & constants.S_IFMT];
-
-  if (ktype === undefined) {
-    return constants.UV_DIRENT_UNKNOWN;
-  }
-
-  return ktype;
-}
-
-function notImplemented() {
-  throw new Error('Method not implemented');
-}
-
-function deBuffer(p) {
-  return Buffer.isBuffer(p) ? p.toString() : p;
-}
-
-/**
- * Create a new stats object.
- * @param {Object} config Stats properties.
- * @constructor
- */
-function Stats(config) {
-  for (const key in config) {
-    this[key] = config[key];
-  }
-  // node 10 expects an array internally
-  // see https://github.com/nodejs/node/pull/19714
-  fillStatsArray(config, this);
-}
-
-/**
- * Check if mode indicates property.
- * @param {number} property Property to check.
- * @return {boolean} Property matches mode.
- */
-Stats.prototype._checkModeProperty = function(property) {
-  return (this.mode & constants.S_IFMT) === property;
-};
-
-/**
- * @return {Boolean} Is a directory.
- */
-Stats.prototype.isDirectory = function() {
-  return this._checkModeProperty(constants.S_IFDIR);
-};
-
-/**
- * @return {Boolean} Is a regular file.
- */
-Stats.prototype.isFile = function() {
-  return this._checkModeProperty(constants.S_IFREG);
-};
-
-/**
- * @return {Boolean} Is a block device.
- */
-Stats.prototype.isBlockDevice = function() {
-  return this._checkModeProperty(constants.S_IFBLK);
-};
-
-/**
- * @return {Boolean} Is a character device.
- */
-Stats.prototype.isCharacterDevice = function() {
-  return this._checkModeProperty(constants.S_IFCHR);
-};
-
-/**
- * @return {Boolean} Is a symbolic link.
- */
-Stats.prototype.isSymbolicLink = function() {
-  return this._checkModeProperty(constants.S_IFLNK);
-};
-
-/**
- * @return {Boolean} Is a named pipe.
- */
-Stats.prototype.isFIFO = function() {
-  return this._checkModeProperty(constants.S_IFIFO);
-};
-
-/**
- * @return {Boolean} Is a socket.
- */
-Stats.prototype.isSocket = function() {
-  return this._checkModeProperty(constants.S_IFSOCK);
-};
-
-/**
- * Create a new binding with the given file system.
- * @param {FileSystem} system Mock file system.
- * @constructor
- */
-function Binding(system) {
-  /**
-   * Mock file system.
-   * @type {FileSystem}
-   */
-  this._system = system;
-
-  /**
-   * Stats constructor.
-   * @type {function}
-   */
-  this.Stats = Stats;
-
-  /**
-   * Lookup of open files.
-   * @type {Object.<number, FileDescriptor>}
-   */
-  this._openFiles = {};
-
-  /**
-   * Counter for file descriptors.
-   * @type {number}
-   */
-  this._counter = -1;
-
-  const stdin = new FileDescriptor(constants.O_RDWR);
-  stdin.setItem(new File.StandardInput());
-  this.trackDescriptor(stdin);
-
-  const stdout = new FileDescriptor(constants.O_RDWR);
-  stdout.setItem(new File.StandardOutput());
-  this.trackDescriptor(stdout);
-
-  const stderr = new FileDescriptor(constants.O_RDWR);
-  stderr.setItem(new File.StandardError());
-  this.trackDescriptor(stderr);
-}
-
-/**
- * Get the file system underlying this binding.
- * @return {FileSystem} The underlying file system.
- */
-Binding.prototype.getSystem = function() {
-  return this._system;
-};
-
-/**
- * Reset the file system underlying this binding.
- * @param {FileSystem} system The new file system.
- */
-Binding.prototype.setSystem = function(system) {
-  this._system = system;
-};
-
-/**
- * Get a file descriptor.
- * @param {number} fd File descriptor identifier.
- * @return {FileDescriptor} File descriptor.
- */
-Binding.prototype.getDescriptorById = function(fd) {
-  if (!this._openFiles.hasOwnProperty(fd)) {
-    throw new FSError('EBADF');
-  }
-  return this._openFiles[fd];
-};
-
-/**
- * Keep track of a file descriptor as open.
- * @param {FileDescriptor} descriptor The file descriptor.
- * @return {number} Identifier for file descriptor.
- */
-Binding.prototype.trackDescriptor = function(descriptor) {
-  const fd = ++this._counter;
-  this._openFiles[fd] = descriptor;
-  return fd;
-};
-
-/**
- * Stop tracking a file descriptor as open.
- * @param {number} fd Identifier for file descriptor.
- */
-Binding.prototype.untrackDescriptorById = function(fd) {
-  if (!this._openFiles.hasOwnProperty(fd)) {
-    throw new FSError('EBADF');
-  }
-  delete this._openFiles[fd];
-};
-
-/**
- * Resolve the canonicalized absolute pathname.
- * @param {string|Buffer} filepath The file path.
- * @param {string} encoding The encoding for the return.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {string|Buffer} The real path.
- */
-Binding.prototype.realpath = function(filepath, encoding, callback, ctx) {
-  markSyscall(ctx, 'realpath');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    let realPath;
-    filepath = deBuffer(filepath);
-    const resolved = path.resolve(filepath);
-    const parts = getPathParts(resolved);
-    let item = this._system.getRoot();
-    let itemPath = '/';
-    let name, i, ii;
-    for (i = 0, ii = parts.length; i < ii; ++i) {
-      name = parts[i];
-      while (item instanceof SymbolicLink) {
-        itemPath = path.resolve(path.dirname(itemPath), item.getPath());
-        item = this._system.getItem(itemPath);
-      }
-      if (!item) {
-        throw new FSError('ENOENT', filepath);
-      }
-      if (item instanceof Directory) {
-        itemPath = path.resolve(itemPath, name);
-        item = item.getItem(name);
-      } else {
-        throw new FSError('ENOTDIR', filepath);
-      }
-    }
-    if (item) {
-      while (item instanceof SymbolicLink) {
-        itemPath = path.resolve(path.dirname(itemPath), item.getPath());
-        item = this._system.getItem(itemPath);
-      }
-      realPath = itemPath;
-    } else {
-      throw new FSError('ENOENT', filepath);
-    }
-
-    if (process.platform === 'win32' && realPath.startsWith('\\\\?\\')) {
-      // Remove win32 file namespace prefix \\?\
-      realPath = realPath.slice(4);
-    }
-
-    if (encoding === 'buffer') {
-      realPath = bufferFrom(realPath);
-    }
-
-    return realPath;
-  });
-};
-
-/**
- * Fill a Float64Array with stat information
- * This is based on the internal FillStatsArray function in Node.
- * https://github.com/nodejs/node/blob/4e05952a8a75af6df625415db612d3a9a1322682/src/node_file.cc#L533
- * @param {Object} stats An object with file stats
- * @param {Float64Array} statValues A Float64Array where stat values should be inserted
- * @returns {void}
- */
-function fillStatsArray(stats, statValues) {
-  statValues[0] = stats.dev;
-  statValues[1] = stats.mode;
-  statValues[2] = stats.nlink;
-  statValues[3] = stats.uid;
-  statValues[4] = stats.gid;
-  statValues[5] = stats.rdev;
-  statValues[6] = stats.blksize;
-  statValues[7] = stats.ino;
-  statValues[8] = stats.size;
-  statValues[9] = stats.blocks;
-
-  if (statContainsNs) {
-    // nodejs v12.10.0+
-    // This is based on the internal FillStatsArray function in Node.
-    // https://github.com/nodejs/node/blob/3a2e75d9a5c31d20e429d505b82dd182e33f459a/src/node_file.h#L153-L187
-    statValues[10] = Math.floor(stats.atimeMs / 1000);
-    statValues[11] = (stats.atimeMs % 1000) * 1000000;
-    statValues[12] = Math.floor(stats.mtimeMs / 1000);
-    statValues[13] = (stats.mtimeMs % 1000) * 1000000;
-    statValues[14] = Math.floor(stats.ctimeMs / 1000);
-    statValues[15] = (stats.ctimeMs % 1000) * 1000000;
-    statValues[16] = Math.floor(stats.birthtimeMs / 1000);
-    statValues[17] = (stats.birthtimeMs % 1000) * 1000000;
-  } else {
-    // nodejs before v12.10.0
-    // This is based on the internal FillStatsArray function in Node.
-    // https://github.com/nodejs/node/blob/4e05952a8a75af6df625415db612d3a9a1322682/src/node_file.cc#L533
-    statValues[10] = stats.atimeMs;
-    statValues[11] = stats.mtimeMs;
-    statValues[12] = stats.ctimeMs;
-    statValues[13] = stats.birthtimeMs;
-  }
-}
-
-/**
- * Stat an item.
- * @param {string} filepath Path.
- * @param {function(Error, Stats)|Float64Array|BigUint64Array} callback Callback (optional). In Node 7.7.0+ this will be a Float64Array
- * that should be filled with stat values.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {Stats|undefined} Stats or undefined (if sync).
- */
-Binding.prototype.stat = function(filepath, options, callback, ctx) {
-  // this seems wound not happen in nodejs v10+
-  if (arguments.length < 3) {
-    callback = options;
-    options = {};
-  }
-
-  markSyscall(ctx, 'stat');
-
-  return maybeCallback(wrapStatsCallback(callback), ctx, this, function() {
-    filepath = deBuffer(filepath);
-    let item = this._system.getItem(filepath);
-    if (item instanceof SymbolicLink) {
-      item = this._system.getItem(
-        path.resolve(path.dirname(filepath), item.getPath())
-      );
-    }
-    if (!item) {
-      throw new FSError('ENOENT', filepath);
-    }
-    const stats = item.getStats();
-
-    // In Node 7.7.0+, binding.stat accepts a Float64Array as the second argument,
-    // which should be filled with stat values.
-    // In prior versions of Node, binding.stat simply returns a Stats instance.
-    if (
-      callback instanceof Float64Array ||
-      callback instanceof BigUint64Array
-    ) {
-      fillStatsArray(stats, callback);
-    } else {
-      fillStatsArray(stats, statValues);
-      return new Stats(stats);
-    }
-  });
-};
-
-/**
- * Stat an item.
- * @param {number} fd File descriptor.
- * @param {function(Error, Stats)|Float64Array|BigUint64Array} callback Callback (optional). In Node 7.7.0+ this will be a Float64Array
- * that should be filled with stat values.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {Stats|undefined} Stats or undefined (if sync).
- */
-Binding.prototype.fstat = function(fd, options, callback, ctx) {
-  if (arguments.length < 3) {
-    callback = options;
-    options = {};
-  }
-
-  markSyscall(ctx, 'fstat');
-
-  return maybeCallback(wrapStatsCallback(callback), ctx, this, function() {
-    const descriptor = this.getDescriptorById(fd);
-    const item = descriptor.getItem();
-    const stats = item.getStats();
-
-    // In Node 7.7.0+, binding.stat accepts a Float64Array as the second argument,
-    // which should be filled with stat values.
-    // In prior versions of Node, binding.stat simply returns a Stats instance.
-    if (
-      callback instanceof Float64Array ||
-      callback instanceof BigUint64Array
-    ) {
-      fillStatsArray(stats, callback);
-    } else {
-      fillStatsArray(stats, statValues);
-      return new Stats(stats);
-    }
-  });
-};
-
-/**
- * Close a file descriptor.
- * @param {number} fd File descriptor.
- * @param {function(Error)} callback Callback (optional).
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.close = function(fd, callback, ctx) {
-  markSyscall(ctx, 'close');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    this.untrackDescriptorById(fd);
-  });
-};
-
-/**
- * Open and possibly create a file.
- * @param {string} pathname File path.
- * @param {number} flags Flags.
- * @param {number} mode Mode.
- * @param {function(Error, string)} callback Callback (optional).
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {string} File descriptor (if sync).
- */
-Binding.prototype.open = function(pathname, flags, mode, callback, ctx) {
-  markSyscall(ctx, 'open');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    pathname = deBuffer(pathname);
-    const descriptor = new FileDescriptor(flags);
-    let item = this._system.getItem(pathname);
-    while (item instanceof SymbolicLink) {
-      item = this._system.getItem(
-        path.resolve(path.dirname(pathname), item.getPath())
-      );
-    }
-    if (descriptor.isExclusive() && item) {
-      throw new FSError('EEXIST', pathname);
-    }
-    if (descriptor.isCreate() && !item) {
-      const parent = this._system.getItem(path.dirname(pathname));
-      if (!parent) {
-        throw new FSError('ENOENT', pathname);
-      }
-      if (!(parent instanceof Directory)) {
-        throw new FSError('ENOTDIR', pathname);
-      }
-      item = new File();
-      if (mode) {
-        item.setMode(mode);
-      }
-      parent.addItem(path.basename(pathname), item);
-    }
-    if (descriptor.isRead()) {
-      if (!item) {
-        throw new FSError('ENOENT', pathname);
-      }
-      if (!item.canRead()) {
-        throw new FSError('EACCES', pathname);
-      }
-    }
-    if (descriptor.isWrite() && !item.canWrite()) {
-      throw new FSError('EACCES', pathname);
-    }
-    if (
-      item instanceof Directory &&
-      (descriptor.isTruncate() || descriptor.isAppend())
-    ) {
-      throw new FSError('EISDIR', pathname);
-    }
-    if (descriptor.isTruncate()) {
-      if (!(item instanceof File)) {
-        throw new FSError('EBADF');
-      }
-      item.setContent('');
-    }
-    if (descriptor.isTruncate() || descriptor.isAppend()) {
-      descriptor.setPosition(item.getContent().length);
-    }
-    descriptor.setItem(item);
-    return this.trackDescriptor(descriptor);
-  });
-};
-
-/**
- * Open a file handler. A new api in nodejs v10+ for fs.promises
- * @param {string} pathname File path.
- * @param {number} flags Flags.
- * @param {number} mode Mode.
- * @param {function} callback Callback (optional), expecting kUsePromises in nodejs v10+.
- */
-Binding.prototype.openFileHandle = function(pathname, flags, mode, callback) {
-  const self = this;
-
-  return this.open(pathname, flags, mode, kUsePromises).then(function(fd) {
-    // nodejs v10+ fs.promises FileHandler constructor only ask these three properties.
-    return {
-      getAsyncId: notImplemented,
-      fd: fd,
-      close: function() {
-        return self.close(fd, kUsePromises);
-      }
-    };
-  });
-};
-
-/**
- * Read from a file descriptor.
- * @param {string} fd File descriptor.
- * @param {Buffer} buffer Buffer that the contents will be written to.
- * @param {number} offset Offset in the buffer to start writing to.
- * @param {number} length Number of bytes to read.
- * @param {?number} position Where to begin reading in the file.  If null,
- *     data will be read from the current file position.
- * @param {function(Error, number, Buffer)} callback Callback (optional) called
- *     with any error, number of bytes read, and the buffer.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {number} Number of bytes read (if sync).
- */
-Binding.prototype.read = function(
-  fd,
-  buffer,
-  offset,
-  length,
-  position,
-  callback,
-  ctx
-) {
-  markSyscall(ctx, 'read');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    const descriptor = this.getDescriptorById(fd);
-    if (!descriptor.isRead()) {
-      throw new FSError('EBADF');
-    }
-    const file = descriptor.getItem();
-    if (file instanceof Directory) {
-      throw new FSError('EISDIR');
-    }
-    if (!(file instanceof File)) {
-      // deleted or not a regular file
-      throw new FSError('EBADF');
-    }
-    if (typeof position !== 'number' || position < 0) {
-      position = descriptor.getPosition();
-    }
-    const content = file.getContent();
-    const start = Math.min(position, content.length);
-    const end = Math.min(position + length, content.length);
-    const read = start < end ? content.copy(buffer, offset, start, end) : 0;
-    descriptor.setPosition(position + read);
-    return read;
-  });
-};
-
-/**
- * Write to a file descriptor given a buffer.
- * @param {string} src Source file.
- * @param {string} dest Destination file.
- * @param {number} flags Modifiers for copy operation.
- * @param {function(Error)} callback Callback (optional) called
- *     with any error.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.copyFile = function(src, dest, flags, callback, ctx) {
-  markSyscall(ctx, 'copyfile');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    src = deBuffer(src);
-    dest = deBuffer(dest);
-    const srcFd = this.open(src, constants.O_RDONLY);
-
-    try {
-      const srcDescriptor = this.getDescriptorById(srcFd);
-      if (!srcDescriptor.isRead()) {
-        throw new FSError('EBADF');
-      }
-      const srcFile = srcDescriptor.getItem();
-      if (!(srcFile instanceof File)) {
-        throw new FSError('EBADF');
-      }
-      const srcContent = srcFile.getContent();
-
-      let destFlags =
-        constants.O_WRONLY | constants.O_CREAT | constants.O_TRUNC;
-
-      if ((flags & constants.COPYFILE_EXCL) === constants.COPYFILE_EXCL) {
-        destFlags |= constants.O_EXCL;
-      }
-
-      const destFd = this.open(dest, destFlags);
-
-      try {
-        this.write(destFd, srcContent, 0, srcContent.length, 0);
-      } finally {
-        this.close(destFd);
-      }
-    } finally {
-      this.close(srcFd);
-    }
-  });
-};
-
-/**
- * Write to a file descriptor given a buffer.
- * @param {string} fd File descriptor.
- * @param {Array<Buffer>} buffers Array of buffers with contents to write.
- * @param {?number} position Where to begin writing in the file.  If null,
- *     data will be written to the current file position.
- * @param {function(Error, number, Buffer)} callback Callback (optional) called
- *     with any error, number of bytes written, and the buffer.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {number} Number of bytes written (if sync).
- */
-Binding.prototype.writeBuffers = function(
-  fd,
-  buffers,
-  position,
-  callback,
-  ctx
-) {
-  markSyscall(ctx, 'write');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    const descriptor = this.getDescriptorById(fd);
-    if (!descriptor.isWrite()) {
-      throw new FSError('EBADF');
-    }
-    const file = descriptor.getItem();
-    if (!(file instanceof File)) {
-      // not a regular file
-      throw new FSError('EBADF');
-    }
-    if (typeof position !== 'number' || position < 0) {
-      position = descriptor.getPosition();
-    }
-    let content = file.getContent();
-    const newContent = Buffer.concat(buffers);
-    const newLength = position + newContent.length;
-    if (content.length < newLength) {
-      const tempContent = bufferAlloc(newLength);
-      content.copy(tempContent);
-      content = tempContent;
-    }
-    const written = newContent.copy(content, position);
-    file.setContent(content);
-    descriptor.setPosition(newLength);
-    return written;
-  });
-};
-
-/**
- * Write to a file descriptor given a buffer.
- * @param {string} fd File descriptor.
- * @param {Buffer} buffer Buffer with contents to write.
- * @param {number} offset Offset in the buffer to start writing from.
- * @param {number} length Number of bytes to write.
- * @param {?number} position Where to begin writing in the file.  If null,
- *     data will be written to the current file position.
- * @param {function(Error, number, Buffer)} callback Callback (optional) called
- *     with any error, number of bytes written, and the buffer.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {number} Number of bytes written (if sync).
- */
-Binding.prototype.writeBuffer = function(
-  fd,
-  buffer,
-  offset,
-  length,
-  position,
-  callback,
-  ctx
-) {
-  markSyscall(ctx, 'write');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    const descriptor = this.getDescriptorById(fd);
-    if (!descriptor.isWrite()) {
-      throw new FSError('EBADF');
-    }
-    const file = descriptor.getItem();
-    if (!(file instanceof File)) {
-      // not a regular file
-      throw new FSError('EBADF');
-    }
-    if (typeof position !== 'number' || position < 0) {
-      position = descriptor.getPosition();
-    }
-    let content = file.getContent();
-    const newLength = position + length;
-    if (content.length < newLength) {
-      const newContent = bufferAlloc(newLength);
-      content.copy(newContent);
-      content = newContent;
-    }
-    const sourceEnd = Math.min(offset + length, buffer.length);
-    const written = bufferFrom(buffer).copy(
-      content,
-      position,
-      offset,
-      sourceEnd
-    );
-    file.setContent(content);
-    descriptor.setPosition(newLength);
-    return written;
-  });
-};
-
-/**
- * Alias for writeBuffer (used in Node <= 0.10).
- * @param {string} fd File descriptor.
- * @param {Buffer} buffer Buffer with contents to write.
- * @param {number} offset Offset in the buffer to start writing from.
- * @param {number} length Number of bytes to write.
- * @param {?number} position Where to begin writing in the file.  If null,
- *     data will be written to the current file position.
- * @param {function(Error, number, Buffer)} callback Callback (optional) called
- *     with any error, number of bytes written, and the buffer.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {number} Number of bytes written (if sync).
- */
-Binding.prototype.write = Binding.prototype.writeBuffer;
-
-/**
- * Write to a file descriptor given a string.
- * @param {string} fd File descriptor.
- * @param {string} string String with contents to write.
- * @param {number} position Where to begin writing in the file.  If null,
- *     data will be written to the current file position.
- * @param {string} encoding String encoding.
- * @param {function(Error, number, string)} callback Callback (optional) called
- *     with any error, number of bytes written, and the string.
- * @return {number} Number of bytes written (if sync).
- */
-Binding.prototype.writeString = function(
-  fd,
-  string,
-  position,
-  encoding,
-  callback,
-  ctx
-) {
-  markSyscall(ctx, 'write');
-
-  const buffer = bufferFrom(string, encoding);
-  let wrapper;
-  if (callback && callback !== kUsePromises) {
-    if (callback.oncomplete) {
-      callback = callback.oncomplete.bind(callback);
-    }
-    wrapper = function(err, written, returned) {
-      callback(err, written, returned && string);
-    };
-  }
-  return this.writeBuffer(fd, buffer, 0, string.length, position, wrapper, ctx);
-};
-
-/**
- * Rename a file.
- * @param {string} oldPath Old pathname.
- * @param {string} newPath New pathname.
- * @param {function(Error)} callback Callback (optional).
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {undefined}
- */
-Binding.prototype.rename = function(oldPath, newPath, callback, ctx) {
-  markSyscall(ctx, 'rename');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    oldPath = deBuffer(oldPath);
-    newPath = deBuffer(newPath);
-    const oldItem = this._system.getItem(oldPath);
-    if (!oldItem) {
-      throw new FSError('ENOENT', oldPath);
-    }
-    const oldParent = this._system.getItem(path.dirname(oldPath));
-    const oldName = path.basename(oldPath);
-    const newItem = this._system.getItem(newPath);
-    const newParent = this._system.getItem(path.dirname(newPath));
-    const newName = path.basename(newPath);
-    if (newItem) {
-      // make sure they are the same type
-      if (oldItem instanceof File) {
-        if (newItem instanceof Directory) {
-          throw new FSError('EISDIR', newPath);
-        }
-      } else if (oldItem instanceof Directory) {
-        if (!(newItem instanceof Directory)) {
-          throw new FSError('ENOTDIR', newPath);
-        }
-        if (newItem.list().length > 0) {
-          throw new FSError('ENOTEMPTY', newPath);
-        }
-      }
-      newParent.removeItem(newName);
-    } else {
-      if (!newParent) {
-        throw new FSError('ENOENT', newPath);
-      }
-      if (!(newParent instanceof Directory)) {
-        throw new FSError('ENOTDIR', newPath);
-      }
-    }
-    oldParent.removeItem(oldName);
-    newParent.addItem(newName, oldItem);
-  });
-};
-
-/**
- * Read a directory.
- * @param {string} dirpath Path to directory.
- * @param {string} encoding The encoding ('utf-8' or 'buffer').
- * @param {boolean} withFileTypes whether or not to return fs.Dirent objects
- * @param {function(Error, (Array.<string>|Array.<Buffer>)} callback Callback
- *     (optional) called with any error or array of items in the directory.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {Array.<string>|Array.<Buffer>} Array of items in directory (if sync).
- */
-Binding.prototype.readdir = function(
-  dirpath,
-  encoding,
-  withFileTypes,
-  callback,
-  ctx
-) {
-  // again, the shorter arguments would not happen in nodejs v10+
-  if (arguments.length === 2) {
-    callback = encoding;
-    encoding = 'utf-8';
-  } else if (arguments.length === 3) {
-    callback = withFileTypes;
-  }
-
-  markSyscall(ctx, 'scandir');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    dirpath = deBuffer(dirpath);
-    let dpath = dirpath;
-    let dir = this._system.getItem(dirpath);
-    while (dir instanceof SymbolicLink) {
-      dpath = path.resolve(path.dirname(dpath), dir.getPath());
-      dir = this._system.getItem(dpath);
-    }
-    if (!dir) {
-      throw new FSError('ENOENT', dirpath);
-    }
-    if (!(dir instanceof Directory)) {
-      throw new FSError('ENOTDIR', dirpath);
-    }
-    if (!dir.canRead()) {
-      throw new FSError('EACCES', dirpath);
-    }
-
-    let list = dir.list();
-    if (encoding === 'buffer') {
-      list = list.map(function(item) {
-        return bufferFrom(item);
-      });
-    }
-
-    if (withFileTypes === true) {
-      const types = list.map(function(name) {
-        const stats = dir.getItem(name).getStats();
-
-        return getDirentType(stats.mode);
-      });
-      list = [list, types];
-    }
-
-    return list;
-  });
-};
-
-/**
- * Create a directory.
- * @param {string} pathname Path to new directory.
- * @param {number} mode Permissions.
- * @param {boolean} recursive Recursively create deep directory. (added in nodejs v10+)
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.mkdir = function(pathname, mode, recursive, callback, ctx) {
-  if (typeof recursive !== 'boolean') {
-    // when running nodejs < 10
-    ctx = callback;
-    callback = recursive;
-    recursive = false;
-  }
-
-  markSyscall(ctx, 'mkdir');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    pathname = deBuffer(pathname);
-    const item = this._system.getItem(pathname);
-    if (item) {
-      if (recursive && item instanceof Directory) {
-        // silently pass existing folder in recursive mode
-        return;
-      }
-      throw new FSError('EEXIST', pathname);
-    }
-
-    const _mkdir = function(_pathname) {
-      const parentDir = path.dirname(_pathname);
-      let parent = this._system.getItem(parentDir);
-      if (!parent) {
-        if (!recursive) {
-          throw new FSError('ENOENT', _pathname);
-        }
-        parent = _mkdir(parentDir, true);
-      }
-      this.access(parentDir, parseInt('0002', 8));
-      const dir = new Directory();
-      if (mode) {
-        dir.setMode(mode);
-      }
-      return parent.addItem(path.basename(_pathname), dir);
-    }.bind(this);
-
-    _mkdir(pathname);
-  });
-};
-
-/**
- * Remove a directory.
- * @param {string} pathname Path to directory.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.rmdir = function(pathname, callback, ctx) {
-  markSyscall(ctx, 'rmdir');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    pathname = deBuffer(pathname);
-    const item = this._system.getItem(pathname);
-    if (!item) {
-      throw new FSError('ENOENT', pathname);
-    }
-    if (!(item instanceof Directory)) {
-      throw new FSError('ENOTDIR', pathname);
-    }
-    if (item.list().length > 0) {
-      throw new FSError('ENOTEMPTY', pathname);
-    }
-    this.access(path.dirname(pathname), parseInt('0002', 8));
-    const parent = this._system.getItem(path.dirname(pathname));
-    parent.removeItem(path.basename(pathname));
-  });
-};
-
-const PATH_CHARS =
-  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
-const MAX_ATTEMPTS = 62 * 62 * 62;
-
-/**
- * Create a directory based on a template.
- * See http://web.mit.edu/freebsd/head/lib/libc/stdio/mktemp.c
- * @param {string} template Path template (trailing Xs will be replaced).
- * @param {string} encoding The encoding ('utf-8' or 'buffer').
- * @param {function(Error, string)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.mkdtemp = function(prefix, encoding, callback, ctx) {
-  if (encoding && typeof encoding !== 'string') {
-    callback = encoding;
-    encoding = 'utf-8';
-  }
-
-  markSyscall(ctx, 'mkdtemp');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    prefix = prefix.replace(/X{0,6}$/, 'XXXXXX');
-    const parentPath = path.dirname(prefix);
-    const parent = this._system.getItem(parentPath);
-    if (!parent) {
-      throw new FSError('ENOENT', prefix);
-    }
-    if (!(parent instanceof Directory)) {
-      throw new FSError('ENOTDIR', prefix);
-    }
-    this.access(parentPath, parseInt('0002', 8));
-    const template = path.basename(prefix);
-    let unique = false;
-    let count = 0;
-    let name;
-    while (!unique && count < MAX_ATTEMPTS) {
-      let position = template.length - 1;
-      let replacement = '';
-      while (template.charAt(position) === 'X') {
-        replacement += PATH_CHARS.charAt(
-          Math.floor(PATH_CHARS.length * Math.random())
-        );
-        position -= 1;
-      }
-      const candidate = template.slice(0, position + 1) + replacement;
-      if (!parent.getItem(candidate)) {
-        name = candidate;
-        unique = true;
-      }
-      count += 1;
-    }
-    if (!name) {
-      throw new FSError('EEXIST', prefix);
-    }
-    const dir = new Directory();
-    parent.addItem(name, dir);
-    let uniquePath = path.join(parentPath, name);
-    if (encoding === 'buffer') {
-      uniquePath = bufferFrom(uniquePath);
-    }
-    return uniquePath;
-  });
-};
-
-/**
- * Truncate a file.
- * @param {number} fd File descriptor.
- * @param {number} len Number of bytes.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.ftruncate = function(fd, len, callback, ctx) {
-  markSyscall(ctx, 'ftruncate');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    const descriptor = this.getDescriptorById(fd);
-    if (!descriptor.isWrite()) {
-      throw new FSError('EINVAL');
-    }
-    const file = descriptor.getItem();
-    if (!(file instanceof File)) {
-      throw new FSError('EINVAL');
-    }
-    const content = file.getContent();
-    const newContent = bufferAlloc(len);
-    content.copy(newContent);
-    file.setContent(newContent);
-  });
-};
-
-/**
- * Legacy support.
- * @param {number} fd File descriptor.
- * @param {number} len Number of bytes.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.truncate = Binding.prototype.ftruncate;
-
-/**
- * Change user and group owner.
- * @param {string} pathname Path.
- * @param {number} uid User id.
- * @param {number} gid Group id.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.chown = function(pathname, uid, gid, callback, ctx) {
-  markSyscall(ctx, 'chown');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    pathname = deBuffer(pathname);
-    const item = this._system.getItem(pathname);
-    if (!item) {
-      throw new FSError('ENOENT', pathname);
-    }
-    item.setUid(uid);
-    item.setGid(gid);
-  });
-};
-
-/**
- * Change user and group owner.
- * @param {number} fd File descriptor.
- * @param {number} uid User id.
- * @param {number} gid Group id.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.fchown = function(fd, uid, gid, callback, ctx) {
-  markSyscall(ctx, 'fchown');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    const descriptor = this.getDescriptorById(fd);
-    const item = descriptor.getItem();
-    item.setUid(uid);
-    item.setGid(gid);
-  });
-};
-
-/**
- * Change permissions.
- * @param {string} pathname Path.
- * @param {number} mode Mode.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.chmod = function(pathname, mode, callback, ctx) {
-  markSyscall(ctx, 'chmod');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    pathname = deBuffer(pathname);
-    const item = this._system.getItem(pathname);
-    if (!item) {
-      throw new FSError('ENOENT', pathname);
-    }
-    item.setMode(mode);
-  });
-};
-
-/**
- * Change permissions.
- * @param {number} fd File descriptor.
- * @param {number} mode Mode.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.fchmod = function(fd, mode, callback, ctx) {
-  markSyscall(ctx, 'fchmod');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    const descriptor = this.getDescriptorById(fd);
-    const item = descriptor.getItem();
-    item.setMode(mode);
-  });
-};
-
-/**
- * Delete a named item.
- * @param {string} pathname Path to item.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.unlink = function(pathname, callback, ctx) {
-  markSyscall(ctx, 'unlink');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    pathname = deBuffer(pathname);
-    const item = this._system.getItem(pathname);
-    if (!item) {
-      throw new FSError('ENOENT', pathname);
-    }
-    if (item instanceof Directory) {
-      throw new FSError('EPERM', pathname);
-    }
-    const parent = this._system.getItem(path.dirname(pathname));
-    parent.removeItem(path.basename(pathname));
-  });
-};
-
-/**
- * Update timestamps.
- * @param {string} pathname Path to item.
- * @param {number} atime Access time (in seconds).
- * @param {number} mtime Modification time (in seconds).
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.utimes = function(pathname, atime, mtime, callback, ctx) {
-  markSyscall(ctx, 'utimes');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    pathname = deBuffer(pathname);
-    const item = this._system.getItem(pathname);
-    if (!item) {
-      throw new FSError('ENOENT', pathname);
-    }
-    item.setATime(new Date(atime * 1000));
-    item.setMTime(new Date(mtime * 1000));
-  });
-};
-
-/**
- * Update timestamps.
- * @param {number} fd File descriptor.
- * @param {number} atime Access time (in seconds).
- * @param {number} mtime Modification time (in seconds).
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.futimes = function(fd, atime, mtime, callback, ctx) {
-  markSyscall(ctx, 'futimes');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    const descriptor = this.getDescriptorById(fd);
-    const item = descriptor.getItem();
-    item.setATime(new Date(atime * 1000));
-    item.setMTime(new Date(mtime * 1000));
-  });
-};
-
-/**
- * Synchronize in-core state with storage device.
- * @param {number} fd File descriptor.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.fsync = function(fd, callback, ctx) {
-  markSyscall(ctx, 'fsync');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    this.getDescriptorById(fd);
-  });
-};
-
-/**
- * Synchronize in-core metadata state with storage device.
- * @param {number} fd File descriptor.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.fdatasync = function(fd, callback, ctx) {
-  markSyscall(ctx, 'fdatasync');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    this.getDescriptorById(fd);
-  });
-};
-
-/**
- * Create a hard link.
- * @param {string} srcPath The existing file.
- * @param {string} destPath The new link to create.
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.link = function(srcPath, destPath, callback, ctx) {
-  markSyscall(ctx, 'link');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    srcPath = deBuffer(srcPath);
-    destPath = deBuffer(destPath);
-    const item = this._system.getItem(srcPath);
-    if (!item) {
-      throw new FSError('ENOENT', srcPath);
-    }
-    if (item instanceof Directory) {
-      throw new FSError('EPERM', srcPath);
-    }
-    if (this._system.getItem(destPath)) {
-      throw new FSError('EEXIST', destPath);
-    }
-    const parent = this._system.getItem(path.dirname(destPath));
-    if (!parent) {
-      throw new FSError('ENOENT', destPath);
-    }
-    if (!(parent instanceof Directory)) {
-      throw new FSError('ENOTDIR', destPath);
-    }
-    parent.addItem(path.basename(destPath), item);
-  });
-};
-
-/**
- * Create a symbolic link.
- * @param {string} srcPath Path from link to the source file.
- * @param {string} destPath Path for the generated link.
- * @param {string} type Ignored (used for Windows only).
- * @param {function(Error)} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.symlink = function(srcPath, destPath, type, callback, ctx) {
-  markSyscall(ctx, 'symlink');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    srcPath = deBuffer(srcPath);
-    destPath = deBuffer(destPath);
-    if (this._system.getItem(destPath)) {
-      throw new FSError('EEXIST', destPath);
-    }
-    const parent = this._system.getItem(path.dirname(destPath));
-    if (!parent) {
-      throw new FSError('ENOENT', destPath);
-    }
-    if (!(parent instanceof Directory)) {
-      throw new FSError('ENOTDIR', destPath);
-    }
-    const link = new SymbolicLink();
-    link.setPath(srcPath);
-    parent.addItem(path.basename(destPath), link);
-  });
-};
-
-/**
- * Read the contents of a symbolic link.
- * @param {string} pathname Path to symbolic link.
- * @param {string} encoding The encoding ('utf-8' or 'buffer').
- * @param {function(Error, (string|Buffer))} callback Optional callback.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {string|Buffer} Symbolic link contents (path to source).
- */
-Binding.prototype.readlink = function(pathname, encoding, callback, ctx) {
-  if (encoding && typeof encoding !== 'string') {
-    // this would not happend in nodejs v10+
-    callback = encoding;
-    encoding = 'utf-8';
-  }
-
-  markSyscall(ctx, 'readlink');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    pathname = deBuffer(pathname);
-    const link = this._system.getItem(pathname);
-    if (!link) {
-      throw new FSError('ENOENT', pathname);
-    }
-    if (!(link instanceof SymbolicLink)) {
-      throw new FSError('EINVAL', pathname);
-    }
-    let linkPath = link.getPath();
-    if (encoding === 'buffer') {
-      linkPath = bufferFrom(linkPath);
-    }
-    return linkPath;
-  });
-};
-
-/**
- * Stat an item.
- * @param {string} filepath Path.
- * @param {function(Error, Stats)|Float64Array|BigUint64Array} callback Callback (optional). In Node 7.7.0+ this will be a Float64Array
- * that should be filled with stat values.
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- * @return {Stats|undefined} Stats or undefined (if sync).
- */
-Binding.prototype.lstat = function(filepath, options, callback, ctx) {
-  if (arguments.length < 3) {
-    // this would not happend in nodejs v10+
-    callback = options;
-    options = {};
-  }
-
-  markSyscall(ctx, 'lstat');
-
-  return maybeCallback(wrapStatsCallback(callback), ctx, this, function() {
-    filepath = deBuffer(filepath);
-    const item = this._system.getItem(filepath);
-    if (!item) {
-      throw new FSError('ENOENT', filepath);
-    }
-    const stats = item.getStats();
-
-    // In Node 7.7.0+, binding.stat accepts a Float64Array as the second argument,
-    // which should be filled with stat values.
-    // In prior versions of Node, binding.stat simply returns a Stats instance.
-    if (
-      callback instanceof Float64Array ||
-      callback instanceof BigUint64Array
-    ) {
-      fillStatsArray(stats, callback);
-    } else {
-      fillStatsArray(stats, statValues);
-      return new Stats(item.getStats());
-    }
-  });
-};
-
-/**
- * Tests user permissions.
- * @param {string} filepath Path.
- * @param {number} mode Mode.
- * @param {function(Error)} callback Callback (optional).
- * @param {Object} ctx Context object (optional), only for nodejs v10+.
- */
-Binding.prototype.access = function(filepath, mode, callback, ctx) {
-  markSyscall(ctx, 'access');
-
-  return maybeCallback(normalizeCallback(callback), ctx, this, function() {
-    filepath = deBuffer(filepath);
-    let item = this._system.getItem(filepath);
-    let links = 0;
-    while (item instanceof SymbolicLink) {
-      if (links > MAX_LINKS) {
-        throw new FSError('ELOOP', filepath);
-      }
-      filepath = path.resolve(path.dirname(filepath), item.getPath());
-      item = this._system.getItem(filepath);
-      ++links;
-    }
-    if (!item) {
-      throw new FSError('ENOENT', filepath);
-    }
-    if (mode && process.getuid && process.getgid) {
-      const itemMode = item.getMode();
-      if (item.getUid() === process.getuid()) {
-        if ((itemMode & (mode * 64)) !== mode * 64) {
-          throw new FSError('EACCES', filepath);
-        }
-      } else if (item.getGid() === process.getgid()) {
-        if ((itemMode & (mode * 8)) !== mode * 8) {
-          throw new FSError('EACCES', filepath);
-        }
-      } else {
-        if ((itemMode & mode) !== mode) {
-          throw new FSError('EACCES', filepath);
-        }
-      }
-    }
-  });
-};
-
-/**
- * Not yet implemented.
- * @type {function()}
- */
-Binding.prototype.StatWatcher = notImplemented;
-
-/**
- * Export the binding constructor.
- * @type {function()}
- */
-exports = module.exports = Binding;
-
-
-/***/ }),
-
-/***/ 87813:
-/***/ ((__unused_webpack_module, exports) => {
-
-exports.H =
-  Buffer.from ||
-  function(value, encoding) {
-    if (encoding) {
-      return new Buffer(value, encoding);
-    }
-    return new Buffer(value);
-  };
-
-exports.c =
-  Buffer.alloc ||
-  function(size) {
-    return new Buffer(size);
-  };
-
-
-/***/ }),
-
-/***/ 99911:
-/***/ ((module, exports) => {
-
-const realBinding = process.binding('fs');
-let storedBinding;
-
-/**
- * Perform action, bypassing mock FS
- * @example
- * // This file exists on the real FS, not on the mocked FS
- * const filePath = '/path/file.json';
- * const data = mock.bypass(() => fs.readFileSync(filePath, 'utf-8'));
- */
-exports = module.exports = function bypass(fn) {
-  if (typeof fn !== 'function') {
-    throw new Error(`Must provide a function to perform for mock.bypass()`);
-  }
-
-  disable();
-
-  let result;
-  try {
-    result = fn();
-  } finally {
-    if (result && typeof result.then === 'function') {
-      result.then(
-        r => {
-          enable();
-          return r;
-        },
-        err => {
-          enable();
-          throw err;
-        }
-      );
-    } else {
-      enable();
-    }
-  }
-
-  return result;
-};
-
-/**
- * Temporarily disable Mocked FS
- */
-function disable() {
-  if (realBinding._mockedBinding) {
-    storedBinding = realBinding._mockedBinding;
-    delete realBinding._mockedBinding;
-  }
-}
-
-/**
- * Enables Mocked FS after being disabled by disable()
- */
-function enable() {
-  if (storedBinding) {
-    realBinding._mockedBinding = storedBinding;
-    storedBinding = undefined;
-  }
-}
-
-
-/***/ }),
-
-/***/ 98162:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const constants = __nccwpck_require__(49140);
-
-/**
- * Create a new file descriptor.
- * @param {number} flags Flags.
- * @constructor
- */
-function FileDescriptor(flags) {
-  /**
-   * Flags.
-   * @type {number}
-   */
-  this._flags = flags;
-
-  /**
-   * File system item.
-   * @type {Item}
-   */
-  this._item = null;
-
-  /**
-   * Current file position.
-   * @type {number}
-   */
-  this._position = 0;
-}
-
-/**
- * Set the item.
- * @param {Item} item File system item.
- */
-FileDescriptor.prototype.setItem = function(item) {
-  this._item = item;
-};
-
-/**
- * Get the item.
- * @return {Item} File system item.
- */
-FileDescriptor.prototype.getItem = function() {
-  return this._item;
-};
-
-/**
- * Get the current file position.
- * @return {number} File position.
- */
-FileDescriptor.prototype.getPosition = function() {
-  return this._position;
-};
-
-/**
- * Set the current file position.
- * @param {number} position File position.
- */
-FileDescriptor.prototype.setPosition = function(position) {
-  this._position = position;
-};
-
-/**
- * Check if file opened for appending.
- * @return {boolean} Opened for appending.
- */
-FileDescriptor.prototype.isAppend = function() {
-  return (this._flags & constants.O_APPEND) === constants.O_APPEND;
-};
-
-/**
- * Check if file opened for creation.
- * @return {boolean} Opened for creation.
- */
-FileDescriptor.prototype.isCreate = function() {
-  return (this._flags & constants.O_CREAT) === constants.O_CREAT;
-};
-
-/**
- * Check if file opened for reading.
- * @return {boolean} Opened for reading.
- */
-FileDescriptor.prototype.isRead = function() {
-  return (this._flags & constants.O_WRONLY) !== constants.O_WRONLY;
-};
-
-/**
- * Check if file opened for writing.
- * @return {boolean} Opened for writing.
- */
-FileDescriptor.prototype.isWrite = function() {
-  return (
-    (this._flags & constants.O_WRONLY) === constants.O_WRONLY ||
-    (this._flags & constants.O_RDWR) === constants.O_RDWR
-  );
-};
-
-/**
- * Check if file opened for truncating.
- * @return {boolean} Opened for truncating.
- */
-FileDescriptor.prototype.isTruncate = function() {
-  return (this._flags & constants.O_TRUNC) === constants.O_TRUNC;
-};
-
-/**
- * Check if file opened with exclusive flag.
- * @return {boolean} Opened with exclusive.
- */
-FileDescriptor.prototype.isExclusive = function() {
-  return (this._flags & constants.O_EXCL) === constants.O_EXCL;
-};
-
-/**
- * Export the constructor.
- * @type {function()}
- */
-exports = module.exports = FileDescriptor;
-
-
-/***/ }),
-
-/***/ 90344:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const util = __nccwpck_require__(39023);
-
-const Item = __nccwpck_require__(15116);
-
-const constants = __nccwpck_require__(49140);
-
-/**
- * A directory.
- * @constructor
- */
-function Directory() {
-  Item.call(this);
-
-  /**
-   * Items in this directory.
-   * @type {Object.<string, Item>}
-   */
-  this._items = {};
-
-  /**
-   * Permissions.
-   */
-  this._mode = 511; // 0777
-}
-util.inherits(Directory, Item);
-
-/**
- * Add an item to the directory.
- * @param {string} name The name to give the item.
- * @param {Item} item The item to add.
- * @return {Item} The added item.
- */
-Directory.prototype.addItem = function(name, item) {
-  if (this._items.hasOwnProperty(name)) {
-    throw new Error('Item with the same name already exists: ' + name);
-  }
-  this._items[name] = item;
-  ++item.links;
-  if (item instanceof Directory) {
-    // for '.' entry
-    ++item.links;
-    // for subdirectory
-    ++this.links;
-  }
-  this.setMTime(new Date());
-  return item;
-};
-
-/**
- * Get a named item.
- * @param {string} name Item name.
- * @return {Item} The named item (or null if none).
- */
-Directory.prototype.getItem = function(name) {
-  let item = null;
-  if (this._items.hasOwnProperty(name)) {
-    item = this._items[name];
-  }
-  return item;
-};
-
-/**
- * Remove an item.
- * @param {string} name Name of item to remove.
- * @return {Item} The orphan item.
- */
-Directory.prototype.removeItem = function(name) {
-  if (!this._items.hasOwnProperty(name)) {
-    throw new Error('Item does not exist in directory: ' + name);
-  }
-  const item = this._items[name];
-  delete this._items[name];
-  --item.links;
-  if (item instanceof Directory) {
-    // for '.' entry
-    --item.links;
-    // for subdirectory
-    --this.links;
-  }
-  this.setMTime(new Date());
-  return item;
-};
-
-/**
- * Get list of item names in this directory.
- * @return {Array.<string>} Item names.
- */
-Directory.prototype.list = function() {
-  return Object.keys(this._items).sort();
-};
-
-/**
- * Get directory stats.
- * @return {Object} Stats properties.
- */
-Directory.prototype.getStats = function() {
-  const stats = Item.prototype.getStats.call(this);
-  stats.mode = this.getMode() | constants.S_IFDIR;
-  stats.size = 1;
-  stats.blocks = 1;
-  return stats;
-};
-
-/**
- * Export the constructor.
- * @type {function()}
- */
-exports = module.exports = Directory;
-
-
-/***/ }),
-
-/***/ 13073:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-const uvBinding = process.binding('uv');
-/**
- * Error codes from libuv.
- * @enum {number}
- */
-const codes = {};
-
-if (uvBinding.errmap) {
-  // nodejs v8+
-  uvBinding.errmap.forEach(function(value, errno) {
-    const code = value[0];
-    const message = value[1];
-    codes[code] = {errno: errno, message: message};
-  });
-} else {
-  // nodejs v4 and v6
-  Object.keys(uvBinding).forEach(function(key) {
-    if (key.startsWith('UV_')) {
-      const code = key.slice(3);
-      const errno = uvBinding[key];
-      codes[code] = {errno: errno, message: key};
-    }
-  });
-}
-
-/**
- * Create an error.
- * @param {string} code Error code.
- * @param {string} path Path (optional).
- * @constructor
- */
-function FSError(code, path) {
-  if (!codes.hasOwnProperty(code)) {
-    throw new Error('Programmer error, invalid error code: ' + code);
-  }
-  Error.call(this);
-  const details = codes[code];
-  let message = code + ', ' + details.message;
-  if (path) {
-    message += " '" + path + "'";
-  }
-  this.message = message;
-  this.code = code;
-  this.errno = details.errno;
-  if (path !== undefined) {
-    this.path = path;
-  }
-  Error.captureStackTrace(this, FSError);
-}
-FSError.prototype = new Error();
-FSError.codes = codes;
-
-/**
- * Error constructor.
- */
-exports = module.exports = FSError;
-
-
-/***/ }),
-
-/***/ 65521:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const util = __nccwpck_require__(39023);
-
-const Item = __nccwpck_require__(15116);
-const bufferFrom = (__nccwpck_require__(87813)/* .from */ .H);
-const bufferAlloc = (__nccwpck_require__(87813)/* .alloc */ .c);
-
-const EMPTY = bufferAlloc(0);
-const constants = __nccwpck_require__(49140);
-
-/**
- * A file.
- * @constructor
- */
-function File() {
-  Item.call(this);
-
-  /**
-   * File content.
-   * @type {Buffer}
-   */
-  this._content = EMPTY;
-}
-util.inherits(File, Item);
-
-/**
- * Get the file contents.
- * @return {Buffer} File contents.
- */
-File.prototype.getContent = function() {
-  this.setATime(new Date());
-  return this._content;
-};
-
-/**
- * Set the file contents.
- * @param {string|Buffer} content File contents.
- */
-File.prototype.setContent = function(content) {
-  if (typeof content === 'string') {
-    content = bufferFrom(content);
-  } else if (!Buffer.isBuffer(content)) {
-    throw new Error('File content must be a string or buffer');
-  }
-  this._content = content;
-  const now = Date.now();
-  this.setCTime(new Date(now));
-  this.setMTime(new Date(now));
-};
-
-/**
- * Get file stats.
- * @return {Object} Stats properties.
- */
-File.prototype.getStats = function() {
-  const size = this._content.length;
-  const stats = Item.prototype.getStats.call(this);
-  stats.mode = this.getMode() | constants.S_IFREG;
-  stats.size = size;
-  stats.blocks = Math.ceil(size / 512);
-  return stats;
-};
-
-/**
- * Export the constructor.
- * @type {function()}
- */
-exports = module.exports = File;
-
-/**
- * Standard input.
- * @constructor
- */
-function StandardInput() {
-  File.call(this);
-  this.setMode(438); // 0666
-}
-util.inherits(StandardInput, File);
-
-exports.StandardInput = StandardInput;
-
-/**
- * Standard output.
- * @constructor
- */
-function StandardOutput() {
-  File.call(this);
-  this.setMode(438); // 0666
-}
-util.inherits(StandardOutput, File);
-
-/**
- * Write the contents to stdout.
- * @param {string|Buffer} content File contents.
- */
-StandardOutput.prototype.setContent = function(content) {
-  if (process.stdout.isTTY) {
-    process.stdout.write(content);
-  }
-};
-
-exports.StandardOutput = StandardOutput;
-
-/**
- * Standard error.
- * @constructor
- */
-function StandardError() {
-  File.call(this);
-  this.setMode(438); // 0666
-}
-util.inherits(StandardError, File);
-
-/**
- * Write the contents to stderr.
- * @param {string|Buffer} content File contents.
- */
-StandardError.prototype.setContent = function(content) {
-  if (process.stderr.isTTY) {
-    process.stderr.write(content);
-  }
-};
-
-exports.StandardError = StandardError;
-
-
-/***/ }),
-
-/***/ 76716:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const os = __nccwpck_require__(70857);
-const path = __nccwpck_require__(16928);
-
-const Directory = __nccwpck_require__(90344);
-const File = __nccwpck_require__(65521);
-const FSError = __nccwpck_require__(13073);
-const SymbolicLink = __nccwpck_require__(20968);
-
-const isWindows = process.platform === 'win32';
-
-function toNamespacedPath(filePath) {
-  return path.toNamespacedPath
-    ? path.toNamespacedPath(filePath)
-    : path._makeLong(filePath);
-}
-
-function getPathParts(filepath) {
-  const parts = toNamespacedPath(path.resolve(filepath)).split(path.sep);
-  parts.shift();
-  if (isWindows) {
-    // parts currently looks like ['', '?', 'c:', ...]
-    parts.shift();
-    const q = parts.shift(); // should be '?'
-    const base = '\\\\' + q + '\\' + parts.shift().toLowerCase();
-    parts.unshift(base);
-  }
-  if (parts[parts.length - 1] === '') {
-    parts.pop();
-  }
-  return parts;
-}
-
-/**
- * Create a new file system.
- * @param {Object} options Any filesystem options.
- * @param {boolean} options.createCwd Create a directory for `process.cwd()`
- *     (defaults to `true`).
- * @param {boolean} options.createTmp Create a directory for `os.tmpdir()`
- *     (defaults to `true`).
- * @constructor
- */
-function FileSystem(options) {
-  options = options || {};
-
-  const createCwd = 'createCwd' in options ? options.createCwd : true;
-  const createTmp = 'createTmp' in options ? options.createTmp : true;
-
-  const root = new Directory();
-
-  // populate with default directories
-  const defaults = [];
-  if (createCwd) {
-    defaults.push(process.cwd());
-  }
-
-  if (createTmp) {
-    defaults.push((os.tmpdir && os.tmpdir()) || os.tmpDir());
-  }
-
-  defaults.forEach(function(dir) {
-    const parts = getPathParts(dir);
-    let directory = root;
-    for (let i = 0, ii = parts.length; i < ii; ++i) {
-      const name = parts[i];
-      const candidate = directory.getItem(name);
-      if (!candidate) {
-        directory = directory.addItem(name, new Directory());
-      } else if (candidate instanceof Directory) {
-        directory = candidate;
-      } else {
-        throw new Error('Failed to create directory: ' + dir);
-      }
-    }
-  });
-
-  /**
-   * Root directory.
-   * @type {Directory}
-   */
-  this._root = root;
-}
-
-/**
- * Get the root directory.
- * @return {Directory} The root directory.
- */
-FileSystem.prototype.getRoot = function() {
-  return this._root;
-};
-
-/**
- * Get a file system item.
- * @param {string} filepath Path to item.
- * @return {Item} The item (or null if not found).
- */
-FileSystem.prototype.getItem = function(filepath) {
-  const parts = getPathParts(filepath);
-  const currentParts = getPathParts(process.cwd());
-  let item = this._root;
-  let itemPath = '/';
-  for (let i = 0, ii = parts.length; i < ii; ++i) {
-    const name = parts[i];
-    while (item instanceof SymbolicLink) {
-      // Symbolic link being traversed as a directory --- If link targets
-      // another symbolic link, resolve target's path relative to the original
-      // link's target, otherwise relative to the current item.
-      itemPath = path.resolve(path.dirname(itemPath), item.getPath());
-      item = this.getItem(itemPath);
-    }
-    if (item) {
-      if (item instanceof Directory && name !== currentParts[i]) {
-        // make sure traversal is allowed
-        // This fails for Windows directories which do not have execute permission, by default. It may be a good idea
-        // to change this logic to windows-friendly. See notes in mock.createDirectoryInfoFromPaths()
-        if (!item.canExecute()) {
-          throw new FSError('EACCES', filepath);
-        }
-      }
-      if (item instanceof File) {
-        throw new FSError('ENOTDIR', filepath);
-      }
-      item = item.getItem(name);
-    }
-    if (!item) {
-      break;
-    }
-    itemPath = path.resolve(itemPath, name);
-  }
-  return item;
-};
-
-/**
- * Populate a directory with an item.
- * @param {Directory} directory The directory to populate.
- * @param {string} name The name of the item.
- * @param {string|Buffer|function|Object} obj Instructions for creating the
- *     item.
- */
-function populate(directory, name, obj) {
-  let item;
-  if (typeof obj === 'string' || Buffer.isBuffer(obj)) {
-    // contents for a file
-    item = new File();
-    item.setContent(obj);
-  } else if (typeof obj === 'function') {
-    // item factory
-    item = obj();
-  } else if (typeof obj === 'object') {
-    // directory with more to populate
-    item = new Directory();
-    for (const key in obj) {
-      populate(item, key, obj[key]);
-    }
-  } else {
-    throw new Error('Unsupported type: ' + typeof obj + ' of item ' + name);
-  }
-
-  /**
-   * Special exception for redundant adding of empty directories.
-   */
-  if (
-    item instanceof Directory &&
-    item.list().length === 0 &&
-    directory.getItem(name) instanceof Directory
-  ) {
-    // pass
-  } else {
-    directory.addItem(name, item);
-  }
-}
-
-/**
- * Configure a mock file system.
- * @param {Object} paths Config object.
- * @param {Object} options Any filesystem options.
- * @param {boolean} options.createCwd Create a directory for `process.cwd()`
- *     (defaults to `true`).
- * @param {boolean} options.createTmp Create a directory for `os.tmpdir()`
- *     (defaults to `true`).
- * @return {FileSystem} Mock file system.
- */
-FileSystem.create = function(paths, options) {
-  const system = new FileSystem(options);
-
-  for (const filepath in paths) {
-    const parts = getPathParts(filepath);
-    let directory = system._root;
-    for (let i = 0, ii = parts.length - 1; i < ii; ++i) {
-      const name = parts[i];
-      const candidate = directory.getItem(name);
-      if (!candidate) {
-        directory = directory.addItem(name, new Directory());
-      } else if (candidate instanceof Directory) {
-        directory = candidate;
-      } else {
-        throw new Error('Failed to create directory: ' + filepath);
-      }
-    }
-    populate(directory, parts[parts.length - 1], paths[filepath]);
-  }
-
-  return system;
-};
-
-/**
- * Generate a factory for new files.
- * @param {Object} config File config.
- * @return {function():File} Factory that creates a new file.
- */
-FileSystem.file = function(config) {
-  config = config || {};
-  return function() {
-    const file = new File();
-    if (config.hasOwnProperty('content')) {
-      file.setContent(config.content);
-    }
-    if (config.hasOwnProperty('mode')) {
-      file.setMode(config.mode);
-    } else {
-      file.setMode(438); // 0666
-    }
-    if (config.hasOwnProperty('uid')) {
-      file.setUid(config.uid);
-    }
-    if (config.hasOwnProperty('gid')) {
-      file.setGid(config.gid);
-    }
-    if (config.hasOwnProperty('atime')) {
-      file.setATime(config.atime);
-    }
-    if (config.hasOwnProperty('ctime')) {
-      file.setCTime(config.ctime);
-    }
-    if (config.hasOwnProperty('mtime')) {
-      file.setMTime(config.mtime);
-    }
-    if (config.hasOwnProperty('birthtime')) {
-      file.setBirthtime(config.birthtime);
-    }
-    return file;
-  };
-};
-
-/**
- * Generate a factory for new symbolic links.
- * @param {Object} config File config.
- * @return {function():File} Factory that creates a new symbolic link.
- */
-FileSystem.symlink = function(config) {
-  config = config || {};
-  return function() {
-    const link = new SymbolicLink();
-    if (config.hasOwnProperty('mode')) {
-      link.setMode(config.mode);
-    } else {
-      link.setMode(438); // 0666
-    }
-    if (config.hasOwnProperty('uid')) {
-      link.setUid(config.uid);
-    }
-    if (config.hasOwnProperty('gid')) {
-      link.setGid(config.gid);
-    }
-    if (config.hasOwnProperty('path')) {
-      link.setPath(config.path);
-    } else {
-      throw new Error('Missing "path" property');
-    }
-    if (config.hasOwnProperty('atime')) {
-      link.setATime(config.atime);
-    }
-    if (config.hasOwnProperty('ctime')) {
-      link.setCTime(config.ctime);
-    }
-    if (config.hasOwnProperty('mtime')) {
-      link.setMTime(config.mtime);
-    }
-    if (config.hasOwnProperty('birthtime')) {
-      link.setBirthtime(config.birthtime);
-    }
-    return link;
-  };
-};
-
-/**
- * Generate a factory for new directories.
- * @param {Object} config File config.
- * @return {function():Directory} Factory that creates a new directory.
- */
-FileSystem.directory = function(config) {
-  config = config || {};
-  return function() {
-    const dir = new Directory();
-    if (config.hasOwnProperty('mode')) {
-      dir.setMode(config.mode);
-    }
-    if (config.hasOwnProperty('uid')) {
-      dir.setUid(config.uid);
-    }
-    if (config.hasOwnProperty('gid')) {
-      dir.setGid(config.gid);
-    }
-    if (config.hasOwnProperty('items')) {
-      for (const name in config.items) {
-        populate(dir, name, config.items[name]);
-      }
-    }
-    if (config.hasOwnProperty('atime')) {
-      dir.setATime(config.atime);
-    }
-    if (config.hasOwnProperty('ctime')) {
-      dir.setCTime(config.ctime);
-    }
-    if (config.hasOwnProperty('mtime')) {
-      dir.setMTime(config.mtime);
-    }
-    if (config.hasOwnProperty('birthtime')) {
-      dir.setBirthtime(config.birthtime);
-    }
-    return dir;
-  };
-};
-
-/**
- * Module exports.
- * @type {function}
- */
-exports = module.exports = FileSystem;
-exports.getPathParts = getPathParts;
-exports.toNamespacedPath = toNamespacedPath;
-
-
-/***/ }),
-
-/***/ 6699:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const Binding = __nccwpck_require__(42682);
-const FSError = __nccwpck_require__(13073);
-const FileSystem = __nccwpck_require__(76716);
-const realBinding = process.binding('fs');
-const path = __nccwpck_require__(16928);
-const loader = __nccwpck_require__(31608);
-const bypass = __nccwpck_require__(99911);
-const fs = __nccwpck_require__(79896);
-
-const toNamespacedPath = FileSystem.toNamespacedPath;
-
-const realProcessProps = {
-  cwd: process.cwd,
-  chdir: process.chdir
-};
-const realCreateWriteStream = fs.createWriteStream;
-const realStats = realBinding.Stats;
-const realStatWatcher = realBinding.StatWatcher;
-
-/**
- * Pre-patch fs binding.
- * This allows mock-fs to work properly under nodejs v10+ readFile
- * As ReadFileContext nodejs v10+ implementation traps original binding methods:
- * const { FSReqWrap, close, read } = process.binding('fs');
- * Note this patch only solves issue for readFile, as the require of
- * ReadFileContext is delayed by readFile implementation.
- * if (!ReadFileContext) ReadFileContext = require('internal/fs/read_file_context')
- *
- * @param {string} key Property name.
- */
-function patch(key) {
-  const existingMethod = realBinding[key];
-  realBinding[key] = function() {
-    if (this._mockedBinding) {
-      return this._mockedBinding[key].apply(this._mockedBinding, arguments);
-    } else {
-      return existingMethod.apply(this, arguments);
-    }
-  }.bind(realBinding);
-}
-
-for (const key in Binding.prototype) {
-  if (typeof realBinding[key] === 'function') {
-    // Stats and StatWatcher are constructors
-    if (key !== 'Stats' && key !== 'StatWatcher') {
-      patch(key);
-    }
-  }
-}
-
-function overrideBinding(binding) {
-  realBinding._mockedBinding = binding;
-}
-
-function overrideProcess(cwd, chdir) {
-  process.cwd = cwd;
-  process.chdir = chdir;
-}
-
-/**
- * Have to disable write stream _writev on nodejs v10+.
- *
- * nodejs v8 lib/fs.js
- * note binding.writeBuffers will use mock-fs patched writeBuffers.
- *
- *   const binding = process.binding('fs');
- *   function writev(fd, chunks, position, callback) {
- *     // ...
- *     binding.writeBuffers(fd, chunks, position, req);
- *   }
- *
- * nodejs v10+ lib/internal/fs/streams.js
- * note it uses original writeBuffers, bypassed mock-fs patched writeBuffers.
- *
- *  const {writeBuffers} = internalBinding('fs');
- *  function writev(fd, chunks, position, callback) {
- *    // ...
- *    writeBuffers(fd, chunks, position, req);
- *  }
- *
- * Luckily _writev is an optional method on Writeable stream implementation.
- * When _writev is missing, it will fall back to make multiple _write calls.
- */
-function overrideCreateWriteStream() {
-  fs.createWriteStream = function(path, options) {
-    const output = realCreateWriteStream(path, options);
-    // disable _writev, this will over shadow WriteStream.prototype._writev
-    if (realBinding._mockedBinding) {
-      output._writev = undefined;
-    }
-    return output;
-  };
-}
-
-function restoreBinding() {
-  delete realBinding._mockedBinding;
-  realBinding.Stats = realStats;
-  realBinding.StatWatcher = realStatWatcher;
-}
-
-function restoreProcess() {
-  for (const key in realProcessProps) {
-    process[key] = realProcessProps[key];
-  }
-}
-
-function restoreCreateWriteStream() {
-  fs.createWriteStream = realCreateWriteStream;
-}
-
-/**
- * Swap out the fs bindings for a mock file system.
- * @param {Object} config Mock file system configuration.
- * @param {Object} options Any filesystem options.
- * @param {boolean} options.createCwd Create a directory for `process.cwd()`
- *     (defaults to `true`).
- * @param {boolean} options.createTmp Create a directory for `os.tmpdir()`
- *     (defaults to `true`).
- */
-exports = module.exports = function mock(config, options) {
-  const system = FileSystem.create(config, options);
-  const binding = new Binding(system);
-
-  overrideBinding(binding);
-
-  let currentPath = process.cwd();
-  overrideProcess(
-    function cwd() {
-      if (realBinding._mockedBinding) {
-        return currentPath;
-      }
-      return realProcessProps.cwd();
-    },
-    function chdir(directory) {
-      if (realBinding._mockedBinding) {
-        if (!binding.stat(toNamespacedPath(directory)).isDirectory()) {
-          throw new FSError('ENOTDIR');
-        }
-        currentPath = path.resolve(currentPath, directory);
-      } else {
-        return realProcessProps.chdir(directory);
-      }
-    }
-  );
-
-  overrideCreateWriteStream();
-};
-
-/**
- * Get hold of the mocked filesystem's 'root'
- * If fs hasn't currently been replaced, this will return an empty object
- */
-exports.getMockRoot = function() {
-  if (realBinding._mockedBinding) {
-    return realBinding._mockedBinding.getSystem().getRoot();
-  } else {
-    return {};
-  }
-};
-
-/**
- * Restore the fs bindings for the real file system.
- */
-exports.restore = function() {
-  restoreBinding();
-  restoreProcess();
-  restoreCreateWriteStream();
-};
-
-/**
- * Create a file factory.
- */
-exports.file = FileSystem.file;
-
-/**
- * Create a directory factory.
- */
-exports.directory = FileSystem.directory;
-
-/**
- * Create a symbolic link factory.
- */
-exports.symlink = FileSystem.symlink;
-
-/**
- * Automatically maps specified paths (for use with `mock()`)
- */
-exports.load = loader.load;
-
-/**
- * Perform action, bypassing mock FS
- * @example
- * // This file exists on the real FS, not on the mocked FS
- * const filePath = '/path/file.json';
- * const data = mock.bypass(() => fs.readFileSync(filePath, 'utf-8'));
- */
-exports.bypass = bypass;
-
-
-/***/ }),
-
-/***/ 15116:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-let counter = 0;
-
-/**
- * Permissions.
- * @enum {number}
- */
-const permissions = {
-  USER_READ: 256, // 0400
-  USER_WRITE: 128, // 0200
-  USER_EXEC: 64, // 0100
-  GROUP_READ: 32, // 0040
-  GROUP_WRITE: 16, // 0020
-  GROUP_EXEC: 8, // 0010
-  OTHER_READ: 4, // 0004
-  OTHER_WRITE: 2, // 0002
-  OTHER_EXEC: 1 // 0001
-};
-
-function getUid() {
-  // force NaN on windows.
-  return process.getuid ? process.getuid() : NaN;
-}
-
-function getGid() {
-  // force NaN on windows.
-  return process.getgid ? process.getgid() : NaN;
-}
-
-/**
- * A filesystem item.
- * @constructor
- */
-function Item() {
-  const now = Date.now();
-
-  /**
-   * Access time.
-   * @type {Date}
-   */
-  this._atime = new Date(now);
-
-  /**
-   * Change time.
-   * @type {Date}
-   */
-  this._ctime = new Date(now);
-
-  /**
-   * Birth time.
-   * @type {Date}
-   */
-  this._birthtime = new Date(now);
-
-  /**
-   * Modification time.
-   * @type {Date}
-   */
-  this._mtime = new Date(now);
-
-  /**
-   * Permissions.
-   */
-  this._mode = 438; // 0666
-
-  /**
-   * User id.
-   * @type {number}
-   */
-  this._uid = getUid();
-
-  /**
-   * Group id.
-   * @type {number}
-   */
-  this._gid = getGid();
-
-  /**
-   * Item number.
-   * @type {number}
-   */
-  this._id = ++counter;
-
-  /**
-   * Number of links to this item.
-   */
-  this.links = 0;
-}
-
-/**
- * Add execute if read allowed
- * See notes in index.js -> mapping#addDir
- */
-Item.fixWin32Permissions = mode =>
-  process.platform !== 'win32'
-    ? mode
-    : mode |
-      (mode & permissions.USER_READ && permissions.USER_EXEC) |
-      (mode & permissions.GROUP_READ && permissions.GROUP_EXEC) |
-      (mode & permissions.OTHER_READ && permissions.OTHER_EXEC);
-
-/**
- * Determine if the current user has read permission.
- * @return {boolean} The current user can read.
- */
-Item.prototype.canRead = function() {
-  const uid = getUid();
-  const gid = getGid();
-  let can = false;
-  if (uid === 0) {
-    can = true;
-  } else if (uid === this._uid || uid !== uid) {
-    // (uid !== uid) means uid is NaN, only for windows
-    can = (permissions.USER_READ & this._mode) === permissions.USER_READ;
-  } else if (gid === this._gid) {
-    can = (permissions.GROUP_READ & this._mode) === permissions.GROUP_READ;
-  } else {
-    can = (permissions.OTHER_READ & this._mode) === permissions.OTHER_READ;
-  }
-  return can;
-};
-
-/**
- * Determine if the current user has write permission.
- * @return {boolean} The current user can write.
- */
-Item.prototype.canWrite = function() {
-  const uid = getUid();
-  const gid = getGid();
-  let can = false;
-  if (uid === 0) {
-    can = true;
-  } else if (uid === this._uid || uid !== uid) {
-    // (uid !== uid) means uid is NaN, only for windows
-    can = (permissions.USER_WRITE & this._mode) === permissions.USER_WRITE;
-  } else if (gid === this._gid) {
-    can = (permissions.GROUP_WRITE & this._mode) === permissions.GROUP_WRITE;
-  } else {
-    can = (permissions.OTHER_WRITE & this._mode) === permissions.OTHER_WRITE;
-  }
-  return can;
-};
-
-/**
- * Determine if the current user has execute permission.
- * @return {boolean} The current user can execute.
- */
-Item.prototype.canExecute = function() {
-  const uid = getUid();
-  const gid = getGid();
-  let can = false;
-  if (uid === 0) {
-    can = true;
-  } else if (uid === this._uid || isNaN(uid)) {
-    // NaN occurs on windows
-    can = (permissions.USER_EXEC & this._mode) === permissions.USER_EXEC;
-  } else if (gid === this._gid) {
-    can = (permissions.GROUP_EXEC & this._mode) === permissions.GROUP_EXEC;
-  } else {
-    can = (permissions.OTHER_EXEC & this._mode) === permissions.OTHER_EXEC;
-  }
-  return can;
-};
-
-/**
- * Get access time.
- * @return {Date} Access time.
- */
-Item.prototype.getATime = function() {
-  return this._atime;
-};
-
-/**
- * Set access time.
- * @param {Date} atime Access time.
- */
-Item.prototype.setATime = function(atime) {
-  this._atime = atime;
-};
-
-/**
- * Get change time.
- * @return {Date} Change time.
- */
-Item.prototype.getCTime = function() {
-  return this._ctime;
-};
-
-/**
- * Set change time.
- * @param {Date} ctime Change time.
- */
-Item.prototype.setCTime = function(ctime) {
-  this._ctime = ctime;
-};
-
-/**
- * Get birth time.
- * @return {Date} Birth time.
- */
-Item.prototype.getBirthtime = function() {
-  return this._birthtime;
-};
-
-/**
- * Set change time.
- * @param {Date} birthtime Birth time.
- */
-Item.prototype.setBirthtime = function(birthtime) {
-  this._birthtime = birthtime;
-};
-
-/**
- * Get modification time.
- * @return {Date} Modification time.
- */
-Item.prototype.getMTime = function() {
-  return this._mtime;
-};
-
-/**
- * Set modification time.
- * @param {Date} mtime Modification time.
- */
-Item.prototype.setMTime = function(mtime) {
-  this._mtime = mtime;
-};
-
-/**
- * Get mode (permission only, e.g 0666).
- * @return {number} Mode.
- */
-Item.prototype.getMode = function() {
-  return this._mode;
-};
-
-/**
- * Set mode (permission only, e.g 0666).
- * @param {Date} mode Mode.
- */
-Item.prototype.setMode = function(mode) {
-  this.setCTime(new Date());
-  this._mode = mode;
-};
-
-/**
- * Get user id.
- * @return {number} User id.
- */
-Item.prototype.getUid = function() {
-  return this._uid;
-};
-
-/**
- * Set user id.
- * @param {number} uid User id.
- */
-Item.prototype.setUid = function(uid) {
-  this.setCTime(new Date());
-  this._uid = uid;
-};
-
-/**
- * Get group id.
- * @return {number} Group id.
- */
-Item.prototype.getGid = function() {
-  return this._gid;
-};
-
-/**
- * Set group id.
- * @param {number} gid Group id.
- */
-Item.prototype.setGid = function(gid) {
-  this.setCTime(new Date());
-  this._gid = gid;
-};
-
-/**
- * Get item stats.
- * @return {Object} Stats properties.
- */
-Item.prototype.getStats = function() {
-  return {
-    dev: 8675309,
-    nlink: this.links,
-    uid: this.getUid(),
-    gid: this.getGid(),
-    rdev: 0,
-    blksize: 4096,
-    ino: this._id,
-    atime: this.getATime(),
-    mtime: this.getMTime(),
-    ctime: this.getCTime(),
-    birthtime: this.getBirthtime(),
-    atimeMs: +this.getATime(),
-    mtimeMs: +this.getMTime(),
-    ctimeMs: +this.getCTime(),
-    birthtimeMs: +this.getBirthtime()
-  };
-};
-
-/**
- * Get the item's string representation.
- * @return {string} String representation.
- */
-Item.prototype.toString = function() {
-  return '[' + this.constructor.name + ']';
-};
-
-/**
- * Export the constructor.
- * @type {function()}
- */
-exports = module.exports = Item;
-
-
-/***/ }),
-
-/***/ 31608:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-const {fixWin32Permissions} = __nccwpck_require__(15116);
-const path = __nccwpck_require__(16928);
-const FileSystem = __nccwpck_require__(76716);
-const fs = __nccwpck_require__(79896);
-const bypass = __nccwpck_require__(99911);
-
-const createContext = ({output, options = {}, target}, newContext) =>
-  Object.assign(
-    {
-      // Assign options and set defaults if needed
-      options: {
-        recursive: options.recursive !== false,
-        lazy: options.lazy !== false
-      },
-      output,
-      target
-    },
-    newContext
-  );
-
-function addFile(context, stats, isRoot) {
-  const {output, target} = context;
-  const {lazy} = context.options;
-
-  if (!stats.isFile()) {
-    throw new Error(`${target} is not a valid file!`);
-  }
-
-  const outputPropKey = isRoot ? target : path.basename(target);
-
-  output[outputPropKey] = () => {
-    const content = !lazy ? fs.readFileSync(target) : '';
-    const file = FileSystem.file(Object.assign({}, stats, {content}))();
-
-    if (lazy) {
-      Object.defineProperty(file, '_content', {
-        get() {
-          const res = bypass(() => fs.readFileSync(target));
-          Object.defineProperty(file, '_content', {
-            value: res,
-            writable: true
-          });
-          return res;
-        },
-        set(data) {
-          Object.defineProperty(file, '_content', {
-            value: data,
-            writable: true
-          });
-        },
-        configurable: true
-      });
-    }
-
-    return file;
-  };
-
-  return output[outputPropKey];
-}
-
-function addDir(context, stats, isRoot) {
-  const {target, output} = context;
-  const {recursive} = context.options;
-
-  if (!stats.isDirectory()) {
-    throw new Error(`${target} is not a valid directory!`);
-  }
-
-  stats = Object.assign({}, stats);
-  const outputPropKey = isRoot ? target : path.basename(target);
-
-  // On windows platforms, directories do not have the executable flag, which causes FileSystem.prototype.getItem
-  // to think that the directory cannot be traversed. This is a workaround, however, a better solution may be to
-  // re-think the logic in FileSystem.prototype.getItem
-  // This workaround adds executable privileges if read privileges are found
-  stats.mode = fixWin32Permissions(stats.mode);
-
-  // Create directory factory
-  const directoryItems = {};
-  output[outputPropKey] = FileSystem.directory(
-    Object.assign(stats, {items: directoryItems})
-  );
-
-  fs.readdirSync(target).forEach(p => {
-    const absPath = path.join(target, p);
-    const stats = fs.statSync(absPath);
-    const newContext = createContext(context, {
-      target: absPath,
-      output: directoryItems
-    });
-
-    if (recursive && stats.isDirectory()) {
-      addDir(newContext, stats);
-    } else if (stats.isFile()) {
-      addFile(newContext, stats);
-    }
-  });
-
-  return output[outputPropKey];
-}
-
-/**
- * Load directory or file from real FS
- */
-exports.load = function(p, options) {
-  return bypass(() => {
-    p = path.resolve(p);
-
-    const stats = fs.statSync(p);
-    const context = createContext({output: {}, options, target: p});
-
-    if (stats.isDirectory()) {
-      return addDir(context, stats, true);
-    } else if (stats.isFile()) {
-      return addFile(context, stats, true);
-    }
-  });
-};
-
-
-/***/ }),
-
-/***/ 20968:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const util = __nccwpck_require__(39023);
-
-const Item = __nccwpck_require__(15116);
-
-const constants = __nccwpck_require__(49140);
-
-/**
- * A directory.
- * @constructor
- */
-function SymbolicLink() {
-  Item.call(this);
-
-  /**
-   * Relative path to source.
-   * @type {string}
-   */
-  this._path = undefined;
-}
-util.inherits(SymbolicLink, Item);
-
-/**
- * Set the path to the source.
- * @param {string} pathname Path to source.
- */
-SymbolicLink.prototype.setPath = function(pathname) {
-  this._path = pathname;
-};
-
-/**
- * Get the path to the source.
- * @return {string} Path to source.
- */
-SymbolicLink.prototype.getPath = function() {
-  return this._path;
-};
-
-/**
- * Get symbolic link stats.
- * @return {Object} Stats properties.
- */
-SymbolicLink.prototype.getStats = function() {
-  const size = this._path.length;
-  const stats = Item.prototype.getStats.call(this);
-  stats.mode = this.getMode() | constants.S_IFLNK;
-  stats.size = size;
-  stats.blocks = Math.ceil(size / 512);
-  return stats;
-};
-
-/**
- * Export the constructor.
- * @type {function()}
- */
-exports = module.exports = SymbolicLink;
 
 
 /***/ }),
@@ -32896,6 +29750,3396 @@ function populateMaps (extensions, types) {
     }
   })
 }
+
+
+/***/ }),
+
+/***/ 47027:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const path = __nccwpck_require__(16928);
+const File = __nccwpck_require__(10126);
+const FileDescriptor = __nccwpck_require__(72989);
+const Directory = __nccwpck_require__(22501);
+const SymbolicLink = __nccwpck_require__(52149);
+const {FSError} = __nccwpck_require__(30128);
+const constants = __nccwpck_require__(49140);
+const {getPathParts, getRealPath} = __nccwpck_require__(72451);
+
+const MODE_TO_KTYPE = {
+  [constants.S_IFREG]: constants.UV_DIRENT_FILE,
+  [constants.S_IFDIR]: constants.UV_DIRENT_DIR,
+  [constants.S_IFBLK]: constants.UV_DIRENT_BLOCK,
+  [constants.S_IFCHR]: constants.UV_DIRENT_CHAR,
+  [constants.S_IFLNK]: constants.UV_DIRENT_LINK,
+  [constants.S_IFIFO]: constants.UV_DIRENT_FIFO,
+  [constants.S_IFSOCK]: constants.UV_DIRENT_SOCKET,
+};
+
+/** Workaround for optimizations in node 8+ */
+const fsBinding = process.binding('fs');
+const kUsePromises = fsBinding.kUsePromises;
+let statValues;
+let bigintStatValues;
+if (fsBinding.statValues) {
+  statValues = fsBinding.statValues; // node 10+
+  bigintStatValues = fsBinding.bigintStatValues;
+}
+
+const MAX_LINKS = 50;
+
+/**
+ * Call the provided function and either return the result or call the callback
+ * with it (depending on if a callback is provided).
+ * @param {function()} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {object} thisArg This argument for the following function.
+ * @param {function()} func Function to call.
+ * @return {*} Return (if callback is not provided).
+ */
+function maybeCallback(callback, ctx, thisArg, func) {
+  let err = null;
+  let val;
+
+  if (usePromises(callback)) {
+    // support nodejs v10+ fs.promises
+    try {
+      val = func.call(thisArg);
+    } catch (e) {
+      err = e;
+    }
+    return new Promise(function (resolve, reject) {
+      process.nextTick(function () {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(val);
+        }
+      });
+    });
+  } else if (callback && typeof callback === 'function') {
+    try {
+      val = func.call(thisArg);
+    } catch (e) {
+      err = e;
+    }
+    process.nextTick(function () {
+      if (val === undefined) {
+        callback(err);
+      } else {
+        callback(err, val);
+      }
+    });
+  } else if (ctx && typeof ctx === 'object') {
+    try {
+      return func.call(thisArg);
+    } catch (e) {
+      // default to errno for UNKNOWN
+      ctx.code = e.code || 'UNKNOWN';
+      ctx.errno = e.errno || FSError.codes.UNKNOWN.errno;
+    }
+  } else {
+    return func.call(thisArg);
+  }
+}
+
+function usePromises(callback) {
+  return kUsePromises && callback === kUsePromises;
+}
+
+/**
+ * set syscall property on context object, only for nodejs v10+.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {string} syscall Name of syscall.
+ */
+function markSyscall(ctx, syscall) {
+  if (ctx && typeof ctx === 'object') {
+    ctx.syscall = syscall;
+  }
+}
+
+/**
+ * Handle FSReqWrap oncomplete.
+ * @param {Function} callback The callback.
+ * @return {Function} The normalized callback.
+ */
+function normalizeCallback(callback) {
+  if (callback && typeof callback.oncomplete === 'function') {
+    // Unpack callback from FSReqWrap
+    callback = callback.oncomplete.bind(callback);
+  }
+  return callback;
+}
+
+function getDirentType(mode) {
+  const ktype = MODE_TO_KTYPE[mode & constants.S_IFMT];
+
+  if (ktype === undefined) {
+    return constants.UV_DIRENT_UNKNOWN;
+  }
+
+  return ktype;
+}
+
+function notImplemented() {
+  throw new Error('Method not implemented');
+}
+
+function deBuffer(p) {
+  return Buffer.isBuffer(p) ? p.toString() : p;
+}
+
+/**
+ * Create a new binding with the given file system.
+ * @param {FileSystem} system Mock file system.
+ * @class
+ */
+function Binding(system) {
+  /**
+   * Mock file system.
+   * @type {FileSystem}
+   */
+  this._system = system;
+
+  /**
+   * Lookup of open files.
+   * @type {Object<number, FileDescriptor>}
+   */
+  this._openFiles = {};
+
+  /**
+   * Counter for file descriptors.
+   * @type {number}
+   */
+  this._counter = -1;
+
+  const stdin = new FileDescriptor(constants.O_RDWR);
+  stdin.setItem(new File.StandardInput());
+  this.trackDescriptor(stdin);
+
+  const stdout = new FileDescriptor(constants.O_RDWR);
+  stdout.setItem(new File.StandardOutput());
+  this.trackDescriptor(stdout);
+
+  const stderr = new FileDescriptor(constants.O_RDWR);
+  stderr.setItem(new File.StandardError());
+  this.trackDescriptor(stderr);
+}
+
+/**
+ * Get the file system underlying this binding.
+ * @return {FileSystem} The underlying file system.
+ */
+Binding.prototype.getSystem = function () {
+  return this._system;
+};
+
+/**
+ * Reset the file system underlying this binding.
+ * @param {FileSystem} system The new file system.
+ */
+Binding.prototype.setSystem = function (system) {
+  this._system = system;
+};
+
+/**
+ * Get a file descriptor.
+ * @param {number} fd File descriptor identifier.
+ * @return {FileDescriptor} File descriptor.
+ */
+Binding.prototype.getDescriptorById = function (fd) {
+  if (!this._openFiles.hasOwnProperty(fd)) {
+    throw new FSError('EBADF');
+  }
+  return this._openFiles[fd];
+};
+
+/**
+ * Keep track of a file descriptor as open.
+ * @param {FileDescriptor} descriptor The file descriptor.
+ * @return {number} Identifier for file descriptor.
+ */
+Binding.prototype.trackDescriptor = function (descriptor) {
+  const fd = ++this._counter;
+  this._openFiles[fd] = descriptor;
+  return fd;
+};
+
+/**
+ * Stop tracking a file descriptor as open.
+ * @param {number} fd Identifier for file descriptor.
+ */
+Binding.prototype.untrackDescriptorById = function (fd) {
+  if (!this._openFiles.hasOwnProperty(fd)) {
+    throw new FSError('EBADF');
+  }
+  delete this._openFiles[fd];
+};
+
+/**
+ * Resolve the canonicalized absolute pathname.
+ * @param {string|Buffer} filepath The file path.
+ * @param {string} encoding The encoding for the return.
+ * @param {Function} callback The callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {string|Buffer} The real path.
+ */
+Binding.prototype.realpath = function (filepath, encoding, callback, ctx) {
+  markSyscall(ctx, 'realpath');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    let realPath;
+    filepath = deBuffer(filepath);
+    const resolved = path.resolve(filepath);
+    const parts = getPathParts(resolved);
+    let item = this._system.getRoot();
+    let itemPath = '/';
+    let name, i, ii;
+    for (i = 0, ii = parts.length; i < ii; ++i) {
+      name = parts[i];
+      while (item instanceof SymbolicLink) {
+        itemPath = path.resolve(path.dirname(itemPath), item.getPath());
+        item = this._system.getItem(itemPath);
+      }
+      if (!item) {
+        throw new FSError('ENOENT', filepath);
+      }
+      if (item instanceof Directory) {
+        itemPath = path.resolve(itemPath, name);
+        item = item.getItem(name);
+      } else {
+        throw new FSError('ENOTDIR', filepath);
+      }
+    }
+    if (item) {
+      while (item instanceof SymbolicLink) {
+        itemPath = path.resolve(path.dirname(itemPath), item.getPath());
+        item = this._system.getItem(itemPath);
+      }
+      realPath = itemPath;
+    } else {
+      throw new FSError('ENOENT', filepath);
+    }
+
+    // Remove win32 file namespace prefix \\?\
+    realPath = getRealPath(realPath);
+
+    if (encoding === 'buffer') {
+      realPath = Buffer.from(realPath);
+    }
+
+    return realPath;
+  });
+};
+
+function fillStats(stats, bigint) {
+  const target = bigint ? bigintStatValues : statValues;
+  for (let i = 0; i < 36; i++) {
+    target[i] = stats[i];
+  }
+}
+
+/**
+ * Stat an item.
+ * @param {string} filepath Path.
+ * @param {boolean} bigint Use BigInt.
+ * @param {function(Error, Float64Array|BigUint64Array)} callback Callback (optional).
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {Float64Array|BigUint64Array|undefined} Stats or undefined (if sync).
+ */
+Binding.prototype.stat = function (filepath, bigint, callback, ctx) {
+  markSyscall(ctx, 'stat');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    filepath = deBuffer(filepath);
+    let item = this._system.getItem(filepath);
+    if (item instanceof SymbolicLink) {
+      item = this._system.getItem(
+        path.resolve(path.dirname(filepath), item.getPath())
+      );
+    }
+    if (!item) {
+      throw new FSError('ENOENT', filepath);
+    }
+    const stats = item.getStats(bigint);
+    fillStats(stats, bigint);
+    return stats;
+  });
+};
+
+/**
+ * Stat an item.
+ * @param {string} filepath Path.
+ * @param {boolean} bigint Use BigInt.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {Float64Array|BigUint64Array|undefined} Stats or undefined if sync.
+ */
+Binding.prototype.statSync = function (filepath, bigint, ctx) {
+  return this.stat(filepath, bigint, undefined, ctx);
+};
+
+/**
+ * Stat an item.
+ * @param {number} fd File descriptor.
+ * @param {boolean} bigint Use BigInt.
+ * @param {function(Error, Float64Array|BigUint64Array)} callback Callback (optional).
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {Float64Array|BigUint64Array|undefined} Stats or undefined (if sync).
+ */
+Binding.prototype.fstat = function (fd, bigint, callback, ctx) {
+  markSyscall(ctx, 'fstat');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    const descriptor = this.getDescriptorById(fd);
+    const item = descriptor.getItem();
+    const stats = item.getStats(bigint);
+    fillStats(stats, bigint);
+    return stats;
+  });
+};
+
+/**
+ * Close a file descriptor.
+ * @param {number} fd File descriptor.
+ * @param {function(Error)} callback Callback (optional).
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback.
+ */
+Binding.prototype.close = function (fd, callback, ctx) {
+  markSyscall(ctx, 'close');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    this.untrackDescriptorById(fd);
+  });
+};
+
+/**
+ * Close a file descriptor.
+ * @param {number} fd File descriptor.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return.
+ */
+Binding.prototype.closeSync = function (fd, ctx) {
+  return this.close(fd, undefined, ctx);
+};
+
+/**
+ * Open and possibly create a file.
+ * @param {string} pathname File path.
+ * @param {number} flags Flags.
+ * @param {number} mode Mode.
+ * @param {function(Error, string)} callback Callback (optional).
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {string} File descriptor (if sync).
+ */
+Binding.prototype.open = function (pathname, flags, mode, callback, ctx) {
+  markSyscall(ctx, 'open');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    pathname = deBuffer(pathname);
+    const descriptor = new FileDescriptor(flags, usePromises(callback));
+    let item = this._system.getItem(pathname);
+    while (item instanceof SymbolicLink) {
+      item = this._system.getItem(
+        path.resolve(path.dirname(pathname), item.getPath())
+      );
+    }
+    if (descriptor.isExclusive() && item) {
+      throw new FSError('EEXIST', pathname);
+    }
+    if (descriptor.isCreate() && !item) {
+      const parent = this._system.getItem(path.dirname(pathname));
+      if (!parent) {
+        throw new FSError('ENOENT', pathname);
+      }
+      if (!(parent instanceof Directory)) {
+        throw new FSError('ENOTDIR', pathname);
+      }
+      item = new File();
+      if (mode) {
+        item.setMode(mode);
+      }
+      parent.addItem(path.basename(pathname), item);
+    }
+    if (descriptor.isRead()) {
+      if (!item) {
+        throw new FSError('ENOENT', pathname);
+      }
+      if (!item.canRead()) {
+        throw new FSError('EACCES', pathname);
+      }
+    }
+    if (descriptor.isWrite() && !item.canWrite()) {
+      throw new FSError('EACCES', pathname);
+    }
+    if (
+      item instanceof Directory &&
+      (descriptor.isTruncate() || descriptor.isAppend())
+    ) {
+      throw new FSError('EISDIR', pathname);
+    }
+    if (descriptor.isTruncate()) {
+      if (!(item instanceof File)) {
+        throw new FSError('EBADF');
+      }
+      item.setContent('');
+    }
+    if (descriptor.isTruncate() || descriptor.isAppend()) {
+      descriptor.setPosition(item.getContent().length);
+    }
+    descriptor.setItem(item);
+    return this.trackDescriptor(descriptor);
+  });
+};
+
+/**
+ * Open and possibly create a file.
+ * @param {string} pathname File path.
+ * @param {number} flags Flags.
+ * @param {number} mode Mode.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {string} File descriptor.
+ */
+Binding.prototype.openSync = function (pathname, flags, mode, ctx) {
+  return this.open(pathname, flags, mode, undefined, ctx);
+};
+
+/**
+ * Open a file handler. A new api in nodejs v10+ for fs.promises
+ * @param {string} pathname File path.
+ * @param {number} flags Flags.
+ * @param {number} mode Mode.
+ * @param {Function} callback Callback (optional), expecting kUsePromises in nodejs v10+.
+ * @return {string} The file handle.
+ */
+Binding.prototype.openFileHandle = function (pathname, flags, mode, callback) {
+  const self = this;
+
+  return this.open(pathname, flags, mode, kUsePromises).then(function (fd) {
+    // nodejs v10+ fs.promises FileHandler constructor only ask these three properties.
+    return {
+      getAsyncId: notImplemented,
+      fd: fd,
+      close: function () {
+        return self.close(fd, kUsePromises);
+      },
+    };
+  });
+};
+
+/**
+ * Read from a file descriptor.
+ * @param {string} fd File descriptor.
+ * @param {Buffer} buffer Buffer that the contents will be written to.
+ * @param {number} offset Offset in the buffer to start writing to.
+ * @param {number} length Number of bytes to read.
+ * @param {?number} position Where to begin reading in the file.  If null,
+ *     data will be read from the current file position.
+ * @param {function(Error, number, Buffer)} callback Callback (optional) called
+ *     with any error, number of bytes read, and the buffer.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {number} Number of bytes read (if sync).
+ */
+Binding.prototype.read = function (
+  fd,
+  buffer,
+  offset,
+  length,
+  position,
+  callback,
+  ctx
+) {
+  markSyscall(ctx, 'read');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    const descriptor = this.getDescriptorById(fd);
+    if (!descriptor.isRead()) {
+      throw new FSError('EBADF');
+    }
+    const file = descriptor.getItem();
+    if (file instanceof Directory) {
+      throw new FSError('EISDIR');
+    }
+    if (!(file instanceof File)) {
+      // deleted or not a regular file
+      throw new FSError('EBADF');
+    }
+    if (typeof position !== 'number' || position < 0) {
+      position = descriptor.getPosition();
+    }
+    const content = file.getContent();
+    const start = Math.min(position, content.length);
+    const end = Math.min(position + length, content.length);
+    const read = start < end ? content.copy(buffer, offset, start, end) : 0;
+    descriptor.setPosition(position + read);
+    return read;
+  });
+};
+
+/**
+ * Write to a file descriptor given a buffer.
+ * @param {string} src Source file.
+ * @param {string} dest Destination file.
+ * @param {number} flags Modifiers for copy operation.
+ * @param {function(Error)} callback Callback (optional) called
+ *     with any error.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.copyFile = function (src, dest, flags, callback, ctx) {
+  markSyscall(ctx, 'copyfile');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    src = deBuffer(src);
+    dest = deBuffer(dest);
+    const srcFd = this.open(src, constants.O_RDONLY);
+
+    try {
+      const srcDescriptor = this.getDescriptorById(srcFd);
+      if (!srcDescriptor.isRead()) {
+        throw new FSError('EBADF');
+      }
+      const srcFile = srcDescriptor.getItem();
+      if (!(srcFile instanceof File)) {
+        throw new FSError('EBADF');
+      }
+      const srcContent = srcFile.getContent();
+
+      let destFlags =
+        constants.O_WRONLY | constants.O_CREAT | constants.O_TRUNC;
+
+      if ((flags & constants.COPYFILE_EXCL) === constants.COPYFILE_EXCL) {
+        destFlags |= constants.O_EXCL;
+      }
+
+      const destFd = this.open(dest, destFlags);
+
+      try {
+        this.writeBuffer(destFd, srcContent, 0, srcContent.length, 0);
+      } finally {
+        this.close(destFd);
+      }
+    } finally {
+      this.close(srcFd);
+    }
+  });
+};
+
+/**
+ * Write to a file descriptor given a buffer.
+ * @param {string} src Source file.
+ * @param {string} dest Destination file.
+ * @param {number} flags Modifiers for copy operation.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.copyFileSync = function (src, dest, flags, ctx) {
+  return this.copyFile(src, dest, flags, undefined, ctx);
+};
+
+/**
+ * Write to a file descriptor given a buffer.
+ * @param {string} fd File descriptor.
+ * @param {Array<Buffer>} buffers Array of buffers with contents to write.
+ * @param {?number} position Where to begin writing in the file.  If null,
+ *     data will be written to the current file position.
+ * @param {function(Error, number, Buffer)} callback Callback (optional) called
+ *     with any error, number of bytes written, and the buffer.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {number} Number of bytes written (if sync).
+ */
+Binding.prototype.writeBuffers = function (
+  fd,
+  buffers,
+  position,
+  callback,
+  ctx
+) {
+  markSyscall(ctx, 'write');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    const descriptor = this.getDescriptorById(fd);
+    if (!descriptor.isWrite()) {
+      throw new FSError('EBADF');
+    }
+    const file = descriptor.getItem();
+    if (!(file instanceof File)) {
+      // not a regular file
+      throw new FSError('EBADF');
+    }
+    if (typeof position !== 'number' || position < 0) {
+      position = descriptor.getPosition();
+    }
+    let content = file.getContent();
+    const newContent = Buffer.concat(buffers);
+    const newLength = position + newContent.length;
+    if (content.length < newLength) {
+      const tempContent = Buffer.alloc(newLength);
+      content.copy(tempContent);
+      content = tempContent;
+    }
+    const written = newContent.copy(content, position);
+    file.setContent(content);
+    descriptor.setPosition(newLength);
+    return written;
+  });
+};
+
+/**
+ * Write to a file descriptor given a buffer.
+ * @param {string} fd File descriptor.
+ * @param {Buffer} buffer Buffer with contents to write.
+ * @param {number} offset Offset in the buffer to start writing from.
+ * @param {number} length Number of bytes to write.
+ * @param {?number} position Where to begin writing in the file.  If null,
+ *     data will be written to the current file position.
+ * @param {function(Error, number, Buffer)} callback Callback (optional) called
+ *     with any error, number of bytes written, and the buffer.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {number} Number of bytes written (if sync).
+ */
+Binding.prototype.writeBuffer = function (
+  fd,
+  buffer,
+  offset,
+  length,
+  position,
+  callback,
+  ctx
+) {
+  markSyscall(ctx, 'write');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    const descriptor = this.getDescriptorById(fd);
+    if (!descriptor.isWrite()) {
+      throw new FSError('EBADF');
+    }
+    const file = descriptor.getItem();
+    if (!(file instanceof File)) {
+      // not a regular file
+      throw new FSError('EBADF');
+    }
+    if (typeof position !== 'number' || position < 0) {
+      position = descriptor.getPosition();
+    }
+    let content = file.getContent();
+    const newLength = position + length;
+    if (content.length < newLength) {
+      const newContent = Buffer.alloc(newLength);
+      content.copy(newContent);
+      content = newContent;
+    }
+    const sourceEnd = Math.min(offset + length, buffer.length);
+    const written = Buffer.from(buffer).copy(
+      content,
+      position,
+      offset,
+      sourceEnd
+    );
+    file.setContent(content);
+    descriptor.setPosition(newLength);
+    // If we're in fs.promises / FileHandle we need to return a promise
+    // Both fs.promises.open().then(fd => fs.write())
+    // and fs.openSync().writeSync() use this function
+    // without a callback, so we have to check if  the descriptor was opened
+    // with kUsePromises
+    return descriptor.isPromise() ? Promise.resolve(written) : written;
+  });
+};
+
+/**
+ * Write to a file descriptor given a string.
+ * @param {string} fd File descriptor.
+ * @param {string} string String with contents to write.
+ * @param {number} position Where to begin writing in the file.  If null,
+ *     data will be written to the current file position.
+ * @param {string} encoding String encoding.
+ * @param {function(Error, number, string)} callback Callback (optional) called
+ *     with any error, number of bytes written, and the string.
+ * @param {object} ctx The context.
+ * @return {number} Number of bytes written (if sync).
+ */
+Binding.prototype.writeString = function (
+  fd,
+  string,
+  position,
+  encoding,
+  callback,
+  ctx
+) {
+  markSyscall(ctx, 'write');
+
+  const buffer = Buffer.from(string, encoding);
+  let wrapper;
+  if (callback && callback !== kUsePromises) {
+    if (callback.oncomplete) {
+      callback = callback.oncomplete.bind(callback);
+    }
+    wrapper = function (err, written, returned) {
+      callback(err, written, returned && string);
+    };
+  }
+  return this.writeBuffer(fd, buffer, 0, string.length, position, wrapper, ctx);
+};
+
+/**
+ * Rename a file.
+ * @param {string} oldPath Old pathname.
+ * @param {string} newPath New pathname.
+ * @param {function(Error)} callback Callback (optional).
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {undefined}
+ */
+Binding.prototype.rename = function (oldPath, newPath, callback, ctx) {
+  markSyscall(ctx, 'rename');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    oldPath = deBuffer(oldPath);
+    newPath = deBuffer(newPath);
+    const oldItem = this._system.getItem(oldPath);
+    if (!oldItem) {
+      throw new FSError('ENOENT', oldPath);
+    }
+    const oldParent = this._system.getItem(path.dirname(oldPath));
+    const oldName = path.basename(oldPath);
+    const newItem = this._system.getItem(newPath);
+    const newParent = this._system.getItem(path.dirname(newPath));
+    const newName = path.basename(newPath);
+    if (newItem) {
+      // make sure they are the same type
+      if (oldItem instanceof File) {
+        if (newItem instanceof Directory) {
+          throw new FSError('EISDIR', newPath);
+        }
+      } else if (oldItem instanceof Directory) {
+        if (!(newItem instanceof Directory)) {
+          throw new FSError('ENOTDIR', newPath);
+        }
+        if (newItem.list().length > 0) {
+          throw new FSError('ENOTEMPTY', newPath);
+        }
+      }
+      newParent.removeItem(newName);
+    } else {
+      if (!newParent) {
+        throw new FSError('ENOENT', newPath);
+      }
+      if (!(newParent instanceof Directory)) {
+        throw new FSError('ENOTDIR', newPath);
+      }
+    }
+    oldParent.removeItem(oldName);
+    newParent.addItem(newName, oldItem);
+  });
+};
+
+/**
+ * Rename a file.
+ * @param {string} oldPath Old pathname.
+ * @param {string} newPath New pathname.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {undefined}
+ */
+Binding.prototype.renameSync = function (oldPath, newPath, ctx) {
+  return this.rename(oldPath, newPath, undefined, ctx);
+};
+
+/**
+ * Read a directory.
+ * @param {string} dirpath Path to directory.
+ * @param {string} encoding The encoding ('utf-8' or 'buffer').
+ * @param {boolean} withFileTypes whether or not to return fs.Dirent objects
+ * @param {function(Error, (Array.<string>|Array.<Buffer>)} callback Callback
+ *     (optional) called with any error or array of items in the directory.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {Array<string> | Array<Buffer>} Array of items in directory (if sync).
+ */
+Binding.prototype.readdir = function (
+  dirpath,
+  encoding,
+  withFileTypes,
+  callback,
+  ctx
+) {
+  markSyscall(ctx, 'scandir');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    dirpath = deBuffer(dirpath);
+    let dpath = dirpath;
+    let dir = this._system.getItem(dirpath);
+    while (dir instanceof SymbolicLink) {
+      dpath = path.resolve(path.dirname(dpath), dir.getPath());
+      dir = this._system.getItem(dpath);
+    }
+    if (!dir) {
+      throw new FSError('ENOENT', dirpath);
+    }
+    if (!(dir instanceof Directory)) {
+      throw new FSError('ENOTDIR', dirpath);
+    }
+    if (!dir.canRead()) {
+      throw new FSError('EACCES', dirpath);
+    }
+
+    let list = dir.list();
+    if (encoding === 'buffer') {
+      list = list.map(function (item) {
+        return Buffer.from(item);
+      });
+    }
+
+    if (withFileTypes === true) {
+      const types = list.map(function (name) {
+        const stats = dir.getItem(name).getStats();
+
+        return getDirentType(stats.mode);
+      });
+      list = [list, types];
+    }
+
+    return list;
+  });
+};
+
+/**
+ * Read file as utf8 string.
+ * @param {string} name file to write.
+ * @param {number} flags Flags.
+ * @return {string} the file content.
+ */
+Binding.prototype.readFileUtf8 = function (name, flags) {
+  const fd = this.open(name, flags);
+  const descriptor = this.getDescriptorById(fd);
+
+  if (!descriptor.isRead()) {
+    throw new FSError('EBADF');
+  }
+  const file = descriptor.getItem();
+  if (file instanceof Directory) {
+    throw new FSError('EISDIR');
+  }
+  if (!(file instanceof File)) {
+    // deleted or not a regular file
+    throw new FSError('EBADF');
+  }
+  const content = file.getContent();
+  return content.toString('utf8');
+};
+
+/**
+ * Write a utf8 string.
+ * @param {string} filepath file to write.
+ * @param {string} data data to write to filepath.
+ * @param {number} flags Flags.
+ * @param {number} mode Mode.
+ */
+Binding.prototype.writeFileUtf8 = function (filepath, data, flags, mode) {
+  const destFd = this.open(filepath, flags, mode);
+  this.writeBuffer(destFd, data, 0, data.length);
+};
+
+/**
+ * Create a directory.
+ * @param {string} pathname Path to new directory.
+ * @param {number} mode Permissions.
+ * @param {boolean} recursive Recursively create deep directory. (added in nodejs v10+)
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.mkdir = function (pathname, mode, recursive, callback, ctx) {
+  markSyscall(ctx, 'mkdir');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    pathname = deBuffer(pathname);
+    const item = this._system.getItem(pathname);
+    if (item) {
+      if (recursive && item instanceof Directory) {
+        // silently pass existing folder in recursive mode
+        return;
+      }
+      throw new FSError('EEXIST', pathname);
+    }
+
+    const _mkdir = function (_pathname) {
+      const parentDir = path.dirname(_pathname);
+      let parent = this._system.getItem(parentDir);
+      if (!parent) {
+        if (!recursive) {
+          throw new FSError('ENOENT', _pathname);
+        }
+        parent = _mkdir(parentDir, true);
+      }
+      this.access(parentDir, parseInt('0002', 8));
+      const dir = new Directory();
+      if (mode) {
+        dir.setMode(mode);
+      }
+      return parent.addItem(path.basename(_pathname), dir);
+    }.bind(this);
+
+    _mkdir(pathname);
+  });
+};
+
+/**
+ * Remove a directory.
+ * @param {string} pathname Path to directory.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.rmdir = function (pathname, callback, ctx) {
+  markSyscall(ctx, 'rmdir');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    pathname = deBuffer(pathname);
+    const item = this._system.getItem(pathname);
+    if (!item) {
+      throw new FSError('ENOENT', pathname);
+    }
+    if (!(item instanceof Directory)) {
+      throw new FSError('ENOTDIR', pathname);
+    }
+    if (item.list().length > 0) {
+      throw new FSError('ENOTEMPTY', pathname);
+    }
+    this.access(path.dirname(pathname), parseInt('0002', 8));
+    const parent = this._system.getItem(path.dirname(pathname));
+    parent.removeItem(path.basename(pathname));
+  });
+};
+
+const PATH_CHARS =
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+const MAX_ATTEMPTS = 62 * 62 * 62;
+
+/**
+ * Create a directory based on a template.
+ * See http://web.mit.edu/freebsd/head/lib/libc/stdio/mktemp.c
+ * @param {string} prefix Path template (trailing Xs will be replaced).
+ * @param {string} encoding The encoding ('utf-8' or 'buffer').
+ * @param {function(Error, string)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.mkdtemp = function (prefix, encoding, callback, ctx) {
+  if (encoding && typeof encoding !== 'string') {
+    callback = encoding;
+    encoding = 'utf-8';
+  }
+
+  markSyscall(ctx, 'mkdtemp');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    prefix = prefix.replace(/X{0,6}$/, 'XXXXXX');
+    const parentPath = path.dirname(prefix);
+    const parent = this._system.getItem(parentPath);
+    if (!parent) {
+      throw new FSError('ENOENT', prefix);
+    }
+    if (!(parent instanceof Directory)) {
+      throw new FSError('ENOTDIR', prefix);
+    }
+    this.access(parentPath, parseInt('0002', 8));
+    const template = path.basename(prefix);
+    let unique = false;
+    let count = 0;
+    let name;
+    while (!unique && count < MAX_ATTEMPTS) {
+      let position = template.length - 1;
+      let replacement = '';
+      while (template.charAt(position) === 'X') {
+        replacement += PATH_CHARS.charAt(
+          Math.floor(PATH_CHARS.length * Math.random())
+        );
+        position -= 1;
+      }
+      const candidate = template.slice(0, position + 1) + replacement;
+      if (!parent.getItem(candidate)) {
+        name = candidate;
+        unique = true;
+      }
+      count += 1;
+    }
+    if (!name) {
+      throw new FSError('EEXIST', prefix);
+    }
+    const dir = new Directory();
+    parent.addItem(name, dir);
+    let uniquePath = path.join(parentPath, name);
+    if (encoding === 'buffer') {
+      uniquePath = Buffer.from(uniquePath);
+    }
+    return uniquePath;
+  });
+};
+
+/**
+ * Truncate a file.
+ * @param {number} fd File descriptor.
+ * @param {number} len Number of bytes.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.ftruncate = function (fd, len, callback, ctx) {
+  markSyscall(ctx, 'ftruncate');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    const descriptor = this.getDescriptorById(fd);
+    if (!descriptor.isWrite()) {
+      throw new FSError('EINVAL');
+    }
+    const file = descriptor.getItem();
+    if (!(file instanceof File)) {
+      throw new FSError('EINVAL');
+    }
+    const content = file.getContent();
+    const newContent = Buffer.alloc(len);
+    content.copy(newContent);
+    file.setContent(newContent);
+  });
+};
+
+/**
+ * Legacy support.
+ * @param {number} fd File descriptor.
+ * @param {number} len Number of bytes.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ */
+Binding.prototype.truncate = Binding.prototype.ftruncate;
+
+/**
+ * Change user and group owner.
+ * @param {string} pathname Path.
+ * @param {number} uid User id.
+ * @param {number} gid Group id.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.chown = function (pathname, uid, gid, callback, ctx) {
+  markSyscall(ctx, 'chown');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    pathname = deBuffer(pathname);
+    const item = this._system.getItem(pathname);
+    if (!item) {
+      throw new FSError('ENOENT', pathname);
+    }
+    item.setUid(uid);
+    item.setGid(gid);
+  });
+};
+
+/**
+ * Change user and group owner.
+ * @param {number} fd File descriptor.
+ * @param {number} uid User id.
+ * @param {number} gid Group id.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.fchown = function (fd, uid, gid, callback, ctx) {
+  markSyscall(ctx, 'fchown');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    const descriptor = this.getDescriptorById(fd);
+    const item = descriptor.getItem();
+    item.setUid(uid);
+    item.setGid(gid);
+  });
+};
+
+/**
+ * Change permissions.
+ * @param {string} pathname Path.
+ * @param {number} mode Mode.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.chmod = function (pathname, mode, callback, ctx) {
+  markSyscall(ctx, 'chmod');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    pathname = deBuffer(pathname);
+    const item = this._system.getItem(pathname);
+    if (!item) {
+      throw new FSError('ENOENT', pathname);
+    }
+    item.setMode(mode);
+  });
+};
+
+/**
+ * Change permissions.
+ * @param {number} fd File descriptor.
+ * @param {number} mode Mode.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.fchmod = function (fd, mode, callback, ctx) {
+  markSyscall(ctx, 'fchmod');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    const descriptor = this.getDescriptorById(fd);
+    const item = descriptor.getItem();
+    item.setMode(mode);
+  });
+};
+
+/**
+ * Delete a named item.
+ * @param {string} pathname Path to item.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.unlink = function (pathname, callback, ctx) {
+  markSyscall(ctx, 'unlink');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    pathname = deBuffer(pathname);
+    const item = this._system.getItem(pathname);
+    if (!item) {
+      throw new FSError('ENOENT', pathname);
+    }
+    if (item instanceof Directory) {
+      throw new FSError('EPERM', pathname);
+    }
+    const parent = this._system.getItem(path.dirname(pathname));
+    parent.removeItem(path.basename(pathname));
+  });
+};
+
+/**
+ * Delete a named item.
+ * @param {string} pathname Path to item.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.unlinkSync = function (pathname, ctx) {
+  return this.unlink(pathname, undefined, ctx);
+};
+
+/**
+ * Update timestamps.
+ * @param {string} pathname Path to item.
+ * @param {number} atime Access time (in seconds).
+ * @param {number} mtime Modification time (in seconds).
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.utimes = function (pathname, atime, mtime, callback, ctx) {
+  markSyscall(ctx, 'utimes');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    let filepath = deBuffer(pathname);
+    let item = this._system.getItem(filepath);
+    let links = 0;
+    while (item instanceof SymbolicLink) {
+      if (links > MAX_LINKS) {
+        throw new FSError('ELOOP', filepath);
+      }
+      filepath = path.resolve(path.dirname(filepath), item.getPath());
+      item = this._system.getItem(filepath);
+      ++links;
+    }
+    if (!item) {
+      throw new FSError('ENOENT', pathname);
+    }
+    item.setATime(new Date(atime * 1000));
+    item.setMTime(new Date(mtime * 1000));
+  });
+};
+
+/**
+ * Update timestamps.
+ * @param {string} pathname Path to item.
+ * @param {number} atime Access time (in seconds).
+ * @param {number} mtime Modification time (in seconds).
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.lutimes = function (pathname, atime, mtime, callback, ctx) {
+  markSyscall(ctx, 'utimes');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    pathname = deBuffer(pathname);
+    const item = this._system.getItem(pathname);
+    if (!item) {
+      throw new FSError('ENOENT', pathname);
+    }
+    // lutimes doesn't follow symlink
+    item.setATime(new Date(atime * 1000));
+    item.setMTime(new Date(mtime * 1000));
+  });
+};
+
+/**
+ * Update timestamps.
+ * @param {number} fd File descriptor.
+ * @param {number} atime Access time (in seconds).
+ * @param {number} mtime Modification time (in seconds).
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.futimes = function (fd, atime, mtime, callback, ctx) {
+  markSyscall(ctx, 'futimes');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    const descriptor = this.getDescriptorById(fd);
+    let item = descriptor.getItem();
+    let filepath = this._system.getFilepath(item);
+    let links = 0;
+    while (item instanceof SymbolicLink) {
+      if (links > MAX_LINKS) {
+        throw new FSError('ELOOP', filepath);
+      }
+      filepath = path.resolve(path.dirname(filepath), item.getPath());
+      item = this._system.getItem(filepath);
+      ++links;
+    }
+    item.setATime(new Date(atime * 1000));
+    item.setMTime(new Date(mtime * 1000));
+  });
+};
+
+/**
+ * Synchronize in-core state with storage device.
+ * @param {number} fd File descriptor.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.fsync = function (fd, callback, ctx) {
+  markSyscall(ctx, 'fsync');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    this.getDescriptorById(fd);
+  });
+};
+
+/**
+ * Synchronize in-core metadata state with storage device.
+ * @param {number} fd File descriptor.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.fdatasync = function (fd, callback, ctx) {
+  markSyscall(ctx, 'fdatasync');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    this.getDescriptorById(fd);
+  });
+};
+
+/**
+ * Create a hard link.
+ * @param {string} srcPath The existing file.
+ * @param {string} destPath The new link to create.
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.link = function (srcPath, destPath, callback, ctx) {
+  markSyscall(ctx, 'link');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    srcPath = deBuffer(srcPath);
+    destPath = deBuffer(destPath);
+    const item = this._system.getItem(srcPath);
+    if (!item) {
+      throw new FSError('ENOENT', srcPath);
+    }
+    if (item instanceof Directory) {
+      throw new FSError('EPERM', srcPath);
+    }
+    if (this._system.getItem(destPath)) {
+      throw new FSError('EEXIST', destPath);
+    }
+    const parent = this._system.getItem(path.dirname(destPath));
+    if (!parent) {
+      throw new FSError('ENOENT', destPath);
+    }
+    if (!(parent instanceof Directory)) {
+      throw new FSError('ENOTDIR', destPath);
+    }
+    parent.addItem(path.basename(destPath), item);
+  });
+};
+
+/**
+ * Create a symbolic link.
+ * @param {string} srcPath Path from link to the source file.
+ * @param {string} destPath Path for the generated link.
+ * @param {string} type Ignored (used for Windows only).
+ * @param {function(Error)} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.symlink = function (srcPath, destPath, type, callback, ctx) {
+  markSyscall(ctx, 'symlink');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    srcPath = deBuffer(srcPath);
+    destPath = deBuffer(destPath);
+    if (this._system.getItem(destPath)) {
+      throw new FSError('EEXIST', destPath);
+    }
+    const parent = this._system.getItem(path.dirname(destPath));
+    if (!parent) {
+      throw new FSError('ENOENT', destPath);
+    }
+    if (!(parent instanceof Directory)) {
+      throw new FSError('ENOTDIR', destPath);
+    }
+    const link = new SymbolicLink();
+    link.setPath(srcPath);
+    parent.addItem(path.basename(destPath), link);
+  });
+};
+
+/**
+ * Create a symbolic link.
+ * @param {string} srcPath Path from link to the source file.
+ * @param {string} destPath Path for the generated link.
+ * @param {string} type Ignored (used for Windows only).
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.symlinkSync = function (srcPath, destPath, type, ctx) {
+  return this.symlink(srcPath, destPath, type, undefined, ctx);
+};
+
+/**
+ * Read the contents of a symbolic link.
+ * @param {string} pathname Path to symbolic link.
+ * @param {string} encoding The encoding ('utf-8' or 'buffer').
+ * @param {function(Error, (string|Buffer))} callback Optional callback.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {string|Buffer} Symbolic link contents (path to source).
+ */
+Binding.prototype.readlink = function (pathname, encoding, callback, ctx) {
+  if (encoding && typeof encoding !== 'string') {
+    // this would not happend in nodejs v10+
+    callback = encoding;
+    encoding = 'utf-8';
+  }
+
+  markSyscall(ctx, 'readlink');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    pathname = deBuffer(pathname);
+    const link = this._system.getItem(pathname);
+    if (!link) {
+      throw new FSError('ENOENT', pathname);
+    }
+    if (!(link instanceof SymbolicLink)) {
+      throw new FSError('EINVAL', pathname);
+    }
+    let linkPath = link.getPath();
+    if (encoding === 'buffer') {
+      linkPath = Buffer.from(linkPath);
+    }
+    return linkPath;
+  });
+};
+
+/**
+ * Stat an item.
+ * @param {string} filepath Path.
+ * @param {boolean} bigint Use BigInt.
+ * @param {function(Error, Float64Array|BigUint64Array)} callback Callback (optional).
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {Float64Array|BigUint64Array|undefined} Stats or undefined (if sync).
+ */
+Binding.prototype.lstat = function (filepath, bigint, callback, ctx) {
+  markSyscall(ctx, 'lstat');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    filepath = deBuffer(filepath);
+    const item = this._system.getItem(filepath);
+    if (!item) {
+      throw new FSError('ENOENT', filepath);
+    }
+    const stats = item.getStats(bigint);
+    fillStats(stats, bigint);
+    return stats;
+  });
+};
+
+/**
+ * Tests user permissions.
+ * @param {string} filepath Path.
+ * @param {number} mode Mode.
+ * @param {function(Error)} callback Callback (optional).
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.access = function (filepath, mode, callback, ctx) {
+  markSyscall(ctx, 'access');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    filepath = deBuffer(filepath);
+    let item = this._system.getItem(filepath);
+    let links = 0;
+    while (item instanceof SymbolicLink) {
+      if (links > MAX_LINKS) {
+        throw new FSError('ELOOP', filepath);
+      }
+      filepath = path.resolve(path.dirname(filepath), item.getPath());
+      item = this._system.getItem(filepath);
+      ++links;
+    }
+    if (!item) {
+      throw new FSError('ENOENT', filepath);
+    }
+    if (mode && process.getuid && process.getgid) {
+      if (mode & constants.R_OK && !item.canRead()) {
+        throw new FSError('EACCES', filepath);
+      }
+      if (mode & constants.W_OK && !item.canWrite()) {
+        throw new FSError('EACCES', filepath);
+      }
+      if (mode & constants.X_OK && !item.canExecute()) {
+        throw new FSError('EACCES', filepath);
+      }
+    }
+  });
+};
+
+/**
+ * Tests user permissions.
+ * @param {string} filepath Path.
+ * @param {number} mode Mode.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.accessSync = function (filepath, mode, ctx) {
+  return this.access(filepath, mode, undefined, ctx);
+};
+
+/**
+ * Tests whether or not the given path exists.
+ * @param {string} filepath Path.
+ * @param {function(Error)} callback Callback (optional).
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.exists = function (filepath, callback, ctx) {
+  markSyscall(ctx, 'exists');
+
+  return maybeCallback(normalizeCallback(callback), ctx, this, function () {
+    filepath = deBuffer(filepath);
+    const item = this._system.getItem(filepath);
+
+    if (item) {
+      if (item instanceof SymbolicLink) {
+        return this.exists(item.getPath(), callback, ctx);
+      }
+      return true;
+    }
+    return false;
+  });
+};
+
+/**
+ * Tests whether or not the given path exists.
+ * @param {string} filepath Path.
+ * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @return {*} The return if no callback is provided.
+ */
+Binding.prototype.existsSync = function (filepath, ctx) {
+  return this.exists(filepath, undefined, ctx);
+};
+
+/**
+ * Not yet implemented.
+ * @type {function()}
+ */
+Binding.prototype.StatWatcher = notImplemented;
+
+/**
+ * Export the binding constructor.
+ * @type {function()}
+ */
+module.exports = Binding;
+
+
+/***/ }),
+
+/***/ 68980:
+/***/ ((module) => {
+
+const realBinding = process.binding('fs');
+
+let storedBinding;
+
+/**
+ * Perform action, bypassing mock FS
+ * @param {Function} fn The function.
+ * @example
+ * // This file exists on the real FS, not on the mocked FS
+ * const filePath = '/path/file.json';
+ * const data = mock.bypass(() => fs.readFileSync(filePath, 'utf-8'));
+ * @return {*} The return.
+ */
+module.exports = function bypass(fn) {
+  if (typeof fn !== 'function') {
+    throw new Error(`Must provide a function to perform for mock.bypass()`);
+  }
+
+  disable();
+
+  let result;
+  try {
+    result = fn();
+    if (result && typeof result.then === 'function') {
+      return result.then(
+        (r) => {
+          enable();
+          return r;
+        },
+        (err) => {
+          enable();
+          throw err;
+        }
+      );
+    } else {
+      enable();
+      return result;
+    }
+  } catch (err) {
+    enable();
+    throw err;
+  }
+};
+
+/**
+ * Temporarily disable Mocked FS
+ */
+function disable() {
+  if (realBinding._mockedBinding) {
+    storedBinding = realBinding._mockedBinding;
+    delete realBinding._mockedBinding;
+  }
+}
+
+/**
+ * Enables Mocked FS after being disabled by disable()
+ */
+function enable() {
+  if (storedBinding) {
+    realBinding._mockedBinding = storedBinding;
+    storedBinding = undefined;
+  }
+}
+
+
+/***/ }),
+
+/***/ 72989:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const constants = __nccwpck_require__(49140);
+
+/**
+ * Create a new file descriptor.
+ * @param {number} flags Flags.
+ * @param {boolean} isPromise descriptor was opened via fs.promises
+ * @class
+ */
+function FileDescriptor(flags, isPromise = false) {
+  /**
+   * Flags.
+   * @type {number}
+   */
+  this._flags = flags;
+
+  /**
+   * File system item.
+   * @type {Item}
+   */
+  this._item = null;
+
+  /**
+   * Current file position.
+   * @type {number}
+   */
+  this._position = 0;
+
+  this._isPromise = isPromise;
+}
+
+/**
+ * Set the item.
+ * @param {Item} item File system item.
+ */
+FileDescriptor.prototype.setItem = function (item) {
+  this._item = item;
+};
+
+/**
+ * Get the item.
+ * @return {Item} File system item.
+ */
+FileDescriptor.prototype.getItem = function () {
+  return this._item;
+};
+
+/**
+ * Get the current file position.
+ * @return {number} File position.
+ */
+FileDescriptor.prototype.getPosition = function () {
+  return this._position;
+};
+
+/**
+ * Set the current file position.
+ * @param {number} position File position.
+ */
+FileDescriptor.prototype.setPosition = function (position) {
+  this._position = position;
+};
+
+/**
+ * Check if file opened for appending.
+ * @return {boolean} Opened for appending.
+ */
+FileDescriptor.prototype.isAppend = function () {
+  return (this._flags & constants.O_APPEND) === constants.O_APPEND;
+};
+
+/**
+ * Check if file opened for creation.
+ * @return {boolean} Opened for creation.
+ */
+FileDescriptor.prototype.isCreate = function () {
+  return (this._flags & constants.O_CREAT) === constants.O_CREAT;
+};
+
+/**
+ * Check if file opened for reading.
+ * @return {boolean} Opened for reading.
+ */
+FileDescriptor.prototype.isRead = function () {
+  return (this._flags & constants.O_WRONLY) !== constants.O_WRONLY;
+};
+
+/**
+ * Check if file opened for writing.
+ * @return {boolean} Opened for writing.
+ */
+FileDescriptor.prototype.isWrite = function () {
+  return (
+    (this._flags & constants.O_WRONLY) === constants.O_WRONLY ||
+    (this._flags & constants.O_RDWR) === constants.O_RDWR
+  );
+};
+
+/**
+ * Check if file opened for truncating.
+ * @return {boolean} Opened for truncating.
+ */
+FileDescriptor.prototype.isTruncate = function () {
+  return (this._flags & constants.O_TRUNC) === constants.O_TRUNC;
+};
+
+/**
+ * Check if file opened with exclusive flag.
+ * @return {boolean} Opened with exclusive.
+ */
+FileDescriptor.prototype.isExclusive = function () {
+  return (this._flags & constants.O_EXCL) === constants.O_EXCL;
+};
+
+/**
+ * Check if the file descriptor was opened as a promise
+ * @return {boolean} Opened from fs.promise
+ */
+FileDescriptor.prototype.isPromise = function () {
+  return this._isPromise;
+};
+
+/**
+ * Export the constructor.
+ * @type {function()}
+ */
+module.exports = FileDescriptor;
+
+
+/***/ }),
+
+/***/ 22501:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const util = __nccwpck_require__(39023);
+const Item = __nccwpck_require__(25579);
+const constants = __nccwpck_require__(49140);
+
+/**
+ * A directory.
+ * @class
+ */
+function Directory() {
+  Item.call(this);
+
+  /**
+   * Items in this directory.
+   * @type {Object<string, Item>}
+   */
+  this._items = {};
+
+  /**
+   * Permissions.
+   */
+  this._mode = 511; // 0777
+}
+util.inherits(Directory, Item);
+
+/**
+ * Add an item to the directory.
+ * @param {string} name The name to give the item.
+ * @param {Item} item The item to add.
+ * @return {Item} The added item.
+ */
+Directory.prototype.addItem = function (name, item) {
+  if (this._items.hasOwnProperty(name)) {
+    throw new Error('Item with the same name already exists: ' + name);
+  }
+  this._items[name] = item;
+  ++item.links;
+  if (item instanceof Directory) {
+    // for '.' entry
+    ++item.links;
+    // for subdirectory
+    ++this.links;
+  }
+  this.setMTime(new Date());
+  return item;
+};
+
+/**
+ * Get a named item.
+ * @param {string} name Item name.
+ * @return {Item} The named item (or null if none).
+ */
+Directory.prototype.getItem = function (name) {
+  let item = null;
+  if (this._items.hasOwnProperty(name)) {
+    item = this._items[name];
+  }
+  return item;
+};
+
+/**
+ * Remove an item.
+ * @param {string} name Name of item to remove.
+ * @return {Item} The orphan item.
+ */
+Directory.prototype.removeItem = function (name) {
+  if (!this._items.hasOwnProperty(name)) {
+    throw new Error('Item does not exist in directory: ' + name);
+  }
+  const item = this._items[name];
+  delete this._items[name];
+  --item.links;
+  if (item instanceof Directory) {
+    // for '.' entry
+    --item.links;
+    // for subdirectory
+    --this.links;
+  }
+  this.setMTime(new Date());
+  return item;
+};
+
+/**
+ * Get list of item names in this directory.
+ * @return {Array<string>} Item names.
+ */
+Directory.prototype.list = function () {
+  return Object.keys(this._items).sort();
+};
+
+/**
+ * Get directory stats.
+ * @param {bolean} bigint Use BigInt.
+ * @return {object} Stats properties.
+ */
+Directory.prototype.getStats = function (bigint) {
+  const stats = Item.prototype.getStats.call(this, bigint);
+  const convert = bigint ? (v) => BigInt(v) : (v) => v;
+
+  stats[1] = convert(this.getMode() | constants.S_IFDIR); // mode
+  stats[8] = convert(1); // size
+  stats[9] = convert(1); // blocks
+
+  return stats;
+};
+
+/**
+ * Export the constructor.
+ * @type {function()}
+ */
+module.exports = Directory;
+
+
+/***/ }),
+
+/***/ 30128:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+const uvBinding = process.binding('uv');
+
+/**
+ * Error codes from libuv.
+ * @enum {number}
+ */
+const codes = {};
+
+uvBinding.getErrorMap().forEach(function (value, errno) {
+  const code = value[0];
+  const message = value[1];
+  codes[code] = {errno: errno, message: message};
+});
+
+/**
+ * Create an error.
+ * @param {string} code Error code.
+ * @param {string} path Path (optional).
+ * @class
+ */
+function FSError(code, path) {
+  if (!codes.hasOwnProperty(code)) {
+    throw new Error('Programmer error, invalid error code: ' + code);
+  }
+  Error.call(this);
+  const details = codes[code];
+  let message = code + ', ' + details.message;
+  if (path) {
+    message += " '" + path + "'";
+  }
+  this.message = message;
+  this.code = code;
+  this.errno = details.errno;
+  if (path !== undefined) {
+    this.path = path;
+  }
+  Error.captureStackTrace(this, FSError);
+}
+FSError.prototype = new Error();
+FSError.codes = codes;
+
+/**
+ * Create an abort error for when an asynchronous task was aborted.
+ * @class
+ */
+function AbortError() {
+  Error.call(this);
+  this.code = 'ABORT_ERR';
+  this.name = 'AbortError';
+  Error.captureStackTrace(this, AbortError);
+}
+AbortError.prototype = new Error();
+
+/**
+ * FSError constructor.
+ */
+exports.FSError = FSError;
+
+/**
+ * AbortError constructor.
+ */
+exports.AbortError = AbortError;
+
+
+/***/ }),
+
+/***/ 10126:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const util = __nccwpck_require__(39023);
+const Item = __nccwpck_require__(25579);
+const constants = __nccwpck_require__(49140);
+
+const EMPTY = Buffer.alloc(0);
+
+/**
+ * A file.
+ * @class
+ */
+function File() {
+  Item.call(this);
+
+  /**
+   * File content.
+   * @type {Buffer}
+   */
+  this._content = EMPTY;
+}
+util.inherits(File, Item);
+
+/**
+ * Get the file contents.
+ * @return {Buffer} File contents.
+ */
+File.prototype.getContent = function () {
+  this.setATime(new Date());
+  return this._content;
+};
+
+/**
+ * Set the file contents.
+ * @param {string|Buffer} content File contents.
+ */
+File.prototype.setContent = function (content) {
+  if (typeof content === 'string') {
+    content = Buffer.from(content);
+  } else if (!Buffer.isBuffer(content)) {
+    throw new Error('File content must be a string or buffer');
+  }
+  this._content = content;
+  const now = Date.now();
+  this.setCTime(new Date(now));
+  this.setMTime(new Date(now));
+};
+
+/**
+ * Get file stats.
+ * @param {boolean} bigint Use BigInt.
+ * @return {object} Stats properties.
+ */
+File.prototype.getStats = function (bigint) {
+  const size = this._content.length;
+  const stats = Item.prototype.getStats.call(this, bigint);
+  const convert = bigint ? (v) => BigInt(v) : (v) => v;
+
+  stats[1] = convert(this.getMode() | constants.S_IFREG); // mode
+  stats[8] = convert(size); // size
+  stats[9] = convert(Math.ceil(size / 512)); // blocks
+
+  return stats;
+};
+
+/**
+ * Export the constructor.
+ * @type {function()}
+ */
+module.exports = File;
+exports = module.exports;
+
+/**
+ * Standard input.
+ * @class
+ */
+function StandardInput() {
+  File.call(this);
+  this.setMode(438); // 0666
+}
+util.inherits(StandardInput, File);
+
+exports.StandardInput = StandardInput;
+
+/**
+ * Standard output.
+ * @class
+ */
+function StandardOutput() {
+  File.call(this);
+  this.setMode(438); // 0666
+}
+util.inherits(StandardOutput, File);
+
+/**
+ * Write the contents to stdout.
+ * @param {string|Buffer} content File contents.
+ */
+StandardOutput.prototype.setContent = function (content) {
+  if (process.stdout.isTTY) {
+    process.stdout.write(content);
+  }
+};
+
+exports.StandardOutput = StandardOutput;
+
+/**
+ * Standard error.
+ * @class
+ */
+function StandardError() {
+  File.call(this);
+  this.setMode(438); // 0666
+}
+util.inherits(StandardError, File);
+
+/**
+ * Write the contents to stderr.
+ * @param {string|Buffer} content File contents.
+ */
+StandardError.prototype.setContent = function (content) {
+  if (process.stderr.isTTY) {
+    process.stderr.write(content);
+  }
+};
+
+exports.StandardError = StandardError;
+
+
+/***/ }),
+
+/***/ 72451:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const os = __nccwpck_require__(70857);
+const path = __nccwpck_require__(16928);
+const Directory = __nccwpck_require__(22501);
+const File = __nccwpck_require__(10126);
+const {FSError} = __nccwpck_require__(30128);
+const SymbolicLink = __nccwpck_require__(52149);
+
+const isWindows = process.platform === 'win32';
+
+// on Win32, change filepath from \\?\c:\a\b to C:\a\b
+function getRealPath(filepath) {
+  if (isWindows && filepath.startsWith('\\\\?\\')) {
+    // Remove win32 file namespace prefix \\?\
+    return filepath[4].toUpperCase() + filepath.slice(5);
+  }
+  return filepath;
+}
+
+function getPathParts(filepath) {
+  // path.toNamespacedPath is only for Win32 system.
+  // on other platform, it returns the path unmodified.
+  const parts = path.toNamespacedPath(path.resolve(filepath)).split(path.sep);
+  parts.shift();
+  if (isWindows) {
+    // parts currently looks like ['', '?', 'c:', ...]
+    parts.shift();
+    const q = parts.shift(); // should be '?'
+    // https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN#win32-file-namespaces
+    // Win32 File Namespaces prefix \\?\
+    const base = '\\\\' + q + '\\' + parts.shift().toLowerCase();
+    parts.unshift(base);
+  }
+  if (parts[parts.length - 1] === '') {
+    parts.pop();
+  }
+  return parts;
+}
+
+/**
+ * Create a new file system.
+ * @param {object} options Any filesystem options.
+ * @param {boolean} options.createCwd Create a directory for `process.cwd()`
+ *     (defaults to `true`).
+ * @param {boolean} options.createTmp Create a directory for `os.tmpdir()`
+ *     (defaults to `true`).
+ * @class
+ */
+function FileSystem(options) {
+  options = options || {};
+
+  const createCwd = 'createCwd' in options ? options.createCwd : true;
+  const createTmp = 'createTmp' in options ? options.createTmp : true;
+
+  const root = new Directory();
+
+  // populate with default directories
+  const defaults = [];
+  if (createCwd) {
+    defaults.push(process.cwd());
+  }
+
+  if (createTmp) {
+    defaults.push((os.tmpdir && os.tmpdir()) || os.tmpDir());
+  }
+
+  defaults.forEach(function (dir) {
+    const parts = getPathParts(dir);
+    let directory = root;
+    for (let i = 0, ii = parts.length; i < ii; ++i) {
+      const name = parts[i];
+      const candidate = directory.getItem(name);
+      if (!candidate) {
+        directory = directory.addItem(name, new Directory());
+      } else if (candidate instanceof Directory) {
+        directory = candidate;
+      } else {
+        throw new Error('Failed to create directory: ' + dir);
+      }
+    }
+  });
+
+  /**
+   * Root directory.
+   * @type {Directory}
+   */
+  this._root = root;
+}
+
+/**
+ * Get the root directory.
+ * @return {Directory} The root directory.
+ */
+FileSystem.prototype.getRoot = function () {
+  return this._root;
+};
+
+/**
+ * Get a file system item.
+ * @param {string} filepath Path to item.
+ * @return {Item} The item (or null if not found).
+ */
+FileSystem.prototype.getItem = function (filepath) {
+  const parts = getPathParts(filepath);
+  const currentParts = getPathParts(process.cwd());
+  let item = this._root;
+  let itemPath = '/';
+  for (let i = 0, ii = parts.length; i < ii; ++i) {
+    const name = parts[i];
+    while (item instanceof SymbolicLink) {
+      // Symbolic link being traversed as a directory --- If link targets
+      // another symbolic link, resolve target's path relative to the original
+      // link's target, otherwise relative to the current item.
+      itemPath = path.resolve(path.dirname(itemPath), item.getPath());
+      item = this.getItem(itemPath);
+    }
+    if (item) {
+      if (item instanceof Directory && name !== currentParts[i]) {
+        // make sure traversal is allowed
+        // This fails for Windows directories which do not have execute permission, by default. It may be a good idea
+        // to change this logic to windows-friendly. See notes in mock.createDirectoryInfoFromPaths()
+        if (!item.canExecute()) {
+          throw new FSError('EACCES', filepath);
+        }
+      }
+      if (item instanceof File) {
+        throw new FSError('ENOTDIR', filepath);
+      }
+      item = item.getItem(name);
+    }
+    if (!item) {
+      break;
+    }
+    itemPath = path.resolve(itemPath, name);
+  }
+  return item;
+};
+
+function _getFilepath(item, itemPath, wanted) {
+  if (item === wanted) {
+    return itemPath;
+  }
+  if (item instanceof Directory) {
+    for (const name of item.list()) {
+      const got = _getFilepath(
+        item.getItem(name),
+        path.join(itemPath, name),
+        wanted
+      );
+      if (got) {
+        return got;
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Get file path from a file system item.
+ * @param {Item} item a file system item.
+ * @return {string} file path for the item (or null if not found).
+ */
+FileSystem.prototype.getFilepath = function (item) {
+  const namespacedPath = _getFilepath(this._root, isWindows ? '' : '/', item);
+  return getRealPath(namespacedPath);
+};
+
+/**
+ * Populate a directory with an item.
+ * @param {Directory} directory The directory to populate.
+ * @param {string} name The name of the item.
+ * @param {string | Buffer | Function | object} obj Instructions for creating the
+ *     item.
+ */
+function populate(directory, name, obj) {
+  let item;
+  if (typeof obj === 'string' || Buffer.isBuffer(obj)) {
+    // contents for a file
+    item = new File();
+    item.setContent(obj);
+  } else if (typeof obj === 'function') {
+    // item factory
+    item = obj();
+  } else if (typeof obj === 'object') {
+    // directory with more to populate
+    item = new Directory();
+    for (const key in obj) {
+      populate(item, key, obj[key]);
+    }
+  } else {
+    throw new Error('Unsupported type: ' + typeof obj + ' of item ' + name);
+  }
+
+  /**
+   * Special exception for redundant adding of empty directories.
+   */
+  if (
+    item instanceof Directory &&
+    item.list().length === 0 &&
+    directory.getItem(name) instanceof Directory
+  ) {
+    // pass
+  } else {
+    directory.addItem(name, item);
+  }
+}
+
+/**
+ * Configure a mock file system.
+ * @param {object} paths Config object.
+ * @param {object} options Any filesystem options.
+ * @param {boolean} options.createCwd Create a directory for `process.cwd()`
+ *     (defaults to `true`).
+ * @param {boolean} options.createTmp Create a directory for `os.tmpdir()`
+ *     (defaults to `true`).
+ * @return {FileSystem} Mock file system.
+ */
+FileSystem.create = function (paths, options) {
+  const system = new FileSystem(options);
+
+  for (const filepath in paths) {
+    const parts = getPathParts(filepath);
+    let directory = system._root;
+    for (let i = 0, ii = parts.length - 1; i < ii; ++i) {
+      const name = parts[i];
+      const candidate = directory.getItem(name);
+      if (!candidate) {
+        directory = directory.addItem(name, new Directory());
+      } else if (candidate instanceof Directory) {
+        directory = candidate;
+      } else {
+        throw new Error('Failed to create directory: ' + filepath);
+      }
+    }
+    populate(directory, parts[parts.length - 1], paths[filepath]);
+  }
+
+  return system;
+};
+
+/**
+ * Generate a factory for new files.
+ * @param {object} config File config.
+ * @return {function():File} Factory that creates a new file.
+ */
+FileSystem.file = function (config) {
+  config = config || {};
+  return function () {
+    const file = new File();
+    if (config.hasOwnProperty('content')) {
+      file.setContent(config.content);
+    }
+    if (config.hasOwnProperty('mode')) {
+      file.setMode(config.mode);
+    } else {
+      file.setMode(438); // 0666
+    }
+    if (config.hasOwnProperty('uid')) {
+      file.setUid(config.uid);
+    }
+    if (config.hasOwnProperty('gid')) {
+      file.setGid(config.gid);
+    }
+    if (config.hasOwnProperty('atime')) {
+      file.setATime(config.atime);
+    } else if (config.hasOwnProperty('atimeMs')) {
+      file.setATime(new Date(config.atimeMs));
+    }
+    if (config.hasOwnProperty('ctime')) {
+      file.setCTime(config.ctime);
+    } else if (config.hasOwnProperty('ctimeMs')) {
+      file.setCTime(new Date(config.ctimeMs));
+    }
+    if (config.hasOwnProperty('mtime')) {
+      file.setMTime(config.mtime);
+    } else if (config.hasOwnProperty('mtimeMs')) {
+      file.setMTime(new Date(config.mtimeMs));
+    }
+    if (config.hasOwnProperty('birthtime')) {
+      file.setBirthtime(config.birthtime);
+    } else if (config.hasOwnProperty('birthtimeMs')) {
+      file.setBirthtime(new Date(config.birthtimeMs));
+    }
+    return file;
+  };
+};
+
+/**
+ * Generate a factory for new symbolic links.
+ * @param {object} config File config.
+ * @return {function():File} Factory that creates a new symbolic link.
+ */
+FileSystem.symlink = function (config) {
+  config = config || {};
+  return function () {
+    const link = new SymbolicLink();
+    if (config.hasOwnProperty('mode')) {
+      link.setMode(config.mode);
+    } else {
+      link.setMode(438); // 0666
+    }
+    if (config.hasOwnProperty('uid')) {
+      link.setUid(config.uid);
+    }
+    if (config.hasOwnProperty('gid')) {
+      link.setGid(config.gid);
+    }
+    if (config.hasOwnProperty('path')) {
+      link.setPath(config.path);
+    } else {
+      throw new Error('Missing "path" property');
+    }
+    if (config.hasOwnProperty('atime')) {
+      link.setATime(config.atime);
+    } else if (config.hasOwnProperty('atimeMs')) {
+      link.setATime(new Date(config.atimeMs));
+    }
+    if (config.hasOwnProperty('ctime')) {
+      link.setCTime(config.ctime);
+    } else if (config.hasOwnProperty('ctimeMs')) {
+      link.setCTime(new Date(config.ctimeMs));
+    }
+    if (config.hasOwnProperty('mtime')) {
+      link.setMTime(config.mtime);
+    } else if (config.hasOwnProperty('mtimeMs')) {
+      link.setMTime(new Date(config.mtimeMs));
+    }
+    if (config.hasOwnProperty('birthtime')) {
+      link.setBirthtime(config.birthtime);
+    } else if (config.hasOwnProperty('birthtimeMs')) {
+      link.setBirthtime(new Date(config.birthtimeMs));
+    }
+    return link;
+  };
+};
+
+/**
+ * Generate a factory for new directories.
+ * @param {object} config File config.
+ * @return {function():Directory} Factory that creates a new directory.
+ */
+FileSystem.directory = function (config) {
+  config = config || {};
+  return function () {
+    const dir = new Directory();
+    if (config.hasOwnProperty('mode')) {
+      dir.setMode(config.mode);
+    }
+    if (config.hasOwnProperty('uid')) {
+      dir.setUid(config.uid);
+    }
+    if (config.hasOwnProperty('gid')) {
+      dir.setGid(config.gid);
+    }
+    if (config.hasOwnProperty('items')) {
+      for (const name in config.items) {
+        populate(dir, name, config.items[name]);
+      }
+    }
+    if (config.hasOwnProperty('atime')) {
+      dir.setATime(config.atime);
+    } else if (config.hasOwnProperty('atimeMs')) {
+      dir.setATime(new Date(config.atimeMs));
+    }
+    if (config.hasOwnProperty('ctime')) {
+      dir.setCTime(config.ctime);
+    } else if (config.hasOwnProperty('ctimeMs')) {
+      dir.setCTime(new Date(config.ctimeMs));
+    }
+    if (config.hasOwnProperty('mtime')) {
+      dir.setMTime(config.mtime);
+    } else if (config.hasOwnProperty('mtimeMs')) {
+      dir.setMTime(new Date(config.mtimeMs));
+    }
+    if (config.hasOwnProperty('birthtime')) {
+      dir.setBirthtime(config.birthtime);
+    } else if (config.hasOwnProperty('birthtimeMs')) {
+      dir.setBirthtime(new Date(config.birthtimeMs));
+    }
+    return dir;
+  };
+};
+
+/**
+ * Module exports.
+ * @type {Function}
+ */
+module.exports = FileSystem;
+exports = module.exports;
+exports.getPathParts = getPathParts;
+exports.getRealPath = getRealPath;
+
+
+/***/ }),
+
+/***/ 55850:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const Binding = __nccwpck_require__(47027);
+const {FSError} = __nccwpck_require__(30128);
+const FileSystem = __nccwpck_require__(72451);
+const realBinding = process.binding('fs');
+const path = __nccwpck_require__(16928);
+const loader = __nccwpck_require__(25303);
+const bypass = __nccwpck_require__(68980);
+const {
+  getReadFileContextPrototype,
+  patchReadFileContext,
+} = __nccwpck_require__(50591);
+const fs = __nccwpck_require__(79896);
+
+const realProcessProps = {
+  cwd: process.cwd,
+  chdir: process.chdir,
+};
+const realCreateWriteStream = fs.createWriteStream;
+const realStats = realBinding.Stats;
+const realStatWatcher = realBinding.StatWatcher;
+
+/**
+ * Pre-patch fs binding.
+ * This allows mock-fs to work properly under nodejs v10+ readFile
+ * As ReadFileContext nodejs v10+ implementation traps original binding methods:
+ * const { FSReqWrap, close, read } = process.binding('fs');
+ * Note this patch only solves issue for readFile, as the require of
+ * ReadFileContext is delayed by readFile implementation.
+ * if (!ReadFileContext) ReadFileContext = require('internal/fs/read_file_context')
+ *
+ * @param {string} key Property name.
+ */
+function patch(key) {
+  const existingMethod = realBinding[key];
+  realBinding[key] = function () {
+    if (this._mockedBinding) {
+      return this._mockedBinding[key].apply(this._mockedBinding, arguments);
+    } else {
+      return existingMethod.apply(this, arguments);
+    }
+  }.bind(realBinding);
+}
+
+for (const key in Binding.prototype) {
+  if (typeof realBinding[key] === 'function') {
+    // Stats and StatWatcher are constructors
+    if (key !== 'Stats' && key !== 'StatWatcher') {
+      patch(key);
+    }
+  }
+}
+
+const readFileContextPrototype = getReadFileContextPrototype();
+
+patchReadFileContext(readFileContextPrototype);
+
+function overrideBinding(binding) {
+  realBinding._mockedBinding = binding;
+}
+
+function overrideProcess(cwd, chdir) {
+  process.cwd = cwd;
+  process.chdir = chdir;
+}
+
+/**
+ * Have to disable write stream _writev on nodejs v10+.
+ *
+ * nodejs v8 lib/fs.js
+ * note binding.writeBuffers will use mock-fs patched writeBuffers.
+ *
+ *   const binding = process.binding('fs');
+ *   function writev(fd, chunks, position, callback) {
+ *     // ...
+ *     binding.writeBuffers(fd, chunks, position, req);
+ *   }
+ *
+ * nodejs v10+ lib/internal/fs/streams.js
+ * note it uses original writeBuffers, bypassed mock-fs patched writeBuffers.
+ *
+ *  const {writeBuffers} = internalBinding('fs');
+ *  function writev(fd, chunks, position, callback) {
+ *    // ...
+ *    writeBuffers(fd, chunks, position, req);
+ *  }
+ *
+ * Luckily _writev is an optional method on Writeable stream implementation.
+ * When _writev is missing, it will fall back to make multiple _write calls.
+ */
+function overrideCreateWriteStream() {
+  fs.createWriteStream = function (path, options) {
+    const output = realCreateWriteStream(path, options);
+    // disable _writev, this will over shadow WriteStream.prototype._writev
+    if (realBinding._mockedBinding) {
+      output._writev = undefined;
+    }
+    return output;
+  };
+}
+
+function overrideReadFileContext(binding) {
+  readFileContextPrototype._mockedBinding = binding;
+}
+
+function restoreBinding() {
+  delete realBinding._mockedBinding;
+  realBinding.Stats = realStats;
+  realBinding.StatWatcher = realStatWatcher;
+}
+
+function restoreProcess() {
+  for (const key in realProcessProps) {
+    process[key] = realProcessProps[key];
+  }
+}
+
+function restoreCreateWriteStream() {
+  fs.createWriteStream = realCreateWriteStream;
+}
+
+function restoreReadFileContext(binding) {
+  delete readFileContextPrototype._mockedBinding;
+}
+
+/**
+ * Swap out the fs bindings for a mock file system.
+ * @param {object} config Mock file system configuration.
+ * @param {object} [options={}] Any filesystem options.
+ * @param {boolean} options.createCwd Create a directory for `process.cwd()`
+ *     (defaults to `true`).
+ * @param {boolean} options.createTmp Create a directory for `os.tmpdir()`
+ *     (defaults to `true`).
+ */
+module.exports = function mock(config, options = {}) {
+  const system = FileSystem.create(config, options);
+  const binding = new Binding(system);
+
+  overrideBinding(binding);
+
+  overrideReadFileContext(binding);
+
+  let currentPath = process.cwd();
+  overrideProcess(
+    function cwd() {
+      if (realBinding._mockedBinding) {
+        return currentPath;
+      }
+      return realProcessProps.cwd();
+    },
+    function chdir(directory) {
+      if (realBinding._mockedBinding) {
+        if (!fs.statSync(path.toNamespacedPath(directory)).isDirectory()) {
+          throw new FSError('ENOTDIR');
+        }
+        currentPath = path.resolve(currentPath, directory);
+      } else {
+        return realProcessProps.chdir(directory);
+      }
+    }
+  );
+
+  overrideCreateWriteStream();
+};
+
+exports = module.exports;
+
+/**
+ * Get hold of the mocked filesystem's 'root'
+ * If fs hasn't currently been replaced, this will return an empty object
+ * @return {object} The mock root.
+ */
+exports.getMockRoot = function () {
+  if (realBinding._mockedBinding) {
+    return realBinding._mockedBinding.getSystem().getRoot();
+  } else {
+    return {};
+  }
+};
+
+/**
+ * Restore the fs bindings for the real file system.
+ */
+exports.restore = function () {
+  restoreBinding();
+  restoreProcess();
+  restoreCreateWriteStream();
+  restoreReadFileContext();
+};
+
+/**
+ * Create a file factory.
+ */
+exports.file = FileSystem.file;
+
+/**
+ * Create a directory factory.
+ */
+exports.directory = FileSystem.directory;
+
+/**
+ * Create a symbolic link factory.
+ */
+exports.symlink = FileSystem.symlink;
+
+/**
+ * Automatically maps specified paths (for use with `mock()`)
+ */
+exports.load = loader.load;
+
+/**
+ * Perform action, bypassing mock FS
+ * @example
+ * // This file exists on the real FS, not on the mocked FS
+ * const filePath = '/path/file.json';
+ * const data = mock.bypass(() => fs.readFileSync(filePath, 'utf-8'));
+ */
+exports.bypass = bypass;
+
+
+/***/ }),
+
+/***/ 25579:
+/***/ ((module) => {
+
+"use strict";
+
+
+const fsBinding = process.binding('fs');
+const statsConstructor = fsBinding.statValues
+  ? fsBinding.statValues.constructor
+  : Float64Array;
+// Nodejs v18.7.0 changed bigint stats type from BigUint64Array to BigInt64Array
+// https://github.com/nodejs/node/pull/43714
+const bigintStatsConstructor = fsBinding.bigintStatValues
+  ? fsBinding.bigintStatValues.constructor
+  : BigUint64Array;
+
+let counter = 0;
+
+/**
+ * Permissions.
+ * @enum {number}
+ */
+const permissions = {
+  USER_READ: 256, // 0400
+  USER_WRITE: 128, // 0200
+  USER_EXEC: 64, // 0100
+  GROUP_READ: 32, // 0040
+  GROUP_WRITE: 16, // 0020
+  GROUP_EXEC: 8, // 0010
+  OTHER_READ: 4, // 0004
+  OTHER_WRITE: 2, // 0002
+  OTHER_EXEC: 1, // 0001
+};
+
+function getUid() {
+  // force 0 on windows.
+  return process.getuid ? process.getuid() : 0;
+}
+
+function getGid() {
+  // force 0 on windows.
+  return process.getgid ? process.getgid() : 0;
+}
+
+/**
+ * A filesystem item.
+ * @class
+ */
+function Item() {
+  const now = Date.now();
+
+  /**
+   * Access time.
+   * @type {Date}
+   */
+  this._atime = new Date(now);
+
+  /**
+   * Change time.
+   * @type {Date}
+   */
+  this._ctime = new Date(now);
+
+  /**
+   * Birth time.
+   * @type {Date}
+   */
+  this._birthtime = new Date(now);
+
+  /**
+   * Modification time.
+   * @type {Date}
+   */
+  this._mtime = new Date(now);
+
+  /**
+   * Permissions.
+   */
+  this._mode = 438; // 0666
+
+  /**
+   * User id.
+   * @type {number}
+   */
+  this._uid = getUid();
+
+  /**
+   * Group id.
+   * @type {number}
+   */
+  this._gid = getGid();
+
+  /**
+   * Item number.
+   * @type {number}
+   */
+  this._id = ++counter;
+
+  /**
+   * Number of links to this item.
+   */
+  this.links = 0;
+}
+
+/**
+ * Add execute if read allowed
+ * See notes in index.js -> mapping#addDir
+ * @param {number} mode The file mode.
+ * @return {number} The modified mode.
+ */
+Item.fixWin32Permissions = (mode) =>
+  process.platform !== 'win32'
+    ? mode
+    : mode |
+      (mode & permissions.USER_READ && permissions.USER_EXEC) |
+      (mode & permissions.GROUP_READ && permissions.GROUP_EXEC) |
+      (mode & permissions.OTHER_READ && permissions.OTHER_EXEC);
+
+/**
+ * Determine if the current user has read permission.
+ * @return {boolean} The current user can read.
+ */
+Item.prototype.canRead = function () {
+  const uid = getUid();
+  const gid = getGid();
+  let can = false;
+  if (process.getuid && uid === 0) {
+    can = true;
+  } else if (uid === this._uid) {
+    can = (permissions.USER_READ & this._mode) === permissions.USER_READ;
+  } else if (gid === this._gid) {
+    can = (permissions.GROUP_READ & this._mode) === permissions.GROUP_READ;
+  } else {
+    can = (permissions.OTHER_READ & this._mode) === permissions.OTHER_READ;
+  }
+  return can;
+};
+
+/**
+ * Determine if the current user has write permission.
+ * @return {boolean} The current user can write.
+ */
+Item.prototype.canWrite = function () {
+  const uid = getUid();
+  const gid = getGid();
+  let can = false;
+  if (process.getuid && uid === 0) {
+    can = true;
+  } else if (uid === this._uid) {
+    can = (permissions.USER_WRITE & this._mode) === permissions.USER_WRITE;
+  } else if (gid === this._gid) {
+    can = (permissions.GROUP_WRITE & this._mode) === permissions.GROUP_WRITE;
+  } else {
+    can = (permissions.OTHER_WRITE & this._mode) === permissions.OTHER_WRITE;
+  }
+  return can;
+};
+
+/**
+ * Determine if the current user has execute permission.
+ * @return {boolean} The current user can execute.
+ */
+Item.prototype.canExecute = function () {
+  const uid = getUid();
+  const gid = getGid();
+  let can = false;
+  if (process.getuid && uid === 0) {
+    can = true;
+  } else if (uid === this._uid) {
+    can = (permissions.USER_EXEC & this._mode) === permissions.USER_EXEC;
+  } else if (gid === this._gid) {
+    can = (permissions.GROUP_EXEC & this._mode) === permissions.GROUP_EXEC;
+  } else {
+    can = (permissions.OTHER_EXEC & this._mode) === permissions.OTHER_EXEC;
+  }
+  return can;
+};
+
+/**
+ * Get access time.
+ * @return {Date} Access time.
+ */
+Item.prototype.getATime = function () {
+  return this._atime;
+};
+
+/**
+ * Set access time.
+ * @param {Date} atime Access time.
+ */
+Item.prototype.setATime = function (atime) {
+  this._atime = atime;
+};
+
+/**
+ * Get change time.
+ * @return {Date} Change time.
+ */
+Item.prototype.getCTime = function () {
+  return this._ctime;
+};
+
+/**
+ * Set change time.
+ * @param {Date} ctime Change time.
+ */
+Item.prototype.setCTime = function (ctime) {
+  this._ctime = ctime;
+};
+
+/**
+ * Get birth time.
+ * @return {Date} Birth time.
+ */
+Item.prototype.getBirthtime = function () {
+  return this._birthtime;
+};
+
+/**
+ * Set change time.
+ * @param {Date} birthtime Birth time.
+ */
+Item.prototype.setBirthtime = function (birthtime) {
+  this._birthtime = birthtime;
+};
+
+/**
+ * Get modification time.
+ * @return {Date} Modification time.
+ */
+Item.prototype.getMTime = function () {
+  return this._mtime;
+};
+
+/**
+ * Set modification time.
+ * @param {Date} mtime Modification time.
+ */
+Item.prototype.setMTime = function (mtime) {
+  this._mtime = mtime;
+};
+
+/**
+ * Get mode (permission only, e.g 0666).
+ * @return {number} Mode.
+ */
+Item.prototype.getMode = function () {
+  return this._mode;
+};
+
+/**
+ * Set mode (permission only, e.g 0666).
+ * @param {Date} mode Mode.
+ */
+Item.prototype.setMode = function (mode) {
+  this.setCTime(new Date());
+  this._mode = mode;
+};
+
+/**
+ * Get user id.
+ * @return {number} User id.
+ */
+Item.prototype.getUid = function () {
+  return this._uid;
+};
+
+/**
+ * Set user id.
+ * @param {number} uid User id.
+ */
+Item.prototype.setUid = function (uid) {
+  this.setCTime(new Date());
+  this._uid = uid;
+};
+
+/**
+ * Get group id.
+ * @return {number} Group id.
+ */
+Item.prototype.getGid = function () {
+  return this._gid;
+};
+
+/**
+ * Set group id.
+ * @param {number} gid Group id.
+ */
+Item.prototype.setGid = function (gid) {
+  this.setCTime(new Date());
+  this._gid = gid;
+};
+
+/**
+ * Get item stats.
+ * @param {boolean} bigint Use BigInt.
+ * @return {object} Stats properties.
+ */
+Item.prototype.getStats = function (bigint) {
+  const stats = bigint
+    ? new bigintStatsConstructor(36)
+    : new statsConstructor(36);
+  const convert = bigint ? (v) => BigInt(v) : (v) => v;
+
+  stats[0] = convert(8675309); // dev
+  // [1] is mode
+  stats[2] = convert(this.links); // nlink
+  stats[3] = convert(this.getUid()); // uid
+  stats[4] = convert(this.getGid()); // gid
+  stats[5] = convert(0); // rdev
+  stats[6] = convert(4096); // blksize
+  stats[7] = convert(this._id); // ino
+  // [8] is size
+  // [9] is blocks
+  const atimeMs = +this.getATime();
+  stats[10] = convert(Math.floor(atimeMs / 1000)); // atime seconds
+  stats[11] = convert((atimeMs % 1000) * 1000000); // atime nanoseconds
+  const mtimeMs = +this.getMTime();
+  stats[12] = convert(Math.floor(mtimeMs / 1000)); // atime seconds
+  stats[13] = convert((mtimeMs % 1000) * 1000000); // atime nanoseconds
+  const ctimeMs = +this.getCTime();
+  stats[14] = convert(Math.floor(ctimeMs / 1000)); // atime seconds
+  stats[15] = convert((ctimeMs % 1000) * 1000000); // atime nanoseconds
+  const birthtimeMs = +this.getBirthtime();
+  stats[16] = convert(Math.floor(birthtimeMs / 1000)); // atime seconds
+  stats[17] = convert((birthtimeMs % 1000) * 1000000); // atime nanoseconds
+  return stats;
+};
+
+/**
+ * Get the item's string representation.
+ * @return {string} String representation.
+ */
+Item.prototype.toString = function () {
+  return '[' + this.constructor.name + ']';
+};
+
+/**
+ * Export the constructor.
+ * @type {function()}
+ */
+module.exports = Item;
+
+
+/***/ }),
+
+/***/ 25303:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+const {fixWin32Permissions} = __nccwpck_require__(25579);
+const path = __nccwpck_require__(16928);
+const FileSystem = __nccwpck_require__(72451);
+const fs = __nccwpck_require__(79896);
+const bypass = __nccwpck_require__(68980);
+
+const createContext = ({output, options = {}, target}, newContext) =>
+  Object.assign(
+    {
+      // Assign options and set defaults if needed
+      options: {
+        recursive: options.recursive !== false,
+        lazy: options.lazy !== false,
+      },
+      output,
+      target,
+    },
+    newContext
+  );
+
+function addFile(context, stats, isRoot) {
+  const {output, target} = context;
+  const {lazy} = context.options;
+
+  if (!stats.isFile()) {
+    throw new Error(`${target} is not a valid file!`);
+  }
+
+  const outputPropKey = isRoot ? target : path.basename(target);
+
+  output[outputPropKey] = () => {
+    const content = !lazy ? fs.readFileSync(target) : '';
+    const file = FileSystem.file(Object.assign({}, stats, {content}))();
+
+    if (lazy) {
+      Object.defineProperty(file, '_content', {
+        get() {
+          const res = bypass(() => fs.readFileSync(target));
+          Object.defineProperty(file, '_content', {
+            value: res,
+            writable: true,
+          });
+          return res;
+        },
+        set(data) {
+          Object.defineProperty(file, '_content', {
+            value: data,
+            writable: true,
+          });
+        },
+        configurable: true,
+      });
+    }
+
+    return file;
+  };
+
+  return output[outputPropKey];
+}
+
+function addDir(context, stats, isRoot) {
+  const {target, output} = context;
+  const {recursive} = context.options;
+
+  if (!stats.isDirectory()) {
+    throw new Error(`${target} is not a valid directory!`);
+  }
+
+  stats = Object.assign({}, stats);
+  const outputPropKey = isRoot ? target : path.basename(target);
+
+  // On windows platforms, directories do not have the executable flag, which causes FileSystem.prototype.getItem
+  // to think that the directory cannot be traversed. This is a workaround, however, a better solution may be to
+  // re-think the logic in FileSystem.prototype.getItem
+  // This workaround adds executable privileges if read privileges are found
+  stats.mode = fixWin32Permissions(stats.mode);
+
+  // Create directory factory
+  const directoryItems = {};
+  output[outputPropKey] = FileSystem.directory(
+    Object.assign(stats, {items: directoryItems})
+  );
+
+  fs.readdirSync(target).forEach((p) => {
+    const absPath = path.join(target, p);
+    const stats = fs.statSync(absPath);
+    const newContext = createContext(context, {
+      target: absPath,
+      output: directoryItems,
+    });
+
+    if (recursive && stats.isDirectory()) {
+      addDir(newContext, stats);
+    } else if (stats.isFile()) {
+      addFile(newContext, stats);
+    }
+  });
+
+  return output[outputPropKey];
+}
+
+/**
+ * Load directory or file from real FS
+ * @param {string} p The path.
+ * @param {object} options The options.
+ * @return {*} The return.
+ */
+exports.load = function (p, options) {
+  return bypass(() => {
+    p = path.resolve(p);
+
+    const stats = fs.statSync(p);
+    const context = createContext({output: {}, options, target: p});
+
+    if (stats.isDirectory()) {
+      return addDir(context, stats, true);
+    } else if (stats.isFile()) {
+      return addFile(context, stats, true);
+    }
+  });
+};
+
+
+/***/ }),
+
+/***/ 50591:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const {AbortError} = __nccwpck_require__(30128);
+const {FSReqCallback} = process.binding('fs');
+
+/**
+ * This is a workaround for getting access to the ReadFileContext
+ * prototype, which we need to be able to patch its methods.
+ * @return {object} The prototype.
+ */
+exports.getReadFileContextPrototype = function () {
+  const fs = __nccwpck_require__(79896);
+  const fsBinding = process.binding('fs');
+
+  const originalOpen = fsBinding.open;
+
+  let proto;
+  fsBinding.open = (_path, _flags, _mode, req) => {
+    proto = Object.getPrototypeOf(req.context);
+    return originalOpen.apply(fsBinding, [_path, _flags, _mode, req]);
+  };
+
+  fs.readFile('/ignored.txt', () => {});
+
+  fsBinding.open = originalOpen;
+
+  return proto;
+};
+
+/**
+ * This patches the ReadFileContext prototype to use mocked bindings
+ * when available. This entire implementation is more or less fully
+ * copied over from Node.js's /lib/internal/fs/read_file_context.js
+ *
+ * This patch is required to support Node.js v16+, where the ReadFileContext
+ * closes directly over the internal fs bindings, and is also eagerly loader.
+ *
+ * See https://github.com/tschaub/mock-fs/issues/332 for more information.
+ *
+ * @param {object} prototype The ReadFileContext prototype object to patch.
+ */
+exports.patchReadFileContext = function (prototype) {
+  const origRead = prototype.read;
+  const origClose = prototype.close;
+
+  const kReadFileUnknownBufferLength = 64 * 1024;
+  const kReadFileBufferLength = 512 * 1024;
+
+  function readFileAfterRead(err, bytesRead) {
+    const context = this.context;
+
+    if (err) {
+      return context.close(err);
+    }
+    context.pos += bytesRead;
+
+    if (context.pos === context.size || bytesRead === 0) {
+      context.close();
+    } else {
+      if (context.size === 0) {
+        // Unknown size, just read until we don't get bytes.
+        const buffer =
+          bytesRead === kReadFileUnknownBufferLength
+            ? context.buffer
+            : context.buffer.slice(0, bytesRead);
+        context.buffers.push(buffer);
+      }
+      context.read();
+    }
+  }
+
+  function readFileAfterClose(err) {
+    const context = this.context;
+    const callback = context.callback;
+    let buffer = null;
+
+    if (context.err || err) {
+      // This is a simplification from Node.js, where we don't bother merging the errors
+      return callback(context.err || err);
+    }
+
+    try {
+      if (context.size === 0) {
+        buffer = Buffer.concat(context.buffers, context.pos);
+      } else if (context.pos < context.size) {
+        buffer = context.buffer.slice(0, context.pos);
+      } else {
+        buffer = context.buffer;
+      }
+
+      if (context.encoding) {
+        buffer = buffer.toString(context.encoding);
+      }
+    } catch (err) {
+      return callback(err);
+    }
+
+    callback(null, buffer);
+  }
+
+  prototype.read = function read() {
+    if (!prototype._mockedBinding) {
+      return origRead.apply(this, arguments);
+    }
+
+    let buffer;
+    let offset;
+    let length;
+
+    if (this.signal && this.signal.aborted) {
+      return this.close(new AbortError());
+    }
+    if (this.size === 0) {
+      buffer = Buffer.allocUnsafeSlow(kReadFileUnknownBufferLength);
+      offset = 0;
+      length = kReadFileUnknownBufferLength;
+      this.buffer = buffer;
+    } else {
+      buffer = this.buffer;
+      offset = this.pos;
+      length = Math.min(kReadFileBufferLength, this.size - this.pos);
+    }
+
+    const req = new FSReqCallback();
+    req.oncomplete = readFileAfterRead;
+    req.context = this;
+
+    // This call and the one in close() is what we want to change, the
+    // rest is pretty much the same as Node.js except we don't have access
+    // to some of the internal optimizations.
+    prototype._mockedBinding.read(this.fd, buffer, offset, length, -1, req);
+  };
+
+  prototype.close = function close(err) {
+    if (!prototype._mockedBinding) {
+      return origClose.apply(this, arguments);
+    }
+
+    if (this.isUserFd) {
+      process.nextTick(function tick(context) {
+        readFileAfterClose.apply({context}, [null]);
+      }, this);
+      return;
+    }
+
+    const req = new FSReqCallback();
+    req.oncomplete = readFileAfterClose;
+    req.context = this;
+    this.err = err;
+
+    prototype._mockedBinding.close(this.fd, req);
+  };
+};
+
+
+/***/ }),
+
+/***/ 52149:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const util = __nccwpck_require__(39023);
+const Item = __nccwpck_require__(25579);
+const constants = __nccwpck_require__(49140);
+
+/**
+ * A directory.
+ * @class
+ */
+function SymbolicLink() {
+  Item.call(this);
+
+  /**
+   * Relative path to source.
+   * @type {string}
+   */
+  this._path = undefined;
+}
+util.inherits(SymbolicLink, Item);
+
+/**
+ * Set the path to the source.
+ * @param {string} pathname Path to source.
+ */
+SymbolicLink.prototype.setPath = function (pathname) {
+  this._path = pathname;
+};
+
+/**
+ * Get the path to the source.
+ * @return {string} Path to source.
+ */
+SymbolicLink.prototype.getPath = function () {
+  return this._path;
+};
+
+/**
+ * Get symbolic link stats.
+ * @param {boolean} bigint Use BigInt.
+ * @return {object} Stats properties.
+ */
+SymbolicLink.prototype.getStats = function (bigint) {
+  const size = this._path.length;
+  const stats = Item.prototype.getStats.call(this, bigint);
+  const convert = bigint ? (v) => BigInt(v) : (v) => v;
+
+  stats[1] = convert(this.getMode() | constants.S_IFLNK); // mode
+  stats[8] = convert(size); // size
+  stats[9] = convert(Math.ceil(size / 512)); // blocks
+
+  return stats;
+};
+
+/**
+ * Export the constructor.
+ * @type {function()}
+ */
+module.exports = SymbolicLink;
 
 
 /***/ }),

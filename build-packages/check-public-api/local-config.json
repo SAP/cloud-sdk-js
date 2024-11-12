@@ -1,4 +1,0 @@
-{
-    "force-internal-exports": "true",
-    "excluded-packages": "eslint-config, util, test-util"
-}

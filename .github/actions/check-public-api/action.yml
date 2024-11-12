@@ -1,12 +1,12 @@
 name: 'Check public API'
 description: 'Checks whether the public API is correctly exported.'
 inputs:
-  force-internal-exports:
+  force_internal_exports:
     description: 'Whether to force that everything is exported through the internal API.'
     default: 'false'
-  excluded-packages:
+  excluded_packages:
     description: 'Packages to exclude when checking the public API.'
-  ignored-paths:
+  ignored_paths:
     description: 'Paths to ignore when checking the public API.'
 
 runs:

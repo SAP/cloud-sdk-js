@@ -9,7 +9,7 @@ import path, {
   posix,
   sep
 } from 'path';
-import { promises, existsSync, readFileSync, accessSync } from 'fs';
+import { promises, existsSync } from 'fs';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
 import { flatten, unixEOL } from '@sap-cloud-sdk/util';
@@ -33,15 +33,6 @@ const pathToTsConfigRoot = join(process.cwd(), 'tsconfig.json');
 const pathRootNodeModules = join(process.cwd(), 'node_modules');
 export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
-
-const localConfig: Record<string, string> = (() => {
-  try {
-    return JSON.parse(readFileSync(localConfigPath, 'utf8'));
-  } catch (error) {
-    warning('Error reading local config file:', error);
-    return {};
-  }
-})();
 
 export interface ExportedObject {
   name: string;
@@ -96,17 +87,8 @@ async function getCompilerOptions(
 }
 
 function getListFromInput(inputKey: string) {
-  const input = getInput(inputKey) || localConfig[inputKey];
+  const input = getInput(inputKey);
   return input ? input.split(',').map(item => item.trim()) : [];
-}
-
-function fileExists(filename: string): boolean {
-  try {
-    accessSync(filename);
-    return true;
-  } catch (error) {
-    return false;
-  }
 }
 
 /**
@@ -120,7 +102,7 @@ function compareApisAndLog(
   allExportedTypes: ExportedObject[]
 ): boolean {
   let setsAreEqual = true;
-  const ignoredPaths = getListFromInput('ignored-paths');
+  const ignoredPaths = getListFromInput('ignored_paths');
 
   allExportedTypes.forEach(exportedType => {
     const normalizedPath = exportedType.path.split(sep).join(posix.sep);
@@ -188,8 +170,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     );
 
     const forceInternalExports =
-      getInput('force-internal-exports') === 'true' ||
-      localConfig['force-internal-exports'] === 'true';
+      getInput('force_internal_exports') === 'true';
 
     if (forceInternalExports) {
       await checkBarrelRecursive(pathToSource);
@@ -365,7 +346,7 @@ export async function exportAllInBarrel(
   barrelFileName: string
 ): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
-  if (fileExists(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
+  if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
     const dirContents = (
       await glob('*', {
         ignore: [
@@ -417,7 +398,7 @@ function compareBarrels(
 
 async function runCheckApi() {
   const { packages } = await getPackages(process.cwd());
-  const excludedPackages = getListFromInput('excluded-packages');
+  const excludedPackages = getListFromInput('excluded_packages');
 
   const packagesToCheck = packages.filter(
     pkg =>

@@ -72,7 +72,7 @@ describe('check-public-api', () => {
       expect(errorSpy).toHaveBeenCalledWith("'index.ts' is not in sync.");
     });
 
-    it('checkBarrelRecursive passes recursive check for barrel file exports', () => {
+    it('checkBarrelRecursive passes recursive check for barrel file exports', async () => {
       mock({
         dir1: {
           file1: '',
@@ -84,7 +84,7 @@ describe('check-public-api', () => {
           }
         }
       });
-      checkBarrelRecursive('dir1');
+      await checkBarrelRecursive('dir1');
     });
 
     it('typeDescriptorPaths finds the .d.ts files and excludes index.d.ts', async () => {

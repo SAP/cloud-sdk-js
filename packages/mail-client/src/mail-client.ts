@@ -156,9 +156,15 @@ function createTransport(
   };
 
   if (mailDestination.proxyType === 'OnPremise') {
+    if (!mailDestination.proxyConfiguration) {
+      throw Error(
+        'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
+      );
+    }
+    
     mailClientOptions = {
-      ...mailClientOptions,
-      proxy: `socks5://${mailDestination.proxyConfiguration?.host}:${mailDestination.proxyConfiguration?.port}`
+      ...mailClientOptions || {},
+      proxy: `socks5://${mailDestination.proxyConfiguration.host}:${mailDestination.proxyConfiguration.port}`
     };
   }
 

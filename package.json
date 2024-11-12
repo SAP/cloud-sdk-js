@@ -116,7 +116,6 @@
     "typescript": "~5.6.3"
   },
   "resolutions": {
-    "@sap/cds": "^6.1.1",
     "color-string": ">=1.5.5",
     "detective-postcss": "^6.1.0",
     "dot-prop": "^6.0.1",

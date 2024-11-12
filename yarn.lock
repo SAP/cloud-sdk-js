@@ -1521,10 +1521,10 @@
   resolved "https://registry.npmjs.org/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@sap/cds-compiler@^3.2.0":
-  version "3.9.12"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-3.9.12.tgz#3e40c0956bfbe2106b50a0ee9efabeca1b68f6c8"
-  integrity sha512-PGGrkmSag2cymAxj+zEnHV+jioHwSWLsurZBnkmPVtrATev5k1jNXjB1Py3SOyeM1jyWKD3qhyWgitn9clSZcw==
+"@sap/cds-compiler@>=5.1":
+  version "5.4.2"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-5.4.2.tgz#283f2b29c4c09b8fc3dbcbe5728aa19a22d8dd4e"
+  integrity sha512-Y8S5E0VYmaHSfi+yKFR4728Ve5cACP1JcvETI0fGtH6J97kvwE3J5Fj1BfBEotGXGQt356kRsb+Qp/P3Yp44uQ==
   dependencies:
     antlr4 "4.9.3"
 
@@ -1552,16 +1552,10 @@
   optionalDependencies:
     "@cap-js/sqlite" "^1"
 
-"@sap/cds-foss@^4":
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-4.0.2.tgz#2910fa0a2f3dffb6a66c787de27cbfe564467412"
-  integrity sha512-XY8lmLu3NgGVkOdX9N9L91dWldhu//iQqJF98rqHAtCtdoOKfKCtiYafSVruAmVEzQ3tUWsGXNKCtpHdoXYuLA==
-  dependencies:
-    big.js "^6.1.1"
-    generic-pool "^3.8.2"
-    uuid "^9.0.0"
-    xmlbuilder "^15.1.1"
-    yaml "^2.2.2"
+"@sap/cds-fiori@^1":
+  version "1.2.7"
+  resolved "https://registry.npmjs.org/@sap/cds-fiori/-/cds-fiori-1.2.7.tgz#cdfec5437e6c35f3ce1f22db35701570abfc2787"
+  integrity sha512-F6Uf9wvkv0fXW+Fh7PiV2BbB/k+p1cFJLkQCCKDRJH8HvlxWEcXcn/YIvBrQGuX+GToi125MxB3wd712d8OLTA==
 
 "@sap/cds-foss@^5.0.0":
   version "5.0.0"
@@ -1581,13 +1575,14 @@
     "@sap/hdi-deploy" ">=4"
     axios "^1"
 
-"@sap/cds@>=5.6.0", "@sap/cds@>=7", "@sap/cds@^6.1.1", "@sap/cds@^8.4.1":
-  version "6.8.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.8.4.tgz#c73adb8e61f9efb4eff705f125a717f214f8e49f"
-  integrity sha512-CTf6Y732ABTIAQPwtFZpfLUzZgQLOs9ZqBIrHhFJRx3VQvopfBZlbWAhujz092xETM7u4msZudoUprkmRo0+hg==
+"@sap/cds@>=5.6.0", "@sap/cds@>=7", "@sap/cds@^8.4.1":
+  version "8.4.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-8.4.1.tgz#cbb349273056bf71400b5f55002f2d90d2d440ac"
+  integrity sha512-dchM8blfY9lYiB2hGA/yWQ+Mtu83qD4Y/romWIYLMzD8vhiLrovXcuR8fwP5dyuP2i33ZOG1twNOXR5ObWqZWg==
   dependencies:
-    "@sap/cds-compiler" "^3.2.0"
-    "@sap/cds-foss" "^4"
+    "@sap/cds-compiler" ">=5.1"
+    "@sap/cds-fiori" "^1"
+    "@sap/cds-foss" "^5.0.0"
 
 "@sap/eslint-plugin-cds@^3.0.1":
   version "3.0.2"
@@ -9811,11 +9806,6 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
-
-uuid@^9.0.0:
-  version "9.0.1"
-  resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
-  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
 v8-compile-cache-lib@^3.0.1:
   version "3.0.1"

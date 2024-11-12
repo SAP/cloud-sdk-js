@@ -91,7 +91,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.9",
-    "@types/jest": "^29.5.13",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.4",
@@ -109,7 +109,7 @@
     "license-checker": "^25.0.1",
     "madge": "^8.0.0",
     "prettier": "^3.3.3",
-    "puppeteer": "^23.7.0",
+    "puppeteer": "^23.7.1",
     "semver": "^7.6.3",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",

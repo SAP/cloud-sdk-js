@@ -50,7 +50,7 @@
     "ts-morph": "^24.0.0",
     "typescript": "~5.6.3",
     "voca": "^1.4.1",
-    "winston": "^3.15.0"
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "execa": "^5.0.0",

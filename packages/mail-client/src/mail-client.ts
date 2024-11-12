@@ -3,16 +3,15 @@ import { resolveDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { createLogger } from '@sap-cloud-sdk/util';
 import nodemailer from 'nodemailer';
 import { SocksClient } from 'socks';
-import retry from 'async-retry';
 import {
   customAuthRequestHandler,
   customAuthResponseHandler
 } from './socket-proxy';
+// eslint-disable-next-line import/no-internal-modules
+import type { Options } from 'nodemailer/lib/smtp-pool';
 import type { Socket } from 'node:net';
 import type { SentMessageInfo, Transporter } from 'nodemailer';
 import type { SocksClientOptions, SocksProxy } from 'socks';
-// eslint-disable-next-line import/no-internal-modules
-import type { Options } from 'nodemailer/lib/smtp-pool';
 import type {
   MailClientOptions,
   MailConfig,
@@ -130,6 +129,18 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
   };
 }
 
+/**
+ * @internal
+ */
+export function buildSocksProxyUrl(mailDestination: MailDestination): string {
+  if (!mailDestination.proxyConfiguration) {
+    throw Error(
+      'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
+    );
+  }
+  return `socks5://${mailDestination.proxyConfiguration?.host}:${mailDestination.proxyConfiguration?.port}`;
+}
+
 async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   const connectionOptions: SocksClientOptions = {
     proxy: buildSocksProxy(mailDestination),
@@ -140,54 +151,12 @@ async function createSocket(mailDestination: MailDestination): Promise<Socket> {
     }
   };
   const { socket } = await SocksClient.createConnection(connectionOptions);
-
   return socket;
-}
-
-function retrieveGreeting(socket: Socket): Promise<Buffer> {
-  logger.debug('Waiting for SMTP greeting message...');
-  return new Promise((resolve, reject) => {
-    const onData = data => {
-      logger.debug(`Data received from mail socket: ${data?.toString()}`);
-      if (data?.toString().startsWith('220')) {
-        logger.debug('Removing mail socket listeners...');
-        socket.removeListener('data', onData);
-        socket.removeListener('error', onError);
-        resolve(data);
-      }
-    };
-
-    const onError = err => {
-      reject(new Error(err));
-    };
-
-    socket.on('data', onData);
-    socket.on('error', onError);
-  });
-}
-
-async function resendGreetingUntilReceived(
-  greeting: Buffer,
-  socket: Socket
-): Promise<void> {
-  return retry(
-    () => {
-      // resend the greeting message until a listener is attached
-      // note: this is dangerous because there could be another listener that is not the mailer
-      if (!socket.emit('data', greeting)) {
-        throw new Error(
-          'Failed to re-emit greeting message. No data listener found.'
-        );
-      }
-    },
-    { maxRetryTime: 5000 }
-  );
 }
 
 function createTransport(
   mailDestination: MailDestination,
-  mailClientOptions?: MailClientOptions,
-  socket?: Socket
+  mailClientOptions?: MailClientOptions
 ): Transporter<SentMessageInfo> {
   const baseOptions: Options = {
     pool: true,
@@ -199,8 +168,11 @@ function createTransport(
     port: mailDestination.port
   };
 
-  if (mailDestination.proxyType === 'OnPremise' && socket) {
-    baseOptions.connection = socket;
+  if (mailDestination.proxyType === 'OnPremise') {
+    mailClientOptions = {
+      ...(mailClientOptions || {}),
+      proxy: buildSocksProxyUrl(mailDestination)
+    };
   }
 
   return nodemailer.createTransport({
@@ -274,14 +246,11 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
   let socket: Socket | undefined;
-  let resendGreeting: Promise<void> | undefined;
-  if (mailDestination.proxyType === 'OnPremise') {
+  const transport = createTransport(mailDestination, mailClientOptions);
+  transport.set('proxy_handler_socks5', async (_, __, callback) => {
     socket = await createSocket(mailDestination);
-    // Workaround for incorrect order of events in nodemailer https://github.com/nodemailer/nodemailer/issues/1684
-    const greeting = await retrieveGreeting(socket);
-    resendGreeting = resendGreetingUntilReceived(greeting, socket);
-  }
-  const transport = createTransport(mailDestination, mailClientOptions, socket);
+    callback(null, { connection: socket });
+  });
 
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
@@ -297,10 +266,6 @@ async function sendMailWithNodemailer<T extends MailConfig>(
         mailConfigsFromDestination,
         mailConfigs
       );
-
-  if (resendGreeting) {
-    await resendGreeting;
-  }
 
   teardown(transport, socket);
   return response;

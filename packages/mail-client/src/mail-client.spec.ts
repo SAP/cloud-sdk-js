@@ -10,6 +10,7 @@ import {
 } from '../../../test-resources/test/test-util';
 import {
   buildSocksProxy,
+  buildSocksProxyUrl,
   isMailSentInSequential,
   sendMail
 } from './mail-client';
@@ -29,7 +30,8 @@ describe('mail client', () => {
   const mockTransport = {
     sendMail: jest.fn(),
     close: jest.fn(),
-    verify: jest.fn()
+    verify: jest.fn(),
+    set: jest.fn()
   };
 
   it('should work with destination from service - proxy-type Internet', async () => {
@@ -239,98 +241,26 @@ describe('mail client', () => {
         'proxy-authorization': 'jwt'
       }
     };
+
     const mailOptions: MailConfig = {
       from: 'from1@example.com',
       to: 'to1@example.com'
     };
 
     it('should create transport/socket, send mails and close the transport/socket', async () => {
-      const { connection, createConnectionSpy } = mockSocketConnection();
       const spyCreateTransport = jest
         .spyOn(nodemailer, 'createTransport')
         .mockReturnValue(mockTransport as any);
-      const spySendMail = jest
-        .spyOn(mockTransport, 'sendMail')
-        .mockImplementation(() => {
-          connection.socket.on('data', () => {});
-        });
-
+      const spySendMail = jest.spyOn(mockTransport, 'sendMail');
       const spyCloseTransport = jest.spyOn(mockTransport, 'close');
-      const spyEndSocket = jest.spyOn(connection.socket, 'end');
-      const spyDestroySocket = jest.spyOn(connection.socket, 'destroy');
 
       await expect(
         sendMail(destination, mailOptions, { sdkOptions: { parallel: false } })
       ).resolves.not.toThrow();
-      expect(createConnectionSpy).toHaveBeenCalledTimes(1);
       expect(spyCreateTransport).toHaveBeenCalledTimes(1);
       expect(spySendMail).toHaveBeenCalledTimes(1);
       expect(spySendMail).toHaveBeenCalledWith(mailOptions);
       expect(spyCloseTransport).toHaveBeenCalledTimes(1);
-      expect(spyEndSocket).toHaveBeenCalledTimes(1);
-      expect(spyDestroySocket).toHaveBeenCalledTimes(1);
-    });
-
-    it('should resend greeting', async () => {
-      const { connection } = mockSocketConnection();
-      jest
-        .spyOn(nodemailer, 'createTransport')
-        .mockReturnValue(mockTransport as any);
-
-      const req = sendMail(destination, mailOptions, {
-        sdkOptions: { parallel: false }
-      });
-
-      // The socket emits data for the first time before nodemailer listens to it.
-      // We re-emit the data until a listener listened for it.
-      // In this test we listen for the data event to check that we in fact re-emit the message.
-      const emitsTwice = new Promise(resolve => {
-        let dataEmitCount = 0;
-        const collectedData: string[] = [];
-        connection.socket.on('data', data => {
-          dataEmitCount++;
-          collectedData.push(data.toString());
-          if (dataEmitCount === 2) {
-            resolve(collectedData);
-          }
-        });
-      });
-
-      await expect(emitsTwice).resolves.toEqual([
-        '220 smtp.gmail.com ESMTP',
-        '220 smtp.gmail.com ESMTP'
-      ]);
-      await expect(req).resolves.not.toThrow();
-    });
-
-    it('should fail if nodemailer never listens to greeting', async () => {
-      mockSocketConnection();
-
-      jest
-        .spyOn(nodemailer, 'createTransport')
-        .mockReturnValue(mockTransport as any);
-
-      const req = sendMail(destination, mailOptions, {
-        sdkOptions: { parallel: false }
-      });
-
-      await expect(req).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Failed to re-emit greeting message. No data listener found."'
-      );
-    }, 15000);
-
-    it('should throw if greeting (really) was not received', async () => {
-      const { connection } = mockSocketConnection(true);
-
-      jest.spyOn(mockTransport, 'sendMail').mockImplementation(() => {
-        connection.socket.on('data', () => {});
-      });
-
-      await expect(() =>
-        sendMail(destination, mailOptions, {
-          sdkOptions: { parallel: false }
-        })
-      ).rejects.toThrowErrorMatchingInlineSnapshot('"Something went wrong"');
     });
   });
 });
@@ -377,6 +307,19 @@ describe('buildSocksProxy', () => {
     };
     const proxy = buildSocksProxy(dest);
     expect(isValidSocksProxy(proxy)).toBe(true);
+  });
+
+  it('build valid socks proxy url', () => {
+    const dest: MailDestination = {
+      proxyConfiguration: {
+        host: 'www.proxy.com',
+        port: 12345,
+        protocol: 'socks',
+        'proxy-authorization': 'jwt'
+      }
+    };
+    const proxyUrl = buildSocksProxyUrl(dest);
+    expect(proxyUrl).toBe('socks5://www.proxy.com:12345');
   });
 });
 

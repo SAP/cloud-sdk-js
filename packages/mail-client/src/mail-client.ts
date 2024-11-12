@@ -7,10 +7,11 @@ import {
   customAuthRequestHandler,
   customAuthResponseHandler
 } from './socket-proxy';
+// eslint-disable-next-line import/no-internal-modules
+import type { Options } from 'nodemailer/lib/smtp-pool';
 import type { Socket } from 'node:net';
 import type { SentMessageInfo, Transporter } from 'nodemailer';
 import type { SocksClientOptions, SocksProxy } from 'socks';
-// eslint-disable-next-line import/no-internal-modules
 import type {
   MailClientOptions,
   MailConfig,
@@ -145,7 +146,7 @@ function createTransport(
   mailDestination: MailDestination,
   mailClientOptions?: MailClientOptions
 ): Transporter<SentMessageInfo> {
-  const baseOptions = {
+  const baseOptions: Options = {
     pool: true,
     auth: {
       user: mailDestination.username,
@@ -161,9 +162,9 @@ function createTransport(
         'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
       );
     }
-    
+
     mailClientOptions = {
-      ...mailClientOptions || {},
+      ...(mailClientOptions || {}),
       proxy: `socks5://${mailDestination.proxyConfiguration.host}:${mailDestination.proxyConfiguration.port}`
     };
   }

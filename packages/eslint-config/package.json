@@ -31,7 +31,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jsdoc": "^50.4.3",
+    "eslint-plugin-jsdoc": "^50.5.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-regex": "^1.10.0",
     "eslint-plugin-unused-imports": "^4.1.4",

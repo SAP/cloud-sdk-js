@@ -242,7 +242,7 @@ async function sendMailInParallel<T extends MailConfig>(
         return response;
       } catch (error) {
         logger.error(
-          `Failed to send email ${mailConfigIndex + 1}/${mailConfigs.length} for subject "${
+          `Failed to send email ${mailConfigIndex + 1}/${mailConfigs.length} with subject "${
             mailConfig.subject
           }". Error: ${error.message}`
         );

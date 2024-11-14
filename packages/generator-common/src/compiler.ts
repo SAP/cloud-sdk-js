@@ -255,7 +255,8 @@ function parseModuleKind(input: string): ModuleKind {
     amd: ModuleKind.AMD,
     es2015: ModuleKind.ES2015,
     es2020: ModuleKind.ES2020,
-    esnext: ModuleKind.ESNext
+    esnext: ModuleKind.ESNext,
+    nodenext: ModuleKind.NodeNext
   };
 
   if (mapping[input.toLowerCase()]) {

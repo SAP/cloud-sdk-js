@@ -73,7 +73,10 @@ jobs:
         name: Test Service Version Check
       - run: yarn check:dependencies
         name: Undeclared dependency Check
-      - run: yarn check:public-api
+      - uses: ./.github/actions/check-public-api
+        with:
+            force_internal_exports: 'true'
+            excluded_packages: 'eslint-config, util, test-util'
         name: Check public api
       - run: yarn test:self
         name: Self tests for tools

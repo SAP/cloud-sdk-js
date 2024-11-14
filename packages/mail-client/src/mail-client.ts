@@ -194,19 +194,27 @@ async function sendMailInSequential<T extends MailConfig>(
   mailConfigs: T[]
 ): Promise<MailResponse[]> {
   const response: MailResponse[] = [];
-  for (const mailConfigIndex in mailConfigs) {
-    logger.debug(
-      `Sending email ${mailConfigIndex + 1}/${mailConfigs.length}...`
-    );
-    response[mailConfigIndex] = await transport.sendMail({
-      ...mailConfigsFromDestination,
-      ...mailConfigs[mailConfigIndex]
-    });
-    logger.debug(
-      `...email ${mailConfigIndex + 1}/${mailConfigs.length} for subject "${
-        mailConfigs[mailConfigIndex].subject
-      }" was sent successfully.`
-    );
+  for (const [mailConfigIndex, mailConfig] of mailConfigs.entries()) {
+    try {
+      logger.debug(
+        `Sending email ${mailConfigIndex + 1}/${mailConfigs.length}...`
+      );
+      response[mailConfigIndex] = await transport.sendMail({
+        ...mailConfigsFromDestination,
+        ...mailConfig
+      });
+      logger.debug(
+        `...email ${mailConfigIndex + 1}/${mailConfigs.length} with subject "${mailConfig.subject}" was sent successfully.`
+      );
+    } catch (error) {
+      logger.error(
+        `Failed to send email ${mailConfigIndex + 1}/${mailConfigs.length} with subject "${mailConfig.subject}". Error: ${error.message}`
+      );
+      response[mailConfigIndex] = {
+        response: error.response,
+        rejected: error.rejected
+      };
+    }
   }
   return response;
 }
@@ -217,27 +225,36 @@ async function sendMailInParallel<T extends MailConfig>(
   mailConfigs: T[]
 ): Promise<MailResponse[]> {
   const promises: Promise<MailResponse>[] = mailConfigs.map(
-    (mailConfig, mailConfigIndex, mailConfigsArray) => {
-      logger.debug(
-        `Sending email ${mailConfigIndex + 1}/${mailConfigsArray.length}...`
-      );
-      return transport.sendMail({
-        ...mailConfigsFromDestination,
-        ...mailConfig
-      });
+    async (mailConfig, mailConfigIndex, mailConfigsArray) => {
+      try {
+        logger.debug(
+          `Sending email ${mailConfigIndex + 1}/${mailConfigsArray.length}...`
+        );
+        const response = await transport.sendMail({
+          ...mailConfigsFromDestination,
+          ...mailConfig
+        });
+        logger.debug(
+          `...email ${mailConfigIndex + 1}/${mailConfigs.length} with subject "${
+            mailConfig.subject
+          }" was sent successfully.`
+        );
+        return response;
+      } catch (error) {
+        logger.error(
+          `Failed to send email ${mailConfigIndex + 1}/${mailConfigs.length} with subject "${
+            mailConfig.subject
+          }". Error: ${error.message}`
+        );
+        return {
+          response: error.response,
+          rejected: error.rejected
+        };
+      }
     }
   );
 
-  return Promise.all(promises).then(responses => {
-    responses.forEach((_, responseIndex) =>
-      logger.debug(
-        `...email ${responseIndex + 1}/${mailConfigs.length} for subject "${
-          mailConfigs[responseIndex].subject
-        }" was sent successfully`
-      )
-    );
-    return responses;
-  });
+  return Promise.all(promises);
 }
 
 async function sendMailWithNodemailer<T extends MailConfig>(

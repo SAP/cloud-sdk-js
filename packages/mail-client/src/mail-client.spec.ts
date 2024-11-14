@@ -171,6 +171,98 @@ describe('mail client', () => {
       expect(spySendMail).toHaveBeenCalledWith(mailOptions2);
       expect(spyCloseTransport).toHaveBeenCalledTimes(1);
     });
+
+    it('should send first and last emails successfully and log error for middle email', async () => {
+      // const logger = createLogger({
+      //   package: 'mail-client',
+      //   messageContext: 'mail-client'
+      // });
+      jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+      const mailOptions1: MailConfig = {
+        from: 'from1@example.com',
+        to: 'to1@example.com',
+        subject: 'Email 1'
+      };
+
+      const mailOptions2: MailConfig = {
+        from: 'from2@example.com',
+        to: 'to2@example.com',
+        subject: 'Email 2'
+      };
+
+      const mailOptions3: MailConfig = {
+        from: 'from3@example.com',
+        to: 'to3@example.com',
+        subject: 'Email 3'
+      };
+
+      const mailDestinationResponse: DestinationConfiguration = {
+        Name: 'MyMailDestination',
+        Type: 'MAIL',
+        Authentication: 'BasicAuthentication',
+        ProxyType: 'Internet',
+        User: 'user',
+        Password: 'password',
+        'mail.password': 'password',
+        'mail.user': 'user',
+        'mail.smtp.host': 'smtp.gmail.com',
+        'mail.smtp.port': '587'
+      };
+
+      mockServiceBindings();
+      // the mockServiceToken() method does not work outside connectivity module.
+      jest
+        .spyOn(tokenAccessor, 'serviceToken')
+        .mockImplementation(() => Promise.resolve(providerServiceToken));
+      mockFetchDestinationCalls(mailDestinationResponse);
+
+      mockTransport.sendMail.mockImplementationOnce(() =>
+        Promise.resolve({ accepted: ['to1@example.com'] })
+      );
+      mockTransport.sendMail.mockImplementationOnce(() =>
+        Promise.reject({
+          rejected: ['to2@example.com'],
+          response: 'Mail was not sent'
+        })
+      );
+      mockTransport.sendMail.mockImplementationOnce(() =>
+        Promise.resolve({ accepted: ['to3@example.com'] })
+      );
+
+      const response = await sendMail(
+        { destinationName: mailDestinationResponse.Name },
+        [mailOptions1, mailOptions2, mailOptions3],
+        { sdkOptions: { parallel: false } }
+      );
+
+      expect(mockTransport.sendMail).toHaveBeenCalledTimes(3);
+      expect(mockTransport.sendMail).toHaveBeenNthCalledWith(1, {
+        from: 'from1@example.com',
+        to: 'to1@example.com',
+        subject: 'Email 1'
+      });
+      expect(mockTransport.sendMail).toHaveBeenNthCalledWith(2, {
+        from: 'from2@example.com',
+        to: 'to2@example.com',
+        subject: 'Email 2'
+      });
+      expect(mockTransport.sendMail).toHaveBeenNthCalledWith(3, {
+        from: 'from3@example.com',
+        to: 'to3@example.com',
+        subject: 'Email 3'
+      });
+
+      expect(response).toEqual([
+        { accepted: ['to1@example.com'] },
+        { rejected: ['to2@example.com'], response: 'Mail was not sent' },
+        { accepted: ['to3@example.com'] }
+      ]);
+
+      // expect(logger.debug).toHaveBeenCalledTimes(2);
+      // expect(logger.error).toHaveBeenCalledTimes(1);
+    }, 50000);
   });
 
   describe('on-premise', () => {

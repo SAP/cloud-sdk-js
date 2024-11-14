@@ -130,6 +130,53 @@ describe('mail client', () => {
     ).resolves.not.toThrow();
   });
 
+  it('should work with destination from service - proxy-type OnPremise with Authentication set to NoAuthentication', async () => {
+    const { connection } = mockSocketConnection();
+    jest
+      .spyOn(nodemailer, 'createTransport')
+      .mockReturnValue(mockTransport as any);
+
+    jest.spyOn(mockTransport, 'sendMail').mockImplementation(() => {
+      connection.socket.on('data', () => {});
+    });
+
+    const mailOptions1: MailConfig = {
+      from: 'from2@example.com',
+      to: 'to2@example.com'
+    };
+
+    const mailClientOptions: MailClientOptions = {
+      tls: {
+        rejectUnauthorized: false
+      }
+    };
+
+    const mailDestinationResponse: DestinationConfiguration = {
+      Name: 'MyMailDestination',
+      Type: 'MAIL',
+      Authentication: 'NoAuthentication',
+      ProxyType: 'OnPremise',
+      'mail.smtp.host': 'smtp.gmail.com',
+      'mail.smtp.port': '587'
+    };
+
+    mockServiceBindings();
+    // the mockServiceToken() method does not work outside connectivity module.
+    jest
+      .spyOn(tokenAccessor, 'serviceToken')
+      .mockImplementation(() => Promise.resolve(providerServiceToken));
+
+    mockFetchDestinationCalls(mailDestinationResponse);
+
+    await expect(
+      sendMail(
+        { destinationName: mailDestinationResponse.Name },
+        [mailOptions1],
+        mailClientOptions
+      )
+    ).resolves.not.toThrow();
+  });
+
   it('should work with registered destination', async () => {
     jest
       .spyOn(nodemailer, 'createTransport')

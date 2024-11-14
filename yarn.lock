@@ -1162,10 +1162,10 @@
     jju "^1.4.0"
     js-yaml "^4.1.0"
 
-"@mswjs/interceptors@^0.36.4":
-  version "0.36.4"
-  resolved "https://registry.npmjs.org/@mswjs/interceptors/-/interceptors-0.36.4.tgz#444d379ed917fa23640e65ddd8720c2cbf8725cd"
-  integrity sha512-ktzj7bra4HatOGqXw/PXyresXxFtnZa570rm4olAyf9HbvNdEWRkQl81ykmJK0nCHxNndmh2zQ84TBYKFDM+sg==
+"@mswjs/interceptors@^0.36.6":
+  version "0.36.10"
+  resolved "https://registry.npmjs.org/@mswjs/interceptors/-/interceptors-0.36.10.tgz#028a51a3c01f6ed87679e972d9f12a9a3726f7a0"
+  integrity sha512-GXrJgakgJW3DWKueebkvtYgGKkxA7s0u5B0P5syJM5rvQUnrpLPigvci8Hukl7yEM+sU06l+er2Fgvx/gmiRgg==
   dependencies:
     "@open-draft/deferred-promise" "^2.2.0"
     "@open-draft/logger" "^0.3.0"
@@ -6884,12 +6884,12 @@ neo-async@^2.6.0:
   resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
-nock@^14.0.0-beta.15:
-  version "14.0.0-beta.15"
-  resolved "https://registry.npmjs.org/nock/-/nock-14.0.0-beta.15.tgz#1eb16e009d3a692bb2a9db4ba4a2834bda424aa3"
-  integrity sha512-rp72chatxoZbR/2cYHwtb+IX6n6kkanYKGN2PKn4c12JBrj9n4xGUKFykuQHB+Gkz3fynlikFbMH2LI6VoebuQ==
+nock@^14.0.0-beta.16:
+  version "14.0.0-beta.16"
+  resolved "https://registry.npmjs.org/nock/-/nock-14.0.0-beta.16.tgz#69fac0b8261ea7bdb18c5680dbf34889a16fcd6a"
+  integrity sha512-H6ZyT+Naz9wfy0gNrhD0m+VIkCq9li/eaNQPEUEjXg06gsLR3/jDctROt44Z+iT3gFnkTQ0wXtwKJPdvbueBbg==
   dependencies:
-    "@mswjs/interceptors" "^0.36.4"
+    "@mswjs/interceptors" "^0.36.6"
     json-stringify-safe "^5.0.1"
     propagate "^2.0.0"
 

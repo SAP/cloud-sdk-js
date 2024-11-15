@@ -451,9 +451,9 @@
   integrity sha512-1EbZUaKxWvhxmdjM1raFEQT9MkI28mFJMtYEEbUGdD2NMpd7pWH//xcWpLb+9NOKye+mXEtZxvD9bZcRE5y2lA==
 
 "@cap-js/db-service@^1.14.1":
-  version "1.14.1"
-  resolved "https://registry.npmjs.org/@cap-js/db-service/-/db-service-1.14.1.tgz#c7728450556383049a9bf4b7148e934acb5a48d4"
-  integrity sha512-9j+picfUm6lFKW3HghghMTC2auyhtcyVU8JWocjE65BQGF1H+gETE++3Qd6fnK93W6xw3HA12GVHsNThn3ZVMA==
+  version "1.15.0"
+  resolved "https://registry.npmjs.org/@cap-js/db-service/-/db-service-1.15.0.tgz#c436743afb74f8c89940139f50905e2b5b2bd2e8"
+  integrity sha512-9MCyfumDsPRA/axkQ0kePd8MqolbDTCGAaSN1jR07bMSNo/gFoRGfqcqvlP8+XdX5S1xBiMmP1gbw8VktZr0yg==
   dependencies:
     generic-pool "^3.9.0"
 
@@ -465,9 +465,9 @@
     pluralize "^8.0.0"
 
 "@cap-js/sqlite@^1":
-  version "1.7.6"
-  resolved "https://registry.npmjs.org/@cap-js/sqlite/-/sqlite-1.7.6.tgz#5f7f67fba56da8286261174070a52ef9de980c84"
-  integrity sha512-StCwBb0Hoj9Fbbdk8MTCHiibdwRU+X/rI0jclQcu1n2OJMDJmjiVKW6PGTERFV+Wpi1W/u4TnN/9pHqqcp4yXQ==
+  version "1.7.7"
+  resolved "https://registry.npmjs.org/@cap-js/sqlite/-/sqlite-1.7.7.tgz#852c74f8d6f4ea8560dec45936dad2abea088928"
+  integrity sha512-SOmFJMr6pjWOniFRkJsrI0BpQEQT5Q8o+IVZ/LXFj6+bAe0NQQztzxhMQx62V/Px3u58JJM3xkPMU+QC5PcJHw==
   dependencies:
     "@cap-js/db-service" "^1.14.1"
     better-sqlite3 "^11.0.0"
@@ -854,9 +854,9 @@
   integrity sha512-BsWiH1yFGjXXS2yvrf5LyuoSIIbPrGUWob917o+BTKuZ7qJdxX8aJLRxs1fS9n6r7vESrq1OUqb68dANcFXuQQ==
 
 "@eslint/plugin-kit@^0.2.0":
-  version "0.2.2"
-  resolved "https://registry.npmjs.org/@eslint/plugin-kit/-/plugin-kit-0.2.2.tgz#5eff371953bc13e3f4d88150e2c53959f64f74f6"
-  integrity sha512-CXtq5nR4Su+2I47WPOlWud98Y5Lv8Kyxp2ukhgFx/eW6Blm18VXJO5WuQylPugRo8nbluoi6GvvxBLqHcvqUUw==
+  version "0.2.3"
+  resolved "https://registry.npmjs.org/@eslint/plugin-kit/-/plugin-kit-0.2.3.tgz#812980a6a41ecf3a8341719f92a6d1e784a2e0e8"
+  integrity sha512-2b/g5hRmpbb1o4GnTZax9N9m0FXzz9OV42ZzI4rDDMDuHUqigAiQCEWChBWCY4ztAGVRjoWT19v0yMmc5/L5kA==
   dependencies:
     levn "^0.4.1"
 
@@ -1568,17 +1568,25 @@
     yaml "^2.2.2"
 
 "@sap/cds-mtxs@>=1.9.0":
-  version "2.3.0"
-  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-2.3.0.tgz#7792ecf6ca98ca71d550d2f3e530b8d71639f7a4"
-  integrity sha512-wmEfYcRVFPiiQywYaoSjJ7x4aG6lq8rP4BFkPZXs//QniSkJ41xTKnCW59qzToYUZJSPKEFh0Agzj6PF6B34PA==
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/@sap/cds-mtxs/-/cds-mtxs-2.3.1.tgz#0aa2f45c03c88844b7b5a8b189f29f41444b6ca4"
+  integrity sha512-WmWJAUnXGeki6ax2zq9MFGduZq8k+bfoMI/Tn+WJbv6P82qI7Ul15/0lljpvi4I7obOgM02+szXILVi5MorATQ==
   dependencies:
     "@sap/hdi-deploy" ">=4"
     axios "^1"
 
-"@sap/cds@>=5.6.0", "@sap/cds@>=7", "@sap/cds@^8.4.1":
-  version "8.4.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-8.4.1.tgz#cbb349273056bf71400b5f55002f2d90d2d440ac"
-  integrity sha512-dchM8blfY9lYiB2hGA/yWQ+Mtu83qD4Y/romWIYLMzD8vhiLrovXcuR8fwP5dyuP2i33ZOG1twNOXR5ObWqZWg==
+"@sap/cds@>=5.6.0":
+  version "6.8.4"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.8.4.tgz#c73adb8e61f9efb4eff705f125a717f214f8e49f"
+  integrity sha512-CTf6Y732ABTIAQPwtFZpfLUzZgQLOs9ZqBIrHhFJRx3VQvopfBZlbWAhujz092xETM7u4msZudoUprkmRo0+hg==
+  dependencies:
+    "@sap/cds-compiler" "^3.2.0"
+    "@sap/cds-foss" "^4"
+
+"@sap/cds@>=7", "@sap/cds@^8.4.1":
+  version "8.4.2"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-8.4.2.tgz#2baf0b0f3917a641403829c7db23d83bd38913ad"
+  integrity sha512-wHiPU+PciyG6L7oGglUq22ji+aV5SFwef/gF/rnIheMirzxpDlHq+K8GwqmcrrFu3GWRioQGRe3rr8KAalOQrg==
   dependencies:
     "@sap/cds-compiler" ">=5.1"
     "@sap/cds-fiori" "^1"
@@ -2595,12 +2603,7 @@ async@^2.6.3, async@~2.6.1:
   dependencies:
     lodash "^4.17.14"
 
-async@^3.2.0, async@^3.2.3:
-  version "3.2.5"
-  resolved "https://registry.npmjs.org/async/-/async-3.2.5.tgz#ebd52a8fdaf7a2289a24df399f8d8485c8a46b66"
-  integrity sha512-baNZyqaaLhyLVKm/DlvdW051MSgO6b8eVfIezl9E5PqWxFgzLm/wQntEW4zOytVburDEr0JlALEpdOFwvErLsg==
-
-async@^3.2.6, async@~3.2.0:
+async@^3.2.0, async@^3.2.3, async@^3.2.6, async@~3.2.0:
   version "3.2.6"
   resolved "https://registry.npmjs.org/async/-/async-3.2.6.tgz#1b0728e14929d51b85b449b7f06e27c1145e38ce"
   integrity sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==

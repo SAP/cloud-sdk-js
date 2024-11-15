@@ -70637,6 +70637,7 @@ function parseModuleKind(input) {
         es2015: typescript_1.ModuleKind.ES2015,
         es2020: typescript_1.ModuleKind.ES2020,
         esnext: typescript_1.ModuleKind.ESNext,
+        node16: typescript_1.ModuleKind.Node16,
         nodenext: typescript_1.ModuleKind.NodeNext
     };
     if (mapping[input.toLowerCase()]) {

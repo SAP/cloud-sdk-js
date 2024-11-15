@@ -1528,6 +1528,13 @@
   dependencies:
     antlr4 "4.9.3"
 
+"@sap/cds-compiler@^3.2.0":
+  version "3.9.12"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-3.9.12.tgz#3e40c0956bfbe2106b50a0ee9efabeca1b68f6c8"
+  integrity sha512-PGGrkmSag2cymAxj+zEnHV+jioHwSWLsurZBnkmPVtrATev5k1jNXjB1Py3SOyeM1jyWKD3qhyWgitn9clSZcw==
+  dependencies:
+    antlr4 "4.9.3"
+
 "@sap/cds-dk@8.4.1":
   version "8.4.1"
   resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-8.4.1.tgz#a380d172dae4158d4be33179a62a4c3361048f4e"
@@ -1556,6 +1563,17 @@
   version "1.2.7"
   resolved "https://registry.npmjs.org/@sap/cds-fiori/-/cds-fiori-1.2.7.tgz#cdfec5437e6c35f3ce1f22db35701570abfc2787"
   integrity sha512-F6Uf9wvkv0fXW+Fh7PiV2BbB/k+p1cFJLkQCCKDRJH8HvlxWEcXcn/YIvBrQGuX+GToi125MxB3wd712d8OLTA==
+
+"@sap/cds-foss@^4":
+  version "4.0.2"
+  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-4.0.2.tgz#2910fa0a2f3dffb6a66c787de27cbfe564467412"
+  integrity sha512-XY8lmLu3NgGVkOdX9N9L91dWldhu//iQqJF98rqHAtCtdoOKfKCtiYafSVruAmVEzQ3tUWsGXNKCtpHdoXYuLA==
+  dependencies:
+    big.js "^6.1.1"
+    generic-pool "^3.8.2"
+    uuid "^9.0.0"
+    xmlbuilder "^15.1.1"
+    yaml "^2.2.2"
 
 "@sap/cds-foss@^5.0.0":
   version "5.0.0"
@@ -2603,7 +2621,7 @@ async@^2.6.3, async@~2.6.1:
   dependencies:
     lodash "^4.17.14"
 
-async@^3.2.0, async@^3.2.3, async@~3.2.0:
+async@^3.2.0, async@^3.2.3, async@^3.2.6, async@~3.2.0:
   version "3.2.6"
   resolved "https://registry.npmjs.org/async/-/async-3.2.6.tgz#1b0728e14929d51b85b449b7f06e27c1145e38ce"
   integrity sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==
@@ -9825,6 +9843,11 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uuid@^9.0.0:
+  version "9.0.1"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
 v8-compile-cache-lib@^3.0.1:
   version "3.0.1"

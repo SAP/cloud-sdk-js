@@ -256,6 +256,7 @@ function parseModuleKind(input: string): ModuleKind {
     es2015: ModuleKind.ES2015,
     es2020: ModuleKind.ES2020,
     esnext: ModuleKind.ESNext,
+    node16: ModuleKind.Node16,
     nodenext: ModuleKind.NodeNext
   };
 

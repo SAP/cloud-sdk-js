@@ -1,5 +1,14 @@
 # @sap-cloud-sdk/mail-client
 
+## 3.23.0
+
+### Patch Changes
+
+- ea9b6b5: [Fixed Issue] Fix mail client issue for port 465 with on-premise setup.
+- 62eaed5: [Fixed Issue] Fix email sending functionality to ensure that emails are sent to all valid addresses. Previously, if an email failed, all subsequent emails were not sent.
+  - @sap-cloud-sdk/connectivity@3.23.0
+  - @sap-cloud-sdk/util@3.23.0
+
 ## 3.22.2
 
 ### Patch Changes

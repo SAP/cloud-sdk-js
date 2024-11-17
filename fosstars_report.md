@@ -308,7 +308,7 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Number of projects on GitHub that use an open source project:** 5892
+1.  **Number of projects on GitHub that use an open source project:** 5895
 1.  **Number of stars for a GitHub repository:** 167
 1.  **Number of watchers for a GitHub repository:** 17
 

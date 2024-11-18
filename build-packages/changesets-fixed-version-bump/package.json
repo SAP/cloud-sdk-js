@@ -20,7 +20,7 @@
     "semver": "^7.6.3"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.2",
+    "@vercel/ncc": "^0.38.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.57.1",
     "prettier": "^3.3.3",

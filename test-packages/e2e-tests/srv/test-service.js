@@ -11,7 +11,7 @@ module.exports = async srv => {
   // bound function
   srv.on('getStringProperty', 'TestEntity', async oRequest => {
     const entity = await cds
-      .transaction(oRequest)
+      .tx(oRequest)
       .run(SELECT.one.from(oRequest.query.SELECT.from));
     oRequest.reply(entity.StringProperty);
   });
@@ -62,10 +62,10 @@ module.exports = async srv => {
   // bound action
   srv.on('deleteEntity', 'TestEntity', async oRequest => {
     const entity = await cds
-      .transaction(oRequest)
+      .tx(oRequest)
       .run(SELECT.one.from(oRequest.query.SELECT.from));
     await cds
-      .transaction(oRequest)
+      .tx(oRequest)
       .run(DELETE.from(TestEntity).byKey(entity.KeyTestEntity));
     oRequest.reply(entity.KeyTestEntity);
   });
@@ -129,7 +129,7 @@ module.exports = async srv => {
   srv.on('createTestEntityById', async oRequest => {
     const id = oRequest.data.id;
     await cds
-      .transaction(oRequest)
+      .tx(oRequest)
       .run(INSERT.into(TestEntity).columns('KeyTestEntity').values(id));
     oRequest.reply({ KeyTestEntity: id });
   });
@@ -137,7 +137,7 @@ module.exports = async srv => {
   srv.on('createTestEntityByIdReturnId', async oRequest => {
     const id = oRequest.data.id;
     await cds
-      .transaction(oRequest)
+      .tx(oRequest)
       .run(INSERT.into(TestEntity).columns('KeyTestEntity').values(id));
     oRequest.reply(id);
   });
@@ -145,7 +145,7 @@ module.exports = async srv => {
   srv.on('createTestEntityReturnId', async oRequest => {
     const param = oRequest.data.param;
     await cds
-      .transaction(oRequest)
+      .tx(oRequest)
       .run(
         INSERT.into(TestEntity)
           .columns('KeyTestEntity')

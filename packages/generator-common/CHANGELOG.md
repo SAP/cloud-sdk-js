@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/generator-common
 
+## 3.23.0
+
+### Minor Changes
+
+- 745766e: [Fixed Issue] Fix ESM client code compilation by allowing the `module` option to be set to `nodenext` or `node16` in a custom `tsconfig.json` file.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@3.23.0
+
 ## 3.22.2
 
 ### Patch Changes

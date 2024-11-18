@@ -10,6 +10,7 @@ import {
 } from '../../../test-resources/test/test-util';
 import {
   buildSocksProxy,
+  buildSocksProxyUrl,
   isMailSentInSequential,
   sendMail
 } from './mail-client';
@@ -29,198 +30,242 @@ describe('mail client', () => {
   const mockTransport = {
     sendMail: jest.fn(),
     close: jest.fn(),
-    verify: jest.fn()
+    verify: jest.fn(),
+    set: jest.fn()
   };
 
-  it('should work with destination from service - proxy-type Internet', async () => {
-    jest
-      .spyOn(nodemailer, 'createTransport')
-      .mockReturnValue(mockTransport as any);
-    const mailOptions1: MailConfig = {
-      from: 'from2@example.com',
-      to: 'to2@example.com'
-    };
+  describe('internet', () => {
+    it('should work with destination from service - proxy-type Internet', async () => {
+      jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+      const mailOptions1: MailConfig = {
+        from: 'from2@example.com',
+        to: 'to2@example.com'
+      };
 
-    const mailClientOptions: MailClientOptions = {
-      proxy: 'http://my.proxy.com:25',
-      tls: {
-        rejectUnauthorized: false
-      }
-    };
+      const mailClientOptions: MailClientOptions = {
+        proxy: 'http://my.proxy.com:25',
+        tls: {
+          rejectUnauthorized: false
+        }
+      };
 
-    const mailDestinationResponse: DestinationConfiguration = {
-      Name: 'MyMailDestination',
-      Type: 'MAIL',
-      Authentication: 'BasicAuthentication',
-      ProxyType: 'Internet',
-      User: 'user',
-      Password: 'password',
-      'mail.password': 'password',
-      'mail.user': 'user',
-      'mail.smtp.host': 'smtp.gmail.com',
-      'mail.smtp.port': '587'
-    };
+      const mailDestinationResponse: DestinationConfiguration = {
+        Name: 'MyMailDestination',
+        Type: 'MAIL',
+        Authentication: 'BasicAuthentication',
+        ProxyType: 'Internet',
+        User: 'user',
+        Password: 'password',
+        'mail.password': 'password',
+        'mail.user': 'user',
+        'mail.smtp.host': 'smtp.gmail.com',
+        'mail.smtp.port': '587'
+      };
 
-    mockServiceBindings();
-    // the mockServiceToken() method does not work outside connectivity module.
-    jest
-      .spyOn(tokenAccessor, 'serviceToken')
-      .mockImplementation(() => Promise.resolve(providerServiceToken));
-    mockFetchDestinationCalls(mailDestinationResponse);
+      mockServiceBindings();
+      // the mockServiceToken() method does not work outside connectivity module.
+      jest
+        .spyOn(tokenAccessor, 'serviceToken')
+        .mockImplementation(() => Promise.resolve(providerServiceToken));
+      mockFetchDestinationCalls(mailDestinationResponse);
 
-    await expect(
-      sendMail(
-        { destinationName: mailDestinationResponse.Name },
-        [mailOptions1],
-        mailClientOptions
-      )
-    ).resolves.not.toThrow();
-  });
-
-  it('should work with destination from service - proxy-type OnPremise', async () => {
-    const { connection } = mockSocketConnection();
-    jest
-      .spyOn(nodemailer, 'createTransport')
-      .mockReturnValue(mockTransport as any);
-
-    jest.spyOn(mockTransport, 'sendMail').mockImplementation(() => {
-      connection.socket.on('data', () => {});
+      await expect(
+        sendMail(
+          { destinationName: mailDestinationResponse.Name },
+          [mailOptions1],
+          mailClientOptions
+        )
+      ).resolves.not.toThrow();
     });
 
-    const mailOptions1: MailConfig = {
-      from: 'from2@example.com',
-      to: 'to2@example.com'
-    };
+    it('should work with registered destination', async () => {
+      jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+      const mailOptions1: MailConfig = {
+        from: 'from2@example.com',
+        to: 'to2@example.com'
+      };
 
-    const mailClientOptions: MailClientOptions = {
-      tls: {
-        rejectUnauthorized: false
-      }
-    };
+      const mailClientOptions: MailClientOptions = {
+        proxy: 'http://my.proxy.com:25',
+        tls: {
+          rejectUnauthorized: false
+        }
+      };
 
-    const mailDestinationResponse: DestinationConfiguration = {
-      Name: 'MyMailDestination',
-      Type: 'MAIL',
-      Authentication: 'BasicAuthentication',
-      ProxyType: 'OnPremise',
-      User: 'user',
-      Password: 'password',
-      'mail.password': 'password',
-      'mail.user': 'user',
-      'mail.smtp.host': 'smtp.gmail.com',
-      'mail.smtp.port': '587'
-    };
+      mockServiceBindings();
+      const mailDestination: DestinationWithName = {
+        name: 'MyMailDestination',
+        type: 'MAIL',
+        authentication: 'BasicAuthentication',
+        proxyType: 'Internet',
+        username: 'user',
+        password: 'password',
+        originalProperties: {
+          'mail.password': 'password',
+          'mail.user': 'user',
+          'mail.smtp.host': 'smtp.gmail.com',
+          'mail.smtp.port': '587'
+        }
+      };
 
-    mockServiceBindings();
-    // the mockServiceToken() method does not work outside connectivity module.
-    jest
-      .spyOn(tokenAccessor, 'serviceToken')
-      .mockImplementation(() => Promise.resolve(providerServiceToken));
+      registerDestination(mailDestination);
+      await expect(
+        sendMail(
+          { destinationName: 'MyMailDestination' },
+          [mailOptions1],
+          mailClientOptions
+        )
+      ).resolves.not.toThrow();
+    });
 
-    mockFetchDestinationCalls(mailDestinationResponse);
+    it('should create transport, send mails and close the transport', async () => {
+      const spyCreateTransport = jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+      const spySendMail = jest.spyOn(mockTransport, 'sendMail');
+      const spyCloseTransport = jest.spyOn(mockTransport, 'close');
+      const destination: any = {
+        originalProperties: {
+          'mail.password': 'password',
+          'mail.user': 'user',
+          'mail.smtp.host': 'smtp.gmail.com',
+          'mail.smtp.port': '587'
+        },
+        name: 'my-destination',
+        type: 'MAIL',
+        authentication: 'BasicAuthentication',
+        proxyType: 'Internet'
+      };
+      const mailOptions1: MailConfig = {
+        from: 'from1@example.com',
+        to: 'to1@example.com',
+        subject: 'subject',
+        text: 'txt',
+        html: 'html',
+        attachments: [{ content: 'content' }]
+      };
+      const mailOptions2: MailConfig = {
+        from: 'from2@example.com',
+        to: 'to2@example.com'
+      };
 
-    await expect(
-      sendMail(
+      const mailClientOptions: MailClientOptions = {
+        proxy: 'http://my.proxy.com:25',
+        tls: {
+          rejectUnauthorized: false
+        }
+      };
+      await expect(
+        sendMail(destination, [mailOptions1, mailOptions2], mailClientOptions)
+      ).resolves.not.toThrow();
+      expect(spyCreateTransport).toHaveBeenCalledTimes(1);
+      expect(spyCreateTransport).toHaveBeenCalledWith(
+        expect.objectContaining(mailClientOptions)
+      );
+      expect(spySendMail).toHaveBeenCalledTimes(2);
+      expect(spySendMail).toHaveBeenCalledWith(mailOptions1);
+      expect(spySendMail).toHaveBeenCalledWith(mailOptions2);
+      expect(spyCloseTransport).toHaveBeenCalledTimes(1);
+    });
+
+    it('should send first and last emails successfully and log error for middle email', async () => {
+      // const logger = createLogger({
+      //   package: 'mail-client',
+      //   messageContext: 'mail-client'
+      // });
+      jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+      const mailOptions1: MailConfig = {
+        from: 'from1@example.com',
+        to: 'to1@example.com',
+        subject: 'Email 1'
+      };
+
+      const mailOptions2: MailConfig = {
+        from: 'from2@example.com',
+        to: 'to2@example.com',
+        subject: 'Email 2'
+      };
+
+      const mailOptions3: MailConfig = {
+        from: 'from3@example.com',
+        to: 'to3@example.com',
+        subject: 'Email 3'
+      };
+
+      const mailDestinationResponse: DestinationConfiguration = {
+        Name: 'MyMailDestination',
+        Type: 'MAIL',
+        Authentication: 'BasicAuthentication',
+        ProxyType: 'Internet',
+        User: 'user',
+        Password: 'password',
+        'mail.password': 'password',
+        'mail.user': 'user',
+        'mail.smtp.host': 'smtp.gmail.com',
+        'mail.smtp.port': '587'
+      };
+
+      mockServiceBindings();
+      // the mockServiceToken() method does not work outside connectivity module.
+      jest
+        .spyOn(tokenAccessor, 'serviceToken')
+        .mockImplementation(() => Promise.resolve(providerServiceToken));
+      mockFetchDestinationCalls(mailDestinationResponse);
+
+      mockTransport.sendMail.mockImplementationOnce(() =>
+        Promise.resolve({ accepted: ['to1@example.com'] })
+      );
+      mockTransport.sendMail.mockImplementationOnce(() =>
+        Promise.reject({
+          rejected: ['to2@example.com'],
+          response: 'Mail was not sent'
+        })
+      );
+      mockTransport.sendMail.mockImplementationOnce(() =>
+        Promise.resolve({ accepted: ['to3@example.com'] })
+      );
+
+      const response = await sendMail(
         { destinationName: mailDestinationResponse.Name },
-        [mailOptions1],
-        mailClientOptions
-      )
-    ).resolves.not.toThrow();
+        [mailOptions1, mailOptions2, mailOptions3],
+        { sdkOptions: { parallel: false } }
+      );
+
+      expect(mockTransport.sendMail).toHaveBeenCalledTimes(3);
+      expect(mockTransport.sendMail).toHaveBeenNthCalledWith(1, {
+        from: 'from1@example.com',
+        to: 'to1@example.com',
+        subject: 'Email 1'
+      });
+      expect(mockTransport.sendMail).toHaveBeenNthCalledWith(2, {
+        from: 'from2@example.com',
+        to: 'to2@example.com',
+        subject: 'Email 2'
+      });
+      expect(mockTransport.sendMail).toHaveBeenNthCalledWith(3, {
+        from: 'from3@example.com',
+        to: 'to3@example.com',
+        subject: 'Email 3'
+      });
+
+      expect(response).toEqual([
+        { accepted: ['to1@example.com'] },
+        { rejected: ['to2@example.com'], response: 'Mail was not sent' },
+        { accepted: ['to3@example.com'] }
+      ]);
+
+      // expect(logger.debug).toHaveBeenCalledTimes(2);
+      // expect(logger.error).toHaveBeenCalledTimes(1);
+    }, 50000);
   });
 
-  it('should work with registered destination', async () => {
-    jest
-      .spyOn(nodemailer, 'createTransport')
-      .mockReturnValue(mockTransport as any);
-    const mailOptions1: MailConfig = {
-      from: 'from2@example.com',
-      to: 'to2@example.com'
-    };
-
-    const mailClientOptions: MailClientOptions = {
-      proxy: 'http://my.proxy.com:25',
-      tls: {
-        rejectUnauthorized: false
-      }
-    };
-
-    mockServiceBindings();
-    const mailDestination: DestinationWithName = {
-      name: 'MyMailDestination',
-      type: 'MAIL',
-      authentication: 'BasicAuthentication',
-      proxyType: 'Internet',
-      username: 'user',
-      password: 'password',
-      originalProperties: {
-        'mail.password': 'password',
-        'mail.user': 'user',
-        'mail.smtp.host': 'smtp.gmail.com',
-        'mail.smtp.port': '587'
-      }
-    };
-
-    registerDestination(mailDestination);
-    await expect(
-      sendMail(
-        { destinationName: 'MyMailDestination' },
-        [mailOptions1],
-        mailClientOptions
-      )
-    ).resolves.not.toThrow();
-  });
-
-  it('should create transport, send mails and close the transport', async () => {
-    const spyCreateTransport = jest
-      .spyOn(nodemailer, 'createTransport')
-      .mockReturnValue(mockTransport as any);
-    const spySendMail = jest.spyOn(mockTransport, 'sendMail');
-    const spyCloseTransport = jest.spyOn(mockTransport, 'close');
-    const destination: any = {
-      originalProperties: {
-        'mail.password': 'password',
-        'mail.user': 'user',
-        'mail.smtp.host': 'smtp.gmail.com',
-        'mail.smtp.port': '587'
-      },
-      name: 'my-destination',
-      type: 'MAIL',
-      authentication: 'BasicAuthentication',
-      proxyType: 'Internet'
-    };
-    const mailOptions1: MailConfig = {
-      from: 'from1@example.com',
-      to: 'to1@example.com',
-      subject: 'subject',
-      text: 'txt',
-      html: 'html',
-      attachments: [{ content: 'content' }]
-    };
-    const mailOptions2: MailConfig = {
-      from: 'from2@example.com',
-      to: 'to2@example.com'
-    };
-
-    const mailClientOptions: MailClientOptions = {
-      proxy: 'http://my.proxy.com:25',
-      tls: {
-        rejectUnauthorized: false
-      }
-    };
-    await expect(
-      sendMail(destination, [mailOptions1, mailOptions2], mailClientOptions)
-    ).resolves.not.toThrow();
-    expect(spyCreateTransport).toHaveBeenCalledTimes(1);
-    expect(spyCreateTransport).toHaveBeenCalledWith(
-      expect.objectContaining(mailClientOptions)
-    );
-    expect(spySendMail).toHaveBeenCalledTimes(2);
-    expect(spySendMail).toHaveBeenCalledWith(mailOptions1);
-    expect(spySendMail).toHaveBeenCalledWith(mailOptions2);
-    expect(spyCloseTransport).toHaveBeenCalledTimes(1);
-  });
-
-  describe('on premise', () => {
+  describe('on-premise', () => {
     const destination: any = {
       originalProperties: {
         'mail.password': 'password',
@@ -239,144 +284,136 @@ describe('mail client', () => {
         'proxy-authorization': 'jwt'
       }
     };
+
     const mailOptions: MailConfig = {
       from: 'from1@example.com',
       to: 'to1@example.com'
     };
 
-    it('should create transport/socket, send mails and close the transport/socket', async () => {
-      const { connection, createConnectionSpy } = mockSocketConnection();
-      const spyCreateTransport = jest
-        .spyOn(nodemailer, 'createTransport')
-        .mockReturnValue(mockTransport as any);
-      const spySendMail = jest
-        .spyOn(mockTransport, 'sendMail')
-        .mockImplementation(() => {
-          connection.socket.on('data', () => {});
-        });
-
-      const spyCloseTransport = jest.spyOn(mockTransport, 'close');
-      const spyEndSocket = jest.spyOn(connection.socket, 'end');
-      const spyDestroySocket = jest.spyOn(connection.socket, 'destroy');
-
-      await expect(
-        sendMail(destination, mailOptions, { sdkOptions: { parallel: false } })
-      ).resolves.not.toThrow();
-      expect(createConnectionSpy).toHaveBeenCalledTimes(1);
-      expect(spyCreateTransport).toHaveBeenCalledTimes(1);
-      expect(spySendMail).toHaveBeenCalledTimes(1);
-      expect(spySendMail).toHaveBeenCalledWith(mailOptions);
-      expect(spyCloseTransport).toHaveBeenCalledTimes(1);
-      expect(spyEndSocket).toHaveBeenCalledTimes(1);
-      expect(spyDestroySocket).toHaveBeenCalledTimes(1);
-    });
-
-    it('should resend greeting', async () => {
+    it('should work with destination from service - proxy-type OnPremise', async () => {
       const { connection } = mockSocketConnection();
       jest
         .spyOn(nodemailer, 'createTransport')
         .mockReturnValue(mockTransport as any);
 
-      const req = sendMail(destination, mailOptions, {
-        sdkOptions: { parallel: false }
-      });
-
-      // The socket emits data for the first time before nodemailer listens to it.
-      // We re-emit the data until a listener listened for it.
-      // In this test we listen for the data event to check that we in fact re-emit the message.
-      const emitsTwice = new Promise(resolve => {
-        let dataEmitCount = 0;
-        const collectedData: string[] = [];
-        connection.socket.on('data', data => {
-          dataEmitCount++;
-          collectedData.push(data.toString());
-          if (dataEmitCount === 2) {
-            resolve(collectedData);
-          }
-        });
-      });
-
-      await expect(emitsTwice).resolves.toEqual([
-        '220 smtp.gmail.com ESMTP',
-        '220 smtp.gmail.com ESMTP'
-      ]);
-      await expect(req).resolves.not.toThrow();
-    });
-
-    it('should fail if nodemailer never listens to greeting', async () => {
-      mockSocketConnection();
-
-      jest
-        .spyOn(nodemailer, 'createTransport')
-        .mockReturnValue(mockTransport as any);
-
-      const req = sendMail(destination, mailOptions, {
-        sdkOptions: { parallel: false }
-      });
-
-      await expect(req).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Failed to re-emit greeting message. No data listener found."'
-      );
-    }, 15000);
-
-    it('should throw if greeting (really) was not received', async () => {
-      const { connection } = mockSocketConnection(true);
-
       jest.spyOn(mockTransport, 'sendMail').mockImplementation(() => {
         connection.socket.on('data', () => {});
       });
 
-      await expect(() =>
-        sendMail(destination, mailOptions, {
-          sdkOptions: { parallel: false }
-        })
-      ).rejects.toThrowErrorMatchingInlineSnapshot('"Something went wrong"');
+      const mailOptions1: MailConfig = {
+        from: 'from2@example.com',
+        to: 'to2@example.com'
+      };
+
+      const mailClientOptions: MailClientOptions = {
+        tls: {
+          rejectUnauthorized: false
+        }
+      };
+
+      const mailDestinationResponse: DestinationConfiguration = {
+        Name: 'MyMailDestination',
+        Type: 'MAIL',
+        Authentication: 'BasicAuthentication',
+        ProxyType: 'OnPremise',
+        User: 'user',
+        Password: 'password',
+        'mail.password': 'password',
+        'mail.user': 'user',
+        'mail.smtp.host': 'smtp.gmail.com',
+        'mail.smtp.port': '587'
+      };
+
+      mockServiceBindings();
+      // the mockServiceToken() method does not work outside connectivity module.
+      jest
+        .spyOn(tokenAccessor, 'serviceToken')
+        .mockImplementation(() => Promise.resolve(providerServiceToken));
+
+      mockFetchDestinationCalls(mailDestinationResponse);
+
+      await expect(
+        sendMail(
+          { destinationName: mailDestinationResponse.Name },
+          [mailOptions1],
+          mailClientOptions
+        )
+      ).resolves.not.toThrow();
+    });
+
+    it('should create transport/socket, send mails and close the transport/socket', async () => {
+      const spyCreateTransport = jest
+        .spyOn(nodemailer, 'createTransport')
+        .mockReturnValue(mockTransport as any);
+      const spySendMail = jest.spyOn(mockTransport, 'sendMail');
+      const spyCloseTransport = jest.spyOn(mockTransport, 'close');
+
+      await expect(
+        sendMail(destination, mailOptions, { sdkOptions: { parallel: false } })
+      ).resolves.not.toThrow();
+      expect(spyCreateTransport).toHaveBeenCalledTimes(1);
+      expect(spySendMail).toHaveBeenCalledTimes(1);
+      expect(spySendMail).toHaveBeenCalledWith(mailOptions);
+      expect(spyCloseTransport).toHaveBeenCalledTimes(1);
     });
   });
-});
 
-describe('isMailSentInSequential', () => {
-  it('should return false when the mail client options are undefined', () => {
-    expect(isMailSentInSequential()).toBe(false);
+  describe('isMailSentInSequential', () => {
+    it('should return false when the mail client options are undefined', () => {
+      expect(isMailSentInSequential()).toBe(false);
+    });
+
+    it('should return false when the sdk options are undefined', () => {
+      const mailClientOptions: MailClientOptions = {};
+      expect(isMailSentInSequential(mailClientOptions)).toBe(false);
+    });
+
+    it('should return false when the parallel option is undefined', () => {
+      const mailClientOptions: MailClientOptions = { sdkOptions: {} };
+      expect(isMailSentInSequential(mailClientOptions)).toBe(false);
+    });
+
+    it('should return false when the parallel option is set to true', () => {
+      const mailClientOptions: MailClientOptions = {
+        sdkOptions: { parallel: true }
+      };
+      expect(isMailSentInSequential(mailClientOptions)).toBe(false);
+    });
+
+    it('should return true when the parallel option is set to false', () => {
+      const mailClientOptions: MailClientOptions = {
+        sdkOptions: { parallel: false }
+      };
+      expect(isMailSentInSequential(mailClientOptions)).toBe(true);
+    });
   });
 
-  it('should return false when the sdk options are undefined', () => {
-    const mailClientOptions: MailClientOptions = {};
-    expect(isMailSentInSequential(mailClientOptions)).toBe(false);
-  });
+  describe('buildSocksProxy', () => {
+    it('build valid socks proxy', () => {
+      const dest: MailDestination = {
+        proxyConfiguration: {
+          host: 'www.proxy.com',
+          port: 12345,
+          protocol: 'socks',
+          'proxy-authorization': 'jwt'
+        }
+      };
+      const proxy = buildSocksProxy(dest);
+      expect(isValidSocksProxy(proxy)).toBe(true);
+    });
 
-  it('should return false when the parallel option is undefined', () => {
-    const mailClientOptions: MailClientOptions = { sdkOptions: {} };
-    expect(isMailSentInSequential(mailClientOptions)).toBe(false);
-  });
-
-  it('should return false when the parallel option is set to true', () => {
-    const mailClientOptions: MailClientOptions = {
-      sdkOptions: { parallel: true }
-    };
-    expect(isMailSentInSequential(mailClientOptions)).toBe(false);
-  });
-
-  it('should return true when the parallel option is set to false', () => {
-    const mailClientOptions: MailClientOptions = {
-      sdkOptions: { parallel: false }
-    };
-    expect(isMailSentInSequential(mailClientOptions)).toBe(true);
-  });
-});
-
-describe('buildSocksProxy', () => {
-  it('build valid socks proxy', () => {
-    const dest: MailDestination = {
-      proxyConfiguration: {
-        host: 'www.proxy.com',
-        port: 12345,
-        protocol: 'socks',
-        'proxy-authorization': 'jwt'
-      }
-    };
-    const proxy = buildSocksProxy(dest);
-    expect(isValidSocksProxy(proxy)).toBe(true);
+    it('build valid socks proxy url', () => {
+      const dest: MailDestination = {
+        proxyConfiguration: {
+          host: 'www.proxy.com',
+          port: 12345,
+          protocol: 'socks',
+          'proxy-authorization': 'jwt'
+        }
+      };
+      const proxyUrl = buildSocksProxyUrl(dest);
+      expect(proxyUrl).toBe('socks5://www.proxy.com:12345');
+    });
   });
 });
 

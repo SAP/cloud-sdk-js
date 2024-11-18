@@ -1,4 +1,4 @@
-## Version: 3.22.2
+## Version: 3.23.0
 
 The SAP Cloud SDK for JavaScript consists of multiple libraries to enable you to write side-by-side extensions on SAP Business Technology Platform.
 

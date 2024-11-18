@@ -65,7 +65,7 @@ jobs:
           node-version: 22
           cache: 'yarn'
       - name: REUSE Compliance Check
-        uses: fsfe/reuse-action@v4
+        uses: fsfe/reuse-action@v5
       - run: yarn install --frozen-lockfile --ignore-engines
       - run: yarn lint
         name: Static Code Check

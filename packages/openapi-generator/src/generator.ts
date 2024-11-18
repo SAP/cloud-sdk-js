@@ -26,6 +26,7 @@ import {
   packageJson,
   readme,
   schemaFile,
+  responseFile,
   apiIndexFile,
   schemaIndexFile
 } from './file-serializer';
@@ -204,6 +205,17 @@ async function generateMandatorySources(
     );
   }
 
+  if (openApiDocument.componentResponses.length) {
+    const responseDir = resolve(serviceDir, 'responses');
+    await createResponseFiles(responseDir, openApiDocument, createFileOptions);
+    await createFile(
+      responseDir,
+      'index.ts',
+      schemaIndexFile(openApiDocument, createFileOptions),
+      createFileOptions
+    );
+  }
+
   await createApis(serviceDir, openApiDocument, createFileOptions);
   await createFile(
     serviceDir,
@@ -242,6 +254,24 @@ async function createSchemaFiles(
         dir,
         `${schema.fileName}.ts`,
         schemaFile(schema, createFileOptions),
+        createFileOptions
+      )
+    )
+  );
+}
+
+async function createResponseFiles(
+  dir: string,
+  openApiDocument: OpenApiDocument,
+  createFileOptions: CreateFileOptions
+): Promise<void> {
+  await mkdir(dir, { recursive: true });
+  await Promise.all(
+    openApiDocument.componentResponses.map(response =>
+      createFile(
+        dir,
+        `${response.fileName}.ts`,
+        responseFile(response, createFileOptions),
         createFileOptions
       )
     )

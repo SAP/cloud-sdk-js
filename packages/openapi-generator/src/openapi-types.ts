@@ -30,6 +30,11 @@ export interface OpenApiDocument {
    * Parsed APIs of the document.
    */
   apis: OpenApiApi[];
+
+  /**
+   * Parsed component responses of the document.
+   */
+  componentResponses: OpenApiPersistedResponse[];
 }
 
 /**
@@ -231,6 +236,23 @@ export interface OpenApiPersistedSchema extends SchemaNaming {
 }
 
 /**
+ * Check whether the given OpenAPISchema is an OpenAPIPersistedSchema.
+ * @internal
+ */
+export function isOpenAPIPersistedSchema(input:OpenAPISchema) {}
+
+/**
+ * Represents a reference to a component responses, that will be saved in a file.
+ * @internal
+ */
+export interface OpenApiPersistedResponse extends ResponseNaming {
+  /**
+   * The schema the media type is referencing.
+   */
+  schema: OpenApiSchema;
+}
+
+/**
  * Represents an object that can be referenced by the given path.
  * @internal
  */
@@ -387,6 +409,21 @@ export interface SchemaNaming {
    * Name of the referenced schema.
    */
   schemaName: string;
+
+  /**
+   * File name of the referenced schema file.
+   */
+  fileName: string;
+}
+/**
+ * Represents an object containing the parsed names for a schema.
+ * @internal
+ */
+export interface ResponseNaming {
+  /**
+   * Name of the referenced schema.
+   */
+  responseName: string;
 
   /**
    * File name of the referenced schema file.

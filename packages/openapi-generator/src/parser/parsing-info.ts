@@ -1,6 +1,6 @@
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OperationNameExtended } from '../extensions';
-import type { Method, SchemaNaming } from '../openapi-types';
+import type { Method, ResponseNaming, SchemaNaming } from '../openapi-types';
 
 /**
  * Represents an object holding all relevant information for operation parsing.
@@ -60,3 +60,9 @@ export interface SchemaInfo extends SchemaNaming {
  * @internal
  */
 export type SchemaRefMapping = Record<string, SchemaNaming>;
+
+/**
+ * Type of an object representing a mapping between the reference path (key) and the unique parsed names for the schema.
+ * @internal
+ */
+export type ResponseRefMapping = Record<string, ResponseNaming>;

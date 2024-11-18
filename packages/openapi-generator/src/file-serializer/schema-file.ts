@@ -2,7 +2,10 @@ import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
 import { collectRefs, getSchemaPropertiesDocumentation } from '../schema-util';
 import { serializeSchema } from './schema';
-import type { OpenApiPersistedSchema } from '../openapi-types';
+import type {
+  OpenApiPersistedSchema,
+  OpenApiPersistedResponse
+} from '../openapi-types';
 import type {
   Import,
   CreateFileOptions
@@ -26,6 +29,34 @@ export function schemaFile(
     export type ${namedSchema.schemaName} = ${serializeSchema(
       namedSchema.schema
     )}${namedSchema.nullable ? ' | null' : ''};
+  `;
+}
+
+/**
+ * Serialize a schema representation to a string representing the according schema file contents.
+ * @param namedResponse - A named response.
+ * @returns The serialized schema file contents.
+ * @internal
+ */
+export function responseFile(
+  namedResponse: OpenApiPersistedResponse,
+  options?: CreateFileOptions
+): string {
+  const input = {
+    schema: namedResponse.schema,
+    schemaProperties: {},
+    nullable: false,
+    schemaName: namedResponse.responseName,
+    fileName: namedResponse.fileName
+  } as OpenApiPersistedSchema;
+  const imports = serializeImports(getImports(input, options));
+
+  return codeBlock`    
+    ${imports}
+    ${schemaDocumentation(input)}
+    export type ${input.schemaName} = ${serializeSchema(
+      input.schema
+    )}${input.nullable ? ' | null' : ''};
   `;
 }
 

@@ -55,6 +55,7 @@ export function parseErrorResponses(
       ])
       // Undefined responses are filtered
       .filter(([response]) => response) as [string, OpenApiSchema][];
+    // Undefined responses are filtered
     return errorSchemas.reduce((acc, [statusCode, response]) => {
       acc[statusCode] = response;
       return acc;

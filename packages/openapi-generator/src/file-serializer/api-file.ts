@@ -77,7 +77,7 @@ function getImports(api: OpenApiApi, options?: CreateFileOptions): Import[] {
   };
 
   const hasErrorResponses = api.operations.some(
-    operation => Object.keys(operation.errorResponses ?? {}).length
+    operation => (operation.errorResponses?? {}).length
   );
 
   if (hasErrorResponses) {

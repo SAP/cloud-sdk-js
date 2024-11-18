@@ -25,19 +25,20 @@ export function serializeOperation(operation: OpenApiOperation): string {
   }
 
   const responseType = serializeSchema(operation.response);
-  let temp = `(${serializeOperationSignature(
+  const temp = `(${serializeOperationSignature(
     operation
   )}) => new OpenApiRequestBuilder<${responseType}>(
 ${requestBuilderParams.join(',\n')}
 )`;
 
-  if (Object.keys(operation.errorResponses ?? {}).length) {
-    const typeGuard = Object.entries(operation.errorResponses ?? {})
-      .map(([key, value]) => buildTypeGuard(key, value))
-      .join('\n');
-    temp = `Object.assign(${temp},
-    { errorHandler: {${typeGuard}}})`;
-  }
+  // const typeGuard = '';
+  // Array.from(operation.errorResponses ?? [])
+  //   .map(buildTypeGuard)
+  //   .join('\n');
+
+  // temp = `Object.assign(${temp},
+  //   { errorHandler: {${typeGuard}}})`;
+
   const newLocal = `
 ${operationDocumentation(operation)}
 ${operation.operationId}: ${temp}`;

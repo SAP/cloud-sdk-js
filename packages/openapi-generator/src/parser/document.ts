@@ -11,12 +11,16 @@ import {
 import { parseApis } from './api';
 import { createRefs } from './refs';
 import { parseBound } from './swagger-parser-workaround';
+import { parseMediaType } from './media-type';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 import type {
   OpenApiDocument,
   OpenApiPersistedSchema,
-  OpenApiOneOfSchema
+  OpenApiOneOfSchema,
+  OpenApiPersistedResponse,
+  OpenApiSchema,
+  OpenApiApi
 } from '../openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
 import type { ParserOptions } from './options';
@@ -35,17 +39,29 @@ export async function parseOpenApiDocument(
   options: ParserOptions
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
-  const document = (await parseBound(clonedContent)) as OpenAPIV3.Document;
+  const document: OpenAPIV3.Document = (await parseBound(
+    clonedContent
+  )) as OpenAPIV3.Document;
   const refs = await createRefs(document, options);
   const schemas = parseSchemas(document, refs, options);
+  const componentResponses = parseComponentResponses(document, refs, options);
   sanitizeDiscriminatedSchemas(schemas, refs, options);
-
+  const apis: OpenApiApi[] = parseApis(document, refs, options);
+  const distinctErrorSchemas = apis.flatMap(api =>
+    api.operations.flatMap(operation =>
+      Object.values(operation.errorResponses || {}).map(response => {
+        const res = response as OpenApiSchema;
+        return res.
+      })
+    )
+  );
   return {
-    apis: parseApis(document, refs, options),
+    apis,
     serviceDescription: document.info.description,
     serviceOptions,
     serviceName: serviceOptions.directoryName,
-    schemas
+    schemas,
+    componentResponses
   };
 }
 
@@ -114,6 +130,26 @@ export function parseSchemas(
       description: refs.resolveObject(schema).description,
       schemaProperties: parseSchemaProperties(schema),
       nullable: 'nullable' in schema && schema.nullable ? true : false
+    })
+  );
+}
+
+/**
+ * @internal
+ */
+export function parseComponentResponses(
+  document: OpenAPIV3.Document,
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
+): OpenApiPersistedResponse[] {
+  return Object.entries(document.components?.responses || {}).map(
+    ([name, response]) => ({
+      schema: (parseMediaType(
+        response as OpenAPIV3.ResponseObject,
+        refs,
+        options
+      ) || {}) as OpenApiSchema,
+      ...refs.getResponseNaming(`#/components/responses/${name}`)
     })
   );
 }

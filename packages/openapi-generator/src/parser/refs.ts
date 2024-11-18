@@ -5,8 +5,8 @@ import { ensureValidSchemaNames } from './schema-naming';
 import { resolveBound } from './swagger-parser-workaround';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { $Refs } from '@apidevtools/swagger-parser';
-import type { SchemaNaming } from '../openapi-types';
-import type { SchemaRefMapping } from './parsing-info';
+import type { SchemaNaming, ResponseNaming } from '../openapi-types';
+import type { SchemaRefMapping, ResponseRefMapping } from './parsing-info';
 import type { ParserOptions } from './options';
 
 /**
@@ -41,7 +41,8 @@ export class OpenApiDocumentRefs {
   ): Promise<OpenApiDocumentRefs> {
     return new OpenApiDocumentRefs(
       await resolveBound(document),
-      OpenApiDocumentRefs.parseSchemaRefMapping(document, options)
+      OpenApiDocumentRefs.parseSchemaRefMapping(document, options),
+      OpenApiDocumentRefs.parseResponseRefMapping(document, options)
     );
   }
 
@@ -81,13 +82,49 @@ export class OpenApiDocumentRefs {
   }
 
   /**
+   * Parse mapping between schema references and their unique names.
+   * @param document - The original OpenAPI document.
+   * @param options - Parser options.
+   * @returns A mapping from schema references to schema naming objects.
+   */
+  private static parseResponseRefMapping(
+    document: OpenAPIV3.Document,
+    options: ParserOptions
+  ): ResponseRefMapping {
+    const originalNames = Object.keys(document.components?.responses || {});
+    const validResponseNames = ensureValidSchemaNames(originalNames, options);
+
+    const responseNames = ensureUniqueNames(validResponseNames, options, {
+      format: pascalCase,
+      separator: '_'
+    });
+    const fileNames = ensureUniqueNames(responseNames, options, {
+      format: kebabCase,
+      separator: '-',
+      reservedWords: ['index']
+    });
+
+    return originalNames.reduce(
+      (mapping, originalName, i) => ({
+        ...mapping,
+        [`#/components/responses/${originalName}`]: {
+          responseName: pascalCase(options.schemaPrefix) + responseNames[i],
+          fileName: fileNames[i]
+        }
+      }),
+      {}
+    );
+  }
+  /**
    * Creates a new instance of `OpenApiDocumentRefs`.
    * @param refs - Object representing the OpenAPI cross references.
    * @param schemaRefMapping - Mapping between schema references and schema naming.
+   * @param responseRefMapping - Mapping between response references and response naming.
    */
   private constructor(
     private refs: $Refs,
-    private schemaRefMapping: SchemaRefMapping
+    private schemaRefMapping: SchemaRefMapping,
+    private responseRefMapping: ResponseRefMapping
   ) {}
 
   /**
@@ -121,5 +158,28 @@ export class OpenApiDocumentRefs {
       );
     }
     return schemaNaming;
+  }
+
+  /**
+   * Parse the type name of a reference object.
+   * @param obj - Reference object or reference path to get the type name from.
+   * @returns Parsed type name.
+   */
+  getResponseNaming(obj: OpenAPIV3.ReferenceObject | string): ResponseNaming {
+    const ref = isReferenceObject(obj) ? obj.$ref : obj;
+
+    if (!ref.startsWith('#/components/responses')) {
+      throw new Error(
+        `Could not get response naming for reference path '${ref}'. Path does not reference a response.`
+      );
+    }
+
+    const responseNaming = this.responseRefMapping[ref];
+    if (!responseNaming) {
+      throw new Error(
+        `Could not find response naming for reference path '${ref}'. Response does not exist.`
+      );
+    }
+    return responseNaming;
   }
 }

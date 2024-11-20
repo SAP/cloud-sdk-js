@@ -40,3 +40,7 @@ async function getBumpType() {
     .sort((a, b) => b - a);
   return bumpTypeOrder[Math.min(...versionIncreases)];
 }
+
+export function formatJson(json: any): string {
+  return JSON.stringify(json, null, 2) + '\n';
+}

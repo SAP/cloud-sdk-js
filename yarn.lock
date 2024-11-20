@@ -1533,17 +1533,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-compiler@^3.2.0":
-  version "3.9.12"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-3.9.12.tgz#3e40c0956bfbe2106b50a0ee9efabeca1b68f6c8"
-  integrity sha512-PGGrkmSag2cymAxj+zEnHV+jioHwSWLsurZBnkmPVtrATev5k1jNXjB1Py3SOyeM1jyWKD3qhyWgitn9clSZcw==
-  dependencies:
-    antlr4 "4.9.3"
-
-"@sap/cds-dk@8.4.1":
-  version "8.4.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-8.4.1.tgz#a380d172dae4158d4be33179a62a4c3361048f4e"
-  integrity sha512-+/DU/gSGD6iEDdZ4/heUJqP2Mf0qqy38aKtmKpw0o/FKlTy6RrN5P4R4PIa4Y8gyGrn4i1Uk1H9cheBSQAk15A==
+"@sap/cds-dk@8.4.2":
+  version "8.4.2"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-8.4.2.tgz#cbf11f05df24c189e3589daac7485450b2da6588"
+  integrity sha512-fpN1d4DwgsSmnd9VveusDYwIPSAx4CXa1uQtKOJJnXheoBN1/SVWCrrVdNu0IC3xPaD/Se4KKwjbC3IfwuRr/w==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"
@@ -1569,17 +1562,6 @@
   resolved "https://registry.npmjs.org/@sap/cds-fiori/-/cds-fiori-1.2.7.tgz#cdfec5437e6c35f3ce1f22db35701570abfc2787"
   integrity sha512-F6Uf9wvkv0fXW+Fh7PiV2BbB/k+p1cFJLkQCCKDRJH8HvlxWEcXcn/YIvBrQGuX+GToi125MxB3wd712d8OLTA==
 
-"@sap/cds-foss@^4":
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-4.0.2.tgz#2910fa0a2f3dffb6a66c787de27cbfe564467412"
-  integrity sha512-XY8lmLu3NgGVkOdX9N9L91dWldhu//iQqJF98rqHAtCtdoOKfKCtiYafSVruAmVEzQ3tUWsGXNKCtpHdoXYuLA==
-  dependencies:
-    big.js "^6.1.1"
-    generic-pool "^3.8.2"
-    uuid "^9.0.0"
-    xmlbuilder "^15.1.1"
-    yaml "^2.2.2"
-
 "@sap/cds-foss@^5.0.0":
   version "5.0.0"
   resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-5.0.0.tgz#6d941cf8a2f169d6d641ec877aa69680486d1c70"
@@ -1598,15 +1580,7 @@
     "@sap/hdi-deploy" ">=4"
     axios "^1"
 
-"@sap/cds@>=5.6.0":
-  version "6.8.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-6.8.4.tgz#c73adb8e61f9efb4eff705f125a717f214f8e49f"
-  integrity sha512-CTf6Y732ABTIAQPwtFZpfLUzZgQLOs9ZqBIrHhFJRx3VQvopfBZlbWAhujz092xETM7u4msZudoUprkmRo0+hg==
-  dependencies:
-    "@sap/cds-compiler" "^3.2.0"
-    "@sap/cds-foss" "^4"
-
-"@sap/cds@>=7", "@sap/cds@^8.4.1":
+"@sap/cds@>=5.6.0", "@sap/cds@>=7", "@sap/cds@^8.4.1":
   version "8.4.2"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-8.4.2.tgz#2baf0b0f3917a641403829c7db23d83bd38913ad"
   integrity sha512-wHiPU+PciyG6L7oGglUq22ji+aV5SFwef/gF/rnIheMirzxpDlHq+K8GwqmcrrFu3GWRioQGRe3rr8KAalOQrg==
@@ -9849,11 +9823,6 @@ uuid@^8.3.2:
   resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
-uuid@^9.0.0:
-  version "9.0.1"
-  resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
-  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
-
 v8-compile-cache-lib@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/v8-compile-cache-lib/-/v8-compile-cache-lib-3.0.1.tgz#6336e8d71965cb3d35a1bbb7868445a7c05264bf"
@@ -10134,9 +10103,9 @@ yallist@^5.0.0:
   integrity sha512-YgvUTfwqyc7UXVMrB+SImsVYSmTS8X/tSrtdNZMImM+n7+QTriRXyXim0mBrTXNeqzVF0KWGgHPeiyViFFrNDw==
 
 yaml@>=2.2.2, yaml@^1.10.0, yaml@^2.2.2, yaml@^2.5.1:
-  version "2.6.0"
-  resolved "https://registry.npmjs.org/yaml/-/yaml-2.6.0.tgz#14059ad9d0b1680d0f04d3a60fe00f3a857303c3"
-  integrity sha512-a6ae//JvKDEra2kdi1qzCyrJW/WZCgFi8ydDV+eXExl95t+5R+ijnqHJbz9tmMh8FUjx3iv2fCQ4dclAQlO2UQ==
+  version "2.6.1"
+  resolved "https://registry.npmjs.org/yaml/-/yaml-2.6.1.tgz#42f2b1ba89203f374609572d5349fb8686500773"
+  integrity sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg==
 
 yargs-parser@^20.2.2, yargs-parser@^20.2.3:
   version "20.2.9"

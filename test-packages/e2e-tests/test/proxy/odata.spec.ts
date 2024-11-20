@@ -20,8 +20,8 @@ const onPremDestination: HttpDestination = {
   proxyType: 'OnPremise',
   // NoAuthentication is not possible with OnPremise proxy type.
   authentication: 'BasicAuthentication',
-  username: '',
-  password: '',
+  username: 'username',
+  password: 'password',
   proxyConfiguration: {
     host: proxyHost,
     port: proxyPort,

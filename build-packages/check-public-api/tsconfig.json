@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "outDir": "./lib",
+      "tsBuildInfoFile": "./lib/.tsbuildinfo",
+      "composite": false,
+      "incremental": true,
+      "declaration": false,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "allowSyntheticDefaultImports": true,
+      "target": "es2021",
+      "module": "Node16",
+      "lib": ["ES2021", "dom"]
+    },
+    "include": ["index.ts"],
+    "exclude": []
+  }

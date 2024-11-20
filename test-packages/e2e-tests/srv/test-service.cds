@@ -1,6 +1,6 @@
 using { cloudsdk.test as cloudsdk } from '../db/schema';
 
-@path : 'test-service'
+@path : '/test-service'
 service TestService {
 
   define type MyComplexReturnType {

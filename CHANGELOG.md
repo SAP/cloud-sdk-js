@@ -28,6 +28,17 @@
 
 - 
 
+# 3.23.0
+
+
+## Fixed Issues
+
+- [generator-common] Fix ESM client code compilation by allowing the `module` option to be set to `nodenext` or `node16` in a custom `tsconfig.json` file. (745766e)
+- [mail-client] Fix mail client issue for port 465 with on-premise setup. (ea9b6b5)
+- [mail-client] Fix email sending functionality to ensure that emails are sent to all valid addresses. Previously, if an email failed, all subsequent emails were not sent.
+  - @sap-cloud-sdk/connectivity@3.23.0
+  - @sap-cloud-sdk/util@3.23.0 (62eaed5)
+
 # 3.22.2
 
 

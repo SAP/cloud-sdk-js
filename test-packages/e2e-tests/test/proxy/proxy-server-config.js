@@ -2,7 +2,7 @@ const proxyPort = 3100;
 const proxyHost = 'localhost';
 const proxyUser = 'user';
 const proxyPassword = 'password';
-const proxyBearAuth = 'Bear jwt';
+const proxyBearAuth = 'Bearer jwt';
 const proxyBasicAuth = 'Basic dXNlcjpwYXNzd29yZA==';
 
 module.exports = {

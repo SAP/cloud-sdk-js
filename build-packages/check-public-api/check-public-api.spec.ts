@@ -1,34 +1,40 @@
 import mock from 'mock-fs';
-import { createLogger } from '@sap-cloud-sdk/util';
+import path from 'path';
+import * as core from '@actions/core';
 import {
   checkBarrelRecursive,
   checkIndexFileExists,
   exportAllInBarrel,
   parseBarrelFile,
   parseIndexFile,
-  parseTypeDefinitionFile,
+  parseExportedObjectsInFile,
   regexExportedIndex,
   typeDescriptorPaths
-} from './check-public-api';
+} from './index';
 
 describe('check-public-api', () => {
-  afterEach(() => mock.restore());
+  let errorSpy: any;
 
-  it('checkIndexFileExists fails if index file is not in root', () => {
-    mock({
-      root: {
-        dir1: {
-          'index.ts': ''
-        }
-      }
-    });
-    expect(() => checkIndexFileExists('root/index.ts')).toThrowError(
-      'No index.ts file found in root.'
-    );
+  beforeEach(() => {
+    errorSpy = jest.spyOn(core, 'error').mockImplementation();
+  });
+  afterEach(() => {
+    errorSpy.mockRestore();
+    mock.restore();
   });
 
   describe('exportAllInBarrel', () => {
-    afterEach(() => mock.restore());
+    it('checkIndexFileExists fails if index file is not in root', () => {
+      mock({
+        root: {
+          dir1: {
+            'index.ts': ''
+          }
+        }
+      });
+      checkIndexFileExists('root/index.ts');
+      expect(errorSpy).toHaveBeenCalledWith('No index.ts file found in root.');
+    });
 
     it('fails if internal.ts is not present in root', async () => {
       mock({
@@ -39,14 +45,13 @@ describe('check-public-api', () => {
           }
         }
       });
-      await expect(() =>
-        exportAllInBarrel('src', 'internal.ts')
-      ).rejects.toThrowError("No 'internal.ts' file found in 'src'.");
+      await exportAllInBarrel('src', 'internal.ts');
+      expect(errorSpy).toHaveBeenCalledWith(
+        "No 'internal.ts' file found in 'src'."
+      );
     });
 
     it('fails if a file is not exported in barrel file', async () => {
-      const logger = createLogger('check-public-api');
-      const errorSpy = jest.spyOn(logger, 'error');
       mock({
         dir1: {
           file1: '',
@@ -59,64 +64,64 @@ describe('check-public-api', () => {
         }
       });
 
-      await expect(() =>
-        exportAllInBarrel('dir1', 'index.ts')
-      ).rejects.toThrowError("'index.ts' is not in sync.");
+      await exportAllInBarrel('dir1', 'index.ts');
 
       expect(errorSpy).toHaveBeenCalledWith(
-        "'dir2' is not exported in 'dir1/index.ts'."
+        `'dir2' is not exported in '${path.normalize('dir1/index.ts')}'.`
       );
+      expect(errorSpy).toHaveBeenCalledWith("'index.ts' is not in sync.");
     });
-  });
 
-  it('checkBarrelRecursive passes recursive check for barrel file exports', () => {
-    mock({
-      dir1: {
-        file1: '',
-        'index.ts': "export * from './file1'; export * from './dir2';",
-        dir2: {
-          file2: '',
-          file3: '',
-          'index.ts': "export * from './file2';export * from './file3';"
+    it('checkBarrelRecursive passes recursive check for barrel file exports', async () => {
+      mock({
+        dir1: {
+          file1: '',
+          'index.ts': "export * from './file1'; export * from './dir2';",
+          dir2: {
+            file2: '',
+            file3: '',
+            'index.ts': "export * from './file2';export * from './file3';"
+          }
         }
-      }
+      });
+      await checkBarrelRecursive('dir1');
     });
-    checkBarrelRecursive('dir1');
-  });
 
-  it('typeDescriptorPaths finds the .d.ts files and excludes index.d.ts', () => {
-    mock({
-      dir1: {
-        'file1.d.ts': '',
-        'index.d.ts': '',
-        dir2: {
-          'file2.d.ts': '',
-          'file3.d.ts': '',
-          'index.d.ts': ''
+    it('typeDescriptorPaths finds the .d.ts files and excludes index.d.ts', async () => {
+      mock({
+        dir1: {
+          'file1.d.ts': '',
+          'index.d.ts': '',
+          dir2: {
+            'file2.d.ts': '',
+            'file3.d.ts': '',
+            'index.d.ts': ''
+          }
         }
-      }
+      });
+
+      expect(await typeDescriptorPaths('dir1')).toEqual([
+        path.normalize('dir1/file1.d.ts'),
+        path.normalize('dir1/dir2/file3.d.ts'),
+        path.normalize('dir1/dir2/file2.d.ts')
+      ]);
     });
-    expect(typeDescriptorPaths('dir1')).toEqual([
-      'dir1/dir2/file2.d.ts',
-      'dir1/dir2/file3.d.ts',
-      'dir1/file1.d.ts'
-    ]);
   });
 
-  describe('parseTypeDefinitionFile', () => {
+  describe('parseExportedObjectsInFile', () => {
     it('parses one .d.ts file', () => {
-      const exportedType = parseTypeDefinitionFile(dummyTypeDefinition);
+      const exportedType = parseExportedObjectsInFile(dummyTypeDefinition);
       expect(exportedType.map(e => e.name).sort()).toEqual([
         'CacheEntry',
         'IsolationStrategy',
         'MyType',
-        'parseTypeDefinitionFile',
+        'parseExportedObjectsInFile',
         'responseDataAccessor'
       ]);
     });
 
     it('parses one .d.ts file without content', () => {
-      const exportedType = parseTypeDefinitionFile('some non matching');
+      const exportedType = parseExportedObjectsInFile('some non matching');
       expect(exportedType).toEqual([]);
     });
   });
@@ -148,8 +153,6 @@ describe('check-public-api', () => {
   });
 
   describe('parseIndexFile', () => {
-    afterEach(() => mock.restore());
-
     it('parses referenced star imports', async () => {
       mock({
         'index.ts': "export * from './common';export * from './subdir/ref';",
@@ -161,7 +164,7 @@ describe('check-public-api', () => {
         }
       });
 
-      await expect(parseIndexFile('index.ts')).resolves.toEqual([
+      await expect(parseIndexFile('index.ts', true)).resolves.toEqual([
         'commonExport',
         'crossRefExport',
         'subdirRefExport'
@@ -176,7 +179,7 @@ describe('check-public-api', () => {
         'named.ts': "export type { namedExport } from './local'"
       });
 
-      const result = await parseIndexFile('index.ts');
+      const result = await parseIndexFile('index.ts', true);
       expect(result).toEqual(['namedExport', 'commonExport']);
     });
 
@@ -186,7 +189,9 @@ describe('check-public-api', () => {
           "export { ignoreme } from '@other/package';export { local } from './local';"
       });
 
-      await expect(parseIndexFile('index.ts')).resolves.toEqual(['local']);
+      await expect(parseIndexFile('index.ts', true)).resolves.toEqual([
+        'local'
+      ]);
     });
 
     it('throws an error on internal re-exports', async () => {
@@ -195,7 +200,8 @@ describe('check-public-api', () => {
           "export { internal } from '@other/package/internal';export { local } from './local';"
       });
 
-      await expect(parseIndexFile('index.ts')).rejects.toThrowError(
+      await parseIndexFile('index.ts', true);
+      expect(errorSpy).toHaveBeenCalledWith(
         "Re-exporting internal modules is not allowed. 'internal' exported in 'index.ts'."
       );
     });
@@ -221,7 +227,7 @@ export declare enum IsolationStrategy {
     No_Isolation = "NoIsolation"
 }
 
-export declare function parseTypeDefinitionFile(path: string): Promise<string[]>;
+export declare function parseExportedObjectsInFile(path: string): Promise<string[]>;
 export declare const responseDataAccessor: ResponseDataAccessor;
 
 export declare type MyType = {value:string}

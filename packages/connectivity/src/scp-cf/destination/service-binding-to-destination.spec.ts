@@ -1,7 +1,10 @@
 import { serviceToken } from '../token-accessor';
 import { resolveServiceBinding } from '../environment-accessor/service-bindings';
 import { decodeJwt } from '../jwt';
-import { transformServiceBindingToClientCredentialsDestination, transformServiceBindingToDestination } from './service-binding-to-destination';
+import {
+  transformServiceBindingToClientCredentialsDestination,
+  transformServiceBindingToDestination
+} from './service-binding-to-destination';
 
 const services = {
   destination: [
@@ -214,9 +217,10 @@ describe('service binding to destination', () => {
   });
 
   it('transforms a generic service binding to a client credentials destination', async () => {
-    const destination = await transformServiceBindingToClientCredentialsDestination(
-      resolveServiceBinding('some-service')
-    );
+    const destination =
+      await transformServiceBindingToClientCredentialsDestination(
+        resolveServiceBinding('some-service')
+      );
     expect(destination).toEqual(
       expect.objectContaining({
         url: 'some-service-url',
@@ -233,10 +237,11 @@ describe('service binding to destination', () => {
   });
 
   it('transforms a generic service binding to a client credentials destination', async () => {
-    const destination = await transformServiceBindingToClientCredentialsDestination(
-      resolveServiceBinding('some-service'),
-      { url: 'some-custom-service-url' }
-    );
+    const destination =
+      await transformServiceBindingToClientCredentialsDestination(
+        resolveServiceBinding('some-service'),
+        { url: 'some-custom-service-url' }
+      );
     expect(destination).toEqual(
       expect.objectContaining({
         url: 'some-custom-service-url',

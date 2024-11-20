@@ -58,19 +58,19 @@ export async function transformServiceBindingToDestination(
 
 /**
  * Transforms a service binding to a destination of type OAuth2ClientCredentials.
- * @param serviceBinding - The service binding to transform.
- * @param options - Options used for fetching the destination.
+ * @param service - The service binding to transform.
+ * @param options - Options used to transform the service binding.
  * @returns A promise returning the transformed destination on success.
  */
 export async function transformServiceBindingToClientCredentialsDestination(
   service: Service,
-  options?: ServiceBindingTransformOptions & { url: string }
+  options?: ServiceBindingTransformOptions & { url?: string }
 ): Promise<Destination> {
-  const token = await serviceToken(serviceBinding, options);
+  const token = await serviceToken(service, options);
   return buildClientCredentialsDestination(
     token,
-    options?.url ?? serviceBinding.url,
-    serviceBinding.name
+    options?.url ?? service.url,
+    service.name
   );
 }
 

@@ -236,7 +236,7 @@ describe('service binding to destination', () => {
     );
   });
 
-  it('transforms a generic service binding to a client credentials destination', async () => {
+  it('transforms a generic service binding to a client credentials destination with custom url', async () => {
     const destination =
       await transformServiceBindingToClientCredentialsDestination(
         resolveServiceBinding('some-service'),

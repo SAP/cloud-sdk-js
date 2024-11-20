@@ -63,7 +63,7 @@ export async function transformServiceBindingToDestination(
  * @returns A promise returning the transformed destination on success.
  */
 export async function transformServiceBindingToClientCredentialsDestination(
-  serviceBinding: Service,
+  service: Service,
   options?: ServiceBindingTransformOptions & { url: string }
 ): Promise<Destination> {
   const token = await serviceToken(serviceBinding, options);

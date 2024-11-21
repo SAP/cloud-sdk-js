@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@changesets/get-release-plan": "^4.0.4",
+    "@changesets/get-release-plan": "^4.0.5",
     "execa": "^5.0.0",
     "semver": "^7.6.3"
   },

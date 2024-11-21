@@ -57,7 +57,9 @@ export async function transformServiceBindingToDestination(
 }
 
 /**
+ * Convenience function to create a destination from the provided service binding.
  * Transforms a service binding to a destination of type OAuth2ClientCredentials.
+ * If a JWT is provided as part of the options, the tenant in the JWT is used for the client credentials grant, else the provider tenant is used, wherever applicable.
  * @param service - The service binding to transform.
  * @param options - Options used to transform the service binding.
  * @returns A promise returning the transformed destination on success.

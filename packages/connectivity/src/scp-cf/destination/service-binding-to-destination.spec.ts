@@ -74,8 +74,7 @@ const services = {
       url: 'some-service-url',
       credentials: {
         clientid: 'some-service-clientid',
-        clientsecret: 'some-service-clientsecret',
-        uri: 'some-service-uri'
+        clientsecret: 'some-service-clientsecret'
       }
     }
   ],

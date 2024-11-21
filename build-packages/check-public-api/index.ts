@@ -42,12 +42,14 @@ export interface ExportedObject {
 
 function paths(pathToPackage: string): {
   pathToSource: string;
+  pathToPackageJson: string;
   pathToTsConfig: string;
   pathToNodeModules: string;
   pathCompiled: string;
 } {
   return {
     pathToSource: join(pathToPackage, 'src'),
+    pathToPackageJson: join(pathToPackage, 'package.json'),
     pathToTsConfig: join(pathToPackage, 'tsconfig.json'),
     pathToNodeModules: join(pathToPackage, 'node_modules'),
     pathCompiled: 'dist'
@@ -55,10 +57,11 @@ function paths(pathToPackage: string): {
 }
 
 function mockFileSystem(pathToPackage: string) {
-  const { pathToSource, pathToTsConfig, pathToNodeModules } =
+  const { pathToSource, pathToTsConfig, pathToNodeModules, pathToPackageJson } =
     paths(pathToPackage);
   mock({
     [pathToTsConfig]: mock.load(pathToTsConfig),
+    [pathToPackageJson]: mock.load(pathToPackageJson),
     [pathToSource]: mock.load(pathToSource),
     [pathRootNodeModules]: mock.load(pathRootNodeModules),
     [pathToNodeModules]: mock.load(pathToNodeModules),

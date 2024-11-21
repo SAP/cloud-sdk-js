@@ -38,15 +38,17 @@ exports.regexExportedInternal = /\.\/([\w-]+)/g;
 function paths(pathToPackage) {
     return {
         pathToSource: (0, path_1.join)(pathToPackage, 'src'),
+        pathToPackageJson: (0, path_1.join)(pathToPackage, 'package.json'),
         pathToTsConfig: (0, path_1.join)(pathToPackage, 'tsconfig.json'),
         pathToNodeModules: (0, path_1.join)(pathToPackage, 'node_modules'),
         pathCompiled: 'dist'
     };
 }
 function mockFileSystem(pathToPackage) {
-    const { pathToSource, pathToTsConfig, pathToNodeModules } = paths(pathToPackage);
+    const { pathToSource, pathToTsConfig, pathToNodeModules, pathToPackageJson } = paths(pathToPackage);
     (0, mock_fs_1.default)({
         [pathToTsConfig]: mock_fs_1.default.load(pathToTsConfig),
+        [pathToPackageJson]: mock_fs_1.default.load(pathToPackageJson),
         [pathToSource]: mock_fs_1.default.load(pathToSource),
         [pathRootNodeModules]: mock_fs_1.default.load(pathRootNodeModules),
         [pathToNodeModules]: mock_fs_1.default.load(pathToNodeModules),

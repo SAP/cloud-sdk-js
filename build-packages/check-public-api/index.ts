@@ -25,10 +25,6 @@ import { getPackages } from '@manypkg/get-packages';
 
 const { readFile, lstat, readdir } = promises;
 
-const localConfigPath = join(
-  process.cwd(),
-  'build-packages/check-public-api/local-config.json'
-);
 const pathToTsConfigRoot = join(process.cwd(), 'tsconfig.json');
 const pathRootNodeModules = join(process.cwd(), 'node_modules');
 export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
@@ -48,12 +44,16 @@ function paths(pathToPackage: string): {
   pathCompiled: string;
 } {
   return {
-    pathToSource: join(pathToPackage, 'src'),
-    pathToPackageJson: join(pathToPackage, 'package.json'),
-    pathToTsConfig: join(pathToPackage, 'tsconfig.json'),
-    pathToNodeModules: join(pathToPackage, 'node_modules'),
+    pathToSource: getPathWithPosixSeparator(join(pathToPackage, 'src')),
+    pathToPackageJson: getPathWithPosixSeparator(join(pathToPackage, 'package.json')),
+    pathToTsConfig: getPathWithPosixSeparator(join(pathToPackage, 'tsconfig.json')),
+    pathToNodeModules: getPathWithPosixSeparator(join(pathToPackage, 'node_modules')),
     pathCompiled: 'dist'
   };
+}
+
+function getPathWithPosixSeparator(filePath: string): string {
+  return filePath.split(sep).join(posix.sep);
 }
 
 function mockFileSystem(pathToPackage: string) {
@@ -94,6 +94,12 @@ function getListFromInput(inputKey: string) {
   return input ? input.split(',').map(item => item.trim()) : [];
 }
 
+function isPathMatchingPattern(path: string, patterns: string[]): boolean {
+  return patterns.some(pattern => {
+    return new RegExp(pattern).test(path);
+  });
+}
+
 /**
  * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
  * @param allExportedIndex - Names of the object imported by the index.ts.
@@ -105,15 +111,13 @@ function compareApisAndLog(
   allExportedTypes: ExportedObject[]
 ): boolean {
   let setsAreEqual = true;
-  const ignoredPaths = getListFromInput('ignored_paths');
+  const ignoredPathPatterns = getListFromInput('ignored_path_patterns');
 
   allExportedTypes.forEach(exportedType => {
-    const normalizedPath = exportedType.path.split(sep).join(posix.sep);
+    const normalizedPath = getPathWithPosixSeparator(exportedType.path);
 
-    const isPathMatched = ignoredPaths.length
-      ? ignoredPaths.some(ignoredPath =>
-          normalizedPath.includes(ignoredPath.split(sep).join(posix.sep))
-        )
+    const isPathMatched = ignoredPathPatterns.length
+      ? isPathMatchingPattern(normalizedPath, ignoredPathPatterns)
       : false;
     if (
       !allExportedIndex.find(nameInIndex => exportedType.name === nameInIndex)

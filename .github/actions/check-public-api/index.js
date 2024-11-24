@@ -30,19 +30,21 @@ const mock_fs_1 = __importDefault(__nccwpck_require__(55850));
 const internal_1 = __nccwpck_require__(81583);
 const get_packages_1 = __nccwpck_require__(30886);
 const { readFile, lstat, readdir } = fs_1.promises;
-const localConfigPath = (0, path_1.join)(process.cwd(), 'build-packages/check-public-api/local-config.json');
 const pathToTsConfigRoot = (0, path_1.join)(process.cwd(), 'tsconfig.json');
 const pathRootNodeModules = (0, path_1.join)(process.cwd(), 'node_modules');
 exports.regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 exports.regexExportedInternal = /\.\/([\w-]+)/g;
 function paths(pathToPackage) {
     return {
-        pathToSource: (0, path_1.join)(pathToPackage, 'src'),
-        pathToPackageJson: (0, path_1.join)(pathToPackage, 'package.json'),
-        pathToTsConfig: (0, path_1.join)(pathToPackage, 'tsconfig.json'),
-        pathToNodeModules: (0, path_1.join)(pathToPackage, 'node_modules'),
+        pathToSource: getPathWithPosixSeparator((0, path_1.join)(pathToPackage, 'src')),
+        pathToPackageJson: getPathWithPosixSeparator((0, path_1.join)(pathToPackage, 'package.json')),
+        pathToTsConfig: getPathWithPosixSeparator((0, path_1.join)(pathToPackage, 'tsconfig.json')),
+        pathToNodeModules: getPathWithPosixSeparator((0, path_1.join)(pathToPackage, 'node_modules')),
         pathCompiled: 'dist'
     };
+}
+function getPathWithPosixSeparator(filePath) {
+    return filePath.split(path_1.sep).join(path_1.posix.sep);
 }
 function mockFileSystem(pathToPackage) {
     const { pathToSource, pathToTsConfig, pathToNodeModules, pathToPackageJson } = paths(pathToPackage);
@@ -76,6 +78,11 @@ function getListFromInput(inputKey) {
     const input = (0, core_1.getInput)(inputKey);
     return input ? input.split(',').map(item => item.trim()) : [];
 }
+function isPathMatchingPattern(path, patterns) {
+    return patterns.some(pattern => {
+        return new RegExp(pattern).test(path);
+    });
+}
 /**
  * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
  * @param allExportedIndex - Names of the object imported by the index.ts.
@@ -84,11 +91,11 @@ function getListFromInput(inputKey) {
  */
 function compareApisAndLog(allExportedIndex, allExportedTypes) {
     let setsAreEqual = true;
-    const ignoredPaths = getListFromInput('ignored_paths');
+    const ignoredPathPatterns = getListFromInput('ignored_path_patterns');
     allExportedTypes.forEach(exportedType => {
-        const normalizedPath = exportedType.path.split(path_1.sep).join(path_1.posix.sep);
-        const isPathMatched = ignoredPaths.length
-            ? ignoredPaths.some(ignoredPath => normalizedPath.includes(ignoredPath.split(path_1.sep).join(path_1.posix.sep)))
+        const normalizedPath = getPathWithPosixSeparator(exportedType.path);
+        const isPathMatched = ignoredPathPatterns.length
+            ? isPathMatchingPattern(normalizedPath, ignoredPathPatterns)
             : false;
         if (!allExportedIndex.find(nameInIndex => exportedType.name === nameInIndex)) {
             if (isPathMatched) {

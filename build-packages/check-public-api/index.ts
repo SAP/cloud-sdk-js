@@ -45,9 +45,15 @@ function paths(pathToPackage: string): {
 } {
   return {
     pathToSource: getPathWithPosixSeparator(join(pathToPackage, 'src')),
-    pathToPackageJson: getPathWithPosixSeparator(join(pathToPackage, 'package.json')),
-    pathToTsConfig: getPathWithPosixSeparator(join(pathToPackage, 'tsconfig.json')),
-    pathToNodeModules: getPathWithPosixSeparator(join(pathToPackage, 'node_modules')),
+    pathToPackageJson: getPathWithPosixSeparator(
+      join(pathToPackage, 'package.json')
+    ),
+    pathToTsConfig: getPathWithPosixSeparator(
+      join(pathToPackage, 'tsconfig.json')
+    ),
+    pathToNodeModules: getPathWithPosixSeparator(
+      join(pathToPackage, 'node_modules')
+    ),
     pathCompiled: 'dist'
   };
 }

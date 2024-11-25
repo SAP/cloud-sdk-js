@@ -78,11 +78,6 @@ function getListFromInput(inputKey) {
     const input = (0, core_1.getInput)(inputKey);
     return input ? input.split(',').map(item => item.trim()) : [];
 }
-function isPathMatchingPattern(path, patterns) {
-    return patterns.some(pattern => {
-        return new RegExp(pattern).test(path);
-    });
-}
 /**
  * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
  * @param allExportedIndex - Names of the object imported by the index.ts.
@@ -91,11 +86,11 @@ function isPathMatchingPattern(path, patterns) {
  */
 function compareApisAndLog(allExportedIndex, allExportedTypes) {
     let setsAreEqual = true;
-    const ignoredPathPatterns = getListFromInput('ignored_path_patterns');
+    const ignoredPathPattern = (0, core_1.getInput)('ignored_path_patterns');
     allExportedTypes.forEach(exportedType => {
         const normalizedPath = getPathWithPosixSeparator(exportedType.path);
-        const isPathMatched = ignoredPathPatterns.length
-            ? isPathMatchingPattern(normalizedPath, ignoredPathPatterns)
+        const isPathMatched = ignoredPathPattern
+            ? new RegExp(ignoredPathPattern).test(normalizedPath)
             : false;
         if (!allExportedIndex.find(nameInIndex => exportedType.name === nameInIndex)) {
             if (isPathMatched) {
@@ -135,7 +130,7 @@ async function checkApiOfPackage(pathToPackage) {
                 prettierOptions: internal_1.defaultPrettierConfig,
                 usePrettier: false
             }
-        }, { exclude: includeExclude?.exclude, include: ['**/*.ts'] });
+        }, { exclude: includeExclude ? includeExclude.exclude : [], include: ['**/*.ts'] });
         const forceInternalExports = (0, core_1.getInput)('force_internal_exports') === 'true';
         if (forceInternalExports) {
             await checkBarrelRecursive(pathToSource);
@@ -239,12 +234,12 @@ async function parseIndexFile(filePath, forceInternalExports) {
             ...parseBarrelFile(fileContent, exports.regexExportedIndex),
             ...parseExportedObjectsInFile(fileContent).map(obj => obj.name)
         ];
-    const starFiles = captureGroupsFromGlobalRegex(/export \* from '([\w\/.-]+)'/g, fileContent);
+    const starFiles = captureGroupsFromGlobalRegex(/export \* from '([\w/.-]+)'/g, fileContent);
     const starFileExports = await Promise.all(starFiles.map(async (relativeFilePath) => {
-        const filePath = relativeFilePath.endsWith('.js')
+        const absolutePath = relativeFilePath.endsWith('.js')
             ? (0, path_1.resolve)(cwd, `${relativeFilePath.slice(0, -3)}.ts`)
             : (0, path_1.resolve)(cwd, `${relativeFilePath}.ts`);
-        return parseIndexFile(filePath, forceInternalExports);
+        return parseIndexFile(absolutePath, forceInternalExports);
     }));
     return [...localExports, ...starFileExports.flat()];
 }
@@ -301,8 +296,8 @@ async function runCheckApi() {
         try {
             await checkApiOfPackage(pkg.dir);
         }
-        catch (error) {
-            (0, core_1.setFailed)(`API check failed for ${pkg.relativeDir}: ${error}`);
+        catch (e) {
+            (0, core_1.setFailed)(`API check failed for ${pkg.relativeDir}: ${e}`);
             process.exit(1);
         }
     }

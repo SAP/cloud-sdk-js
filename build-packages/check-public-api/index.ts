@@ -1,14 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import {
-  join,
-  resolve,
-  parse,
-  basename,
-  dirname,
-  posix,
-  sep
-} from 'path';
+import { join, resolve, parse, basename, dirname, posix, sep } from 'path';
 import { promises, existsSync } from 'fs';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
@@ -173,7 +165,10 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
           usePrettier: false
         }
       },
-      { exclude: includeExclude ? includeExclude.exclude : [], include: ['**/*.ts'] }
+      {
+        exclude: includeExclude ? includeExclude.exclude : [],
+        include: ['**/*.ts']
+      }
     );
 
     const forceInternalExports = getInput('force_internal_exports') === 'true';

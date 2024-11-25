@@ -86,7 +86,7 @@ function getListFromInput(inputKey) {
  */
 function compareApisAndLog(allExportedIndex, allExportedTypes) {
     let setsAreEqual = true;
-    const ignoredPathPattern = (0, core_1.getInput)('ignored_path_patterns');
+    const ignoredPathPattern = (0, core_1.getInput)('ignored_path_pattern');
     allExportedTypes.forEach(exportedType => {
         const normalizedPath = getPathWithPosixSeparator(exportedType.path);
         const isPathMatched = ignoredPathPattern
@@ -130,7 +130,10 @@ async function checkApiOfPackage(pathToPackage) {
                 prettierOptions: internal_1.defaultPrettierConfig,
                 usePrettier: false
             }
-        }, { exclude: includeExclude ? includeExclude.exclude : [], include: ['**/*.ts'] });
+        }, {
+            exclude: includeExclude ? includeExclude.exclude : [],
+            include: ['**/*.ts']
+        });
         const forceInternalExports = (0, core_1.getInput)('force_internal_exports') === 'true';
         if (forceInternalExports) {
             await checkBarrelRecursive(pathToSource);

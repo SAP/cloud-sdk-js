@@ -1,6 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import path, {
+import {
   join,
   resolve,
   parse,
@@ -20,8 +20,8 @@ import {
   readIncludeExcludeWithDefaults,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
-import type { CompilerOptions } from 'typescript';
 import { getPackages } from '@manypkg/get-packages';
+import type { CompilerOptions } from 'typescript';
 
 const { readFile, lstat, readdir } = promises;
 
@@ -100,12 +100,6 @@ function getListFromInput(inputKey: string) {
   return input ? input.split(',').map(item => item.trim()) : [];
 }
 
-function isPathMatchingPattern(path: string, patterns: string[]): boolean {
-  return patterns.some(pattern => {
-    return new RegExp(pattern).test(path);
-  });
-}
-
 /**
  * Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
  * @param allExportedIndex - Names of the object imported by the index.ts.
@@ -117,13 +111,13 @@ function compareApisAndLog(
   allExportedTypes: ExportedObject[]
 ): boolean {
   let setsAreEqual = true;
-  const ignoredPathPatterns = getListFromInput('ignored_path_patterns');
+  const ignoredPathPattern = getInput('ignored_path_patterns');
 
   allExportedTypes.forEach(exportedType => {
     const normalizedPath = getPathWithPosixSeparator(exportedType.path);
 
-    const isPathMatched = ignoredPathPatterns.length
-      ? isPathMatchingPattern(normalizedPath, ignoredPathPatterns)
+    const isPathMatched = ignoredPathPattern
+      ? new RegExp(ignoredPathPattern).test(normalizedPath)
       : false;
     if (
       !allExportedIndex.find(nameInIndex => exportedType.name === nameInIndex)
@@ -179,7 +173,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
           usePrettier: false
         }
       },
-      { exclude: includeExclude?.exclude!, include: ['**/*.ts'] }
+      { exclude: includeExclude ? includeExclude.exclude : [], include: ['**/*.ts'] }
     );
 
     const forceInternalExports = getInput('force_internal_exports') === 'true';
@@ -319,16 +313,16 @@ export async function parseIndexFile(
         ...parseExportedObjectsInFile(fileContent).map(obj => obj.name)
       ];
   const starFiles = captureGroupsFromGlobalRegex(
-    /export \* from '([\w\/.-]+)'/g,
+    /export \* from '([\w/.-]+)'/g,
     fileContent
   );
   const starFileExports = await Promise.all(
     starFiles.map(async relativeFilePath => {
-      const filePath = relativeFilePath.endsWith('.js')
+      const absolutePath = relativeFilePath.endsWith('.js')
         ? resolve(cwd, `${relativeFilePath.slice(0, -3)}.ts`)
         : resolve(cwd, `${relativeFilePath}.ts`);
 
-      return parseIndexFile(filePath, forceInternalExports);
+      return parseIndexFile(absolutePath, forceInternalExports);
     })
   );
   return [...localExports, ...starFileExports.flat()];
@@ -420,8 +414,8 @@ async function runCheckApi() {
   for (const pkg of packagesToCheck) {
     try {
       await checkApiOfPackage(pkg.dir);
-    } catch (error) {
-      setFailed(`API check failed for ${pkg.relativeDir}: ${error}`);
+    } catch (e) {
+      setFailed(`API check failed for ${pkg.relativeDir}: ${e}`);
       process.exit(1);
     }
   }

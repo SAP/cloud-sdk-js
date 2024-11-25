@@ -103,7 +103,7 @@ function compareApisAndLog(
   allExportedTypes: ExportedObject[]
 ): boolean {
   let setsAreEqual = true;
-  const ignoredPathPattern = getInput('ignored_path_patterns');
+  const ignoredPathPattern = getInput('ignored_path_pattern');
 
   allExportedTypes.forEach(exportedType => {
     const normalizedPath = getPathWithPosixSeparator(exportedType.path);

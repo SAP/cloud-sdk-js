@@ -6,8 +6,8 @@ inputs:
     default: 'false'
   excluded_packages:
     description: 'Packages to exclude when checking the public API.'
-  ignored_paths:
-    description: 'Paths to ignore when checking the public API.'
+  ignored_path_pattern:
+    description: 'Regular expression for paths to be ignore when checking the public API.'
 
 runs:
   using: 'node20'

@@ -7030,10 +7030,10 @@ neo-async@^2.6.2:
   resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
-nock@^14.0.0-beta.17:
-  version "14.0.0-beta.17"
-  resolved "https://registry.npmjs.org/nock/-/nock-14.0.0-beta.17.tgz#a2952e240e3b5b20fb05349cfa7e614cc3d3b0a5"
-  integrity sha512-VBuPJISh9Tp0BZikx6MZB/Ummad0aFEZ4aBwMqOXzsPxqq1DaFct93TR2vXYKAwLXZwqVrYqFMtLayYtVbgNjg==
+nock@^14.0.0-beta.18:
+  version "14.0.0-beta.18"
+  resolved "https://registry.npmjs.org/nock/-/nock-14.0.0-beta.18.tgz#7245e63c19811f45cb5067587c6345f47dfb300c"
+  integrity sha512-pG+QkbovRb8XMdSTnV/GgFWdwWAv2y7bWMzdCQnk2gQ3JjrpHgBAd0V8IIIhSBLJVvrOAqhSBsZrxSntISvXjA==
   dependencies:
     "@mswjs/interceptors" "^0.36.6"
     json-stringify-safe "^5.0.1"

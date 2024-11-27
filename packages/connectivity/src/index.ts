@@ -59,7 +59,8 @@ export {
   ServiceBindingTransformOptions,
   transformServiceBindingToDestination,
   getAllDestinationsFromDestinationService,
-  getTenantId
+  getTenantId,
+  transformServiceBindingToClientCredentialsDestination
 } from './scp-cf';
 
 export type {

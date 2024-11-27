@@ -1,14 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 
-import path, {
-  join,
-  resolve,
-  parse,
-  basename,
-  dirname,
-  posix,
-  sep
-} from 'path';
+import { join, resolve, parse, basename, dirname, posix, sep } from 'path';
 import { promises, existsSync } from 'fs';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
@@ -20,15 +12,11 @@ import {
   readIncludeExcludeWithDefaults,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
-import type { CompilerOptions } from 'typescript';
 import { getPackages } from '@manypkg/get-packages';
+import type { CompilerOptions } from 'typescript';
 
 const { readFile, lstat, readdir } = promises;
 
-const localConfigPath = join(
-  process.cwd(),
-  'build-packages/check-public-api/local-config.json'
-);
 const pathToTsConfigRoot = join(process.cwd(), 'tsconfig.json');
 const pathRootNodeModules = join(process.cwd(), 'node_modules');
 export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
@@ -42,23 +30,36 @@ export interface ExportedObject {
 
 function paths(pathToPackage: string): {
   pathToSource: string;
+  pathToPackageJson: string;
   pathToTsConfig: string;
   pathToNodeModules: string;
   pathCompiled: string;
 } {
   return {
-    pathToSource: join(pathToPackage, 'src'),
-    pathToTsConfig: join(pathToPackage, 'tsconfig.json'),
-    pathToNodeModules: join(pathToPackage, 'node_modules'),
+    pathToSource: getPathWithPosixSeparator(join(pathToPackage, 'src')),
+    pathToPackageJson: getPathWithPosixSeparator(
+      join(pathToPackage, 'package.json')
+    ),
+    pathToTsConfig: getPathWithPosixSeparator(
+      join(pathToPackage, 'tsconfig.json')
+    ),
+    pathToNodeModules: getPathWithPosixSeparator(
+      join(pathToPackage, 'node_modules')
+    ),
     pathCompiled: 'dist'
   };
 }
 
+function getPathWithPosixSeparator(filePath: string): string {
+  return filePath.split(sep).join(posix.sep);
+}
+
 function mockFileSystem(pathToPackage: string) {
-  const { pathToSource, pathToTsConfig, pathToNodeModules } =
+  const { pathToSource, pathToTsConfig, pathToNodeModules, pathToPackageJson } =
     paths(pathToPackage);
   mock({
     [pathToTsConfig]: mock.load(pathToTsConfig),
+    [pathToPackageJson]: mock.load(pathToPackageJson),
     [pathToSource]: mock.load(pathToSource),
     [pathRootNodeModules]: mock.load(pathRootNodeModules),
     [pathToNodeModules]: mock.load(pathToNodeModules),
@@ -102,15 +103,13 @@ function compareApisAndLog(
   allExportedTypes: ExportedObject[]
 ): boolean {
   let setsAreEqual = true;
-  const ignoredPaths = getListFromInput('ignored_paths');
+  const ignoredPathPattern = getInput('ignored_path_pattern');
 
   allExportedTypes.forEach(exportedType => {
-    const normalizedPath = exportedType.path.split(sep).join(posix.sep);
+    const normalizedPath = getPathWithPosixSeparator(exportedType.path);
 
-    const isPathMatched = ignoredPaths.length
-      ? ignoredPaths.some(ignoredPath =>
-          normalizedPath.includes(ignoredPath.split(sep).join(posix.sep))
-        )
+    const isPathMatched = ignoredPathPattern
+      ? new RegExp(ignoredPathPattern).test(normalizedPath)
       : false;
     if (
       !allExportedIndex.find(nameInIndex => exportedType.name === nameInIndex)
@@ -166,7 +165,10 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
           usePrettier: false
         }
       },
-      { exclude: includeExclude?.exclude!, include: ['**/*.ts'] }
+      {
+        exclude: includeExclude ? includeExclude.exclude : [],
+        include: ['**/*.ts']
+      }
     );
 
     const forceInternalExports = getInput('force_internal_exports') === 'true';
@@ -306,16 +308,16 @@ export async function parseIndexFile(
         ...parseExportedObjectsInFile(fileContent).map(obj => obj.name)
       ];
   const starFiles = captureGroupsFromGlobalRegex(
-    /export \* from '([\w\/.-]+)'/g,
+    /export \* from '([\w/.-]+)'/g,
     fileContent
   );
   const starFileExports = await Promise.all(
     starFiles.map(async relativeFilePath => {
-      const filePath = relativeFilePath.endsWith('.js')
+      const absolutePath = relativeFilePath.endsWith('.js')
         ? resolve(cwd, `${relativeFilePath.slice(0, -3)}.ts`)
         : resolve(cwd, `${relativeFilePath}.ts`);
 
-      return parseIndexFile(filePath, forceInternalExports);
+      return parseIndexFile(absolutePath, forceInternalExports);
     })
   );
   return [...localExports, ...starFileExports.flat()];
@@ -407,8 +409,8 @@ async function runCheckApi() {
   for (const pkg of packagesToCheck) {
     try {
       await checkApiOfPackage(pkg.dir);
-    } catch (error) {
-      setFailed(`API check failed for ${pkg.relativeDir}: ${error}`);
+    } catch (e) {
+      setFailed(`API check failed for ${pkg.relativeDir}: ${e}`);
       process.exit(1);
     }
   }

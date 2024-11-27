@@ -1,7 +1,10 @@
 import { serviceToken } from '../token-accessor';
 import { resolveServiceBinding } from '../environment-accessor/service-bindings';
 import { decodeJwt } from '../jwt';
-import { transformServiceBindingToDestination } from './service-binding-to-destination';
+import {
+  transformServiceBindingToClientCredentialsDestination,
+  transformServiceBindingToDestination
+} from './service-binding-to-destination';
 
 const services = {
   destination: [
@@ -68,10 +71,10 @@ const services = {
       name: 'some-service1',
       label: 'some-service',
       tags: ['some-service'],
+      url: 'some-service-url',
       credentials: {
         clientid: 'some-service-clientid',
-        clientsecret: 'some-service-clientsecret',
-        uri: 'some-service-uri'
+        clientsecret: 'some-service-clientsecret'
       }
     }
   ],
@@ -209,6 +212,47 @@ describe('service binding to destination', () => {
       )
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"The provided service binding of type some-service is not supported out of the box for destination transformation."'
+    );
+  });
+
+  it('transforms a generic service binding to a client credentials destination', async () => {
+    const destination =
+      await transformServiceBindingToClientCredentialsDestination(
+        resolveServiceBinding('some-service')
+      );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'some-service-url',
+        name: 'some-service1',
+        authentication: 'OAuth2ClientCredentials',
+        authTokens: expect.arrayContaining([
+          expect.objectContaining({
+            value: 'access-token',
+            type: 'bearer'
+          })
+        ])
+      })
+    );
+  });
+
+  it('transforms a generic service binding to a client credentials destination with custom url', async () => {
+    const destination =
+      await transformServiceBindingToClientCredentialsDestination(
+        resolveServiceBinding('some-service'),
+        { url: 'some-custom-service-url' }
+      );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'some-custom-service-url',
+        name: 'some-service1',
+        authentication: 'OAuth2ClientCredentials',
+        authTokens: expect.arrayContaining([
+          expect.objectContaining({
+            value: 'access-token',
+            type: 'bearer'
+          })
+        ])
+      })
     );
   });
 });

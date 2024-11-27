@@ -30,23 +30,27 @@ const mock_fs_1 = __importDefault(__nccwpck_require__(55850));
 const internal_1 = __nccwpck_require__(81583);
 const get_packages_1 = __nccwpck_require__(30886);
 const { readFile, lstat, readdir } = fs_1.promises;
-const localConfigPath = (0, path_1.join)(process.cwd(), 'build-packages/check-public-api/local-config.json');
 const pathToTsConfigRoot = (0, path_1.join)(process.cwd(), 'tsconfig.json');
 const pathRootNodeModules = (0, path_1.join)(process.cwd(), 'node_modules');
 exports.regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 exports.regexExportedInternal = /\.\/([\w-]+)/g;
 function paths(pathToPackage) {
     return {
-        pathToSource: (0, path_1.join)(pathToPackage, 'src'),
-        pathToTsConfig: (0, path_1.join)(pathToPackage, 'tsconfig.json'),
-        pathToNodeModules: (0, path_1.join)(pathToPackage, 'node_modules'),
+        pathToSource: getPathWithPosixSeparator((0, path_1.join)(pathToPackage, 'src')),
+        pathToPackageJson: getPathWithPosixSeparator((0, path_1.join)(pathToPackage, 'package.json')),
+        pathToTsConfig: getPathWithPosixSeparator((0, path_1.join)(pathToPackage, 'tsconfig.json')),
+        pathToNodeModules: getPathWithPosixSeparator((0, path_1.join)(pathToPackage, 'node_modules')),
         pathCompiled: 'dist'
     };
 }
+function getPathWithPosixSeparator(filePath) {
+    return filePath.split(path_1.sep).join(path_1.posix.sep);
+}
 function mockFileSystem(pathToPackage) {
-    const { pathToSource, pathToTsConfig, pathToNodeModules } = paths(pathToPackage);
+    const { pathToSource, pathToTsConfig, pathToNodeModules, pathToPackageJson } = paths(pathToPackage);
     (0, mock_fs_1.default)({
         [pathToTsConfig]: mock_fs_1.default.load(pathToTsConfig),
+        [pathToPackageJson]: mock_fs_1.default.load(pathToPackageJson),
         [pathToSource]: mock_fs_1.default.load(pathToSource),
         [pathRootNodeModules]: mock_fs_1.default.load(pathRootNodeModules),
         [pathToNodeModules]: mock_fs_1.default.load(pathToNodeModules),
@@ -82,11 +86,11 @@ function getListFromInput(inputKey) {
  */
 function compareApisAndLog(allExportedIndex, allExportedTypes) {
     let setsAreEqual = true;
-    const ignoredPaths = getListFromInput('ignored_paths');
+    const ignoredPathPattern = (0, core_1.getInput)('ignored_path_pattern');
     allExportedTypes.forEach(exportedType => {
-        const normalizedPath = exportedType.path.split(path_1.sep).join(path_1.posix.sep);
-        const isPathMatched = ignoredPaths.length
-            ? ignoredPaths.some(ignoredPath => normalizedPath.includes(ignoredPath.split(path_1.sep).join(path_1.posix.sep)))
+        const normalizedPath = getPathWithPosixSeparator(exportedType.path);
+        const isPathMatched = ignoredPathPattern
+            ? new RegExp(ignoredPathPattern).test(normalizedPath)
             : false;
         if (!allExportedIndex.find(nameInIndex => exportedType.name === nameInIndex)) {
             if (isPathMatched) {
@@ -126,7 +130,10 @@ async function checkApiOfPackage(pathToPackage) {
                 prettierOptions: internal_1.defaultPrettierConfig,
                 usePrettier: false
             }
-        }, { exclude: includeExclude?.exclude, include: ['**/*.ts'] });
+        }, {
+            exclude: includeExclude ? includeExclude.exclude : [],
+            include: ['**/*.ts']
+        });
         const forceInternalExports = (0, core_1.getInput)('force_internal_exports') === 'true';
         if (forceInternalExports) {
             await checkBarrelRecursive(pathToSource);
@@ -230,12 +237,12 @@ async function parseIndexFile(filePath, forceInternalExports) {
             ...parseBarrelFile(fileContent, exports.regexExportedIndex),
             ...parseExportedObjectsInFile(fileContent).map(obj => obj.name)
         ];
-    const starFiles = captureGroupsFromGlobalRegex(/export \* from '([\w\/.-]+)'/g, fileContent);
+    const starFiles = captureGroupsFromGlobalRegex(/export \* from '([\w/.-]+)'/g, fileContent);
     const starFileExports = await Promise.all(starFiles.map(async (relativeFilePath) => {
-        const filePath = relativeFilePath.endsWith('.js')
+        const absolutePath = relativeFilePath.endsWith('.js')
             ? (0, path_1.resolve)(cwd, `${relativeFilePath.slice(0, -3)}.ts`)
             : (0, path_1.resolve)(cwd, `${relativeFilePath}.ts`);
-        return parseIndexFile(filePath, forceInternalExports);
+        return parseIndexFile(absolutePath, forceInternalExports);
     }));
     return [...localExports, ...starFileExports.flat()];
 }
@@ -292,8 +299,8 @@ async function runCheckApi() {
         try {
             await checkApiOfPackage(pkg.dir);
         }
-        catch (error) {
-            (0, core_1.setFailed)(`API check failed for ${pkg.relativeDir}: ${error}`);
+        catch (e) {
+            (0, core_1.setFailed)(`API check failed for ${pkg.relativeDir}: ${e}`);
             process.exit(1);
         }
     }

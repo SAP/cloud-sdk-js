@@ -4646,6 +4646,311 @@ exports["default"] = getReleasePlan;
 
 /***/ }),
 
+/***/ 59427:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var spawn = __nccwpck_require__(51114);
+var fs = __nccwpck_require__(79896);
+var path = __nccwpck_require__(16928);
+var getPackages = __nccwpck_require__(94941);
+var errors = __nccwpck_require__(17789);
+var isSubdir = __nccwpck_require__(46390);
+var micromatch = __nccwpck_require__(77805);
+
+function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
+
+var spawn__default = /*#__PURE__*/_interopDefault(spawn);
+var fs__default = /*#__PURE__*/_interopDefault(fs);
+var path__default = /*#__PURE__*/_interopDefault(path);
+var isSubdir__default = /*#__PURE__*/_interopDefault(isSubdir);
+var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
+
+async function add(pathToFile, cwd) {
+  const gitCmd = await spawn__default["default"]("git", ["add", pathToFile], {
+    cwd
+  });
+
+  if (gitCmd.code !== 0) {
+    console.log(pathToFile, gitCmd.stderr.toString());
+  }
+
+  return gitCmd.code === 0;
+}
+async function commit(message, cwd) {
+  const gitCmd = await spawn__default["default"]("git", ["commit", "-m", message, "--allow-empty"], {
+    cwd
+  });
+  return gitCmd.code === 0;
+}
+async function getAllTags(cwd) {
+  const gitCmd = await spawn__default["default"]("git", ["tag"], {
+    cwd
+  });
+
+  if (gitCmd.code !== 0) {
+    throw new Error(gitCmd.stderr.toString());
+  }
+
+  const tags = gitCmd.stdout.toString().trim().split("\n");
+  return new Set(tags);
+} // used to create a single tag at a time for the current head only
+
+async function tag(tagStr, cwd) {
+  // NOTE: it's important we use the -m flag to create annotated tag otherwise 'git push --follow-tags' won't actually push
+  // the tags
+  const gitCmd = await spawn__default["default"]("git", ["tag", tagStr, "-m", tagStr], {
+    cwd
+  });
+  return gitCmd.code === 0;
+} // Find the commit where we diverged from `ref` at using `git merge-base`
+
+async function getDivergedCommit(cwd, ref) {
+  const cmd = await spawn__default["default"]("git", ["merge-base", ref, "HEAD"], {
+    cwd
+  });
+
+  if (cmd.code !== 0) {
+    throw new Error(`Failed to find where HEAD diverged from "${ref}". Does "${ref}" exist and it's synced with remote?`);
+  }
+
+  return cmd.stdout.toString().trim();
+}
+/**
+ * Get the SHAs for the commits that added files, including automatically
+ * extending a shallow clone if necessary to determine any commits.
+ * @param gitPaths - Paths to fetch
+ * @param options - `cwd` and `short`
+ */
+
+async function getCommitsThatAddFiles(gitPaths, {
+  cwd,
+  short = false
+}) {
+  // Maps gitPath to commit SHA
+  const map = new Map(); // Paths we haven't completed processing on yet
+
+  let remaining = gitPaths;
+
+  do {
+    // Fetch commit information for all paths we don't have yet
+    const commitInfos = await Promise.all(remaining.map(async gitPath => {
+      const [commitSha, parentSha] = (await spawn__default["default"]("git", ["log", "--diff-filter=A", "--max-count=1", short ? "--pretty=format:%h:%p" : "--pretty=format:%H:%p", gitPath], {
+        cwd
+      })).stdout.toString().split(":");
+      return {
+        path: gitPath,
+        commitSha,
+        parentSha
+      };
+    })); // To collect commits without parents (usually because they're absent from
+    // a shallow clone).
+
+    let commitsWithMissingParents = [];
+
+    for (const info of commitInfos) {
+      if (info.commitSha) {
+        if (info.parentSha) {
+          // We have found the parent of the commit that added the file.
+          // Therefore we know that the commit is legitimate and isn't simply the boundary of a shallow clone.
+          map.set(info.path, info.commitSha);
+        } else {
+          commitsWithMissingParents.push(info);
+        }
+      }
+    }
+
+    if (commitsWithMissingParents.length === 0) {
+      break;
+    } // The commits we've found may be the real commits or they may be the boundary of
+    // a shallow clone.
+    // Can we deepen the clone?
+
+
+    if (await isRepoShallow({
+      cwd
+    })) {
+      // Yes.
+      await deepenCloneBy({
+        by: 50,
+        cwd
+      });
+      remaining = commitsWithMissingParents.map(p => p.path);
+    } else {
+      // It's not a shallow clone, so all the commit SHAs we have are legitimate.
+      for (const unresolved of commitsWithMissingParents) {
+        map.set(unresolved.path, unresolved.commitSha);
+      }
+
+      break;
+    }
+  } while (true);
+
+  return gitPaths.map(p => map.get(p));
+}
+async function isRepoShallow({
+  cwd
+}) {
+  const isShallowRepoOutput = (await spawn__default["default"]("git", ["rev-parse", "--is-shallow-repository"], {
+    cwd
+  })).stdout.toString().trim();
+
+  if (isShallowRepoOutput === "--is-shallow-repository") {
+    // We have an old version of Git (<2.15) which doesn't support `rev-parse --is-shallow-repository`
+    // In that case, we'll test for the existence of .git/shallow.
+    // Firstly, find the .git folder for the repo; note that this will be relative to the repo dir
+    const gitDir = (await spawn__default["default"]("git", ["rev-parse", "--git-dir"], {
+      cwd
+    })).stdout.toString().trim();
+    const fullGitDir = path__default["default"].resolve(cwd, gitDir); // Check for the existence of <gitDir>/shallow
+
+    return fs__default["default"].existsSync(path__default["default"].join(fullGitDir, "shallow"));
+  } else {
+    // We have a newer Git which supports `rev-parse --is-shallow-repository`. We'll use
+    // the output of that instead of messing with .git/shallow in case that changes in the future.
+    return isShallowRepoOutput === "true";
+  }
+}
+async function deepenCloneBy({
+  by,
+  cwd
+}) {
+  await spawn__default["default"]("git", ["fetch", `--deepen=${by}`], {
+    cwd
+  });
+}
+
+async function getRepoRoot({
+  cwd
+}) {
+  const {
+    stdout,
+    code,
+    stderr
+  } = await spawn__default["default"]("git", ["rev-parse", "--show-toplevel"], {
+    cwd
+  });
+
+  if (code !== 0) {
+    throw new Error(stderr.toString());
+  }
+
+  return stdout.toString().trim().replace(/\n|\r/g, "");
+}
+
+async function getChangedFilesSince({
+  cwd,
+  ref,
+  fullPath = false
+}) {
+  const divergedAt = await getDivergedCommit(cwd, ref); // Now we can find which files we added
+
+  const cmd = await spawn__default["default"]("git", ["diff", "--name-only", divergedAt], {
+    cwd
+  });
+
+  if (cmd.code !== 0) {
+    throw new Error(`Failed to diff against ${divergedAt}. Is ${divergedAt} a valid ref?`);
+  }
+
+  const files = cmd.stdout.toString().trim().split("\n").filter(a => a);
+  if (!fullPath) return files;
+  const repoRoot = await getRepoRoot({
+    cwd
+  });
+  return files.map(file => path__default["default"].resolve(repoRoot, file));
+} // below are less generic functions that we use in combination with other things we are doing
+
+async function getChangedChangesetFilesSinceRef({
+  cwd,
+  ref
+}) {
+  try {
+    const divergedAt = await getDivergedCommit(cwd, ref); // Now we can find which files we added
+
+    const cmd = await spawn__default["default"]("git", ["diff", "--name-only", "--diff-filter=d", divergedAt], {
+      cwd
+    });
+    let tester = /.changeset\/[^/]+\.md$/;
+    const files = cmd.stdout.toString().trim().split("\n").filter(file => tester.test(file));
+    return files;
+  } catch (err) {
+    if (err instanceof errors.GitError) return [];
+    throw err;
+  }
+}
+async function getChangedPackagesSinceRef({
+  cwd,
+  ref,
+  changedFilePatterns = ["**"]
+}) {
+  const changedFiles = await getChangedFilesSince({
+    ref,
+    cwd,
+    fullPath: true
+  });
+  return [...(await getPackages.getPackages(cwd)).packages] // sort packages by length of dir, so that we can check for subdirs first
+  .sort((pkgA, pkgB) => pkgB.dir.length - pkgA.dir.length).filter(pkg => {
+    const changedPackageFiles = [];
+
+    for (let i = changedFiles.length - 1; i >= 0; i--) {
+      const file = changedFiles[i];
+
+      if (isSubdir__default["default"](pkg.dir, file)) {
+        changedFiles.splice(i, 1);
+        const relativeFile = file.slice(pkg.dir.length + 1);
+        changedPackageFiles.push(relativeFile);
+      }
+    }
+
+    return changedPackageFiles.length > 0 && micromatch__default["default"](changedPackageFiles, changedFilePatterns).length > 0;
+  });
+}
+async function tagExists(tagStr, cwd) {
+  const gitCmd = await spawn__default["default"]("git", ["tag", "-l", tagStr], {
+    cwd
+  });
+  const output = gitCmd.stdout.toString().trim();
+  const tagExists = !!output;
+  return tagExists;
+}
+async function getCurrentCommitId({
+  cwd,
+  short = false
+}) {
+  return (await spawn__default["default"]("git", ["rev-parse", short && "--short", "HEAD"].filter(Boolean), {
+    cwd
+  })).stdout.toString().trim();
+}
+async function remoteTagExists(tagStr) {
+  const gitCmd = await spawn__default["default"]("git", ["ls-remote", "--tags", "origin", "-l", tagStr]);
+  const output = gitCmd.stdout.toString().trim();
+  const tagExists = !!output;
+  return tagExists;
+}
+
+exports.add = add;
+exports.commit = commit;
+exports.deepenCloneBy = deepenCloneBy;
+exports.getAllTags = getAllTags;
+exports.getChangedChangesetFilesSinceRef = getChangedChangesetFilesSinceRef;
+exports.getChangedFilesSince = getChangedFilesSince;
+exports.getChangedPackagesSinceRef = getChangedPackagesSinceRef;
+exports.getCommitsThatAddFiles = getCommitsThatAddFiles;
+exports.getCurrentCommitId = getCurrentCommitId;
+exports.getDivergedCommit = getDivergedCommit;
+exports.isRepoShallow = isRepoShallow;
+exports.remoteTagExists = remoteTagExists;
+exports.tag = tag;
+exports.tagExists = tagExists;
+
+
+/***/ }),
+
 /***/ 68323:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -9084,7 +9389,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var fs = __nccwpck_require__(41348);
 var path = __nccwpck_require__(16928);
 var parse = __nccwpck_require__(7751);
-var git = __nccwpck_require__(85429);
+var git = __nccwpck_require__(59427);
 var pc = __nccwpck_require__(96596);
 var pFilter = __nccwpck_require__(97465);
 var logger = __nccwpck_require__(68323);
@@ -9240,761 +9545,6 @@ async function getChangesets(cwd, sinceRef) {
 }
 
 exports["default"] = getChangesets;
-
-
-/***/ }),
-
-/***/ 85429:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-var spawn = __nccwpck_require__(44964);
-var fs = __nccwpck_require__(79896);
-var path = __nccwpck_require__(16928);
-var getPackages = __nccwpck_require__(94941);
-var errors = __nccwpck_require__(17789);
-var isSubdir = __nccwpck_require__(46390);
-var micromatch = __nccwpck_require__(77805);
-
-function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
-
-var spawn__default = /*#__PURE__*/_interopDefault(spawn);
-var fs__default = /*#__PURE__*/_interopDefault(fs);
-var path__default = /*#__PURE__*/_interopDefault(path);
-var isSubdir__default = /*#__PURE__*/_interopDefault(isSubdir);
-var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
-
-async function add(pathToFile, cwd) {
-  const gitCmd = await spawn__default["default"]("git", ["add", pathToFile], {
-    cwd
-  });
-
-  if (gitCmd.code !== 0) {
-    console.log(pathToFile, gitCmd.stderr.toString());
-  }
-
-  return gitCmd.code === 0;
-}
-async function commit(message, cwd) {
-  const gitCmd = await spawn__default["default"]("git", ["commit", "-m", message, "--allow-empty"], {
-    cwd
-  });
-  return gitCmd.code === 0;
-}
-async function getAllTags(cwd) {
-  const gitCmd = await spawn__default["default"]("git", ["tag"], {
-    cwd
-  });
-
-  if (gitCmd.code !== 0) {
-    throw new Error(gitCmd.stderr.toString());
-  }
-
-  const tags = gitCmd.stdout.toString().trim().split("\n");
-  return new Set(tags);
-} // used to create a single tag at a time for the current head only
-
-async function tag(tagStr, cwd) {
-  // NOTE: it's important we use the -m flag to create annotated tag otherwise 'git push --follow-tags' won't actually push
-  // the tags
-  const gitCmd = await spawn__default["default"]("git", ["tag", tagStr, "-m", tagStr], {
-    cwd
-  });
-  return gitCmd.code === 0;
-} // Find the commit where we diverged from `ref` at using `git merge-base`
-
-async function getDivergedCommit(cwd, ref) {
-  const cmd = await spawn__default["default"]("git", ["merge-base", ref, "HEAD"], {
-    cwd
-  });
-
-  if (cmd.code !== 0) {
-    throw new Error(`Failed to find where HEAD diverged from "${ref}". Does "${ref}" exist and it's synced with remote?`);
-  }
-
-  return cmd.stdout.toString().trim();
-}
-/**
- * Get the SHAs for the commits that added files, including automatically
- * extending a shallow clone if necessary to determine any commits.
- * @param gitPaths - Paths to fetch
- * @param options - `cwd` and `short`
- */
-
-async function getCommitsThatAddFiles(gitPaths, {
-  cwd,
-  short = false
-}) {
-  // Maps gitPath to commit SHA
-  const map = new Map(); // Paths we haven't completed processing on yet
-
-  let remaining = gitPaths;
-
-  do {
-    // Fetch commit information for all paths we don't have yet
-    const commitInfos = await Promise.all(remaining.map(async gitPath => {
-      const [commitSha, parentSha] = (await spawn__default["default"]("git", ["log", "--diff-filter=A", "--max-count=1", short ? "--pretty=format:%h:%p" : "--pretty=format:%H:%p", gitPath], {
-        cwd
-      })).stdout.toString().split(":");
-      return {
-        path: gitPath,
-        commitSha,
-        parentSha
-      };
-    })); // To collect commits without parents (usually because they're absent from
-    // a shallow clone).
-
-    let commitsWithMissingParents = [];
-
-    for (const info of commitInfos) {
-      if (info.commitSha) {
-        if (info.parentSha) {
-          // We have found the parent of the commit that added the file.
-          // Therefore we know that the commit is legitimate and isn't simply the boundary of a shallow clone.
-          map.set(info.path, info.commitSha);
-        } else {
-          commitsWithMissingParents.push(info);
-        }
-      }
-    }
-
-    if (commitsWithMissingParents.length === 0) {
-      break;
-    } // The commits we've found may be the real commits or they may be the boundary of
-    // a shallow clone.
-    // Can we deepen the clone?
-
-
-    if (await isRepoShallow({
-      cwd
-    })) {
-      // Yes.
-      await deepenCloneBy({
-        by: 50,
-        cwd
-      });
-      remaining = commitsWithMissingParents.map(p => p.path);
-    } else {
-      // It's not a shallow clone, so all the commit SHAs we have are legitimate.
-      for (const unresolved of commitsWithMissingParents) {
-        map.set(unresolved.path, unresolved.commitSha);
-      }
-
-      break;
-    }
-  } while (true);
-
-  return gitPaths.map(p => map.get(p));
-}
-async function isRepoShallow({
-  cwd
-}) {
-  const isShallowRepoOutput = (await spawn__default["default"]("git", ["rev-parse", "--is-shallow-repository"], {
-    cwd
-  })).stdout.toString().trim();
-
-  if (isShallowRepoOutput === "--is-shallow-repository") {
-    // We have an old version of Git (<2.15) which doesn't support `rev-parse --is-shallow-repository`
-    // In that case, we'll test for the existence of .git/shallow.
-    // Firstly, find the .git folder for the repo; note that this will be relative to the repo dir
-    const gitDir = (await spawn__default["default"]("git", ["rev-parse", "--git-dir"], {
-      cwd
-    })).stdout.toString().trim();
-    const fullGitDir = path__default["default"].resolve(cwd, gitDir); // Check for the existence of <gitDir>/shallow
-
-    return fs__default["default"].existsSync(path__default["default"].join(fullGitDir, "shallow"));
-  } else {
-    // We have a newer Git which supports `rev-parse --is-shallow-repository`. We'll use
-    // the output of that instead of messing with .git/shallow in case that changes in the future.
-    return isShallowRepoOutput === "true";
-  }
-}
-async function deepenCloneBy({
-  by,
-  cwd
-}) {
-  await spawn__default["default"]("git", ["fetch", `--deepen=${by}`], {
-    cwd
-  });
-}
-
-async function getRepoRoot({
-  cwd
-}) {
-  const {
-    stdout,
-    code,
-    stderr
-  } = await spawn__default["default"]("git", ["rev-parse", "--show-toplevel"], {
-    cwd
-  });
-
-  if (code !== 0) {
-    throw new Error(stderr.toString());
-  }
-
-  return stdout.toString().trim().replace(/\n|\r/g, "");
-}
-
-async function getChangedFilesSince({
-  cwd,
-  ref,
-  fullPath = false
-}) {
-  const divergedAt = await getDivergedCommit(cwd, ref); // Now we can find which files we added
-
-  const cmd = await spawn__default["default"]("git", ["diff", "--name-only", divergedAt], {
-    cwd
-  });
-
-  if (cmd.code !== 0) {
-    throw new Error(`Failed to diff against ${divergedAt}. Is ${divergedAt} a valid ref?`);
-  }
-
-  const files = cmd.stdout.toString().trim().split("\n").filter(a => a);
-  if (!fullPath) return files;
-  const repoRoot = await getRepoRoot({
-    cwd
-  });
-  return files.map(file => path__default["default"].resolve(repoRoot, file));
-} // below are less generic functions that we use in combination with other things we are doing
-
-async function getChangedChangesetFilesSinceRef({
-  cwd,
-  ref
-}) {
-  try {
-    const divergedAt = await getDivergedCommit(cwd, ref); // Now we can find which files we added
-
-    const cmd = await spawn__default["default"]("git", ["diff", "--name-only", "--diff-filter=d", divergedAt], {
-      cwd
-    });
-    let tester = /.changeset\/[^/]+\.md$/;
-    const files = cmd.stdout.toString().trim().split("\n").filter(file => tester.test(file));
-    return files;
-  } catch (err) {
-    if (err instanceof errors.GitError) return [];
-    throw err;
-  }
-}
-async function getChangedPackagesSinceRef({
-  cwd,
-  ref,
-  changedFilePatterns = ["**"]
-}) {
-  const changedFiles = await getChangedFilesSince({
-    ref,
-    cwd,
-    fullPath: true
-  });
-  return [...(await getPackages.getPackages(cwd)).packages] // sort packages by length of dir, so that we can check for subdirs first
-  .sort((pkgA, pkgB) => pkgB.dir.length - pkgA.dir.length).filter(pkg => {
-    const changedPackageFiles = [];
-
-    for (let i = changedFiles.length - 1; i >= 0; i--) {
-      const file = changedFiles[i];
-
-      if (isSubdir__default["default"](pkg.dir, file)) {
-        changedFiles.splice(i, 1);
-        const relativeFile = file.slice(pkg.dir.length + 1);
-        changedPackageFiles.push(relativeFile);
-      }
-    }
-
-    return changedPackageFiles.length > 0 && micromatch__default["default"](changedPackageFiles, changedFilePatterns).length > 0;
-  });
-}
-async function tagExists(tagStr, cwd) {
-  const gitCmd = await spawn__default["default"]("git", ["tag", "-l", tagStr], {
-    cwd
-  });
-  const output = gitCmd.stdout.toString().trim();
-  const tagExists = !!output;
-  return tagExists;
-}
-async function getCurrentCommitId({
-  cwd,
-  short = false
-}) {
-  return (await spawn__default["default"]("git", ["rev-parse", short && "--short", "HEAD"].filter(Boolean), {
-    cwd
-  })).stdout.toString().trim();
-}
-async function remoteTagExists(tagStr) {
-  const gitCmd = await spawn__default["default"]("git", ["ls-remote", "--tags", "origin", "-l", tagStr]);
-  const output = gitCmd.stdout.toString().trim();
-  const tagExists = !!output;
-  return tagExists;
-}
-
-exports.add = add;
-exports.commit = commit;
-exports.deepenCloneBy = deepenCloneBy;
-exports.getAllTags = getAllTags;
-exports.getChangedChangesetFilesSinceRef = getChangedChangesetFilesSinceRef;
-exports.getChangedFilesSince = getChangedFilesSince;
-exports.getChangedPackagesSinceRef = getChangedPackagesSinceRef;
-exports.getCommitsThatAddFiles = getCommitsThatAddFiles;
-exports.getCurrentCommitId = getCurrentCommitId;
-exports.getDivergedCommit = getDivergedCommit;
-exports.isRepoShallow = isRepoShallow;
-exports.remoteTagExists = remoteTagExists;
-exports.tag = tag;
-exports.tagExists = tagExists;
-
-
-/***/ }),
-
-/***/ 6752:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const cp = __nccwpck_require__(35317);
-const parse = __nccwpck_require__(86879);
-const enoent = __nccwpck_require__(87919);
-
-function spawn(command, args, options) {
-    // Parse the arguments
-    const parsed = parse(command, args, options);
-
-    // Spawn the child process
-    const spawned = cp.spawn(parsed.command, parsed.args, parsed.options);
-
-    // Hook into child process "exit" event to emit an error if the command
-    // does not exists, see: https://github.com/IndigoUnited/node-cross-spawn/issues/16
-    enoent.hookChildProcess(spawned, parsed);
-
-    return spawned;
-}
-
-function spawnSync(command, args, options) {
-    // Parse the arguments
-    const parsed = parse(command, args, options);
-
-    // Spawn the child process
-    const result = cp.spawnSync(parsed.command, parsed.args, parsed.options);
-
-    // Analyze if the command does not exist, see: https://github.com/IndigoUnited/node-cross-spawn/issues/16
-    result.error = result.error || enoent.verifyENOENTSync(result.status, parsed);
-
-    return result;
-}
-
-module.exports = spawn;
-module.exports.spawn = spawn;
-module.exports.sync = spawnSync;
-
-module.exports._parse = parse;
-module.exports._enoent = enoent;
-
-
-/***/ }),
-
-/***/ 87919:
-/***/ ((module) => {
-
-"use strict";
-
-
-const isWin = process.platform === 'win32';
-
-function notFoundError(original, syscall) {
-    return Object.assign(new Error(`${syscall} ${original.command} ENOENT`), {
-        code: 'ENOENT',
-        errno: 'ENOENT',
-        syscall: `${syscall} ${original.command}`,
-        path: original.command,
-        spawnargs: original.args,
-    });
-}
-
-function hookChildProcess(cp, parsed) {
-    if (!isWin) {
-        return;
-    }
-
-    const originalEmit = cp.emit;
-
-    cp.emit = function (name, arg1) {
-        // If emitting "exit" event and exit code is 1, we need to check if
-        // the command exists and emit an "error" instead
-        // See https://github.com/IndigoUnited/node-cross-spawn/issues/16
-        if (name === 'exit') {
-            const err = verifyENOENT(arg1, parsed);
-
-            if (err) {
-                return originalEmit.call(cp, 'error', err);
-            }
-        }
-
-        return originalEmit.apply(cp, arguments); // eslint-disable-line prefer-rest-params
-    };
-}
-
-function verifyENOENT(status, parsed) {
-    if (isWin && status === 1 && !parsed.file) {
-        return notFoundError(parsed.original, 'spawn');
-    }
-
-    return null;
-}
-
-function verifyENOENTSync(status, parsed) {
-    if (isWin && status === 1 && !parsed.file) {
-        return notFoundError(parsed.original, 'spawnSync');
-    }
-
-    return null;
-}
-
-module.exports = {
-    hookChildProcess,
-    verifyENOENT,
-    verifyENOENTSync,
-    notFoundError,
-};
-
-
-/***/ }),
-
-/***/ 86879:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const path = __nccwpck_require__(16928);
-const resolveCommand = __nccwpck_require__(94548);
-const escape = __nccwpck_require__(67314);
-const readShebang = __nccwpck_require__(45709);
-
-const isWin = process.platform === 'win32';
-const isExecutableRegExp = /\.(?:com|exe)$/i;
-const isCmdShimRegExp = /node_modules[\\/].bin[\\/][^\\/]+\.cmd$/i;
-
-function detectShebang(parsed) {
-    parsed.file = resolveCommand(parsed);
-
-    const shebang = parsed.file && readShebang(parsed.file);
-
-    if (shebang) {
-        parsed.args.unshift(parsed.file);
-        parsed.command = shebang;
-
-        return resolveCommand(parsed);
-    }
-
-    return parsed.file;
-}
-
-function parseNonShell(parsed) {
-    if (!isWin) {
-        return parsed;
-    }
-
-    // Detect & add support for shebangs
-    const commandFile = detectShebang(parsed);
-
-    // We don't need a shell if the command filename is an executable
-    const needsShell = !isExecutableRegExp.test(commandFile);
-
-    // If a shell is required, use cmd.exe and take care of escaping everything correctly
-    // Note that `forceShell` is an hidden option used only in tests
-    if (parsed.options.forceShell || needsShell) {
-        // Need to double escape meta chars if the command is a cmd-shim located in `node_modules/.bin/`
-        // The cmd-shim simply calls execute the package bin file with NodeJS, proxying any argument
-        // Because the escape of metachars with ^ gets interpreted when the cmd.exe is first called,
-        // we need to double escape them
-        const needsDoubleEscapeMetaChars = isCmdShimRegExp.test(commandFile);
-
-        // Normalize posix paths into OS compatible paths (e.g.: foo/bar -> foo\bar)
-        // This is necessary otherwise it will always fail with ENOENT in those cases
-        parsed.command = path.normalize(parsed.command);
-
-        // Escape command & arguments
-        parsed.command = escape.command(parsed.command);
-        parsed.args = parsed.args.map((arg) => escape.argument(arg, needsDoubleEscapeMetaChars));
-
-        const shellCommand = [parsed.command].concat(parsed.args).join(' ');
-
-        parsed.args = ['/d', '/s', '/c', `"${shellCommand}"`];
-        parsed.command = process.env.comspec || 'cmd.exe';
-        parsed.options.windowsVerbatimArguments = true; // Tell node's spawn that the arguments are already escaped
-    }
-
-    return parsed;
-}
-
-function parse(command, args, options) {
-    // Normalize arguments, similar to nodejs
-    if (args && !Array.isArray(args)) {
-        options = args;
-        args = null;
-    }
-
-    args = args ? args.slice(0) : []; // Clone array to avoid changing the original
-    options = Object.assign({}, options); // Clone object to avoid changing the original
-
-    // Build our parsed object
-    const parsed = {
-        command,
-        args,
-        options,
-        file: undefined,
-        original: {
-            command,
-            args,
-        },
-    };
-
-    // Delegate further parsing to shell or non-shell
-    return options.shell ? parsed : parseNonShell(parsed);
-}
-
-module.exports = parse;
-
-
-/***/ }),
-
-/***/ 67314:
-/***/ ((module) => {
-
-"use strict";
-
-
-// See http://www.robvanderwoude.com/escapechars.php
-const metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
-
-function escapeCommand(arg) {
-    // Escape meta chars
-    arg = arg.replace(metaCharsRegExp, '^$1');
-
-    return arg;
-}
-
-function escapeArgument(arg, doubleEscapeMetaChars) {
-    // Convert to string
-    arg = `${arg}`;
-
-    // Algorithm below is based on https://qntm.org/cmd
-    // It's slightly altered to disable JS backtracking to avoid hanging on specially crafted input
-    // Please see https://github.com/moxystudio/node-cross-spawn/pull/160 for more information
-
-    // Sequence of backslashes followed by a double quote:
-    // double up all the backslashes and escape the double quote
-    arg = arg.replace(/(?=(\\+?)?)\1"/g, '$1$1\\"');
-
-    // Sequence of backslashes followed by the end of the string
-    // (which will become a double quote later):
-    // double up all the backslashes
-    arg = arg.replace(/(?=(\\+?)?)\1$/, '$1$1');
-
-    // All other backslashes occur literally
-
-    // Quote the whole thing:
-    arg = `"${arg}"`;
-
-    // Escape meta chars
-    arg = arg.replace(metaCharsRegExp, '^$1');
-
-    // Double escape meta chars if necessary
-    if (doubleEscapeMetaChars) {
-        arg = arg.replace(metaCharsRegExp, '^$1');
-    }
-
-    return arg;
-}
-
-module.exports.command = escapeCommand;
-module.exports.argument = escapeArgument;
-
-
-/***/ }),
-
-/***/ 45709:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const fs = __nccwpck_require__(79896);
-const shebangCommand = __nccwpck_require__(72668);
-
-function readShebang(command) {
-    // Read the first 150 bytes from the file
-    const size = 150;
-    const buffer = Buffer.alloc(size);
-
-    let fd;
-
-    try {
-        fd = fs.openSync(command, 'r');
-        fs.readSync(fd, buffer, 0, size, 0);
-        fs.closeSync(fd);
-    } catch (e) { /* Empty */ }
-
-    // Attempt to extract shebang (null is returned if not a shebang)
-    return shebangCommand(buffer.toString());
-}
-
-module.exports = readShebang;
-
-
-/***/ }),
-
-/***/ 94548:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const path = __nccwpck_require__(16928);
-const which = __nccwpck_require__(13340);
-const getPathKey = __nccwpck_require__(50661);
-
-function resolveCommandAttempt(parsed, withoutPathExt) {
-    const env = parsed.options.env || process.env;
-    const cwd = process.cwd();
-    const hasCustomCwd = parsed.options.cwd != null;
-    // Worker threads do not have process.chdir()
-    const shouldSwitchCwd = hasCustomCwd && process.chdir !== undefined && !process.chdir.disabled;
-
-    // If a custom `cwd` was specified, we need to change the process cwd
-    // because `which` will do stat calls but does not support a custom cwd
-    if (shouldSwitchCwd) {
-        try {
-            process.chdir(parsed.options.cwd);
-        } catch (err) {
-            /* Empty */
-        }
-    }
-
-    let resolved;
-
-    try {
-        resolved = which.sync(parsed.command, {
-            path: env[getPathKey({ env })],
-            pathExt: withoutPathExt ? path.delimiter : undefined,
-        });
-    } catch (e) {
-        /* Empty */
-    } finally {
-        if (shouldSwitchCwd) {
-            process.chdir(cwd);
-        }
-    }
-
-    // If we successfully resolved, ensure that an absolute path is returned
-    // Note that when a custom `cwd` was used, we need to resolve to an absolute path based on it
-    if (resolved) {
-        resolved = path.resolve(hasCustomCwd ? parsed.options.cwd : '', resolved);
-    }
-
-    return resolved;
-}
-
-function resolveCommand(parsed) {
-    return resolveCommandAttempt(parsed) || resolveCommandAttempt(parsed, true);
-}
-
-module.exports = resolveCommand;
-
-
-/***/ }),
-
-/***/ 44964:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-// @flow
-
-const crossSpawn = __nccwpck_require__(6752);
-const { onExit } = __nccwpck_require__(76774)
-const EventEmitter = __nccwpck_require__(24434);
-const ChildProcessPromise = __nccwpck_require__(85609);
-
-const activeProcesses = new Set();
-
-onExit(() => {
-  for (let child of activeProcesses) {
-    child.kill('SIGTERM');
-  }
-});
-
-function spawn(
-  cmd /*: string */,
-  args /*:: ?: Array<string> */,
-  opts /*:: ?: child_process$spawnOpts */
-) /*: ChildProcessPromise */ {
-  return new ChildProcessPromise((resolve, reject, events) => {
-    let child = crossSpawn(cmd, args, opts);
-    let stdout = Buffer.from('');
-    let stderr = Buffer.from('');
-
-    activeProcesses.add(child);
-
-    if (child.stdout) {
-      child.stdout.on('data', data => {
-        stdout = Buffer.concat([stdout, data]);
-        events.emit('stdout', data);
-      });
-    }
-
-    if (child.stderr) {
-      child.stderr.on('data', data => {
-        stderr = Buffer.concat([stderr, data]);
-        events.emit('stderr', data);
-      });
-    }
-
-    child.on('error', err => {
-      activeProcesses.delete(child);
-      reject(err);
-    });
-
-    child.on('close', code => {
-      activeProcesses.delete(child);
-      resolve({ code, stdout, stderr });
-    });
-  });
-}
-
-module.exports = spawn;
-module.exports.ChildProcessPromise = ChildProcessPromise;
-
-
-/***/ }),
-
-/***/ 85609:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-const EventEmitter = __nccwpck_require__(24434);
-
-class ChildProcessPromise extends Promise {
-  constructor(executer) {
-    let resolve;
-    let reject;
-
-    super((res, rej) => {
-      resolve = res;
-      reject = rej;
-    });
-
-    executer(resolve, reject, this);
-  }
-}
-
-Object.assign(ChildProcessPromise.prototype, EventEmitter.prototype);
-
-module.exports = ChildProcessPromise;
 
 
 /***/ }),
@@ -27242,31 +26792,21 @@ exports.isSymlinkSync = isTypeSync.bind(null, 'lstatSync', 'isSymbolicLink');
 /***/ }),
 
 /***/ 96596:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+/***/ ((module) => {
 
-let argv = process.argv || [],
-	env = process.env
+let p = process || {}, argv = p.argv || [], env = p.env || {}
 let isColorSupported =
-	!("NO_COLOR" in env || argv.includes("--no-color")) &&
-	("FORCE_COLOR" in env ||
-		argv.includes("--color") ||
-		process.platform === "win32" ||
-		(require != null && (__nccwpck_require__(52018).isatty)(1) && env.TERM !== "dumb") ||
-		"CI" in env)
+	!(!!env.NO_COLOR || argv.includes("--no-color")) &&
+	(!!env.FORCE_COLOR || argv.includes("--color") || p.platform === "win32" || ((p.stdout || {}).isTTY && env.TERM !== "dumb") || !!env.CI)
 
-let formatter =
-	(open, close, replace = open) =>
+let formatter = (open, close, replace = open) =>
 	input => {
-		let string = "" + input
-		let index = string.indexOf(close, open.length)
-		return ~index
-			? open + replaceClose(string, close, replace, index) + close
-			: open + string + close
+		let string = "" + input, index = string.indexOf(close, open.length)
+		return ~index ? open + replaceClose(string, close, replace, index) + close : open + string + close
 	}
 
 let replaceClose = (string, close, replace, index) => {
-	let result = ""
-	let cursor = 0
+	let result = "", cursor = 0
 	do {
 		result += string.substring(cursor, index) + replace
 		cursor = index + close.length
@@ -27276,54 +26816,54 @@ let replaceClose = (string, close, replace, index) => {
 }
 
 let createColors = (enabled = isColorSupported) => {
-	let init = enabled ? formatter : () => String
+	let f = enabled ? formatter : () => String
 	return {
 		isColorSupported: enabled,
-		reset: init("\x1b[0m", "\x1b[0m"),
-		bold: init("\x1b[1m", "\x1b[22m", "\x1b[22m\x1b[1m"),
-		dim: init("\x1b[2m", "\x1b[22m", "\x1b[22m\x1b[2m"),
-		italic: init("\x1b[3m", "\x1b[23m"),
-		underline: init("\x1b[4m", "\x1b[24m"),
-		inverse: init("\x1b[7m", "\x1b[27m"),
-		hidden: init("\x1b[8m", "\x1b[28m"),
-		strikethrough: init("\x1b[9m", "\x1b[29m"),
+		reset: f("\x1b[0m", "\x1b[0m"),
+		bold: f("\x1b[1m", "\x1b[22m", "\x1b[22m\x1b[1m"),
+		dim: f("\x1b[2m", "\x1b[22m", "\x1b[22m\x1b[2m"),
+		italic: f("\x1b[3m", "\x1b[23m"),
+		underline: f("\x1b[4m", "\x1b[24m"),
+		inverse: f("\x1b[7m", "\x1b[27m"),
+		hidden: f("\x1b[8m", "\x1b[28m"),
+		strikethrough: f("\x1b[9m", "\x1b[29m"),
 
-		black: init("\x1b[30m", "\x1b[39m"),
-		red: init("\x1b[31m", "\x1b[39m"),
-		green: init("\x1b[32m", "\x1b[39m"),
-		yellow: init("\x1b[33m", "\x1b[39m"),
-		blue: init("\x1b[34m", "\x1b[39m"),
-		magenta: init("\x1b[35m", "\x1b[39m"),
-		cyan: init("\x1b[36m", "\x1b[39m"),
-		white: init("\x1b[37m", "\x1b[39m"),
-		gray: init("\x1b[90m", "\x1b[39m"),
+		black: f("\x1b[30m", "\x1b[39m"),
+		red: f("\x1b[31m", "\x1b[39m"),
+		green: f("\x1b[32m", "\x1b[39m"),
+		yellow: f("\x1b[33m", "\x1b[39m"),
+		blue: f("\x1b[34m", "\x1b[39m"),
+		magenta: f("\x1b[35m", "\x1b[39m"),
+		cyan: f("\x1b[36m", "\x1b[39m"),
+		white: f("\x1b[37m", "\x1b[39m"),
+		gray: f("\x1b[90m", "\x1b[39m"),
 
-		bgBlack: init("\x1b[40m", "\x1b[49m"),
-		bgRed: init("\x1b[41m", "\x1b[49m"),
-		bgGreen: init("\x1b[42m", "\x1b[49m"),
-		bgYellow: init("\x1b[43m", "\x1b[49m"),
-		bgBlue: init("\x1b[44m", "\x1b[49m"),
-		bgMagenta: init("\x1b[45m", "\x1b[49m"),
-		bgCyan: init("\x1b[46m", "\x1b[49m"),
-		bgWhite: init("\x1b[47m", "\x1b[49m"),
+		bgBlack: f("\x1b[40m", "\x1b[49m"),
+		bgRed: f("\x1b[41m", "\x1b[49m"),
+		bgGreen: f("\x1b[42m", "\x1b[49m"),
+		bgYellow: f("\x1b[43m", "\x1b[49m"),
+		bgBlue: f("\x1b[44m", "\x1b[49m"),
+		bgMagenta: f("\x1b[45m", "\x1b[49m"),
+		bgCyan: f("\x1b[46m", "\x1b[49m"),
+		bgWhite: f("\x1b[47m", "\x1b[49m"),
 
-		blackBright: init("\x1b[90m", "\x1b[39m"),
-		redBright: init("\x1b[91m", "\x1b[39m"),
-		greenBright: init("\x1b[92m", "\x1b[39m"),
-		yellowBright: init("\x1b[93m", "\x1b[39m"),
-		blueBright: init("\x1b[94m", "\x1b[39m"),
-		magentaBright: init("\x1b[95m", "\x1b[39m"),
-		cyanBright: init("\x1b[96m", "\x1b[39m"),
-		whiteBright: init("\x1b[97m", "\x1b[39m"),
+		blackBright: f("\x1b[90m", "\x1b[39m"),
+		redBright: f("\x1b[91m", "\x1b[39m"),
+		greenBright: f("\x1b[92m", "\x1b[39m"),
+		yellowBright: f("\x1b[93m", "\x1b[39m"),
+		blueBright: f("\x1b[94m", "\x1b[39m"),
+		magentaBright: f("\x1b[95m", "\x1b[39m"),
+		cyanBright: f("\x1b[96m", "\x1b[39m"),
+		whiteBright: f("\x1b[97m", "\x1b[39m"),
 
-		bgBlackBright: init("\x1b[100m","\x1b[49m"),
-		bgRedBright: init("\x1b[101m","\x1b[49m"),
-		bgGreenBright: init("\x1b[102m","\x1b[49m"),
-		bgYellowBright: init("\x1b[103m","\x1b[49m"),
-		bgBlueBright: init("\x1b[104m","\x1b[49m"),
-		bgMagentaBright: init("\x1b[105m","\x1b[49m"),
-		bgCyanBright: init("\x1b[106m","\x1b[49m"),
-		bgWhiteBright: init("\x1b[107m","\x1b[49m"),
+		bgBlackBright: f("\x1b[100m", "\x1b[49m"),
+		bgRedBright: f("\x1b[101m", "\x1b[49m"),
+		bgGreenBright: f("\x1b[102m", "\x1b[49m"),
+		bgYellowBright: f("\x1b[103m", "\x1b[49m"),
+		bgBlueBright: f("\x1b[104m", "\x1b[49m"),
+		bgMagentaBright: f("\x1b[105m", "\x1b[49m"),
+		bgCyanBright: f("\x1b[106m", "\x1b[49m"),
+		bgWhiteBright: f("\x1b[107m", "\x1b[49m"),
 	}
 }
 
@@ -36701,6 +36241,456 @@ module.exports = path => {
 
 	return path.replace(/\\/g, '/');
 };
+
+
+/***/ }),
+
+/***/ 51114:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+// @flow
+
+const crossSpawn = __nccwpck_require__(72916);
+const { onExit } = __nccwpck_require__(88160)
+const EventEmitter = __nccwpck_require__(24434);
+const ChildProcessPromise = __nccwpck_require__(21543);
+
+const activeProcesses = new Set();
+
+onExit(() => {
+  for (let child of activeProcesses) {
+    child.kill('SIGTERM');
+  }
+});
+
+function spawn(
+  cmd /*: string */,
+  args /*:: ?: Array<string> */,
+  opts /*:: ?: child_process$spawnOpts */
+) /*: ChildProcessPromise */ {
+  return new ChildProcessPromise((resolve, reject, events) => {
+    let child = crossSpawn(cmd, args, opts);
+    let stdout = Buffer.from('');
+    let stderr = Buffer.from('');
+
+    activeProcesses.add(child);
+
+    if (child.stdout) {
+      child.stdout.on('data', data => {
+        stdout = Buffer.concat([stdout, data]);
+        events.emit('stdout', data);
+      });
+    }
+
+    if (child.stderr) {
+      child.stderr.on('data', data => {
+        stderr = Buffer.concat([stderr, data]);
+        events.emit('stderr', data);
+      });
+    }
+
+    child.on('error', err => {
+      activeProcesses.delete(child);
+      reject(err);
+    });
+
+    child.on('close', code => {
+      activeProcesses.delete(child);
+      resolve({ code, stdout, stderr });
+    });
+  });
+}
+
+module.exports = spawn;
+module.exports.ChildProcessPromise = ChildProcessPromise;
+
+
+/***/ }),
+
+/***/ 72916:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const cp = __nccwpck_require__(35317);
+const parse = __nccwpck_require__(55603);
+const enoent = __nccwpck_require__(42227);
+
+function spawn(command, args, options) {
+    // Parse the arguments
+    const parsed = parse(command, args, options);
+
+    // Spawn the child process
+    const spawned = cp.spawn(parsed.command, parsed.args, parsed.options);
+
+    // Hook into child process "exit" event to emit an error if the command
+    // does not exists, see: https://github.com/IndigoUnited/node-cross-spawn/issues/16
+    enoent.hookChildProcess(spawned, parsed);
+
+    return spawned;
+}
+
+function spawnSync(command, args, options) {
+    // Parse the arguments
+    const parsed = parse(command, args, options);
+
+    // Spawn the child process
+    const result = cp.spawnSync(parsed.command, parsed.args, parsed.options);
+
+    // Analyze if the command does not exist, see: https://github.com/IndigoUnited/node-cross-spawn/issues/16
+    result.error = result.error || enoent.verifyENOENTSync(result.status, parsed);
+
+    return result;
+}
+
+module.exports = spawn;
+module.exports.spawn = spawn;
+module.exports.sync = spawnSync;
+
+module.exports._parse = parse;
+module.exports._enoent = enoent;
+
+
+/***/ }),
+
+/***/ 42227:
+/***/ ((module) => {
+
+"use strict";
+
+
+const isWin = process.platform === 'win32';
+
+function notFoundError(original, syscall) {
+    return Object.assign(new Error(`${syscall} ${original.command} ENOENT`), {
+        code: 'ENOENT',
+        errno: 'ENOENT',
+        syscall: `${syscall} ${original.command}`,
+        path: original.command,
+        spawnargs: original.args,
+    });
+}
+
+function hookChildProcess(cp, parsed) {
+    if (!isWin) {
+        return;
+    }
+
+    const originalEmit = cp.emit;
+
+    cp.emit = function (name, arg1) {
+        // If emitting "exit" event and exit code is 1, we need to check if
+        // the command exists and emit an "error" instead
+        // See https://github.com/IndigoUnited/node-cross-spawn/issues/16
+        if (name === 'exit') {
+            const err = verifyENOENT(arg1, parsed);
+
+            if (err) {
+                return originalEmit.call(cp, 'error', err);
+            }
+        }
+
+        return originalEmit.apply(cp, arguments); // eslint-disable-line prefer-rest-params
+    };
+}
+
+function verifyENOENT(status, parsed) {
+    if (isWin && status === 1 && !parsed.file) {
+        return notFoundError(parsed.original, 'spawn');
+    }
+
+    return null;
+}
+
+function verifyENOENTSync(status, parsed) {
+    if (isWin && status === 1 && !parsed.file) {
+        return notFoundError(parsed.original, 'spawnSync');
+    }
+
+    return null;
+}
+
+module.exports = {
+    hookChildProcess,
+    verifyENOENT,
+    verifyENOENTSync,
+    notFoundError,
+};
+
+
+/***/ }),
+
+/***/ 55603:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const path = __nccwpck_require__(16928);
+const resolveCommand = __nccwpck_require__(80704);
+const escape = __nccwpck_require__(52350);
+const readShebang = __nccwpck_require__(82201);
+
+const isWin = process.platform === 'win32';
+const isExecutableRegExp = /\.(?:com|exe)$/i;
+const isCmdShimRegExp = /node_modules[\\/].bin[\\/][^\\/]+\.cmd$/i;
+
+function detectShebang(parsed) {
+    parsed.file = resolveCommand(parsed);
+
+    const shebang = parsed.file && readShebang(parsed.file);
+
+    if (shebang) {
+        parsed.args.unshift(parsed.file);
+        parsed.command = shebang;
+
+        return resolveCommand(parsed);
+    }
+
+    return parsed.file;
+}
+
+function parseNonShell(parsed) {
+    if (!isWin) {
+        return parsed;
+    }
+
+    // Detect & add support for shebangs
+    const commandFile = detectShebang(parsed);
+
+    // We don't need a shell if the command filename is an executable
+    const needsShell = !isExecutableRegExp.test(commandFile);
+
+    // If a shell is required, use cmd.exe and take care of escaping everything correctly
+    // Note that `forceShell` is an hidden option used only in tests
+    if (parsed.options.forceShell || needsShell) {
+        // Need to double escape meta chars if the command is a cmd-shim located in `node_modules/.bin/`
+        // The cmd-shim simply calls execute the package bin file with NodeJS, proxying any argument
+        // Because the escape of metachars with ^ gets interpreted when the cmd.exe is first called,
+        // we need to double escape them
+        const needsDoubleEscapeMetaChars = isCmdShimRegExp.test(commandFile);
+
+        // Normalize posix paths into OS compatible paths (e.g.: foo/bar -> foo\bar)
+        // This is necessary otherwise it will always fail with ENOENT in those cases
+        parsed.command = path.normalize(parsed.command);
+
+        // Escape command & arguments
+        parsed.command = escape.command(parsed.command);
+        parsed.args = parsed.args.map((arg) => escape.argument(arg, needsDoubleEscapeMetaChars));
+
+        const shellCommand = [parsed.command].concat(parsed.args).join(' ');
+
+        parsed.args = ['/d', '/s', '/c', `"${shellCommand}"`];
+        parsed.command = process.env.comspec || 'cmd.exe';
+        parsed.options.windowsVerbatimArguments = true; // Tell node's spawn that the arguments are already escaped
+    }
+
+    return parsed;
+}
+
+function parse(command, args, options) {
+    // Normalize arguments, similar to nodejs
+    if (args && !Array.isArray(args)) {
+        options = args;
+        args = null;
+    }
+
+    args = args ? args.slice(0) : []; // Clone array to avoid changing the original
+    options = Object.assign({}, options); // Clone object to avoid changing the original
+
+    // Build our parsed object
+    const parsed = {
+        command,
+        args,
+        options,
+        file: undefined,
+        original: {
+            command,
+            args,
+        },
+    };
+
+    // Delegate further parsing to shell or non-shell
+    return options.shell ? parsed : parseNonShell(parsed);
+}
+
+module.exports = parse;
+
+
+/***/ }),
+
+/***/ 52350:
+/***/ ((module) => {
+
+"use strict";
+
+
+// See http://www.robvanderwoude.com/escapechars.php
+const metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
+
+function escapeCommand(arg) {
+    // Escape meta chars
+    arg = arg.replace(metaCharsRegExp, '^$1');
+
+    return arg;
+}
+
+function escapeArgument(arg, doubleEscapeMetaChars) {
+    // Convert to string
+    arg = `${arg}`;
+
+    // Algorithm below is based on https://qntm.org/cmd
+    // It's slightly altered to disable JS backtracking to avoid hanging on specially crafted input
+    // Please see https://github.com/moxystudio/node-cross-spawn/pull/160 for more information
+
+    // Sequence of backslashes followed by a double quote:
+    // double up all the backslashes and escape the double quote
+    arg = arg.replace(/(?=(\\+?)?)\1"/g, '$1$1\\"');
+
+    // Sequence of backslashes followed by the end of the string
+    // (which will become a double quote later):
+    // double up all the backslashes
+    arg = arg.replace(/(?=(\\+?)?)\1$/, '$1$1');
+
+    // All other backslashes occur literally
+
+    // Quote the whole thing:
+    arg = `"${arg}"`;
+
+    // Escape meta chars
+    arg = arg.replace(metaCharsRegExp, '^$1');
+
+    // Double escape meta chars if necessary
+    if (doubleEscapeMetaChars) {
+        arg = arg.replace(metaCharsRegExp, '^$1');
+    }
+
+    return arg;
+}
+
+module.exports.command = escapeCommand;
+module.exports.argument = escapeArgument;
+
+
+/***/ }),
+
+/***/ 82201:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const fs = __nccwpck_require__(79896);
+const shebangCommand = __nccwpck_require__(72668);
+
+function readShebang(command) {
+    // Read the first 150 bytes from the file
+    const size = 150;
+    const buffer = Buffer.alloc(size);
+
+    let fd;
+
+    try {
+        fd = fs.openSync(command, 'r');
+        fs.readSync(fd, buffer, 0, size, 0);
+        fs.closeSync(fd);
+    } catch (e) { /* Empty */ }
+
+    // Attempt to extract shebang (null is returned if not a shebang)
+    return shebangCommand(buffer.toString());
+}
+
+module.exports = readShebang;
+
+
+/***/ }),
+
+/***/ 80704:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const path = __nccwpck_require__(16928);
+const which = __nccwpck_require__(13340);
+const getPathKey = __nccwpck_require__(50661);
+
+function resolveCommandAttempt(parsed, withoutPathExt) {
+    const env = parsed.options.env || process.env;
+    const cwd = process.cwd();
+    const hasCustomCwd = parsed.options.cwd != null;
+    // Worker threads do not have process.chdir()
+    const shouldSwitchCwd = hasCustomCwd && process.chdir !== undefined && !process.chdir.disabled;
+
+    // If a custom `cwd` was specified, we need to change the process cwd
+    // because `which` will do stat calls but does not support a custom cwd
+    if (shouldSwitchCwd) {
+        try {
+            process.chdir(parsed.options.cwd);
+        } catch (err) {
+            /* Empty */
+        }
+    }
+
+    let resolved;
+
+    try {
+        resolved = which.sync(parsed.command, {
+            path: env[getPathKey({ env })],
+            pathExt: withoutPathExt ? path.delimiter : undefined,
+        });
+    } catch (e) {
+        /* Empty */
+    } finally {
+        if (shouldSwitchCwd) {
+            process.chdir(cwd);
+        }
+    }
+
+    // If we successfully resolved, ensure that an absolute path is returned
+    // Note that when a custom `cwd` was used, we need to resolve to an absolute path based on it
+    if (resolved) {
+        resolved = path.resolve(hasCustomCwd ? parsed.options.cwd : '', resolved);
+    }
+
+    return resolved;
+}
+
+function resolveCommand(parsed) {
+    return resolveCommandAttempt(parsed) || resolveCommandAttempt(parsed, true);
+}
+
+module.exports = resolveCommand;
+
+
+/***/ }),
+
+/***/ 21543:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+const EventEmitter = __nccwpck_require__(24434);
+
+class ChildProcessPromise extends Promise {
+  constructor(executer) {
+    let resolve;
+    let reject;
+
+    super((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+
+    executer(resolve, reject, this);
+  }
+}
+
+Object.assign(ChildProcessPromise.prototype, EventEmitter.prototype);
+
+module.exports = ChildProcessPromise;
 
 
 /***/ }),
@@ -59892,14 +59882,6 @@ module.exports = require("tls");
 
 /***/ }),
 
-/***/ 52018:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("tty");
-
-/***/ }),
-
 /***/ 87016:
 /***/ ((module) => {
 
@@ -60497,341 +60479,6 @@ try {
   }
 }
 
-
-/***/ }),
-
-/***/ 76774:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-var _a;
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.unload = exports.load = exports.onExit = exports.signals = void 0;
-// Note: since nyc uses this module to output coverage, any lines
-// that are in the direct sync flow of nyc's outputCoverage are
-// ignored, since we can never get coverage for them.
-// grab a reference to node's real process object right away
-const signals_js_1 = __nccwpck_require__(37395);
-Object.defineProperty(exports, "signals", ({ enumerable: true, get: function () { return signals_js_1.signals; } }));
-const processOk = (process) => !!process &&
-    typeof process === 'object' &&
-    typeof process.removeListener === 'function' &&
-    typeof process.emit === 'function' &&
-    typeof process.reallyExit === 'function' &&
-    typeof process.listeners === 'function' &&
-    typeof process.kill === 'function' &&
-    typeof process.pid === 'number' &&
-    typeof process.on === 'function';
-const kExitEmitter = Symbol.for('signal-exit emitter');
-const global = globalThis;
-const ObjectDefineProperty = Object.defineProperty.bind(Object);
-// teeny special purpose ee
-class Emitter {
-    emitted = {
-        afterExit: false,
-        exit: false,
-    };
-    listeners = {
-        afterExit: [],
-        exit: [],
-    };
-    count = 0;
-    id = Math.random();
-    constructor() {
-        if (global[kExitEmitter]) {
-            return global[kExitEmitter];
-        }
-        ObjectDefineProperty(global, kExitEmitter, {
-            value: this,
-            writable: false,
-            enumerable: false,
-            configurable: false,
-        });
-    }
-    on(ev, fn) {
-        this.listeners[ev].push(fn);
-    }
-    removeListener(ev, fn) {
-        const list = this.listeners[ev];
-        const i = list.indexOf(fn);
-        /* c8 ignore start */
-        if (i === -1) {
-            return;
-        }
-        /* c8 ignore stop */
-        if (i === 0 && list.length === 1) {
-            list.length = 0;
-        }
-        else {
-            list.splice(i, 1);
-        }
-    }
-    emit(ev, code, signal) {
-        if (this.emitted[ev]) {
-            return false;
-        }
-        this.emitted[ev] = true;
-        let ret = false;
-        for (const fn of this.listeners[ev]) {
-            ret = fn(code, signal) === true || ret;
-        }
-        if (ev === 'exit') {
-            ret = this.emit('afterExit', code, signal) || ret;
-        }
-        return ret;
-    }
-}
-class SignalExitBase {
-}
-const signalExitWrap = (handler) => {
-    return {
-        onExit(cb, opts) {
-            return handler.onExit(cb, opts);
-        },
-        load() {
-            return handler.load();
-        },
-        unload() {
-            return handler.unload();
-        },
-    };
-};
-class SignalExitFallback extends SignalExitBase {
-    onExit() {
-        return () => { };
-    }
-    load() { }
-    unload() { }
-}
-class SignalExit extends SignalExitBase {
-    // "SIGHUP" throws an `ENOSYS` error on Windows,
-    // so use a supported signal instead
-    /* c8 ignore start */
-    #hupSig = process.platform === 'win32' ? 'SIGINT' : 'SIGHUP';
-    /* c8 ignore stop */
-    #emitter = new Emitter();
-    #process;
-    #originalProcessEmit;
-    #originalProcessReallyExit;
-    #sigListeners = {};
-    #loaded = false;
-    constructor(process) {
-        super();
-        this.#process = process;
-        // { <signal>: <listener fn>, ... }
-        this.#sigListeners = {};
-        for (const sig of signals_js_1.signals) {
-            this.#sigListeners[sig] = () => {
-                // If there are no other listeners, an exit is coming!
-                // Simplest way: remove us and then re-send the signal.
-                // We know that this will kill the process, so we can
-                // safely emit now.
-                const listeners = this.#process.listeners(sig);
-                let { count } = this.#emitter;
-                // This is a workaround for the fact that signal-exit v3 and signal
-                // exit v4 are not aware of each other, and each will attempt to let
-                // the other handle it, so neither of them do. To correct this, we
-                // detect if we're the only handler *except* for previous versions
-                // of signal-exit, and increment by the count of listeners it has
-                // created.
-                /* c8 ignore start */
-                const p = process;
-                if (typeof p.__signal_exit_emitter__ === 'object' &&
-                    typeof p.__signal_exit_emitter__.count === 'number') {
-                    count += p.__signal_exit_emitter__.count;
-                }
-                /* c8 ignore stop */
-                if (listeners.length === count) {
-                    this.unload();
-                    const ret = this.#emitter.emit('exit', null, sig);
-                    /* c8 ignore start */
-                    const s = sig === 'SIGHUP' ? this.#hupSig : sig;
-                    if (!ret)
-                        process.kill(process.pid, s);
-                    /* c8 ignore stop */
-                }
-            };
-        }
-        this.#originalProcessReallyExit = process.reallyExit;
-        this.#originalProcessEmit = process.emit;
-    }
-    onExit(cb, opts) {
-        /* c8 ignore start */
-        if (!processOk(this.#process)) {
-            return () => { };
-        }
-        /* c8 ignore stop */
-        if (this.#loaded === false) {
-            this.load();
-        }
-        const ev = opts?.alwaysLast ? 'afterExit' : 'exit';
-        this.#emitter.on(ev, cb);
-        return () => {
-            this.#emitter.removeListener(ev, cb);
-            if (this.#emitter.listeners['exit'].length === 0 &&
-                this.#emitter.listeners['afterExit'].length === 0) {
-                this.unload();
-            }
-        };
-    }
-    load() {
-        if (this.#loaded) {
-            return;
-        }
-        this.#loaded = true;
-        // This is the number of onSignalExit's that are in play.
-        // It's important so that we can count the correct number of
-        // listeners on signals, and don't wait for the other one to
-        // handle it instead of us.
-        this.#emitter.count += 1;
-        for (const sig of signals_js_1.signals) {
-            try {
-                const fn = this.#sigListeners[sig];
-                if (fn)
-                    this.#process.on(sig, fn);
-            }
-            catch (_) { }
-        }
-        this.#process.emit = (ev, ...a) => {
-            return this.#processEmit(ev, ...a);
-        };
-        this.#process.reallyExit = (code) => {
-            return this.#processReallyExit(code);
-        };
-    }
-    unload() {
-        if (!this.#loaded) {
-            return;
-        }
-        this.#loaded = false;
-        signals_js_1.signals.forEach(sig => {
-            const listener = this.#sigListeners[sig];
-            /* c8 ignore start */
-            if (!listener) {
-                throw new Error('Listener not defined for signal: ' + sig);
-            }
-            /* c8 ignore stop */
-            try {
-                this.#process.removeListener(sig, listener);
-                /* c8 ignore start */
-            }
-            catch (_) { }
-            /* c8 ignore stop */
-        });
-        this.#process.emit = this.#originalProcessEmit;
-        this.#process.reallyExit = this.#originalProcessReallyExit;
-        this.#emitter.count -= 1;
-    }
-    #processReallyExit(code) {
-        /* c8 ignore start */
-        if (!processOk(this.#process)) {
-            return 0;
-        }
-        this.#process.exitCode = code || 0;
-        /* c8 ignore stop */
-        this.#emitter.emit('exit', this.#process.exitCode, null);
-        return this.#originalProcessReallyExit.call(this.#process, this.#process.exitCode);
-    }
-    #processEmit(ev, ...args) {
-        const og = this.#originalProcessEmit;
-        if (ev === 'exit' && processOk(this.#process)) {
-            if (typeof args[0] === 'number') {
-                this.#process.exitCode = args[0];
-                /* c8 ignore start */
-            }
-            /* c8 ignore start */
-            const ret = og.call(this.#process, ev, ...args);
-            /* c8 ignore start */
-            this.#emitter.emit('exit', this.#process.exitCode, null);
-            /* c8 ignore stop */
-            return ret;
-        }
-        else {
-            return og.call(this.#process, ev, ...args);
-        }
-    }
-}
-const process = globalThis.process;
-// wrap so that we call the method on the actual handler, without
-// exporting it directly.
-_a = signalExitWrap(processOk(process) ? new SignalExit(process) : new SignalExitFallback()), 
-/**
- * Called when the process is exiting, whether via signal, explicit
- * exit, or running out of stuff to do.
- *
- * If the global process object is not suitable for instrumentation,
- * then this will be a no-op.
- *
- * Returns a function that may be used to unload signal-exit.
- */
-exports.onExit = _a.onExit, 
-/**
- * Load the listeners.  Likely you never need to call this, unless
- * doing a rather deep integration with signal-exit functionality.
- * Mostly exposed for the benefit of testing.
- *
- * @internal
- */
-exports.load = _a.load, 
-/**
- * Unload the listeners.  Likely you never need to call this, unless
- * doing a rather deep integration with signal-exit functionality.
- * Mostly exposed for the benefit of testing.
- *
- * @internal
- */
-exports.unload = _a.unload;
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ 37395:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.signals = void 0;
-/**
- * This is not the set of all possible signals.
- *
- * It IS, however, the set of all signals that trigger
- * an exit on either Linux or BSD systems.  Linux is a
- * superset of the signal names supported on BSD, and
- * the unknown signals just fail to register, so we can
- * catch that easily enough.
- *
- * Windows signals are a different set, since there are
- * signals that terminate Windows processes, but don't
- * terminate (or don't even exist) on Posix systems.
- *
- * Don't bother with SIGKILL.  It's uncatchable, which
- * means that we can't fire any callbacks anyway.
- *
- * If a user does happen to register a handler on a non-
- * fatal signal like SIGWINCH or something, and then
- * exit, it'll end up firing `process.emit('exit')`, so
- * the handler will be fired anyway.
- *
- * SIGBUS, SIGFPE, SIGSEGV and SIGILL, when not raised
- * artificially, inherently leave the process in a
- * state from which it is not safe to try and enter JS
- * listeners.
- */
-exports.signals = [];
-exports.signals.push('SIGHUP', 'SIGINT', 'SIGTERM');
-if (process.platform !== 'win32') {
-    exports.signals.push('SIGALRM', 'SIGABRT', 'SIGVTALRM', 'SIGXCPU', 'SIGXFSZ', 'SIGUSR2', 'SIGTRAP', 'SIGSYS', 'SIGQUIT', 'SIGIOT'
-    // should detect profiler and enable/disable accordingly.
-    // see #21
-    // 'SIGPROF'
-    );
-}
-if (process.platform === 'linux') {
-    exports.signals.push('SIGIO', 'SIGPOLL', 'SIGPWR', 'SIGSTKFLT');
-}
-//# sourceMappingURL=signals.js.map
 
 /***/ }),
 
@@ -62457,6 +62104,341 @@ function parseParams (str) {
 
 module.exports = parseParams
 
+
+/***/ }),
+
+/***/ 88160:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.unload = exports.load = exports.onExit = exports.signals = void 0;
+// Note: since nyc uses this module to output coverage, any lines
+// that are in the direct sync flow of nyc's outputCoverage are
+// ignored, since we can never get coverage for them.
+// grab a reference to node's real process object right away
+const signals_js_1 = __nccwpck_require__(25241);
+Object.defineProperty(exports, "signals", ({ enumerable: true, get: function () { return signals_js_1.signals; } }));
+const processOk = (process) => !!process &&
+    typeof process === 'object' &&
+    typeof process.removeListener === 'function' &&
+    typeof process.emit === 'function' &&
+    typeof process.reallyExit === 'function' &&
+    typeof process.listeners === 'function' &&
+    typeof process.kill === 'function' &&
+    typeof process.pid === 'number' &&
+    typeof process.on === 'function';
+const kExitEmitter = Symbol.for('signal-exit emitter');
+const global = globalThis;
+const ObjectDefineProperty = Object.defineProperty.bind(Object);
+// teeny special purpose ee
+class Emitter {
+    emitted = {
+        afterExit: false,
+        exit: false,
+    };
+    listeners = {
+        afterExit: [],
+        exit: [],
+    };
+    count = 0;
+    id = Math.random();
+    constructor() {
+        if (global[kExitEmitter]) {
+            return global[kExitEmitter];
+        }
+        ObjectDefineProperty(global, kExitEmitter, {
+            value: this,
+            writable: false,
+            enumerable: false,
+            configurable: false,
+        });
+    }
+    on(ev, fn) {
+        this.listeners[ev].push(fn);
+    }
+    removeListener(ev, fn) {
+        const list = this.listeners[ev];
+        const i = list.indexOf(fn);
+        /* c8 ignore start */
+        if (i === -1) {
+            return;
+        }
+        /* c8 ignore stop */
+        if (i === 0 && list.length === 1) {
+            list.length = 0;
+        }
+        else {
+            list.splice(i, 1);
+        }
+    }
+    emit(ev, code, signal) {
+        if (this.emitted[ev]) {
+            return false;
+        }
+        this.emitted[ev] = true;
+        let ret = false;
+        for (const fn of this.listeners[ev]) {
+            ret = fn(code, signal) === true || ret;
+        }
+        if (ev === 'exit') {
+            ret = this.emit('afterExit', code, signal) || ret;
+        }
+        return ret;
+    }
+}
+class SignalExitBase {
+}
+const signalExitWrap = (handler) => {
+    return {
+        onExit(cb, opts) {
+            return handler.onExit(cb, opts);
+        },
+        load() {
+            return handler.load();
+        },
+        unload() {
+            return handler.unload();
+        },
+    };
+};
+class SignalExitFallback extends SignalExitBase {
+    onExit() {
+        return () => { };
+    }
+    load() { }
+    unload() { }
+}
+class SignalExit extends SignalExitBase {
+    // "SIGHUP" throws an `ENOSYS` error on Windows,
+    // so use a supported signal instead
+    /* c8 ignore start */
+    #hupSig = process.platform === 'win32' ? 'SIGINT' : 'SIGHUP';
+    /* c8 ignore stop */
+    #emitter = new Emitter();
+    #process;
+    #originalProcessEmit;
+    #originalProcessReallyExit;
+    #sigListeners = {};
+    #loaded = false;
+    constructor(process) {
+        super();
+        this.#process = process;
+        // { <signal>: <listener fn>, ... }
+        this.#sigListeners = {};
+        for (const sig of signals_js_1.signals) {
+            this.#sigListeners[sig] = () => {
+                // If there are no other listeners, an exit is coming!
+                // Simplest way: remove us and then re-send the signal.
+                // We know that this will kill the process, so we can
+                // safely emit now.
+                const listeners = this.#process.listeners(sig);
+                let { count } = this.#emitter;
+                // This is a workaround for the fact that signal-exit v3 and signal
+                // exit v4 are not aware of each other, and each will attempt to let
+                // the other handle it, so neither of them do. To correct this, we
+                // detect if we're the only handler *except* for previous versions
+                // of signal-exit, and increment by the count of listeners it has
+                // created.
+                /* c8 ignore start */
+                const p = process;
+                if (typeof p.__signal_exit_emitter__ === 'object' &&
+                    typeof p.__signal_exit_emitter__.count === 'number') {
+                    count += p.__signal_exit_emitter__.count;
+                }
+                /* c8 ignore stop */
+                if (listeners.length === count) {
+                    this.unload();
+                    const ret = this.#emitter.emit('exit', null, sig);
+                    /* c8 ignore start */
+                    const s = sig === 'SIGHUP' ? this.#hupSig : sig;
+                    if (!ret)
+                        process.kill(process.pid, s);
+                    /* c8 ignore stop */
+                }
+            };
+        }
+        this.#originalProcessReallyExit = process.reallyExit;
+        this.#originalProcessEmit = process.emit;
+    }
+    onExit(cb, opts) {
+        /* c8 ignore start */
+        if (!processOk(this.#process)) {
+            return () => { };
+        }
+        /* c8 ignore stop */
+        if (this.#loaded === false) {
+            this.load();
+        }
+        const ev = opts?.alwaysLast ? 'afterExit' : 'exit';
+        this.#emitter.on(ev, cb);
+        return () => {
+            this.#emitter.removeListener(ev, cb);
+            if (this.#emitter.listeners['exit'].length === 0 &&
+                this.#emitter.listeners['afterExit'].length === 0) {
+                this.unload();
+            }
+        };
+    }
+    load() {
+        if (this.#loaded) {
+            return;
+        }
+        this.#loaded = true;
+        // This is the number of onSignalExit's that are in play.
+        // It's important so that we can count the correct number of
+        // listeners on signals, and don't wait for the other one to
+        // handle it instead of us.
+        this.#emitter.count += 1;
+        for (const sig of signals_js_1.signals) {
+            try {
+                const fn = this.#sigListeners[sig];
+                if (fn)
+                    this.#process.on(sig, fn);
+            }
+            catch (_) { }
+        }
+        this.#process.emit = (ev, ...a) => {
+            return this.#processEmit(ev, ...a);
+        };
+        this.#process.reallyExit = (code) => {
+            return this.#processReallyExit(code);
+        };
+    }
+    unload() {
+        if (!this.#loaded) {
+            return;
+        }
+        this.#loaded = false;
+        signals_js_1.signals.forEach(sig => {
+            const listener = this.#sigListeners[sig];
+            /* c8 ignore start */
+            if (!listener) {
+                throw new Error('Listener not defined for signal: ' + sig);
+            }
+            /* c8 ignore stop */
+            try {
+                this.#process.removeListener(sig, listener);
+                /* c8 ignore start */
+            }
+            catch (_) { }
+            /* c8 ignore stop */
+        });
+        this.#process.emit = this.#originalProcessEmit;
+        this.#process.reallyExit = this.#originalProcessReallyExit;
+        this.#emitter.count -= 1;
+    }
+    #processReallyExit(code) {
+        /* c8 ignore start */
+        if (!processOk(this.#process)) {
+            return 0;
+        }
+        this.#process.exitCode = code || 0;
+        /* c8 ignore stop */
+        this.#emitter.emit('exit', this.#process.exitCode, null);
+        return this.#originalProcessReallyExit.call(this.#process, this.#process.exitCode);
+    }
+    #processEmit(ev, ...args) {
+        const og = this.#originalProcessEmit;
+        if (ev === 'exit' && processOk(this.#process)) {
+            if (typeof args[0] === 'number') {
+                this.#process.exitCode = args[0];
+                /* c8 ignore start */
+            }
+            /* c8 ignore start */
+            const ret = og.call(this.#process, ev, ...args);
+            /* c8 ignore start */
+            this.#emitter.emit('exit', this.#process.exitCode, null);
+            /* c8 ignore stop */
+            return ret;
+        }
+        else {
+            return og.call(this.#process, ev, ...args);
+        }
+    }
+}
+const process = globalThis.process;
+// wrap so that we call the method on the actual handler, without
+// exporting it directly.
+_a = signalExitWrap(processOk(process) ? new SignalExit(process) : new SignalExitFallback()), 
+/**
+ * Called when the process is exiting, whether via signal, explicit
+ * exit, or running out of stuff to do.
+ *
+ * If the global process object is not suitable for instrumentation,
+ * then this will be a no-op.
+ *
+ * Returns a function that may be used to unload signal-exit.
+ */
+exports.onExit = _a.onExit, 
+/**
+ * Load the listeners.  Likely you never need to call this, unless
+ * doing a rather deep integration with signal-exit functionality.
+ * Mostly exposed for the benefit of testing.
+ *
+ * @internal
+ */
+exports.load = _a.load, 
+/**
+ * Unload the listeners.  Likely you never need to call this, unless
+ * doing a rather deep integration with signal-exit functionality.
+ * Mostly exposed for the benefit of testing.
+ *
+ * @internal
+ */
+exports.unload = _a.unload;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ 25241:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.signals = void 0;
+/**
+ * This is not the set of all possible signals.
+ *
+ * It IS, however, the set of all signals that trigger
+ * an exit on either Linux or BSD systems.  Linux is a
+ * superset of the signal names supported on BSD, and
+ * the unknown signals just fail to register, so we can
+ * catch that easily enough.
+ *
+ * Windows signals are a different set, since there are
+ * signals that terminate Windows processes, but don't
+ * terminate (or don't even exist) on Posix systems.
+ *
+ * Don't bother with SIGKILL.  It's uncatchable, which
+ * means that we can't fire any callbacks anyway.
+ *
+ * If a user does happen to register a handler on a non-
+ * fatal signal like SIGWINCH or something, and then
+ * exit, it'll end up firing `process.emit('exit')`, so
+ * the handler will be fired anyway.
+ *
+ * SIGBUS, SIGFPE, SIGSEGV and SIGILL, when not raised
+ * artificially, inherently leave the process in a
+ * state from which it is not safe to try and enter JS
+ * listeners.
+ */
+exports.signals = [];
+exports.signals.push('SIGHUP', 'SIGINT', 'SIGTERM');
+if (process.platform !== 'win32') {
+    exports.signals.push('SIGALRM', 'SIGABRT', 'SIGVTALRM', 'SIGXCPU', 'SIGXFSZ', 'SIGUSR2', 'SIGTRAP', 'SIGSYS', 'SIGQUIT', 'SIGIOT'
+    // should detect profiler and enable/disable accordingly.
+    // see #21
+    // 'SIGPROF'
+    );
+}
+if (process.platform === 'linux') {
+    exports.signals.push('SIGIO', 'SIGPOLL', 'SIGPWR', 'SIGSTKFLT');
+}
+//# sourceMappingURL=signals.js.map
 
 /***/ })
 

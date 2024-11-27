@@ -28,6 +28,13 @@
 
 - 
 
+# 3.24.0
+
+
+## New Functionalities
+
+- [connectivity] Add transform function to create OAuth2ClientCredentials destinations from service bindings. (7ccc9a3)
+
 # 3.23.0
 
 

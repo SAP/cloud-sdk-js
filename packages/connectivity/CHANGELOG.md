@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.24.0
+
+### Minor Changes
+
+- 7ccc9a3: [New Functionality] Add transform function to create OAuth2ClientCredentials destinations from service bindings.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@3.24.0
+- @sap-cloud-sdk/util@3.24.0
+
 ## 3.23.0
 
 ### Patch Changes

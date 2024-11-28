@@ -1,5 +1,5 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { isHttpSuccessCode } from './batch-response-parser';
+import { isHttpSuccessCode, parseBatchResponse } from './batch-response-parser';
 import type {
   BatchResponse,
   ErrorResponse,
@@ -109,14 +109,15 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
   private deserializeChangeSet(
     changesetData: ResponseData[]
   ): WriteResponses<DeSerializersT> {
+    const changesetSuccess = changesetData.every(subResponseData => isHttpSuccessCode(subResponseData.httpCode))
     return {
       responses: changesetData.map(subResponseData =>
         this.deserializeChangeSetSubResponse(subResponseData)
       ),
       isSuccess: (): this is
         | ReadResponse<DeSerializersT>
-        | WriteResponses<DeSerializersT> => true,
-      isError: (): this is ErrorResponse => false,
+        | WriteResponses<DeSerializersT> => changesetSuccess,
+      isError: (): this is ErrorResponse => !changesetSuccess,
       isReadResponse: (): this is ReadResponse<DeSerializersT> => false,
       isWriteResponses: (): this is WriteResponses<DeSerializersT> => true
     };

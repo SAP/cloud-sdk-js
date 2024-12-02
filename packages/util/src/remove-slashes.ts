@@ -11,12 +11,13 @@ export function removeSlashes(path: string): string {
  * @internal
  */
 export function removeTrailingSlashes(path: string): string {
-  return path.endsWith('/') ? path.slice(0, -1) : path;
+  return path.replace(/\/+$/, '');
 }
 
 /**
  * @internal
  */
 export function removeLeadingSlashes(path: string): string {
-  return path.startsWith('/') ? path.slice(1) : path;
+  return path.replace(/^\/+/,'');
 }
+

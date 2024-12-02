@@ -1,4 +1,9 @@
-import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
+import {
+  codeBlock,
+  documentationBlock,
+  removeSlashes,
+  unixEOL
+} from '@sap-cloud-sdk/util';
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
 import { collectRefs, getUniqueRefs } from '../schema-util';
 import { serializeOperation } from './operation';
@@ -29,7 +34,7 @@ export function apiFile(
 ): string {
   const imports = serializeImports(getImports(api, options));
   const apiDoc = apiDocumentation(api, serviceName);
-  const santisiedBasePath = getSantisiedBasePath(basePath);
+  const santisiedBasePath = basePath ? removeSlashes(basePath) + '/' : '';
   const apiContent = codeBlock`
 export const ${api.name} = {
   ${api.operations.map(operation => serializeOperation(operation, santisiedBasePath)).join(',\n')}
@@ -38,11 +43,6 @@ export const ${api.name} = {
 
   return [imports, apiDoc, apiContent].join(unixEOL);
 }
-
-function getSantisiedBasePath(basePath: string | undefined) {
-  return basePath ? basePath.replace(/^\/+/, '') + '/' : '';
-}
-
 /**
  * Get the unique reference schemas for all request body types in the given operation list.
  * @param operations - The given operation list.

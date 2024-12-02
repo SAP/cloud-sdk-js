@@ -223,7 +223,7 @@ async function createApis(
       createFile(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
-        apiFile(api, openApiDocument.serviceName, options),
+        apiFile(api, openApiDocument.serviceName, options, openApiDocument.serviceOptions.basePath),
         options
       )
     )

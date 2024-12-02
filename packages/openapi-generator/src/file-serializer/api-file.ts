@@ -16,23 +16,31 @@ import type {
  * Serialize an API representation to a string representing the resulting API file.
  * @param api - Representation of an API.
  * @param serviceName - Service name for which the API is created.
+ * @param options - Options to configure the file creation.
+ * @param basePath - Base path for the API obtained from optionsPerService.
  * @returns The serialized API file contents.
  * @internal
  */
 export function apiFile(
   api: OpenApiApi,
   serviceName: string,
-  options?: CreateFileOptions
+  options?: CreateFileOptions,
+  basePath?: string
 ): string {
   const imports = serializeImports(getImports(api, options));
   const apiDoc = apiDocumentation(api, serviceName);
+  const santisiedBasePath = getSantisiedBasePath(basePath);
   const apiContent = codeBlock`
 export const ${api.name} = {
-  ${api.operations.map(operation => serializeOperation(operation)).join(',\n')}
+  ${api.operations.map(operation => serializeOperation(operation, santisiedBasePath)).join(',\n')}
 };
 `;
 
   return [imports, apiDoc, apiContent].join(unixEOL);
+}
+
+function getSantisiedBasePath(basePath: string | undefined) {
+  return basePath ? basePath.replace(/^\/+/, '') + '/' : '';
 }
 
 /**

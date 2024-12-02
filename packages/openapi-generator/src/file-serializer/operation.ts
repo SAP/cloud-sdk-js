@@ -9,13 +9,21 @@ import type {
 /**
  * Serialize an operation to a string.
  * @param operation - Operation to serialize.
+ * @param santisedBasePath - Sanitised base path from optionsPerService that needs to be prefixed to the operation path pattern.
  * @returns The operation as a string.
  * @internal
  */
-export function serializeOperation(operation: OpenApiOperation): string {
+export function serializeOperation(
+  operation: OpenApiOperation,
+  santisiedBasePath?: string
+): string {
+  const pathPatternWithBasePath = santisiedBasePath
+    ? `${santisiedBasePath}${operation.pathPattern}`
+    : operation.pathPattern;
+
   const requestBuilderParams = [
     `'${operation.method}'`,
-    `"${operation.pathPattern}"`
+    `"${pathPatternWithBasePath}"`
   ];
 
   const bodyAndQueryParams = serializeParamsForRequestBuilder(operation);

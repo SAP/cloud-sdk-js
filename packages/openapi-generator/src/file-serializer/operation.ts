@@ -9,7 +9,7 @@ import type {
 /**
  * Serialize an operation to a string.
  * @param operation - Operation to serialize.
- * @param santisedBasePath - Sanitised base path from optionsPerService that needs to be prefixed to the operation path pattern.
+ * @param santisedBasePath - Sanitised base path(leading slashes removed and only contains one trailing slash) from optionsPerService that gets prefixed to the operation path pattern.
  * @returns The operation as a string.
  * @internal
  */

@@ -18,6 +18,5 @@ export function removeTrailingSlashes(path: string): string {
  * @internal
  */
 export function removeLeadingSlashes(path: string): string {
-  return path.replace(/^\/+/,'');
+  return path.replace(/^\/+/, '');
 }
-

@@ -124,6 +124,17 @@ describe('api-file', () => {
     expect(apiFile(multipleOperationApi, 'MyServiceName')).toMatchSnapshot();
   });
 
+  it('serializes api file with multiple operations and references and base path', () => {
+    expect(
+      apiFile(
+        multipleOperationApi,
+        'MyServiceName',
+        undefined,
+        '///base/path/to/service///'
+      )
+    ).toMatchSnapshot();
+  });
+
   it('creates an api file with documentation', () => {
     expect(apiFile(docsApi, 'TestService')).toMatchSnapshot();
   });

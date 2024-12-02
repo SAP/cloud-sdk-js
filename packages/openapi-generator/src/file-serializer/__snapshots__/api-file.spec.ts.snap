@@ -103,6 +103,45 @@ export const TestApi = {
 };"
 `;
 
+exports[`api-file serializes api file with multiple operations and references and base path 1`] = `
+"import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
+import type { QueryParameterType, RefType, ResponseType } from './schema';
+/**
+ * Representation of the 'TestApi'.
+ * This API is part of the 'MyServiceName' service.
+ */
+export const TestApi = {
+  /**
+   * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
+   * @param id - Path parameter.
+   * @param queryParameters - Object containing the following keys: queryParam.
+   * @param headerParameters - Object containing the following keys: headerParam.
+   * @returns The request builder, use the \`execute()\` method to trigger the request.
+   */
+  getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}, headerParameters?: {'headerParam'?: string}) => new OpenApiRequestBuilder<string>(
+    'get',
+    "base/path/to/service/test/{id}",
+    {
+          pathParameters: { id },
+          queryParameters,
+          headerParameters
+        }
+  ),
+  /**
+   * Create a request builder for execution of post requests to the 'test' endpoint.
+   * @param body - Request body.
+   * @returns The request builder, use the \`execute()\` method to trigger the request.
+   */
+  createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
+    'post',
+    "base/path/to/service/test",
+    {
+          body
+        }
+  )
+};"
+`;
+
 exports[`api-file serializes api file with one operation and no references 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
 /**

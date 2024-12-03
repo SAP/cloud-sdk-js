@@ -34,7 +34,7 @@ export function apiFile(
 ): string {
   const imports = serializeImports(getImports(api, options));
   const apiDoc = apiDocumentation(api, serviceName);
-  const santisiedBasePath = basePath ? removeSlashes(basePath) + '/' : '';
+  const santisiedBasePath = basePath ? '/' + removeSlashes(basePath) : '';
   const apiContent = codeBlock`
 export const ${api.name} = {
   ${api.operations.map(operation => serializeOperation(operation, santisiedBasePath)).join(',\n')}

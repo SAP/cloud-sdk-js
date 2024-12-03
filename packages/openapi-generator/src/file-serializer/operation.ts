@@ -9,7 +9,7 @@ import type {
 /**
  * Serialize an operation to a string.
  * @param operation - Operation to serialize.
- * @param santisedBasePath - Sanitised base path(leading slashes removed and only contains one trailing slash) from optionsPerService that gets prefixed to the operation path pattern.
+ * @param santisedBasePath - Sanitised base path(one leading slash and all trailing slashes removed) from optionsPerService that gets prefixed to the operation path pattern.
  * @returns The operation as a string.
  * @internal
  */
@@ -33,7 +33,7 @@ export function serializeOperation(
 
   const responseType = serializeSchema(operation.response);
   return codeBlock`
-${operationDocumentation(operation)}
+${operationDocumentation(operation, pathPatternWithBasePath)}
 ${operation.operationId}: (${serializeOperationSignature(
     operation
   )}) => new OpenApiRequestBuilder<${responseType}>(
@@ -139,7 +139,10 @@ function serializeParamsForRequestBuilder(
 /**
  * @internal
  */
-export function operationDocumentation(operation: OpenApiOperation): string {
+export function operationDocumentation(
+  operation: OpenApiOperation,
+  pathPatternWithBasePath?: string
+): string {
   const signature: string[] = [];
   if (operation.pathParameters.length) {
     signature.push(...getSignatureOfPathParameters(operation.pathParameters));
@@ -164,7 +167,10 @@ export function operationDocumentation(operation: OpenApiOperation): string {
   signature.push(
     '@returns The request builder, use the `execute()` method to trigger the request.'
   );
-  const lines = [getOperationDescriptionText(operation), ...signature];
+  const lines = [
+    getOperationDescriptionText(operation, pathPatternWithBasePath),
+    ...signature
+  ];
   return documentationBlock`${lines.join(unixEOL)}`;
 }
 
@@ -181,10 +187,13 @@ function getSignatureOfBody(body: OpenApiRequestBody): string {
   return `@param body - ${body.description || 'Request body.'}`;
 }
 
-function getOperationDescriptionText(operation: OpenApiOperation): string {
+function getOperationDescriptionText(
+  operation: OpenApiOperation,
+  pathPatternWithBasePath?: string
+): string {
   if (operation.description) {
     return operation.description;
   }
 
-  return `Create a request builder for execution of ${operation.method} requests to the '${operation.pathPattern}' endpoint.`;
+  return `Create a request builder for execution of ${operation.method} requests to the '${pathPatternWithBasePath || operation.pathPattern}' endpoint.`;
 }

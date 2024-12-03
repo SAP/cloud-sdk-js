@@ -17,15 +17,15 @@ exports.EntityApi = {
      * @param queryParameters - Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    getAllEntities: (queryParameters) => new openapi_1.OpenApiRequestBuilder('get', '/entities', {
+    getAllEntities: (queryParameters) => new openapi_1.OpenApiRequestBuilder('get', '/base/path/to/service/entities', {
         queryParameters
     }),
     /**
-     * Create a request builder for execution of put requests to the '/entities' endpoint.
+     * Create a request builder for execution of put requests to the '/base/path/to/service/entities||/entities' endpoint.
      * @param body - Request body.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    updateEntityWithPut: (body) => new openapi_1.OpenApiRequestBuilder('put', '/entities', {
+    updateEntityWithPut: (body) => new openapi_1.OpenApiRequestBuilder('put', '/base/path/to/service/entities', {
         body
     }),
     /**
@@ -33,42 +33,42 @@ exports.EntityApi = {
      * @param body - Entity to create
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    createEntity: (body) => new openapi_1.OpenApiRequestBuilder('post', '/entities', {
+    createEntity: (body) => new openapi_1.OpenApiRequestBuilder('post', '/base/path/to/service/entities', {
         body
     }),
     /**
-     * Create a request builder for execution of patch requests to the '/entities' endpoint.
+     * Create a request builder for execution of patch requests to the '/base/path/to/service/entities||/entities' endpoint.
      * @param body - Request body.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    updateEntity: (body) => new openapi_1.OpenApiRequestBuilder('patch', '/entities', {
+    updateEntity: (body) => new openapi_1.OpenApiRequestBuilder('patch', '/base/path/to/service/entities', {
         body
     }),
     /**
-     * Create a request builder for execution of delete requests to the '/entities' endpoint.
+     * Create a request builder for execution of delete requests to the '/base/path/to/service/entities||/entities' endpoint.
      * @param body - Request body.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    deleteEntity: (body) => new openapi_1.OpenApiRequestBuilder('delete', '/entities', {
+    deleteEntity: (body) => new openapi_1.OpenApiRequestBuilder('delete', '/base/path/to/service/entities', {
         body
     }),
     /**
      * Head request of entities
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    headEntities: () => new openapi_1.OpenApiRequestBuilder('head', '/entities'),
+    headEntities: () => new openapi_1.OpenApiRequestBuilder('head', '/base/path/to/service/entities'),
     /**
      * Get entity by id
      * @param entityId - Key property of the entity
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    getEntityByKey: (entityId) => new openapi_1.OpenApiRequestBuilder('get', '/entities/{entityId}', {
+    getEntityByKey: (entityId) => new openapi_1.OpenApiRequestBuilder('get', '/base/path/to/service/entities/{entityId}', {
         pathParameters: { entityId }
     }),
     /**
      * Count entities
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    countEntities: () => new openapi_1.OpenApiRequestBuilder('get', '/entities/count')
+    countEntities: () => new openapi_1.OpenApiRequestBuilder('get', '/base/path/to/service/entities/count')
 };
 //# sourceMappingURL=entity-api.js.map

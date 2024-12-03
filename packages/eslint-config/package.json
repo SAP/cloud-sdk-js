@@ -35,7 +35,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-regex": "^1.10.0",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "typescript-eslint": "^8.16.0"
+    "typescript-eslint": "^8.17.0"
   },
   "peerDependencies": {
     "eslint": "^8.0.0"

@@ -212,7 +212,7 @@ describe('generator', () => {
           })
         },
         existingConfig:
-          '{ "inputDir/spec.json": {"directoryName": "customName", "basePath": "/base/path/for/service"} }',
+          '{ "inputDir/spec.json": {"directoryName": "customName" } }',
         anotherConfig:
           '{ "inputDir/spec2.json": {"directoryName": "customName" } }'
       });
@@ -251,8 +251,7 @@ describe('generator', () => {
       await expect(JSON.parse(actual)).toEqual({
         'inputDir/spec.json': {
           packageName: 'customname',
-          directoryName: 'customName',
-          basePath: '/base/path/for/service'
+          directoryName: 'customName'
         }
       });
     });

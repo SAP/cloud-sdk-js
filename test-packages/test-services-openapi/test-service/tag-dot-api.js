@@ -13,7 +13,7 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
  */
 exports.TagDotApi = {
     /**
-     * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/special-tag||/test-cases/special-tag' endpoint.
+     * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/special-tag' endpoint.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     tagWithDot: () => new openapi_1.OpenApiRequestBuilder('get', '/base/path/to/service/test-cases/special-tag')

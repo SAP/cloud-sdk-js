@@ -26,7 +26,7 @@ export declare const EntityApi: {
     enumBooleanParameter?: true | false;
   }) => OpenApiRequestBuilder<TestEntity[]>;
   /**
-   * Create a request builder for execution of put requests to the '/base/path/to/service/entities||/entities' endpoint.
+   * Create a request builder for execution of put requests to the '/base/path/to/service/entities' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
@@ -40,7 +40,7 @@ export declare const EntityApi: {
    */
   createEntity: (body: TestEntity | undefined) => OpenApiRequestBuilder<any>;
   /**
-   * Create a request builder for execution of patch requests to the '/base/path/to/service/entities||/entities' endpoint.
+   * Create a request builder for execution of patch requests to the '/base/path/to/service/entities' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
@@ -48,7 +48,7 @@ export declare const EntityApi: {
     body: Record<string, any> | undefined
   ) => OpenApiRequestBuilder<any>;
   /**
-   * Create a request builder for execution of delete requests to the '/base/path/to/service/entities||/entities' endpoint.
+   * Create a request builder for execution of delete requests to the '/base/path/to/service/entities' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */

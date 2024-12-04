@@ -34,10 +34,11 @@ export function apiFile(
 ): string {
   const imports = serializeImports(getImports(api, options));
   const apiDoc = apiDocumentation(api, serviceName);
-  const santisiedBasePath = basePath ? '/' + removeSlashes(basePath) : '';
+  const sanitizedBasePath = basePath ? removeSlashes(basePath) : '';
+  const prefixedBasePath = sanitizedBasePath ? '/' + sanitizedBasePath : '';
   const apiContent = codeBlock`
 export const ${api.name} = {
-  ${api.operations.map(operation => serializeOperation(operation, santisiedBasePath)).join(',\n')}
+  ${api.operations.map(operation => serializeOperation(operation, prefixedBasePath)).join(',\n')}
 };
 `;
 

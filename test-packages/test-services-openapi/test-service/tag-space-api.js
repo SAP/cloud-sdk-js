@@ -13,7 +13,7 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
  */
 exports.TagSpaceApi = {
     /**
-     * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/special-tag||/test-cases/special-tag' endpoint.
+     * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/special-tag' endpoint.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     tagWithSpace: () => new openapi_1.OpenApiRequestBuilder('post', '/base/path/to/service/test-cases/special-tag')

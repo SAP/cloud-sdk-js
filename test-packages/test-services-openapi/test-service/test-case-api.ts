@@ -16,7 +16,7 @@ import type {
  */
 export const TestCaseApi = {
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/parameters/required-parameters/{requiredPathItemPathParam}||/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
+   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
    * @param requiredPathItemPathParam - Path parameter.
    * @param body - Request body.
    * @param queryParameters - Object containing the following keys: requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam, optionalPathItemQueryParam.
@@ -42,7 +42,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/parameters/required-parameters/{requiredPathItemPathParam}||/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
+   * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
    * @param requiredPathItemPathParam - Path parameter.
    * @param body - Request body.
    * @param queryParameters - Object containing the following keys: optionalPathItemQueryParam, requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam.
@@ -68,7 +68,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/parameters||/test-cases/parameters' endpoint.
+   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/parameters' endpoint.
    * @param queryParameters - Object containing the following keys: requiredQueryParam.
    * @param headerParameters - Object containing the following keys: optionalHeaderParam.
    * @returns The request builder, use the `execute()` method to trigger the request.
@@ -86,7 +86,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/parameters||/test-cases/parameters' endpoint.
+   * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/parameters' endpoint.
    * @param body - Request body.
    * @param queryParameters - Object containing the following keys: optionalQueryParam.
    * @param headerParameters - Object containing the following keys: requiredHeaderParam.
@@ -107,7 +107,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of patch requests to the '/base/path/to/service/test-cases/parameters||/test-cases/parameters' endpoint.
+   * Create a request builder for execution of patch requests to the '/base/path/to/service/test-cases/parameters' endpoint.
    * @param body - Request body.
    * @param queryParameters - Object containing the following keys: optionalQueryParam.
    * @param headerParameters - Object containing the following keys: optionalHeaderParam.
@@ -128,7 +128,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/parameters/{duplicateParam}||/test-cases/parameters/{duplicateParam}' endpoint.
+   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/parameters/{duplicateParam}' endpoint.
    * @param duplicateParam - Path parameter.
    * @param queryParameters - Object containing the following keys: duplicateParam.
    * @returns The request builder, use the `execute()` method to trigger the request.
@@ -146,7 +146,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/duplicate-operation-ids||/test-cases/duplicate-operation-ids' endpoint.
+   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/duplicate-operation-ids' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId: () =>
@@ -155,7 +155,7 @@ export const TestCaseApi = {
       '/base/path/to/service/test-cases/duplicate-operation-ids'
     ),
   /**
-   * Create a request builder for execution of put requests to the '/base/path/to/service/test-cases/duplicate-operation-ids||/test-cases/duplicate-operation-ids' endpoint.
+   * Create a request builder for execution of put requests to the '/base/path/to/service/test-cases/duplicate-operation-ids' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId1_1: () =>
@@ -164,7 +164,7 @@ export const TestCaseApi = {
       '/base/path/to/service/test-cases/duplicate-operation-ids'
     ),
   /**
-   * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/duplicate-operation-ids||/test-cases/duplicate-operation-ids' endpoint.
+   * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/duplicate-operation-ids' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId_1: () =>
@@ -173,7 +173,7 @@ export const TestCaseApi = {
       '/base/path/to/service/test-cases/duplicate-operation-ids'
     ),
   /**
-   * Create a request builder for execution of patch requests to the '/base/path/to/service/test-cases/duplicate-operation-ids||/test-cases/duplicate-operation-ids' endpoint.
+   * Create a request builder for execution of patch requests to the '/base/path/to/service/test-cases/duplicate-operation-ids' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId1: () =>
@@ -182,7 +182,7 @@ export const TestCaseApi = {
       '/base/path/to/service/test-cases/duplicate-operation-ids'
     ),
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/reserved-keywords/{const1}||/test-cases/reserved-keywords/{const1}' endpoint.
+   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/reserved-keywords/{const1}' endpoint.
    * @param const1 - Path parameter.
    * @param queryParameters - Object containing the following keys: const.
    * @returns The request builder, use the `execute()` method to trigger the request.
@@ -197,7 +197,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/complex-schemas||/test-cases/complex-schemas' endpoint.
+   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/complex-schemas' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
@@ -210,7 +210,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/complex-schemas||/test-cases/complex-schemas' endpoint.
+   * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/complex-schemas' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
@@ -223,7 +223,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/schema-name-integer||/test-cases/schema-name-integer' endpoint.
+   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/schema-name-integer' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
@@ -236,7 +236,7 @@ export const TestCaseApi = {
       }
     ),
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/no-operation-id||/test-cases/no-operation-id' endpoint.
+   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/no-operation-id' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   getTestCasesNoOperationId: () =>

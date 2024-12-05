@@ -108,7 +108,7 @@
     "jest-junit": "^16.0.0",
     "license-checker": "^25.0.1",
     "madge": "^8.0.0",
-    "prettier": "^3.4.1",
+    "prettier": "^3.4.2",
     "puppeteer": "^23.10.0",
     "semver": "^7.6.3",
     "ts-jest": "^29.2.5",

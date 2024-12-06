@@ -9,21 +9,17 @@ import type {
 /**
  * Serialize an operation to a string.
  * @param operation - Operation to serialize.
- * @param santisedBasePath - Sanitised base path(one leading slash and all trailing slashes removed) from optionsPerService that gets prefixed to the operation path pattern.
+ * @param apiName - Name of the API being serialized.
  * @returns The operation as a string.
  * @internal
  */
 export function serializeOperation(
   operation: OpenApiOperation,
-  santisiedBasePath?: string
+  apiName: string
 ): string {
-  const pathPatternWithBasePath = santisiedBasePath
-    ? `${santisiedBasePath}${operation.pathPattern}`
-    : operation.pathPattern;
-
   const requestBuilderParams = [
     `'${operation.method}'`,
-    `"${pathPatternWithBasePath}"`
+    `"${operation.pathPattern}"`
   ];
 
   const bodyAndQueryParams = serializeParamsForRequestBuilder(operation);
@@ -33,11 +29,12 @@ export function serializeOperation(
 
   const responseType = serializeSchema(operation.response);
   return codeBlock`
-${operationDocumentation(operation, pathPatternWithBasePath)}
+${operationDocumentation(operation, operation.pathPattern)}
 ${operation.operationId}: (${serializeOperationSignature(
     operation
   )}) => new OpenApiRequestBuilder<${responseType}>(
-  ${requestBuilderParams.join(',\n')}
+  ${requestBuilderParams.join(',\n')},
+  ${apiName}._defaultBasePath
 )`;
 }
 

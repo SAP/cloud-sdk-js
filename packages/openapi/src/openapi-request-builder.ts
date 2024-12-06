@@ -39,11 +39,13 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param method - HTTP method of the request to be built.
    * @param pathPattern - Path for the request containing path parameter references as in the OpenAPI specification.
    * @param parameters - Query parameters and or body to pass to the request.
+   * @param basePath - The path to be prefixed to the pathPattern.
    */
   constructor(
     public method: Method,
     private pathPattern: string,
-    private parameters?: OpenApiRequestParameters
+    private parameters?: OpenApiRequestParameters,
+    private basePath?: string
   ) {}
 
   /**
@@ -175,11 +177,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     // Get the innermost curly bracket pairs with non-empty and legal content as placeholders.
     const placeholders: string[] = this.pathPattern.match(/{[^/?#{}]+}/g) || [];
 
-    return placeholders.reduce((path: string, placeholder: string) => {
-      const strippedPlaceholder = placeholder.slice(1, -1);
-      const parameterValue = pathParameters[strippedPlaceholder];
-      return path.replace(placeholder, encodeURIComponent(parameterValue));
-    }, this.pathPattern);
+    return (
+      (this.basePath ?? '') +
+      placeholders.reduce((path: string, placeholder: string) => {
+        const strippedPlaceholder = placeholder.slice(1, -1);
+        const parameterValue = pathParameters[strippedPlaceholder];
+        return path.replace(placeholder, encodeURIComponent(parameterValue));
+      }, this.pathPattern)
+    );
   }
 }
 

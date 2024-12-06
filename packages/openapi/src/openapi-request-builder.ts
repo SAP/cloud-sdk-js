@@ -2,6 +2,7 @@
 // eslint-disable-next-line import/named
 import {
   isNullish,
+  removeSlashes,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
 import { useOrFetchDestination } from '@sap-cloud-sdk/connectivity';
@@ -141,12 +142,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Set the basePath that gets prefixed to the pathPattern of the generated client.
+   * Set the basePath that gets prefixed to the pathPattern before a request.
    * @param basePath - Base path to be set.
    * @returns The request builder itself, to facilitate method chaining.
    */
   setBasePath(basePath: string): this {
-    this.basePath = basePath;
+    const sanitizedBasePath = basePath ? removeSlashes(basePath) : '';
+    const fixedBasePath = sanitizedBasePath ? '/' + sanitizedBasePath : '';
+    this.basePath = fixedBasePath;
     return this;
   }
 

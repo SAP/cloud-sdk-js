@@ -76,6 +76,27 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe(dummyResponse);
   });
 
+  it('executeRaw executes a request without parameters and basePath explicitly set', async () => {
+    const requestBuilder = new OpenApiRequestBuilder(
+      'get',
+      '/test'
+    ).setBasePath('/base/path/to/service/');
+    const response = await requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      sanitizeDestination(destination),
+      {
+        method: 'get',
+        middleware: [],
+        url: '/base/path/to/service/test',
+        headers: { requestConfig: {} },
+        params: { requestConfig: {} },
+        data: undefined
+      },
+      { fetchCsrfToken: false }
+    );
+    expect(response.data).toBe(dummyResponse);
+  });
+
   it('executeRaw executes a request with header parameters', async () => {
     const destinationWithAuth = {
       ...destination,

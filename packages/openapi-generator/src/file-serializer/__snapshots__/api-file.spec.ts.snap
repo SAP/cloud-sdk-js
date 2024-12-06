@@ -8,6 +8,7 @@ import type { QueryParameterType, RefType, ResponseType } from './schema/index.j
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
+  _defaultBasePath: '',
   /**
    * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.
@@ -22,7 +23,8 @@ export const TestApi = {
           pathParameters: { id },
           queryParameters,
           headerParameters
-        }
+        },
+    TestApi._defaultBasePath
   ),
   /**
    * Create a request builder for execution of post requests to the 'test' endpoint.
@@ -34,7 +36,8 @@ export const TestApi = {
     "test",
     {
           body
-        }
+        },
+    TestApi._defaultBasePath
   )
 };"
 `;
@@ -46,13 +49,16 @@ exports[`api-file creates an api file with documentation 1`] = `
  * This API is part of the 'TestService' service.
  */
 export const TestApi = {
+  _defaultBasePath: '',
   /**
    * Create a request builder for execution of get requests to the 'test' endpoint.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
   getFn: () => new OpenApiRequestBuilder<any>(
     'get',
-    "test"
+    "test",
+    {},
+    TestApi._defaultBasePath
   )
 };"
 `;
@@ -72,6 +78,7 @@ import type { QueryParameterType, RefType, ResponseType } from './schema';
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
+  _defaultBasePath: '',
   /**
    * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.
@@ -86,7 +93,8 @@ export const TestApi = {
           pathParameters: { id },
           queryParameters,
           headerParameters
-        }
+        },
+    TestApi._defaultBasePath
   ),
   /**
    * Create a request builder for execution of post requests to the 'test' endpoint.
@@ -98,7 +106,8 @@ export const TestApi = {
     "test",
     {
           body
-        }
+        },
+    TestApi._defaultBasePath
   )
 };"
 `;
@@ -111,8 +120,9 @@ import type { QueryParameterType, RefType, ResponseType } from './schema';
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
+  _defaultBasePath: '/base/path/to/service',
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/servicetest/{id}' endpoint.
+   * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.
    * @param queryParameters - Object containing the following keys: queryParam.
    * @param headerParameters - Object containing the following keys: headerParam.
@@ -120,24 +130,26 @@ export const TestApi = {
    */
   getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}, headerParameters?: {'headerParam'?: string}) => new OpenApiRequestBuilder<string>(
     'get',
-    "/base/path/to/servicetest/{id}",
+    "test/{id}",
     {
           pathParameters: { id },
           queryParameters,
           headerParameters
-        }
+        },
+    TestApi._defaultBasePath
   ),
   /**
-   * Create a request builder for execution of post requests to the '/base/path/to/servicetest' endpoint.
+   * Create a request builder for execution of post requests to the 'test' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
   createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
     'post',
-    "/base/path/to/servicetest",
+    "test",
     {
           body
-        }
+        },
+    TestApi._defaultBasePath
   )
 };"
 `;
@@ -149,6 +161,7 @@ exports[`api-file serializes api file with one operation and no references 1`] =
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
+  _defaultBasePath: '',
   /**
    * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.
@@ -159,7 +172,8 @@ export const TestApi = {
     "test/{id}",
     {
           pathParameters: { id }
-        }
+        },
+    TestApi._defaultBasePath
   )
 };"
 `;

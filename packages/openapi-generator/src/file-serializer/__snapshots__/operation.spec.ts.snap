@@ -11,6 +11,7 @@ getFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
   "/test('{id}')",
   {
         pathParameters: { id }
-      }
+      },
+  TestApi._defaultBasePath
 )"
 `;

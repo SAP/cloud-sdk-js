@@ -6,6 +6,7 @@ import type {
 } from '../openapi-types';
 
 describe('serializeOperation', () => {
+  const apiName = 'TestApi';
   it('serializes operation with path, query and header parameters', () => {
     const operation: OpenApiOperation = {
       operationId: 'getFn',
@@ -51,7 +52,7 @@ describe('serializeOperation', () => {
       response: { type: 'string' },
       pathPattern: '/test/{id}/{subId}'
     };
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of get requests to the '/test/{id}/{subId}' endpoint.
        * @param id - Path parameter.
@@ -67,7 +68,8 @@ describe('serializeOperation', () => {
               pathParameters: { id, subId },
               queryParameters,
               headerParameters
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -101,21 +103,20 @@ describe('serializeOperation', () => {
       response: { type: 'string' },
       pathPattern: '/test/{id}/{subId}'
     };
-    const santisedBasePath = '/base/path';
-    expect(serializeOperation(operation, santisedBasePath))
-      .toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
-       * Create a request builder for execution of get requests to the '/base/path/test/{id}/{subId}' endpoint.
+       * Create a request builder for execution of get requests to the '/test/{id}/{subId}' endpoint.
        * @param id - Path parameter.
        * @param subId - Path parameter.
        * @returns The request builder, use the \`execute()\` method to trigger the request.
        */
       getFn: (id: string, subId: string) => new OpenApiRequestBuilder<string>(
         'get',
-        "/base/path/test/{id}/{subId}",
+        "/test/{id}/{subId}",
         {
               pathParameters: { id, subId }
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -153,7 +154,7 @@ describe('serializeOperation', () => {
       pathPattern: '/test/{id}'
     };
 
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of delete requests to the '/test/{id}' endpoint.
        * @param id - Path parameter.
@@ -166,7 +167,8 @@ describe('serializeOperation', () => {
         {
               pathParameters: { id },
               headerParameters
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -196,7 +198,7 @@ describe('serializeOperation', () => {
       pathPattern: '/test/{id}'
     };
 
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of delete requests to the '/test/{id}' endpoint.
        * @param id - Path parameter.
@@ -207,7 +209,8 @@ describe('serializeOperation', () => {
         "/test/{id}",
         {
               pathParameters: { id }
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -237,7 +240,7 @@ describe('serializeOperation', () => {
       pathPattern: "/test('{id}')"
     };
 
-    expect(serializeOperation(operation)).toMatchSnapshot();
+    expect(serializeOperation(operation, apiName)).toMatchSnapshot();
   });
 
   it('serializes operation with optional query and required header parameters', () => {
@@ -279,7 +282,7 @@ describe('serializeOperation', () => {
       pathPattern: '/test'
     };
 
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of get requests to the '/test' endpoint.
        * @param queryParameters - Object containing the following keys: limit, page.
@@ -292,7 +295,8 @@ describe('serializeOperation', () => {
         {
               queryParameters,
               headerParameters
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -344,7 +348,7 @@ describe('serializeOperation', () => {
       pathPattern: '/test'
     };
 
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of get requests to the '/test' endpoint.
        * @param queryParameters - Object containing the following keys: limit, page.
@@ -357,7 +361,8 @@ describe('serializeOperation', () => {
         {
               queryParameters,
               headerParameters
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -393,7 +398,7 @@ describe('serializeOperation', () => {
       pathPattern: '/test'
     };
 
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of get requests to the '/test' endpoint.
        * @param queryParameters - Object containing the following keys: limit.
@@ -406,7 +411,8 @@ describe('serializeOperation', () => {
         {
               queryParameters,
               headerParameters
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -450,7 +456,7 @@ describe('serializeOperation', () => {
       pathPattern: '/test'
     };
 
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of get requests to the '/test' endpoint.
        * @param queryParameters - Object containing the following keys: limit, page.
@@ -463,7 +469,8 @@ describe('serializeOperation', () => {
         {
               queryParameters,
               headerParameters
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -489,7 +496,7 @@ describe('serializeOperation', () => {
       pathPattern: '/test'
     };
 
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of get requests to the '/test' endpoint.
        * @param queryParameters - Object containing the following keys: limit.
@@ -500,7 +507,8 @@ describe('serializeOperation', () => {
         "/test",
         {
               queryParameters
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -533,7 +541,7 @@ describe('serializeOperation', () => {
       response: { type: 'any' },
       pathPattern: '/test/{id}'
     };
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of post requests to the '/test/{id}' endpoint.
        * @param id - Path parameter.
@@ -546,7 +554,8 @@ describe('serializeOperation', () => {
         {
               pathParameters: { id },
               body
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });
@@ -571,7 +580,7 @@ describe('serializeOperation', () => {
       pathPattern: '/test'
     };
 
-    expect(serializeOperation(operation)).toMatchInlineSnapshot(`
+    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of post requests to the '/test' endpoint.
        * @param body - Request body.
@@ -582,7 +591,8 @@ describe('serializeOperation', () => {
         "/test",
         {
               body
-            }
+            },
+        TestApi._defaultBasePath
       )"
     `);
   });

@@ -25,6 +25,9 @@ export function serializeOperation(
   const bodyAndQueryParams = serializeParamsForRequestBuilder(operation);
   if (bodyAndQueryParams) {
     requestBuilderParams.push(bodyAndQueryParams);
+  } else {
+    // to keep the order of the params correct while adding the base path
+    requestBuilderParams.push('{}');
   }
 
   const responseType = serializeSchema(operation.response);

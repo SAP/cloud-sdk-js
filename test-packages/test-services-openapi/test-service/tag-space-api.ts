@@ -9,13 +9,16 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
  * This API is part of the 'test-service' service.
  */
 export const TagSpaceApi = {
+  _defaultBasePath: '/base/path/to/service',
   /**
-   * Create a request builder for execution of post requests to the '/base/path/to/service/test-cases/special-tag' endpoint.
+   * Create a request builder for execution of post requests to the '/test-cases/special-tag' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   tagWithSpace: () =>
     new OpenApiRequestBuilder<any>(
       'post',
-      '/base/path/to/service/test-cases/special-tag'
+      '/test-cases/special-tag',
+      {},
+      TagSpaceApi._defaultBasePath
     )
 };

@@ -10,6 +10,7 @@ import type { TestEntity } from './schema';
  * This API is part of the 'test-service' service.
  */
 export const EntityApi = {
+  _defaultBasePath: '/base/path/to/service',
   /**
    * Get all entities
    * @param queryParameters - Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.
@@ -27,53 +28,79 @@ export const EntityApi = {
   }) =>
     new OpenApiRequestBuilder<TestEntity[]>(
       'get',
-      '/base/path/to/service/entities',
+      '/entities',
       {
         queryParameters
-      }
+      },
+      EntityApi._defaultBasePath
     ),
   /**
-   * Create a request builder for execution of put requests to the '/base/path/to/service/entities' endpoint.
+   * Create a request builder for execution of put requests to the '/entities' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   updateEntityWithPut: (body: TestEntity[] | undefined) =>
-    new OpenApiRequestBuilder<any>('put', '/base/path/to/service/entities', {
-      body
-    }),
+    new OpenApiRequestBuilder<any>(
+      'put',
+      '/entities',
+      {
+        body
+      },
+      EntityApi._defaultBasePath
+    ),
   /**
    * Create entity
    * @param body - Entity to create
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   createEntity: (body: TestEntity | undefined) =>
-    new OpenApiRequestBuilder<any>('post', '/base/path/to/service/entities', {
-      body
-    }),
+    new OpenApiRequestBuilder<any>(
+      'post',
+      '/entities',
+      {
+        body
+      },
+      EntityApi._defaultBasePath
+    ),
   /**
-   * Create a request builder for execution of patch requests to the '/base/path/to/service/entities' endpoint.
+   * Create a request builder for execution of patch requests to the '/entities' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   updateEntity: (body: Record<string, any> | undefined) =>
-    new OpenApiRequestBuilder<any>('patch', '/base/path/to/service/entities', {
-      body
-    }),
+    new OpenApiRequestBuilder<any>(
+      'patch',
+      '/entities',
+      {
+        body
+      },
+      EntityApi._defaultBasePath
+    ),
   /**
-   * Create a request builder for execution of delete requests to the '/base/path/to/service/entities' endpoint.
+   * Create a request builder for execution of delete requests to the '/entities' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   deleteEntity: (body: string[] | undefined) =>
-    new OpenApiRequestBuilder<any>('delete', '/base/path/to/service/entities', {
-      body
-    }),
+    new OpenApiRequestBuilder<any>(
+      'delete',
+      '/entities',
+      {
+        body
+      },
+      EntityApi._defaultBasePath
+    ),
   /**
    * Head request of entities
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   headEntities: () =>
-    new OpenApiRequestBuilder<any>('head', '/base/path/to/service/entities'),
+    new OpenApiRequestBuilder<any>(
+      'head',
+      '/entities',
+      {},
+      EntityApi._defaultBasePath
+    ),
   /**
    * Get entity by id
    * @param entityId - Key property of the entity
@@ -82,10 +109,11 @@ export const EntityApi = {
   getEntityByKey: (entityId: string) =>
     new OpenApiRequestBuilder<any>(
       'get',
-      '/base/path/to/service/entities/{entityId}',
+      '/entities/{entityId}',
       {
         pathParameters: { entityId }
-      }
+      },
+      EntityApi._defaultBasePath
     ),
   /**
    * Count entities
@@ -94,6 +122,8 @@ export const EntityApi = {
   countEntities: () =>
     new OpenApiRequestBuilder<number>(
       'get',
-      '/base/path/to/service/entities/count'
+      '/entities/count',
+      {},
+      EntityApi._defaultBasePath
     )
 };

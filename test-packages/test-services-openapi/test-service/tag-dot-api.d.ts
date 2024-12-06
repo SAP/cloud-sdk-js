@@ -9,8 +9,9 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
  * This API is part of the 'test-service' service.
  */
 export declare const TagDotApi: {
+  _defaultBasePath: string;
   /**
-   * Create a request builder for execution of get requests to the '/base/path/to/service/test-cases/special-tag' endpoint.
+   * Create a request builder for execution of get requests to the '/test-cases/special-tag' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   tagWithDot: () => OpenApiRequestBuilder<any>;

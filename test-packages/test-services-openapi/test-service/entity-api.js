@@ -12,63 +12,64 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
  * This API is part of the 'test-service' service.
  */
 exports.EntityApi = {
+    _defaultBasePath: '/base/path/to/service',
     /**
      * Get all entities
      * @param queryParameters - Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    getAllEntities: (queryParameters) => new openapi_1.OpenApiRequestBuilder('get', '/base/path/to/service/entities', {
+    getAllEntities: (queryParameters) => new openapi_1.OpenApiRequestBuilder('get', '/entities', {
         queryParameters
-    }),
+    }, exports.EntityApi._defaultBasePath),
     /**
-     * Create a request builder for execution of put requests to the '/base/path/to/service/entities' endpoint.
+     * Create a request builder for execution of put requests to the '/entities' endpoint.
      * @param body - Request body.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    updateEntityWithPut: (body) => new openapi_1.OpenApiRequestBuilder('put', '/base/path/to/service/entities', {
+    updateEntityWithPut: (body) => new openapi_1.OpenApiRequestBuilder('put', '/entities', {
         body
-    }),
+    }, exports.EntityApi._defaultBasePath),
     /**
      * Create entity
      * @param body - Entity to create
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    createEntity: (body) => new openapi_1.OpenApiRequestBuilder('post', '/base/path/to/service/entities', {
+    createEntity: (body) => new openapi_1.OpenApiRequestBuilder('post', '/entities', {
         body
-    }),
+    }, exports.EntityApi._defaultBasePath),
     /**
-     * Create a request builder for execution of patch requests to the '/base/path/to/service/entities' endpoint.
+     * Create a request builder for execution of patch requests to the '/entities' endpoint.
      * @param body - Request body.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    updateEntity: (body) => new openapi_1.OpenApiRequestBuilder('patch', '/base/path/to/service/entities', {
+    updateEntity: (body) => new openapi_1.OpenApiRequestBuilder('patch', '/entities', {
         body
-    }),
+    }, exports.EntityApi._defaultBasePath),
     /**
-     * Create a request builder for execution of delete requests to the '/base/path/to/service/entities' endpoint.
+     * Create a request builder for execution of delete requests to the '/entities' endpoint.
      * @param body - Request body.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    deleteEntity: (body) => new openapi_1.OpenApiRequestBuilder('delete', '/base/path/to/service/entities', {
+    deleteEntity: (body) => new openapi_1.OpenApiRequestBuilder('delete', '/entities', {
         body
-    }),
+    }, exports.EntityApi._defaultBasePath),
     /**
      * Head request of entities
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    headEntities: () => new openapi_1.OpenApiRequestBuilder('head', '/base/path/to/service/entities'),
+    headEntities: () => new openapi_1.OpenApiRequestBuilder('head', '/entities', {}, exports.EntityApi._defaultBasePath),
     /**
      * Get entity by id
      * @param entityId - Key property of the entity
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    getEntityByKey: (entityId) => new openapi_1.OpenApiRequestBuilder('get', '/base/path/to/service/entities/{entityId}', {
+    getEntityByKey: (entityId) => new openapi_1.OpenApiRequestBuilder('get', '/entities/{entityId}', {
         pathParameters: { entityId }
-    }),
+    }, exports.EntityApi._defaultBasePath),
     /**
      * Count entities
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    countEntities: () => new openapi_1.OpenApiRequestBuilder('get', '/base/path/to/service/entities/count')
+    countEntities: () => new openapi_1.OpenApiRequestBuilder('get', '/entities/count', {}, exports.EntityApi._defaultBasePath)
 };
 //# sourceMappingURL=entity-api.js.map

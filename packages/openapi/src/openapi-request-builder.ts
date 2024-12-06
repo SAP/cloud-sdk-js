@@ -141,6 +141,16 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
+   * Set the basePath that gets prefixed to the pathPattern of the generated client.
+   * @param basePath - Base path to be set.
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  setBasePath(basePath: string): this {
+    this.basePath = basePath;
+    return this;
+  }
+
+  /**
    * Get http request config.
    * @returns Promise of http request config with origin.
    */

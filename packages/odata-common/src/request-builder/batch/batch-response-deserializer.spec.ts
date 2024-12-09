@@ -5,6 +5,7 @@ import {
 } from './batch-response-deserializer';
 import type { EntityDeserializer } from '../../entity-deserializer';
 import type { ResponseDataAccessor } from '../../response-data-accessor';
+import { ResponseData } from './batch-response-parser';
 
 describe('batch response transformer', () => {
   describe('getEntityNameFromMetadata', () => {
@@ -91,4 +92,35 @@ describe('batch response transformer', () => {
       );
     });
   });
+  describe('deserializeBatchResponse', () => {
+    it('returns an array of parsed sub responses of the batch response', () => {
+      const parsedBatchResponse: ResponseData[] = [
+        {body: {custom: 'response'}, httpCode: 200},
+        {body: {custom: 'response'}, httpCode: 200}
+      ];
+      const entityToApi = {
+        entity: 'entity' as any
+      };
+      const responseDataAccessor = {
+        isCollectionResult: input => true, 
+        getCollectionResult: input => input.d.results
+      } as ResponseDataAccessor;
+      const deserializer = {} as EntityDeserializer;
+      expect(
+        new BatchResponseDeserializer(
+          this.getEntityToApiMap(),
+          responseDataAccessor,
+          deserializer
+        ).deserializeBatchResponse(parsedBatchResponse)
+      ).toEqual([{}, {}, {}]);
+    });
+  })
 });
+
+
+deserializeBatchResponse(
+  parsedResponse,
+  this.getEntityToApiMap(),
+  responseDataAccessor,
+  entityDeserializer(this.deSerializers!)
+)

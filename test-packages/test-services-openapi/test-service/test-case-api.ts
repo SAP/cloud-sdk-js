@@ -15,7 +15,7 @@ import type {
  * This API is part of the 'test-service' service.
  */
 export const TestCaseApi = {
-  _defaultBasePath: '',
+  _defaultBasePath: undefined,
   /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
    * @param requiredPathItemPathParam - Path parameter.

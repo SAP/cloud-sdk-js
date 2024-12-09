@@ -8,7 +8,7 @@ import type { QueryParameterType, RefType, ResponseType } from './schema/index.j
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
-  _defaultBasePath: '',
+  _defaultBasePath: undefined,
   /**
    * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.
@@ -49,7 +49,7 @@ exports[`api-file creates an api file with documentation 1`] = `
  * This API is part of the 'TestService' service.
  */
 export const TestApi = {
-  _defaultBasePath: '',
+  _defaultBasePath: undefined,
   /**
    * Create a request builder for execution of get requests to the 'test' endpoint.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
@@ -78,7 +78,7 @@ import type { QueryParameterType, RefType, ResponseType } from './schema';
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
-  _defaultBasePath: '',
+  _defaultBasePath: undefined,
   /**
    * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.
@@ -161,7 +161,7 @@ exports[`api-file serializes api file with one operation and no references 1`] =
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
-  _defaultBasePath: '',
+  _defaultBasePath: undefined,
   /**
    * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.

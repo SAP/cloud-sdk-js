@@ -9,7 +9,7 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
  * This API is part of the 'test-service' service.
  */
 export const ExtensionApi = {
-  _defaultBasePath: '',
+  _defaultBasePath: undefined,
   /**
    * Create a request builder for execution of get requests to the '/test-cases/extension' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.

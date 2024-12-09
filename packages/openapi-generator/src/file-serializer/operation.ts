@@ -26,7 +26,6 @@ export function serializeOperation(
   if (bodyAndQueryParams) {
     requestBuilderParams.push(bodyAndQueryParams);
   } else {
-    // to keep the order of the params correct while adding the base path
     requestBuilderParams.push('{}');
   }
 

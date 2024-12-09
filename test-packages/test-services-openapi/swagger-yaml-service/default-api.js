@@ -12,7 +12,7 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
  * This API is part of the 'swagger-yaml-service' service.
  */
 exports.DefaultApi = {
-    _defaultBasePath: '',
+    _defaultBasePath: undefined,
     /**
      * Test POST
      * @param pathParam - Path parameter.

@@ -98,7 +98,7 @@ describe('generator', () => {
       mock.restore();
       const inputFile = resolve(
         __dirname,
-        '../../../test-resources/openapi-service-specs/test-service.json'
+        '../../../test-resources/openapi-service-specs/specifications/test-service.json'
       );
       const serviceSpec = await promises.readFile(inputFile, {
         encoding: 'utf8'

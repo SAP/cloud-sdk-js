@@ -147,10 +147,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns The request builder itself, to facilitate method chaining.
    */
   setBasePath(basePath: string): this {
-    let sanitizedBasePath = basePath ? removeSlashes(basePath) : '';
+    const sanitizedBasePath = basePath ? removeSlashes(basePath) : '';
     // Add a leading slash if basePath is not empty, as all Path Items start with a slash according to Swagger 3
-    sanitizedBasePath = sanitizedBasePath ? '/' + sanitizedBasePath : '';
-    this.basePath = sanitizedBasePath;
+    this.basePath = sanitizedBasePath ? '/' + sanitizedBasePath : undefined;
     return this;
   }
 

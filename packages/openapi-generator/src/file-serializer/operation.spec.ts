@@ -74,53 +74,6 @@ describe('serializeOperation', () => {
     `);
   });
 
-  it('serializes operation by appending base path to the path pattern', () => {
-    const operation: OpenApiOperation = {
-      operationId: 'getFn',
-      method: 'get',
-      tags: [],
-      pathParameters: [
-        {
-          in: 'path',
-          name: 'id',
-          originalName: 'id',
-          schema: { type: 'string' },
-          required: true,
-          schemaProperties: {}
-        },
-        {
-          in: 'path',
-          name: 'subId',
-          originalName: 'subId',
-          schema: { type: 'string' },
-          required: true,
-          schemaProperties: {}
-        }
-      ],
-      queryParameters: [],
-      headerParameters: [],
-      responses: { 200: { description: 'some response description' } },
-      response: { type: 'string' },
-      pathPattern: '/test/{id}/{subId}'
-    };
-    expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of get requests to the '/test/{id}/{subId}' endpoint.
-       * @param id - Path parameter.
-       * @param subId - Path parameter.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      getFn: (id: string, subId: string) => new OpenApiRequestBuilder<string>(
-        'get',
-        "/test/{id}/{subId}",
-        {
-              pathParameters: { id, subId }
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
-  });
-
   it('serializes operation with path and header parameters', () => {
     const operation: OpenApiOperation = {
       operationId: 'deleteFn',

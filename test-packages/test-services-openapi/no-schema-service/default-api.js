@@ -12,10 +12,11 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
  * This API is part of the 'no-schema-service' service.
  */
 exports.DefaultApi = {
+    _defaultBasePath: '',
     /**
      * Create a request builder for execution of get requests to the '/' endpoint.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    get: () => new openapi_1.OpenApiRequestBuilder('get', '/')
+    get: () => new openapi_1.OpenApiRequestBuilder('get', '/', {}, exports.DefaultApi._defaultBasePath)
 };
 //# sourceMappingURL=default-api.js.map

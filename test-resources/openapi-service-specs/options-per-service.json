@@ -1,7 +1,0 @@
-{
-  "../../test-resources/openapi-service-specs/test-service.json": {
-    "packageName": "test-service",
-    "directoryName": "test-service",
-    "basePath": "/base/path/to/service"
-  }
-}

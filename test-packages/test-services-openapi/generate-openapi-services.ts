@@ -20,26 +20,14 @@ async function generateOpenApi() {
       '..',
       '..',
       'test-resources',
-      'openapi-service-specs',
-      'test-service.json'
+      'openapi-service-specs'
     ),
     outputDir: resolve('.'),
-    transpile: true,
-    optionsPerService: resolve(
-      '..',
-      '..',
-      'test-resources',
-      'openapi-service-specs',
-      'options-per-service.json'
-    )
+    transpile: true
   }).catch(reason => {
     logger.error(`Unhandled rejection at: ${reason}`);
     process.exit(1);
   });
 }
 
-try {
-  generateOpenApi();
-} catch (error) {
-  console.log(error);
-}
+generateOpenApi();

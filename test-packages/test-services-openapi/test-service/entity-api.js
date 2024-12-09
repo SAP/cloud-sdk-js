@@ -12,7 +12,7 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
  * This API is part of the 'test-service' service.
  */
 exports.EntityApi = {
-    _defaultBasePath: '/base/path/to/service',
+    _defaultBasePath: '',
     /**
      * Get all entities
      * @param queryParameters - Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.

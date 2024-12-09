@@ -179,11 +179,14 @@ jobs:
         run: |
           date=`date +%Y%m%d%H%M%S`
           rm -f .changeset/*.md
-          cp canary-release-changeset.md .changeset
+          project_version=$(cat package.json | jq '.version' | tr -d '"')
+          echo The project version is: $project_version
+          [[ $project_version == 4* ]] && cp canary-release-changeset.md .changeset          
+          [[ $project_version == 3* ]] && cp major-release-changeset.md .changeset
           yarn changeset pre enter ${date}
           yarn changeset version
           yarn changeset pre exit
-          yarn changeset publish --tag canary
+          yarn changeset publish --tag next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
   draft-github-release:

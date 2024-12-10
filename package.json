@@ -98,7 +98,7 @@
     "@types/node": "^18.19.67",
     "@types/uuid": "^10.0.0",
     "@types/voca": "^1.4.6",
-    "axios": "^1.7.8",
+    "axios": "^1.7.9",
     "cross-env": "7.0.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.57.1",

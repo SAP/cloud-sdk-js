@@ -31,7 +31,7 @@ export function serializeOperation(
 
   const responseType = serializeSchema(operation.response);
   return codeBlock`
-${operationDocumentation(operation, operation.pathPattern)}
+${operationDocumentation(operation)}
 ${operation.operationId}: (${serializeOperationSignature(
     operation
   )}) => new OpenApiRequestBuilder<${responseType}>(
@@ -138,10 +138,7 @@ function serializeParamsForRequestBuilder(
 /**
  * @internal
  */
-export function operationDocumentation(
-  operation: OpenApiOperation,
-  pathPatternWithBasePath?: string
-): string {
+export function operationDocumentation(operation: OpenApiOperation): string {
   const signature: string[] = [];
   if (operation.pathParameters.length) {
     signature.push(...getSignatureOfPathParameters(operation.pathParameters));
@@ -166,10 +163,7 @@ export function operationDocumentation(
   signature.push(
     '@returns The request builder, use the `execute()` method to trigger the request.'
   );
-  const lines = [
-    getOperationDescriptionText(operation, pathPatternWithBasePath),
-    ...signature
-  ];
+  const lines = [getOperationDescriptionText(operation), ...signature];
   return documentationBlock`${lines.join(unixEOL)}`;
 }
 
@@ -186,13 +180,10 @@ function getSignatureOfBody(body: OpenApiRequestBody): string {
   return `@param body - ${body.description || 'Request body.'}`;
 }
 
-function getOperationDescriptionText(
-  operation: OpenApiOperation,
-  pathPatternWithBasePath?: string
-): string {
+function getOperationDescriptionText(operation: OpenApiOperation): string {
   if (operation.description) {
     return operation.description;
   }
 
-  return `Create a request builder for execution of ${operation.method} requests to the '${pathPatternWithBasePath || operation.pathPattern}' endpoint.`;
+  return `Create a request builder for execution of ${operation.method} requests to the '${operation.pathPattern}' endpoint.`;
 }

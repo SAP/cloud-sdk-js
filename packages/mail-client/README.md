@@ -3,6 +3,11 @@
 <a href="https://sap.github.io/cloud-sdk/docs/js/overview"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
+> [!caution]
+> This package has been deprecated and is no longer maintained.
+> Use at your own risk.
+
+
 # @sap-cloud-sdk/mail-client
 With the SAP Cloud SDK mail client you can leverage the connectivity and destination services on SAP BTP to send e-mails from your application.
 

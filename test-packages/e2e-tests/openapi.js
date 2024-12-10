@@ -24,7 +24,7 @@ function mockTestEntity(schema) {
 
 async function createApi() {
   const api = new OpenAPIBackend({
-    definition: '../../test-resources/openapi-service-specs/test-service.json'
+    definition: '../../test-resources/openapi-service-specs/specifications/test-service.json'
   });
 
   const schema = await getSchemas();

@@ -8,7 +8,7 @@ const jsf = require('json-schema-faker');
 async function getSchemas() {
   // SchemaObject
   const document = await SwaggerParser.dereference(
-    '../../test-resources/openapi-service-specs/test-service.json'
+    '../../test-resources/openapi-service-specs/specifications/test-service.json'
   );
 
   return document.components.schemas;

@@ -74871,19 +74871,13 @@ function removeSlashes(path) {
  * @internal
  */
 function removeTrailingSlashes(path) {
-    while (path.endsWith('/')) {
-        path = path.endsWith('/') ? path.slice(0, -1) : path;
-    }
-    return path;
+    return path.endsWith('/') ? path.slice(0, -1) : path;
 }
 /**
  * @internal
  */
 function removeLeadingSlashes(path) {
-    while (path.startsWith('/')) {
-        path = path.startsWith('/') ? path.slice(1) : path;
-    }
-    return path;
+    return path.startsWith('/') ? path.slice(1) : path;
 }
 //# sourceMappingURL=remove-slashes.js.map
 

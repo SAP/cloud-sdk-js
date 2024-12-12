@@ -9,7 +9,7 @@ import type {
 /**
  * Serialize an operation to a string.
  * @param operation - Operation to serialize.
- * @param apiName - Name of the API being serialized.
+ * @param apiName - Name of the API the operation is part of.
  * @returns The operation as a string.
  * @internal
  */

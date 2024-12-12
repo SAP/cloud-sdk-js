@@ -46,7 +46,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     public method: Method,
     private pathPattern: string,
     private parameters?: OpenApiRequestParameters,
-    private basePath?: string | undefined
+    private basePath?: string
   ) {}
 
   /**

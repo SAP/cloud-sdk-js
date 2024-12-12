@@ -34,11 +34,7 @@ export function apiFile(
 ): string {
   const imports = serializeImports(getImports(api, options));
   const apiDoc = apiDocumentation(api, serviceName);
-  const sanitizedBasePath = basePath ? removeSlashes(basePath) : '';
-  // Add a leading slash if basePath is not empty, as all Path Items start with a slash according to Swagger 3
-  const defaultBasePath = sanitizedBasePath
-    ? '/' + sanitizedBasePath
-    : undefined;
+  const defaultBasePath = basePath ? removeSlashes(basePath) : undefined;
   const apiContent = codeBlock`
 export const ${api.name} = {
   _defaultBasePath: ${defaultBasePath ? `'${defaultBasePath}'` : undefined},

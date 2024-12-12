@@ -147,9 +147,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns The request builder itself, to facilitate method chaining.
    */
   setBasePath(basePath: string): this {
-    const sanitizedBasePath = basePath ? removeSlashes(basePath) : '';
-    // Add a leading slash if basePath is not empty, as all Path Items start with a slash according to Swagger 3
-    this.basePath = sanitizedBasePath ? '/' + sanitizedBasePath : undefined;
+    this.basePath = basePath;
     return this;
   }
 
@@ -191,7 +189,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     const placeholders: string[] = this.pathPattern.match(/{[^/?#{}]+}/g) || [];
 
     return (
-      (this.basePath ?? '') +
+      (this.basePath ? removeSlashes(this.basePath) : '') +
       placeholders.reduce((path: string, placeholder: string) => {
         const strippedPlaceholder = placeholder.slice(1, -1);
         const parameterValue = pathParameters[strippedPlaceholder];

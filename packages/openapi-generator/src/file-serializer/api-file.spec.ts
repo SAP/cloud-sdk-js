@@ -130,7 +130,7 @@ describe('api-file', () => {
         multipleOperationApi,
         'MyServiceName',
         undefined,
-        '///base/path/to/service///'
+        '/base/path/to/service/'
       )
     ).toMatchSnapshot();
   });

@@ -1,0 +1,24 @@
+name: Question
+description: Ask a question about the SAP Cloud SDK (JavaScript / TypeScript).
+title: '<title>'
+labels: 
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!note]
+        > Please note that this repository is for JavaScript / TypeScript related issues only. 
+        > If you have a question about the SAP Cloud SDK (Java), open a GitHub issue here: https://github.com/SAP/cloud-sdk-java/issues/new/choose
+  - type: markdown
+    attributes:
+      value: |
+        > [!note]
+        > Please read the [Troubleshooting](https://sap.github.io/cloud-sdk/docs/js/troubleshooting) documentation first.
+        > Always provide detailed information such as logs, callstack and error messages to help us understand the question.
+  - type: textarea
+    attributes:
+      label: "Describe the Question"
+      description: A clear and concise description of your question.
+    validations:
+      required: true

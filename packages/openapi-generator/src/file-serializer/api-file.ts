@@ -1,9 +1,4 @@
-import {
-  codeBlock,
-  documentationBlock,
-  removeSlashes,
-  unixEOL
-} from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
 import { collectRefs, getUniqueRefs } from '../schema-util';
 import { serializeOperation } from './operation';

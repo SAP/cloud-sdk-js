@@ -34,10 +34,9 @@ export function apiFile(
 ): string {
   const imports = serializeImports(getImports(api, options));
   const apiDoc = apiDocumentation(api, serviceName);
-  const defaultBasePath = basePath ? removeSlashes(basePath) : undefined;
   const apiContent = codeBlock`
 export const ${api.name} = {
-  _defaultBasePath: ${defaultBasePath ? `'${defaultBasePath}'` : undefined},
+  _defaultBasePath: ${basePath ? `'${basePath}'` : undefined},
   ${api.operations.map(operation => serializeOperation(operation, api.name)).join(',\n')}
 };
 `;

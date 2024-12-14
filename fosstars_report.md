@@ -285,14 +285,14 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-230 commits in the last 3 months results to 10.00 points
+231 commits in the last 3 months results to 10.00 points
 3 contributors increase the score value from 10.00 to 11.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 230
+1.  **Number of commits in the last three months:** 231
 1.  **Number of contributors in the last three months:** 3
 
 
@@ -308,7 +308,7 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Number of projects on GitHub that use an open source project:** 6051
+1.  **Number of projects on GitHub that use an open source project:** 6055
 1.  **Number of stars for a GitHub repository:** 168
 1.  **Number of watchers for a GitHub repository:** 17
 

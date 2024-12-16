@@ -1,15 +1,12 @@
 name: auto-dependabot-fix
 
 on:
-  pull_request: ~
+  pull_request_target: ~
 
 jobs:
   building:
     if: github.actor == 'dependabot[bot]' && !github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: write
     steps:
       - uses: actions/checkout@v4
         with:

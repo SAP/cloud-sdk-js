@@ -1,0 +1,107 @@
+name: Bug Report
+description: Released feature does not work as expected in the SAP Cloud SDK (JavaScript / TypeScript).
+title: '<title>'
+labels: 
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!note]
+        > Please note that this repository is for JavaScript / TypeScript related issues only. 
+        > If you have a question about the SAP Cloud SDK (Java), open a GitHub issue here: https://github.com/SAP/cloud-sdk-java/issues/new/choose
+  - type: markdown
+    attributes:
+      value: |
+        > [!important]
+        > Please read the [Troubleshooting](https://sap.github.io/cloud-sdk/docs/js/troubleshooting) documentation first.
+        > Always provide detailed information such as logs, callstack and error messages to help us understand the issue.
+        > Explain why you think this is a bug in the SAP Cloud SDK.
+  - type: textarea
+    attributes:
+      label: "Describe the Bug"
+      description: "A clear and concise description of what the bug is."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Steps to Reproduce"
+      description: "Steps to reproduce the behavior."
+      placeholder: |
+        1. Set up ...
+        2. Execute ...
+        3. Confirm ...
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Expected Behavior"
+      description: "A clear and concise description of what you expected to happen."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Screenshots"
+      description: "Add screenshots to help explain your problem."
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: "Used Versions"
+      description: "Provide versions used in the project."
+      value: |
+        - Node version via `node -v`: ...
+        - NPM version via `npm -v: ...
+        - SAP Cloud SDK version: ...
+        - For CAP users, CAP version: ...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Code Examples"
+      description: "Add code snippets as examples to help explain your problem. Please remove sensitive information."
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: "Log File"
+      description: "Add your log file or related error message. Again, please remove sensitive information."
+    validations:
+      required: false
+  - type: dropdown
+    attributes:
+      label: "Affected Development Phase"
+      description: "Choose the development phase affected by this issue."
+      multiple: false
+      options:
+        - Getting Started
+        - Development
+        - Release
+        - Production
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: "Impact"
+      description: "Choose the impact severity."
+      multiple: false
+      options:
+        - No Impact
+        - Inconvenience
+        - Impaired
+        - Blocked
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Timeline"
+      description: "Please briefly state your timeline, e.g., Go-Live in 12 weeks."
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: "Additional Context"
+      description: "Add any other context about the problem here."
+    validations:
+      required: false

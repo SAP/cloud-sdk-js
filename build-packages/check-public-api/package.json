@@ -21,7 +21,7 @@
       "@sap-cloud-sdk/generator-common": "^3.22.2",
       "@types/mock-fs": "^4.13.4",
       "glob": "^11.0.0",
-      "mock-fs": "^5.3.0"
+      "mock-fs": "^5.4.1"
     },
     "devDependencies": {
       "@vercel/ncc": "^0.38.3",

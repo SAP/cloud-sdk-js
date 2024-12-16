@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "execa": "^5.0.0",
-    "mock-fs": "^5.3.0",
+    "mock-fs": "^5.4.1",
     "prettier": "^3.4.2"
   }
 }

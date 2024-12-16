@@ -12,7 +12,6 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
       - run: git fetch --depth=1
       - uses: actions/setup-node@v4
         with:

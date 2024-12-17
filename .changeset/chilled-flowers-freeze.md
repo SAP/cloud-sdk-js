@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/openapi': minor
 ---
 
-[New Functionality] Introduce `setBasePath()` method on the OpenAPI request builder which allows to set the base path dynamically. This gets prepended with the path parameter for every request to the client.
+[New Functionality] Introduce `setBasePath()` method on the OpenAPI request builder, allowing a custom base path URL to be set for a single request. This base path is prepended to the API path for that request.

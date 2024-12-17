@@ -9628,7 +9628,7 @@ typedoc@^0.27.2:
   resolved "https://registry.npmjs.org/typescript/-/typescript-5.8.0-dev.20241220.tgz#16e0b7ab3295e7bc44356e3789ceaa5e8a9c0f20"
   integrity sha512-+Ub5hKcNqrDJ/MWTrMCjy4HZivAggL6MtkgRqu8YaPg/Ghu6CY57SDD0fcTn/AClb3zxDATm+ilNq3fnPrnx7Q==
 
-typescript-eslint@^8.18.0:
+typescript-eslint@^8.18.1:
   version "8.18.1"
   resolved "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.18.1.tgz#197b284b6769678ed77d9868df180eeaf61108eb"
   integrity sha512-Mlaw6yxuaDEPQvb/2Qwu3/TfgeBHy9iTJ3mTwe7OvpPmF6KPQjVOfGyEJpPv6Ez2C34OODChhXrzYw/9phI0MQ==

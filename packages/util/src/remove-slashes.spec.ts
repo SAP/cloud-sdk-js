@@ -11,7 +11,7 @@ describe('removeSlashes', () => {
   it('removes leading slashes', () => {
     expect(removeLeadingSlashes('/test')).toBe('test');
   });
-  it('removes trailing slashes', () => {
+  it('removes trailing slash', () => {
     expect(removeTrailingSlashes('/test/')).toBe('/test');
   });
 });

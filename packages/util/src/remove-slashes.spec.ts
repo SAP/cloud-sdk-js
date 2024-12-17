@@ -5,7 +5,7 @@ import {
 } from './remove-slashes';
 
 describe('removeSlashes', () => {
-  it('removes trailing slashes', () => {
+  it('removes a single leading and trailing slash', () => {
     expect(removeSlashes('/test/')).toBe('test');
   });
   it('removes leading slash', () => {

@@ -40,7 +40,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param method - HTTP method of the request to be built.
    * @param pathPattern - Path for the request containing path parameter references as in the OpenAPI specification.
    * @param parameters - Query parameters and or body to pass to the request.
-   * @param basePath - The path to be prefixed to the pathPattern.
+   * @param basePath - The custom path to be prefixed to the API path pattern.
    */
   constructor(
     public method: Method,
@@ -142,7 +142,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Set the basePath that gets prefixed to the pathPattern before a request.
+   * Set the custom base path that gets prefixed to the API path parameter before a request.
    * @param basePath - Base path to be set.
    * @returns The request builder itself, to facilitate method chaining.
    */

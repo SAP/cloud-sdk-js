@@ -17,7 +17,7 @@ import type {
  * @param api - Representation of an API.
  * @param serviceName - Service name for which the API is created.
  * @param options - Options to configure the file creation.
- * @param basePath - Base path for the API.
+ * @param basePath - Custom base path for the API.
  * @returns The serialized API file contents.
  * @internal
  */

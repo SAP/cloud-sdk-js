@@ -4,4 +4,4 @@
 '@sap-cloud-sdk/util': minor
 ---
 
-[New Functionality] Support `basePath` option in the `options-per-service.json` file in the OpenAPI generator. It enables the base path to be prepended to the path parameter for every request of the generated client.
+[New Functionality] Add `basePath` option in the `options-per-service.json` file in the OpenAPI generator. This option prepends the base URL path to the API path for every request.

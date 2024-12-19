@@ -544,10 +544,10 @@
     spawndamnit "^3.0.1"
     term-size "^2.1.0"
 
-"@changesets/config@^3.0.4":
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/@changesets/config/-/config-3.0.4.tgz#2acfdf3e09424149684b3bd10c88074becf251aa"
-  integrity sha512-+DiIwtEBpvvv1z30f8bbOsUQGuccnZl9KRKMM/LxUHuDu5oEjmN+bJQ1RIBKNJjfYMQn8RZzoPiX0UgPaLQyXw==
+"@changesets/config@^3.0.4", "@changesets/config@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.npmjs.org/@changesets/config/-/config-3.0.5.tgz#cb59e9f338a4b35d3266af8a32799cb940d54ee0"
+  integrity sha512-QyXLSSd10GquX7hY0Mt4yQFMEeqnO5z/XLpbIr4PAkNNoQNKwDyiSrx4yd749WddusH1v3OSiA0NRAYmH/APpQ==
   dependencies:
     "@changesets/errors" "^0.2.0"
     "@changesets/get-dependents-graph" "^2.1.2"
@@ -574,13 +574,13 @@
     picocolors "^1.1.0"
     semver "^7.5.3"
 
-"@changesets/get-release-plan@^4.0.5":
-  version "4.0.5"
-  resolved "https://registry.npmjs.org/@changesets/get-release-plan/-/get-release-plan-4.0.5.tgz#2c857ce2f1942b88ff6ffcb24667edc52bcbfaea"
-  integrity sha512-E6wW7JoSMcctdVakut0UB76FrrN3KIeJSXvB+DHMFo99CnC3ZVnNYDCVNClMlqAhYGmLmAj77QfApaI3ca4Fkw==
+"@changesets/get-release-plan@^4.0.5", "@changesets/get-release-plan@^4.0.6":
+  version "4.0.6"
+  resolved "https://registry.npmjs.org/@changesets/get-release-plan/-/get-release-plan-4.0.6.tgz#40d70c2524be51a70b7e1a778826854bb6c8562a"
+  integrity sha512-FHRwBkY7Eili04Y5YMOZb0ezQzKikTka4wL753vfUA5COSebt7KThqiuCN9BewE4/qFGgF/5t3AuzXx1/UAY4w==
   dependencies:
     "@changesets/assemble-release-plan" "^6.0.5"
-    "@changesets/config" "^3.0.4"
+    "@changesets/config" "^3.0.5"
     "@changesets/pre" "^2.0.1"
     "@changesets/read" "^0.6.2"
     "@changesets/types" "^6.0.0"

@@ -3979,6 +3979,7 @@ var path = __nccwpck_require__(16928);
 var micromatch = __nccwpck_require__(77805);
 var errors = __nccwpck_require__(17789);
 var logger = __nccwpck_require__(68323);
+var getPackages = __nccwpck_require__(94941);
 var getDependentsGraph = __nccwpck_require__(81699);
 
 function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
@@ -4007,7 +4008,7 @@ var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
 
 var packageJson = {
 	name: "@changesets/config",
-	version: "3.0.4",
+	version: "3.0.5",
 	description: "Utilities for reading and parsing Changeset's config",
 	main: "dist/changesets-config.cjs.js",
 	module: "dist/changesets-config.esm.js",
@@ -4107,6 +4108,9 @@ function isArray(arg) {
 }
 
 let read = async (cwd, packages) => {
+  var _packages;
+
+  (_packages = packages) !== null && _packages !== void 0 ? _packages : packages = await getPackages.getPackages(cwd);
   let json = await fs__namespace.readJSON(path__default["default"].join(cwd, ".changeset", "config.json"));
   return parse(json, packages);
 };

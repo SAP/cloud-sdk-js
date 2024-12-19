@@ -9,9 +9,11 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
  * This API is part of the 'no-schema-service' service.
  */
 export const DefaultApi = {
+  _defaultBasePath: '/base/path/to/service',
   /**
    * Create a request builder for execution of get requests to the '/' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
-  get: () => new OpenApiRequestBuilder<any>('get', '/')
+  get: () =>
+    new OpenApiRequestBuilder<any>('get', '/', {}, DefaultApi._defaultBasePath)
 };

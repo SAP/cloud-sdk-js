@@ -80,7 +80,7 @@ describe('openapi-request-builder', () => {
     const requestBuilder = new OpenApiRequestBuilder(
       'get',
       '/test'
-    ).setBasePath('/base/path/to/service/');
+    ).setBasePath('/base/path/to/service');
     const response = await requestBuilder.executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
       sanitizeDestination(destination),

@@ -7968,7 +7968,7 @@ puppeteer-core@23.11.1:
     typed-query-selector "^2.12.0"
     ws "^8.18.0"
 
-puppeteer@^23.11.0:
+puppeteer@^23.11.1:
   version "23.11.1"
   resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-23.11.1.tgz#98fd9040786b1219b1a4f639c270377586e8899c"
   integrity sha512-53uIX3KR5en8l7Vd8n5DUv90Ae9QDQsyIthaUFVzwV6yU750RjqRznEtNMBT20VthqAdemnJN+hxVdmMHKt7Zw==

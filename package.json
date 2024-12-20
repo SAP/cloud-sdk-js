@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "3.24.0",
+  "version": "3.25.0",
   "private": true,
   "sideEffects": false,
   "packageManager": "yarn@1.22.18",

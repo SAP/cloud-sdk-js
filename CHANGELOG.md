@@ -28,6 +28,14 @@
 
 - 
 
+# 3.25.0
+
+
+## New Functionalities
+
+- [openapi] Introduce `setBasePath()` method on the OpenAPI request builder, allowing a custom base path URL to be set for a single request. This base path is prepended to the API path parameter for that single request. (2943cd5)
+- [openapi, openapi-generator, util] Add `basePath` option in the `options-per-service.json` file in the OpenAPI generator. This option prepends the base URL path to the API path parameter for every request. (2943cd5)
+
 # 3.24.0
 
 

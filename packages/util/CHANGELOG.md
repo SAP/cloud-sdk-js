@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/util
 
+## 3.25.0
+
+### Minor Changes
+
+- 2943cd5: [New Functionality] Add `basePath` option in the `options-per-service.json` file in the OpenAPI generator. This option prepends the base URL path to the API path parameter for every request.
+
 ## 3.24.0
 
 ## 3.23.0

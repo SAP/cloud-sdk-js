@@ -28851,7 +28851,7 @@ function maybeCallback(callback, ctx, thisArg, func) {
       err = e;
     }
     return new Promise(function (resolve, reject) {
-      setImmediate(function () {
+      process.nextTick(function () {
         if (err) {
           reject(err);
         } else {
@@ -28865,7 +28865,7 @@ function maybeCallback(callback, ctx, thisArg, func) {
     } catch (e) {
       err = e;
     }
-    setImmediate(function () {
+    process.nextTick(function () {
       if (val === undefined) {
         callback(err);
       } else {
@@ -30284,14 +30284,7 @@ Binding.prototype.exists = function (filepath, callback, ctx) {
 
   return maybeCallback(normalizeCallback(callback), ctx, this, function () {
     filepath = deBuffer(filepath);
-    let item;
-    try {
-      item = this._system.getItem(filepath);
-    } catch {
-      // ignore errors
-      // see https://github.com/nodejs/node/blob/v22.11.0/lib/fs.js#L255-L257
-      return false;
-    }
+    const item = this._system.getItem(filepath);
 
     if (item) {
       if (item instanceof SymbolicLink) {

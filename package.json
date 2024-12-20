@@ -90,15 +90,15 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.10",
+    "@changesets/cli": "^2.27.11",
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.4",
-    "@types/node": "^18.19.67",
+    "@types/node": "^18.19.68",
     "@types/uuid": "^10.0.0",
     "@types/voca": "^1.4.6",
-    "axios": "^1.7.8",
+    "axios": "^1.7.9",
     "cross-env": "7.0.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.57.1",
@@ -109,12 +109,12 @@
     "license-checker": "^25.0.1",
     "madge": "^8.0.0",
     "prettier": "^3.4.2",
-    "puppeteer": "^23.10.1",
+    "puppeteer": "^23.11.1",
     "semver": "^7.6.3",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "turbo": "^2.3.3",
-    "typedoc": "^0.27.2",
+    "typedoc": "^0.27.5",
     "typescript": "~5.7.2"
   },
   "resolutions": {

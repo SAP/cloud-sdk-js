@@ -36,7 +36,7 @@ describe('openapi-request-builder', () => {
     httpSpy.mockClear();
   });
 
-  it('executes a request without parameters using executeRaw', async () => {
+  it('executeRaw executes a request without parameters', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     const response = await requestBuilder.executeRaw(destination);
     expect(httpSpy).toHaveBeenCalledWith(
@@ -54,7 +54,7 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe(dummyResponse);
   });
 
-  it('executes a request with query parameters using executeRaw', async () => {
+  it('executeRaw executes a request with query parameters', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test', {
       queryParameters: {
         limit: 100
@@ -76,28 +76,7 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe(dummyResponse);
   });
 
-  it('executes a request without parameters and basePath explicitly set using executeRaw', async () => {
-    const requestBuilder = new OpenApiRequestBuilder(
-      'get',
-      '/test'
-    ).setBasePath('/base/path/to/service');
-    const response = await requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      sanitizeDestination(destination),
-      {
-        method: 'get',
-        middleware: [],
-        url: 'base/path/to/service/test',
-        headers: { requestConfig: {} },
-        params: { requestConfig: {} },
-        data: undefined
-      },
-      { fetchCsrfToken: false }
-    );
-    expect(response.data).toBe(dummyResponse);
-  });
-
-  it('executes a request with header parameters using executeRaw', async () => {
+  it('executeRaw executes a request with header parameters', async () => {
     const destinationWithAuth = {
       ...destination,
       headers: { authorization: 'destAuth' }
@@ -125,7 +104,7 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe(dummyResponse);
   });
 
-  it('executes a request with body using executeRaw', async () => {
+  it('executeRaw executes a request with body', async () => {
     const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
       body: {
         limit: 100
@@ -251,7 +230,7 @@ describe('openapi-request-builder', () => {
     expect(response.data).toBe('iss token used on the way');
   });
 
-  it('should add custom headers', async () => {
+  it('addCustomHeaders', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     const destinationWithAuth = {
       ...destination,
@@ -318,7 +297,7 @@ describe('openapi-request-builder', () => {
     );
   });
 
-  it('should add custom request config', async () => {
+  it('addCustomRequestConfig', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     const response = await requestBuilder
       .addCustomRequestConfiguration({

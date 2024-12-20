@@ -12,7 +12,6 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
  * This API is part of the 'swagger-yaml-service' service.
  */
 exports.DefaultApi = {
-    _defaultBasePath: undefined,
     /**
      * Test POST
      * @param pathParam - Path parameter.
@@ -22,7 +21,7 @@ exports.DefaultApi = {
     postEntity: (pathParam, queryParameters) => new openapi_1.OpenApiRequestBuilder('post', '/entities/{pathParam}', {
         pathParameters: { pathParam },
         queryParameters
-    }, exports.DefaultApi._defaultBasePath),
+    }),
     /**
      * Create a request builder for execution of patch requests to the '/entities/{pathParam}' endpoint.
      * @param pathParam - Path parameter.
@@ -32,6 +31,6 @@ exports.DefaultApi = {
     patchEntity: (pathParam, body) => new openapi_1.OpenApiRequestBuilder('patch', '/entities/{pathParam}', {
         pathParameters: { pathParam },
         body
-    }, exports.DefaultApi._defaultBasePath)
+    })
 };
 //# sourceMappingURL=default-api.js.map

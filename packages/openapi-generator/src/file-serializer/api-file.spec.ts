@@ -23,7 +23,7 @@ const singleOperationApi: OpenApiApi = {
       headerParameters: [],
       response: { type: 'any' },
       responses: { 200: { description: 'some response description' } },
-      pathPattern: '/test/{id}'
+      pathPattern: 'test/{id}'
     }
   ]
 };
@@ -71,7 +71,7 @@ const multipleOperationApi: OpenApiApi = {
           schemaProperties: {}
         }
       ],
-      pathPattern: '/test/{id}',
+      pathPattern: 'test/{id}',
       response: { type: 'string' }
     },
     {
@@ -89,7 +89,7 @@ const multipleOperationApi: OpenApiApi = {
           schemaName: 'RefType'
         } as OpenApiReferenceSchema
       },
-      pathPattern: '/test',
+      pathPattern: 'test',
       response: {
         $ref: '#/components/schemas/ResponseType',
         schemaName: 'ResponseType'
@@ -110,7 +110,7 @@ const docsApi: OpenApiApi = {
       queryParameters: [],
       headerParameters: [],
       response: { type: 'any' },
-      pathPattern: '/test'
+      pathPattern: 'test'
     }
   ]
 };
@@ -122,17 +122,6 @@ describe('api-file', () => {
 
   it('serializes api file with multiple operations and references', async () => {
     expect(apiFile(multipleOperationApi, 'MyServiceName')).toMatchSnapshot();
-  });
-
-  it('serializes api file with multiple operations and references and base path', () => {
-    expect(
-      apiFile(
-        multipleOperationApi,
-        'MyServiceName',
-        undefined,
-        '/base/path/to/service'
-      )
-    ).toMatchSnapshot();
   });
 
   it('creates an api file with documentation', () => {

@@ -61,7 +61,7 @@ describe('openapi negative tests', () => {
           '--input',
           resolve(
             testOutputRootDir,
-            '../../openapi-service-specs/specifications/test-service.json'
+            '../../openapi-service-specs/test-service.json'
           ),
           '-o',
           output,
@@ -89,7 +89,7 @@ describe('openapi negative tests', () => {
           '-i',
           resolve(
             testResourcesDir,
-            '../../openapi-service-specs/specifications/test-service.json'
+            '../../openapi-service-specs/test-service.json'
           ),
           '-o',
           output,

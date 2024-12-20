@@ -9,14 +9,10 @@ import type {
 /**
  * Serialize an operation to a string.
  * @param operation - Operation to serialize.
- * @param apiName - Name of the API the operation is part of.
  * @returns The operation as a string.
  * @internal
  */
-export function serializeOperation(
-  operation: OpenApiOperation,
-  apiName: string
-): string {
+export function serializeOperation(operation: OpenApiOperation): string {
   const requestBuilderParams = [
     `'${operation.method}'`,
     `"${operation.pathPattern}"`
@@ -25,8 +21,6 @@ export function serializeOperation(
   const bodyAndQueryParams = serializeParamsForRequestBuilder(operation);
   if (bodyAndQueryParams) {
     requestBuilderParams.push(bodyAndQueryParams);
-  } else {
-    requestBuilderParams.push('{}');
   }
 
   const responseType = serializeSchema(operation.response);
@@ -35,8 +29,7 @@ ${operationDocumentation(operation)}
 ${operation.operationId}: (${serializeOperationSignature(
     operation
   )}) => new OpenApiRequestBuilder<${responseType}>(
-  ${requestBuilderParams.join(',\n')},
-  ${apiName}._defaultBasePath
+  ${requestBuilderParams.join(',\n')}
 )`;
 }
 

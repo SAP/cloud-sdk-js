@@ -2,7 +2,6 @@
 // eslint-disable-next-line import/named
 import {
   isNullish,
-  removeSlashes,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
 import { useOrFetchDestination } from '@sap-cloud-sdk/connectivity';
@@ -40,13 +39,11 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param method - HTTP method of the request to be built.
    * @param pathPattern - Path for the request containing path parameter references as in the OpenAPI specification.
    * @param parameters - Query parameters and or body to pass to the request.
-   * @param basePath - The custom path to be prefixed to the API path pattern.
    */
   constructor(
     public method: Method,
     private pathPattern: string,
-    private parameters?: OpenApiRequestParameters,
-    private basePath?: string
+    private parameters?: OpenApiRequestParameters
   ) {}
 
   /**
@@ -142,16 +139,6 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Set the custom base path that gets prefixed to the API path parameter before a request.
-   * @param basePath - Base path to be set.
-   * @returns The request builder itself, to facilitate method chaining.
-   */
-  setBasePath(basePath: string): this {
-    this.basePath = basePath;
-    return this;
-  }
-
-  /**
    * Get http request config.
    * @returns Promise of http request config with origin.
    */
@@ -188,14 +175,11 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     // Get the innermost curly bracket pairs with non-empty and legal content as placeholders.
     const placeholders: string[] = this.pathPattern.match(/{[^/?#{}]+}/g) || [];
 
-    return (
-      (this.basePath ? removeSlashes(this.basePath) : '') +
-      placeholders.reduce((path: string, placeholder: string) => {
-        const strippedPlaceholder = placeholder.slice(1, -1);
-        const parameterValue = pathParameters[strippedPlaceholder];
-        return path.replace(placeholder, encodeURIComponent(parameterValue));
-      }, this.pathPattern)
-    );
+    return placeholders.reduce((path: string, placeholder: string) => {
+      const strippedPlaceholder = placeholder.slice(1, -1);
+      const parameterValue = pathParameters[strippedPlaceholder];
+      return path.replace(placeholder, encodeURIComponent(parameterValue));
+    }, this.pathPattern);
   }
 }
 

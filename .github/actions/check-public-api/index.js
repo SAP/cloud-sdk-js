@@ -74880,7 +74880,6 @@ exports.removeTrailingSlashes = removeTrailingSlashes;
 exports.removeLeadingSlashes = removeLeadingSlashes;
 /**
  * @internal
- * Utility function to remove a single leading and trailing slash from a path.
  */
 function removeSlashes(path) {
     path = removeLeadingSlashes(path);
@@ -74889,14 +74888,12 @@ function removeSlashes(path) {
 }
 /**
  * @internal
- * Utility function to remove a single trailing slash from a path.
  */
 function removeTrailingSlashes(path) {
     return path.endsWith('/') ? path.slice(0, -1) : path;
 }
 /**
  * @internal
- * Utility function to remove a single leading slash from a path.
  */
 function removeLeadingSlashes(path) {
     return path.startsWith('/') ? path.slice(1) : path;

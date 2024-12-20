@@ -15,7 +15,6 @@ import type {
  * This API is part of the 'test-service' service.
  */
 export const TestCaseApi = {
-  _defaultBasePath: undefined,
   /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
    * @param requiredPathItemPathParam - Path parameter.
@@ -40,8 +39,7 @@ export const TestCaseApi = {
         pathParameters: { requiredPathItemPathParam },
         body,
         queryParameters
-      },
-      TestCaseApi._defaultBasePath
+      }
     ),
   /**
    * Create a request builder for execution of post requests to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
@@ -67,8 +65,7 @@ export const TestCaseApi = {
         pathParameters: { requiredPathItemPathParam },
         body,
         queryParameters
-      },
-      TestCaseApi._defaultBasePath
+      }
     ),
   /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters' endpoint.
@@ -80,15 +77,10 @@ export const TestCaseApi = {
     queryParameters: { requiredQueryParam: string },
     headerParameters?: { optionalHeaderParam?: string }
   ) =>
-    new OpenApiRequestBuilder<any>(
-      'get',
-      '/test-cases/parameters',
-      {
-        queryParameters,
-        headerParameters
-      },
-      TestCaseApi._defaultBasePath
-    ),
+    new OpenApiRequestBuilder<any>('get', '/test-cases/parameters', {
+      queryParameters,
+      headerParameters
+    }),
   /**
    * Create a request builder for execution of post requests to the '/test-cases/parameters' endpoint.
    * @param body - Request body.
@@ -101,16 +93,11 @@ export const TestCaseApi = {
     queryParameters: { optionalQueryParam?: string },
     headerParameters: { requiredHeaderParam: string }
   ) =>
-    new OpenApiRequestBuilder<any>(
-      'post',
-      '/test-cases/parameters',
-      {
-        body,
-        queryParameters,
-        headerParameters
-      },
-      TestCaseApi._defaultBasePath
-    ),
+    new OpenApiRequestBuilder<any>('post', '/test-cases/parameters', {
+      body,
+      queryParameters,
+      headerParameters
+    }),
   /**
    * Create a request builder for execution of patch requests to the '/test-cases/parameters' endpoint.
    * @param body - Request body.
@@ -123,16 +110,11 @@ export const TestCaseApi = {
     queryParameters?: { optionalQueryParam?: string },
     headerParameters?: { optionalHeaderParam?: string }
   ) =>
-    new OpenApiRequestBuilder<any>(
-      'patch',
-      '/test-cases/parameters',
-      {
-        body,
-        queryParameters,
-        headerParameters
-      },
-      TestCaseApi._defaultBasePath
-    ),
+    new OpenApiRequestBuilder<any>('patch', '/test-cases/parameters', {
+      body,
+      queryParameters,
+      headerParameters
+    }),
   /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters/{duplicateParam}' endpoint.
    * @param duplicateParam - Path parameter.
@@ -149,8 +131,7 @@ export const TestCaseApi = {
       {
         pathParameters: { duplicateParam },
         queryParameters
-      },
-      TestCaseApi._defaultBasePath
+      }
     ),
   /**
    * Create a request builder for execution of get requests to the '/test-cases/duplicate-operation-ids' endpoint.
@@ -159,9 +140,7 @@ export const TestCaseApi = {
   duplicateOperationId: () =>
     new OpenApiRequestBuilder<any>(
       'get',
-      '/test-cases/duplicate-operation-ids',
-      {},
-      TestCaseApi._defaultBasePath
+      '/test-cases/duplicate-operation-ids'
     ),
   /**
    * Create a request builder for execution of put requests to the '/test-cases/duplicate-operation-ids' endpoint.
@@ -170,9 +149,7 @@ export const TestCaseApi = {
   duplicateOperationId1_1: () =>
     new OpenApiRequestBuilder<any>(
       'put',
-      '/test-cases/duplicate-operation-ids',
-      {},
-      TestCaseApi._defaultBasePath
+      '/test-cases/duplicate-operation-ids'
     ),
   /**
    * Create a request builder for execution of post requests to the '/test-cases/duplicate-operation-ids' endpoint.
@@ -181,9 +158,7 @@ export const TestCaseApi = {
   duplicateOperationId_1: () =>
     new OpenApiRequestBuilder<any>(
       'post',
-      '/test-cases/duplicate-operation-ids',
-      {},
-      TestCaseApi._defaultBasePath
+      '/test-cases/duplicate-operation-ids'
     ),
   /**
    * Create a request builder for execution of patch requests to the '/test-cases/duplicate-operation-ids' endpoint.
@@ -192,9 +167,7 @@ export const TestCaseApi = {
   duplicateOperationId1: () =>
     new OpenApiRequestBuilder<any>(
       'patch',
-      '/test-cases/duplicate-operation-ids',
-      {},
-      TestCaseApi._defaultBasePath
+      '/test-cases/duplicate-operation-ids'
     ),
   /**
    * Create a request builder for execution of get requests to the '/test-cases/reserved-keywords/{const1}' endpoint.
@@ -209,8 +182,7 @@ export const TestCaseApi = {
       {
         pathParameters: { const1 },
         queryParameters
-      },
-      TestCaseApi._defaultBasePath
+      }
     ),
   /**
    * Create a request builder for execution of get requests to the '/test-cases/complex-schemas' endpoint.
@@ -218,51 +190,31 @@ export const TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   complexSchemas: (body: ComplexTestEntity | undefined) =>
-    new OpenApiRequestBuilder<any>(
-      'get',
-      '/test-cases/complex-schemas',
-      {
-        body
-      },
-      TestCaseApi._defaultBasePath
-    ),
+    new OpenApiRequestBuilder<any>('get', '/test-cases/complex-schemas', {
+      body
+    }),
   /**
    * Create a request builder for execution of post requests to the '/test-cases/complex-schemas' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   useNameWithSymbols: (body: SimpleTestEntityWITHSymbols | undefined) =>
-    new OpenApiRequestBuilder<any>(
-      'post',
-      '/test-cases/complex-schemas',
-      {
-        body
-      },
-      TestCaseApi._defaultBasePath
-    ),
+    new OpenApiRequestBuilder<any>('post', '/test-cases/complex-schemas', {
+      body
+    }),
   /**
    * Create a request builder for execution of get requests to the '/test-cases/schema-name-integer' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   schemaNameInteger: (body: Schema123456 | undefined) =>
-    new OpenApiRequestBuilder<any>(
-      'get',
-      '/test-cases/schema-name-integer',
-      {
-        body
-      },
-      TestCaseApi._defaultBasePath
-    ),
+    new OpenApiRequestBuilder<any>('get', '/test-cases/schema-name-integer', {
+      body
+    }),
   /**
    * Create a request builder for execution of get requests to the '/test-cases/no-operation-id' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   getTestCasesNoOperationId: () =>
-    new OpenApiRequestBuilder<any>(
-      'get',
-      '/test-cases/no-operation-id',
-      {},
-      TestCaseApi._defaultBasePath
-    )
+    new OpenApiRequestBuilder<any>('get', '/test-cases/no-operation-id')
 };

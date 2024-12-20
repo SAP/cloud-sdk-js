@@ -10,7 +10,6 @@ import type { TestEntity } from './schema';
  * This API is part of the 'test-service' service.
  */
 export declare const EntityApi: {
-  _defaultBasePath: undefined;
   /**
    * Get all entities
    * @param queryParameters - Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.

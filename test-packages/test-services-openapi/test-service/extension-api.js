@@ -12,16 +12,15 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
  * This API is part of the 'test-service' service.
  */
 exports.ExtensionApi = {
-    _defaultBasePath: undefined,
     /**
      * Create a request builder for execution of get requests to the '/test-cases/extension' endpoint.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    niceGetFunction: () => new openapi_1.OpenApiRequestBuilder('get', '/test-cases/extension', {}, exports.ExtensionApi._defaultBasePath),
+    niceGetFunction: () => new openapi_1.OpenApiRequestBuilder('get', '/test-cases/extension'),
     /**
      * Create a request builder for execution of post requests to the '/test-cases/extension' endpoint.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
-    nicePostFunction: () => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/extension', {}, exports.ExtensionApi._defaultBasePath)
+    nicePostFunction: () => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/extension')
 };
 //# sourceMappingURL=extension-api.js.map

@@ -9,27 +9,15 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
  * This API is part of the 'test-service' service.
  */
 export const DefaultApi = {
-  _defaultBasePath: undefined,
   /**
    * Create a request builder for execution of get requests to the '/test-cases/default-tag' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
-  noTag: () =>
-    new OpenApiRequestBuilder<any>(
-      'get',
-      '/test-cases/default-tag',
-      {},
-      DefaultApi._defaultBasePath
-    ),
+  noTag: () => new OpenApiRequestBuilder<any>('get', '/test-cases/default-tag'),
   /**
    * Create a request builder for execution of post requests to the '/test-cases/default-tag' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   defaultTag: () =>
-    new OpenApiRequestBuilder<any>(
-      'post',
-      '/test-cases/default-tag',
-      {},
-      DefaultApi._defaultBasePath
-    )
+    new OpenApiRequestBuilder<any>('post', '/test-cases/default-tag')
 };

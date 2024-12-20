@@ -16,22 +16,9 @@ const generatorConfigOpenApi: Partial<GeneratorOptions> = {
 async function generateOpenApi() {
   await generate({
     ...generatorConfigOpenApi,
-    input: resolve(
-      '..',
-      '..',
-      'test-resources',
-      'openapi-service-specs',
-      'specifications'
-    ),
+    input: resolve('..', '..', 'test-resources', 'openapi-service-specs'),
     outputDir: resolve('.'),
-    transpile: true,
-    optionsPerService: resolve(
-      '..',
-      '..',
-      'test-resources',
-      'openapi-service-specs',
-      'config'
-    )
+    transpile: true
   }).catch(reason => {
     logger.error(`Unhandled rejection at: ${reason}`);
     process.exit(1);

@@ -8,7 +8,7 @@ const jsf = require('json-schema-faker');
 async function getSchemas() {
   // SchemaObject
   const document = await SwaggerParser.dereference(
-    '../../test-resources/openapi-service-specs/specifications/test-service.json'
+    '../../test-resources/openapi-service-specs/test-service.json'
   );
 
   return document.components.schemas;
@@ -24,7 +24,7 @@ function mockTestEntity(schema) {
 
 async function createApi() {
   const api = new OpenAPIBackend({
-    definition: '../../test-resources/openapi-service-specs/specifications/test-service.json'
+    definition: '../../test-resources/openapi-service-specs/test-service.json'
   });
 
   const schema = await getSchemas();

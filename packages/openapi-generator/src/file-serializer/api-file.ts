@@ -16,28 +16,25 @@ import type {
  * Serialize an API representation to a string representing the resulting API file.
  * @param api - Representation of an API.
  * @param serviceName - Service name for which the API is created.
- * @param options - Options to configure the file creation.
- * @param basePath - Custom base path for the API.
  * @returns The serialized API file contents.
  * @internal
  */
 export function apiFile(
   api: OpenApiApi,
   serviceName: string,
-  options?: CreateFileOptions,
-  basePath?: string
+  options?: CreateFileOptions
 ): string {
   const imports = serializeImports(getImports(api, options));
   const apiDoc = apiDocumentation(api, serviceName);
   const apiContent = codeBlock`
 export const ${api.name} = {
-  _defaultBasePath: ${basePath ? `'${basePath}'` : undefined},
-  ${api.operations.map(operation => serializeOperation(operation, api.name)).join(',\n')}
+  ${api.operations.map(operation => serializeOperation(operation)).join(',\n')}
 };
 `;
 
   return [imports, apiDoc, apiContent].join(unixEOL);
 }
+
 /**
  * Get the unique reference schemas for all request body types in the given operation list.
  * @param operations - The given operation list.

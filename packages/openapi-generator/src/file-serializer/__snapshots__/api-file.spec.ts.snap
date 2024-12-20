@@ -8,9 +8,8 @@ import type { QueryParameterType, RefType, ResponseType } from './schema/index.j
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
-  _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test/{id}' endpoint.
+   * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.
    * @param queryParameters - Object containing the following keys: queryParam.
    * @param headerParameters - Object containing the following keys: headerParam.
@@ -18,26 +17,24 @@ export const TestApi = {
    */
   getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}, headerParameters?: {'headerParam'?: string}) => new OpenApiRequestBuilder<string>(
     'get',
-    "/test/{id}",
+    "test/{id}",
     {
           pathParameters: { id },
           queryParameters,
           headerParameters
-        },
-    TestApi._defaultBasePath
+        }
   ),
   /**
-   * Create a request builder for execution of post requests to the '/test' endpoint.
+   * Create a request builder for execution of post requests to the 'test' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
   createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
     'post',
-    "/test",
+    "test",
     {
           body
-        },
-    TestApi._defaultBasePath
+        }
   )
 };"
 `;
@@ -49,16 +46,13 @@ exports[`api-file creates an api file with documentation 1`] = `
  * This API is part of the 'TestService' service.
  */
 export const TestApi = {
-  _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test' endpoint.
+   * Create a request builder for execution of get requests to the 'test' endpoint.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
   getFn: () => new OpenApiRequestBuilder<any>(
     'get',
-    "/test",
-    {},
-    TestApi._defaultBasePath
+    "test"
   )
 };"
 `;
@@ -78,9 +72,8 @@ import type { QueryParameterType, RefType, ResponseType } from './schema';
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
-  _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test/{id}' endpoint.
+   * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.
    * @param queryParameters - Object containing the following keys: queryParam.
    * @param headerParameters - Object containing the following keys: headerParam.
@@ -88,68 +81,24 @@ export const TestApi = {
    */
   getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}, headerParameters?: {'headerParam'?: string}) => new OpenApiRequestBuilder<string>(
     'get',
-    "/test/{id}",
+    "test/{id}",
     {
           pathParameters: { id },
           queryParameters,
           headerParameters
-        },
-    TestApi._defaultBasePath
+        }
   ),
   /**
-   * Create a request builder for execution of post requests to the '/test' endpoint.
+   * Create a request builder for execution of post requests to the 'test' endpoint.
    * @param body - Request body.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
   createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
     'post',
-    "/test",
+    "test",
     {
           body
-        },
-    TestApi._defaultBasePath
-  )
-};"
-`;
-
-exports[`api-file serializes api file with multiple operations and references and base path 1`] = `
-"import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
-import type { QueryParameterType, RefType, ResponseType } from './schema';
-/**
- * Representation of the 'TestApi'.
- * This API is part of the 'MyServiceName' service.
- */
-export const TestApi = {
-  _defaultBasePath: '/base/path/to/service',
-  /**
-   * Create a request builder for execution of get requests to the '/test/{id}' endpoint.
-   * @param id - Path parameter.
-   * @param queryParameters - Object containing the following keys: queryParam.
-   * @param headerParameters - Object containing the following keys: headerParam.
-   * @returns The request builder, use the \`execute()\` method to trigger the request.
-   */
-  getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}, headerParameters?: {'headerParam'?: string}) => new OpenApiRequestBuilder<string>(
-    'get',
-    "/test/{id}",
-    {
-          pathParameters: { id },
-          queryParameters,
-          headerParameters
-        },
-    TestApi._defaultBasePath
-  ),
-  /**
-   * Create a request builder for execution of post requests to the '/test' endpoint.
-   * @param body - Request body.
-   * @returns The request builder, use the \`execute()\` method to trigger the request.
-   */
-  createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
-    'post',
-    "/test",
-    {
-          body
-        },
-    TestApi._defaultBasePath
+        }
   )
 };"
 `;
@@ -161,19 +110,17 @@ exports[`api-file serializes api file with one operation and no references 1`] =
  * This API is part of the 'MyServiceName' service.
  */
 export const TestApi = {
-  _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test/{id}' endpoint.
+   * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
    * @param id - Path parameter.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
   getFn: (id: string) => new OpenApiRequestBuilder<any>(
     'get',
-    "/test/{id}",
+    "test/{id}",
     {
           pathParameters: { id }
-        },
-    TestApi._defaultBasePath
+        }
   )
 };"
 `;

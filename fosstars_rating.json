@@ -244,9 +244,9 @@
         }
       }
     },
-    "value" : 5.084105339105339,
+    "value" : 6.883668600902644,
     "weight" : 1.0,
-    "confidence" : 7.179487179487181,
+    "confidence" : 9.645390070921987,
     "usedValues" : [ {
       "type" : "ScoreValue",
       "score" : {
@@ -1262,19 +1262,58 @@
         "type" : "UnpatchedVulnerabilitiesScore",
         "name" : "How well vulnerabilities are patched"
       },
-      "value" : 0.0,
+      "value" : 10.0,
       "weight" : 0.5,
-      "confidence" : 0.0,
+      "confidence" : 10.0,
       "usedValues" : [ {
-        "type" : "UnknownValue",
+        "type" : "VulnerabilitiesValue",
         "feature" : {
           "type" : "VulnerabilitiesFeature",
           "name" : "Info about vulnerabilities in open-source project"
         },
+        "vulnerabilities" : {
+          "entries" : [ {
+            "id" : "CVE-2021-41251",
+            "cvss" : {
+              "type" : "CVSS$V2",
+              "value" : 2.6,
+              "confidentialityImpact" : "PARTIAL",
+              "integrityImpact" : "NONE",
+              "availabilityImpact" : "NONE"
+            },
+            "references" : [ {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
+              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
+              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
+            } ],
+            "resolution" : "PATCHED",
+            "introduced" : null,
+            "fixed" : null,
+            "published" : "2021-11-05",
+            "vulnerableVersions" : [ {
+              "versionStart" : null,
+              "versionEnd" : null
+            } ]
+          } ]
+        },
         "explanation" : [ ]
       } ],
-      "explanation" : [ ],
-      "isUnknown" : true,
+      "explanation" : [ "No unpatched vulnerabilities found which is good" ],
+      "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
         "type" : "UnpatchedVulnerabilitiesScore",
@@ -1336,7 +1375,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 228,
+        "number" : 235,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1347,7 +1386,7 @@
         "number" : 3,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "228 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
+      "explanation" : [ "235 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -1516,14 +1555,53 @@
         },
         "name" : "Assesses security testing and vulnerability discovery"
       },
-      "value" : 0.0,
+      "value" : 10.0,
       "weight" : 0.6,
-      "confidence" : 5.0,
+      "confidence" : 10.0,
       "usedValues" : [ {
-        "type" : "UnknownValue",
+        "type" : "VulnerabilitiesValue",
         "feature" : {
           "type" : "VulnerabilitiesFeature",
           "name" : "Info about vulnerabilities in open-source project"
+        },
+        "vulnerabilities" : {
+          "entries" : [ {
+            "id" : "CVE-2021-41251",
+            "cvss" : {
+              "type" : "CVSS$V2",
+              "value" : 2.6,
+              "confidentialityImpact" : "PARTIAL",
+              "integrityImpact" : "NONE",
+              "availabilityImpact" : "NONE"
+            },
+            "references" : [ {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1769",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1769"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/pull/1770",
+              "url" : "https://github.com/SAP/cloud-sdk-js/pull/1770"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
+              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
+            }, {
+              "description" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32",
+              "url" : "https://github.com/SAP/cloud-sdk-js/security/advisories/GHSA-gp2f-254m-rh32"
+            } ],
+            "resolution" : "PATCHED",
+            "introduced" : null,
+            "fixed" : null,
+            "published" : "2021-11-05",
+            "vulnerableVersions" : [ {
+              "versionStart" : null,
+              "versionEnd" : null
+            } ]
+          } ]
         },
         "explanation" : [ ]
       }, {
@@ -2721,5 +2799,5 @@
       }
     }
   },
-  "label" : [ "OssSecurityRating$SecurityLabel", "UNCLEAR" ]
+  "label" : [ "OssSecurityRating$SecurityLabel", "GOOD" ]
 }

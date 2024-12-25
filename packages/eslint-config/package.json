@@ -27,7 +27,7 @@
   "dependencies": {
     "@eslint/js": "^9.17.0",
     "@stylistic/eslint-plugin": "^2.12.1",
-    "@typescript-eslint/parser": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.2",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.7.0",
     "eslint-plugin-import": "^2.31.0",

@@ -1,0 +1,66 @@
+name: Feature Request
+description: Request a new feature to help your project using the SAP Cloud SDK (JavaScript / TypeScript).
+title: '<title>'
+labels: 
+  - feature request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!note]
+        > Please note that this repository is for JavaScript / TypeScript related issues only. 
+        > If you have a question about the SAP Cloud SDK (Java), open a GitHub issue here: https://github.com/SAP/cloud-sdk-java/issues/new/choose
+  - type: textarea
+    attributes:
+      label: "Describe the Problem"
+      description: A clear and concise description of what the problem is, e.g., I'm always frustrated when [...]
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Propose a Solution"
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Describe Alternatives"
+      description: A clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: false
+  - type: dropdown
+    attributes:
+      label: "Affected Development Phase"
+      description: "Choose the development phase affected by this issue."
+      multiple: false
+      options:
+        - Getting Started
+        - Development
+        - Release
+        - Production
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: "Impact"
+      description: "Choose the impact severity."
+      multiple: false
+      options:
+        - No Impact
+        - Inconvenience
+        - Impaired
+        - Blocked
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Timeline"
+      description: "Please briefly state your timeline, e.g., Go-Live in 12 weeks."
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: "Additional Context"
+      description: "Add any other context about the feature request here."
+    validations:
+      required: false

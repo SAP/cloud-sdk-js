@@ -10,6 +10,7 @@ import type { TestEntity } from './schema';
  * This API is part of the 'swagger-yaml-service' service.
  */
 export declare const DefaultApi: {
+  _defaultBasePath: undefined;
   /**
    * Test POST
    * @param pathParam - Path parameter.

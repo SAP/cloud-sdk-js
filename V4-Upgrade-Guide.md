@@ -24,7 +24,7 @@ The To-Do list is:
 
 Search for occurrences of `@sap-cloud-sdk/[some module]` in your `package.json` files.
 Replace the version numbers with `^4`.
-Depending on if you're using `npm` or `yarn`, run `npm install` or `yarn` in the directories of your `package.json` files to update the `package-lock.json` or `yarn.lock` file.
+run `npm install` or similar to install the dependencies and update the lock file.
 
 Running your tests or deploying your application might fail at this point if you need to adapt to any breaking changes.
 We recommend updating your applications in one commit or pull request and making sure everything still works using your existing test suite.

@@ -14,7 +14,8 @@ Add sections to the document as you see fit.
 # How to Upgrade to Version 4 of the SAP Cloud SDK for JavaScript <!-- omit from toc -->
 
 This document will guide you through the steps necessary to upgrade to version 4 of the SAP Cloud SDK.
-Depending on your project, some steps might not be applicable. The To-Do list is:
+Depending on your project, some steps might not be applicable.
+The To-Do list is:
 
 - [Update Your Project Dependencies](#update-your-project-dependencies)
 - [Update to Node 22 or Newer](#update-to-node-22-or-newer)
@@ -25,7 +26,7 @@ Search for occurrences of `@sap-cloud-sdk/[some module]` in your `package.json` 
 Replace the version numbers with `^4`.
 Depending on if you're using `npm` or `yarn`, run `npm install` or `yarn` in the directories of your `package.json` files to update the `package-lock.json` or `yarn.lock` file.
 
-Running your tests or deploying your application might fail at this point in time if you need to adapt to any breaking changes.
+Running your tests or deploying your application might fail at this point if you need to adapt to any breaking changes.
 We recommend updating your applications in one commit or pull request and making sure everything still works using your existing test suite.
 
 ## Update to Node 22 or Newer

@@ -105,6 +105,8 @@ function properties(
       isEnum
     );
 
+    console.log("properties: " + p.Precision);
+
     return {
       originalName: p.Name,
       instancePropertyName,
@@ -119,6 +121,7 @@ function properties(
       description: propertyDescription(p, swaggerProp),
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,
+      precision: p.Precision === undefined ? undefined : parseInt(p.Precision),
       isComplex,
       isEnum,
       isCollection

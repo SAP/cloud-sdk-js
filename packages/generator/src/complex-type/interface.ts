@@ -35,7 +35,8 @@ function property(prop: VdmProperty): PropertySignatureStructure {
       addLeadingNewline(
         getPropertyDescription(prop, {
           nullable: prop.nullable,
-          maxLength: prop.maxLength
+          maxLength: prop.maxLength,
+          precision: prop.precision
         })
       )
     ]

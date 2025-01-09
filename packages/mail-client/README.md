@@ -6,6 +6,9 @@
 > [!caution]
 > This package has been deprecated and is no longer maintained.
 > Use at your own risk.
+>
+> Alternatively, you can use the SAP Cloud SDK to fetch a mail destination and send the mail yourself.
+> This can be done, for example, by reading the SAP BTP [documentation](https://help.sap.com/docs/connectivity/sap-btp-connectivity-cf/using-tcp-protocol-for-cloud-applications?locale=en-US) or by copying the existing SAP Cloud SDK [source code](https://github.com/SAP/cloud-sdk-js/tree/v3-main/packages/mail-client/src) (just 2 files).
 
 
 # @sap-cloud-sdk/mail-client

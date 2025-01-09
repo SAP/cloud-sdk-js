@@ -14,6 +14,7 @@ import {
   serializeToTime,
   deserializeDateToMoment
 } from './converters';
+import type { Moment } from 'moment';
 import type BigNumber from 'bignumber.js';
 import type { Time } from '@sap-cloud-sdk/odata-common/internal';
 import type { DeSerializers } from './de-serializers';
@@ -55,7 +56,8 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
   },
   'Edm.DateTimeOffset': {
     deserialize: deserializeDateTimeOffsetToMoment,
-    serialize: serializeToDateTimeOffset,
+    serialize: (value: Moment, propertyMetadata?: any) =>
+      serializeToDateTimeOffset(value, propertyMetadata),
     serializeToUri: (value, serialize) => serialize(value)
   },
   'Edm.Duration': {

@@ -63,15 +63,17 @@ export class EdmTypeField<
    * @param edmType - Type of the field according to the metadata description.
    * @param _deSerializers - (De-)serializers used for transformation.
    * @param fieldOptions - Optional settings for this field.
+   * @param fieldMetadata - Metadata properties associated with the field.
    */
   constructor(
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
     readonly edmType: EdmT,
     public _deSerializers: DeSerializersT, // Only necessary for the type, unused otherwise
-    fieldOptions?: FieldOptions<NullableT, SelectableT>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>,
+    fieldMetadata?: any
   ) {
-    super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
+    super(fieldName, getEntityConstructor(_fieldOf), fieldOptions,fieldMetadata);
   }
 
   /**

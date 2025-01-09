@@ -13,12 +13,14 @@ function createTestEntity() {
   const keyPropString = 'stringId';
   const int32Prop = 125;
   const keyPropDate = moment();
+  const propDateTimeOffset = moment();
 
   return testEntityApi
     .entityBuilder()
     .keyPropertyGuid(keyPropGuid)
     .keyPropertyString(keyPropString)
     .keyDateProperty(keyPropDate)
+    .dateTimeOffSetProperty(propDateTimeOffset)
     .int32Property(int32Prop)
     .build();
 }
@@ -29,7 +31,9 @@ describe('UpdateRequestBuilder', () => {
   });
 
   it('update request sends only non-key properties', async () => {
-    const entity = createTestEntity();
+    const entity = 
+    
+    createTestEntity();
     entity.booleanProperty = false;
     const requestBody = {
       Int32Property: entity.int32Property,

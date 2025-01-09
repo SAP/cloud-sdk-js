@@ -58,18 +58,22 @@ export class Field<
   SelectableT extends boolean = false
 > {
   readonly _fieldOptions: Required<FieldOptions<NullableT, SelectableT>>;
+  readonly _fieldMetadata?: any;
   /**
    * Creates an instance of Field.
    * @param _fieldName - Actual name of the field used in the OData request.
    * @param _entityConstructor - Constructor type of the entity the field belongs to.
    * @param fieldOptions - Optional settings for this field.
+   * @param fieldMetadata - Metadata properties associated with the field.
    */
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>,
-    fieldOptions?: FieldOptions<NullableT, SelectableT>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>,
+    fieldMetadata?: any
   ) {
     this._fieldOptions = getFieldOptions(fieldOptions);
+    this._fieldMetadata = fieldMetadata;
   }
 
   /**

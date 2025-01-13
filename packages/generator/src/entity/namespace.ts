@@ -99,7 +99,9 @@ export function createPropertyFieldInitializerForEntity(
     return `${fieldBuilderName}.buildEnumField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
   }
 
-  return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+  return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${
+    prop.edmType
+  }', ${prop.nullable}${prop.precision ? `, ${prop.precision}` :''})`;
 }
 
 /**

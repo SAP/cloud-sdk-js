@@ -35,7 +35,9 @@ export async function parseOpenApiDocument(
   options: ParserOptions
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
-  const document = (await SwaggerParser.parse(clonedContent)) as OpenAPIV3.Document;
+  const document = (await SwaggerParser.parse(
+    clonedContent
+  )) as OpenAPIV3.Document;
   const refs = await createRefs(document, options);
   const schemas = parseSchemas(document, refs, options);
   sanitizeDiscriminatedSchemas(schemas, refs, options);
@@ -51,7 +53,7 @@ export async function parseOpenApiDocument(
 
 type OpenApiPersistedSchemaWithDiscriminator = OpenApiPersistedSchema & {
   schema: OpenApiOneOfSchema &
-  Required<Pick<OpenApiOneOfSchema, 'discriminator'>>;
+    Required<Pick<OpenApiOneOfSchema, 'discriminator'>>;
 };
 
 // Some specs include incorrect discriminator definitions based on the schema type `object`, that circularly reference their parent type.

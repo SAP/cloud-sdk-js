@@ -54,7 +54,8 @@ export const cliOptions = {
     hidden: true
   },
   resolveExternal: {
-    describe: 'By default, external $ref pointers will be resolved. If set to false, external $ref pointers will simply be ignored.',
+    describe:
+      'By default, external $ref pointers will be resolved. If set to false, external $ref pointers will simply be ignored.',
     type: 'boolean',
     default: true
   }

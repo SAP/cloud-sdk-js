@@ -17,8 +17,8 @@ describe('OpenApiDocumentRefs', () => {
 
   describe('createRefs', () => {
     it('throws if external refs does not exist', async () => {
-      await expect(
-        () => createRefs(
+      await expect(() =>
+        createRefs(
           {
             ...emptyDocument,
             paths: {
@@ -38,11 +38,13 @@ describe('OpenApiDocumentRefs', () => {
                   }
                 }
               }
-            },
+            }
           },
           { strictNaming: true, schemaPrefix: 'xyz', resolveExternal: true }
         )
-      ).rejects.toThrowErrorMatchingInlineSnapshot('"Error opening file "/path/to/external.json""');
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Error opening file "/path/to/external.json""'
+      );
     });
 
     it('should ignore external refs if resolveExternal set to false', async () => {
@@ -67,7 +69,7 @@ describe('OpenApiDocumentRefs', () => {
                   }
                 }
               }
-            },
+            }
           },
           { strictNaming: true, schemaPrefix: 'xyz', resolveExternal: false }
         )

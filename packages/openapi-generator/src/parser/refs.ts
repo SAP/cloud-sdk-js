@@ -40,7 +40,9 @@ export class OpenApiDocumentRefs {
     options: ParserOptions
   ): Promise<OpenApiDocumentRefs> {
     return new OpenApiDocumentRefs(
-      await SwaggerParser.resolve(document, { resolve: { external: options.resolveExternal } }),
+      await SwaggerParser.resolve(document, {
+        resolve: { external: options.resolveExternal }
+      }),
       OpenApiDocumentRefs.parseSchemaRefMapping(document, options)
     );
   }

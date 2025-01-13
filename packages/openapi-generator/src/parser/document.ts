@@ -1,3 +1,4 @@
+import SwaggerParser from '@apidevtools/swagger-parser';
 import {
   isAllOfSchema,
   isOneOfSchema,
@@ -10,7 +11,6 @@ import {
 } from './schema';
 import { parseApis } from './api';
 import { createRefs } from './refs';
-import { parseBound } from './swagger-parser-workaround';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 import type {
@@ -35,7 +35,7 @@ export async function parseOpenApiDocument(
   options: ParserOptions
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
-  const document = (await parseBound(clonedContent)) as OpenAPIV3.Document;
+  const document = (await SwaggerParser.parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await createRefs(document, options);
   const schemas = parseSchemas(document, refs, options);
   sanitizeDiscriminatedSchemas(schemas, refs, options);
@@ -51,7 +51,7 @@ export async function parseOpenApiDocument(
 
 type OpenApiPersistedSchemaWithDiscriminator = OpenApiPersistedSchema & {
   schema: OpenApiOneOfSchema &
-    Required<Pick<OpenApiOneOfSchema, 'discriminator'>>;
+  Required<Pick<OpenApiOneOfSchema, 'discriminator'>>;
 };
 
 // Some specs include incorrect discriminator definitions based on the schema type `object`, that circularly reference their parent type.

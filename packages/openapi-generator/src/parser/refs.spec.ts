@@ -5,14 +5,74 @@ import type { OpenApiDocumentRefs } from './refs';
 describe('OpenApiDocumentRefs', () => {
   let refs: OpenApiDocumentRefs;
   const typeName: OpenAPIV3.SchemaObject = { type: 'string' };
-  beforeAll(async () => {
+  beforeEach(async () => {
     refs = await createRefs(
       {
         ...emptyDocument,
         components: { schemas: { typeName } }
       },
-      { strictNaming: true, schemaPrefix: '' }
+      { strictNaming: true, schemaPrefix: '', resolveExternal: true }
     );
+  });
+
+  describe('createRefs', () => {
+    it('throws if external refs does not exist', async () => {
+      await expect(
+        () => createRefs(
+          {
+            ...emptyDocument,
+            paths: {
+              '/test': {
+                get: {
+                  responses: {
+                    '200': {
+                      description: 'A test response',
+                      content: {
+                        'application/json': {
+                          schema: {
+                            $ref: '/path/to/external.json'
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+          },
+          { strictNaming: true, schemaPrefix: 'xyz', resolveExternal: true }
+        )
+      ).rejects.toThrowErrorMatchingInlineSnapshot('"Error opening file "/path/to/external.json""');
+    });
+
+    it('should ignore external refs if resolveExternal set to false', async () => {
+      await expect(
+        createRefs(
+          {
+            ...emptyDocument,
+            paths: {
+              '/test': {
+                get: {
+                  responses: {
+                    '200': {
+                      description: 'A test response',
+                      content: {
+                        'application/json': {
+                          schema: {
+                            $ref: '/path/to/external.json'
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+          },
+          { strictNaming: true, schemaPrefix: 'xyz', resolveExternal: false }
+        )
+      ).resolves.toBeDefined();
+    });
   });
 
   describe('resolveObject', () => {
@@ -67,7 +127,7 @@ describe('OpenApiDocumentRefs', () => {
           ...emptyDocument,
           components: { schemas: { typeName } }
         },
-        { strictNaming: true, schemaPrefix: 'xyz' }
+        { strictNaming: true, schemaPrefix: 'xyz', resolveExternal: true }
       );
 
       expect(
@@ -86,7 +146,7 @@ describe('OpenApiDocumentRefs', () => {
           ...emptyDocument,
           components: { schemas: { '123456': {}, 'something.Else%': {} } }
         },
-        { strictNaming: false, schemaPrefix: '' }
+        { strictNaming: false, schemaPrefix: '', resolveExternal: true }
       );
       expect(refs.getSchemaNaming('#/components/schemas/123456')).toEqual({
         fileName: 'schema-123456',
@@ -109,7 +169,7 @@ describe('OpenApiDocumentRefs', () => {
             schemas: { '123456': {}, schema123456: {}, schema12345_6: {} }
           }
         },
-        { strictNaming: false, schemaPrefix: '' }
+        { strictNaming: false, schemaPrefix: '', resolveExternal: true }
       );
       expect(refs.getSchemaNaming('#/components/schemas/123456')).toEqual({
         fileName: 'schema-123456',
@@ -139,7 +199,7 @@ describe('OpenApiDocumentRefs', () => {
             ...emptyDocument,
             components: { schemas: { '123456': {} } }
           },
-          { strictNaming: true, schemaPrefix: '' }
+          { strictNaming: true, schemaPrefix: '', resolveExternal: true }
         )
       ).rejects.toThrowError(
         'The service specification contains invalid schema names.'
@@ -152,7 +212,7 @@ describe('OpenApiDocumentRefs', () => {
           ...emptyDocument,
           components: { schemas: { name: {}, Name: {} } }
         },
-        { strictNaming: false, schemaPrefix: '' }
+        { strictNaming: false, schemaPrefix: '', resolveExternal: true }
       );
       expect(refs.getSchemaNaming('#/components/schemas/name')).toEqual({
         fileName: 'name-1',
@@ -171,7 +231,7 @@ describe('OpenApiDocumentRefs', () => {
           ...emptyDocument,
           components: { schemas: { name400: {}, Name400: {} } }
         },
-        { strictNaming: false, schemaPrefix: '' }
+        { strictNaming: false, schemaPrefix: '', resolveExternal: true }
       );
       expect(refs.getSchemaNaming('#/components/schemas/name400')).toEqual({
         fileName: 'name-400-1',

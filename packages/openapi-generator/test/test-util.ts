@@ -14,7 +14,7 @@ export function createTestRefs(
 ): Promise<OpenApiDocumentRefs> {
   return createRefs(
     { ...emptyDocument, components },
-    { strictNaming: true, schemaPrefix: '' }
+    { strictNaming: true, schemaPrefix: '', resolveExternal: true }
   );
 }
 

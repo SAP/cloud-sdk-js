@@ -84,7 +84,7 @@ export function entitySerializer(
       return null;
     }
     if (field instanceof EdmTypeField) {
-      return tsToEdm(fieldValue, field.edmType);
+      return tsToEdm(fieldValue, field.edmType, field._precision);
     }
     if (field instanceof OneToOneLink) {
       return serializeEntity(fieldValue, field._linkedEntityApi);
@@ -221,7 +221,7 @@ export function entitySerializer(
     FieldT extends EdmTypeShared<'any'> | Record<string, any>
   >(fieldValue: any[], fieldType: FieldT) {
     if (isEdmType(fieldType)) {
-      return fieldValue.map(val => tsToEdm(val, fieldType));
+      return fieldValue.map(val => tsToEdm(val, fieldType, undefined));
     }
     if (isComplexTypeNameSpace(fieldType)) {
       return fieldValue.map(val => serializeComplexType(val, fieldType));

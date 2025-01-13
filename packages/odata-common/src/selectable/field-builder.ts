@@ -78,7 +78,8 @@ export class FieldBuilder<
   buildEdmTypeField<EdmT extends OrderableEdmType, NullableT extends boolean>(
     fieldName: string,
     edmType: EdmT,
-    isNullable: NullableT
+    isNullable: NullableT,
+    precision?: number
   ): OrderableEdmTypeField<
     EntityTypeFromFieldOf<FieldOfT>,
     DeSerializersT,
@@ -92,7 +93,8 @@ export class FieldBuilder<
   >(
     fieldName: string,
     edmType: EdmT,
-    isNullable: NullableT
+    isNullable: NullableT,
+    precision?: number
   ): EdmTypeField<
     EntityTypeFromFieldOf<FieldOfT>,
     DeSerializersT,
@@ -116,7 +118,8 @@ export class FieldBuilder<
   >(
     fieldName: string,
     edmType: EdmT,
-    isNullable: NullableT
+    isNullable: NullableT,
+    precision?: number
   ):
     | OrderableEdmTypeField<
         EntityTypeFromFieldOf<FieldOfT>,
@@ -143,7 +146,7 @@ export class FieldBuilder<
     return new ctor(fieldName, this.fieldOf, edmType, this.deSerializers, {
       isNullable,
       isSelectable
-    });
+    }, precision);
   }
 
   /**

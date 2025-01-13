@@ -239,7 +239,8 @@ export class TestEntityApi<
       DeSerializersT,
       'Edm.DateTimeOffset',
       true,
-      true
+      true,
+      2
     >;
     DURATION_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,
@@ -491,7 +492,8 @@ export class TestEntityApi<
         DATE_TIME_OFF_SET_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DateTimeOffSetProperty',
           'Edm.DateTimeOffset',
-          true
+          true,
+          2
         ),
         /**
          * Static representation of the {@link durationProperty} property for query construction.

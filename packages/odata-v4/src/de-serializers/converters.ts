@@ -42,7 +42,7 @@ export function deserializeDateTimeOffsetToMoment(
 /**
  * @internal
  */
-export function serializeToDateTimeOffset(value: moment.Moment): string {
+export function serializeToDateTimeOffset(value: moment.Moment, precision: number): string {
   return value.utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
 }
 

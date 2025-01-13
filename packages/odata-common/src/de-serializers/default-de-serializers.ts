@@ -124,12 +124,12 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
 function wrapDefaultSerializer<T>(
   serialize: DeSerializer<T>['serialize']
 ): DeSerializer<T>['serialize'] {
-  return function (value) {
+  return function (value, precision) {
     if (value === null) {
       return 'null';
     }
     if (serialize) {
-      return serialize(value);
+      return serialize(value, precision);
     }
     return value;
   };

@@ -17,8 +17,9 @@ export class OrderableEdmTypeField<
   DeSerializersT extends DeSerializers,
   EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean = false,
-  SelectableT extends boolean = false
-> extends EdmTypeField<EntityT, DeSerializersT, EdmT, NullableT, SelectableT> {
+  SelectableT extends boolean = false,
+  PrecisionT extends number = 0,
+> extends EdmTypeField<EntityT, DeSerializersT, EdmT, NullableT, SelectableT, PrecisionT> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    * @param value - Value to be used in the filter.

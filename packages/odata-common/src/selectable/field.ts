@@ -58,6 +58,7 @@ export class Field<
   SelectableT extends boolean = false
 > {
   readonly _fieldOptions: Required<FieldOptions<NullableT, SelectableT>>;
+  readonly _precision?: number;
   /**
    * Creates an instance of Field.
    * @param _fieldName - Actual name of the field used in the OData request.
@@ -67,9 +68,11 @@ export class Field<
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>,
-    fieldOptions?: FieldOptions<NullableT, SelectableT>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>,
+    precision?: number
   ) {
     this._fieldOptions = getFieldOptions(fieldOptions);
+    this._precision = precision;
   }
 
   /**

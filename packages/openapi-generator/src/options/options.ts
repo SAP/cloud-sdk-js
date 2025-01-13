@@ -23,6 +23,10 @@ export interface OpenAPIGeneratorOptions {
    * @experimental
    */
   schemaPrefix?: string;
+  /**
+   * Resolve external references.
+   */
+  resolveExternal?: boolean;
 }
 
 /**
@@ -48,5 +52,10 @@ export const cliOptions = {
     type: 'string',
     default: '',
     hidden: true
+  },
+  resolveExternal: {
+    describe: 'By default, external $ref pointers will be resolved. If set to false, external $ref pointers will simply be ignored.',
+    type: 'boolean',
+    default: true
   }
 } as const satisfies Options<GeneratorOptions>;

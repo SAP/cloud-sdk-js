@@ -10,6 +10,5 @@ export * from './request-body';
 export * from './responses';
 export * from './schema-naming';
 export * from './schema';
-export * from './swagger-parser-workaround';
 export * from './type-mapping';
 export * from './unique-naming';

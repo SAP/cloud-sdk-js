@@ -39,7 +39,7 @@
     "@sap-cloud-sdk/util": "^3.25.0",
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^11.2.0",
-    "glob": "^11.0.0",
+    "glob": "^11.0.1",
     "typescript": "~5.7.3",
     "prettier": "^3.4.2",
     "yargs": "^17.7.2",

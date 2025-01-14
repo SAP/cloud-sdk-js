@@ -174,7 +174,6 @@ function addConstraints(
     description += `${unixEOL}@nullable`;
   }
   if (constraints.precision !== undefined) {
-    console.log(constraints.precision);
     description += `${unixEOL}Precision: ${constraints.precision}.`;
   }
 

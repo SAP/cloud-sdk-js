@@ -105,8 +105,6 @@ function properties(
       isEnum
     );
 
-    console.log("properties: " + p.Precision);
-
     return {
       originalName: p.Name,
       instancePropertyName,

@@ -5,7 +5,8 @@ import type { EntityBase, Constructable } from '../entity-base';
  */
 export interface FieldOptions<
   NullableT extends boolean = false,
-  SelectableT extends boolean = false
+  SelectableT extends boolean = false,
+  PrecisionT extends number = number
 > {
   /**
    * Whether the value of the field can be `null`.
@@ -18,7 +19,7 @@ export interface FieldOptions<
   /**
    * Precision associated with field.
    */
-  precision?: number;
+  precision?: PrecisionT;
 }
 
 /**
@@ -30,19 +31,20 @@ export interface FieldOptions<
  */
 export function getFieldOptions<
   NullableT extends boolean = false,
-  SelectableT extends boolean = false
+  SelectableT extends boolean = false,
+  PrecisionT extends number = number
 >(
-  fieldOptions?: FieldOptions<NullableT, SelectableT>
-): Required<FieldOptions<NullableT, SelectableT>> {
+  fieldOptions?: FieldOptions<NullableT, SelectableT, PrecisionT>
+): Required<FieldOptions<NullableT, SelectableT, PrecisionT>> {
   return { ...defaultFieldOptions, ...fieldOptions } as Required<
-    FieldOptions<NullableT, SelectableT>
+    FieldOptions<NullableT, SelectableT, PrecisionT>
   >;
 }
 
 const defaultFieldOptions: Required<FieldOptions> = {
   isNullable: false,
   isSelectable: false,
-  precision : 0
+  precision: 0
 };
 
 /**
@@ -60,9 +62,12 @@ const defaultFieldOptions: Required<FieldOptions> = {
 export class Field<
   EntityT extends EntityBase,
   NullableT extends boolean = false,
-  SelectableT extends boolean = false
+  SelectableT extends boolean = false,
+  PrecisionT extends number = number
 > {
-  readonly _fieldOptions: Required<FieldOptions<NullableT, SelectableT>>;
+  readonly _fieldOptions: Required<
+    FieldOptions<NullableT, SelectableT, PrecisionT>
+  >;
   /**
    * Creates an instance of Field.
    * @param _fieldName - Actual name of the field used in the OData request.
@@ -72,7 +77,7 @@ export class Field<
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>,
-    fieldOptions?: FieldOptions<NullableT, SelectableT>
+    fieldOptions?: FieldOptions<NullableT, SelectableT, PrecisionT>
   ) {
     this._fieldOptions = getFieldOptions(fieldOptions);
   }

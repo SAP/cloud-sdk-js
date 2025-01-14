@@ -49,9 +49,10 @@ export class EdmTypeField<
     DeSerializersT extends DeSerializers,
     EdmT extends EdmTypeShared<'any'>,
     NullableT extends boolean = false,
-    SelectableT extends boolean = false
+    SelectableT extends boolean = false,
+    PrecisionT extends number = number
   >
-  extends Field<EntityT, NullableT, SelectableT>
+  extends Field<EntityT, NullableT, SelectableT, PrecisionT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entity: EntityT;
@@ -70,7 +71,7 @@ export class EdmTypeField<
     readonly _fieldOf: ConstructorOrField<EntityT>,
     readonly edmType: EdmT,
     public _deSerializers: DeSerializersT, // Only necessary for the type, unused otherwise
-    fieldOptions?: FieldOptions<NullableT, SelectableT>
+    fieldOptions?: FieldOptions<NullableT, SelectableT, PrecisionT>
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
     this.precision = fieldOptions?.precision;

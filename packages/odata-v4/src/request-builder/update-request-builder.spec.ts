@@ -19,7 +19,7 @@ function createTestEntity() {
     .keyPropertyGuid(keyPropGuid)
     .keyPropertyString(keyPropString)
     .keyDateProperty(keyPropDate)
-    .dateTimeOffSetProperty(keyPropDate)
+    .dateTimeOffSetProperty(moment())
     .int32Property(int32Prop)
     .build();
 }

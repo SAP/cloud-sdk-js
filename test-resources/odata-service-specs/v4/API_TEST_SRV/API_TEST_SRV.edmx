@@ -22,7 +22,7 @@
         <Property Name="FloatProperty" Type="Edm.Float"/>
         <Property Name="TimeOfDayProperty" Type="Edm.TimeOfDay" Precision="0"/>
         <Property Name="KeyDateProperty" Type="Edm.Date" Precision="0" sap:display-format="Date"/>
-        <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="0"/>
+        <Property Name="DateTimeOffSetProperty" Type="Edm.DateTimeOffset" Precision="2"/>
         <Property Name="DurationProperty" Type="Edm.Duration" Precision="0"/>
         <Property Name="ByteProperty" Type="Edm.Byte"/>
         <Property Name="SByteProperty" Type="Edm.SByte"/>

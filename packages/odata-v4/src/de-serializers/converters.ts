@@ -42,8 +42,17 @@ export function deserializeDateTimeOffsetToMoment(
 /**
  * @internal
  */
-export function serializeToDateTimeOffset(value: moment.Moment): string {
-  return value.utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
+export function serializeToDateTimeOffset(
+  value: moment.Moment,
+  precision?: number
+): string {
+  // If precision is defined, create a format with decimal places
+  if (precision !== undefined && precision !== null) {
+    const precisionFormat = new Array(precision).fill('S').join('');
+    return value.utc().format(`YYYY-MM-DDTHH:mm:ss.${precisionFormat}`) + 'Z';
+  }
+  // If no precision, return without decimal places
+  return value.utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 }
 
 /**

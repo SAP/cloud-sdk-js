@@ -101,7 +101,9 @@ export function createPropertyFieldInitializerForEntity(
 
   return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${
     prop.edmType
-  }', ${prop.nullable}${prop.precision ? `, ${prop.precision}` :''})`;
+  }', ${prop.nullable}${
+    prop.precision !== undefined ? `, ${prop.precision}` : ''
+  })`;
 }
 
 /**

@@ -98,7 +98,7 @@ export interface DeSerializer<DeserializedT> {
    * @param value - Deserialized value to serialize.
    * @returns Serialized value.
    */
-  serialize: (value: DeserializedT) => any;
+  serialize: (value: DeserializedT, precision?: number) => any;
 
   /**
    * Function to serialize a value for use in a URI.

@@ -6,8 +6,7 @@ import {
   Link,
   ComplexTypeField,
   CollectionField,
-  EnumField,
-  getFieldOptions
+  EnumField
 } from './selectable';
 import { isEdmType } from './edm-types';
 import { createValueSerializer } from './de-serializers';
@@ -85,7 +84,7 @@ export function entitySerializer(
       return null;
     }
     if (field instanceof EdmTypeField) {
-      return tsToEdm(fieldValue, field.edmType, getFieldOptions().precision);
+      return tsToEdm(fieldValue, field.edmType, field._fieldOptions.precision);
     }
     if (field instanceof OneToOneLink) {
       return serializeEntity(fieldValue, field._linkedEntityApi);

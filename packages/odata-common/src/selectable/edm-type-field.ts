@@ -56,7 +56,6 @@ export class EdmTypeField<
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entity: EntityT;
-  readonly precision?: number;
 
   /**
    * Creates an instance of EdmTypeField.
@@ -74,7 +73,6 @@ export class EdmTypeField<
     fieldOptions?: FieldOptions<NullableT, SelectableT, PrecisionT>
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
-    this.precision = fieldOptions?.precision;
   }
 
   /**

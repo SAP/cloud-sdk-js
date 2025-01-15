@@ -46,6 +46,7 @@ export function serializeToDateTimeOffset(
   value: moment.Moment,
   precision?: number
 ): string {
+  console.log('Precision being logged in the serialiser', precision);
   // If precision is defined, create a format with decimal places
   if (precision !== undefined && precision !== null) {
     const precisionFormat = new Array(precision).fill('S').join('');

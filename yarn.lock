@@ -1624,10 +1624,10 @@
     node-cache "^5.1.2"
     verror "1.10.1"
 
-"@sap/xssec@^4.2.7":
-  version "4.2.7"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.7.tgz#2d10d9a9d867fe3b8961a7ae5d5281402ea5f5d2"
-  integrity sha512-RCBFma3jiLIJ1naAPFNLQWMIkKwQENiwSsdEtffs2Q+RhH+AnLiaXAqxtXGlO/N+Lg53WANEIcLThYRkttQ00w==
+"@sap/xssec@^4.2.8":
+  version "4.2.8"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.2.8.tgz#52ea937aafa4ae497c6c57ef00a316a435d26c04"
+  integrity sha512-hTwupdCFdp3ElAF/e4qj6Akgf3N6/C7bq3qggbTeHEdaPVEehYPyxuTsdxb1TVI1vUGlHjB7RUW6aa6n30fP6Q==
   dependencies:
     debug "^4.3.4"
     jwt-decode "^4"
@@ -7023,7 +7023,7 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nanoid@^3.3.7:
+nanoid@^3.3.8:
   version "3.3.8"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.8.tgz#b1be3030bee36aaff18bacb375e5cce521684baf"
   integrity sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==
@@ -7874,11 +7874,11 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.4.23, postcss@^8.4.38, postcss@^8.4.40, postcss@^8.4.47:
-  version "8.4.49"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.49.tgz#4ea479048ab059ab3ae61d082190fabfd994fe19"
-  integrity sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==
+  version "8.5.1"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.1.tgz#e2272a1f8a807fafa413218245630b5db10a3214"
+  integrity sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==
   dependencies:
-    nanoid "^3.3.7"
+    nanoid "^3.3.8"
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 

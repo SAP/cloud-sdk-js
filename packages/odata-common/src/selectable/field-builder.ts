@@ -75,39 +75,32 @@ export class FieldBuilder<
     private deSerializers: DeSerializersT
   ) {}
 
-  buildEdmTypeField<
-    EdmT extends OrderableEdmType,
-    NullableT extends boolean,
-    PrecisionT extends number = number
-  >(
+  buildEdmTypeField<EdmT extends OrderableEdmType, NullableT extends boolean>(
     fieldName: string,
     edmType: EdmT,
     isNullable: NullableT,
-    precision?: PrecisionT
+    precision?: number
   ): OrderableEdmTypeField<
     EntityTypeFromFieldOf<FieldOfT>,
     DeSerializersT,
     EdmT,
     NullableT,
-    IsSelectableField<FieldOfT>,
-    PrecisionT
+    IsSelectableField<FieldOfT>
   >;
   buildEdmTypeField<
     EdmT extends Exclude<EdmTypeShared<'any'>, OrderableEdmType>,
-    NullableT extends boolean,
-    PrecisionT extends number = number
+    NullableT extends boolean
   >(
     fieldName: string,
     edmType: EdmT,
     isNullable: NullableT,
-    precision?: PrecisionT
+    precision?: number
   ): EdmTypeField<
     EntityTypeFromFieldOf<FieldOfT>,
     DeSerializersT,
     EdmT,
     NullableT,
-    IsSelectableField<FieldOfT>,
-    PrecisionT
+    IsSelectableField<FieldOfT>
   >;
   /**
    * Build a field for a property with an EDM type.
@@ -122,29 +115,26 @@ export class FieldBuilder<
    */
   buildEdmTypeField<
     EdmT extends EdmTypeShared<'any'>,
-    NullableT extends boolean,
-    PrecisionT extends number = number
+    NullableT extends boolean
   >(
     fieldName: string,
     edmType: EdmT,
     isNullable: NullableT,
-    precision?: PrecisionT
+    precision?: number
   ):
     | OrderableEdmTypeField<
         EntityTypeFromFieldOf<FieldOfT>,
         DeSerializersT,
         EdmT,
         NullableT,
-        IsSelectableField<FieldOfT>,
-        PrecisionT
+        IsSelectableField<FieldOfT>
       >
     | EdmTypeField<
         EntityTypeFromFieldOf<FieldOfT>,
         DeSerializersT,
         EdmT,
         NullableT,
-        IsSelectableField<FieldOfT>,
-        PrecisionT
+        IsSelectableField<FieldOfT>
       > {
     const isSelectable = (this.fieldOf instanceof
       ComplexTypeField) as IsSelectableField<FieldOfT>;

@@ -5,8 +5,7 @@ import type { EntityBase, Constructable } from '../entity-base';
  */
 export interface FieldOptions<
   NullableT extends boolean = false,
-  SelectableT extends boolean = false,
-  PrecisionT extends number = number
+  SelectableT extends boolean = false
 > {
   /**
    * Whether the value of the field can be `null`.
@@ -19,7 +18,7 @@ export interface FieldOptions<
   /**
    * Precision associated with field.
    */
-  precision?: PrecisionT;
+  precision?: number;
 }
 
 /**
@@ -31,13 +30,12 @@ export interface FieldOptions<
  */
 export function getFieldOptions<
   NullableT extends boolean = false,
-  SelectableT extends boolean = false,
-  PrecisionT extends number = number
+  SelectableT extends boolean = false
 >(
-  fieldOptions?: FieldOptions<NullableT, SelectableT, PrecisionT>
-): Required<FieldOptions<NullableT, SelectableT, PrecisionT>> {
+  fieldOptions?: FieldOptions<NullableT, SelectableT>
+): Required<FieldOptions<NullableT, SelectableT>> {
   return { ...defaultFieldOptions, ...fieldOptions } as Required<
-    FieldOptions<NullableT, SelectableT, PrecisionT>
+    FieldOptions<NullableT, SelectableT>
   >;
 }
 
@@ -62,12 +60,9 @@ const defaultFieldOptions: Required<FieldOptions> = {
 export class Field<
   EntityT extends EntityBase,
   NullableT extends boolean = false,
-  SelectableT extends boolean = false,
-  PrecisionT extends number = number
+  SelectableT extends boolean = false
 > {
-  readonly _fieldOptions: Required<
-    FieldOptions<NullableT, SelectableT, PrecisionT>
-  >;
+  readonly _fieldOptions: Required<FieldOptions<NullableT, SelectableT>>;
   /**
    * Creates an instance of Field.
    * @param _fieldName - Actual name of the field used in the OData request.
@@ -77,7 +72,7 @@ export class Field<
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>,
-    fieldOptions?: FieldOptions<NullableT, SelectableT, PrecisionT>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     this._fieldOptions = getFieldOptions(fieldOptions);
   }

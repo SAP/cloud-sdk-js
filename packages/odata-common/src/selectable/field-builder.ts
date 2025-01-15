@@ -110,6 +110,7 @@ export class FieldBuilder<
    * @param fieldName - Name of the field.
    * @param edmType - EDM type of the field.
    * @param isNullable - Whether the field is nullable.
+   * @param precision - Precision provided for the field.
    * @returns An EDM type field.
    */
   buildEdmTypeField<
@@ -143,10 +144,17 @@ export class FieldBuilder<
       isOrderableEdmType(edmType) ? OrderableEdmTypeField : EdmTypeField
     ) as typeof EdmTypeField;
 
-    return new ctor(fieldName, this.fieldOf, edmType, this.deSerializers, {
-      isNullable,
-      isSelectable
-    }, precision);
+    return new ctor(
+      fieldName,
+      this.fieldOf,
+      edmType,
+      this.deSerializers,
+      {
+        isNullable,
+        isSelectable
+      },
+      precision
+    );
   }
 
   /**

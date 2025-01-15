@@ -42,7 +42,11 @@ export function deserializeDateTimeOffsetToMoment(
 /**
  * @internal
  */
-export function serializeToDateTimeOffset(value: moment.Moment, precision: number): string {
+export function serializeToDateTimeOffset(
+  value: moment.Moment,
+  precision?: number
+): string {
+  console.log('Precision being logged in the serialiser', precision);
   return value.utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
 }
 

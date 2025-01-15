@@ -64,6 +64,7 @@ export class Field<
    * @param _fieldName - Actual name of the field used in the OData request.
    * @param _entityConstructor - Constructor type of the entity the field belongs to.
    * @param fieldOptions - Optional settings for this field.
+   * @param precision - Optional precision provided for this field.
    */
   constructor(
     readonly _fieldName: string,

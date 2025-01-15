@@ -49,8 +49,7 @@ export class EdmTypeField<
     DeSerializersT extends DeSerializers,
     EdmT extends EdmTypeShared<'any'>,
     NullableT extends boolean = false,
-    SelectableT extends boolean = false,
-    PrecisionT extends number = 0
+    SelectableT extends boolean = false
   >
   extends Field<EntityT, NullableT, SelectableT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
@@ -64,6 +63,7 @@ export class EdmTypeField<
    * @param edmType - Type of the field according to the metadata description.
    * @param _deSerializers - (De-)serializers used for transformation.
    * @param fieldOptions - Optional settings for this field.
+   * @param precision - Optional precision provided for this field.
    */
   constructor(
     fieldName: string,
@@ -71,7 +71,7 @@ export class EdmTypeField<
     readonly edmType: EdmT,
     public _deSerializers: DeSerializersT, // Only necessary for the type, unused otherwise
     fieldOptions?: FieldOptions<NullableT, SelectableT>,
-    precision?: PrecisionT
+    precision?: number
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions, precision);
   }

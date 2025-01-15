@@ -20,6 +20,7 @@ function createTestEntity() {
     .keyPropertyString(keyPropString)
     .keyDateProperty(keyPropDate)
     .int32Property(int32Prop)
+    .dateTimeOffSetProperty(keyPropDate)
     .build();
 }
 

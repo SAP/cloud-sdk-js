@@ -239,8 +239,7 @@ export class TestEntityApi<
       DeSerializersT,
       'Edm.DateTimeOffset',
       true,
-      true,
-      2
+      true
     >;
     DURATION_PROPERTY: OrderableEdmTypeField<
       TestEntity<DeSerializers>,

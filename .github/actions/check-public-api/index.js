@@ -72048,7 +72048,17 @@ function mkDirAndCopy (srcMode, src, dest, opts) {
 }
 
 function copyDir (src, dest, opts) {
-  fs.readdirSync(src).forEach(item => copyDirItem(item, src, dest, opts))
+  const dir = fs.opendirSync(src)
+
+  try {
+    let dirent
+
+    while ((dirent = dir.readSync()) !== null) {
+      copyDirItem(dirent.name, src, dest, opts)
+    }
+  } finally {
+    dir.closeSync()
+  }
 }
 
 function copyDirItem (item, src, dest, opts) {
@@ -72224,23 +72234,28 @@ async function onDir (srcStat, destStat, src, dest, opts) {
     await fs.mkdir(dest)
   }
 
-  const items = await fs.readdir(src)
+  const promises = []
 
   // loop through the files in the current directory to copy everything
-  await Promise.all(items.map(async item => {
-    const srcItem = path.join(src, item)
-    const destItem = path.join(dest, item)
+  for await (const item of await fs.opendir(src)) {
+    const srcItem = path.join(src, item.name)
+    const destItem = path.join(dest, item.name)
 
-    // skip the item if it is matches by the filter function
-    const include = await runFilter(srcItem, destItem, opts)
-    if (!include) return
+    promises.push(
+      runFilter(srcItem, destItem, opts).then(include => {
+        if (include) {
+          // only copy the item if it matches the filter function
+          return stat.checkPaths(srcItem, destItem, 'copy', opts).then(({ destStat }) => {
+            // If the item is a copyable file, `getStatsAndPerformCopy` will copy it
+            // If the item is a directory, `getStatsAndPerformCopy` will call `onDir` recursively
+            return getStatsAndPerformCopy(destStat, srcItem, destItem, opts)
+          })
+        }
+      })
+    )
+  }
 
-    const { destStat } = await stat.checkPaths(srcItem, destItem, 'copy', opts)
-
-    // If the item is a copyable file, `getStatsAndPerformCopy` will copy it
-    // If the item is a directory, `getStatsAndPerformCopy` will call `onDir` recursively
-    return getStatsAndPerformCopy(destStat, srcItem, destItem, opts)
-  }))
+  await Promise.all(promises)
 
   if (!destStat) {
     await fs.chmod(dest, srcStat.mode)
@@ -72772,6 +72787,7 @@ const api = [
   'chown',
   'close',
   'copyFile',
+  'cp',
   'fchmod',
   'fchown',
   'fdatasync',
@@ -72779,8 +72795,10 @@ const api = [
   'fsync',
   'ftruncate',
   'futimes',
+  'glob',
   'lchmod',
   'lchown',
+  'lutimes',
   'link',
   'lstat',
   'mkdir',
@@ -72795,6 +72813,7 @@ const api = [
   'rm',
   'rmdir',
   'stat',
+  'statfs',
   'symlink',
   'truncate',
   'unlink',
@@ -72803,6 +72822,8 @@ const api = [
 ].filter(key => {
   // Some commands are not available on some systems. Ex:
   // fs.cp was added in Node.js v16.7.0
+  // fs.statfs was added in Node v19.6.0, v18.15.0
+  // fs.glob was added in Node.js v22.0.0
   // fs.lchown is not available on at least some Linux
   return typeof fs[key] === 'function'
 })

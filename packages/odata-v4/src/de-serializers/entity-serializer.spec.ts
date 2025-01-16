@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import moment from 'moment';
 import { entitySerializer } from '@sap-cloud-sdk/odata-common';
 import { TestComplexType } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEnumType';
@@ -138,6 +139,18 @@ describe('entity-serializer', () => {
 
     expect(serializeEntity(testEntityFractional, testEntityApi)).toEqual({
       TimeOfDayProperty: '01:02:03.456'
+    });
+  });
+
+  it('should serialize DateTimeOffset', () => {
+    const testEntity = testEntityApi
+      .entityBuilder()
+      .dateTimeOffSetProperty(moment('2024-03-14T15:30:45.123Z'))
+      .build();
+
+    // Precision is set to 2 in the EDMX specification
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
+      DateTimeOffSetProperty: '2024-03-14T15:30:45.12Z'
     });
   });
 

@@ -373,7 +373,8 @@ export class TestEntityApi<
         DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DecimalProperty',
           'Edm.Decimal',
-          true
+          true,
+          5
         ),
         /**
          * Static representation of the {@link singleProperty} property for query construction.
@@ -409,7 +410,8 @@ export class TestEntityApi<
         TIME_PROPERTY: fieldBuilder.buildEdmTypeField(
           'TimeProperty',
           'Edm.Time',
-          true
+          true,
+          0
         ),
         /**
          * Static representation of the {@link dateTimeProperty} property for query construction.
@@ -418,7 +420,8 @@ export class TestEntityApi<
         DATE_TIME_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DateTimeProperty',
           'Edm.DateTime',
-          true
+          true,
+          0
         ),
         /**
          * Static representation of the {@link dateTimeOffSetProperty} property for query construction.
@@ -427,7 +430,8 @@ export class TestEntityApi<
         DATE_TIME_OFF_SET_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DateTimeOffSetProperty',
           'Edm.DateTimeOffset',
-          true
+          true,
+          0
         ),
         /**
          * Static representation of the {@link byteProperty} property for query construction.

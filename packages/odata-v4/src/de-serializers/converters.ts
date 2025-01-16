@@ -52,7 +52,7 @@ export function serializeToDateTimeOffset(
     const precisionFormat = new Array(precision).fill('S').join('');
     return value.utc().format(`YYYY-MM-DDTHH:mm:ss.${precisionFormat}`) + 'Z';
   }
-  // If no precision, return without decimal places
+  // If precision is undefined, default to 0
   return value.utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
 }
 

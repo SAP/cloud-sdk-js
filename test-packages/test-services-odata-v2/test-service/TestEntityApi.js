@@ -93,7 +93,7 @@ class TestEntityApi {
                  * Static representation of the {@link decimalProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true),
+                DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true, 5),
                 /**
                  * Static representation of the {@link singleProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -113,17 +113,17 @@ class TestEntityApi {
                  * Static representation of the {@link timeProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                TIME_PROPERTY: fieldBuilder.buildEdmTypeField('TimeProperty', 'Edm.Time', true),
+                TIME_PROPERTY: fieldBuilder.buildEdmTypeField('TimeProperty', 'Edm.Time', true, 0),
                 /**
                  * Static representation of the {@link dateTimeProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATE_TIME_PROPERTY: fieldBuilder.buildEdmTypeField('DateTimeProperty', 'Edm.DateTime', true),
+                DATE_TIME_PROPERTY: fieldBuilder.buildEdmTypeField('DateTimeProperty', 'Edm.DateTime', true, 0),
                 /**
                  * Static representation of the {@link dateTimeOffSetProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATE_TIME_OFF_SET_PROPERTY: fieldBuilder.buildEdmTypeField('DateTimeOffSetProperty', 'Edm.DateTimeOffset', true),
+                DATE_TIME_OFF_SET_PROPERTY: fieldBuilder.buildEdmTypeField('DateTimeOffSetProperty', 'Edm.DateTimeOffset', true, 0),
                 /**
                  * Static representation of the {@link byteProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.

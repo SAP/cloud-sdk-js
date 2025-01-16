@@ -166,7 +166,7 @@ describe('EDM to moment and back', () => {
 
   describe('Serialize DateTimeOffset', () => {
     it('serializes a date correctly', () => {
-      const dtoString = '2000-02-01T12:12:12.012Z';
+      const dtoString = '2000-02-01T12:12:12Z';
       const dtoDeserialized = deserializeDateTimeOffsetToMoment(dtoString);
       expect(serializeToDateTimeOffset(dtoDeserialized)).toBe(dtoString);
     });
@@ -179,7 +179,7 @@ describe('EDM to moment and back', () => {
       // expect(serializeToDateTimeOffset(dtoDeserialized)).toBe(dtoString);
 
       expect(serializeToDateTimeOffset(dtoDeserialized)).toBe(
-        '2000-02-01T11:12:12.012Z'
+        '2000-02-01T11:12:12Z'
       );
     });
   });

@@ -80,7 +80,7 @@ class TestEntityApi {
                  * Static representation of the {@link decimalProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true),
+                DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true, 9),
                 /**
                  * Static representation of the {@link dateProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -95,12 +95,12 @@ class TestEntityApi {
                  * Static representation of the {@link dataTimeOffsetDataTimeProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATA_TIME_OFFSET_DATA_TIME_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetDataTimeProperty', 'Edm.DateTimeOffset', true, 0),
+                DATA_TIME_OFFSET_DATA_TIME_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetDataTimeProperty', 'Edm.DateTimeOffset', true),
                 /**
                  * Static representation of the {@link dataTimeOffsetTimestampProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty', 'Edm.DateTimeOffset', true, 0),
+                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty', 'Edm.DateTimeOffset', true, 7),
                 ...this.navigationPropertyFields,
                 /**
                  *

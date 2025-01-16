@@ -253,7 +253,8 @@ export class TestEntityApi<
         DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DecimalProperty',
           'Edm.Decimal',
-          true
+          true,
+          9
         ),
         /**
          * Static representation of the {@link dateProperty} property for query construction.
@@ -289,7 +290,8 @@ export class TestEntityApi<
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DataTimeOffsetTimestampProperty',
           'Edm.DateTimeOffset',
-          true
+          true,
+          7
         ),
         ...this.navigationPropertyFields,
         /**

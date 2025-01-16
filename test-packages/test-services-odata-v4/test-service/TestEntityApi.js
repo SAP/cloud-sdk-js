@@ -116,12 +116,12 @@ class TestEntityApi {
                  * Static representation of the {@link timeOfDayProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                TIME_OF_DAY_PROPERTY: fieldBuilder.buildEdmTypeField('TimeOfDayProperty', 'Edm.TimeOfDay', true, 2),
+                TIME_OF_DAY_PROPERTY: fieldBuilder.buildEdmTypeField('TimeOfDayProperty', 'Edm.TimeOfDay', true, 0),
                 /**
                  * Static representation of the {@link keyDateProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                KEY_DATE_PROPERTY: fieldBuilder.buildEdmTypeField('KeyDateProperty', 'Edm.Date', true, 2),
+                KEY_DATE_PROPERTY: fieldBuilder.buildEdmTypeField('KeyDateProperty', 'Edm.Date', true, 0),
                 /**
                  * Static representation of the {@link dateTimeOffSetProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -131,7 +131,7 @@ class TestEntityApi {
                  * Static representation of the {@link durationProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DURATION_PROPERTY: fieldBuilder.buildEdmTypeField('DurationProperty', 'Edm.Duration', true, 2),
+                DURATION_PROPERTY: fieldBuilder.buildEdmTypeField('DurationProperty', 'Edm.Duration', true, 0),
                 /**
                  * Static representation of the {@link byteProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.

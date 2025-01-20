@@ -1,7 +1,7 @@
 import { createTestRefs } from '../../test/test-util';
 import { parseResponses } from './responses';
 
-const defaultOptions = { strictNaming: true, schemaPrefix: '' };
+const defaultOptions = { strictNaming: true, schemaPrefix: '', resolveExternal: true };
 describe('parseResponses', () => {
   it('parses response schema without content', async () => {
     expect(

@@ -8,7 +8,11 @@ import {
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiParameter } from '../openapi-types';
 
-const defaultOptions = { strictNaming: true, schemaPrefix: '', resolveExternal: true };
+const defaultOptions = {
+  strictNaming: true,
+  schemaPrefix: '',
+  resolveExternal: true
+};
 describe('getRelevantParameters', () => {
   it('ignores cookie parameters', async () => {
     expect(

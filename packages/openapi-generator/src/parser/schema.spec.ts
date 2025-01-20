@@ -6,7 +6,11 @@ import type { OpenAPIV3 } from 'openapi-types';
 
 describe('schema parser', () => {
   describe('parseSchema()', () => {
-    const defaultOptions = { strictNaming: true, schemaPrefix: '', resolveExternal: true };
+    const defaultOptions = {
+      strictNaming: true,
+      schemaPrefix: '',
+      resolveExternal: true
+    };
 
     it('parses reference schema', async () => {
       const schema = { $ref: '#/components/schemas/test' };

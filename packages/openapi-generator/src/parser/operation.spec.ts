@@ -8,7 +8,7 @@ import {
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiParameter } from '../openapi-types';
 
-const defaultOptions = { strictNaming: true, schemaPrefix: '' };
+const defaultOptions = { strictNaming: true, schemaPrefix: '', resolveExternal: true };
 describe('getRelevantParameters', () => {
   it('ignores cookie parameters', async () => {
     expect(
@@ -111,7 +111,8 @@ describe('parsePathParameters', () => {
     expect(
       parsePathParameters([], await createTestRefs(), {
         strictNaming: false,
-        schemaPrefix: ''
+        schemaPrefix: '',
+        resolveExternal: true
       })
     ).toEqual([]);
   });
@@ -131,7 +132,8 @@ describe('parsePathParameters', () => {
     expect(
       parsePathParameters([pathParam1, pathParam2], refs, {
         strictNaming: false,
-        schemaPrefix: ''
+        schemaPrefix: '',
+        resolveExternal: true
       })
     ).toEqual([
       { ...pathParam1, originalName: 'param1', schemaProperties: {} },

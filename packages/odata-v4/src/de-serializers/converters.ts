@@ -46,13 +46,11 @@ export function serializeToDateTimeOffset(
   value: moment.Moment,
   precision?: number
 ): string {
-  // If precision is defined, create a format with decimal places
-  if (precision !== undefined && precision !== null) {
-    const precisionFormat = new Array(precision).fill('S').join('');
-    return value.utc().format(`YYYY-MM-DDTHH:mm:ss.${precisionFormat}`) + 'Z';
-  }
-  // If precision is undefined, default to 0
-  return value.utc().format('YYYY-MM-DDTHH:mm:ss') + 'Z';
+  // If precision is defined, create a format with decimal places or default to 0 decimal places
+  const dateTimeOffesetFormat = precision
+    ? `YYYY-MM-DDTHH:mm:ss.${new Array(precision).fill('S').join('')}`
+    : 'YYYY-MM-DDTHH:mm:ss';
+  return value.utc().format(dateTimeOffesetFormat) + 'Z';
 }
 
 /**

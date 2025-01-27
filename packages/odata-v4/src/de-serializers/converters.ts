@@ -60,7 +60,7 @@ export function serializeToDateTimeOffset(
 }
 
 function validatePrecision(precision?: number): boolean {
-  return precision !== undefined && (precision < 0 || precision > 12);
+  return precision !== undefined && precision >= 0 && precision <= 12;
 }
 
 /**

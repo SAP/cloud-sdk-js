@@ -46,11 +46,21 @@ export function serializeToDateTimeOffset(
   value: moment.Moment,
   precision?: number
 ): string {
+  // For temporal values, OData specification restricts precision values to a non-negative integer between 0 and 12
+  if (!validatePrecision(precision)) {
+    throw new Error(
+      `Provided precision value: ${precision} is invalid. Precision must lie between 0 and 12`
+    );
+  }
   // If precision is defined, create a format with decimal places or default to 0 decimal places
   const dateTimeOffesetFormat = precision
     ? `YYYY-MM-DDTHH:mm:ss.${new Array(precision).fill('S').join('')}`
     : 'YYYY-MM-DDTHH:mm:ss';
   return value.utc().format(dateTimeOffesetFormat) + 'Z';
+}
+
+function validatePrecision(precision?: number): boolean {
+  return precision !== undefined && (precision < 0 || precision > 12);
 }
 
 /**

@@ -155,10 +155,6 @@ export function createValueSerializer<DeSerializersT extends DeSerializers>(
 ): <EdmT>(value: any, edmType: EdmT, precision?: number) => any {
   return (value, edmType, precision) => {
     const serialize = deSerializers[edmType as any]?.serialize;
-    // Check if the edmType is specifically Edm.DateTimeOffset as we can have precision, scale property defined
-    if (edmType === 'Edm.DateTimeOffset' && precision) {
-      return serialize(value, precision);
-    }
-    return serialize ? serialize(value) : value;
+    return serialize ? serialize(value, precision) : value;
   };
 }

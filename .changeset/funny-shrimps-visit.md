@@ -4,4 +4,4 @@
 '@sap-cloud-sdk/odata-common': minor
 ---
 
-[Improvement] Support precision handling during serialization of `Edm.DateTimeOffset` fields in OData V4.
+[Improvement] Support precision handling during serialization of `Edm.DateTimeOffset` fields in OData v4.

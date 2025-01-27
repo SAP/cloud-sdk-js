@@ -80,7 +80,7 @@ class TestEntityApi {
                  * Static representation of the {@link decimalProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true, 9),
+                DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true),
                 /**
                  * Static representation of the {@link dateProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.

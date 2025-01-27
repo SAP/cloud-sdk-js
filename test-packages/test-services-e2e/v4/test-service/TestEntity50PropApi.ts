@@ -513,8 +513,7 @@ export class TestEntity50PropApi<
         DECIMAL_PROPERTY_1: fieldBuilder.buildEdmTypeField(
           'DecimalProperty1',
           'Edm.Decimal',
-          true,
-          9
+          true
         ),
         /**
          * Static representation of the {@link dateProperty1} property for query construction.
@@ -605,8 +604,7 @@ export class TestEntity50PropApi<
         DECIMAL_PROPERTY_2: fieldBuilder.buildEdmTypeField(
           'DecimalProperty2',
           'Edm.Decimal',
-          true,
-          9
+          true
         ),
         /**
          * Static representation of the {@link dateProperty2} property for query construction.
@@ -697,8 +695,7 @@ export class TestEntity50PropApi<
         DECIMAL_PROPERTY_3: fieldBuilder.buildEdmTypeField(
           'DecimalProperty3',
           'Edm.Decimal',
-          true,
-          9
+          true
         ),
         /**
          * Static representation of the {@link dateProperty3} property for query construction.
@@ -789,8 +786,7 @@ export class TestEntity50PropApi<
         DECIMAL_PROPERTY_4: fieldBuilder.buildEdmTypeField(
           'DecimalProperty4',
           'Edm.Decimal',
-          true,
-          9
+          true
         ),
         /**
          * Static representation of the {@link dateProperty4} property for query construction.
@@ -881,8 +877,7 @@ export class TestEntity50PropApi<
         DECIMAL_PROPERTY_5: fieldBuilder.buildEdmTypeField(
           'DecimalProperty5',
           'Edm.Decimal',
-          true,
-          9
+          true
         ),
         /**
          * Static representation of the {@link dateProperty5} property for query construction.

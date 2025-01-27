@@ -102,10 +102,15 @@ export function createPropertyFieldInitializerForEntity(
   return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${
     prop.edmType
   }', ${prop.nullable}${
-    prop.precision !== undefined ? `, ${prop.precision}` : ''
+    prop.precision !== undefined && isPrecisionSupportedEdmType(prop.edmType)
+      ? `, ${prop.precision}`
+      : ''
   })`;
 }
 
+function isPrecisionSupportedEdmType(value: string): boolean {
+  return value === 'Edm.DateTimeOffset';
+}
 /**
  * @internal
  */

@@ -253,8 +253,7 @@ export class TestEntityApi<
         DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DecimalProperty',
           'Edm.Decimal',
-          true,
-          9
+          true
         ),
         /**
          * Static representation of the {@link dateProperty} property for query construction.

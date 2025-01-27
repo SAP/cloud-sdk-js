@@ -14,7 +14,6 @@ import {
   serializeToTime,
   deserializeDateToMoment
 } from './converters';
-
 import type BigNumber from 'bignumber.js';
 import type { Time } from '@sap-cloud-sdk/odata-common/internal';
 import type { DeSerializers } from './de-serializers';

@@ -79,7 +79,8 @@ function getFieldInitializer(
  */
 export function createPropertyFieldInitializerForEntity(
   prop: VdmProperty,
-  fieldBuilderName = '_fieldBuilder'
+  fieldBuilderName = '_fieldBuilder',
+  service?: VdmServiceMetadata
 ): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
@@ -102,7 +103,9 @@ export function createPropertyFieldInitializerForEntity(
   return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${
     prop.edmType
   }', ${prop.nullable}${
-    prop.precision !== undefined && isPrecisionAwareEdmType(prop.edmType)
+    prop.precision !== undefined &&
+    isPrecisionAwareEdmType(prop.edmType) &&
+    service?.oDataVersion === 'v4'
       ? `, ${prop.precision}`
       : ''
   })`;

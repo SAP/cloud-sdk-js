@@ -95,7 +95,7 @@ Use the service function as described in the documentation to get an API instanc
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = ${getSchema(entity)};
+      this._schema = ${getSchema(entity, service)};
     }
   
     return this._schema;

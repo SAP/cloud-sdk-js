@@ -47,7 +47,7 @@ export function serializeToDateTimeOffset(
   precision?: number
 ): string {
   // For temporal values, OData specification restricts precision values to a non-negative integer between 0 and 12
-  if (!validatePrecision(precision)) {
+  if (precision !== undefined && !validatePrecision(precision)) {
     throw new Error(
       `Provided precision value: ${precision} is invalid. Precision must lie between 0 and 12`
     );
@@ -59,8 +59,8 @@ export function serializeToDateTimeOffset(
   return value.utc().format(dateTimeOffesetFormat) + 'Z';
 }
 
-function validatePrecision(precision?: number): boolean {
-  return precision !== undefined && precision >= 0 && precision <= 12;
+function validatePrecision(precision: number): boolean {
+  return precision >= 0 && precision <= 12;
 }
 
 /**

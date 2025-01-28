@@ -17,6 +17,7 @@ import {
 import type BigNumber from 'bignumber.js';
 import type { Time } from '@sap-cloud-sdk/odata-common/internal';
 import type { DeSerializers } from './de-serializers';
+import type moment from 'moment';
 
 /**
  * Type of the default (de-)serializers.

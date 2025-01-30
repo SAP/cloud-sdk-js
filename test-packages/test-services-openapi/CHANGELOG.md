@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/test-services-openapi
 
+## 3.26.0
+
+### Patch Changes
+
+- Updated dependencies [6cc07bc]
+  - @sap-cloud-sdk/openapi-generator@3.26.0
+  - @sap-cloud-sdk/util@3.26.0
+
 ## 3.25.0
 
 ### Patch Changes

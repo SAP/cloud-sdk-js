@@ -1,5 +1,7 @@
 # @sap-cloud-sdk/util
 
+## 3.26.0
+
 ## 3.25.0
 
 ### Minor Changes

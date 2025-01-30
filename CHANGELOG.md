@@ -28,6 +28,13 @@
 
 - 
 
+# 3.26.0
+
+
+## New Functionalities
+
+- [openapi-generator] Add `resolveExternal` option to determine whether external $ref pointers will be resolved. (6cc07bc)
+
 # 3.25.0
 
 

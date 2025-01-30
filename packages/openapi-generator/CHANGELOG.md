@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 3.26.0
+
+### Minor Changes
+
+- 6cc07bc: [New Functionality] Add `resolveExternal` option to determine whether external $ref pointers will be resolved.
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.26.0
+- @sap-cloud-sdk/openapi@3.26.0
+- @sap-cloud-sdk/util@3.26.0
+
 ## 3.25.0
 
 ### Minor Changes

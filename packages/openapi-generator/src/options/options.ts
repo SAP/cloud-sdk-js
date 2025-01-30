@@ -55,8 +55,9 @@ export const cliOptions = {
   },
   resolveExternal: {
     describe:
-      'By default, external $ref pointers will be resolved. If set to false, external $ref pointers will simply be ignored.',
+      'By default, external $ref pointers will be resolved. If set to false, external $ref pointers will be ignored.',
     type: 'boolean',
-    default: true
+    default: true,
+    hidden: true
   }
 } as const satisfies Options<GeneratorOptions>;

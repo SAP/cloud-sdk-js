@@ -45024,6 +45024,14 @@ const { isUint8Array, isArrayBuffer } = __nccwpck_require__(98253)
 const { File: UndiciFile } = __nccwpck_require__(17005)
 const { parseMIMEType, serializeAMimeType } = __nccwpck_require__(37246)
 
+let random
+try {
+  const crypto = __nccwpck_require__(77598)
+  random = (max) => crypto.randomInt(0, max)
+} catch {
+  random = (max) => Math.floor(Math.random(max))
+}
+
 let ReadableStream = globalThis.ReadableStream
 
 /** @type {globalThis['File']} */
@@ -45109,7 +45117,7 @@ function extractBody (object, keepalive = false) {
     // Set source to a copy of the bytes held by object.
     source = new Uint8Array(object.buffer.slice(object.byteOffset, object.byteOffset + object.byteLength))
   } else if (util.isFormDataLike(object)) {
-    const boundary = `----formdata-undici-0${`${Math.floor(Math.random() * 1e11)}`.padStart(11, '0')}`
+    const boundary = `----formdata-undici-0${`${random(1e11)}`.padStart(11, '0')}`
     const prefix = `--${boundary}\r\nContent-Disposition: form-data`
 
     /*! formdata-polyfill. MIT License. Jimmy Wärting <https://jimmy.warting.se/opensource> */
@@ -59414,6 +59422,14 @@ module.exports = require("net");
 
 "use strict";
 module.exports = require("node:console");
+
+/***/ }),
+
+/***/ 77598:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:crypto");
 
 /***/ }),
 

@@ -176,6 +176,10 @@ export interface VdmPropertyValueConstraints {
    * @internal
    */
   nullable: boolean;
+  /**
+   * @internal
+   */
+  precision?: number;
 }
 /**
  * @internal

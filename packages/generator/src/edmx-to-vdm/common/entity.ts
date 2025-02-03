@@ -119,6 +119,7 @@ function properties(
       description: propertyDescription(p, swaggerProp),
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,
+      precision: p.Precision === undefined ? undefined : parseInt(p.Precision),
       isComplex,
       isEnum,
       isCollection

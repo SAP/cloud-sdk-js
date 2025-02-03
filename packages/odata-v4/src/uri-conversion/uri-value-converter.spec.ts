@@ -12,7 +12,7 @@ describe('convertToUriFormat', () => {
 
   it('should convert dateTimeOffset', () => {
     expect(convertToUriFormat(moment(0), 'Edm.DateTimeOffset')).toBe(
-      '1970-01-01T00:00:00.000Z'
+      '1970-01-01T00:00:00Z'
     );
   });
 

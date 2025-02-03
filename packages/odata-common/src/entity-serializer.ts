@@ -84,7 +84,7 @@ export function entitySerializer(
       return null;
     }
     if (field instanceof EdmTypeField) {
-      return tsToEdm(fieldValue, field.edmType);
+      return tsToEdm(fieldValue, field.edmType, field._fieldOptions.precision);
     }
     if (field instanceof OneToOneLink) {
       return serializeEntity(fieldValue, field._linkedEntityApi);

@@ -98,7 +98,7 @@ export interface DeSerializer<DeserializedT> {
    * @param value - Deserialized value to serialize.
    * @returns Serialized value.
    */
-  serialize: (value: DeserializedT) => any;
+  serialize: (value: DeserializedT, precision?: number) => any;
 
   /**
    * Function to serialize a value for use in a URI.
@@ -152,9 +152,9 @@ export function createValueDeserializer<DeSerializersT extends DeSerializers>(
  */
 export function createValueSerializer<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT
-): <EdmT>(value: any, edmType: EdmT) => any {
-  return (value, edmType) => {
+): <EdmT>(value: any, edmType: EdmT, precision?: number) => any {
+  return (value, edmType, precision) => {
     const serialize = deSerializers[edmType as any]?.serialize;
-    return serialize ? serialize(value) : value;
+    return serialize ? serialize(value, precision) : value;
   };
 }

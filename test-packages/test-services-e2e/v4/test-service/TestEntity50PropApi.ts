@@ -549,7 +549,8 @@ export class TestEntity50PropApi<
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_1: fieldBuilder.buildEdmTypeField(
           'DataTimeOffsetTimestampProperty1',
           'Edm.DateTimeOffset',
-          true
+          true,
+          7
         ),
         /**
          * Static representation of the {@link stringProperty2} property for query construction.
@@ -639,7 +640,8 @@ export class TestEntity50PropApi<
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_2: fieldBuilder.buildEdmTypeField(
           'DataTimeOffsetTimestampProperty2',
           'Edm.DateTimeOffset',
-          true
+          true,
+          7
         ),
         /**
          * Static representation of the {@link stringProperty3} property for query construction.
@@ -729,7 +731,8 @@ export class TestEntity50PropApi<
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_3: fieldBuilder.buildEdmTypeField(
           'DataTimeOffsetTimestampProperty3',
           'Edm.DateTimeOffset',
-          true
+          true,
+          7
         ),
         /**
          * Static representation of the {@link stringProperty4} property for query construction.
@@ -819,7 +822,8 @@ export class TestEntity50PropApi<
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_4: fieldBuilder.buildEdmTypeField(
           'DataTimeOffsetTimestampProperty4',
           'Edm.DateTimeOffset',
-          true
+          true,
+          7
         ),
         /**
          * Static representation of the {@link stringProperty5} property for query construction.
@@ -909,7 +913,8 @@ export class TestEntity50PropApi<
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_5: fieldBuilder.buildEdmTypeField(
           'DataTimeOffsetTimestampProperty5',
           'Edm.DateTimeOffset',
-          true
+          true,
+          7
         ),
         ...this.navigationPropertyFields,
         /**

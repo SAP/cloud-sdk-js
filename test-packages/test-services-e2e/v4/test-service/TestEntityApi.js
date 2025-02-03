@@ -100,7 +100,7 @@ class TestEntityApi {
                  * Static representation of the {@link dataTimeOffsetTimestampProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty', 'Edm.DateTimeOffset', true),
+                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty', 'Edm.DateTimeOffset', true, 7),
                 ...this.navigationPropertyFields,
                 /**
                  *

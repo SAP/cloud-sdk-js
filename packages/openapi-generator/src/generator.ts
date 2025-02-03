@@ -272,7 +272,8 @@ async function generateService(
     serviceOptions,
     {
       strictNaming: !options.skipValidation,
-      schemaPrefix: options.schemaPrefix
+      schemaPrefix: options.schemaPrefix,
+      resolveExternal: options.resolveExternal
     }
   );
 

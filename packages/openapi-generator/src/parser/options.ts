@@ -11,4 +11,8 @@ export interface ParserOptions {
    * Add prefix to schema names.
    */
   schemaPrefix: string;
+  /**
+   * Resolve external references.
+   */
+  resolveExternal: boolean;
 }

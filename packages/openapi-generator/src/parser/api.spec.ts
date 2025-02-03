@@ -4,7 +4,7 @@ import { parseApis } from './api';
 import { createRefs } from './refs';
 import type { OpenAPIV3 } from 'openapi-types';
 
-const options = { strictNaming: true, schemaPrefix: '' };
+const options = { strictNaming: true, schemaPrefix: '', resolveExternal: true };
 describe('parseApis', () => {
   it('throws an error if there are APIs without paths', async () => {
     const refs = await createTestRefs();

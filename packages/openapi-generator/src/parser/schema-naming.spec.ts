@@ -5,7 +5,8 @@ describe('schema-naming', () => {
     expect(
       ensureValidSchemaNames(['1234ABC'], {
         strictNaming: false,
-        schemaPrefix: ''
+        schemaPrefix: '',
+        resolveExternal: true
       })
     ).toEqual(['schema1234ABC']);
   });
@@ -14,7 +15,8 @@ describe('schema-naming', () => {
     expect(
       ensureValidSchemaNames(['#som%eth.ing'], {
         strictNaming: false,
-        schemaPrefix: ''
+        schemaPrefix: '',
+        resolveExternal: true
       })
     ).toEqual(['something']);
   });
@@ -23,7 +25,8 @@ describe('schema-naming', () => {
     expect(() =>
       ensureValidSchemaNames(['1234ABC', '#som%eth.ing'], {
         strictNaming: true,
-        schemaPrefix: ''
+        schemaPrefix: '',
+        resolveExternal: true
       })
     ).toThrowErrorMatchingInlineSnapshot(`
       "The service specification contains invalid schema names. Adjust the definition file or enable automatic name adjustment with \`skipValidation\`.

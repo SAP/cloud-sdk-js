@@ -4,7 +4,7 @@ import * as api from './api';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 import type { OpenAPIV3 } from 'openapi-types';
 
-const options = { strictNaming: true, schemaPrefix: '' };
+const options = { strictNaming: true, schemaPrefix: '', resolveExternal: true };
 describe('parseOpenApiDocument()', () => {
   it('does not modify input service specification', () => {
     const input: OpenAPIV3.Document = {
@@ -54,7 +54,7 @@ describe('parseOpenApiDocument()', () => {
         packageName: '@sap/cloud-sdk-openapi-test-service',
         directoryName: 'test-service'
       },
-      { strictNaming: false, schemaPrefix: '' }
+      { strictNaming: false, schemaPrefix: '', resolveExternal: true }
     );
 
     expect(parsedDocument.schemas).toEqual([
@@ -276,7 +276,7 @@ describe('parseOpenApiDocument()', () => {
         packageName: '@sap/cloud-sdk-openapi-test-service',
         directoryName: 'test-service'
       },
-      { strictNaming: false, schemaPrefix: '' }
+      { strictNaming: false, schemaPrefix: '', resolveExternal: true }
     );
 
     expect(parsedDocument.schemas).toEqual([

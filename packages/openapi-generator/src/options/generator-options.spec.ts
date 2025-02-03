@@ -38,7 +38,8 @@ describe('parseGeneratorOptions', () => {
     overwrite: false,
     config: undefined,
     generateESM: false,
-    schemaPrefix: ''
+    schemaPrefix: '',
+    resolveExternal: true
   };
 
   it('gets default options', () => {

@@ -61,6 +61,10 @@ export interface EdmxProperty extends EdmxDocumented, EdmxNamed {
    * @internal
    */
   Type: string;
+  /**
+   * @internal
+   */
+  Precision?: string;
 }
 /**
  * @internal

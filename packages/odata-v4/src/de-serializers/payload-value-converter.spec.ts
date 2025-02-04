@@ -164,7 +164,7 @@ describe('tsToEdm()', () => {
 
   it('should convert moment to Edm.DateTimeOffset', () => {
     expect(tsToEdm(moment(0), 'Edm.DateTimeOffset', defaultDeSerializers)).toBe(
-      '1970-01-01T00:00:00.000Z'
+      '1970-01-01T00:00:00Z'
     );
   });
 
@@ -202,7 +202,7 @@ describe('EDM to TS to EDM does not lead to information loss', () => {
   });
 
   it('should not loose information for Edm.DateTimeOffset', () => {
-    const expected = '2020-05-13T16:14:23.000Z';
+    const expected = '2020-05-13T16:14:23Z';
     expect(
       tsToEdm(
         edmToTs(expected, 'Edm.DateTimeOffset', defaultDeSerializers),

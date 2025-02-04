@@ -289,7 +289,8 @@ export class TestEntityApi<
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DataTimeOffsetTimestampProperty',
           'Edm.DateTimeOffset',
-          true
+          true,
+          7
         ),
         ...this.navigationPropertyFields,
         /**

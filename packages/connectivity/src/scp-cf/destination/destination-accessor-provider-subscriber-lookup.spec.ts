@@ -37,6 +37,7 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
+import { destinationCache } from './destination-cache';
 import type {
   DestinationFetchOptions,
   DestinationWithoutToken
@@ -158,10 +159,11 @@ function assertMockUsed(mock: nock.Scope, used: boolean) {
 }
 
 describe('JWT type and selection strategies', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
+    await destinationCache.clear();
   });
 
   afterEach(() => {
@@ -210,12 +212,12 @@ describe('JWT type and selection strategies', () => {
     });
 
     it('subscriber user token && subscriberFirst: should try subscriber first (found nothing), provider called and return provider destination', async () => {
-      const [subscriberMock] = mockFetchDestinationCalls(providerDestination);
-
-      const [providerMock] = mockFetchDestinationCallsNotFound(
+      const [subscriberMock] = mockFetchDestinationCallsNotFound(
         subscriberDestination.Name!,
         { serviceToken: subscriberServiceToken }
       );
+
+      const [providerMock] = mockFetchDestinationCalls(providerDestination);
 
       const destination = await fetchDestination(
         subscriberUserToken,

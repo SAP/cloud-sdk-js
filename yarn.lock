@@ -1532,10 +1532,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@8.6.1":
-  version "8.6.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-8.6.1.tgz#9e4142aa88ceba41c6693ea48405fee54ff1abbe"
-  integrity sha512-33yQwhJMDFMNabiBWiFT0JEZmPs76pqUJQhJC9YuRt1ibk3/DMMzzfmL8ZQZMGcn1pOgkEmG3+vULDKE/86Wjg==
+"@sap/cds-dk@8.7.1":
+  version "8.7.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-8.7.1.tgz#9706ab058acfbe142711b5d24fe7aa4180c9d6b4"
+  integrity sha512-O+UqLlexTm6HjZHwYR6gD5Eew+BRM5ABAYU9SdaPUS0Nqr0/icY6NbyAdrxIVgab1KnbPA0mMIq5wIo7SxnygA==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"

@@ -26,7 +26,8 @@ async function createEntity(key: number) {
     .stringProperty('someValue')
     .dateProperty(moment(0))
     .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3 })
-    // .dataTimeOffsetDataTimeProperty(moment(0))
+    .dataTimeOffsetDataTimeProperty(moment(0)) // has an undefined precision
+    .dataTimeOffsetTimestampProperty(moment(0)) // has precision set to 7
     .build();
   return requestBuilder.create(dataForCreation).execute(destination);
 }

@@ -212,12 +212,12 @@ describe('JWT type and selection strategies', () => {
     });
 
     it('subscriber user token && subscriberFirst: should try subscriber first (found nothing), provider called and return provider destination', async () => {
-      const [subscriberMock] = mockFetchDestinationCallsNotFound(
+      const [subscriberMock] = mockFetchDestinationCalls(providerDestination);
+
+      const [providerMock] = mockFetchDestinationCallsNotFound(
         subscriberDestination.Name!,
         { serviceToken: subscriberServiceToken }
       );
-
-      const [providerMock] = mockFetchDestinationCalls(providerDestination);
 
       const destination = await fetchDestination(
         subscriberUserToken,

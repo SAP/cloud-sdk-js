@@ -1,6 +1,9 @@
+import {
+  destinationCache,
+  basicHeader
+} from '@sap-cloud-sdk/connectivity/internal';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { mockFetchDestinationCalls } from '../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
@@ -50,7 +53,9 @@ function mockCsrfTokenRequest(path?: string) {
 let destination;
 
 describe('Request Builder', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    await destinationCache.clear();
+
     delete process.env.destinations;
     delete process.env.VCAP_SERVICES;
 
@@ -634,7 +639,8 @@ describe('Request Builder', () => {
     );
 
     mockFetchDestinationCalls(destination, {
-      serviceToken: providerToken
+      serviceToken: providerToken,
+      mockWithTokenRetrievalCall: true
     });
 
     nock(destination.destinationConfiguration.URL, {

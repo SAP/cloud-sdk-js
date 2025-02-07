@@ -171,6 +171,64 @@ describe('JWT type and selection strategies', () => {
     jest.clearAllMocks();
   });
 
+  it('should use cache by default', async () => {
+    const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
+
+    // First call to get destination
+    const firstDestination = await getDestination({
+      destinationName: destName,
+      jwt: subscriberUserToken,
+      selectionStrategy: subscriberFirst
+    });
+
+    expect(firstDestination?.url).toBe(subscriberDestination.URL);
+    assertMockUsed(subscriberMock, true);
+    assertMockUsed(providerMock, false);
+
+    // Second call should use cached value and not trigger another request
+    const { subscriberMock: secondSubscriberMock } =
+      mockDestinationMetadataCalls();
+
+    const secondDestination = await getDestination({
+      destinationName: destName,
+      jwt: subscriberUserToken,
+      selectionStrategy: subscriberFirst
+    });
+
+    expect(secondDestination?.url).toBe(subscriberDestination.URL);
+    assertMockUsed(secondSubscriberMock, false); // Mock should not be used because value is cached
+  });
+
+  it('should not use cache when useCache is set to false', async () => {
+    const { subscriberMock, providerMock } = mockDestinationMetadataCalls();
+
+    // First call to get destination
+    const firstDestination = await getDestination({
+      destinationName: destName,
+      useCache: false,
+      jwt: subscriberUserToken,
+      selectionStrategy: subscriberFirst
+    });
+
+    expect(firstDestination?.url).toBe(subscriberDestination.URL);
+    assertMockUsed(subscriberMock, true);
+    assertMockUsed(providerMock, false);
+
+    // Second call should trigger another request since caching is disabled
+    const { subscriberMock: secondSubscriberMock } =
+      mockDestinationMetadataCalls();
+
+    const secondDestination = await getDestination({
+      destinationName: destName,
+      useCache: false,
+      jwt: subscriberUserToken,
+      selectionStrategy: subscriberFirst
+    });
+
+    expect(secondDestination?.url).toBe(subscriberDestination.URL);
+    assertMockUsed(secondSubscriberMock, true);
+  });
+
   describe('user token', () => {
     it('alwaysSubscriber: should not send a request to retrieve remote provider destination and return subscriber destination.', async () => {
       const { subscriberMock, providerMock } = mockDestinationMetadataCalls();

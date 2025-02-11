@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "https-proxy-agent": "^7.0.6",
-    "nock": "^14.0.0",
+    "nock": "^14.0.1",
     "typescript": "~5.7.3",
     "jsonwebtoken": "^9.0.2"
   }

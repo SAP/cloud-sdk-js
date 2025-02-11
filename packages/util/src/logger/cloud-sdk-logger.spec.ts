@@ -309,10 +309,18 @@ describe('Cloud SDK Logger', () => {
       expect(consoleSpy).not.toBeCalled();
 
       logger.on('close', async () => {
-        const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
-        expect(log).toMatch(/logs error only in test.log because the level is less than info/);
-        expect(log).toMatch(/logs info only in test.log because the level is equal to info/);
-        expect(log).not.toMatch(/logs verbose nowhere because the level is higher than info/);
+        const log = await fs.promises.readFile('test.log', {
+          encoding: 'utf-8'
+        });
+        expect(log).toMatch(
+          /logs error only in test.log because the level is less than info/
+        );
+        expect(log).toMatch(
+          /logs info only in test.log because the level is equal to info/
+        );
+        expect(log).not.toMatch(
+          /logs verbose nowhere because the level is higher than info/
+        );
         mock.restore();
       });
     });

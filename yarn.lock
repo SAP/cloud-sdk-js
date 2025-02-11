@@ -8757,10 +8757,10 @@ socks-proxy-agent@^8.0.5:
     debug "^4.3.4"
     socks "^2.8.3"
 
-socks@2.8.3, socks@^2.6.2, socks@^2.8.3:
-  version "2.8.3"
-  resolved "https://registry.npmjs.org/socks/-/socks-2.8.3.tgz#1ebd0f09c52ba95a09750afe3f3f9f724a800cb5"
-  integrity sha512-l5x7VUUWbjVFbafGLxPWkYsHIhEvmF85tbIeFZWc8ZPtoMyybuEhL7Jye/ooC4/d48FgOjSJXgsF/AJPYCW8Zw==
+socks@2.8.4, socks@^2.6.2, socks@^2.8.3:
+  version "2.8.4"
+  resolved "https://registry.npmjs.org/socks/-/socks-2.8.4.tgz#07109755cdd4da03269bda4725baa061ab56d5cc"
+  integrity sha512-D3YaD0aRxR3mEcqnidIs7ReYJFVzWdd6fXJYUM8ixcQcJRGTka/b3saV0KflYhyVJXKhb947GndU35SxYNResQ==
   dependencies:
     ip-address "^9.0.5"
     smart-buffer "^4.2.0"

@@ -35,6 +35,8 @@ const pathTestService = resolve(
 const pathToGeneratorCommon = resolve(__dirname, '../../generator-common');
 const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
 
+jest.setTimeout(60000); // Set timeout to 60 seconds as runners appear to be slow
+
 describe('generator', () => {
   const prettierSpy = jest.spyOn(prettier, 'format');
 

@@ -28783,17 +28783,14 @@ function populateMaps (extensions, types) {
 /***/ 47027:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-"use strict";
-
-
+const constants = __nccwpck_require__(49140);
 const path = __nccwpck_require__(16928);
-const File = __nccwpck_require__(10126);
 const FileDescriptor = __nccwpck_require__(72989);
 const Directory = __nccwpck_require__(22501);
-const SymbolicLink = __nccwpck_require__(52149);
 const {FSError} = __nccwpck_require__(30128);
-const constants = __nccwpck_require__(49140);
+const File = __nccwpck_require__(10126);
 const {getPathParts, getRealPath} = __nccwpck_require__(72451);
+const SymbolicLink = __nccwpck_require__(52149);
 
 const MODE_TO_KTYPE = {
   [constants.S_IFREG]: constants.UV_DIRENT_FILE,
@@ -28820,10 +28817,10 @@ const MAX_LINKS = 50;
 /**
  * Call the provided function and either return the result or call the callback
  * with it (depending on if a callback is provided).
- * @param {function()} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
- * @param {object} thisArg This argument for the following function.
- * @param {function()} func Function to call.
+ * @param {function():void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} thisArg This argument for the following function.
+ * @param {function():any} func Function to call.
  * @return {*} Return (if callback is not provided).
  */
 function maybeCallback(callback, ctx, thisArg, func) {
@@ -28838,7 +28835,7 @@ function maybeCallback(callback, ctx, thisArg, func) {
       err = e;
     }
     return new Promise(function (resolve, reject) {
-      process.nextTick(function () {
+      setImmediate(function () {
         if (err) {
           reject(err);
         } else {
@@ -28852,7 +28849,7 @@ function maybeCallback(callback, ctx, thisArg, func) {
     } catch (e) {
       err = e;
     }
-    process.nextTick(function () {
+    setImmediate(function () {
       if (val === undefined) {
         callback(err);
       } else {
@@ -28878,7 +28875,7 @@ function usePromises(callback) {
 
 /**
  * set syscall property on context object, only for nodejs v10+.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @param {string} syscall Name of syscall.
  */
 function markSyscall(ctx, syscall) {
@@ -29010,7 +29007,7 @@ Binding.prototype.untrackDescriptorById = function (fd) {
  * @param {string|Buffer} filepath The file path.
  * @param {string} encoding The encoding for the return.
  * @param {Function} callback The callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {string|Buffer} The real path.
  */
 Binding.prototype.realpath = function (filepath, encoding, callback, ctx) {
@@ -29072,8 +29069,8 @@ function fillStats(stats, bigint) {
  * Stat an item.
  * @param {string} filepath Path.
  * @param {boolean} bigint Use BigInt.
- * @param {function(Error, Float64Array|BigUint64Array)} callback Callback (optional).
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error, Float64Array|BigUint64Array):void} callback Callback (optional).
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {Float64Array|BigUint64Array|undefined} Stats or undefined (if sync).
  */
 Binding.prototype.stat = function (filepath, bigint, callback, ctx) {
@@ -29084,7 +29081,7 @@ Binding.prototype.stat = function (filepath, bigint, callback, ctx) {
     let item = this._system.getItem(filepath);
     if (item instanceof SymbolicLink) {
       item = this._system.getItem(
-        path.resolve(path.dirname(filepath), item.getPath())
+        path.resolve(path.dirname(filepath), item.getPath()),
       );
     }
     if (!item) {
@@ -29100,7 +29097,7 @@ Binding.prototype.stat = function (filepath, bigint, callback, ctx) {
  * Stat an item.
  * @param {string} filepath Path.
  * @param {boolean} bigint Use BigInt.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {Float64Array|BigUint64Array|undefined} Stats or undefined if sync.
  */
 Binding.prototype.statSync = function (filepath, bigint, ctx) {
@@ -29111,8 +29108,8 @@ Binding.prototype.statSync = function (filepath, bigint, ctx) {
  * Stat an item.
  * @param {number} fd File descriptor.
  * @param {boolean} bigint Use BigInt.
- * @param {function(Error, Float64Array|BigUint64Array)} callback Callback (optional).
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error, Float64Array|BigUint64Array):void} callback Callback (optional).
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {Float64Array|BigUint64Array|undefined} Stats or undefined (if sync).
  */
 Binding.prototype.fstat = function (fd, bigint, callback, ctx) {
@@ -29130,8 +29127,8 @@ Binding.prototype.fstat = function (fd, bigint, callback, ctx) {
 /**
  * Close a file descriptor.
  * @param {number} fd File descriptor.
- * @param {function(Error)} callback Callback (optional).
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Callback (optional).
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback.
  */
 Binding.prototype.close = function (fd, callback, ctx) {
@@ -29145,7 +29142,7 @@ Binding.prototype.close = function (fd, callback, ctx) {
 /**
  * Close a file descriptor.
  * @param {number} fd File descriptor.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return.
  */
 Binding.prototype.closeSync = function (fd, ctx) {
@@ -29157,8 +29154,8 @@ Binding.prototype.closeSync = function (fd, ctx) {
  * @param {string} pathname File path.
  * @param {number} flags Flags.
  * @param {number} mode Mode.
- * @param {function(Error, string)} callback Callback (optional).
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error, string):void} callback Callback (optional).
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {string} File descriptor (if sync).
  */
 Binding.prototype.open = function (pathname, flags, mode, callback, ctx) {
@@ -29170,7 +29167,7 @@ Binding.prototype.open = function (pathname, flags, mode, callback, ctx) {
     let item = this._system.getItem(pathname);
     while (item instanceof SymbolicLink) {
       item = this._system.getItem(
-        path.resolve(path.dirname(pathname), item.getPath())
+        path.resolve(path.dirname(pathname), item.getPath()),
       );
     }
     if (descriptor.isExclusive() && item) {
@@ -29226,7 +29223,7 @@ Binding.prototype.open = function (pathname, flags, mode, callback, ctx) {
  * @param {string} pathname File path.
  * @param {number} flags Flags.
  * @param {number} mode Mode.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {string} File descriptor.
  */
 Binding.prototype.openSync = function (pathname, flags, mode, ctx) {
@@ -29264,9 +29261,9 @@ Binding.prototype.openFileHandle = function (pathname, flags, mode, callback) {
  * @param {number} length Number of bytes to read.
  * @param {?number} position Where to begin reading in the file.  If null,
  *     data will be read from the current file position.
- * @param {function(Error, number, Buffer)} callback Callback (optional) called
+ * @param {function(Error, number, Buffer):void} callback Callback (optional) called
  *     with any error, number of bytes read, and the buffer.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {number} Number of bytes read (if sync).
  */
 Binding.prototype.read = function (
@@ -29276,7 +29273,7 @@ Binding.prototype.read = function (
   length,
   position,
   callback,
-  ctx
+  ctx,
 ) {
   markSyscall(ctx, 'read');
 
@@ -29310,9 +29307,9 @@ Binding.prototype.read = function (
  * @param {string} src Source file.
  * @param {string} dest Destination file.
  * @param {number} flags Modifiers for copy operation.
- * @param {function(Error)} callback Callback (optional) called
+ * @param {function(Error):void} callback Callback (optional) called
  *     with any error.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.copyFile = function (src, dest, flags, callback, ctx) {
@@ -29359,7 +29356,7 @@ Binding.prototype.copyFile = function (src, dest, flags, callback, ctx) {
  * @param {string} src Source file.
  * @param {string} dest Destination file.
  * @param {number} flags Modifiers for copy operation.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.copyFileSync = function (src, dest, flags, ctx) {
@@ -29372,9 +29369,9 @@ Binding.prototype.copyFileSync = function (src, dest, flags, ctx) {
  * @param {Array<Buffer>} buffers Array of buffers with contents to write.
  * @param {?number} position Where to begin writing in the file.  If null,
  *     data will be written to the current file position.
- * @param {function(Error, number, Buffer)} callback Callback (optional) called
+ * @param {function(Error, number, Buffer):void} callback Callback (optional) called
  *     with any error, number of bytes written, and the buffer.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {number} Number of bytes written (if sync).
  */
 Binding.prototype.writeBuffers = function (
@@ -29382,7 +29379,7 @@ Binding.prototype.writeBuffers = function (
   buffers,
   position,
   callback,
-  ctx
+  ctx,
 ) {
   markSyscall(ctx, 'write');
 
@@ -29422,9 +29419,9 @@ Binding.prototype.writeBuffers = function (
  * @param {number} length Number of bytes to write.
  * @param {?number} position Where to begin writing in the file.  If null,
  *     data will be written to the current file position.
- * @param {function(Error, number, Buffer)} callback Callback (optional) called
+ * @param {function(Error, number, Buffer):void} callback Callback (optional) called
  *     with any error, number of bytes written, and the buffer.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {number} Number of bytes written (if sync).
  */
 Binding.prototype.writeBuffer = function (
@@ -29434,7 +29431,7 @@ Binding.prototype.writeBuffer = function (
   length,
   position,
   callback,
-  ctx
+  ctx,
 ) {
   markSyscall(ctx, 'write');
 
@@ -29463,7 +29460,7 @@ Binding.prototype.writeBuffer = function (
       content,
       position,
       offset,
-      sourceEnd
+      sourceEnd,
     );
     file.setContent(content);
     descriptor.setPosition(newLength);
@@ -29483,9 +29480,9 @@ Binding.prototype.writeBuffer = function (
  * @param {number} position Where to begin writing in the file.  If null,
  *     data will be written to the current file position.
  * @param {string} encoding String encoding.
- * @param {function(Error, number, string)} callback Callback (optional) called
+ * @param {function(Error, number, string):void} callback Callback (optional) called
  *     with any error, number of bytes written, and the string.
- * @param {object} ctx The context.
+ * @param {Object} ctx The context.
  * @return {number} Number of bytes written (if sync).
  */
 Binding.prototype.writeString = function (
@@ -29494,7 +29491,7 @@ Binding.prototype.writeString = function (
   position,
   encoding,
   callback,
-  ctx
+  ctx,
 ) {
   markSyscall(ctx, 'write');
 
@@ -29508,15 +29505,15 @@ Binding.prototype.writeString = function (
       callback(err, written, returned && string);
     };
   }
-  return this.writeBuffer(fd, buffer, 0, string.length, position, wrapper, ctx);
+  return this.writeBuffer(fd, buffer, 0, buffer.length, position, wrapper, ctx);
 };
 
 /**
  * Rename a file.
  * @param {string} oldPath Old pathname.
  * @param {string} newPath New pathname.
- * @param {function(Error)} callback Callback (optional).
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Callback (optional).
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {undefined}
  */
 Binding.prototype.rename = function (oldPath, newPath, callback, ctx) {
@@ -29566,7 +29563,7 @@ Binding.prototype.rename = function (oldPath, newPath, callback, ctx) {
  * Rename a file.
  * @param {string} oldPath Old pathname.
  * @param {string} newPath New pathname.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {undefined}
  */
 Binding.prototype.renameSync = function (oldPath, newPath, ctx) {
@@ -29578,9 +29575,9 @@ Binding.prototype.renameSync = function (oldPath, newPath, ctx) {
  * @param {string} dirpath Path to directory.
  * @param {string} encoding The encoding ('utf-8' or 'buffer').
  * @param {boolean} withFileTypes whether or not to return fs.Dirent objects
- * @param {function(Error, (Array.<string>|Array.<Buffer>)} callback Callback
+ * @param {function(Error, (Array<string> | Array<Buffer>)): void} callback Callback
  *     (optional) called with any error or array of items in the directory.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {Array<string> | Array<Buffer>} Array of items in directory (if sync).
  */
 Binding.prototype.readdir = function (
@@ -29588,7 +29585,7 @@ Binding.prototype.readdir = function (
   encoding,
   withFileTypes,
   callback,
-  ctx
+  ctx,
 ) {
   markSyscall(ctx, 'scandir');
 
@@ -29664,7 +29661,7 @@ Binding.prototype.readFileUtf8 = function (name, flags) {
  */
 Binding.prototype.writeFileUtf8 = function (filepath, data, flags, mode) {
   const destFd = this.open(filepath, flags, mode);
-  this.writeBuffer(destFd, data, 0, data.length);
+  this.writeString(destFd, data, null, 'utf8');
 };
 
 /**
@@ -29672,8 +29669,8 @@ Binding.prototype.writeFileUtf8 = function (filepath, data, flags, mode) {
  * @param {string} pathname Path to new directory.
  * @param {number} mode Permissions.
  * @param {boolean} recursive Recursively create deep directory. (added in nodejs v10+)
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.mkdir = function (pathname, mode, recursive, callback, ctx) {
@@ -29714,8 +29711,8 @@ Binding.prototype.mkdir = function (pathname, mode, recursive, callback, ctx) {
 /**
  * Remove a directory.
  * @param {string} pathname Path to directory.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.rmdir = function (pathname, callback, ctx) {
@@ -29749,8 +29746,8 @@ const MAX_ATTEMPTS = 62 * 62 * 62;
  * See http://web.mit.edu/freebsd/head/lib/libc/stdio/mktemp.c
  * @param {string} prefix Path template (trailing Xs will be replaced).
  * @param {string} encoding The encoding ('utf-8' or 'buffer').
- * @param {function(Error, string)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error, string):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.mkdtemp = function (prefix, encoding, callback, ctx) {
@@ -29781,7 +29778,7 @@ Binding.prototype.mkdtemp = function (prefix, encoding, callback, ctx) {
       let replacement = '';
       while (template.charAt(position) === 'X') {
         replacement += PATH_CHARS.charAt(
-          Math.floor(PATH_CHARS.length * Math.random())
+          Math.floor(PATH_CHARS.length * Math.random()),
         );
         position -= 1;
       }
@@ -29809,8 +29806,8 @@ Binding.prototype.mkdtemp = function (prefix, encoding, callback, ctx) {
  * Truncate a file.
  * @param {number} fd File descriptor.
  * @param {number} len Number of bytes.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.ftruncate = function (fd, len, callback, ctx) {
@@ -29836,8 +29833,8 @@ Binding.prototype.ftruncate = function (fd, len, callback, ctx) {
  * Legacy support.
  * @param {number} fd File descriptor.
  * @param {number} len Number of bytes.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  */
 Binding.prototype.truncate = Binding.prototype.ftruncate;
 
@@ -29846,8 +29843,8 @@ Binding.prototype.truncate = Binding.prototype.ftruncate;
  * @param {string} pathname Path.
  * @param {number} uid User id.
  * @param {number} gid Group id.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.chown = function (pathname, uid, gid, callback, ctx) {
@@ -29869,8 +29866,8 @@ Binding.prototype.chown = function (pathname, uid, gid, callback, ctx) {
  * @param {number} fd File descriptor.
  * @param {number} uid User id.
  * @param {number} gid Group id.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.fchown = function (fd, uid, gid, callback, ctx) {
@@ -29888,8 +29885,8 @@ Binding.prototype.fchown = function (fd, uid, gid, callback, ctx) {
  * Change permissions.
  * @param {string} pathname Path.
  * @param {number} mode Mode.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.chmod = function (pathname, mode, callback, ctx) {
@@ -29909,8 +29906,8 @@ Binding.prototype.chmod = function (pathname, mode, callback, ctx) {
  * Change permissions.
  * @param {number} fd File descriptor.
  * @param {number} mode Mode.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.fchmod = function (fd, mode, callback, ctx) {
@@ -29926,8 +29923,8 @@ Binding.prototype.fchmod = function (fd, mode, callback, ctx) {
 /**
  * Delete a named item.
  * @param {string} pathname Path to item.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.unlink = function (pathname, callback, ctx) {
@@ -29950,7 +29947,7 @@ Binding.prototype.unlink = function (pathname, callback, ctx) {
 /**
  * Delete a named item.
  * @param {string} pathname Path to item.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.unlinkSync = function (pathname, ctx) {
@@ -29962,8 +29959,8 @@ Binding.prototype.unlinkSync = function (pathname, ctx) {
  * @param {string} pathname Path to item.
  * @param {number} atime Access time (in seconds).
  * @param {number} mtime Modification time (in seconds).
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.utimes = function (pathname, atime, mtime, callback, ctx) {
@@ -29994,8 +29991,8 @@ Binding.prototype.utimes = function (pathname, atime, mtime, callback, ctx) {
  * @param {string} pathname Path to item.
  * @param {number} atime Access time (in seconds).
  * @param {number} mtime Modification time (in seconds).
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.lutimes = function (pathname, atime, mtime, callback, ctx) {
@@ -30018,8 +30015,8 @@ Binding.prototype.lutimes = function (pathname, atime, mtime, callback, ctx) {
  * @param {number} fd File descriptor.
  * @param {number} atime Access time (in seconds).
  * @param {number} mtime Modification time (in seconds).
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.futimes = function (fd, atime, mtime, callback, ctx) {
@@ -30046,8 +30043,8 @@ Binding.prototype.futimes = function (fd, atime, mtime, callback, ctx) {
 /**
  * Synchronize in-core state with storage device.
  * @param {number} fd File descriptor.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.fsync = function (fd, callback, ctx) {
@@ -30061,8 +30058,8 @@ Binding.prototype.fsync = function (fd, callback, ctx) {
 /**
  * Synchronize in-core metadata state with storage device.
  * @param {number} fd File descriptor.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.fdatasync = function (fd, callback, ctx) {
@@ -30077,8 +30074,8 @@ Binding.prototype.fdatasync = function (fd, callback, ctx) {
  * Create a hard link.
  * @param {string} srcPath The existing file.
  * @param {string} destPath The new link to create.
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.link = function (srcPath, destPath, callback, ctx) {
@@ -30113,8 +30110,8 @@ Binding.prototype.link = function (srcPath, destPath, callback, ctx) {
  * @param {string} srcPath Path from link to the source file.
  * @param {string} destPath Path for the generated link.
  * @param {string} type Ignored (used for Windows only).
- * @param {function(Error)} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.symlink = function (srcPath, destPath, type, callback, ctx) {
@@ -30144,7 +30141,7 @@ Binding.prototype.symlink = function (srcPath, destPath, type, callback, ctx) {
  * @param {string} srcPath Path from link to the source file.
  * @param {string} destPath Path for the generated link.
  * @param {string} type Ignored (used for Windows only).
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.symlinkSync = function (srcPath, destPath, type, ctx) {
@@ -30155,8 +30152,8 @@ Binding.prototype.symlinkSync = function (srcPath, destPath, type, ctx) {
  * Read the contents of a symbolic link.
  * @param {string} pathname Path to symbolic link.
  * @param {string} encoding The encoding ('utf-8' or 'buffer').
- * @param {function(Error, (string|Buffer))} callback Optional callback.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error, (string|Buffer)):void} callback Optional callback.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {string|Buffer} Symbolic link contents (path to source).
  */
 Binding.prototype.readlink = function (pathname, encoding, callback, ctx) {
@@ -30189,8 +30186,8 @@ Binding.prototype.readlink = function (pathname, encoding, callback, ctx) {
  * Stat an item.
  * @param {string} filepath Path.
  * @param {boolean} bigint Use BigInt.
- * @param {function(Error, Float64Array|BigUint64Array)} callback Callback (optional).
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error, Float64Array|BigUint64Array):void} callback Callback (optional).
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {Float64Array|BigUint64Array|undefined} Stats or undefined (if sync).
  */
 Binding.prototype.lstat = function (filepath, bigint, callback, ctx) {
@@ -30212,8 +30209,8 @@ Binding.prototype.lstat = function (filepath, bigint, callback, ctx) {
  * Tests user permissions.
  * @param {string} filepath Path.
  * @param {number} mode Mode.
- * @param {function(Error)} callback Callback (optional).
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Callback (optional).
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.access = function (filepath, mode, callback, ctx) {
@@ -30252,7 +30249,7 @@ Binding.prototype.access = function (filepath, mode, callback, ctx) {
  * Tests user permissions.
  * @param {string} filepath Path.
  * @param {number} mode Mode.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.accessSync = function (filepath, mode, ctx) {
@@ -30262,8 +30259,8 @@ Binding.prototype.accessSync = function (filepath, mode, ctx) {
 /**
  * Tests whether or not the given path exists.
  * @param {string} filepath Path.
- * @param {function(Error)} callback Callback (optional).
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {function(Error):void} callback Callback (optional).
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.exists = function (filepath, callback, ctx) {
@@ -30271,11 +30268,22 @@ Binding.prototype.exists = function (filepath, callback, ctx) {
 
   return maybeCallback(normalizeCallback(callback), ctx, this, function () {
     filepath = deBuffer(filepath);
-    const item = this._system.getItem(filepath);
+    let item;
+    try {
+      item = this._system.getItem(filepath);
+    } catch {
+      // ignore errors
+      // see https://github.com/nodejs/node/blob/v22.11.0/lib/fs.js#L255-L257
+      return false;
+    }
 
     if (item) {
       if (item instanceof SymbolicLink) {
-        return this.exists(item.getPath(), callback, ctx);
+        return this.exists(
+          path.resolve(path.dirname(filepath), item.getPath()),
+          callback,
+          ctx,
+        );
       }
       return true;
     }
@@ -30286,7 +30294,7 @@ Binding.prototype.exists = function (filepath, callback, ctx) {
 /**
  * Tests whether or not the given path exists.
  * @param {string} filepath Path.
- * @param {object} ctx Context object (optional), only for nodejs v10+.
+ * @param {Object} ctx Context object (optional), only for nodejs v10+.
  * @return {*} The return if no callback is provided.
  */
 Binding.prototype.existsSync = function (filepath, ctx) {
@@ -30295,13 +30303,11 @@ Binding.prototype.existsSync = function (filepath, ctx) {
 
 /**
  * Not yet implemented.
- * @type {function()}
  */
 Binding.prototype.StatWatcher = notImplemented;
 
 /**
  * Export the binding constructor.
- * @type {function()}
  */
 module.exports = Binding;
 
@@ -30343,7 +30349,7 @@ module.exports = function bypass(fn) {
         (err) => {
           enable();
           throw err;
-        }
+        },
       );
     } else {
       enable();
@@ -30380,9 +30386,6 @@ function enable() {
 
 /***/ 72989:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
 
 const constants = __nccwpck_require__(49140);
 
@@ -30507,7 +30510,6 @@ FileDescriptor.prototype.isPromise = function () {
 
 /**
  * Export the constructor.
- * @type {function()}
  */
 module.exports = FileDescriptor;
 
@@ -30517,12 +30519,9 @@ module.exports = FileDescriptor;
 /***/ 22501:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-"use strict";
-
-
+const constants = __nccwpck_require__(49140);
 const util = __nccwpck_require__(39023);
 const Item = __nccwpck_require__(25579);
-const constants = __nccwpck_require__(49140);
 
 /**
  * A directory.
@@ -30612,7 +30611,7 @@ Directory.prototype.list = function () {
 /**
  * Get directory stats.
  * @param {bolean} bigint Use BigInt.
- * @return {object} Stats properties.
+ * @return {Object} Stats properties.
  */
 Directory.prototype.getStats = function (bigint) {
   const stats = Item.prototype.getStats.call(this, bigint);
@@ -30627,7 +30626,6 @@ Directory.prototype.getStats = function (bigint) {
 
 /**
  * Export the constructor.
- * @type {function()}
  */
 module.exports = Directory;
 
@@ -30636,9 +30634,6 @@ module.exports = Directory;
 
 /***/ 30128:
 /***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
 
 const uvBinding = process.binding('uv');
 
@@ -30696,12 +30691,12 @@ AbortError.prototype = new Error();
 /**
  * FSError constructor.
  */
+exports.AbortError = AbortError;
 exports.FSError = FSError;
 
 /**
  * AbortError constructor.
  */
-exports.AbortError = AbortError;
 
 
 /***/ }),
@@ -30709,12 +30704,9 @@ exports.AbortError = AbortError;
 /***/ 10126:
 /***/ ((module, exports, __nccwpck_require__) => {
 
-"use strict";
-
-
+const constants = __nccwpck_require__(49140);
 const util = __nccwpck_require__(39023);
 const Item = __nccwpck_require__(25579);
-const constants = __nccwpck_require__(49140);
 
 const EMPTY = Buffer.alloc(0);
 
@@ -30761,7 +30753,7 @@ File.prototype.setContent = function (content) {
 /**
  * Get file stats.
  * @param {boolean} bigint Use BigInt.
- * @return {object} Stats properties.
+ * @return {Object} Stats properties.
  */
 File.prototype.getStats = function (bigint) {
   const size = this._content.length;
@@ -30777,7 +30769,6 @@ File.prototype.getStats = function (bigint) {
 
 /**
  * Export the constructor.
- * @type {function()}
  */
 module.exports = File;
 exports = module.exports;
@@ -30792,6 +30783,7 @@ function StandardInput() {
 }
 util.inherits(StandardInput, File);
 
+exports.StandardError = StandardError;
 exports.StandardInput = StandardInput;
 
 /**
@@ -30836,22 +30828,17 @@ StandardError.prototype.setContent = function (content) {
   }
 };
 
-exports.StandardError = StandardError;
-
 
 /***/ }),
 
 /***/ 72451:
 /***/ ((module, exports, __nccwpck_require__) => {
 
-"use strict";
-
-
 const os = __nccwpck_require__(70857);
 const path = __nccwpck_require__(16928);
 const Directory = __nccwpck_require__(22501);
-const File = __nccwpck_require__(10126);
 const {FSError} = __nccwpck_require__(30128);
+const File = __nccwpck_require__(10126);
 const SymbolicLink = __nccwpck_require__(52149);
 
 const isWindows = process.platform === 'win32';
@@ -30887,7 +30874,7 @@ function getPathParts(filepath) {
 
 /**
  * Create a new file system.
- * @param {object} options Any filesystem options.
+ * @param {Object} options Any filesystem options.
  * @param {boolean} options.createCwd Create a directory for `process.cwd()`
  *     (defaults to `true`).
  * @param {boolean} options.createTmp Create a directory for `os.tmpdir()`
@@ -30993,7 +30980,7 @@ function _getFilepath(item, itemPath, wanted) {
       const got = _getFilepath(
         item.getItem(name),
         path.join(itemPath, name),
-        wanted
+        wanted,
       );
       if (got) {
         return got;
@@ -31055,8 +31042,8 @@ function populate(directory, name, obj) {
 
 /**
  * Configure a mock file system.
- * @param {object} paths Config object.
- * @param {object} options Any filesystem options.
+ * @param {Object} paths Config object.
+ * @param {Object} options Any filesystem options.
  * @param {boolean} options.createCwd Create a directory for `process.cwd()`
  *     (defaults to `true`).
  * @param {boolean} options.createTmp Create a directory for `os.tmpdir()`
@@ -31088,7 +31075,7 @@ FileSystem.create = function (paths, options) {
 
 /**
  * Generate a factory for new files.
- * @param {object} config File config.
+ * @param {Object} config File config.
  * @return {function():File} Factory that creates a new file.
  */
 FileSystem.file = function (config) {
@@ -31135,7 +31122,7 @@ FileSystem.file = function (config) {
 
 /**
  * Generate a factory for new symbolic links.
- * @param {object} config File config.
+ * @param {Object} config File config.
  * @return {function():File} Factory that creates a new symbolic link.
  */
 FileSystem.symlink = function (config) {
@@ -31184,7 +31171,7 @@ FileSystem.symlink = function (config) {
 
 /**
  * Generate a factory for new directories.
- * @param {object} config File config.
+ * @param {Object} config File config.
  * @return {function():Directory} Factory that creates a new directory.
  */
 FileSystem.directory = function (config) {
@@ -31244,21 +31231,18 @@ exports.getRealPath = getRealPath;
 /***/ 55850:
 /***/ ((module, exports, __nccwpck_require__) => {
 
-"use strict";
-
-
+const fs = __nccwpck_require__(79896);
+const path = __nccwpck_require__(16928);
 const Binding = __nccwpck_require__(47027);
+const bypass = __nccwpck_require__(68980);
 const {FSError} = __nccwpck_require__(30128);
 const FileSystem = __nccwpck_require__(72451);
 const realBinding = process.binding('fs');
-const path = __nccwpck_require__(16928);
 const loader = __nccwpck_require__(25303);
-const bypass = __nccwpck_require__(68980);
 const {
   getReadFileContextPrototype,
   patchReadFileContext,
 } = __nccwpck_require__(50591);
-const fs = __nccwpck_require__(79896);
 
 const realProcessProps = {
   cwd: process.cwd,
@@ -31276,7 +31260,6 @@ const realStatWatcher = realBinding.StatWatcher;
  * Note this patch only solves issue for readFile, as the require of
  * ReadFileContext is delayed by readFile implementation.
  * if (!ReadFileContext) ReadFileContext = require('internal/fs/read_file_context')
- *
  * @param {string} key Property name.
  */
 function patch(key) {
@@ -31373,8 +31356,8 @@ function restoreReadFileContext(binding) {
 
 /**
  * Swap out the fs bindings for a mock file system.
- * @param {object} config Mock file system configuration.
- * @param {object} [options={}] Any filesystem options.
+ * @param {Object} config Mock file system configuration.
+ * @param {Object} [options] Any filesystem options.
  * @param {boolean} options.createCwd Create a directory for `process.cwd()`
  *     (defaults to `true`).
  * @param {boolean} options.createTmp Create a directory for `os.tmpdir()`
@@ -31405,7 +31388,7 @@ module.exports = function mock(config, options = {}) {
       } else {
         return realProcessProps.chdir(directory);
       }
-    }
+    },
   );
 
   overrideCreateWriteStream();
@@ -31416,8 +31399,11 @@ exports = module.exports;
 /**
  * Get hold of the mocked filesystem's 'root'
  * If fs hasn't currently been replaced, this will return an empty object
- * @return {object} The mock root.
+ * @return {Object} The mock root.
  */
+exports.bypass = bypass;
+exports.directory = FileSystem.directory;
+exports.file = FileSystem.file;
 exports.getMockRoot = function () {
   if (realBinding._mockedBinding) {
     return realBinding._mockedBinding.getSystem().getRoot();
@@ -31429,6 +31415,7 @@ exports.getMockRoot = function () {
 /**
  * Restore the fs bindings for the real file system.
  */
+exports.load = loader.load;
 exports.restore = function () {
   restoreBinding();
   restoreProcess();
@@ -31439,12 +31426,10 @@ exports.restore = function () {
 /**
  * Create a file factory.
  */
-exports.file = FileSystem.file;
 
 /**
  * Create a directory factory.
  */
-exports.directory = FileSystem.directory;
 
 /**
  * Create a symbolic link factory.
@@ -31454,7 +31439,6 @@ exports.symlink = FileSystem.symlink;
 /**
  * Automatically maps specified paths (for use with `mock()`)
  */
-exports.load = loader.load;
 
 /**
  * Perform action, bypassing mock FS
@@ -31463,16 +31447,12 @@ exports.load = loader.load;
  * const filePath = '/path/file.json';
  * const data = mock.bypass(() => fs.readFileSync(filePath, 'utf-8'));
  */
-exports.bypass = bypass;
 
 
 /***/ }),
 
 /***/ 25579:
 /***/ ((module) => {
-
-"use strict";
-
 
 const fsBinding = process.binding('fs');
 const statsConstructor = fsBinding.statValues
@@ -31764,7 +31744,7 @@ Item.prototype.setGid = function (gid) {
 /**
  * Get item stats.
  * @param {boolean} bigint Use BigInt.
- * @return {object} Stats properties.
+ * @return {Object} Stats properties.
  */
 Item.prototype.getStats = function (bigint) {
   const stats = bigint
@@ -31807,7 +31787,6 @@ Item.prototype.toString = function () {
 
 /**
  * Export the constructor.
- * @type {function()}
  */
 module.exports = Item;
 
@@ -31817,11 +31796,11 @@ module.exports = Item;
 /***/ 25303:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
-const {fixWin32Permissions} = __nccwpck_require__(25579);
-const path = __nccwpck_require__(16928);
-const FileSystem = __nccwpck_require__(72451);
 const fs = __nccwpck_require__(79896);
+const path = __nccwpck_require__(16928);
 const bypass = __nccwpck_require__(68980);
+const FileSystem = __nccwpck_require__(72451);
+const {fixWin32Permissions} = __nccwpck_require__(25579);
 
 const createContext = ({output, options = {}, target}, newContext) =>
   Object.assign(
@@ -31834,7 +31813,7 @@ const createContext = ({output, options = {}, target}, newContext) =>
       output,
       target,
     },
-    newContext
+    newContext,
   );
 
 function addFile(context, stats, isRoot) {
@@ -31897,7 +31876,7 @@ function addDir(context, stats, isRoot) {
   // Create directory factory
   const directoryItems = {};
   output[outputPropKey] = FileSystem.directory(
-    Object.assign(stats, {items: directoryItems})
+    Object.assign(stats, {items: directoryItems}),
   );
 
   fs.readdirSync(target).forEach((p) => {
@@ -31921,7 +31900,7 @@ function addDir(context, stats, isRoot) {
 /**
  * Load directory or file from real FS
  * @param {string} p The path.
- * @param {object} options The options.
+ * @param {Object} options The options.
  * @return {*} The return.
  */
 exports.load = function (p, options) {
@@ -31945,16 +31924,13 @@ exports.load = function (p, options) {
 /***/ 50591:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
-"use strict";
-
-
 const {AbortError} = __nccwpck_require__(30128);
 const {FSReqCallback} = process.binding('fs');
 
 /**
  * This is a workaround for getting access to the ReadFileContext
  * prototype, which we need to be able to patch its methods.
- * @return {object} The prototype.
+ * @return {Object} The prototype.
  */
 exports.getReadFileContextPrototype = function () {
   const fs = __nccwpck_require__(79896);
@@ -31984,8 +31960,7 @@ exports.getReadFileContextPrototype = function () {
  * closes directly over the internal fs bindings, and is also eagerly loader.
  *
  * See https://github.com/tschaub/mock-fs/issues/332 for more information.
- *
- * @param {object} prototype The ReadFileContext prototype object to patch.
+ * @param {Object} prototype The ReadFileContext prototype object to patch.
  */
 exports.patchReadFileContext = function (prototype) {
   const origRead = prototype.read;
@@ -32106,12 +32081,9 @@ exports.patchReadFileContext = function (prototype) {
 /***/ 52149:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-"use strict";
-
-
+const constants = __nccwpck_require__(49140);
 const util = __nccwpck_require__(39023);
 const Item = __nccwpck_require__(25579);
-const constants = __nccwpck_require__(49140);
 
 /**
  * A directory.
@@ -32147,7 +32119,7 @@ SymbolicLink.prototype.getPath = function () {
 /**
  * Get symbolic link stats.
  * @param {boolean} bigint Use BigInt.
- * @return {object} Stats properties.
+ * @return {Object} Stats properties.
  */
 SymbolicLink.prototype.getStats = function (bigint) {
   const size = this._path.length;
@@ -32163,7 +32135,6 @@ SymbolicLink.prototype.getStats = function (bigint) {
 
 /**
  * Export the constructor.
- * @type {function()}
  */
 module.exports = SymbolicLink;
 

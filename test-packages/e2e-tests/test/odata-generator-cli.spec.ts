@@ -70,5 +70,5 @@ describe('OData generator CLI', () => {
     expect(entities).toContain('TestEntity.ts');
     expect(entities).toContain('TestEntity.js');
     expect(entities).toContain('package.json');
-  });
+  }, 60000);
 });

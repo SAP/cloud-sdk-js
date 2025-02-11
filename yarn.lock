@@ -1676,10 +1676,10 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
-"@stylistic/eslint-plugin@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/@stylistic/eslint-plugin/-/eslint-plugin-3.0.1.tgz#ec85816a3b4e75c34293160b2784e6a4bdce6664"
-  integrity sha512-rQ3tcT5N2cynofJfbjUsnL4seoewTaOVBLyUEwtNldo7iNMPo3h/GUQk+Cl3iHEWwRxjq2wuH6q0FufQrbVL1A==
+"@stylistic/eslint-plugin@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/@stylistic/eslint-plugin/-/eslint-plugin-3.1.0.tgz#a9f655c518f76bfc5feb46b467d0f06e511b289d"
+  integrity sha512-pA6VOrOqk0+S8toJYhQGv2MWpQQR0QpeUo9AhNkC49Y26nxBQ/nH1rta9bUU1rPw2fJ1zZEMV5oCX5AazT7J2g==
   dependencies:
     "@typescript-eslint/utils" "^8.13.0"
     eslint-visitor-keys "^4.2.0"

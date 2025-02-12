@@ -97,9 +97,7 @@ function mockDestinationsWithSameName() {
     Authentication: 'NoAuthentication' as const
   };
 
-  mockFetchDestinationCalls(destination, {
-    mockWithTokenRetrievalCall: false
-  });
+  mockFetchDestinationCalls(destination, { mockWithTokenRetrievalCall: false });
   mockFetchDestinationCalls(destination, {
     serviceToken: subscriberServiceToken,
     mockWithTokenRetrievalCall: false
@@ -158,7 +156,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'ProviderDest',
         jwt: providerUserToken,
-        useCache: true,
         isolationStrategy: 'tenant-user'
       });
       const cacheKeys = Object.keys(
@@ -177,7 +174,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
-        useCache: true,
         cacheVerificationKeys: false
       });
 
@@ -198,7 +194,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false
       });
@@ -214,7 +209,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'ProviderDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysProvider
@@ -232,7 +226,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
@@ -255,7 +248,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'ANY',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
@@ -273,7 +265,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'SubscriberDest2',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
@@ -343,7 +334,6 @@ describe('destination cache', () => {
       );
       const actual = await getDestination({
         destinationName: destName,
-        useCache: true,
         jwt: subscriberUserToken
       });
       expect(actual).toEqual(destinationOne);
@@ -426,15 +416,10 @@ describe('destination cache', () => {
       );
 
       const destinationFromService = await getDestinationFromDestinationService(
-        {
-          destinationName: 'ERNIE-UND-CERT',
-          useCache: true,
-          jwt: providerUserToken
-        }
+        { destinationName: 'ERNIE-UND-CERT', jwt: providerUserToken }
       );
       const destinationFromCache = await getDestinationFromDestinationService({
         destinationName: 'ERNIE-UND-CERT',
-        useCache: true,
         jwt: providerUserToken
       });
 
@@ -520,9 +505,7 @@ describe('destination cache', () => {
 
       mockFetchDestinationCalls(
         onPremisePrincipalPropagationMultipleResponse[0],
-        {
-          mockWithTokenRetrievalCall: false
-        }
+        { mockWithTokenRetrievalCall: false }
       );
 
       const retrieveFromCacheSpy = jest.spyOn(
@@ -533,12 +516,10 @@ describe('destination cache', () => {
       const destinationFromFirstCall =
         await getDestinationFromDestinationService({
           destinationName: 'OnPremise',
-          useCache: true,
           jwt: providerUserToken
         });
       const destinationFromCache = await getDestinationFromDestinationService({
         destinationName: 'OnPremise',
-        useCache: true,
         jwt: providerUserToken
       });
 
@@ -599,7 +580,6 @@ describe('destination cache', () => {
       const actual = await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant-user',
         cacheVerificationKeys: false
       });
@@ -629,7 +609,6 @@ describe('destination cache', () => {
       const actual = await getDestination({
         destinationName: 'ProviderDest',
         jwt: providerUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         selectionStrategy: alwaysProvider,
         cacheVerificationKeys: false
@@ -664,7 +643,6 @@ describe('destination cache', () => {
       const actual = await getDestination({
         destinationName: 'ProviderDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         selectionStrategy: subscriberFirst,
         cacheVerificationKeys: false

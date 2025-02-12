@@ -23,6 +23,10 @@ export interface OpenAPIGeneratorOptions {
    * @experimental
    */
   schemaPrefix?: string;
+  /**
+   * Resolve external references.
+   */
+  resolveExternal?: boolean;
 }
 
 /**
@@ -47,6 +51,13 @@ export const cliOptions = {
       'Prefix all schema names with a value. This is useful to avoid naming conflicts when multiple services are generated.',
     type: 'string',
     default: '',
+    hidden: true
+  },
+  resolveExternal: {
+    describe:
+      'By default, external $ref pointers will be resolved. If set to false, external $ref pointers will be ignored.',
+    type: 'boolean',
+    default: true,
     hidden: true
   }
 } as const satisfies Options<GeneratorOptions>;

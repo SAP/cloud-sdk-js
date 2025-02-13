@@ -62,6 +62,13 @@ export function getTenantId(
   return decodedJwt.zid || decodedJwt.app_tid || undefined;
 }
 
+function isNotIasToken(decodedJwt: JwtPayload): boolean {
+  return (
+    !decodedJwt.iss?.includes('accounts.ondemand.com') &&
+    !decodedJwt.iss?.includes('accounts400.ondemand.com')
+  );
+}
+
 /**
  * @internal
  * Retrieve the subdomain from the decoded XSUAA JWT. If the JWT is not in XSUAA format, returns `undefined`.
@@ -74,7 +81,7 @@ export function getSubdomain(
   const decodedJwt = jwt ? decodeJwt(jwt) : {};
   return (
     decodedJwt?.ext_attr?.zdn ||
-    (isXsuaaToken(decodedJwt) ? getIssuerSubdomain(decodedJwt) : undefined)
+    (isNotIasToken(decodedJwt) ? getIssuerSubdomain(decodedJwt) : undefined)
   );
 }
 

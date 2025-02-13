@@ -19,6 +19,7 @@ The To-Do list is:
 
 - [Update Your Project Dependencies](#update-your-project-dependencies)
 - [Update to Node 22 or Newer](#update-to-node-22-or-newer)
+- [Set `useCache` explicitly to false to turn off destination caching](#set-useCache-explicitly-to-false-to-turn-off-destination-caching)
 
 ## Update Your Project Dependencies
 
@@ -34,3 +35,15 @@ We recommend updating your applications in one commit or pull request and making
 All SAP Cloud SDK for JavaScript libraries now support node 22 (LTS) as the **minimum** node version.
 If you are using a node version older than 22, update your runtime environment to a newer version.
 On Cloud Foundry you can do this by [setting the node engine in your `package.json`](https://docs.cloudfoundry.org/buildpacks/node/index.html#runtime).
+
+## Set `useCache` explicitly to false to turn off destination caching
+
+**Destination caching while retrieving destinations via the destination service is now enabled by default.**
+This change affects the default behviour of `getDestination()` method, generated client's `execute()` method and generic HTTP requests execution using `executeHttpRequest()`.
+
+To disable caching set `useCache: false` in the options, for example in `execute()` method:
+
+```TS
+.execute({ destinationName: 'DESTINATION', jwt: 'JWT', useCache: false })
+```
+

@@ -121,6 +121,11 @@ function createDestinationFetchLogs(
 export async function getAllDestinationsFromDestinationService(
   options: AllDestinationOptions = {}
 ): Promise<DestinationWithoutToken[]> {
+  options = {
+    ...options,
+    // Enable caching by default
+    useCache: options.useCache === undefined ? true : options.useCache
+  };
   logger.debug(
     'Attempting to retrieve all destinations from destination service.'
   );

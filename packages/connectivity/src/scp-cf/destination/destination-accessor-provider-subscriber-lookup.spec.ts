@@ -37,6 +37,7 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
+import { destinationServiceCache } from './destination-service-cache';
 import { destinationCache } from './destination-cache';
 import type {
   DestinationFetchOptions,
@@ -164,6 +165,7 @@ describe('JWT type and selection strategies', () => {
     mockVerifyJwt();
     mockServiceToken();
     await destinationCache.clear();
+    await destinationServiceCache.clear();
   });
 
   afterEach(() => {
@@ -339,7 +341,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     jest.clearAllMocks();
   });
 
-  it('should fetch all subscriber destinations', async () => {
+  it('should fetch all subscriber destinations and cache destinations', async () => {
     const logger = createLogger({
       package: 'connectivity',
       messageContext: 'destination-accessor'
@@ -349,19 +351,40 @@ describe('call getAllDestinations with and without subscriber token', () => {
     mockGetAllProvider();
 
     const debugSpy = jest.spyOn(logger, 'debug');
+    const retrieveSpy = jest.spyOn(
+      destinationServiceCache,
+      'retrieveDestinationsFromCache'
+    );
+    const cacheSpy = jest.spyOn(
+      destinationServiceCache,
+      'cacheRetrievedDestinations'
+    );
 
-    const allDestinations = await getAllDestinationsFromDestinationService({
+    // First call - should fetch and cache
+    let allDestinations = await getAllDestinationsFromDestinationService({
       jwt: subscriberUserToken
     });
 
     expect(allDestinations).toEqual([parsedSubscriberDestination]);
-
+    expect(cacheSpy).toHaveBeenCalled();
     expect(debugSpy).toHaveBeenCalledWith(
       'Retrieving all destinations for account: "subscriber" from destination service.'
     );
     expect(debugSpy).toHaveBeenCalledWith(
       'Retrieving subaccount destination: DESTINATION.\n'
     );
+
+    // Reset spies for second call
+    jest.clearAllMocks();
+
+    // Second call - should use cache
+    allDestinations = await getAllDestinationsFromDestinationService({
+      jwt: subscriberUserToken
+    });
+
+    expect(allDestinations).toEqual([parsedSubscriberDestination]);
+    expect(retrieveSpy).toHaveBeenCalled();
+    expect(cacheSpy).not.toHaveBeenCalled(); // Should not cache again
   });
 
   it('should fetch all provider destinations when called without passing a JWT', async () => {

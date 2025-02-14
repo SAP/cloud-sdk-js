@@ -330,10 +330,12 @@ describe('JWT type and selection strategies', () => {
 });
 
 describe('call getAllDestinations with and without subscriber token', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
+    await destinationCache.clear();
+    await destinationServiceCache.clear();
   });
 
   afterEach(() => {

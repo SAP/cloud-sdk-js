@@ -95,7 +95,7 @@
     "@types/jsonwebtoken": "^9.0.8",
     "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.4",
-    "@types/node": "^18.19.75",
+    "@types/node": "^18.19.76",
     "@types/uuid": "^10.0.0",
     "@types/voca": "^1.4.6",
     "axios": "^1.7.9",

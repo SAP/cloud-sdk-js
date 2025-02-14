@@ -368,6 +368,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     });
 
     expect(allDestinations).toEqual([parsedSubscriberDestination]);
+    expect(retrieveSpy).toHaveBeenCalled();
     expect(cacheSpy).toHaveBeenCalled();
     expect(debugSpy).toHaveBeenCalledWith(
       'Retrieving all destinations for account: "subscriber" from destination service.'
@@ -387,6 +388,46 @@ describe('call getAllDestinations with and without subscriber token', () => {
     expect(allDestinations).toEqual([parsedSubscriberDestination]);
     expect(retrieveSpy).toHaveBeenCalled();
     expect(cacheSpy).not.toHaveBeenCalled(); // Should not cache again
+  });
+
+  it('should fetch all subscriber destinations and not cache destinations', async () => {
+    mockGetAllSubscriber();
+    mockGetAllProvider();
+
+    const cacheSpy = jest.spyOn(
+      destinationServiceCache,
+      'cacheRetrievedDestinations'
+    );
+
+    const retrieveSpy = jest.spyOn(
+      destinationServiceCache,
+      'retrieveDestinationsFromCache'
+    );
+
+    let allDestinations = await getAllDestinationsFromDestinationService({
+      jwt: subscriberUserToken,
+      useCache: false
+    });
+
+    expect(allDestinations).toEqual([parsedSubscriberDestination]);
+    expect(cacheSpy).not.toHaveBeenCalled();
+    expect(retrieveSpy).not.toHaveBeenCalled();
+
+    // Reset spies and mocks for second call
+    jest.clearAllMocks();
+    nock.cleanAll();
+    mockGetAllSubscriber();
+    mockGetAllProvider();
+
+    // Second call - should fetch again since cache was not used previously
+    allDestinations = await getAllDestinationsFromDestinationService({
+      jwt: subscriberUserToken,
+      useCache: false
+    });
+
+    expect(allDestinations).toEqual([parsedSubscriberDestination]);
+    expect(cacheSpy).not.toHaveBeenCalled();
+    expect(retrieveSpy).not.toHaveBeenCalled();
   });
 
   it('should fetch all provider destinations when called without passing a JWT', async () => {

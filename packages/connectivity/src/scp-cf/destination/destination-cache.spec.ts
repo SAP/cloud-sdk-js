@@ -205,6 +205,22 @@ describe('destination cache', () => {
       expect(c2).toBeUndefined();
     });
 
+    it('does not use cache if caching is explicitly disabled', async () => {
+      mockDestinationsWithSameName();
+
+      await getDestination({
+        destinationName: 'SubscriberDest',
+        jwt: subscriberUserToken,
+        useCache: false
+      });
+
+      const c1 = await getSubscriberCache('tenant');
+      const c2 = await getProviderCache('tenant');
+
+      expect(c1).toBeUndefined();
+      expect(c2).toBeUndefined();
+    });
+
     it('caches only provider if selection strategy always provider', async () => {
       await getDestination({
         destinationName: 'ProviderDest',

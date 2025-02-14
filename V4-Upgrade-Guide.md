@@ -39,7 +39,8 @@ On Cloud Foundry you can do this by [setting the node engine in your `package.js
 ## Set `useCache` explicitly to false to turn off destination caching
 
 **Destination caching while retrieving destinations via the destination service is now enabled by default.**
-This change affects the default behviour of `getDestination()` method, generated client's `execute()` method and generic HTTP requests execution using `executeHttpRequest()`.
+
+This change affects the default behviour of `getDestination()` method, `getAllDestinationsFromDestinationService()` method, generated client's `execute()` method and generic HTTP requests execution using `executeHttpRequest()`.
 
 To disable caching set `useCache: false` in the options, for example in `execute()` method:
 

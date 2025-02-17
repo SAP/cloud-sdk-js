@@ -357,7 +357,6 @@ describe('call getAllDestinations with and without subscriber token', () => {
 
     const debugSpy = jest.spyOn(logger, 'debug');
 
-    // First call - should fetch and cache
     const allDestinations = await getAllDestinationsFromDestinationService({
       jwt: subscriberUserToken
     });

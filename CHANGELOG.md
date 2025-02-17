@@ -28,6 +28,15 @@
 
 - 
 
+# 3.26.1
+
+
+## Fixed Issues
+
+- [connectivity] Reintroduce option to pass `iss` property to `getClientCredentialsToken` function.
+  - @sap-cloud-sdk/resilience@3.26.1
+  - @sap-cloud-sdk/util@3.26.1 (06230c3)
+
 # 3.26.0
 
 

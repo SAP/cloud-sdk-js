@@ -1,5 +1,7 @@
 # @sap-cloud-sdk/type-tests
 
+## 3.26.1
+
 ## 3.26.0
 
 ## 3.25.0

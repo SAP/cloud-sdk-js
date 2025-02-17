@@ -62,6 +62,13 @@ export function getTenantId(
   return decodedJwt.zid || decodedJwt.app_tid || undefined;
 }
 
+/**
+ * Check if the given JWT is not an IAS token.
+ * Currently, there are only two domains for IAS tokens:
+ * `accounts.ondemand.com` and `accounts400.onemand.com`.
+ * @param decodedJwt - The decoded JWT to check.
+ * @returns Whether the given JWT is not an IAS token.
+ */
 function isNotIasToken(decodedJwt: JwtPayload): boolean {
   return (
     !decodedJwt.iss?.includes('accounts.ondemand.com') &&
@@ -71,8 +78,10 @@ function isNotIasToken(decodedJwt: JwtPayload): boolean {
 
 /**
  * @internal
- * Retrieve the subdomain from the decoded XSUAA JWT. If the JWT is not in XSUAA format, returns `undefined`.
- * @param jwt - JWT to retrieve the subdomain from.
+ * Retrieve the subdomain from the decoded XSUAA JWT or ISS object.
+ * If it is an IAS JWT, or the passed object doesn't contain an ISS propety,
+ * returns `undefined`.
+ * @param jwt - JWT or ISS object to retrieve the subdomain from.
  * @returns The subdomain, if available.
  */
 export function getSubdomain(

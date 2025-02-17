@@ -325,8 +325,7 @@ describe('destination cache', () => {
 
       const actual = await getDestination({
         destinationName: destName,
-        iss: onlyIssuerXsuaaUrl,
-        useCache: true
+        iss: onlyIssuerXsuaaUrl
       });
       expect(actual).toEqual(destinationOne);
     });
@@ -481,8 +480,7 @@ describe('destination cache', () => {
 
       const destinationFromService = await getDestination({
         destinationName,
-        jwt: providerUserToken,
-        useCache: true
+        jwt: providerUserToken
       });
       expect(destinationFromService).toMatchObject(
         parseDestination(oauthSingleResponse)
@@ -495,8 +493,7 @@ describe('destination cache', () => {
 
       const destinationFromCache = await getDestination({
         destinationName,
-        jwt: providerUserToken,
-        useCache: true
+        jwt: providerUserToken
       });
 
       expect(destinationFromService).toEqual(

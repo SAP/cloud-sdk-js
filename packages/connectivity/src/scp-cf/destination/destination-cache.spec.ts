@@ -317,9 +317,7 @@ describe('destination cache', () => {
         'tenant'
       );
       const destination = await getDestination({ destinationName: destName });
-      expect(destination!.url).toBe(
-        'https://destination1.example'
-      );
+      expect(destination!.url).toBe('https://destination1.example');
     }, 15000);
 
     it('disables the cache if explicitly specified', async () => {

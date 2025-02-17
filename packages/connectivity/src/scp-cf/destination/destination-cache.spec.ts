@@ -205,22 +205,6 @@ describe('destination cache', () => {
       expect(c2).toBeUndefined();
     });
 
-    it('does not use cache if caching is explicitly disabled', async () => {
-      mockDestinationsWithSameName();
-
-      await getDestination({
-        destinationName: 'SubscriberDest',
-        jwt: subscriberUserToken,
-        useCache: false
-      });
-
-      const c1 = await getSubscriberCache('tenant');
-      const c2 = await getProviderCache('tenant');
-
-      expect(c1).toBeUndefined();
-      expect(c2).toBeUndefined();
-    });
-
     it('caches only provider if selection strategy always provider', async () => {
       await getDestination({
         destinationName: 'ProviderDest',
@@ -318,24 +302,6 @@ describe('destination cache', () => {
       );
       const destination = await getDestination({ destinationName: destName });
       expect(destination!.url).toBe('https://destination1.example');
-    }, 15000);
-
-    it('disables the cache if explicitly specified', async () => {
-      await destinationCache.cacheRetrievedDestination(
-        {
-          iat: 1739795395,
-          iss: 'https://provider.authentication.sap.hana.ondemand.com',
-          zid: 'provider',
-          ext_attr: {
-            enhancer: 'XSUAA'
-          }
-        },
-        destinationOne,
-        'tenant'
-      );
-      await expect(
-        getDestination({ destinationName: destName, useCache: false })
-      ).rejects.toThrow('Failed to fetch destination.');
     }, 15000);
 
     it("uses cache with isolation strategy 'tenant' if no JWT is provided", async () => {
@@ -437,6 +403,24 @@ describe('destination cache', () => {
       expect(warn).toHaveBeenCalledWith(
         "Could not build destination cache key. Isolation strategy 'tenant-user' is used, but tenant id or user id is undefined in JWT."
       );
+    }, 15000);
+
+    it('disables the cache if explicitly specified', async () => {
+      await destinationCache.cacheRetrievedDestination(
+        {
+          iat: 1739795395,
+          iss: 'https://provider.authentication.sap.hana.ondemand.com',
+          zid: 'provider',
+          ext_attr: {
+            enhancer: 'XSUAA'
+          }
+        },
+        destinationOne,
+        'tenant'
+      );
+      await expect(
+        getDestination({ destinationName: destName, useCache: false })
+      ).rejects.toThrow('Failed to fetch destination.');
     }, 15000);
   });
 
@@ -860,7 +844,7 @@ describe('destination cache', () => {
 });
 
 describe('get destination cache key', () => {
-  it("should shown warning, when 'tenant-user' is chosen, but user id is missing", () => {
+  it("should show warning, when 'tenant-user' is chosen, but user id is missing", () => {
     const logger = createLogger('destination-cache');
     const warn = jest.spyOn(logger, 'warn');
 

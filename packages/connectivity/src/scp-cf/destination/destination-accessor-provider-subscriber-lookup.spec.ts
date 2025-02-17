@@ -26,6 +26,7 @@ import {
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import * as identityService from '../identity-service';
+import { decodeJwt } from '../jwt';
 import { parseDestination } from './destination';
 import {
   getAllDestinationsFromDestinationService,
@@ -93,6 +94,8 @@ const parsedSubscriberDestination: DestinationWithoutToken = {
   url: 'http://subscriber.com'
 };
 
+const mockedDestinationUrlSubaccountDestinations =
+  'https://destination.example.com/destination-configuration/v1/subaccountDestinations';
 function mockGetAllProvider(returnEmpty = false): nock.Scope[] {
   return [
     mockInstanceDestinationsCall([], 200, providerServiceToken),
@@ -353,81 +356,43 @@ describe('call getAllDestinations with and without subscriber token', () => {
     mockGetAllProvider();
 
     const debugSpy = jest.spyOn(logger, 'debug');
-    const retrieveSpy = jest.spyOn(
-      destinationServiceCache,
-      'retrieveDestinationsFromCache'
-    );
-    const cacheSpy = jest.spyOn(
-      destinationServiceCache,
-      'cacheRetrievedDestinations'
-    );
 
     // First call - should fetch and cache
-    let allDestinations = await getAllDestinationsFromDestinationService({
+    const allDestinations = await getAllDestinationsFromDestinationService({
       jwt: subscriberUserToken
     });
 
     expect(allDestinations).toEqual([parsedSubscriberDestination]);
-    expect(retrieveSpy).toHaveBeenCalled();
-    expect(cacheSpy).toHaveBeenCalled();
     expect(debugSpy).toHaveBeenCalledWith(
       'Retrieving all destinations for account: "subscriber" from destination service.'
     );
     expect(debugSpy).toHaveBeenCalledWith(
       'Retrieving subaccount destination: DESTINATION.\n'
     );
-
-    // Reset spies for second call
-    jest.clearAllMocks();
-
-    // Second call - should use cache
-    allDestinations = await getAllDestinationsFromDestinationService({
-      jwt: subscriberUserToken
-    });
-
-    expect(allDestinations).toEqual([parsedSubscriberDestination]);
-    expect(retrieveSpy).toHaveBeenCalled();
-    expect(cacheSpy).not.toHaveBeenCalled(); // Should not cache again
+    expect(
+      destinationServiceCache.retrieveDestinationsFromCache(
+        mockedDestinationUrlSubaccountDestinations,
+        decodeJwt(subscriberUserToken)
+      )
+    ).toEqual([parsedSubscriberDestination]);
   });
 
   it('should fetch all subscriber destinations and not cache destinations', async () => {
     mockGetAllSubscriber();
     mockGetAllProvider();
 
-    const cacheSpy = jest.spyOn(
-      destinationServiceCache,
-      'cacheRetrievedDestinations'
-    );
-
-    const retrieveSpy = jest.spyOn(
-      destinationServiceCache,
-      'retrieveDestinationsFromCache'
-    );
-
-    let allDestinations = await getAllDestinationsFromDestinationService({
+    const allDestinations = await getAllDestinationsFromDestinationService({
       jwt: subscriberUserToken,
       useCache: false
     });
 
     expect(allDestinations).toEqual([parsedSubscriberDestination]);
-    expect(cacheSpy).not.toHaveBeenCalled();
-    expect(retrieveSpy).not.toHaveBeenCalled();
-
-    // Reset spies and mocks for second call
-    jest.clearAllMocks();
-    nock.cleanAll();
-    mockGetAllSubscriber();
-    mockGetAllProvider();
-
-    // Second call - should fetch again since cache was not used previously
-    allDestinations = await getAllDestinationsFromDestinationService({
-      jwt: subscriberUserToken,
-      useCache: false
-    });
-
-    expect(allDestinations).toEqual([parsedSubscriberDestination]);
-    expect(cacheSpy).not.toHaveBeenCalled();
-    expect(retrieveSpy).not.toHaveBeenCalled();
+    expect(
+      destinationServiceCache.retrieveDestinationsFromCache(
+        mockedDestinationUrlSubaccountDestinations,
+        decodeJwt(subscriberUserToken)
+      )
+    ).toBeUndefined();
   });
 
   it('should fetch all provider destinations when called without passing a JWT', async () => {

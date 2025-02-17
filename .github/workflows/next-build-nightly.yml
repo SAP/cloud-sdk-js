@@ -29,6 +29,18 @@ jobs:
       - run: yarn test:self
       - run: yarn test:build-packages
       - run: yarn test:type
+      - if: failure()
+        name: Slack Notify
+        uses: rtCamp/action-slack-notify@v2.3.2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: SDK Pipeline Bot
+          SLACK_TITLE: Build tests for v4 ${{ job.status }}
+          SLACK_MESSAGE: 'Test failed'
+          MSG_MINIMAL: event,actions url
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MSG_AUTHOR: ' '
+          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
   checks:
     runs-on: ubuntu-latest
     steps:
@@ -62,6 +74,18 @@ jobs:
         name: API Doc Check
       - uses: ./.github/actions/check-license
         name: License Check
+      - if: failure()
+        name: Slack Notify
+        uses: rtCamp/action-slack-notify@v2.3.2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: SDK Pipeline Bot
+          SLACK_TITLE: Build checks for v4 ${{ job.status }}
+          SLACK_MESSAGE: 'Test failed'
+          MSG_MINIMAL: event,actions url
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MSG_AUTHOR: ' '
+          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
   e2e-tests:
     runs-on: ubuntu-latest
     steps:

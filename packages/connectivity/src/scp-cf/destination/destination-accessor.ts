@@ -124,7 +124,7 @@ export async function getAllDestinationsFromDestinationService(
   options = {
     ...options,
     // Enable caching by default
-    useCache: options.useCache === undefined ? true : options.useCache
+    useCache: options.useCache ?? true
   };
   logger.debug(
     'Attempting to retrieve all destinations from destination service.'

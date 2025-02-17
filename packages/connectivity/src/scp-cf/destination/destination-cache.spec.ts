@@ -303,14 +303,40 @@ describe('destination cache', () => {
 
     const destName = destinationOne.name!;
 
-    it('disables the cache by default', async () => {
+    it('uses the cache by default', async () => {
       await destinationCache.cacheRetrievedDestination(
-        { user_id: 'user', zid: 'tenant' },
+        {
+          iat: 1739795395,
+          iss: 'https://provider.authentication.sap.hana.ondemand.com',
+          zid: 'provider',
+          ext_attr: {
+            enhancer: 'XSUAA'
+          }
+        },
+        destinationOne,
+        'tenant'
+      );
+      const destination = await getDestination({ destinationName: destName });
+      expect(destination!.url).toBe(
+        'https://destination1.example'
+      );
+    }, 15000);
+
+    it('disables the cache if explicitly specified', async () => {
+      await destinationCache.cacheRetrievedDestination(
+        {
+          iat: 1739795395,
+          iss: 'https://provider.authentication.sap.hana.ondemand.com',
+          zid: 'provider',
+          ext_attr: {
+            enhancer: 'XSUAA'
+          }
+        },
         destinationOne,
         'tenant'
       );
       await expect(
-        getDestination({ destinationName: destName })
+        getDestination({ destinationName: destName, useCache: false })
       ).rejects.toThrow('Failed to fetch destination.');
     }, 15000);
 
@@ -321,8 +347,7 @@ describe('destination cache', () => {
         'tenant'
       );
       const actual = await getDestination({
-        destinationName: destName,
-        useCache: true
+        destinationName: destName
       });
       expect(actual).toEqual(destinationOne);
     });

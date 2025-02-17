@@ -1531,10 +1531,10 @@
   dependencies:
     antlr4 "4.9.3"
 
-"@sap/cds-dk@8.7.1":
-  version "8.7.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-8.7.1.tgz#9706ab058acfbe142711b5d24fe7aa4180c9d6b4"
-  integrity sha512-O+UqLlexTm6HjZHwYR6gD5Eew+BRM5ABAYU9SdaPUS0Nqr0/icY6NbyAdrxIVgab1KnbPA0mMIq5wIo7SxnygA==
+"@sap/cds-dk@8.7.2":
+  version "8.7.2"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-8.7.2.tgz#211f490a9a4788990385d3fb8234c635ee49e576"
+  integrity sha512-6y0307hZzWNnQgoHClNAO2NeWW14WG3RZBklqi8lZ1io6wn5rHIy+XZWSxDxu5JdXJ7utXajzGgGTxs97jbu+g==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"
@@ -1578,10 +1578,10 @@
     "@sap/hdi-deploy" ">=4"
     axios "^1"
 
-"@sap/cds@>=5.6.0", "@sap/cds@>=7", "@sap/cds@^8.7.1":
-  version "8.7.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-8.7.1.tgz#e962b893ff33159556794b632600c5913a8d6965"
-  integrity sha512-hTS4tqRcF9EQ8bUGu0z1fHBCtQuQuPbsEHbqJxzOWOVgc3leFoSckB0z0zBR4LTzZuv/RmpiNS7M0AKibrmnQg==
+"@sap/cds@>=5.6.0", "@sap/cds@>=7", "@sap/cds@^8.7.2":
+  version "8.7.2"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-8.7.2.tgz#fb8059f36308a646d51942bd1604f52c0e086ed0"
+  integrity sha512-iXUDKWJSEU5fLA6FFeC06FTgLx/TdNrqQXFEZnIie6qR9IvSl4BAofJ7BUUq0BfTB6pkv3T/FkZkWhqLw0kvOw==
   dependencies:
     "@sap/cds-compiler" ">=5.1"
     "@sap/cds-fiori" "^1"
@@ -1623,10 +1623,10 @@
     node-cache "^5.1.2"
     verror "1.10.1"
 
-"@sap/xssec@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.3.0.tgz#dbca8bbfefa09311fa01080ddef8c2ce98fc9c6d"
-  integrity sha512-gA6AFx5dSzUlPOBFZxf7UH4LyN4mk27fvtXPTaTc88U3FmJZ+6UtOWhHIOt/xZK4Ao38qesJ/WL9IeM59UH2YQ==
+"@sap/xssec@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.4.0.tgz#2edbd64a2405971015d769e4cd251985a3bac0ac"
+  integrity sha512-tVPyF6z6lWN2cucT38kkTu6GTmFXhqd/xa0SrExZ+j8K1cNePEIDHvx/zfibubLeb198vyoreW4QOpR9+Vaj4A==
   dependencies:
     debug "^4.3.4"
     jwt-decode "^4"
@@ -3132,10 +3132,10 @@ chownr@^3.0.0:
   resolved "https://registry.npmjs.org/chownr/-/chownr-3.0.0.tgz#9855e64ecd240a9cc4267ce8a4aa5d24a1da15e4"
   integrity sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==
 
-chromium-bidi@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-1.2.0.tgz#e481b3eee0bf0f2d940a60b83faa79414f4752b8"
-  integrity sha512-XtdJ1GSN6S3l7tO7F77GhNsw0K367p0IsLYf2yZawCVAKKC3lUvDhPdMVrB2FNhmhfW43QGYbEX3Wg6q0maGwQ==
+chromium-bidi@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-1.3.0.tgz#59051cae1532444f2642e612f917100ce720a90f"
+  integrity sha512-G3x1bkST13kmbL7+dT/oRkNH/7C4UqG+0YQpmySrzXspyOhYgDNc6lhSGpj3cuexvH25WTENhTYq2Tt9JRXtbw==
   dependencies:
     mitt "^3.0.1"
     zod "^3.24.1"
@@ -4143,19 +4143,18 @@ eslint-import-resolver-node@^0.3.9:
     is-core-module "^2.13.0"
     resolve "^1.22.4"
 
-eslint-import-resolver-typescript@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.npmjs.org/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.7.0.tgz#e69925936a771a9cb2de418ccebc4cdf6c0818aa"
-  integrity sha512-Vrwyi8HHxY97K5ebydMtffsWAn1SCR9eol49eCd5fJS4O1WV7PaAjbcjmbfJJSMz/t4Mal212Uz/fQZrOB8mow==
+eslint-import-resolver-typescript@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.npmjs.org/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.8.0.tgz#44a0f776d296b9c3823f4859441b54c2ec5fef9a"
+  integrity sha512-fItUrP/+xwpavWgadrn6lsvcMe80s08xIVFXkUXvhR4cZD2ga96kRF/z/iFGDI7ZDnvtlaZ0wGic7Tw+DhgVnA==
   dependencies:
     "@nolyfill/is-core-module" "1.0.39"
     debug "^4.3.7"
     enhanced-resolve "^5.15.0"
-    fast-glob "^3.3.2"
-    get-tsconfig "^4.7.5"
+    get-tsconfig "^4.10.0"
     is-bun-module "^1.0.2"
-    is-glob "^4.0.3"
     stable-hash "^0.0.4"
+    tinyglobby "^0.2.10"
 
 eslint-module-utils@^2.12.0:
   version "2.12.0"
@@ -4640,6 +4639,11 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
+fdir@^6.4.2:
+  version "6.4.3"
+  resolved "https://registry.npmjs.org/fdir/-/fdir-6.4.3.tgz#011cdacf837eca9b811c89dbb902df714273db72"
+  integrity sha512-PMXmW2y1hDDfTSRc9gaXIuCCRpuoz3Kaz8cUelp3smouvfT632ozg2vrT6lJsHKKOF59YLbOGfAWGUcKEfRMQw==
+
 fecha@^4.2.0:
   version "4.2.3"
   resolved "https://registry.npmjs.org/fecha/-/fecha-4.2.3.tgz#4d9ccdbc61e8629b259fdca67e65891448d569fd"
@@ -4986,10 +4990,10 @@ get-symbol-description@^1.0.2:
     es-errors "^1.3.0"
     get-intrinsic "^1.2.4"
 
-get-tsconfig@^4.7.5:
-  version "4.8.1"
-  resolved "https://registry.npmjs.org/get-tsconfig/-/get-tsconfig-4.8.1.tgz#8995eb391ae6e1638d251118c7b56de7eb425471"
-  integrity sha512-k9PN+cFBmaLWtVz29SkUoqU5O0slLuHJXt/2P+tMVFT+phsSGXGkp9t3rQIqdz0e+06EHNGs3oM6ZX1s2zHxRg==
+get-tsconfig@^4.10.0:
+  version "4.10.0"
+  resolved "https://registry.npmjs.org/get-tsconfig/-/get-tsconfig-4.10.0.tgz#403a682b373a823612475a4c2928c7326fc0f6bb"
+  integrity sha512-kGzZ3LWWQcGIAmg6iWvXn0ei6WDtV26wzHRMwDSzmAbcXrTEXxHy6IehI6/4eT6VRKyMP1eF1VqwrVUmE/LR7A==
   dependencies:
     resolve-pkg-maps "^1.0.0"
 
@@ -8063,28 +8067,28 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-puppeteer-core@24.2.0:
-  version "24.2.0"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.2.0.tgz#4f935d1417777b335ca747bf1c3ae997989ed6e4"
-  integrity sha512-e4A4/xqWdd4kcE6QVHYhJ+Qlx/+XpgjP4d8OwBx0DJoY/nkIRhSgYmKQnv7+XSs1ofBstalt+XPGrkaz4FoXOQ==
+puppeteer-core@24.2.1:
+  version "24.2.1"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.2.1.tgz#a7a3a82902452094d746e483404767f0e16fed98"
+  integrity sha512-bCypUh3WXzETafv1TCFAjIUnI8BiQ/d+XvEfEXDLcIMm9CAvROqnBmbt79yBjwasoDZsgfXnUmIJU7Y27AalVQ==
   dependencies:
     "@puppeteer/browsers" "2.7.1"
-    chromium-bidi "1.2.0"
+    chromium-bidi "1.3.0"
     debug "^4.4.0"
     devtools-protocol "0.0.1402036"
     typed-query-selector "^2.12.0"
     ws "^8.18.0"
 
-puppeteer@^24.2.0:
-  version "24.2.0"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.2.0.tgz#552d1e7c3d94c82671269263fc63d68a5fe91316"
-  integrity sha512-z8vv7zPEgrilIbOo3WNvM+2mXMnyM9f4z6zdrB88Fzeuo43Oupmjrzk3EpuvuCtyK0A7Lsllfx7Z+4BvEEGJcQ==
+puppeteer@^24.2.1:
+  version "24.2.1"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.2.1.tgz#e2e0370d84b788a12dcfc1cff6a970ce37ecc2e8"
+  integrity sha512-Euno62ou0cd0dTkOYTNioSOsFF4VpSnz4ldD38hi9ov9xCNtr8DbhmoJRUx+V9OuPgecueZbKOohRrnrhkbg3Q==
   dependencies:
     "@puppeteer/browsers" "2.7.1"
-    chromium-bidi "1.2.0"
+    chromium-bidi "1.3.0"
     cosmiconfig "^9.0.0"
     devtools-protocol "0.0.1402036"
-    puppeteer-core "24.2.0"
+    puppeteer-core "24.2.1"
     typed-query-selector "^2.12.0"
 
 pure-rand@^6.0.0:
@@ -9305,6 +9309,14 @@ thenify-all@^1.0.0:
   integrity sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==
   dependencies:
     any-promise "^1.0.0"
+
+tinyglobby@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.10.tgz#e712cf2dc9b95a1f5c5bbd159720e15833977a0f"
+  integrity sha512-Zc+8eJlFMvgatPZTl6A9L/yht8QqdmUNtURHaKZLmKBE12hNPSrqNkUp2cs3M/UKmNVVAMFQYSjYIVHDjW5zew==
+  dependencies:
+    fdir "^6.4.2"
+    picomatch "^4.0.2"
 
 tmp@^0.0.33:
   version "0.0.33"

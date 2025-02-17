@@ -165,7 +165,7 @@ describe('JWT type and selection strategies', () => {
     mockVerifyJwt();
     mockServiceToken();
     await destinationCache.clear();
-    await destinationServiceCache.clear();
+    destinationServiceCache.clear();
   });
 
   afterEach(() => {
@@ -335,7 +335,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     mockVerifyJwt();
     mockServiceToken();
     await destinationCache.clear();
-    await destinationServiceCache.clear();
+    destinationServiceCache.clear();
   });
 
   afterEach(() => {

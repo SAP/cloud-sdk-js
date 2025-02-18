@@ -8,6 +8,7 @@ import {
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
+  destinationServiceUri,
   onlyIssuerXsuaaUrl,
   mockServiceBindings
 } from '../../../../../test-resources/test/test-util/environment-mocks';
@@ -26,6 +27,7 @@ import {
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import * as identityService from '../identity-service';
+import { decodeJwt } from '../jwt';
 import { parseDestination } from './destination';
 import {
   getAllDestinationsFromDestinationService,
@@ -37,6 +39,7 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
+import { destinationServiceCache } from './destination-service-cache';
 import type {
   DestinationFetchOptions,
   DestinationWithoutToken
@@ -91,6 +94,7 @@ const parsedSubscriberDestination: DestinationWithoutToken = {
   url: 'http://subscriber.com'
 };
 
+const mockedDestinationUrlSubaccountDestinations = `${destinationServiceUri}/destination-configuration/v1/subaccountDestinations`;
 function mockGetAllProvider(returnEmpty = false): nock.Scope[] {
   return [
     mockInstanceDestinationsCall([], 200, providerServiceToken),
@@ -136,7 +140,9 @@ async function fetchDestination(
     destinationName: destName,
     selectionStrategy,
     cacheVerificationKeys: false,
-    jwt
+    jwt,
+    // Caching is explicitly disabled as tests for fetching a single destination don't test caching behaviour
+    useCache: false
   };
   return getDestination(options);
 }
@@ -330,6 +336,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
+    destinationServiceCache.clear();
   });
 
   afterEach(() => {
@@ -337,7 +344,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     jest.clearAllMocks();
   });
 
-  it('should fetch all subscriber destinations', async () => {
+  it('should fetch and cache all subscriber destinations', async () => {
     const logger = createLogger({
       package: 'connectivity',
       messageContext: 'destination-accessor'
@@ -353,13 +360,36 @@ describe('call getAllDestinations with and without subscriber token', () => {
     });
 
     expect(allDestinations).toEqual([parsedSubscriberDestination]);
-
     expect(debugSpy).toHaveBeenCalledWith(
       'Retrieving all destinations for account: "subscriber" from destination service.'
     );
     expect(debugSpy).toHaveBeenCalledWith(
       'Retrieving subaccount destination: DESTINATION.\n'
     );
+    expect(
+      destinationServiceCache.retrieveDestinationsFromCache(
+        mockedDestinationUrlSubaccountDestinations,
+        decodeJwt(subscriberUserToken)
+      )
+    ).toEqual([parsedSubscriberDestination]);
+  });
+
+  it('should fetch all subscriber destinations without caching them', async () => {
+    mockGetAllSubscriber();
+    mockGetAllProvider();
+
+    const allDestinations = await getAllDestinationsFromDestinationService({
+      jwt: subscriberUserToken,
+      useCache: false
+    });
+
+    expect(allDestinations).toEqual([parsedSubscriberDestination]);
+    expect(
+      destinationServiceCache.retrieveDestinationsFromCache(
+        mockedDestinationUrlSubaccountDestinations,
+        decodeJwt(subscriberUserToken)
+      )
+    ).toBeUndefined();
   });
 
   it('should fetch all provider destinations when called without passing a JWT', async () => {

@@ -97,9 +97,7 @@ function mockDestinationsWithSameName() {
     Authentication: 'NoAuthentication' as const
   };
 
-  mockFetchDestinationCalls(destination, {
-    mockWithTokenRetrievalCall: false
-  });
+  mockFetchDestinationCalls(destination, { mockWithTokenRetrievalCall: false });
   mockFetchDestinationCalls(destination, {
     serviceToken: subscriberServiceToken,
     mockWithTokenRetrievalCall: false
@@ -154,11 +152,22 @@ describe('destination cache', () => {
       });
     });
 
+    it('uses the cache by default', async () => {
+      await destinationCache.cacheRetrievedDestination(
+        decodeJwt(providerUserToken),
+        destinationOne,
+        'tenant'
+      );
+      const destination = await getDestination({
+        destinationName: 'destToCache1'
+      });
+      expect(destination!.url).toBe('https://destination1.example');
+    }, 15000);
+
     it('cache key contains user also for provider tokens', async () => {
       await getDestination({
         destinationName: 'ProviderDest',
         jwt: providerUserToken,
-        useCache: true,
         isolationStrategy: 'tenant-user'
       });
       const cacheKeys = Object.keys(
@@ -177,7 +186,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
-        useCache: true,
         cacheVerificationKeys: false
       });
 
@@ -198,7 +206,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false
       });
@@ -214,7 +221,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'ProviderDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysProvider
@@ -232,7 +238,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
@@ -255,7 +260,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'ANY',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
@@ -273,7 +277,6 @@ describe('destination cache', () => {
       await getDestination({
         destinationName: 'SubscriberDest2',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
@@ -285,6 +288,17 @@ describe('destination cache', () => {
       expect(c1).toBeUndefined();
       expect(c2!.url).toBe('https://subscriber2.example');
     });
+
+    it('disables the cache if explicitly specified', async () => {
+      await destinationCache.cacheRetrievedDestination(
+        decodeJwt(providerUserToken),
+        destinationOne,
+        'tenant'
+      );
+      await expect(
+        getDestination({ destinationName: 'destToCache1', useCache: false })
+      ).rejects.toThrow('Failed to fetch destination.');
+    }, 15000);
   });
 
   describe('caching options', () => {
@@ -296,17 +310,6 @@ describe('destination cache', () => {
 
     const destName = destinationOne.name!;
 
-    it('disables the cache by default', async () => {
-      await destinationCache.cacheRetrievedDestination(
-        { user_id: 'user', zid: 'tenant' },
-        destinationOne,
-        'tenant'
-      );
-      await expect(
-        getDestination({ destinationName: destName })
-      ).rejects.toThrow('Failed to fetch destination.');
-    }, 15000);
-
     it("uses cache with isolation strategy 'tenant' if no JWT is provided", async () => {
       await destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
@@ -314,8 +317,7 @@ describe('destination cache', () => {
         'tenant'
       );
       const actual = await getDestination({
-        destinationName: destName,
-        useCache: true
+        destinationName: destName
       });
       expect(actual).toEqual(destinationOne);
     });
@@ -329,8 +331,7 @@ describe('destination cache', () => {
 
       const actual = await getDestination({
         destinationName: destName,
-        iss: onlyIssuerXsuaaUrl,
-        useCache: true
+        iss: onlyIssuerXsuaaUrl
       });
       expect(actual).toEqual(destinationOne);
     });
@@ -343,7 +344,6 @@ describe('destination cache', () => {
       );
       const actual = await getDestination({
         destinationName: destName,
-        useCache: true,
         jwt: subscriberUserToken
       });
       expect(actual).toEqual(destinationOne);
@@ -426,15 +426,10 @@ describe('destination cache', () => {
       );
 
       const destinationFromService = await getDestinationFromDestinationService(
-        {
-          destinationName: 'ERNIE-UND-CERT',
-          useCache: true,
-          jwt: providerUserToken
-        }
+        { destinationName: 'ERNIE-UND-CERT', jwt: providerUserToken }
       );
       const destinationFromCache = await getDestinationFromDestinationService({
         destinationName: 'ERNIE-UND-CERT',
-        useCache: true,
         jwt: providerUserToken
       });
 
@@ -473,8 +468,7 @@ describe('destination cache', () => {
 
       const destinationFromService = await getDestination({
         destinationName,
-        jwt: providerUserToken,
-        useCache: true
+        jwt: providerUserToken
       });
       expect(destinationFromService).toMatchObject(
         parseDestination(oauthSingleResponse)
@@ -487,8 +481,7 @@ describe('destination cache', () => {
 
       const destinationFromCache = await getDestination({
         destinationName,
-        jwt: providerUserToken,
-        useCache: true
+        jwt: providerUserToken
       });
 
       expect(destinationFromService).toEqual(
@@ -520,9 +513,7 @@ describe('destination cache', () => {
 
       mockFetchDestinationCalls(
         onPremisePrincipalPropagationMultipleResponse[0],
-        {
-          mockWithTokenRetrievalCall: false
-        }
+        { mockWithTokenRetrievalCall: false }
       );
 
       const retrieveFromCacheSpy = jest.spyOn(
@@ -533,12 +524,10 @@ describe('destination cache', () => {
       const destinationFromFirstCall =
         await getDestinationFromDestinationService({
           destinationName: 'OnPremise',
-          useCache: true,
           jwt: providerUserToken
         });
       const destinationFromCache = await getDestinationFromDestinationService({
         destinationName: 'OnPremise',
-        useCache: true,
         jwt: providerUserToken
       });
 
@@ -599,7 +588,6 @@ describe('destination cache', () => {
       const actual = await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant-user',
         cacheVerificationKeys: false
       });
@@ -629,7 +617,6 @@ describe('destination cache', () => {
       const actual = await getDestination({
         destinationName: 'ProviderDest',
         jwt: providerUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         selectionStrategy: alwaysProvider,
         cacheVerificationKeys: false
@@ -664,7 +651,6 @@ describe('destination cache', () => {
       const actual = await getDestination({
         destinationName: 'ProviderDest',
         jwt: subscriberUserToken,
-        useCache: true,
         isolationStrategy: 'tenant',
         selectionStrategy: subscriberFirst,
         cacheVerificationKeys: false
@@ -843,7 +829,7 @@ describe('destination cache', () => {
 });
 
 describe('get destination cache key', () => {
-  it("should shown warning, when 'tenant-user' is chosen, but user id is missing", () => {
+  it("should show warning, when 'tenant-user' is chosen, but user id is missing", () => {
     const logger = createLogger('destination-cache');
     const warn = jest.spyOn(logger, 'warn');
 

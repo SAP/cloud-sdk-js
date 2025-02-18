@@ -289,14 +289,7 @@ describe('destination cache', () => {
 
     it('uses the cache by default', async () => {
       await destinationCache.cacheRetrievedDestination(
-        {
-          iat: 1739795395,
-          iss: 'https://provider.authentication.sap.hana.ondemand.com',
-          zid: 'provider',
-          ext_attr: {
-            enhancer: 'XSUAA'
-          }
-        },
+        decodeJwt(providerUserToken),
         destinationOne,
         'tenant'
       );
@@ -406,14 +399,7 @@ describe('destination cache', () => {
 
     it('disables the cache if explicitly specified', async () => {
       await destinationCache.cacheRetrievedDestination(
-        {
-          iat: 1739795395,
-          iss: 'https://provider.authentication.sap.hana.ondemand.com',
-          zid: 'provider',
-          ext_attr: {
-            enhancer: 'XSUAA'
-          }
-        },
+        decodeJwt(providerUserToken),
         destinationOne,
         'tenant'
       );

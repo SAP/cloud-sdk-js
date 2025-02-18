@@ -4008,7 +4008,7 @@ var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
 
 var packageJson = {
 	name: "@changesets/config",
-	version: "3.0.5",
+	version: "3.1.0",
 	description: "Utilities for reading and parsing Changeset's config",
 	main: "dist/changesets-config.cjs.js",
 	module: "dist/changesets-config.esm.js",
@@ -4032,9 +4032,9 @@ var packageJson = {
 	],
 	dependencies: {
 		"@changesets/errors": "^0.2.0",
-		"@changesets/get-dependents-graph": "^2.1.2",
+		"@changesets/get-dependents-graph": "^2.1.3",
 		"@changesets/logger": "^0.1.1",
-		"@changesets/types": "^6.0.0",
+		"@changesets/types": "^6.1.0",
 		"@manypkg/get-packages": "^1.1.3",
 		"fs-extra": "^7.0.1",
 		micromatch: "^4.0.8"
@@ -4243,6 +4243,10 @@ let parse = (json, packages) => {
     }
   }
 
+  if (json.prettier !== undefined) {
+    messages.push(`The \`prettier\` option is set as ${JSON.stringify(json.prettier, null, 2)} when the only valid values are undefined or a boolean`);
+  }
+
   const {
     snapshot
   } = json;
@@ -4304,6 +4308,7 @@ let parse = (json, packages) => {
       onlyUpdatePeerDependentsWhenOutOfRange: json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH === undefined || json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.onlyUpdatePeerDependentsWhenOutOfRange === undefined ? false : json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH.onlyUpdatePeerDependentsWhenOutOfRange,
       updateInternalDependents: (_json$___experimental3 = (_json$___experimental4 = json.___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH) === null || _json$___experimental4 === void 0 ? void 0 : _json$___experimental4.updateInternalDependents) !== null && _json$___experimental3 !== void 0 ? _json$___experimental3 : "out-of-range"
     },
+    prettier: typeof json.prettier === "boolean" ? json.prettier : true,
     // TODO consider enabling this by default in the next major version
     privatePackages: json.privatePackages === false ? {
       tag: false,

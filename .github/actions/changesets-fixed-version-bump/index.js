@@ -3275,7 +3275,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 var errors = __nccwpck_require__(17789);
 var getDependentsGraph = __nccwpck_require__(81699);
-var shouldSkipPackage = __nccwpck_require__(61405);
+var shouldSkipPackage = __nccwpck_require__(81435);
 var semverParse = __nccwpck_require__(15797);
 var semverGt = __nccwpck_require__(60955);
 var semverSatisfies = __nccwpck_require__(17871);
@@ -3962,36 +3962,6 @@ function getPreInfo(changesets, packagesByName, config, preState) {
 }
 
 exports["default"] = assembleReleasePlan;
-
-
-/***/ }),
-
-/***/ 61405:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-function shouldSkipPackage({
-  packageJson
-}, {
-  ignore,
-  allowPrivatePackages
-}) {
-  if (ignore.includes(packageJson.name)) {
-    return true;
-  }
-
-  if (packageJson.private && !allowPrivatePackages) {
-    return true;
-  }
-
-  return !packageJson.version;
-}
-
-exports.shouldSkipPackage = shouldSkipPackage;
 
 
 /***/ }),
@@ -9584,6 +9554,36 @@ async function getChangesets(cwd, sinceRef) {
 }
 
 exports["default"] = getChangesets;
+
+
+/***/ }),
+
+/***/ 81435:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+function shouldSkipPackage({
+  packageJson
+}, {
+  ignore,
+  allowPrivatePackages
+}) {
+  if (ignore.includes(packageJson.name)) {
+    return true;
+  }
+
+  if (packageJson.private && !allowPrivatePackages) {
+    return true;
+  }
+
+  return !packageJson.version;
+}
+
+exports.shouldSkipPackage = shouldSkipPackage;
 
 
 /***/ }),

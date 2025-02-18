@@ -40,7 +40,6 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import { destinationServiceCache } from './destination-service-cache';
-import { destinationCache } from './destination-cache';
 import type {
   DestinationFetchOptions,
   DestinationWithoutToken
@@ -165,7 +164,7 @@ function assertMockUsed(mock: nock.Scope, used: boolean) {
 }
 
 describe('JWT type and selection strategies', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
@@ -333,11 +332,10 @@ describe('JWT type and selection strategies', () => {
 });
 
 describe('call getAllDestinations with and without subscriber token', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
-    await destinationCache.clear();
     destinationServiceCache.clear();
   });
 

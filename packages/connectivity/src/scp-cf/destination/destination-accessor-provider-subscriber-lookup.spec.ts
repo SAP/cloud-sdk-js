@@ -141,7 +141,9 @@ async function fetchDestination(
     destinationName: destName,
     selectionStrategy,
     cacheVerificationKeys: false,
-    jwt
+    jwt,
+    // Caching is explicitly disabled as tests for fetching a single destination don't test caching behaviour
+    useCache: false
   };
   return getDestination(options);
 }
@@ -167,8 +169,6 @@ describe('JWT type and selection strategies', () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
-    await destinationCache.clear();
-    destinationServiceCache.clear();
   });
 
   afterEach(() => {

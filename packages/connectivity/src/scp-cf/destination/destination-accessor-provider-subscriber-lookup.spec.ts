@@ -95,8 +95,7 @@ const parsedSubscriberDestination: DestinationWithoutToken = {
   url: 'http://subscriber.com'
 };
 
-const mockedDestinationUrlSubaccountDestinations =
-  `${destinationServiceUri}/destination-configuration/v1/subaccountDestinations`;
+const mockedDestinationUrlSubaccountDestinations = `${destinationServiceUri}/destination-configuration/v1/subaccountDestinations`;
 function mockGetAllProvider(returnEmpty = false): nock.Scope[] {
   return [
     mockInstanceDestinationsCall([], 200, providerServiceToken),

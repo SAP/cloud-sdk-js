@@ -378,7 +378,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     ).toEqual([parsedSubscriberDestination]);
   });
 
-  it('should fetch all subscriber destinations and not cache destinations', async () => {
+  it('should fetch all subscriber destinations without caching them', async () => {
     mockGetAllSubscriber();
     mockGetAllProvider();
 

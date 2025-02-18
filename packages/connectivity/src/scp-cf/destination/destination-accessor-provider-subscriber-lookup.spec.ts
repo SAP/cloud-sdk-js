@@ -348,7 +348,7 @@ describe('call getAllDestinations with and without subscriber token', () => {
     jest.clearAllMocks();
   });
 
-  it('should fetch all subscriber destinations and cache destinations', async () => {
+  it('should fetch and cache all subscriber destinations', async () => {
     const logger = createLogger({
       package: 'connectivity',
       messageContext: 'destination-accessor'

@@ -288,6 +288,17 @@ describe('destination cache', () => {
       expect(c1).toBeUndefined();
       expect(c2!.url).toBe('https://subscriber2.example');
     });
+
+    it('disables the cache if explicitly specified', async () => {
+      await destinationCache.cacheRetrievedDestination(
+        decodeJwt(providerUserToken),
+        destinationOne,
+        'tenant'
+      );
+      await expect(
+        getDestination({ destinationName: 'destToCache1', useCache: false })
+      ).rejects.toThrow('Failed to fetch destination.');
+    }, 15000);
   });
 
   describe('caching options', () => {
@@ -397,17 +408,6 @@ describe('destination cache', () => {
       expect(warn).toHaveBeenCalledWith(
         "Could not build destination cache key. Isolation strategy 'tenant-user' is used, but tenant id or user id is undefined in JWT."
       );
-    }, 15000);
-
-    it('disables the cache if explicitly specified', async () => {
-      await destinationCache.cacheRetrievedDestination(
-        decodeJwt(providerUserToken),
-        destinationOne,
-        'tenant'
-      );
-      await expect(
-        getDestination({ destinationName: destName, useCache: false })
-      ).rejects.toThrow('Failed to fetch destination.');
     }, 15000);
   });
 

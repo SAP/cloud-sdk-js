@@ -8,8 +8,8 @@ import {
   mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
-  onlyIssuerXsuaaUrl,
   destinationServiceUri,
+  onlyIssuerXsuaaUrl,
   mockServiceBindings
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
@@ -96,8 +96,7 @@ const parsedSubscriberDestination: DestinationWithoutToken = {
 };
 
 const mockedDestinationUrlSubaccountDestinations =
-  destinationServiceUri +
-  '/destination-configuration/v1/subaccountDestinations';
+  `${destinationServiceUri}/destination-configuration/v1/subaccountDestinations`;
 function mockGetAllProvider(returnEmpty = false): nock.Scope[] {
   return [
     mockInstanceDestinationsCall([], 200, providerServiceToken),

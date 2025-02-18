@@ -1,0 +1,157 @@
+name: next-build-nightly
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'main'
+      - run: git fetch --depth=1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile --ignore-engines
+      - run: yarn test:unit
+        env:
+          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
+      - run: yarn test:integration
+      - run: yarn test:self
+      - run: yarn test:build-packages
+      - run: yarn test:type
+      - if: failure()
+        name: Slack Notify
+        uses: rtCamp/action-slack-notify@v2.3.2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: SDK Pipeline Bot
+          SLACK_TITLE: Build tests for v4 ${{ job.status }} ${{ matrix.node-version }}
+          SLACK_MESSAGE: 'Test failed'
+          MSG_MINIMAL: event,actions url
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MSG_AUTHOR: ' '
+          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'main'
+      - run: git fetch --depth=1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+      - name: REUSE Compliance Check
+        uses: fsfe/reuse-action@v5
+      - run: yarn install --frozen-lockfile --ignore-engines
+      - run: yarn lint
+        name: Static Code Check
+      - run: yarn check:test-service
+        name: Test Service Version Check
+      - run: yarn check:dependencies
+        name: Undeclared dependency Check
+      - uses: ./.github/actions/check-public-api
+        with:
+          force_internal_exports: 'true'
+          excluded_packages: 'eslint-config, util, test-util'
+        name: Check public api
+      - run: yarn test:self
+        name: Self tests for tools
+      - run: yarn check:circular
+        name: Circular dependency Check
+      - run: yarn doc
+        name: API Doc Check
+      - uses: ./.github/actions/check-license
+        name: License Check
+      - if: failure()
+        name: Slack Notify
+        uses: rtCamp/action-slack-notify@v2.3.2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: SDK Pipeline Bot
+          SLACK_TITLE: Build checks for v4 ${{ job.status }}
+          SLACK_MESSAGE: 'Test failed'
+          MSG_MINIMAL: event,actions url
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MSG_AUTHOR: ' '
+          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'main'
+      - run: git fetch --depth=1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile --ignore-engines
+      - run: yarn test:e2e
+  canary-release-pre-check:
+    runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.date-check.outputs.skip-release }}
+    needs: [tests, checks, e2e-tests]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'main'
+      - run: git fetch --depth=1
+      - id: date-check
+        name: Check if latest commit is within 24 hrs
+        run: |
+          lastCommitDate=$(git --no-pager log -n 1 ${{ github.ref_name }} --pretty=format:"%at")
+          curDate=$(date +%s)
+          dateDiff=$(expr $curDate - $lastCommitDate)
+          echo $lastCommitDate, $curDate, $dateDiff
+
+          if [[ $dateDiff -gt 86400 ]]
+          then
+              echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
+              echo "skip-release=true" >> $GITHUB_OUTPUT
+          else
+              echo "skip-release=false" >> $GITHUB_OUTPUT
+          fi
+  canary-release:
+    if: ${{ needs.canary-release-pre-check.outputs.skip == 'false' }}
+    runs-on: ubuntu-latest
+    needs: [canary-release-pre-check]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'main'
+      - run: git fetch --depth=1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn install --frozen-lockfile --ignore-engines
+      - name: Canary Release
+        run: |
+          date=`date +%Y%m%d%H%M%S`
+          rm -f .changeset/*.md
+          project_version=$(cat package.json | jq '.version' | tr -d '"')
+          echo The project version is: $project_version
+          # When version starts with '4', we're trying to prevent an accidental v5 release
+          [[ $project_version == 4* ]] && cp canary-release-changeset.md .changeset          
+          # When version starts with '3', we're in 'main' branch preparing v4 release
+          [[ $project_version == 3* ]] && cp major-release-changeset.md .changeset
+          yarn changeset pre enter ${date}
+          yarn changeset version
+          yarn changeset pre exit
+          yarn changeset publish --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

@@ -35,7 +35,7 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot
-          SLACK_TITLE: Build tests for v4 ${{ job.status }}
+          SLACK_TITLE: Build tests for v4 ${{ job.status }} ${{ matrix.node-version }}
           SLACK_MESSAGE: 'Test failed'
           MSG_MINIMAL: event,actions url
           SLACK_COLOR: ${{ job.status }}

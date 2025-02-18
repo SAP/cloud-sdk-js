@@ -152,6 +152,18 @@ describe('destination cache', () => {
       });
     });
 
+    it('uses the cache by default', async () => {
+      await destinationCache.cacheRetrievedDestination(
+        decodeJwt(providerUserToken),
+        destinationOne,
+        'tenant'
+      );
+      const destination = await getDestination({
+        destinationName: 'destToCache1'
+      });
+      expect(destination!.url).toBe('https://destination1.example');
+    }, 15000);
+
     it('cache key contains user also for provider tokens', async () => {
       await getDestination({
         destinationName: 'ProviderDest',
@@ -286,16 +298,6 @@ describe('destination cache', () => {
     });
 
     const destName = destinationOne.name!;
-
-    it('uses the cache by default', async () => {
-      await destinationCache.cacheRetrievedDestination(
-        decodeJwt(providerUserToken),
-        destinationOne,
-        'tenant'
-      );
-      const destination = await getDestination({ destinationName: destName });
-      expect(destination!.url).toBe('https://destination1.example');
-    }, 15000);
 
     it("uses cache with isolation strategy 'tenant' if no JWT is provided", async () => {
       await destinationCache.cacheRetrievedDestination(

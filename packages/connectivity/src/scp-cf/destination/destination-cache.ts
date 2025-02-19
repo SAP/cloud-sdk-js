@@ -1,5 +1,5 @@
 import { createLogger, first } from '@sap-cloud-sdk/util';
-import { getTenantId, userId } from '../jwt';
+import { decodeJwt, getTenantId, userId } from '../jwt';
 import { AsyncCache } from '../async-cache';
 import type { JwtPayload } from '../jsonwebtoken-type';
 import type { AsyncCacheInterface } from '../async-cache';
@@ -217,11 +217,40 @@ async function cacheRetrievedDestination<T extends DestinationCacheInterface>(
     throw new Error('The destination name is undefined.');
   }
 
-  const key = getDestinationCacheKey(token, destination.name, isolation);
-  const expiresIn = first(destination.authTokens || [])?.expiresIn;
-  const expirationTime = expiresIn
-    ? Date.now() + parseInt(expiresIn) * 1000
+  const authToken = first(destination.authTokens || []);
+  const proxyAuthorizationToken =
+    destination.proxyConfiguration?.headers?.['Proxy-Authorization']?.match(
+      /^Bearer (.+)/
+    )?.[1];
+  const sapConnectivityAuthenticationToken =
+    destination.proxyConfiguration?.headers?.[
+      'SAP-Connectivity-Authentication'
+    ]?.match(/^Bearer (.+)/)?.[1];
+
+  const authTokenExpiresIn = authToken?.expiresIn
+    ? parseInt(authToken.expiresIn)
     : undefined;
+  const proxyAuthorizationExpiresIn = proxyAuthorizationToken
+    ? decodeJwt(proxyAuthorizationToken).exp
+    : undefined;
+  const sapConnectivityAuthenticationExpiresIn =
+    sapConnectivityAuthenticationToken
+      ? decodeJwt(sapConnectivityAuthenticationToken).exp
+      : undefined;
+
+  const expiresIn = Math.min(
+    ...[
+      authTokenExpiresIn,
+      proxyAuthorizationExpiresIn,
+      sapConnectivityAuthenticationExpiresIn
+    ].filter(e => e !== undefined)
+  );
+  const expirationTime =
+    expiresIn && expiresIn !== Infinity
+      ? Date.now() + expiresIn * 1000
+      : undefined;
+
+  const key = getDestinationCacheKey(token, destination.name, isolation);
   cache.set(key, { entry: destination, expires: expirationTime });
 }
 

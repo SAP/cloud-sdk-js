@@ -113,14 +113,14 @@ jobs:
       - id: date-check
         name: Check if latest commit is within 24 hrs
         run: |
-          lastCommitDate=$(git --no-pager log -n 1 ${{ github.ref_name }} --pretty=format:"%at")
+          lastCommitDate=$(git --no-pager log -n 1 main --pretty=format:"%at")
           curDate=$(date +%s)
           dateDiff=$(expr $curDate - $lastCommitDate)
           echo $lastCommitDate, $curDate, $dateDiff
 
           if [[ $dateDiff -gt 86400 ]]
           then
-              echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
+              echo 'No new commit found on main within the last 24 hrs.'
               echo "skip-release=true" >> $GITHUB_OUTPUT
           else
               echo "skip-release=false" >> $GITHUB_OUTPUT

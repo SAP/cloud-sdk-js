@@ -113,7 +113,7 @@ jobs:
       - id: date-check
         name: Check if latest commit is within 24 hrs
         run: |
-          lastCommitDate=$(git --no-pager log -n 1 "${{ github.ref_name }}" --pretty=format:"%at")
+          lastCommitDate=$(git --no-pager log -n 1 ${{ github.ref_name }} --pretty=format:"%at")
           curDate=$(date +%s)
           dateDiff=$(expr $curDate - $lastCommitDate)
           echo $lastCommitDate, $curDate, $dateDiff

@@ -76,7 +76,7 @@ function validateSingleResult(data: any): void {
       'The given response data has the format for collections instead of the standard OData v2 format for single results.'
     );
   }
-  if (!data?.d) {
+  if (data && !data.d) {
     logger.warn(
       'The given response data does not have the standard OData v2 format for single results.'
     );

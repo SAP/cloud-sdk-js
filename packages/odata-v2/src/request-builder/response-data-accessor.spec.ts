@@ -67,6 +67,11 @@ describe('response data accessor', () => {
       );
     });
 
+    it('does not log any warning for undefined response body', () => {
+      getSingleResult(undefined);
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
     it('returns single result for collection result format', () => {
       const d = { a: 'b' };
       expect(getSingleResult({ d: { results: d } })).toEqual(d);

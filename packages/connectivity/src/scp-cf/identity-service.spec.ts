@@ -26,4 +26,12 @@ describe('shouldExchangeToken', () => {
       })
     ).toBe(false);
   });
+
+  it('should not exchange token, if `iasToXsuaaTokenExchange` is undefined', async () => {
+    expect(
+      shouldExchangeToken({
+        jwt: signedJwt({})
+      })
+    ).toBe(false);
+  });
 });

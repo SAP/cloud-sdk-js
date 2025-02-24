@@ -31,6 +31,7 @@ import {
   mockJwtBearerToken,
   mockServiceToken
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+import { signedJwtForVerification } from '../../../../../test-resources/test/test-util';
 import { destinationServiceCache } from './destination-service-cache';
 import {
   alwaysProvider,
@@ -51,9 +52,6 @@ import type {
   Destination,
   DestinationAuthToken
 } from './destination-service-types';
-import exp from 'constants';
-import { JwtPayload } from 'jsonwebtoken';
-import { signedJwtForVerification } from '../../../../../test-resources/test/test-util';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',

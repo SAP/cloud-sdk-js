@@ -4008,7 +4008,7 @@ var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
 
 var packageJson = {
 	name: "@changesets/config",
-	version: "3.1.0",
+	version: "3.1.1",
 	description: "Utilities for reading and parsing Changeset's config",
 	main: "dist/changesets-config.cjs.js",
 	module: "dist/changesets-config.esm.js",
@@ -4243,7 +4243,7 @@ let parse = (json, packages) => {
     }
   }
 
-  if (json.prettier !== undefined) {
+  if (json.prettier !== undefined && typeof json.prettier !== "boolean") {
     messages.push(`The \`prettier\` option is set as ${JSON.stringify(json.prettier, null, 2)} when the only valid values are undefined or a boolean`);
   }
 

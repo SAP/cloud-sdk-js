@@ -19,7 +19,8 @@ The To-Do list is:
 
 - [Update Your Project Dependencies](#update-your-project-dependencies)
 - [Update to Node 22 or Newer](#update-to-node-22-or-newer)
-- [Set `useCache` explicitly to false to turn off destination caching](#set-useCache-explicitly-to-false-to-turn-off-destination-caching)
+- [Set `useCache` explicitly to `false` to turn off destination caching](#set-usecache-explicitly-to-false-to-turn-off-destination-caching)
+- [Set `iasToXsuaaTokenExchange` to `true` to enable IAS to XSUAA token exchange](#set-iastoxsuaatokenexchange-to-true-to-enable-ias-to-xsuaa-token-exchange)
 
 ## Update Your Project Dependencies
 
@@ -36,7 +37,7 @@ All SAP Cloud SDK for JavaScript libraries now support node 22 (LTS) as the **mi
 If you are using a node version older than 22, update your runtime environment to a newer version.
 On Cloud Foundry you can do this by [setting the node engine in your `package.json`](https://docs.cloudfoundry.org/buildpacks/node/index.html#runtime).
 
-## Set `useCache` explicitly to false to turn off destination caching
+## Set `useCache` explicitly to `false` to turn off destination caching
 
 **Destination caching while retrieving destinations via the destination service is now enabled by default.**
 
@@ -48,3 +49,25 @@ To disable caching set `useCache: false` in the options, for example in `execute
 .execute({ destinationName: 'DESTINATION', jwt: 'JWT', useCache: false })
 ```
 
+## Set `iasToXsuaaTokenExchange` to `true` to enable IAS to XSUAA token exchange
+
+**Token exchange from IAS to XSUAA is now disabled by default. Set `iasToXsuaaTokenExchange` to `true` explicitly if token exchange is expected.** 
+
+This change affects the default behaviour of following functions
+
+- `getDestination()`
+- `getAllDestinationsFromDestinationService()`
+- `registerDestination()`
+- `getDestinationFromDestinationService()`
+- `useOrFetchDestination()`
+- `toDestinationNameUrl()`
+- `buildHttpRequest()`
+- `executeHttpRequest()`
+- `executeHttpRequestWithOrigin()`
+
+and following methods of request builder
+
+- `execute()`
+- `executeRaw()`
+- `url()`
+- `build()`

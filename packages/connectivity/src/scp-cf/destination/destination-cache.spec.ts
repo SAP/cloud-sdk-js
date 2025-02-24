@@ -51,6 +51,9 @@ import type {
   Destination,
   DestinationAuthToken
 } from './destination-service-types';
+import exp from 'constants';
+import { JwtPayload } from 'jsonwebtoken';
+import { signedJwtForVerification } from '../../../../../test-resources/test/test-util';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',
@@ -804,6 +807,112 @@ describe('destination cache', () => {
 
       await expect(retrieveDestination()).resolves.toBeUndefined();
     });
+  });
+
+  it('should return undefined when Proxy-Authorization token expires first', async () => {
+    jest.useFakeTimers();
+    const twoMinutesTokenLifetime = 2 * 60;
+    const fourMinutesTokenLifetime = 4 * 60;
+    const sixMinutesTokenLifetime = 6 * 60;
+    const dummyJwt = { user_id: 'user', zid: 'tenant' };
+
+    const proxyAuthorizationToken = signedJwtForVerification({
+      ...decodeJwt(providerServiceToken),
+      exp: twoMinutesTokenLifetime
+    });
+
+    const sapConnectivityAuthenticationToken = signedJwtForVerification({
+      ...decodeJwt(providerUserToken),
+      exp: fourMinutesTokenLifetime
+    });
+
+    const destination = {
+      ...destinationOne,
+      authTokens: [
+        {
+          expiresIn: sixMinutesTokenLifetime.toString()
+        } as DestinationAuthToken
+      ],
+      proxyConfiguration: {
+        ...connectivityProxyConfigMock,
+        headers: {
+          'Proxy-Authorization': `Bearer ${proxyAuthorizationToken}`,
+          'SAP-Connectivity-Authentication': `Bearer ${sapConnectivityAuthenticationToken}`
+        }
+      }
+    };
+
+    await destinationCache.cacheRetrievedDestination(
+      dummyJwt,
+      destination,
+      'tenant-user'
+    );
+
+    const retrieveDestination = () =>
+      destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        destination.name!,
+        'tenant-user'
+      );
+
+    await expect(retrieveDestination()).resolves.toEqual(destination);
+
+    jest.advanceTimersByTime(twoMinutesTokenLifetime * 1000 + 1);
+
+    await expect(retrieveDestination()).resolves.toBeUndefined();
+  });
+
+  it('should return undefined when SAP-Connectivity-Authentication authorization token expires first', async () => {
+    jest.useFakeTimers();
+    const twoMinutesTokenLifetime = 2 * 60;
+    const fourMinutesTokenLifetime = 4 * 60;
+    const sixMinutesTokenLifetime = 6 * 60;
+    const dummyJwt = { user_id: 'user', zid: 'tenant' };
+
+    const proxyAuthorizationToken = signedJwtForVerification({
+      ...decodeJwt(providerServiceToken),
+      exp: fourMinutesTokenLifetime
+    });
+
+    const sapConnectivityAuthenticationToken = signedJwtForVerification({
+      ...decodeJwt(providerUserToken),
+      exp: twoMinutesTokenLifetime
+    });
+
+    const destination = {
+      ...destinationOne,
+      authTokens: [
+        {
+          expiresIn: sixMinutesTokenLifetime.toString()
+        } as DestinationAuthToken
+      ],
+      proxyConfiguration: {
+        ...connectivityProxyConfigMock,
+        headers: {
+          'Proxy-Authorization': `Bearer ${proxyAuthorizationToken}`,
+          'SAP-Connectivity-Authentication': `Bearer ${sapConnectivityAuthenticationToken}`
+        }
+      }
+    };
+
+    await destinationCache.cacheRetrievedDestination(
+      dummyJwt,
+      destination,
+      'tenant-user'
+    );
+
+    const retrieveDestination = () =>
+      destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        destination.name!,
+        'tenant-user'
+      );
+
+    await expect(retrieveDestination()).resolves.toEqual(destination);
+
+    jest.advanceTimersByTime(twoMinutesTokenLifetime * 1000 + 1);
+
+    await expect(retrieveDestination()).resolves.toBeUndefined();
   });
 
   describe('custom destination cache', () => {

@@ -11,7 +11,9 @@ describe('shouldExchangeToken', () => {
   });
 
   it('should exchange non-XSUAA token', async () => {
-    expect(shouldExchangeToken({ iasToXsuaaTokenExchange: true, jwt: signedJwt({}) })).toBe(true);
+    expect(
+      shouldExchangeToken({ iasToXsuaaTokenExchange: true, jwt: signedJwt({}) })
+    ).toBe(true);
   });
 
   it('should not exchange token, if there is no JWT given', async () => {

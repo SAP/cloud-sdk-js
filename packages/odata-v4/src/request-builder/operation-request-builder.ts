@@ -60,29 +60,3 @@ export class OperationRequestBuilder<
     super(responseTransformer, requestConfig, deSerializers);
   }
 }
-
-/**
- * @deprecated Since 3.3.0. Use {@link OperationRequestBuilder} instead.
- */
-export class ActionImportRequestBuilder<
-  DeSerializersT extends DeSerializers,
-  ParametersT,
-  ReturnT
-> extends OperationRequestBuilder<DeSerializersT, ParametersT, ReturnT> {
-  constructor(
-    defaultBasePath: string,
-    operationName: string,
-    readonly responseTransformer: (data: any) => ReturnT,
-    parameters: OperationParameters<ParametersT>,
-    deSerializers: DeSerializersT
-  ) {
-    super(
-      defaultBasePath,
-      operationName,
-      responseTransformer,
-      parameters,
-      deSerializers,
-      'action'
-    );
-  }
-}

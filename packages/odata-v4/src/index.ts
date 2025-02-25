@@ -29,7 +29,6 @@ export {
   transformReturnValueForEntity,
   transformReturnValueForEntityList,
   transformReturnValueForUndefined,
-  ActionImportRequestBuilder,
   CountRequestBuilder,
   CreateRequestBuilder,
   DeleteRequestBuilder,

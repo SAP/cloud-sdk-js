@@ -12,6 +12,7 @@ import {
 } from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../test-resources/test/test-util/token-accessor-mocks';
 import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
+import { signedJwtForVerification } from '../../../../test-resources/test/test-util';
 import {
   addProxyConfigurationOnPrem,
   httpProxyHostAndPort
@@ -19,7 +20,6 @@ import {
 import { getRequiredSubscriberToken } from './destination';
 import { decodeJwt, getJwtPair } from './jwt';
 import type { Destination } from './destination';
-import { signedJwtForVerification } from '../../../../test-resources/test/test-util';
 
 describe('connectivity-service', () => {
   afterEach(() => {

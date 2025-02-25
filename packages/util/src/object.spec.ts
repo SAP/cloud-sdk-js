@@ -1,5 +1,4 @@
 import {
-  assoc,
   pick,
   propertyExists,
   renameKeys,
@@ -86,12 +85,6 @@ describe('renameKeys', () => {
   it('picks elements also with falsy values', () => {
     const input = { a: 1, b: 2, c: undefined, d: 0 };
     expect(pick(['a', 'c', 'd'], input)).toEqual({ a: 1, c: undefined, d: 0 });
-  });
-
-  it('assoc elements to an object', () => {
-    const input = { a: 1, b: 2 };
-    const expected = { a: 1, b: 2, c: 3 };
-    expect(assoc('c', 3, input)).toEqual(expected);
   });
 });
 

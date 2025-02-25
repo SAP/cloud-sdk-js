@@ -74,3 +74,7 @@ To disable caching set `useCache: false` in the options, for example in `execute
   - The `ODataBoundActionImportRequestConfig` class has been removed. Use `ODataBoundActionRequestConfig` instead.
   - The `OdataBoundFunctionImportRequestConfig` constant has been removed. Use `ODataBoundFunctionRequestConfig` instead.
   - The `ActionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
+- `@sap-cloud-sdk/resilience`
+  - The `circuitBreakerHttp` constant has been removed. Use `circuitBreaker` instead.
+- `@sap-cloud-sdk/util`
+  - The `assoc` constant has been removed. There is no replacement.

@@ -33,13 +33,10 @@ export {
   CountRequestBuilder,
   CreateRequestBuilder,
   DeleteRequestBuilder,
-  FunctionImportRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   BoundOperationRequestBuilder,
-  BoundActionImportRequestBuilder,
-  BoundFunctionImportRequestBuilder,
   OperationRequestBuilder
 } from './request-builder';
 

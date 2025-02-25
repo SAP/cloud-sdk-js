@@ -62,7 +62,11 @@ To disable caching set `useCache: false` in the options, for example in `execute
   - The `ActionFunctionImportRequestBuilderBase` constant has been removed. Use `OperationRequestBuilderBase` instead.
 - `@sap-cloud-sdk/odata-v2`
   - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
+  - The `FunctionImportRequestBuilder` constant has been removed. Use `OperationRequestBuilder` instead.
 - `@sap-cloud-sdk/odata-v4`
   - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
   - The `ActionImportParameter` class has been removed. Use `OperationParameter` instead.
-  - The type `ActionImportParameters` has been removed. Use `OperationParameters` instead.
+  - The `ActionImportParameters` type has been removed. Use `OperationParameters` instead.
+  - The `FunctionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
+  - The `BoundFunctionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
+  - The `BoundActionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.

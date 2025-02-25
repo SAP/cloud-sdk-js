@@ -20,7 +20,7 @@ The To-Do list is:
 - [Update Your Project Dependencies](#update-your-project-dependencies)
 - [Update to Node 22 or Newer](#update-to-node-22-or-newer)
 - [Set `useCache` explicitly to false to turn off destination caching](#set-usecache-explicitly-to-false-to-turn-off-destination-caching)
-- [Check for deprecation](#check-for-deprecation)
+- [Check for Deprecation](#check-for-deprecation)
 
 ## Update Your Project Dependencies
 
@@ -49,7 +49,7 @@ To disable caching set `useCache: false` in the options, for example in `execute
 .execute({ destinationName: 'DESTINATION', jwt: 'JWT', useCache: false })
 ```
 
-## Check for deprecation
+## Check for Deprecation
 
 - `@sap-cloud-sdk/connectivity`
   - The behaviour of `getAgentConfig()` function is changed to be asynchronous. The temporary asynchroneous function `getAgentConfigAsync()` has been removed.

@@ -1,0 +1,8 @@
+---
+'@sap-cloud-sdk/connectivity': major
+---
+
+[Compatibility Note] The following deprecated content has been removed from the package:
+  - The behaviour of `getAgentConfig()` function is changed to be asynchronous. The temporary asynchroneous function `getAgentConfigAsync()` has been removed.
+  - The `destinationForServiceBinding()` function has been removed. Use `getDestinationFromServiceBinding()` instead.
+  - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding()` function.

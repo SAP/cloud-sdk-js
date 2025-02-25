@@ -70,3 +70,4 @@ To disable caching set `useCache: false` in the options, for example in `execute
   - The `FunctionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
   - The `BoundFunctionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
   - The `BoundActionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
+  - The `ODataActionImportRequestConfig` constant has been removed. Use `ODataActionRequestConfig` instead.

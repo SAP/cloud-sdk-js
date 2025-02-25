@@ -4,7 +4,7 @@
 - function any(),all()
   - Class FilterLambdaExpression
     - build() (on function imports)
-  - Class ODataActionImportRequestConfig
+  - Class ODataActionRequestConfig
   - Class ODataFunctionRequestConfig
 - Class CreateRequestBuilder
 - Class UpdateRequestBuild

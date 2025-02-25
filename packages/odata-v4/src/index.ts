@@ -44,8 +44,7 @@ export { ODataBatchRequestBuilder } from './request-builder';
 
 export {
   ODataActionRequestConfig,
-  ODataFunctionRequestConfig,
-  ODataActionImportRequestConfig
+  ODataFunctionRequestConfig
 } from './request';
 
 export { Entity } from './entity';

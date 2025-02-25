@@ -19,9 +19,7 @@ describe('createAgent', () => {
   };
 
   it('returns the default agent if TrustAll is not set', async () => {
-    const agentConfig = (await getAgentConfig(baseDestination))[
-      'httpsAgent'
-    ];
+    const agentConfig = (await getAgentConfig(baseDestination))['httpsAgent'];
     expect(agentConfig.options.rejectUnauthorized).toBe(true);
   });
 
@@ -223,9 +221,7 @@ describe('getAgentConfig', () => {
       url: 'https://example.com'
     };
 
-    expect(
-      (await getAgentConfig(destination))['httpsAgent']
-    ).toBeDefined();
+    expect((await getAgentConfig(destination))['httpsAgent']).toBeDefined();
   });
 
   it('returns an object with key "httpAgent" for destinations with protocol HTTP', async () => {
@@ -241,9 +237,7 @@ describe('getAgentConfig', () => {
       url: 'example.com'
     };
 
-    expect(
-      (await getAgentConfig(destination))['httpsAgent']
-    ).toBeDefined();
+    expect((await getAgentConfig(destination))['httpsAgent']).toBeDefined();
   });
 
   it('throws an error for unsupported protocols', async () => {
@@ -332,8 +326,7 @@ describe('getAgentConfig', () => {
       const logger = createLogger('http-agent');
       const warnSpy = jest.spyOn(logger, 'warn');
 
-      const actual = (await getAgentConfig(destination))['httpsAgent']
-        .options;
+      const actual = (await getAgentConfig(destination))['httpsAgent'].options;
 
       expect(actual.cert).not.toBeDefined();
       expect(actual.key).not.toBeDefined();
@@ -347,8 +340,7 @@ describe('getAgentConfig', () => {
         url: 'https://example.com'
       };
 
-      const actual = (await getAgentConfig(destination))['httpsAgent']
-        .options;
+      const actual = (await getAgentConfig(destination))['httpsAgent'].options;
 
       expect(actual.cert).not.toBeDefined();
       expect(actual.key).not.toBeDefined();

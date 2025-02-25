@@ -3,7 +3,6 @@ import { ODataActionRequestConfig } from './odata-action-request-config';
 import type {
   ODataUri,
   EntityBase,
-  RequestMethodType,
   EntityApi,
   OperationParameters,
   WithKeys

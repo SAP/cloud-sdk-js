@@ -17,8 +17,9 @@ import {
   httpProxyHostAndPort
 } from './connectivity-service';
 import { getRequiredSubscriberToken } from './destination';
-import { getJwtPair } from './jwt';
+import { decodeJwt, getJwtPair } from './jwt';
 import type { Destination } from './destination';
+import { signedJwtForVerification } from '../../../../test-resources/test/test-util';
 
 describe('connectivity-service', () => {
   afterEach(() => {
@@ -28,7 +29,7 @@ describe('connectivity-service', () => {
 
   it('adds a proxy configuration containing at least the host, the port, and the "Proxy-Authorization" header to a destination', async () => {
     mockServiceBindings();
-    mockServiceToken();
+    const serviceTokenSpy = mockServiceToken();
 
     const input: Destination = {
       url: 'https://example.com',
@@ -50,6 +51,33 @@ describe('connectivity-service', () => {
 
     const withProxy = await addProxyConfigurationOnPrem(input);
     expect(withProxy).toEqual(expected);
+    expect(serviceTokenSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not retrieve a new token if "Proxy-Authorization" header exists and its token is not expired', async () => {
+    jest.useFakeTimers().setSystemTime(0); // Set current time to Thu Jan 01 1970 00:00:00 GMT+0000
+    mockServiceBindings();
+    const serviceTokenSpy = mockServiceToken();
+
+    const token = signedJwtForVerification({
+      ...decodeJwt(providerServiceToken),
+      exp: 1 // Not expired yet
+    });
+
+    const input: Destination = {
+      url: 'https://example.com',
+      proxyType: 'OnPremise',
+      type: 'HTTP',
+      proxyConfiguration: {
+        ...connectivityProxyConfigMock,
+        headers: {
+          'Proxy-Authorization': `Bearer ${token}`
+        }
+      }
+    };
+
+    await addProxyConfigurationOnPrem(input);
+    expect(serviceTokenSpy).toHaveBeenCalledTimes(0);
   });
 
   it('also contains the "SAP-Connectivity-Authentication" header if a JWT is present', async () => {

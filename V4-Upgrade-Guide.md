@@ -51,8 +51,6 @@ To disable caching set `useCache: false` in the options, for example in `execute
 
 ## Check for deprecation
 
-
-
 - `@sap-cloud-sdk/connectivity`
   - The behaviour of `getAgentConfig()` function is changed to be asynchronous. The temporary asynchroneous function `getAgentConfigAsync()` has been removed.
   - The `destinationForServiceBinding()` function has been removed. Use `getDestinationFromServiceBinding()` instead.
@@ -61,6 +59,7 @@ To disable caching set `useCache: false` in the options, for example in `execute
   - The `FunctionImportParameters` type has been removed. Use `OperationParameters` instead.
   - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
   - The `FunctionImportParameter` constant has been removed. Use `OperationParameter` instead.
+  - The `ActionFunctionImportRequestBuilderBase` constant has been removed. Use `OperationRequestBuilderBase` instead.
 - `@sap-cloud-sdk/odata-v2`
   - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
 - `@sap-cloud-sdk/odata-v4`

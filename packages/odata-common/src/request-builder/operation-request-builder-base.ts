@@ -85,9 +85,3 @@ export abstract class OperationRequestBuilderBase<
     this._batchReference = { id };
   }
 }
-
-/**
- * @deprecated Since 3.3.0. Use {@link OperationRequestBuilderBase} instead.
- */
-export const ActionFunctionImportRequestBuilderBase =
-  OperationRequestBuilderBase;

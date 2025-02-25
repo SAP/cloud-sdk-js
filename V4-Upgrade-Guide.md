@@ -21,9 +21,6 @@ The To-Do list is:
 - [Update to Node 22 or Newer](#update-to-node-22-or-newer)
 - [Set `useCache` explicitly to false to turn off destination caching](#set-usecache-explicitly-to-false-to-turn-off-destination-caching)
 - [Check for deprecation](#check-for-deprecation)
-  - [Deprecated functions](#deprecated-functions)
-  - [Deprecated types](#deprecated-types)
-  - [Deprecated constants](#deprecated-constants)
 
 ## Update Your Project Dependencies
 
@@ -54,24 +51,19 @@ To disable caching set `useCache: false` in the options, for example in `execute
 
 ## Check for deprecation
 
-### Deprecated functions
+
 
 - `@sap-cloud-sdk/connectivity`
   - The behaviour of `getAgentConfig()` function is changed to be asynchronous. The temporary asynchroneous function `getAgentConfigAsync()` has been removed.
   - The `destinationForServiceBinding()` function has been removed. Use `getDestinationFromServiceBinding()` instead.
-
-### Deprecated types
-
-- `@sap-cloud-sdk/connectivity`
   - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding()` function.
-  - 
-
-### Deprecated constants
-
 - `@sap-cloud-sdk/odata-common`
+  - The `FunctionImportParameters` type has been removed. Use `OperationParameters` instead.
   - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
+  - The `FunctionImportParameter` constant has been removed. Use `OperationParameter` instead.
 - `@sap-cloud-sdk/odata-v2`
   - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
 - `@sap-cloud-sdk/odata-v4`
   - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
-
+  - The `ActionImportParameter` class has been removed. Use `OperationParameter` instead.
+  - The type `ActionImportParameters` has been removed. Use `OperationParameters` instead.

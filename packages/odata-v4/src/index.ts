@@ -48,8 +48,6 @@ export { ODataBatchRequestBuilder } from './request-builder';
 export {
   ODataActionRequestConfig,
   ODataFunctionRequestConfig,
-  ActionImportParameter,
-  ActionImportParameters,
   ODataActionImportRequestConfig
 } from './request';
 

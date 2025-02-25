@@ -69,8 +69,7 @@ export type { BatchResponse } from './batch-response';
 
 export type {
   ODataBoundActionRequestConfig,
-  ODataBoundFunctionRequestConfig,
-  OdataBoundFunctionImportRequestConfig
+  ODataBoundFunctionRequestConfig
 } from './request';
 
 export * from './common';

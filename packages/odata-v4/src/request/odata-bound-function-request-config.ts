@@ -50,9 +50,3 @@ export class ODataBoundFunctionRequestConfig<
     return {};
   }
 }
-
-/**
- * @deprecated Since 3.3.0. Use {@link ODataBoundFunctionRequestConfig} instead.
- */
-export const OdataBoundFunctionImportRequestConfig =
-  ODataBoundFunctionRequestConfig;

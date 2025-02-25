@@ -22,6 +22,7 @@ The To-Do list is:
 - [Set `useCache` explicitly to false to turn off destination caching](#set-usecache-explicitly-to-false-to-turn-off-destination-caching)
 - [Check for deprecation](#check-for-deprecation)
   - [Deprecated functions](#deprecated-functions)
+  - [Deprecated types](#deprecated-types)
 
 ## Update Your Project Dependencies
 
@@ -54,8 +55,13 @@ To disable caching set `useCache: false` in the options, for example in `execute
 
 ### Deprecated functions
 
-The following deprecated functions have been removed in version 4:
+- `@sap-cloud-sdk/connectivity`
+  - The behaviour of `getAgentConfig()` function is changed to be asynchronous. The temporary asynchroneous function `getAgentConfigAsync()` has been removed.
+  - The `destinationForServiceBinding()` function has been removed. Use `getDestinationFromServiceBinding()` instead.
+
+### Deprecated types
 
 - `@sap-cloud-sdk/connectivity`
-  - The behaviour of `getAgentConfig()` is changed to be asynchronous. The temporary asynchroneous function `getAgentConfigAsync()` has been removed.
-  - 
+  - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding`.
+
+

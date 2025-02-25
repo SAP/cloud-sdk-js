@@ -21,19 +21,6 @@ const logger = createLogger({
 });
 
 /**
- * @deprecated Since v3.4.0. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding`.
- * Represents partial options to fetch destinations.
- */
-export type PartialDestinationFetchOptions = {
-  /**
-   * The JWT used to fetch destinations.
-   * The use of `JwtPayload` is deprecated since v3.4.0 and will be removed in the next major version update.
-   * Use `string` instead.
-   */
-  jwt?: JwtPayload;
-} & CachingOptions;
-
-/**
  * Tries to build a destination from a service binding with the given name.
  * Throws an error if no services are bound at all, no service with the given name can be found, or the service type is not supported.
  * The last error can be circumvent by using the second parameter to provide a custom function that transforms a service binding to a destination.
@@ -104,60 +91,6 @@ async function retrieveDestinationWithoutCache({
   });
 
   return { name: destinationName, ...destination };
-}
-
-/**
- * Tries to build a destination from a service binding with the given name.
- * Throws an error if no services are bound at all, no service with the given name can be found, or the service type is not supported.
- * The last error can be circumvent by using the second parameter to provide a custom function that transforms a service binding to a destination.
- * @param serviceInstanceName - The name of the service.
- * @param options - Options to customize the behavior of this function.
- * @returns A destination.
- * @deprecated Since v3.4.0. Use {@link getDestinationFromServiceBinding} instead.
- */
-export async function destinationForServiceBinding(
-  serviceInstanceName: string,
-  options: DestinationForServiceBindingOptions &
-    PartialDestinationFetchOptions = {}
-): Promise<Destination> {
-  if (options.useCache) {
-    const destinationFromCache =
-      await destinationCache.retrieveDestinationFromCache(
-        decodeOrMakeJwt(options.jwt),
-        serviceInstanceName,
-        'tenant'
-      );
-
-    if (destinationFromCache) {
-      return destinationFromCache;
-    }
-  }
-
-  const optionsForTransformation = {
-    useCache: options.useCache,
-    jwt: options.jwt
-  };
-  const selected = getServiceBindingByInstanceName(serviceInstanceName);
-  const transformFn = options.serviceBindingTransformFn || transform;
-  const destination = await transformFn(selected, optionsForTransformation);
-
-  const destWithProxy =
-    destination &&
-    isHttpDestination(destination) &&
-    ['internet', 'private-link'].includes(proxyStrategy(destination))
-      ? addProxyConfigurationInternet(destination)
-      : destination;
-
-  if (options.useCache) {
-    // As the grant type is clientCredential, isolation strategy is 'tenant'.
-    await destinationCache.cacheRetrievedDestination(
-      decodeOrMakeJwt(options.jwt),
-      destWithProxy,
-      'tenant'
-    );
-  }
-
-  return destWithProxy;
 }
 
 /**

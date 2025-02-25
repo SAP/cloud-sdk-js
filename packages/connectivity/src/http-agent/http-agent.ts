@@ -280,7 +280,7 @@ export async function urlAndAgent(targetUri: string): Promise<{
   }
   return {
     baseURL: destination.url,
-    ...(await getAgentConfigAsync(destination)),
+    ...(await getAgentConfig(destination)),
     proxy: getProxyConfig(destination)
   };
 }

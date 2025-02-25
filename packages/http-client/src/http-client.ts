@@ -2,7 +2,7 @@ import * as http from 'http';
 import * as https from 'https';
 import {
   buildHeadersForDestination,
-  getAgentConfigAsync,
+  getAgentConfig,
   getTenantId
 } from '@sap-cloud-sdk/connectivity';
 import {
@@ -401,7 +401,7 @@ async function buildDestinationHttpRequestConfig(
     headers,
     params: destination.queryParameters,
     proxy: getProxyConfig(destination),
-    ...(await getAgentConfigAsync(destination))
+    ...(await getAgentConfig(destination))
   };
 }
 

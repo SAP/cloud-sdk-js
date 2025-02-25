@@ -53,8 +53,7 @@ export type {
 } from './de-serializers';
 
 export {
-  ODataFunctionRequestConfig,
-  ODataFunctionImportRequestConfig
+  ODataFunctionRequestConfig
 } from './request';
 export type { BatchResponse } from './batch-response';
 

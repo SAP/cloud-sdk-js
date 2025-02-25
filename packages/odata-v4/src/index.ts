@@ -50,8 +50,7 @@ export {
   ODataFunctionRequestConfig,
   ActionImportParameter,
   ActionImportParameters,
-  ODataActionImportRequestConfig,
-  ODataFunctionImportRequestConfig
+  ODataActionImportRequestConfig
 } from './request';
 
 export { Entity } from './entity';

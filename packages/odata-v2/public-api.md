@@ -2,7 +2,7 @@
 
 - all filterFunctions new to v2 (substringOf,replace)
   - build() (on function imports)
-  - Class ODataFunctionImportRequestConfig
+  - Class ODataFunctionRequestConfig
 - Class CreateRequestBuilder
 - Class UpdateRequestBuild
 - Class DeleteRequestBuilder

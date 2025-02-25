@@ -23,6 +23,7 @@ The To-Do list is:
 - [Check for deprecation](#check-for-deprecation)
   - [Deprecated functions](#deprecated-functions)
   - [Deprecated types](#deprecated-types)
+  - [Deprecated constants](#deprecated-constants)
 
 ## Update Your Project Dependencies
 
@@ -62,6 +63,15 @@ To disable caching set `useCache: false` in the options, for example in `execute
 ### Deprecated types
 
 - `@sap-cloud-sdk/connectivity`
-  - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding`.
+  - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding()` function.
+  - 
 
+### Deprecated constants
+
+- `@sap-cloud-sdk/odata-common`
+  - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
+- `@sap-cloud-sdk/odata-v2`
+  - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
+- `@sap-cloud-sdk/odata-v4`
+  - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
 

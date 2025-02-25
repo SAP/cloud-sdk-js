@@ -5,7 +5,7 @@
   - Class FilterLambdaExpression
     - build() (on function imports)
   - Class ODataActionImportRequestConfig
-  - Class ODataFunctionImportRequestConfig
+  - Class ODataFunctionRequestConfig
 - Class CreateRequestBuilder
 - Class UpdateRequestBuild
 - Class DeleteRequestBuilder

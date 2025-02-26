@@ -52,7 +52,7 @@ To disable caching set `useCache: false` in the options, for example in `execute
 ## Check for Deprecation
 
 - `@sap-cloud-sdk/connectivity`
-  - The behaviour of `getAgentConfig()` function is changed to be asynchronous. The temporary asynchroneous function `getAgentConfigAsync()` has been removed.
+  - The `getAgentConfig()` function is now asynchronous. The `getAgentConfigAsync()` function has been removed.
   - The `destinationForServiceBinding()` function has been removed. Use `getDestinationFromServiceBinding()` instead.
   - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding()` function.
 - `@sap-cloud-sdk/odata-common`

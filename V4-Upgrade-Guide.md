@@ -51,7 +51,8 @@ To disable caching set `useCache: false` in the options, for example in `execute
 
 ## Set `iasToXsuaaTokenExchange` to `true` to enable IAS to XSUAA token exchange
 
-**Token exchange from IAS to XSUAA is now disabled by default. Set `iasToXsuaaTokenExchange` to `true` explicitly if token exchange is expected.** 
+**Token exchange from IAS to XSUAA is now disabled by default.
+Set `iasToXsuaaTokenExchange` to `true` explicitly if token exchange is expected.** 
 
 This change affects the default behaviour of following functions
 

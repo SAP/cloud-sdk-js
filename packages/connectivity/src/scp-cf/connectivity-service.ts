@@ -38,7 +38,7 @@ export async function addProxyConfigurationOnPrem(
     };
   }
 
-  const proxyConfiguration = {
+  const proxyConfiguration: ProxyConfiguration = {
     ...httpProxyHostAndPort(),
     headers: {
       ...(await proxyHeaders(destination.authentication, subscriberToken))

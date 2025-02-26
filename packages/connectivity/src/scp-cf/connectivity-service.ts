@@ -39,28 +39,7 @@ export async function addProxyConfigurationOnPrem(
     };
   }
 
-  // Get the proxy authorization token if it exists
-  const proxyAuthorizationToken =
-    destination.proxyConfiguration?.headers?.['Proxy-Authorization']?.match(
-      /^Bearer (.+)/
-    )?.[1];
-
-  let proxyConfiguration: ProxyConfiguration;
-  if (proxyAuthorizationToken) {
-    // Expiration time is a `NumericDate` value (seconds since the epoch), see https://tools.ietf.org/html/rfc7519#section-2
-    const exp = decodeJwt(proxyAuthorizationToken).exp;
-    // If the token is not expired, use the existing headers
-    if (exp && exp * 1000 > Date.now()) {
-      proxyConfiguration = {
-        ...httpProxyHostAndPort(),
-        headers: destination.proxyConfiguration?.headers
-      };
-      return { ...destination, proxyConfiguration };
-    }
-  }
-
-  // No token or token expired, get a new header
-  proxyConfiguration = {
+  const proxyConfiguration = {
     ...httpProxyHostAndPort(),
     headers: {
       ...(await proxyHeaders(destination.authentication, subscriberToken))

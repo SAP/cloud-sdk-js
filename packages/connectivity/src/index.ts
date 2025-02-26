@@ -5,7 +5,6 @@
  */
 
 export {
-  parseDestination,
   toDestinationNameUrl,
   sanitizeDestination,
   DestinationCacheInterface,

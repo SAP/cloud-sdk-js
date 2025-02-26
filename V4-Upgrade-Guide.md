@@ -58,7 +58,6 @@ This change affects the default behaviour of following functions
 
 - `getDestination()`
 - `getAllDestinationsFromDestinationService()`
-- `registerDestination()`
 - `getDestinationFromDestinationService()`
 - `useOrFetchDestination()`
 - `toDestinationNameUrl()`

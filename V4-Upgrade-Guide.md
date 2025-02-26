@@ -20,7 +20,7 @@ The To-Do list is:
 - [Update Your Project Dependencies](#update-your-project-dependencies)
 - [Update to Node 22 or Newer](#update-to-node-22-or-newer)
 - [Set `useCache` explicitly to false to turn off destination caching](#set-usecache-explicitly-to-false-to-turn-off-destination-caching)
-- [Check for Deprecation](#check-for-deprecation)
+- [Deprecated Content Removal](#deprecated-content-removal)
 
 ## Update Your Project Dependencies
 
@@ -49,12 +49,14 @@ To disable caching set `useCache: false` in the options, for example in `execute
 .execute({ destinationName: 'DESTINATION', jwt: 'JWT', useCache: false })
 ```
 
-## Check for Deprecation
+## Deprecated Content Removal
 
 - `@sap-cloud-sdk/connectivity`
   - The `getAgentConfig()` function is now asynchronous. The `getAgentConfigAsync()` function has been removed.
   - The `destinationForServiceBinding()` function has been removed. Use `getDestinationFromServiceBinding()` instead.
   - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding()` function.
+  - The `serviceToken()` function no longer takes `xsuaaCredentials` as part of the `options` parameter.
+  - The `parseDestination()` function is no longer a public API.
 - `@sap-cloud-sdk/odata-common`
   - The `FunctionImportParameters` type has been removed. Use `OperationParameters` instead.
   - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.

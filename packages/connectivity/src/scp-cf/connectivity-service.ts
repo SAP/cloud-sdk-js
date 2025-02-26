@@ -1,7 +1,6 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { getServiceBindings } from './environment-accessor';
 import { serviceToken } from './token-accessor';
-import { decodeJwt } from './jwt';
 import type { JwtPayload } from './jsonwebtoken-type';
 import type { Protocol } from './protocol';
 import type {

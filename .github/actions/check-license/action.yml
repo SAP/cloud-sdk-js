@@ -1,0 +1,5 @@
+name: 'Check License'
+description: 'Checks if the licenses of the dependencies are allowed.'
+runs:
+  using: 'node20'
+  main: 'index.js'

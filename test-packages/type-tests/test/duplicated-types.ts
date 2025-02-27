@@ -1,8 +1,8 @@
-import { DeSerializers as DeSerializersV2 } from '@sap-cloud-sdk/odata-v2';
-import BigNumber from 'bignumber.js';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers as DeSerializersV4 } from '@sap-cloud-sdk/odata-v4';
 import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4/internal';
+import type { DeSerializers as DeSerializersV2 } from '@sap-cloud-sdk/odata-v2';
+import type BigNumber from 'bignumber.js';
+import type { Time } from '@sap-cloud-sdk/odata-common/internal';
+import type { DeSerializers as DeSerializersV4 } from '@sap-cloud-sdk/odata-v4';
 
 /*
 These types are duplicated from the published module to ensure a unintentional change breaks the type tests.

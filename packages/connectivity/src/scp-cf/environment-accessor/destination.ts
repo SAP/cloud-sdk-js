@@ -1,5 +1,5 @@
-import { DestinationServiceCredentials } from './environment-accessor-types';
 import { getServiceCredentials } from './service-credentials';
+import type { DestinationServiceCredentials } from './environment-accessor-types';
 
 /**
  * Utility function to get destination service credentials, including error handling.

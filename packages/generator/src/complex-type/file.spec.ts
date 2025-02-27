@@ -1,9 +1,9 @@
 import { StructureKind } from 'ts-morph';
-import { complexTypeSourceFile } from '../complex-type';
 import {
   complexMeal,
   complexMealWithDesert
 } from '../../test/test-util/data-model';
+import { complexTypeSourceFile } from './file';
 
 describe('file', () => {
   it('complexTypeSourceFile', () => {

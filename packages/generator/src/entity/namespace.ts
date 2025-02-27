@@ -1,12 +1,5 @@
 import { unixEOL, unique } from '@sap-cloud-sdk/util';
-import {
-  ModuleDeclarationStructure,
-  StructureKind,
-  VariableDeclarationKind,
-  VariableStatementStructure,
-  OptionalKind,
-  VariableDeclarationStructure
-} from 'ts-morph';
+import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import { isOrderableEdmType } from '@sap-cloud-sdk/odata-common';
 import { getGenericParameters, linkClass } from '../generator-utils';
 import { prependPrefix } from '../internal-prefix';
@@ -15,7 +8,13 @@ import {
   getStaticPropertyDescription,
   addLeadingNewline
 } from '../typedoc';
-import {
+import type {
+  ModuleDeclarationStructure,
+  VariableStatementStructure,
+  OptionalKind,
+  VariableDeclarationStructure
+} from 'ts-morph';
+import type {
   VdmEntity,
   VdmNavigationProperty,
   VdmProperty,
@@ -80,7 +79,8 @@ function getFieldInitializer(
  */
 export function createPropertyFieldInitializerForEntity(
   prop: VdmProperty,
-  fieldBuilderName = '_fieldBuilder'
+  fieldBuilderName = '_fieldBuilder',
+  service?: VdmServiceMetadata
 ): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
@@ -100,9 +100,20 @@ export function createPropertyFieldInitializerForEntity(
     return `${fieldBuilderName}.buildEnumField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
   }
 
-  return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+  return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${
+    prop.edmType
+  }', ${prop.nullable}${
+    prop.precision !== undefined &&
+    isPrecisionAwareEdmType(prop.edmType) &&
+    service?.oDataVersion === 'v4'
+      ? `, ${prop.precision}`
+      : ''
+  })`;
 }
 
+function isPrecisionAwareEdmType(value: string): boolean {
+  return value === 'Edm.DateTimeOffset';
+}
 /**
  * @internal
  */

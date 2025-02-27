@@ -1,7 +1,7 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
-import { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
-import { OpenApiOperation } from '../openapi-types';
 import { getOperationParamCode } from './code-sample-util';
+import type { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
+import type { OpenApiOperation } from '../openapi-types';
 
 /**
  * @internal

@@ -3,9 +3,9 @@ import {
   commonEntityApi
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
-import { DefaultDeSerializers } from '../de-serializers';
 import { asc } from '../order';
 import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
+import type { DefaultDeSerializers } from '../de-serializers';
 
 describe('ODataGetAllRequestConfig', () => {
   let config: ODataGetAllRequestConfig<CommonEntity, DefaultDeSerializers>;

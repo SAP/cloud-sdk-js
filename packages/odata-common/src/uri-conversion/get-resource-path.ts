@@ -3,9 +3,9 @@ import {
   isNullish,
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
-import { EntityBase, Constructable } from '../entity-base';
-import { UriConverter } from '../de-serializers';
-import { EntityApi } from '../entity-api';
+import type { EntityBase, Constructable } from '../entity-base';
+import type { UriConverter } from '../de-serializers';
+import type { EntityApi } from '../entity-api';
 
 const logger = createLogger({
   package: 'odata-common',

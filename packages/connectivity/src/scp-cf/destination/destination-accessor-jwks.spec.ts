@@ -7,10 +7,10 @@ import {
   oauthMultipleResponse,
   providerServiceToken
 } from '../../../../../test-resources/test/test-util';
-import { DestinationFetchOptions } from './destination-accessor-types';
 import { alwaysProvider } from './destination-selection-strategies';
 import { getDestination } from './destination-accessor';
-import { DestinationConfiguration } from './destination';
+import type { DestinationFetchOptions } from './destination-accessor-types';
+import type { DestinationConfiguration } from './destination';
 
 describe('custom JWTs', () => {
   beforeEach(() => {

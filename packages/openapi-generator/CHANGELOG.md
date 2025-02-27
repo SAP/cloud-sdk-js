@@ -1,5 +1,65 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 3.24.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.24.0
+- @sap-cloud-sdk/openapi@3.24.0
+- @sap-cloud-sdk/util@3.24.0
+
+## 3.23.0
+
+### Patch Changes
+
+- Updated dependencies [745766e]
+  - @sap-cloud-sdk/generator-common@3.23.0
+  - @sap-cloud-sdk/openapi@3.23.0
+  - @sap-cloud-sdk/util@3.23.0
+
+## 3.22.2
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.22.2
+- @sap-cloud-sdk/openapi@3.22.2
+- @sap-cloud-sdk/util@3.22.2
+
+## 3.22.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.22.1
+- @sap-cloud-sdk/openapi@3.22.1
+- @sap-cloud-sdk/util@3.22.1
+
+## 3.22.0
+
+### Minor Changes
+
+- d073a48: [New Functionality] Add support for discriminator properties in schemas that include `oneOf` and `anyOf`. Also add support for incorrect usage of the discriminator property with schemas of type `object`.
+- c4153b9: [Fixed Issue] Ignore charset parameter in media types given in OpenAPI specification.
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.22.0
+- @sap-cloud-sdk/openapi@3.22.0
+- @sap-cloud-sdk/util@3.22.0
+
+## 3.21.0
+
+### Minor Changes
+
+- d2a2394: [Improvement] Update generation of properties with `nullable: true` in the spec to include `type | null` in the output types.
+- d2a2394: [Improvement] Normalize schemas that have `allOf`, `anyOf`, or `oneOf` alongside properties defined at the same level.
+- 89f77cd: [Improvement] Configure generated OpenAPI clients to handle `text/plain`, `application/octet-stream`, and wildcard `*/*` content types in response headers.
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.21.0
+- @sap-cloud-sdk/openapi@3.21.0
+- @sap-cloud-sdk/util@3.21.0
+
 ## 3.20.0
 
 ### Patch Changes

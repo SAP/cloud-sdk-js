@@ -1,7 +1,8 @@
-import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import { StructureKind } from 'ts-morph';
 import { unique } from '@sap-cloud-sdk/util';
 import { odataImportDeclarationTsMorph } from '../imports';
-import { VdmServiceMetadata } from '../vdm-types';
+import type { ImportDeclarationStructure } from 'ts-morph';
+import type { VdmServiceMetadata } from '../vdm-types';
 
 /**
  * @internal

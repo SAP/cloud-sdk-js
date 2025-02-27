@@ -1,9 +1,8 @@
-import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import { StructureKind } from 'ts-morph';
 import {
   bigNumberImport,
   momentImport
 } from '../test/test-util/import-declaration-structures';
-import { VdmNavigationProperty, VdmProperty } from './vdm-types';
 import {
   complexTypeImportDeclarations,
   navPropertyFieldTypeImportNames,
@@ -12,6 +11,8 @@ import {
   externalImportDeclarationsTsMorph,
   mergeImportDeclarations
 } from './imports';
+import type { VdmNavigationProperty, VdmProperty } from './vdm-types';
+import type { ImportDeclarationStructure } from 'ts-morph';
 
 const momentProperty = {
   jsType: 'Moment',

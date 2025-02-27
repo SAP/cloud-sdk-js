@@ -1,16 +1,16 @@
 import {
   defaultDeSerializersRaw as defaultDeSerializersCommon,
-  Time,
   wrapDefaultDeSerializers
 } from '@sap-cloud-sdk/odata-common/internal';
-import BigNumber from 'bignumber.js';
 import {
   deserializeToMoment,
   deserializeToTime,
   serializeFromMoment,
   serializeFromTime
 } from './converters';
-import { DeSerializers } from './de-serializers';
+import type { Time } from '@sap-cloud-sdk/odata-common/internal';
+import type BigNumber from 'bignumber.js';
+import type { DeSerializers } from './de-serializers';
 
 /**
  * Type of the default (de-)serializers.

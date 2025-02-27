@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
-import { DefaultDeSerializers } from '../de-serializers';
+import type { DefaultDeSerializers } from '../de-serializers';
 const regexUuid = '\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}';
 const responseBoundary = 'responseBoundary';
 
@@ -76,13 +76,12 @@ HTTP/1.1 200 OK
     const response = await batch(
       operations.testFunctionImportGet({} as any)
     ).execute({ url: baseUrl });
+    expect(response[0].isReadResponse()).toBeTruthy();
     if (response[0].isReadResponse()) {
       const casted = testFunctionImportGet({} as any).responseTransformer(
         response[0].body
       );
       expect(casted).toEqual('MyText');
-    } else {
-      throw new Error('Should be readResponse');
     }
   });
 
@@ -119,13 +118,12 @@ HTTP/1.1 200 OK
       requestBuilder
     ]);
     const response = await batch(changeSet).execute({ url: baseUrl });
+    expect(response[0].isWriteResponses()).toBeTruthy();
     if (response[0].isWriteResponses()) {
       const casted = testFunctionImportPost({} as any).responseTransformer(
         response[0].responses[0].body
       );
       expect(casted).toBe(true);
-    } else {
-      throw new Error('Should be writeResponse');
     }
   });
 
@@ -138,11 +136,10 @@ HTTP/1.1 200 OK
     const response = await batch(
       testEntityApi.requestBuilder().getAll()
     ).execute({ url: baseUrl });
+    expect(response[0].isReadResponse()).toBeTruthy();
     if (response[0].isReadResponse()) {
       const casted = response[0].as(testEntityApi);
       expect(casted[0].stringProperty).toEqual('4711');
-    } else {
-      throw new Error('Should be readResponse');
     }
   });
 });

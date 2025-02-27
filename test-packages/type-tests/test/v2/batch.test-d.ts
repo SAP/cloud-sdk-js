@@ -5,22 +5,22 @@ import {
 import {
   batch,
   changeset as testEntityChangeset,
-  TestEntity,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import {
-  mergeDefaultDeSerializersWith,
+import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2/internal';
+import { expectType } from 'tsd';
+import type {
   ReadResponse,
   WriteResponses
 } from '@sap-cloud-sdk/odata-v2/internal';
-import { expectType } from 'tsd';
-import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
-import {
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import type { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
+import type {
   BatchResponse,
   DefaultDeSerializers,
   ODataBatchRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
-import {
+import type {
   CustomDeSerializerV2,
   DefaultDeSerializerV2
 } from '../duplicated-types';

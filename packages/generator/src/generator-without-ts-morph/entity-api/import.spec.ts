@@ -1,5 +1,5 @@
-import { Import } from '@sap-cloud-sdk/generator-common/internal';
 import { mergeImports } from './imports';
+import type { Import } from '@sap-cloud-sdk/generator-common/internal';
 
 describe('entity api import', () => {
   it('merge imports', () => {

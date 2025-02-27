@@ -29,7 +29,7 @@ function mockCsrfTokenRequest(path?: string) {
       'x-csrf-token': 'Fetch'
     }
   })
-    .head(path ? `${basePath}/${path}` : basePath)
+    .head(path ? `${basePath}/${path}/` : `${basePath}/`)
     .reply(200, '', mockedBuildHeaderResponse);
 }
 
@@ -71,7 +71,7 @@ describe('Request Builder', () => {
     await expect(request).resolves.not.toThrow();
   });
 
-  it('should resolve for getByKey request', async () => {
+  it('should resolve for create request', async () => {
     const response = singleTestEntityResponse();
     mockCsrfTokenRequest(entityName);
 
@@ -100,10 +100,9 @@ describe('Request Builder', () => {
           .int16Property(16)
           .booleanProperty(false)
           .build()
-      )
-      .execute(destination);
+      );
 
-    await expect(request).resolves.not.toThrow();
+    await expect(request.execute(destination)).resolves.not.toThrow();
   });
 
   it('should resolve for update request', async () => {

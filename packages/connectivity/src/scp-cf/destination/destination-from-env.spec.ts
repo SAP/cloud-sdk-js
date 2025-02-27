@@ -5,7 +5,6 @@ import {
   unmockDestinationsEnv
 } from '../../../../../test-resources/test/test-util/request-mocker';
 import { signedJwt } from '../../../../../test-resources/test/test-util';
-import { Destination } from './destination-service-types';
 import {
   getDestinationFromEnvByName,
   getDestinationsFromEnv,
@@ -13,6 +12,7 @@ import {
 } from './destination-from-env';
 import { getDestination, useOrFetchDestination } from './destination-accessor';
 import { sanitizeDestination } from './destination';
+import type { Destination } from './destination-service-types';
 
 const environmentDestination = {
   name: 'FINAL-DESTINATION',

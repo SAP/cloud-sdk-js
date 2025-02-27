@@ -1,9 +1,9 @@
 import { dirname, extname, join, posix, resolve, sep } from 'path';
 import { existsSync, lstatSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { InferredOptionType, Options as YargsOption } from 'yargs';
-const logger = createLogger('generator-options');
 import { globSync, hasMagic } from 'glob';
+import type { InferredOptionType, Options as YargsOption } from 'yargs';
+const logger = createLogger('generator-options');
 
 /**
  * @internal

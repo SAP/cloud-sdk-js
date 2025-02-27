@@ -1,13 +1,13 @@
 import {
-  Destination,
   validateNameAvailable,
   setDestinationsInEnv
 } from '@sap-cloud-sdk/connectivity/internal';
 import {
   getTestDestinationByAlias,
-  GetTestDestinationOptions,
   getTestDestinations
 } from './test-destination-provider';
+import type { Destination } from '@sap-cloud-sdk/connectivity/internal';
+import type { GetTestDestinationOptions } from './test-destination-provider';
 
 /**
  * Add a destination with the given name from the `systems.json` and `credentials.json` files to the `destinations` environment variable.

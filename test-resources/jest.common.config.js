@@ -9,5 +9,6 @@ module.exports = {
   setupFiles: ['<rootDir>/../../test-resources/bootstrap-test.js'],
   coverageReporters: ['text', 'cobertura', 'html'],
   coveragePathIgnorePatterns: ['dist/', 'node_modules/', 'test/', '.*.spec.ts'],
-  reporters: ['default', 'jest-junit']
+  reporters: ['default', 'jest-junit'],
+  prettierPath: null
 };

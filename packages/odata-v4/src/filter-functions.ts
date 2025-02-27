@@ -1,5 +1,11 @@
-import moment from 'moment';
+import { filterFunctions as filterFunctionsCommon } from '@sap-cloud-sdk/odata-common/internal';
+import { filterFunction } from './filter-function';
 import {
+  defaultDeSerializers,
+  mergeDefaultDeSerializersWith
+} from './de-serializers';
+import type moment from 'moment';
+import type {
   Field,
   StringFilterFunction,
   BooleanFilterFunction,
@@ -7,19 +13,13 @@ import {
   FilterFunctionPrimitiveParameterType,
   CollectionField,
   CollectionFilterFunction,
-  filterFunctions as filterFunctionsCommon,
   FilterFunctionNames as FilterFunctionNamesCommon,
   FilterFunctionsType as FilterFunctionsCommonType,
   Time
 } from '@sap-cloud-sdk/odata-common/internal';
-import BigNumber from 'bignumber.js';
-import { Entity } from './entity';
-import { filterFunction } from './filter-function';
-import {
-  defaultDeSerializers,
-  DeSerializers,
-  mergeDefaultDeSerializersWith
-} from './de-serializers';
+import type BigNumber from 'bignumber.js';
+import type { Entity } from './entity';
+import type { DeSerializers } from './de-serializers';
 
 /* String Functions */
 /**

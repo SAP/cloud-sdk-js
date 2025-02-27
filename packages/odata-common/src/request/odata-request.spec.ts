@@ -1,14 +1,12 @@
 import { v4 as uuid } from 'uuid';
 import { oDataTypedClientParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
 import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
-import {
-  CommonEntity,
-  commonEntityApi
-} from '@sap-cloud-sdk/test-services-odata-common/common-entity';
-import { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
-import { DefaultDeSerializers } from '../de-serializers';
+import { commonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
 import { ODataRequest } from './odata-request';
+import type { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
+import type { DefaultDeSerializers } from '../de-serializers';
 
 describe('OData Request', () => {
   it('should be noParamEncoder', async () => {

@@ -1,6 +1,6 @@
 import { breakfastEntity } from '../../../test/test-util/data-model';
-import { VdmProperty } from '../../vdm-types';
 import { requestBuilderClass } from './class';
+import type { VdmProperty } from '../../vdm-types';
 
 describe('request builder class', () => {
   it('should generate request builder correctly', () => {

@@ -1,6 +1,6 @@
-import { DeSerializers } from '../de-serializers/de-serializers';
-import { EntityBase, EntityIdentifiable } from '../entity-base';
-import { EntityApi } from '../entity-api';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityBase, EntityIdentifiable } from '../entity-base';
+import type { EntityApi } from '../entity-api';
 
 /**
  * Represents a request builder for a given entity API.

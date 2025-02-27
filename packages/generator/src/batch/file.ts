@@ -1,8 +1,9 @@
-import { SourceFileStructure, StructureKind } from 'ts-morph';
-import { VdmServiceMetadata } from '../vdm-types';
+import { StructureKind } from 'ts-morph';
 import { batchFunction, changesetFunction } from './function';
 import { importBatchDeclarations } from './imports';
 import { readRequestType, writeRequestType } from './type';
+import type { VdmServiceMetadata } from '../vdm-types';
+import type { SourceFileStructure } from 'ts-morph';
 
 /**
  * @internal

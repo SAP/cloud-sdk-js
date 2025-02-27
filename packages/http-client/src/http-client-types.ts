@@ -1,10 +1,10 @@
-import * as http from 'http';
+import type * as http from 'http';
 import type {
   MiddlewareContext,
   Middleware,
   MiddlewareOptions
 } from '@sap-cloud-sdk/resilience';
-import { BasicProxyConfiguration } from '@sap-cloud-sdk/connectivity';
+import type { BasicProxyConfiguration } from '@sap-cloud-sdk/connectivity';
 
 /**
  * Context for HttpRequests of the middleware.

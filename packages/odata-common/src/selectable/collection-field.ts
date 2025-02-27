@@ -1,10 +1,11 @@
-import { EntityBase } from '../entity-base';
-import { EdmTypeShared } from '../edm-types';
-import { DeSerializers } from '../de-serializers';
-import { Field, FieldOptions } from './field';
-import { ConstructorOrField } from './constructor-or-field';
+import { Field } from './field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
-import { ComplexTypeNamespace } from './complex-type-namespace';
+import type { EntityBase } from '../entity-base';
+import type { EdmTypeShared } from '../edm-types';
+import type { DeSerializers } from '../de-serializers';
+import type { FieldOptions } from './field';
+import type { ConstructorOrField } from './constructor-or-field';
+import type { ComplexTypeNamespace } from './complex-type-namespace';
 
 /**
  * Represents a field of an entity or a complex type, that can have a collection as value.

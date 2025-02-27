@@ -2,19 +2,16 @@ import { promises } from 'fs';
 import { resolve, join } from 'path';
 import { EOL } from 'os';
 import mock from 'mock-fs';
-import {
-  CompilerOptions,
-  ModuleKind,
-  ModuleResolutionKind,
-  ScriptTarget
-} from 'typescript';
+import { ModuleKind, ModuleResolutionKind, ScriptTarget } from 'typescript';
 import { globSync } from 'glob';
 import {
   readCompilerOptions,
   readIncludeExcludeWithDefaults,
   transpileDirectory
 } from './compiler';
-import { CreateFileOptions, defaultPrettierConfig } from './file-writer';
+import { defaultPrettierConfig } from './file-writer';
+import type { CreateFileOptions } from './file-writer';
+import type { CompilerOptions } from 'typescript';
 
 const { readFile, readdir } = promises;
 

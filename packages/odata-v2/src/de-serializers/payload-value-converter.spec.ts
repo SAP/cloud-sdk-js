@@ -4,9 +4,9 @@ import {
   deserializeToNumber,
   serializeFromNumber
 } from '@sap-cloud-sdk/odata-common/internal';
-import { EdmType } from '../edm-types';
-import { defaultDeSerializers } from '../de-serializers';
+import { defaultDeSerializers } from './default-de-serializers';
 import { edmToTs, tsToEdm } from './payload-value-converter';
+import type { EdmType } from '../edm-types';
 
 describe('edmToTs()', () => {
   it('should parse Edm.String to string', () => {

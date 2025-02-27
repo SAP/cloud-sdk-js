@@ -1,6 +1,6 @@
-import { EntityBase } from '../entity-base';
-import { Link } from '../selectable/link';
-import { EntityApi, EntityType } from '../entity-api';
+import type { EntityBase } from '../entity-base';
+import type { Link } from '../selectable';
+import type { EntityApi, EntityType } from '../entity-api';
 import type { Orderable } from './orderable';
 
 /**

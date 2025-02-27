@@ -1,5 +1,4 @@
 import {
-  CommonEntity,
   commonEntityApi,
   CommonEntityApi
 } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
@@ -9,16 +8,17 @@ import {
   deleteRequestBuilder,
   getAllRequestBuilder,
   getByKeyRequestBuilder,
-  updateRequestBuilder,
-  WriteBuilder
+  updateRequestBuilder
 } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
-import { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 import {
   serializeBatchRequest,
   serializeRequest,
   serializeChangeSet
 } from './batch-request-serializer';
 import { BatchChangeSet } from './batch-change-set';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
+import type { WriteBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
+import type { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 
 jest.mock('uuid', () => ({
   v4: jest.fn(() => '<content-id>')

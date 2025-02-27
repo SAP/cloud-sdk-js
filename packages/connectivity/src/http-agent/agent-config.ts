@@ -1,4 +1,4 @@
-import * as http from 'http';
+import type * as http from 'http';
 
 /**
  * Interface for the `http-agent` within the Axios request config.

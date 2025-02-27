@@ -1,22 +1,20 @@
 import { createLogger, upperCaseSnakeCase } from '@sap-cloud-sdk/util';
-import { EntityBase } from './entity-base';
 import {
-  ComplexTypeNamespace,
   isComplexTypeNameSpace,
-  PropertyMetadata
-} from './selectable/complex-type-namespace';
-import { EdmTypeField } from './selectable/edm-type-field';
-import { OneToOneLink } from './selectable/one-to-one-link';
-import { Link } from './selectable/link';
-import { ComplexTypeField } from './selectable/complex-type-field';
-import { CollectionField } from './selectable/collection-field';
-import { EnumField } from './selectable/enum-field';
-import { EdmTypeShared, isEdmType } from './edm-types';
-import {
-  createValueSerializer,
-  DeSerializers
-} from './de-serializers/de-serializers';
-import { EntityApi } from './entity-api';
+  EdmTypeField,
+  OneToOneLink,
+  Link,
+  ComplexTypeField,
+  CollectionField,
+  EnumField
+} from './selectable';
+import { isEdmType } from './edm-types';
+import { createValueSerializer } from './de-serializers';
+import type { EntityBase } from './entity-base';
+import type { ComplexTypeNamespace, PropertyMetadata } from './selectable';
+import type { EdmTypeShared } from './edm-types';
+import type { DeSerializers } from './de-serializers';
+import type { EntityApi } from './entity-api';
 
 const logger = createLogger({
   package: 'odata-common',
@@ -86,7 +84,7 @@ export function entitySerializer(
       return null;
     }
     if (field instanceof EdmTypeField) {
-      return tsToEdm(fieldValue, field.edmType);
+      return tsToEdm(fieldValue, field.edmType, field._fieldOptions.precision);
     }
     if (field instanceof OneToOneLink) {
       return serializeEntity(fieldValue, field._linkedEntityApi);

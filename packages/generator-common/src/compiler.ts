@@ -3,19 +3,22 @@ import { existsSync, promises } from 'fs';
 import { EOL } from 'os';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  CompilerOptions,
   createProgram,
-  Diagnostic,
   getPreEmitDiagnostics,
   ModuleKind,
   ModuleResolutionKind,
+  ScriptTarget
+} from 'typescript';
+import { glob } from 'glob';
+import { createFile, getFileExtension } from './file-writer';
+import type { CreateFileOptions } from './file-writer';
+import type {
+  CompilerOptions,
+  Diagnostic,
   NodeArray,
-  ScriptTarget,
   Statement,
   WriteFileCallback
 } from 'typescript';
-import { glob } from 'glob';
-import { createFile, CreateFileOptions, getFileExtension } from './file-writer';
 
 const logger = createLogger('compiler');
 const { mkdir } = promises;
@@ -252,7 +255,9 @@ function parseModuleKind(input: string): ModuleKind {
     amd: ModuleKind.AMD,
     es2015: ModuleKind.ES2015,
     es2020: ModuleKind.ES2020,
-    esnext: ModuleKind.ESNext
+    esnext: ModuleKind.ESNext,
+    node16: ModuleKind.Node16,
+    nodenext: ModuleKind.NodeNext
   };
 
   if (mapping[input.toLowerCase()]) {

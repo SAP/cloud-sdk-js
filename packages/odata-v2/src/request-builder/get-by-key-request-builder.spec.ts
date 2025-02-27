@@ -70,9 +70,9 @@ describe('GetByKeyRequestBuilder', () => {
       expect(actual.versionIdentifier).toBeUndefined();
     });
 
-    it('ETag should be pulled from __metadata', async () => {
+    it('eTag should be pulled from __metadata', async () => {
       const entityData = createOriginalTestEntityData1();
-      const versionIdentifier = 'etagInMetadata';
+      const versionIdentifier = 'eTagInMetadata';
       entityData['__metadata'] = { etag: versionIdentifier };
       const expected = createTestEntity(entityData);
 
@@ -95,10 +95,10 @@ describe('GetByKeyRequestBuilder', () => {
       expect(actual).toEqual(expected);
     });
 
-    it('ETag should be pulled from response header when __metadata has no ETag property', async () => {
+    it('eTag should be pulled from response header when __metadata has no eTag property', async () => {
       const entityData = createOriginalTestEntityData1();
       const expected = createTestEntity(entityData);
-      const versionIdentifier = 'etagInHeader';
+      const versionIdentifier = 'eTagInHeader';
       expected.setVersionIdentifier(versionIdentifier);
 
       mockGetRequest(
@@ -108,7 +108,7 @@ describe('GetByKeyRequestBuilder', () => {
             expected.keyPropertyString
           ),
           responseBody: { d: entityData },
-          responseHeaders: { Etag: versionIdentifier }
+          responseHeaders: { etag: versionIdentifier }
         },
         testEntityApi
       );
@@ -193,7 +193,7 @@ describe('GetByKeyRequestBuilder', () => {
   });
 
   it('throws a useful error when request execution fails', async () => {
-    nock(/.*/).get(/.*/).reply(500);
+    nock(defaultDestination.url).get(/.*/).reply(500);
 
     const getByKeyRequest = new GetByKeyRequestBuilder(testEntityApi, {
       KeyPropertyGuid: uuid(),

@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { ResponseDataAccessor } from '@sap-cloud-sdk/odata-common';
+import type { ResponseDataAccessor } from '@sap-cloud-sdk/odata-common';
 
 const logger = createLogger({
   package: 'odata-v2',

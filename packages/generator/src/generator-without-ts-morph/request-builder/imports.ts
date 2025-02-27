@@ -1,8 +1,9 @@
-import { Import } from '@sap-cloud-sdk/generator-common/internal';
-import { ODataVersion, unique } from '@sap-cloud-sdk/util';
+import { unique } from '@sap-cloud-sdk/util';
 import { propertyTypeImportNames } from '../../imports';
-import { VdmEntity, VdmProperty } from '../../vdm-types';
 import { externalImportDeclarations, odataImportDeclaration } from '../imports';
+import type { Import } from '@sap-cloud-sdk/generator-common/internal';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import type { VdmEntity, VdmProperty } from '../../vdm-types';
 
 /**
  * @internal

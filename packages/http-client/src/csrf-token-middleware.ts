@@ -9,7 +9,7 @@ import {
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
-import {
+import type {
   HttpMiddleware,
   HttpMiddlewareContext,
   HttpMiddlewareOptions,

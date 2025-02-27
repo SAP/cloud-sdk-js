@@ -1,10 +1,13 @@
-import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { v4 as uuid } from 'uuid';
-import { ODataRequestConfig } from '../request/odata-request-config';
-import { BatchReference, WithBatchReference } from '../request';
-import { DeSerializers } from '../de-serializers/de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import type { HttpResponse } from '@sap-cloud-sdk/http-client';
+import type {
+  ODataRequestConfig,
+  BatchReference,
+  WithBatchReference
+} from '../request';
+import type { DeSerializers } from '../de-serializers';
 
 /**
  * Create OData request to execute an action or function.

@@ -2,7 +2,7 @@
  * Internal representation of function import parameters. It adds metadata to the value.
  * @typeParam ValueT - Type of the value.
  */
-import { EdmTypeShared } from '@sap-cloud-sdk/odata-common';
+import type { EdmTypeShared } from '@sap-cloud-sdk/odata-common';
 
 /**
  * @deprecated Since 3.3.0. Use {@link OperationParameter} instead.

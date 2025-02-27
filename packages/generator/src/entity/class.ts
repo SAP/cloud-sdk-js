@@ -1,9 +1,4 @@
-import {
-  ClassDeclarationStructure,
-  MethodDeclarationStructure,
-  PropertyDeclarationStructure,
-  StructureKind
-} from 'ts-morph';
+import { StructureKind } from 'ts-morph';
 import { prependPrefix } from '../internal-prefix';
 import { operationFunctionBase } from '../operations';
 import {
@@ -12,7 +7,12 @@ import {
   getNavPropertyDescription,
   getPropertyDescription
 } from '../typedoc';
-import {
+import type {
+  ClassDeclarationStructure,
+  MethodDeclarationStructure,
+  PropertyDeclarationStructure
+} from 'ts-morph';
+import type {
   VdmEntity,
   VdmNavigationProperty,
   VdmOperation,

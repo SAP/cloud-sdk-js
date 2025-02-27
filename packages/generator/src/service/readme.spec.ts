@@ -1,10 +1,10 @@
 import { getExpectedHelpfulLinks } from '../../test/test-util/readme-util';
-import {
+import { readme } from './readme';
+import type {
   ApiBusinessHubMetadata,
   VdmOperation,
   VdmServiceMetadata
 } from '../vdm-types';
-import { readme } from './readme';
 
 const packageName = 'business-partner-service';
 const speakingModuleName = 'Business Partner Service';

@@ -1,18 +1,19 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { JwtPayload } from '../jsonwebtoken-type';
 import { decodeJwt, decodeOrMakeJwt } from '../jwt';
-import { Service } from '../environment-accessor/environment-accessor-types';
 import { getServiceBindingByInstanceName } from '../environment-accessor';
-import { CachingOptions } from '../cache';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
-import { Destination, isHttpDestination } from './destination-service-types';
-import type { DestinationFetchOptions } from './destination-accessor-types';
+import { isHttpDestination } from './destination-service-types';
 import { destinationCache } from './destination-cache';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import type { DestinationFetchOptions } from './destination-accessor-types';
+import type { Destination } from './destination-service-types';
+import type { CachingOptions } from '../cache';
+import type { Service } from '../environment-accessor';
+import type { JwtPayload } from '../jsonwebtoken-type';
 
 const logger = createLogger({
   package: 'connectivity',

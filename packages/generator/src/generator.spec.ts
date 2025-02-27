@@ -1,7 +1,6 @@
 import { join, resolve } from 'path';
 import { promises } from 'fs';
 import { transports } from 'winston';
-import { SourceFile } from 'ts-morph';
 import mock from 'mock-fs';
 import prettier from 'prettier';
 import { createLogger } from '@sap-cloud-sdk/util';
@@ -22,6 +21,7 @@ import {
   generateProject,
   getInstallODataErrorMessage
 } from './generator';
+import type { SourceFile } from 'ts-morph';
 
 const { readFile } = promises;
 
@@ -34,6 +34,8 @@ const pathTestService = resolve(
 );
 const pathToGeneratorCommon = resolve(__dirname, '../../generator-common');
 const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
+
+jest.setTimeout(60000); // Set timeout to 60 seconds as runners appear to be slow
 
 describe('generator', () => {
   const prettierSpy = jest.spyOn(prettier, 'format');
@@ -97,7 +99,7 @@ describe('generator', () => {
         project = await generateProject(createParsedOptions(options));
         await generate(options);
         throw new Error('Should not go here.');
-      } catch (e) {
+      } catch {
         const optionsPerService = await readFile(
           'someDir/test-service-options.json',
           { encoding: 'utf-8' }
@@ -120,7 +122,7 @@ describe('generator', () => {
       });
     });
 
-    it('recommends to install odata packages', async () => {
+    it('recommends to install OData packages', async () => {
       expect(getInstallODataErrorMessage(project!)).toMatchInlineSnapshot(
         '"Did you forget to install "@sap-cloud-sdk/odata-v2"?"'
       );

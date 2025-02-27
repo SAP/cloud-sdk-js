@@ -1,5 +1,5 @@
-import { DeSerializers } from './de-serializers';
 import { wrapDefaultDeSerializers } from './default-de-serializers';
+import type { DeSerializers } from './de-serializers';
 
 describe('wrapDefaultDeSerializers', () => {
   const wrappedDeSerializers = wrapDefaultDeSerializers({

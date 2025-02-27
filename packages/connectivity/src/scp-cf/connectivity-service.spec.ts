@@ -16,8 +16,9 @@ import {
   addProxyConfigurationOnPrem,
   httpProxyHostAndPort
 } from './connectivity-service';
-import { Destination, getRequiredSubscriberToken } from './destination';
+import { getRequiredSubscriberToken } from './destination';
 import { getJwtPair } from './jwt';
+import type { Destination } from './destination';
 
 describe('connectivity-service', () => {
   afterEach(() => {

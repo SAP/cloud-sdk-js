@@ -1,6 +1,6 @@
 import { flat } from '@sap-cloud-sdk/util';
 import { forceArray } from '../../generator-utils';
-import {
+import type {
   EdmxComplexTypeBase,
   EdmxEntitySetBase,
   EdmxEntityTypeBase

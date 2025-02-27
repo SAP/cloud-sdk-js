@@ -1,6 +1,6 @@
 import { flat, titleFormat } from '@sap-cloud-sdk/util';
-import { OpenAPIV3 } from 'openapi-types';
-import {
+import type { OpenAPIV3 } from 'openapi-types';
+import type {
   OpenApiAllOfSchema,
   OpenApiAnyOfSchema,
   OpenApiArraySchema,
@@ -13,7 +13,7 @@ import {
   OpenApiSchemaProperties,
   SchemaNaming
 } from './openapi-types';
-import { SchemaRefMapping } from './parser/parsing-info';
+import type { SchemaRefMapping } from './parser';
 
 /**
  * Collect all unique reference schemas within the given schemas.

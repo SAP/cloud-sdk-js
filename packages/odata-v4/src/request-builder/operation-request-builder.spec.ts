@@ -1,5 +1,4 @@
 import nock from 'nock';
-import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,
@@ -12,6 +11,7 @@ import {
 import { entitySerializer } from '@sap-cloud-sdk/odata-common';
 import { defaultDestination } from '../../../../test-resources/test/test-util/request-mocker';
 import { defaultDeSerializers } from '../de-serializers';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const host = 'https://example.com';
@@ -107,12 +107,12 @@ describe('operation request builder', () => {
 
       nock(host)
         .post(`${basePath}/TestActionImportNoParameterNoReturnType`)
-        .reply(204, {});
+        .reply(204);
 
       const actual = await testActionImportNoParameterNoReturnType(
         {}
       ).executeRaw(destination);
-      expect(actual.data).toEqual({});
+      expect(actual.status).toEqual(204);
       expect(actual.request.method).toBe('POST');
     });
   });

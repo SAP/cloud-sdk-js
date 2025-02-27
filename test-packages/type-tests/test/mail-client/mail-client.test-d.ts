@@ -1,5 +1,6 @@
-import { MailResponse, sendMail } from '@sap-cloud-sdk/mail-client';
+import { sendMail } from '@sap-cloud-sdk/mail-client';
 import { expectType } from 'tsd';
+import type { MailResponse } from '@sap-cloud-sdk/mail-client';
 
 const mailConfig = { from: 'from', to: 'to' };
 

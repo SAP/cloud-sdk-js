@@ -1,9 +1,9 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
-import { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
 import voca from 'voca';
-import { VdmOperation } from '../vdm-types';
-import { getApiName } from '../generator-without-ts-morph/service';
+import { getApiName } from '../generator-without-ts-morph';
 import { getOperationParams } from './code-sample-util';
+import type { VdmOperation } from '../vdm-types';
+import type { MultiLineText } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal

@@ -1,13 +1,13 @@
-import { EntityBase } from '../entity-base';
-import { Selectable } from '../selectable';
-import { Filterable } from '../filter';
-import { Expandable } from '../expandable';
-import { Orderable } from '../order';
-import { ODataUri } from '../uri-conversion';
-import { DeSerializers } from '../de-serializers';
-import { EntityApi } from '../entity-api';
 import { ODataRequestConfig } from './odata-request-config';
-import { WithGetAllRestrictions } from './odata-request-traits';
+import type { EntityBase } from '../entity-base';
+import type { Selectable } from '../selectable';
+import type { Filterable } from '../filter';
+import type { Expandable } from '../expandable';
+import type { Orderable } from '../order';
+import type { ODataUri } from '../uri-conversion';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityApi } from '../entity-api';
+import type { WithGetAllRestrictions } from './odata-request-traits';
 
 /**
  * OData getAll request configuration for an entity type.

@@ -1,13 +1,17 @@
-import { and, any, OneToManyLink } from '@sap-cloud-sdk/odata-v4';
+import { and, any } from '@sap-cloud-sdk/odata-v4';
 import {
-  TestEntity,
   TestEnumType,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { expectError, expectType } from 'tsd';
-import { Filter, FilterList } from '@sap-cloud-sdk/odata-common';
-import { TestEntityMultiLinkApi } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntityMultiLinkApi';
-import { AnyDeSerializerV4, DefaultDeSerializersV4 } from '../duplicated-types';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import type { OneToManyLink } from '@sap-cloud-sdk/odata-v4';
+import type { Filter, FilterList } from '@sap-cloud-sdk/odata-common';
+import type { TestEntityMultiLinkApi } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntityMultiLinkApi';
+import type {
+  AnyDeSerializerV4,
+  DefaultDeSerializersV4
+} from '../duplicated-types';
 
 const { testEntityApi, testEntitySingleLinkApi, testEntityMultiLinkApi } =
   testService();

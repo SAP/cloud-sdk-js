@@ -1,8 +1,8 @@
-import moment from 'moment';
-import {
+import { OrderableFilterFunction } from '@sap-cloud-sdk/odata-common/internal';
+import type moment from 'moment';
+import type {
   EntityBase,
-  FilterFunctionParameterType,
-  OrderableFilterFunction
+  FilterFunctionParameterType
 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**

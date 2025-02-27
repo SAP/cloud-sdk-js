@@ -1,5 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
-import {
+import { ODataActionRequestConfig } from './odata-action-request-config';
+import type {
   ODataUri,
   EntityBase,
   RequestMethodType,
@@ -7,8 +8,7 @@ import {
   OperationParameters,
   WithKeys
 } from '@sap-cloud-sdk/odata-common';
-import { DeSerializers } from '../de-serializers';
-import { ODataActionRequestConfig } from './odata-action-request-config';
+import type { DeSerializers } from '../de-serializers';
 
 /**
  * Action request configuration for an entity type.

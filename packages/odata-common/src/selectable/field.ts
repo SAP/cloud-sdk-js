@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../entity-base';
+import type { EntityBase, Constructable } from '../entity-base';
 
 /**
  * Optional settings for fields.
@@ -15,6 +15,10 @@ export interface FieldOptions<
    * Whether the field can be reference in a `.select` statement.
    */
   isSelectable?: SelectableT;
+  /**
+   * Precision associated with field.
+   */
+  precision?: number;
 }
 
 /**
@@ -37,7 +41,8 @@ export function getFieldOptions<
 
 const defaultFieldOptions: Required<FieldOptions> = {
   isNullable: false,
-  isSelectable: false
+  isSelectable: false,
+  precision: 0
 };
 
 /**

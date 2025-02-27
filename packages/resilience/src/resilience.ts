@@ -1,8 +1,7 @@
 import { timeout } from './timeout';
 import { retry } from './retry';
 import { circuitBreaker } from './circuit-breaker';
-import { MiddlewareContext } from './middleware';
-import type { Middleware } from './middleware';
+import type { MiddlewareContext, Middleware } from './middleware';
 /**
  * Interface for Resilience Options.
  */

@@ -1,6 +1,6 @@
-import { EntityBase } from '../entity-base';
-import { EdmTypeField } from './edm-type-field';
-import { OrderableEdmTypeField } from './orderable-edm-type-field';
+import type { EntityBase } from '../entity-base';
+import type { EdmTypeField } from './edm-type-field';
+import type { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 /**
  * A complex type contains multiple properties.

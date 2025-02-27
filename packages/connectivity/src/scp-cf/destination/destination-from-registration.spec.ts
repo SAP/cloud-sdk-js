@@ -12,11 +12,11 @@ import {
 } from '../../../../../test-resources/test/test-util';
 import { certAsString } from '../../../../../test-resources/test/test-util/test-certificate';
 import {
-  DestinationWithName,
   registerDestination,
   searchRegisteredDestination
 } from './destination-from-registration';
 import { registerDestinationCache } from './register-destination-cache';
+import type { DestinationWithName } from './destination-from-registration';
 
 const testDestination: DestinationWithName = {
   name: 'RegisteredDestination',

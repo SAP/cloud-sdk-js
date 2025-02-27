@@ -1,15 +1,15 @@
 import { flat } from '@sap-cloud-sdk/util';
-import {
-  FunctionDeclarationStructure,
-  InterfaceDeclarationStructure,
-  SourceFileStructure,
-  StructureKind
-} from 'ts-morph';
-import { VdmOperation, VdmServiceMetadata } from '../vdm-types';
+import { StructureKind } from 'ts-morph';
 import { parametersInterface } from './parameters-interface';
 import { exportStatement } from './export-statement';
 import { operationDeclarations } from './import';
 import { operationFunction } from './operation';
+import type { VdmOperation, VdmServiceMetadata } from '../vdm-types';
+import type {
+  FunctionDeclarationStructure,
+  InterfaceDeclarationStructure,
+  SourceFileStructure
+} from 'ts-morph';
 
 /**
  * @internal

@@ -1,6 +1,4 @@
 import { identity, isNullish } from '@sap-cloud-sdk/util';
-import BigNumber from 'bignumber.js';
-import { DeSerializer, DeSerializers } from './de-serializers';
 import {
   serializeFromBigNumber,
   deserializeToNumber,
@@ -9,6 +7,8 @@ import {
   validateGuid
 } from './payload-value-converter';
 import { convertToUriForEdmString, isInfOrNan } from './uri-value-converter';
+import type BigNumber from 'bignumber.js';
+import type { DeSerializer, DeSerializers } from './de-serializers';
 
 /**
  * Type of the default (de-)serializers.
@@ -124,12 +124,12 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
 function wrapDefaultSerializer<T>(
   serialize: DeSerializer<T>['serialize']
 ): DeSerializer<T>['serialize'] {
-  return function (value) {
+  return function (value, precision?) {
     if (value === null) {
       return 'null';
     }
     if (serialize) {
-      return serialize(value);
+      return serialize(value, precision);
     }
     return value;
   };

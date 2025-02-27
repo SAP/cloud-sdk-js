@@ -3,9 +3,9 @@ import {
   resolveGlob,
   resolveOptionsPerService,
   resolvePath,
-  resolveRequiredPath,
-  ServiceType
+  resolveRequiredPath
 } from './options-parser';
+import type { ServiceType } from './options-parser';
 
 function getReadmeText(serviceType: ServiceType): string {
   return serviceType === 'OData'

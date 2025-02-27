@@ -1,7 +1,7 @@
-import { JwtPayload } from '../jsonwebtoken-type';
 import { Cache } from '../cache';
-import { Destination } from './destination-service-types';
 import { getDestinationCacheKey } from './destination-cache';
+import type { JwtPayload } from '../jsonwebtoken-type';
+import type { Destination } from './destination-service-types';
 
 const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
   retrieveDestinationsFromCache: (

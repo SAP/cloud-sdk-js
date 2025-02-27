@@ -1,16 +1,17 @@
-import {
-  TestEntity,
-  testService
-} from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { expectType } from 'tsd';
-import {
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import type {
   OneToManyLink,
   OneToOneLink,
   OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-v4';
-import { TestEntityMultiLinkApi } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntityMultiLinkApi';
-import { TestEntitySingleLinkApi } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntitySingleLinkApi';
-import { AnyDeSerializerV4, DefaultDeSerializersV4 } from '../duplicated-types';
+import type { TestEntityMultiLinkApi } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntityMultiLinkApi';
+import type { TestEntitySingleLinkApi } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntitySingleLinkApi';
+import type {
+  AnyDeSerializerV4,
+  DefaultDeSerializersV4
+} from '../duplicated-types';
 
 const { testEntityApi } = testService();
 const testEntitySchema = testEntityApi.schema;

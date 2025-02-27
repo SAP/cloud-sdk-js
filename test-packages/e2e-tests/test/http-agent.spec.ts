@@ -1,10 +1,11 @@
-import { createServer, Server } from 'https';
+import { createServer } from 'https';
 import { promisify } from 'util';
-import {
+import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
+import type {
   DestinationCertificate,
   HttpDestination
 } from '@sap-cloud-sdk/connectivity';
-import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
+import type { Server } from 'https';
 
 describe('createAgent', () => {
   let server: Server = undefined as any;

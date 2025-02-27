@@ -1,6 +1,7 @@
-import { EnumDeclarationStructure, StructureKind } from 'ts-morph';
-import { VdmEnumType } from '../vdm-types';
+import { StructureKind } from 'ts-morph';
 import { addLeadingNewline, enumDocs } from '../typedoc';
+import type { EnumDeclarationStructure } from 'ts-morph';
+import type { VdmEnumType } from '../vdm-types';
 
 /**
  * @internal

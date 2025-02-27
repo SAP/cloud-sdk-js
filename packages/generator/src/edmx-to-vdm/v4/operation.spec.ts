@@ -1,13 +1,4 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { EdmxParameter, EdmxProperty } from '../../edmx-parser/common';
-import {
-  EdmxComplexType,
-  EdmxEntitySet,
-  EdmxEntityTypeV4,
-  EdmxOperation,
-  EdmxOperationImport
-} from '../../edmx-parser/v4';
-import { ServiceMetadata } from '../../edmx-parser';
 import { generateEntitiesV4 } from './entity';
 import {
   filterAndTransformOperations,
@@ -15,6 +6,15 @@ import {
 } from './operation';
 import { generateComplexTypesV4 } from './complex-type';
 import { createEntityType, getComplexType, getFormatter } from './entity.spec';
+import type { ServiceMetadata } from '../../edmx-parser';
+import type {
+  EdmxComplexType,
+  EdmxEntitySet,
+  EdmxEntityTypeV4,
+  EdmxOperation,
+  EdmxOperationImport
+} from '../../edmx-parser/v4';
+import type { EdmxParameter, EdmxProperty } from '../../edmx-parser/common';
 
 describe('action-import', () => {
   beforeEach(() => {

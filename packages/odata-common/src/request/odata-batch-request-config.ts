@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { BatchSubRequestPathType } from '../request-builder/batch/batch-request-options';
 import { ODataRequestConfig } from './odata-request-config';
+import type { BatchSubRequestPathType } from '../request-builder';
 
 /**
  * OData batch request configuration for an entity type.

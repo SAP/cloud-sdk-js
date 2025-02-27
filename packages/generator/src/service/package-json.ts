@@ -1,8 +1,7 @@
-import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
-import {
-  packageJsonBase,
-  PackageJsonOptions as PackageJsonOptionsBase
-} from '@sap-cloud-sdk/generator-common/internal';
+import { unixEOL } from '@sap-cloud-sdk/util';
+import { packageJsonBase } from '@sap-cloud-sdk/generator-common/internal';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import type { PackageJsonOptions as PackageJsonOptionsBase } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal

@@ -1,9 +1,9 @@
 import { resolve } from 'path';
 import { writeFile, readFile, removeSync } from 'fs-extra';
 import execa from 'execa';
-import { VdmServiceMetadata } from '../vdm-types';
 import { getApiSpecificUsage } from './generation-and-usage';
 import { entityCodeSample } from './code-samples';
+import type { VdmServiceMetadata } from '../vdm-types';
 
 describe('generation-and-usage', () => {
   const service = {

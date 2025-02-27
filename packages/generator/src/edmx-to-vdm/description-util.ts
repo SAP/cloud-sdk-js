@@ -1,13 +1,13 @@
 import { unixEOL, titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot, ensureString } from '../generator-utils';
-import {
+import type {
   EdmxDocumented,
   EdmxEntitySetBase,
   EdmxParameter,
   EdmxProperty,
   JoinedEntityMetadata
-} from '../edmx-parser/common';
-import {
+} from '../edmx-parser';
+import type {
   SwaggerDescribed,
   SwaggerPath,
   SwaggerPathParameter,

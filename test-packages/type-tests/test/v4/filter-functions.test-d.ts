@@ -1,18 +1,14 @@
 import { testService } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
-import {
-  DateFilterFunction,
-  Entity,
-  filterFunction,
-  filterFunctions
-} from '@sap-cloud-sdk/odata-v4';
+import { filterFunction, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 import { expectError, expectType } from 'tsd';
-import {
+import type { DateFilterFunction, Entity } from '@sap-cloud-sdk/odata-v4';
+import type {
   BooleanFilterFunction,
   CollectionFilterFunction,
   Filter
 } from '@sap-cloud-sdk/odata-common';
-import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntity';
-import { AnyDeSerializerV4 } from '../duplicated-types';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntity';
+import type { AnyDeSerializerV4 } from '../duplicated-types';
 
 const testEntitySchema = testService().testEntityApi.schema;
 

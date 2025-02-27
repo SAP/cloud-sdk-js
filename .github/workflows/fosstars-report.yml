@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     name: 'Security rating'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: SAP/fosstars-rating-core-action@v1.14.0
         with:
           report-branch: fosstars-report
           token: '${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}'
       - if: failure() || cancelled()
         name: Slack Notify
-        uses: rtCamp/action-slack-notify@v2.3.0
+        uses: rtCamp/action-slack-notify@v2.3.2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot

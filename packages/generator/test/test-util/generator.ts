@@ -1,11 +1,15 @@
 import { resolve } from 'path';
-import { ClassDeclaration, FunctionDeclaration, SourceFile } from 'ts-morph';
-import { ODataVersion } from '@sap-cloud-sdk/util';
 import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { generateProject } from '../../src/generator';
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
 import { cliOptions } from '../../src/options';
 import { createOptions } from './create-generator-options';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import type {
+  ClassDeclaration,
+  FunctionDeclaration,
+  SourceFile
+} from 'ts-morph';
 
 export function checkStaticProperties(entityClass: ClassDeclaration): void {
   const properties = entityClass.getProperties();

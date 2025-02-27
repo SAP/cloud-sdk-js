@@ -1,6 +1,6 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
-import { VdmOperationReturnType } from '../vdm-types';
 import { responseTransformerFunctionName } from './response-transformer-function';
+import type { VdmOperationReturnType } from '../vdm-types';
 
 const returnTypeEntity: VdmOperationReturnType = {
   builderFunction: '',

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-util",
-  "version": "3.20.0",
+  "version": "3.24.0",
   "description": "SAP Cloud SDK for JavaScript test utilities",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -34,11 +34,11 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^3.20.0",
-    "@sap-cloud-sdk/util": "^3.20.0"
+    "@sap-cloud-sdk/connectivity": "^3.24.0",
+    "@sap-cloud-sdk/util": "^3.24.0"
   },
   "devDependencies": {
-    "mock-fs": "^5.2.0",
-    "typescript": "~5.6.2"
+    "mock-fs": "^5.5.0",
+    "typescript": "~5.7.3"
   }
 }

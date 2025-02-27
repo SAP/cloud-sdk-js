@@ -1,6 +1,6 @@
 import { codeBlock, kebabCase } from '@sap-cloud-sdk/util';
-import { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
-import { OpenApiDocument } from '../openapi-types';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type { OpenApiDocument } from '../openapi-types';
 
 /**
  * Serialize an index file for the root directory of the generated service.

@@ -3,8 +3,8 @@ import {
   helpfulLinksSection,
   usageHeaderText
 } from '@sap-cloud-sdk/generator-common/internal';
-import { OpenApiDocument } from '../openapi-types';
 import { getApiSpecificUsage } from '../sdk-metadata';
+import type { OpenApiDocument } from '../openapi-types';
 /**
  * Generate the readme for an openapi client.
  * @param openApiDocument - Parsed service.

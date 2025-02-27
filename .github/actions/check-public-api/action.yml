@@ -1,0 +1,14 @@
+name: 'Check public API'
+description: 'Checks whether the public API is correctly exported.'
+inputs:
+  force_internal_exports:
+    description: 'Whether to force that everything is exported through the internal API.'
+    default: 'false'
+  excluded_packages:
+    description: 'Packages to exclude when checking the public API.'
+  ignored_path_pattern:
+    description: 'Regular expression for paths to be ignore when checking the public API.'
+
+runs:
+  using: 'node20'
+  main: 'index.js'

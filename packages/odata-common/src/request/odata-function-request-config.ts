@@ -1,7 +1,8 @@
-import { DeSerializers } from '../de-serializers';
-import { ODataUri } from '../uri-conversion';
-import { OperationParameters } from './operation-parameter';
-import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
+import { ODataRequestConfig } from './odata-request-config';
+import type { DeSerializers } from '../de-serializers';
+import type { ODataUri } from '../uri-conversion';
+import type { OperationParameters } from './operation-parameter';
+import type { RequestMethodType } from './odata-request-config';
 
 /**
  * Function request configuration for an entity type.

@@ -1,15 +1,16 @@
-import { Expandable } from '../expandable';
-import { EntityBase } from '../entity-base';
-import { EdmTypeShared } from '../edm-types';
-import { Selectable } from '../selectable';
-import { Orderable } from '../order';
-import { Filterable } from '../filter';
-import { createUriConverter, DeSerializers } from '../de-serializers';
-import { EntityApi } from '../entity-api';
+import { createUriConverter } from '../de-serializers';
 import { getEntityKeys } from './get-keys';
 import { getOrderBy } from './get-orderby';
 import { createGetFilter } from './get-filter';
 import { createGetResourcePathForKeys } from './get-resource-path';
+import type { Expandable } from '../expandable';
+import type { EntityBase } from '../entity-base';
+import type { EdmTypeShared } from '../edm-types';
+import type { Selectable } from '../selectable';
+import type { Orderable } from '../order';
+import type { Filterable } from '../filter';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityApi } from '../entity-api';
 
 /**
  * Union of necessary methods for the OData URI conversion.

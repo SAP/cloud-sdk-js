@@ -1,9 +1,11 @@
-import { ODataVersion } from '@sap-cloud-sdk/util';
-import { EdmTypeShared, isEdmType } from '../edm-types';
-import { Constructable, EntityBase } from '../entity-base';
-import { DeSerializers } from '../de-serializers';
-import { Field, FieldOptions } from './field';
-import { ComplexTypeNamespace } from './complex-type-namespace';
+import { isEdmType } from '../edm-types';
+import { Field } from './field';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import type { EdmTypeShared } from '../edm-types';
+import type { Constructable, EntityBase } from '../entity-base';
+import type { DeSerializers } from '../de-serializers';
+import type { FieldOptions } from './field';
+import type { ComplexTypeNamespace } from './complex-type-namespace';
 import type { ConstructorOrField } from './constructor-or-field';
 
 /**

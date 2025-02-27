@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 import { getBasePath } from './service-base-path';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 
 describe('options-per-service', () => {
   it('gets basePath from optionsPerService over edmx self link and swagger', () => {

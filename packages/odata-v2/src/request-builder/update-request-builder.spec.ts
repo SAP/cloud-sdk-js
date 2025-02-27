@@ -476,21 +476,19 @@ describe('UpdateRequestBuilder', () => {
     it('returns request and raw response when sending non-key properties', async () => {
       const entity = createTestEntity();
       entity.booleanProperty = false;
-      const requestBody = {
+      const body = {
         Int32Property: entity.int32Property,
         BooleanProperty: false,
         StringProperty: null
       };
-      const response = { d: requestBody };
 
       mockUpdateRequest(
         {
-          body: requestBody,
+          body,
           path: testEntityResourcePath(
             entity.keyPropertyGuid,
             entity.keyPropertyString
-          ),
-          responseBody: response
+          )
         },
         testEntityApi
       );
@@ -499,8 +497,8 @@ describe('UpdateRequestBuilder', () => {
         testEntityApi,
         entity
       ).executeRaw(defaultDestination);
-      expect(actual!.data).toEqual(response);
-      expect(actual!.request.method).toEqual('PATCH');
+      expect(actual?.status).toEqual(204);
+      expect(actual?.request.method).toEqual('PATCH');
     });
   });
 });

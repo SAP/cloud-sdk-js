@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: git fetch --depth=1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --ignore-engines
       - run: sudo apt-get install jq
       - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
       - name: Blackduck Scan
@@ -34,7 +34,7 @@ jobs:
           DETECT_YARN_DEPENDENCY_TYPES_EXCLUDED: NON_PRODUCTION
       - if: failure() || cancelled()
         name: Slack Notify
-        uses: rtCamp/action-slack-notify@v2.3.0
+        uses: rtCamp/action-slack-notify@v2.3.2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot

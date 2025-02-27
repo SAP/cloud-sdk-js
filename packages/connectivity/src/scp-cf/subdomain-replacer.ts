@@ -1,5 +1,5 @@
 import { URL } from 'url';
-import { JwtPayload } from './jsonwebtoken-type';
+import type { JwtPayload } from './jsonwebtoken-type';
 
 /**
  * @internal
@@ -30,7 +30,7 @@ function isValidUrl(url: string): boolean {
   try {
     new URL(url);
     return true;
-  } catch (_) {
+  } catch {
     return false;
   }
 }

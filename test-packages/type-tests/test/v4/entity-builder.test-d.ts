@@ -1,9 +1,7 @@
-import {
-  testService,
-  TestEntity
-} from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { expectError, expectType } from 'tsd';
-import { DefaultDeSerializersV4 } from '../duplicated-types';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
+import type { DefaultDeSerializersV4 } from '../duplicated-types';
 
 const builder = testService().testEntityApi.entityBuilder();
 

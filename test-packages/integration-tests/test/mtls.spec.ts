@@ -1,14 +1,14 @@
-import { HttpDestination } from '@sap-cloud-sdk/connectivity';
-import {
-  DestinationWithName,
-  RegisterDestinationOptions,
-  registerDestination
-} from '@sap-cloud-sdk/connectivity/src/scp-cf';
+import { registerDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import axios from 'axios';
 import mock from 'mock-fs';
 import nock from 'nock';
 import { mockServiceBindings } from '../../../test-resources/test/test-util/environment-mocks';
+import type {
+  DestinationWithName,
+  RegisterDestinationOptions
+} from '@sap-cloud-sdk/connectivity/src/scp-cf';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 describe('mTLS on CloudFoundry', () => {
   beforeAll(() => {

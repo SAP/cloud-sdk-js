@@ -5,12 +5,13 @@ import {
   encodeBase64,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import {
+// eslint-disable-next-line import/no-internal-modules
+import { sanitizeDestination } from './destination/destination';
+import type {
   AuthenticationType,
   Destination,
   DestinationAuthToken
-} from './destination/destination-service-types';
-import { sanitizeDestination } from './destination/destination';
+} from './destination';
 
 const logger = createLogger({
   package: 'connectivity',

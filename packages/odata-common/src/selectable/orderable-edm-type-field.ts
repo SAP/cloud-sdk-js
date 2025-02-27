@@ -1,8 +1,9 @@
-import { EntityBase } from '../entity-base';
-import { EdmTypeShared } from '../edm-types';
-import { Filter } from '../filter/filter';
-import { DeSerializers } from '../de-serializers/de-serializers';
-import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
+import { Filter } from '../filter';
+import { EdmTypeField } from './edm-type-field';
+import type { EntityBase } from '../entity-base';
+import type { EdmTypeShared } from '../edm-types';
+import type { DeSerializers } from '../de-serializers';
+import type { FieldTypeByEdmType } from './edm-type-field';
 
 /**
  * {@link EdmTypeField}, that represents a property with an EDM type, that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.

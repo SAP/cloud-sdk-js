@@ -1,12 +1,11 @@
 import { pascalCase } from '@sap-cloud-sdk/util';
-import type { EdmxParameter } from '../../edmx-parser/common';
-import type { EdmxFunctionImportV2 } from '../../edmx-parser/v2';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { SwaggerPath } from '../../swagger-parser';
-import type { VdmOperationBase } from '../../vdm-types';
 import { functionImportDescription } from '../description-util';
-import type { EdmxJoinedOperation } from '../v4';
 import { getOperationParameters } from './operation-parameter';
+import type { EdmxParameter, EdmxFunctionImportV2 } from '../../edmx-parser';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type { SwaggerPath } from '../../swagger-parser';
+import type { VdmOperationBase } from '../../vdm-types';
+import type { EdmxJoinedOperation } from '../v4';
 
 /**
  * @internal

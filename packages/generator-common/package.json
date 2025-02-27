@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator-common",
-  "version": "3.20.0",
+  "version": "3.24.0",
   "description": "SAP Cloud SDK for JavaScript common functions of OData client generator and OpenAPI clint generator.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -33,21 +33,20 @@
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck .",
-    "check:public-api": "ts-node ../../scripts/check-public-api-cli.ts",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^3.20.0",
+    "@sap-cloud-sdk/util": "^3.24.0",
     "fast-levenshtein": "~3.0.0",
-    "fs-extra": "^11.2.0",
-    "glob": "^10.4.3",
-    "typescript": "~5.6.2",
-    "prettier": "^3.3.3",
+    "fs-extra": "^11.3.0",
+    "glob": "^11.0.1",
+    "typescript": "~5.7.3",
+    "prettier": "^3.5.2",
     "yargs": "^17.7.2",
     "voca": "^1.4.1"
   },
   "devDependencies": {
     "@types/yargs": "^17.0.33",
-    "mock-fs": "^5.2.0"
+    "mock-fs": "^5.5.0"
   }
 }

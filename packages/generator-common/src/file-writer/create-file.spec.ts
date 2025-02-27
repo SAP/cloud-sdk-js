@@ -1,16 +1,13 @@
-import { promises, readFileSync } from 'fs';
-import { resolve } from 'path';
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import mock from 'mock-fs';
-import prettier from 'prettier';
 import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
 import {
   createFile,
-  CreateFileOptions,
   defaultPrettierConfig,
   readPrettierConfig
 } from './create-file';
-
-const { readFile } = promises;
+import type { CreateFileOptions } from './create-file';
 
 describe('createFile', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../../node_modules');
@@ -98,7 +95,6 @@ describe('createFile', () => {
   });
 
   it('uses prettier per default', async () => {
-    const spy = jest.spyOn(prettier, 'format');
     await createFile(
       'directory',
       'formatted.ts',
@@ -106,12 +102,8 @@ describe('createFile', () => {
       defaultCreateConfig
     );
     expect(
-      readFileSync('directory/formatted.ts', { encoding: 'utf-8' })
+      await readFile('directory/formatted.ts', { encoding: 'utf-8' })
     ).toContain(`const abc = '123';${unixEOL}`);
-    expect(spy).toHaveBeenCalledWith(expect.any(String), {
-      ...defaultPrettierConfig,
-      parser: 'typescript'
-    });
   });
 
   it('uses custom prettier config', async () => {
@@ -120,13 +112,13 @@ describe('createFile', () => {
       prettierOptions: await readPrettierConfig('some-dir/.prettierrc')
     });
     expect(
-      readFileSync('directory/formatted.ts', { encoding: 'utf-8' })
+      await readFile('directory/formatted.ts', { encoding: 'utf-8' })
     ).toContain(`const abc = "123"${unixEOL}`);
   });
 
   it('uses default config if custom prettier config is not found', async () => {
     const logger = createLogger('create-file');
-    jest.spyOn(prettier, 'format');
+
     const loggerSpy = jest.spyOn(logger, 'warn');
     const defaultConfig = await readPrettierConfig('not-existing/.prettierrc');
 
@@ -151,7 +143,7 @@ describe('createFile', () => {
       'No prettier-parser configured for file formatted.unknown - skip prettier.'
     );
     expect(
-      readFileSync('directory/formatted.unknown', { encoding: 'utf-8' })
+      await readFile('directory/formatted.unknown', { encoding: 'utf-8' })
     ).toEqual("const abc='123'");
   });
 });

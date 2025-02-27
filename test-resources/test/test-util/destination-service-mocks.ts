@@ -1,6 +1,7 @@
 import nock from 'nock';
-import * as sdkJwt from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt';
-import {
+import * as sdkJwtVerify from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt/verify';
+import * as sdkJwtJwt from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt/jwt';
+import type {
   DestinationConfiguration,
   DestinationJson
 } from '@sap-cloud-sdk/connectivity';
@@ -232,6 +233,6 @@ export function mockFetchDestinationCalls(
 
 export function mockVerifyJwt() {
   return jest
-    .spyOn(sdkJwt, 'verifyJwt')
-    .mockImplementation(token => Promise.resolve(sdkJwt.decodeJwt(token)));
+    .spyOn(sdkJwtVerify, 'verifyJwt')
+    .mockImplementation(token => Promise.resolve(sdkJwtJwt.decodeJwt(token)));
 }

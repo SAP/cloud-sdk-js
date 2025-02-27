@@ -1,7 +1,7 @@
-import { DeSerializers } from '../de-serializers';
-import { EntityBase, EntityIdentifiable } from '../entity-base';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityBase, EntityIdentifiable } from '../entity-base';
 import type { Expandable } from '../expandable';
-import { EntityApi, EntityType } from '../entity-api';
+import type { EntityApi, EntityType } from '../entity-api';
 import type { Selectable } from './selectable';
 
 /**

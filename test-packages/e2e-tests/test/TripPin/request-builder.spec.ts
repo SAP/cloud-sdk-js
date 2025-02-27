@@ -1,7 +1,6 @@
 import { resetDataSource } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/operations';
 import { PersonGender } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/PersonGender';
 import {
-  People,
   microsoftODataServiceSampleTrippinInMemoryModelsService,
   batch,
   getNearestAirport
@@ -11,6 +10,7 @@ import {
   defaultDeSerializers,
   entityDeserializer
 } from '@sap-cloud-sdk/odata-v4';
+import type { People } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
 
 const url = 'https://services.odata.org/';
 const destination = { url };

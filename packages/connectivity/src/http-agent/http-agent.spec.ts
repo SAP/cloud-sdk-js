@@ -1,11 +1,11 @@
 import { X509Certificate } from 'node:crypto';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { DestinationCertificate } from '../scp-cf';
-import { HttpDestination } from '../scp-cf/destination';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
 import { getAgentConfigAsync } from './http-agent';
+import type { HttpDestination } from '../scp-cf/destination';
+import type { DestinationCertificate } from '../scp-cf';
 
 describe('createAgent', () => {
   const baseDestination: HttpDestination = {
@@ -190,7 +190,7 @@ describe('createAgent', () => {
     };
 
     expect(async () => getAgentConfigAsync(destination)).rejects.toThrowError(
-      "The format of the provided certificate 'cert.jks' is not supported. Supported formats are: p12, pfx. You can convert Java Keystores (.jks, .keystore) into PKCS#12 keystores using the JVM's keytool CLI: keytool -importkeystore -srckeystore your-keystore.jks -destkeystore your-keystore.p12 -deststoretype pkcs12"
+      "The format of the provided certificate 'cert.jks' is not supported. Supported formats are: p12, pfx, pem. You can convert Java Keystores (.jks, .keystore) into PKCS#12 keystores using the JVM's keytool CLI: keytool -importkeystore -srckeystore your-keystore.jks -destkeystore your-keystore.p12 -deststoretype pkcs12"
     );
   });
 

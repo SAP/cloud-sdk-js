@@ -1,23 +1,24 @@
-import {
-  TestEntity,
-  testService
-} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import {
   filterFunctions,
-  GetAllRequestBuilder,
   length,
   substring,
   substringOf
 } from '@sap-cloud-sdk/odata-v2';
 import { expectError, expectType } from 'tsd';
-import {
+import type { GetAllRequestBuilder } from '@sap-cloud-sdk/odata-v2';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import type {
   BooleanFilterFunction,
   EntityBase,
   Filter,
   NumberFilterFunction,
   StringFilterFunction
 } from '@sap-cloud-sdk/odata-common';
-import { AnyDeserializerV2, DefaultDeSerializerV2 } from '../duplicated-types';
+import type {
+  AnyDeserializerV2,
+  DefaultDeSerializerV2
+} from '../duplicated-types';
 
 const { testEntityApi, testEntitySingleLinkApi } = testService();
 const testEntitySchema = testEntityApi.schema;

@@ -15,29 +15,30 @@ import {
   copyFiles,
   packageDescription,
   createFile,
-  CreateFileOptions,
   readPrettierConfig,
   parseOptions,
   writeOptionsPerService,
   getOptionsPerService,
-  getRelPathWithPosixSeparator,
-  ServiceOptions
+  getRelPathWithPosixSeparator
 } from '@sap-cloud-sdk/generator-common/internal';
-import { apiFile } from './file-serializer/api-file';
-import { packageJson } from './file-serializer/package-json';
-import { readme } from './file-serializer/readme';
-import { schemaFile } from './file-serializer/schema-file';
-import { apiIndexFile, schemaIndexFile } from './file-serializer/index-file';
-import { OpenApiDocument } from './openapi-types';
-import { parseOpenApiDocument } from './parser/document';
+import {
+  apiFile,
+  packageJson,
+  readme,
+  schemaFile,
+  apiIndexFile,
+  schemaIndexFile
+} from './file-serializer';
+import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { sdkMetadata } from './sdk-metadata';
-import {
-  cliOptions,
-  GeneratorOptions,
-  ParsedGeneratorOptions,
-  tsconfigJson
-} from './options';
+import { cliOptions, tsconfigJson } from './options';
+import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
+import type { OpenApiDocument } from './openapi-types';
+import type {
+  CreateFileOptions,
+  ServiceOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 
 const { mkdir } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -222,7 +223,12 @@ async function createApis(
       createFile(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
-        apiFile(api, openApiDocument.serviceName, options),
+        apiFile(
+          api,
+          openApiDocument.serviceName,
+          options,
+          openApiDocument.serviceOptions.basePath
+        ),
         options
       )
     )
@@ -264,7 +270,11 @@ async function generateService(
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceOptions,
-    { strictNaming: !options.skipValidation }
+    {
+      strictNaming: !options.skipValidation,
+      schemaPrefix: options.schemaPrefix,
+      resolveExternal: options.resolveExternal
+    }
   );
 
   const serviceDir = resolve(options.outputDir, serviceOptions.directoryName);

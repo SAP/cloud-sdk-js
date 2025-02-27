@@ -1,4 +1,4 @@
-import { VerifyJwtOptions } from '../jwt';
+import type { VerifyJwtOptions } from '../jwt';
 import type {
   Destination,
   DestinationRetrievalOptions

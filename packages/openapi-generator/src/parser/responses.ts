@@ -1,8 +1,8 @@
-import { OpenAPIV3 } from 'openapi-types';
-import { OpenApiSchema } from '../openapi-types';
-import { OpenApiDocumentRefs } from './refs';
 import { parseMediaType } from './media-type';
-import { ParserOptions } from './options';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenApiSchema } from '../openapi-types';
+import type { OpenApiDocumentRefs } from './refs';
+import type { ParserOptions } from './options';
 
 /**
  * @internal

@@ -1,10 +1,9 @@
-import {
-  entityDeserializer as entityDeserializerBase,
-  EntityDeserializer
-} from '@sap-cloud-sdk/odata-common';
+import { entityDeserializer as entityDeserializerBase } from '@sap-cloud-sdk/odata-common';
+// eslint-disable-next-line import/no-internal-modules
 import { getLinkedCollectionResult } from '../request-builder/response-data-accessor';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DeSerializers } from './de-serializers';
+import type { EntityDeserializer } from '@sap-cloud-sdk/odata-common';
+import type { DeSerializers } from './de-serializers';
 
 /**
  * Entity deserializer instance for v2 entities.

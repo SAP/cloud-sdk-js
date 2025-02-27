@@ -1,14 +1,12 @@
 import { resolve } from 'path';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 import mock from 'mock-fs';
-import {
-  getRelPathWithPosixSeparator,
-  OptionsPerService
-} from '@sap-cloud-sdk/generator-common/internal';
+import { getRelPathWithPosixSeparator } from '@sap-cloud-sdk/generator-common/internal';
 import { createParsedOptions } from '../test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
-import { VdmProperty } from './vdm-types';
 import { parseAllServices, parseService } from './service-generator';
+import type { VdmProperty } from './vdm-types';
+import type { OptionsPerService } from '@sap-cloud-sdk/generator-common/internal';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 
 describe('service-generator', () => {
   describe('v2', () => {

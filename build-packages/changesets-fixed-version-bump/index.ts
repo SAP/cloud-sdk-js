@@ -1,9 +1,9 @@
 import { resolve } from 'node:path';
-import { formatJson } from '@sap-cloud-sdk/util';
 import { getInput, info, setOutput } from '@actions/core';
 import { command } from 'execa';
+// eslint-disable-next-line import/no-internal-modules
 import { transformFile } from '../../scripts/util';
-import { getNextVersion } from './util';
+import { formatJson, getNextVersion } from './util';
 
 async function bump() {
   const { version, bumpType } = await getNextVersion();

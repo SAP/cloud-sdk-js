@@ -1,7 +1,8 @@
 import fs from 'fs';
 import { join, resolve } from 'path';
 import * as fsExtra from 'fs-extra';
-import { MailConfig, MailResponse, sendMail } from '@sap-cloud-sdk/mail-client';
+import { sendMail } from '@sap-cloud-sdk/mail-client';
+import type { MailConfig, MailResponse } from '@sap-cloud-sdk/mail-client';
 
 describe('Mail', () => {
   beforeEach(async () => {

@@ -1,18 +1,18 @@
-import {
-  TestEntity,
-  TestEntityMultiLink,
-  TestEntityRequestBuilder,
-  testService
-} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common';
 import { expectError, expectType } from 'tsd';
-import {
+import type {
+  TestEntity,
+  TestEntityMultiLink,
+  TestEntityRequestBuilder
+} from '@sap-cloud-sdk/test-services-odata-v2/test-service';
+import type {
   CreateRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
-import { DefaultDeSerializerV2 } from '../duplicated-types';
+import type { DefaultDeSerializerV2 } from '../duplicated-types';
 
 const { testEntityApi, testEntityMultiLinkApi, testEntitySingleLinkApi } =
   testService();

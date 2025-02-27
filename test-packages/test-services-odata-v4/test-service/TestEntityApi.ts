@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -491,7 +491,8 @@ export class TestEntityApi<
         DATE_TIME_OFF_SET_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DateTimeOffSetProperty',
           'Edm.DateTimeOffset',
-          true
+          true,
+          2
         ),
         /**
          * Static representation of the {@link durationProperty} property for query construction.

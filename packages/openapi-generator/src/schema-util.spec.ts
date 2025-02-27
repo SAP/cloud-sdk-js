@@ -1,8 +1,8 @@
-import {
+import { collectRefs, getSchemaPropertiesDocumentation } from './schema-util';
+import type {
   OpenApiReferenceSchema,
   OpenApiSchemaProperties
 } from './openapi-types';
-import { collectRefs, getSchemaPropertiesDocumentation } from './schema-util';
 
 describe('collectRefs', () => {
   it('collects empty array for undefined', () => {
@@ -19,6 +19,7 @@ describe('collectRefs', () => {
               {
                 name: 'refProperty',
                 required: false,
+                nullable: false,
                 schema: {
                   $ref: 'ref1',
                   schemaName: 'Ref1'

@@ -1,5 +1,5 @@
-import { AxiosError } from 'axios';
 import { unixEOL } from './string-formatter';
+import type { AxiosError } from 'axios';
 
 /**
  * Represents an error that was caused by another error.

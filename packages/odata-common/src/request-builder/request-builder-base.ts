@@ -2,18 +2,16 @@ import {
   ErrorWithCause,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import {
-  HttpDestinationOrFetchOptions,
-  useOrFetchDestination
-} from '@sap-cloud-sdk/connectivity';
+import { useOrFetchDestination } from '@sap-cloud-sdk/connectivity';
 import {
   assertHttpDestination,
   noDestinationErrorMessage
 } from '@sap-cloud-sdk/connectivity/internal';
-import { HttpMiddleware } from '@sap-cloud-sdk/http-client/internal';
-import { CustomRequestConfig } from '@sap-cloud-sdk/http-client';
-import { ODataRequest } from '../request/odata-request';
-import { ODataRequestConfig } from '../request/odata-request-config';
+import { ODataRequest } from '../request';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import type { HttpMiddleware } from '@sap-cloud-sdk/http-client/internal';
+import type { CustomRequestConfig } from '@sap-cloud-sdk/http-client';
+import type { ODataRequestConfig } from '../request';
 
 /**
  * Base class for all request builders.

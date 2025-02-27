@@ -1,25 +1,27 @@
-import {
-  Destination,
-  DestinationOrFetchOptions,
-  toDestinationNameUrl
-} from '@sap-cloud-sdk/connectivity';
+import { toDestinationNameUrl } from '@sap-cloud-sdk/connectivity';
 import { resolveDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { createLogger } from '@sap-cloud-sdk/util';
-import nodemailer, { SentMessageInfo, Transporter } from 'nodemailer';
-import { SocksClient, SocksClientOptions, SocksProxy } from 'socks';
-// eslint-disable-next-line import/no-internal-modules
-import type { Options } from 'nodemailer/lib/smtp-pool';
-import {
-  MailClientOptions,
-  MailConfig,
-  MailDestination,
-  MailResponse,
-  SocksSocket
-} from './mail-client-types';
+import nodemailer from 'nodemailer';
+import { SocksClient } from 'socks';
 import {
   customAuthRequestHandler,
   customAuthResponseHandler
 } from './socket-proxy';
+// eslint-disable-next-line import/no-internal-modules
+import type { Options } from 'nodemailer/lib/smtp-pool';
+import type { Socket } from 'node:net';
+import type { SentMessageInfo, Transporter } from 'nodemailer';
+import type { SocksClientOptions, SocksProxy } from 'socks';
+import type {
+  MailClientOptions,
+  MailConfig,
+  MailDestination,
+  MailResponse
+} from './mail-client-types';
+import type {
+  Destination,
+  DestinationOrFetchOptions
+} from '@sap-cloud-sdk/connectivity';
 
 const logger = createLogger({
   package: 'mail-client',
@@ -127,9 +129,19 @@ export function buildSocksProxy(mailDestination: MailDestination): SocksProxy {
   };
 }
 
-async function createSocket(
-  mailDestination: MailDestination
-): Promise<SocksSocket> {
+/**
+ * @internal
+ */
+export function buildSocksProxyUrl(mailDestination: MailDestination): string {
+  if (!mailDestination.proxyConfiguration) {
+    throw Error(
+      'The proxy configuration is undefined, which is mandatory for creating a socket connection.'
+    );
+  }
+  return `socks5://${mailDestination.proxyConfiguration?.host}:${mailDestination.proxyConfiguration?.port}`;
+}
+
+async function createSocket(mailDestination: MailDestination): Promise<Socket> {
   const connectionOptions: SocksClientOptions = {
     proxy: buildSocksProxy(mailDestination),
     command: 'connect',
@@ -138,20 +150,13 @@ async function createSocket(
       port: mailDestination.port!
     }
   };
-  const socketConnection =
-    await SocksClient.createConnection(connectionOptions);
-
-  const socksSocket = socketConnection.socket as SocksSocket;
-  // Setting `_readableListening` to true in the next line makes the socket readable.
-  // Otherwise nodemailer is not able to receive the SMTP greeting message and send emails.
-  socksSocket._readableState.readableListening = true;
-  return socksSocket;
+  const { socket } = await SocksClient.createConnection(connectionOptions);
+  return socket;
 }
 
 function createTransport(
   mailDestination: MailDestination,
-  mailClientOptions?: MailClientOptions,
-  socket?: SocksSocket
+  mailClientOptions?: MailClientOptions
 ): Transporter<SentMessageInfo> {
   const baseOptions: Options = {
     pool: true,
@@ -163,8 +168,11 @@ function createTransport(
     port: mailDestination.port
   };
 
-  if (mailDestination.proxyType === 'OnPremise' && socket) {
-    baseOptions.connection = socket;
+  if (mailDestination.proxyType === 'OnPremise') {
+    mailClientOptions = {
+      ...(mailClientOptions || {}),
+      proxy: buildSocksProxyUrl(mailDestination)
+    };
   }
 
   return nodemailer.createTransport({
@@ -186,19 +194,27 @@ async function sendMailInSequential<T extends MailConfig>(
   mailConfigs: T[]
 ): Promise<MailResponse[]> {
   const response: MailResponse[] = [];
-  for (const mailConfigIndex in mailConfigs) {
-    logger.debug(
-      `Sending email ${mailConfigIndex + 1}/${mailConfigs.length}...`
-    );
-    response[mailConfigIndex] = await transport.sendMail({
-      ...mailConfigsFromDestination,
-      ...mailConfigs[mailConfigIndex]
-    });
-    logger.debug(
-      `...email ${mailConfigIndex + 1}/${mailConfigs.length} for subject "${
-        mailConfigs[mailConfigIndex].subject
-      }" was sent successfully.`
-    );
+  for (const [mailConfigIndex, mailConfig] of mailConfigs.entries()) {
+    try {
+      logger.debug(
+        `Sending email ${mailConfigIndex + 1}/${mailConfigs.length}...`
+      );
+      response[mailConfigIndex] = await transport.sendMail({
+        ...mailConfigsFromDestination,
+        ...mailConfig
+      });
+      logger.debug(
+        `...email ${mailConfigIndex + 1}/${mailConfigs.length} with subject "${mailConfig.subject}" was sent successfully.`
+      );
+    } catch (error) {
+      logger.error(
+        `Failed to send email ${mailConfigIndex + 1}/${mailConfigs.length} with subject "${mailConfig.subject}". Error: ${error.message}`
+      );
+      response[mailConfigIndex] = {
+        response: error.response,
+        rejected: error.rejected
+      };
+    }
   }
   return response;
 }
@@ -209,27 +225,36 @@ async function sendMailInParallel<T extends MailConfig>(
   mailConfigs: T[]
 ): Promise<MailResponse[]> {
   const promises: Promise<MailResponse>[] = mailConfigs.map(
-    (mailConfig, mailConfigIndex, mailConfigsArray) => {
-      logger.debug(
-        `Sending email ${mailConfigIndex + 1}/${mailConfigsArray.length}...`
-      );
-      return transport.sendMail({
-        ...mailConfigsFromDestination,
-        ...mailConfig
-      });
+    async (mailConfig, mailConfigIndex, mailConfigsArray) => {
+      try {
+        logger.debug(
+          `Sending email ${mailConfigIndex + 1}/${mailConfigsArray.length}...`
+        );
+        const response = await transport.sendMail({
+          ...mailConfigsFromDestination,
+          ...mailConfig
+        });
+        logger.debug(
+          `...email ${mailConfigIndex + 1}/${mailConfigs.length} with subject "${
+            mailConfig.subject
+          }" was sent successfully.`
+        );
+        return response;
+      } catch (error) {
+        logger.error(
+          `Failed to send email ${mailConfigIndex + 1}/${mailConfigs.length} with subject "${
+            mailConfig.subject
+          }". Error: ${error.message}`
+        );
+        return {
+          response: error.response,
+          rejected: error.rejected
+        };
+      }
     }
   );
 
-  return Promise.all(promises).then(responses => {
-    responses.forEach((_, responseIndex) =>
-      logger.debug(
-        `...email ${responseIndex + 1}/${mailConfigs.length} for subject "${
-          mailConfigs[responseIndex].subject
-        }" was sent successfully`
-      )
-    );
-    return responses;
-  });
+  return Promise.all(promises);
 }
 
 async function sendMailWithNodemailer<T extends MailConfig>(
@@ -237,42 +262,33 @@ async function sendMailWithNodemailer<T extends MailConfig>(
   mailConfigs: T[],
   mailClientOptions?: MailClientOptions
 ): Promise<MailResponse[]> {
-  let socket: SocksSocket | undefined;
-  if (mailDestination.proxyType === 'OnPremise') {
+  let socket: Socket | undefined;
+  const transport = createTransport(mailDestination, mailClientOptions);
+  transport.set('proxy_handler_socks5', async (_, __, callback) => {
     socket = await createSocket(mailDestination);
-  }
-  const transport = await createTransport(
-    mailDestination,
-    mailClientOptions,
-    socket
-  );
+    callback(null, { connection: socket });
+  });
 
   const mailConfigsFromDestination =
     buildMailConfigsFromDestination(mailDestination);
 
-  let response: MailResponse[];
-  if (isMailSentInSequential(mailClientOptions)) {
-    response = await sendMailInSequential(
-      transport,
-      mailConfigsFromDestination,
-      mailConfigs
-    );
-  } else {
-    response = await sendMailInParallel(
-      transport,
-      mailConfigsFromDestination,
-      mailConfigs
-    );
-  }
+  const response = isMailSentInSequential(mailClientOptions)
+    ? await sendMailInSequential(
+        transport,
+        mailConfigsFromDestination,
+        mailConfigs
+      )
+    : await sendMailInParallel(
+        transport,
+        mailConfigsFromDestination,
+        mailConfigs
+      );
 
   teardown(transport, socket);
   return response;
 }
 
-function teardown(
-  transport: Transporter<SentMessageInfo>,
-  socket?: SocksSocket
-) {
+function teardown(transport: Transporter<SentMessageInfo>, socket?: Socket) {
   transport.close();
   logger.debug('SMTP transport connection closed.');
   if (socket) {

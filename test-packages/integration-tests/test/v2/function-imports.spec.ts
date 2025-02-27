@@ -1,9 +1,9 @@
 import { operations } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { errorResponse } from '../test-data/error-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const basicHeaderCSRF = 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=';
@@ -16,7 +16,7 @@ function mockCsrfTokenRequest(url: string) {
       'x-csrf-token': 'Fetch'
     }
   })
-    .get(basePath)
+    .head(`${basePath}/`)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']

@@ -1,17 +1,18 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import {
+import { isHttpSuccessCode } from './batch-response-parser';
+import type {
   BatchResponse,
   ErrorResponse,
   ReadResponse,
   WriteResponse,
   WriteResponses
 } from '../../batch-response';
-import { DeSerializers } from '../../de-serializers';
-import { EntityBase } from '../../entity-base';
-import { EntityDeserializer } from '../../entity-deserializer';
-import { ResponseDataAccessor } from '../../response-data-accessor';
-import { EntityApi } from '../../entity-api';
-import { ResponseData, isHttpSuccessCode } from './batch-response-parser';
+import type { DeSerializers } from '../../de-serializers';
+import type { EntityBase } from '../../entity-base';
+import type { EntityDeserializer } from '../../entity-deserializer';
+import type { ResponseDataAccessor } from '../../response-data-accessor';
+import type { EntityApi } from '../../entity-api';
+import type { ResponseData } from './batch-response-parser';
 
 const logger = createLogger({
   package: 'odata-common',

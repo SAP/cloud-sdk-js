@@ -1,5 +1,51 @@
 # @sap-cloud-sdk/mail-client
 
+## 3.24.0
+
+### Patch Changes
+
+- Updated dependencies [7ccc9a3]
+  - @sap-cloud-sdk/connectivity@3.24.0
+  - @sap-cloud-sdk/util@3.24.0
+
+## 3.23.0
+
+### Patch Changes
+
+- ea9b6b5: [Fixed Issue] Fix mail client issue for port 465 with on-premise setup.
+- 62eaed5: [Fixed Issue] Fix email sending functionality to ensure that emails are sent to all valid addresses. Previously, if an email failed, all subsequent emails were not sent.
+  - @sap-cloud-sdk/connectivity@3.23.0
+  - @sap-cloud-sdk/util@3.23.0
+
+## 3.22.2
+
+### Patch Changes
+
+- 7f8ce79: [Fixed Issue] Fix sending e-mails through socks proxies in Node 20 and higher.
+  - @sap-cloud-sdk/connectivity@3.22.2
+  - @sap-cloud-sdk/util@3.22.2
+
+## 3.22.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.22.1
+- @sap-cloud-sdk/util@3.22.1
+
+## 3.22.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.22.0
+- @sap-cloud-sdk/util@3.22.0
+
+## 3.21.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.21.0
+- @sap-cloud-sdk/util@3.21.0
+
 ## 3.20.0
 
 ### Patch Changes

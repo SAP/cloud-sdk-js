@@ -1,11 +1,11 @@
 import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
-import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import {
   addNavigationPropertyFieldsFunction,
   navigationPropertyFieldsVariable
 } from './navigation-properties';
 import { getSchema } from './schema';
 import { getSchemaType } from './schema-type';
+import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 
 /**
  * @internal
@@ -95,7 +95,7 @@ Use the service function as described in the documentation to get an API instanc
   get schema() {
     if (!this._schema) {
       const fieldBuilder = this.fieldBuilder;
-      this._schema = ${getSchema(entity)};
+      this._schema = ${getSchema(entity, service)};
     }
   
     return this._schema;

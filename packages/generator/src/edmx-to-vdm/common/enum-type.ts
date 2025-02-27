@@ -1,7 +1,7 @@
 import { createLogger, unique } from '@sap-cloud-sdk/util';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmEnumMemberType, VdmEnumType } from '../../vdm-types';
-import { EdmxEnumType } from '../../edmx-parser/v4';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type { VdmEnumMemberType, VdmEnumType } from '../../vdm-types';
+import type { EdmxEnumType } from '../../edmx-parser';
 
 const logger = createLogger({
   package: 'generator',

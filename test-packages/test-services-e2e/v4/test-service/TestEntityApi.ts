@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -289,7 +289,8 @@ export class TestEntityApi<
         DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField(
           'DataTimeOffsetTimestampProperty',
           'Edm.DateTimeOffset',
-          true
+          true,
+          7
         ),
         ...this.navigationPropertyFields,
         /**

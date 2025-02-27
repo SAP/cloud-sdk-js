@@ -1,9 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { OpenAPIV3 } from 'openapi-types';
-import { OpenApiSchema } from '../openapi-types';
-import { OpenApiDocumentRefs } from './refs';
 import { parseSchema } from './schema';
-import { ParserOptions } from './options';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenApiSchema } from '../openapi-types';
+import type { OpenApiDocumentRefs } from './refs';
+import type { ParserOptions } from './options';
 
 const logger = createLogger('openapi-generator');
 const allowedMediaTypes = [
@@ -104,7 +104,7 @@ function getMediaTypeObject(
 ): OpenAPIV3.MediaTypeObject | undefined {
   if (bodyOrResponseObject?.content) {
     return Object.entries(bodyOrResponseObject.content).find(([key]) =>
-      contentType.includes(key)
+      contentType.includes(key.split(';')[0])
     )?.[1];
   }
   return undefined;

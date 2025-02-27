@@ -1,26 +1,22 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
-  EdmxParameter,
-  parseOperationImports,
-  parseOperations
-} from '../../edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import type {
-  EdmxOperation,
-  EdmxOperationImport,
-  EdmxReturnType
-} from '../../edmx-parser/v4/edm-types';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { getSwaggerDefinitionForOperation } from '../../swagger-parser/swagger-parser';
+import { parseOperationImports, parseOperations } from '../../edmx-parser';
+import { getSwaggerDefinitionForOperation } from '../../swagger-parser';
+import { transformOperationBase, parseOperationReturnType } from '../common';
+import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
+import { findOperationByImportName } from './operation-util';
 import type {
   VdmComplexType,
   VdmOperation,
   VdmPartialEntity
 } from '../../vdm-types';
-import { transformOperationBase } from '../common/operation';
-import { parseOperationReturnType } from '../common/operation-return-type';
-import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
-import { findOperationByImportName } from './operation-util';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type {
+  EdmxParameter,
+  ServiceMetadata,
+  EdmxOperation,
+  EdmxOperationImport,
+  EdmxReturnType
+} from '../../edmx-parser';
 
 const logger = createLogger({
   package: 'generator',

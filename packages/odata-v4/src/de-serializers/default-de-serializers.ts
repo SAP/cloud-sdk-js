@@ -1,11 +1,9 @@
 import {
   convertToUriForEdmString,
   defaultDeSerializersRaw as defaultDeSerializersCommon,
-  Time,
   wrapDefaultDeSerializers
 } from '@sap-cloud-sdk/odata-common/internal';
 import { identity } from '@sap-cloud-sdk/util';
-import BigNumber from 'bignumber.js';
 import {
   serializeToDate,
   deserializeDateTimeOffsetToMoment,
@@ -16,7 +14,10 @@ import {
   serializeToTime,
   deserializeDateToMoment
 } from './converters';
-import { DeSerializers } from './de-serializers';
+import type BigNumber from 'bignumber.js';
+import type { Time } from '@sap-cloud-sdk/odata-common/internal';
+import type { DeSerializers } from './de-serializers';
+import type moment from 'moment';
 
 /**
  * Type of the default (de-)serializers.
@@ -55,7 +56,8 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
   },
   'Edm.DateTimeOffset': {
     deserialize: deserializeDateTimeOffsetToMoment,
-    serialize: serializeToDateTimeOffset,
+    serialize: (value: moment.Moment, precision?: number) =>
+      serializeToDateTimeOffset(value, precision),
     serializeToUri: (value, serialize) => serialize(value)
   },
   'Edm.Duration': {

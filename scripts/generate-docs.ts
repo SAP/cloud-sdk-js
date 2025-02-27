@@ -4,11 +4,10 @@ import { resolve, basename, extname } from 'path';
 import execa from 'execa';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile } from './util';
-import { gunzip, gzip } from 'zlib';
+import { deflate } from 'zlib';
 import { promisify } from 'util';
 
-const gunzipP = promisify(gunzip);
-const gzipP = promisify(gzip);
+const deflateP = promisify(deflate);
 
 const docPath = resolve(
   JSON.parse(readFileSync('tsconfig.typedoc.json', 'utf8')).typedocOptions.out
@@ -36,8 +35,8 @@ const isNavigationJs = fileName => basename(fileName) === 'navigation.js';
 
 const pipe =
   (...fns) =>
-  start =>
-    fns.reduce((state, fn) => fn(state), start);
+    start =>
+      fns.reduce((state, fn) => fn(state), start);
 
 async function adjustForGitHubPages() {
   const documentationFilePaths = flatten(readDir(resolve(docPath)));
@@ -57,6 +56,34 @@ async function adjustForGitHubPages() {
   htmlPaths.forEach(filePath => removeUnderlinePrefixFromFileName(filePath));
 }
 
+/**
+ * Decompresses Base64-encoded deflate compressed data and parses it into a JSON object.
+ * @link https://github.com/TypeStrong/typedoc/blob/82449253188582f6b63695fecf608d9887ba1761/src/lib/output/themes/default/assets/typedoc/utils/decompress.ts
+ *
+ * @param base64 - The Base64-encoded string representing the deflate-compressed JSON string.
+ * @returns A promise that resolves to the parsed JSON object.
+ */
+export async function decompressJson(base64: string) {
+  const binaryData = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+  const blob = new Blob([binaryData]);
+  const decompressedStream = blob
+    .stream()
+    .pipeThrough(new DecompressionStream("deflate"));
+  const decompressedText = await new Response(decompressedStream).text();
+  return JSON.parse(decompressedText);
+}
+
+/**
+ * Compresses a JSON-serializable object into a Base64-encoded deflate string.
+ * @link https://github.com/TypeStrong/typedoc/blob/82449253188582f6b63695fecf608d9887ba1761/src/lib/utils/compress.ts
+ * @param data - The JSON-serializable object to compress.
+ * @returns A promise that resolves to a Base64-encoded string of the deflate-compressed data.
+ */
+export async function compressJson(data: any) {
+  const gz = await deflateP(Buffer.from(JSON.stringify(data)));
+  return gz.toString("base64");
+}
+
 async function adjustSearchJs(paths) {
   const filtered = paths.filter(isSearchJs);
   if (filtered.length !== 1) {
@@ -65,31 +92,22 @@ async function adjustSearchJs(paths) {
 
   await transformFile(filtered[0], async file => {
     const dataRegexResult =
-      /window.searchData = "data:application\/octet-stream;base64,(.*)"/.exec(
+      /window.searchData = "(.*)";/.exec(
         file
       );
-
     if (!dataRegexResult) {
       throw Error(
         `Cannot adjust links in 'search.js'. File content did not match expected pattern.`
       );
     }
 
-    const encodedData = dataRegexResult[1];
-
-    const ungzipped = (
-      await gunzipP(Buffer.from(encodedData, 'base64'))
-    ).toString('utf8');
-    const searchItems = JSON.parse(ungzipped);
-
+    const searchItems = await decompressJson(dataRegexResult[1]);
     searchItems.rows.forEach(s => {
       s.url = removeUnderlinePrefix(s.url);
     });
 
-    const encodedAdjustedData = (
-      await gzipP(JSON.stringify(searchItems))
-    ).toString('base64');
-    return `window.searchData = "data:application/octet-stream;base64,${encodedAdjustedData}"`;
+    const encodedAdjustedData = await compressJson(searchItems);
+    return `window.searchData = "${encodedAdjustedData}"`;
   });
 }
 
@@ -101,23 +119,16 @@ async function adjustNavigationJs(paths) {
 
   await transformFile(filtered[0], async file => {
     const dataRegexResult =
-      /window.navigationData = "data:application\/octet-stream;base64,(.*)"/.exec(
+      /window.navigationData = "(.*)"/.exec(
         file
       );
-
     if (!dataRegexResult) {
       throw Error(
         `Cannot adjust links in 'navigation.js'. File content did not match expected pattern.`
       );
     }
 
-    const encodedData = dataRegexResult[1];
-
-    const ungzipped = (
-      await gunzipP(Buffer.from(encodedData, 'base64'))
-    ).toString('utf8');
-    const navigationItems = JSON.parse(ungzipped);
-
+    const navigationItems = await decompressJson(dataRegexResult[1]);
     navigationItems
       .filter(n => n.path)
       .forEach(n => {
@@ -127,10 +138,8 @@ async function adjustNavigationJs(paths) {
         });
       });
 
-    const encodedAdjustedData = (
-      await gzipP(JSON.stringify(navigationItems))
-    ).toString('base64');
-    return `window.navigationData = "data:application/octet-stream;base64,${encodedAdjustedData}"`;
+    const encodedAdjustedData = await compressJson(navigationItems);
+    return `window.navigationData = "${encodedAdjustedData}"`;
   });
 }
 

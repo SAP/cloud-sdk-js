@@ -5,10 +5,11 @@ import {
   parseComplexTypesBase,
   parseEntitySetsBase,
   parseEntityTypesBase
-} from '../common/edmx-parser';
+} from '../common';
 import { forceArray } from '../../generator-utils';
+// eslint-disable-next-line import/no-internal-modules
 import { stripNamespace } from '../../edmx-to-vdm/edmx-to-vdm-util';
-import {
+import type {
   EdmxComplexType,
   EdmxDerivedType,
   EdmxEntitySet,

@@ -1,5 +1,5 @@
 import type { OpenAPIV3 } from 'openapi-types';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * Representation of an OpenAPI specification/document.
@@ -218,6 +218,11 @@ export interface OpenApiPersistedSchema extends SchemaNaming {
    * Denotes the schema properties.
    */
   schemaProperties: OpenApiSchemaProperties;
+
+  /**
+   * Denotes whether the schema is nullable.
+   */
+  nullable: boolean;
 }
 
 /**
@@ -285,6 +290,17 @@ export interface OpenApiObjectSchema {
 }
 
 /**
+ * Parsed discriminator of a `oneOf` or `anyOf` schema.
+ * @internal
+ */
+export type OpenApiDiscriminator = Omit<
+  OpenAPIV3.DiscriminatorObject,
+  'mapping'
+> & {
+  mapping: Record<string, OpenApiReferenceSchema>;
+};
+
+/**
  * Represents a type where one of the given schemas can be chosen exclusively.
  * @internal
  */
@@ -293,6 +309,10 @@ export interface OpenApiOneOfSchema {
    * Represents the schemas to chose from.
    */
   oneOf: OpenApiSchema[];
+  /**
+   * Represents a discriminator.
+   */
+  discriminator?: OpenApiDiscriminator;
 }
 
 /**
@@ -315,6 +335,10 @@ export interface OpenApiAnyOfSchema {
    * Represents the schemas to chose from.
    */
   anyOf: OpenApiSchema[];
+  /**
+   * Represents a discriminator.
+   */
+  discriminator?: OpenApiDiscriminator;
 }
 
 /**
@@ -337,6 +361,10 @@ export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
    * Denotes whether the parameter is required for the according object.
    */
   required: boolean;
+  /**
+   * Denotes whether the parameter is nullable.
+   */
+  nullable: boolean;
 }
 
 /**

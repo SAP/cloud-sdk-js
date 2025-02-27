@@ -1,6 +1,6 @@
-import { OpenAPIV3 } from 'openapi-types';
-import { OperationNameExtended } from '../extensions';
-import { Method, SchemaNaming } from '../openapi-types';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { OperationNameExtended } from '../extensions';
+import type { Method, SchemaNaming } from '../openapi-types';
 
 /**
  * Represents an object holding all relevant information for operation parsing.

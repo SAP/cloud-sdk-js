@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../entity-base';
+import type { EntityBase, Constructable } from '../entity-base';
 
 /**
  * Represents the selection of all fields.

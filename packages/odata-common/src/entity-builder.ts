@@ -5,8 +5,8 @@ import {
 } from '@sap-cloud-sdk/util';
 import { isNavigationProperty } from './properties-util';
 import type { EntityBase } from './entity-base';
-import { DeSerializers } from './de-serializers';
-import { EntityApi } from './entity-api';
+import type { DeSerializers } from './de-serializers';
+import type { EntityApi } from './entity-api';
 
 const logger = createLogger({
   package: 'odata-common',

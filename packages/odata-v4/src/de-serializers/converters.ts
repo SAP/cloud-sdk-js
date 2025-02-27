@@ -1,6 +1,6 @@
 import { durationRegexV4 } from '@sap-cloud-sdk/odata-common/internal';
-import { Time } from '@sap-cloud-sdk/odata-common';
 import moment from 'moment';
+import type { Time } from '@sap-cloud-sdk/odata-common';
 /**
  * @internal
  */
@@ -42,8 +42,25 @@ export function deserializeDateTimeOffsetToMoment(
 /**
  * @internal
  */
-export function serializeToDateTimeOffset(value: moment.Moment): string {
-  return value.utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
+export function serializeToDateTimeOffset(
+  value: moment.Moment,
+  precision?: number
+): string {
+  // For temporal values, OData specification restricts precision values to a non-negative integer between 0 and 12
+  if (precision !== undefined && !validatePrecision(precision)) {
+    throw new Error(
+      `Provided precision value: ${precision} is invalid. Precision must lie between 0 and 12`
+    );
+  }
+  // If precision is defined, create a format with decimal places or default to 0 decimal places
+  const dateTimeOffesetFormat = precision
+    ? `YYYY-MM-DDTHH:mm:ss.${new Array(precision).fill('S').join('')}`
+    : 'YYYY-MM-DDTHH:mm:ss';
+  return value.utc().format(dateTimeOffesetFormat) + 'Z';
+}
+
+function validatePrecision(precision: number): boolean {
+  return precision >= 0 && precision <= 12;
 }
 
 /**

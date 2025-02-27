@@ -1,19 +1,16 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { JwtPayload } from './jsonwebtoken-type';
 import {
   getDefaultTenantId,
   getSubdomain,
   getTenantId,
   getTenantIdFromBinding
 } from './jwt';
-import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
-import {
-  Service,
-  XsuaaServiceCredentials
-} from './environment-accessor/environment-accessor-types';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
+import type { Service, XsuaaServiceCredentials } from './environment-accessor';
+import type { CachingOptions } from './cache';
+import type { JwtPayload } from './jsonwebtoken-type';
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.

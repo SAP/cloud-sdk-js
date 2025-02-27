@@ -9,23 +9,22 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import { Destination, sanitizeDestination } from '@sap-cloud-sdk/connectivity';
-import {
-  HttpResponse,
-  HttpRequestConfigWithOrigin,
-  executeHttpRequest
-} from '@sap-cloud-sdk/http-client';
+import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
+import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
-  OriginOptions,
   mergeOptionsWithPriority
 } from '@sap-cloud-sdk/http-client/internal';
-import {
-  assertHttpDestination,
-  HttpDestination
-} from '@sap-cloud-sdk/connectivity/internal';
-import { ODataRequestConfig } from './odata-request-config';
+import { assertHttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { isWithETag } from './odata-request-traits';
+import type { Destination } from '@sap-cloud-sdk/connectivity';
+import type {
+  HttpResponse,
+  HttpRequestConfigWithOrigin
+} from '@sap-cloud-sdk/http-client';
+import type { OriginOptions } from '@sap-cloud-sdk/http-client/internal';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
+import type { ODataRequestConfig } from './odata-request-config';
 
 /**
  * OData request configuration for an entity type.

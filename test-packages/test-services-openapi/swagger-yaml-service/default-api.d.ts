@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -10,6 +10,7 @@ import type { TestEntity } from './schema';
  * This API is part of the 'swagger-yaml-service' service.
  */
 export declare const DefaultApi: {
+  _defaultBasePath: undefined;
   /**
    * Test POST
    * @param pathParam - Path parameter.

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEntityApi = void 0;
 /*
- * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -100,7 +100,7 @@ class TestEntityApi {
                  * Static representation of the {@link dataTimeOffsetTimestampProperty} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty', 'Edm.DateTimeOffset', true),
+                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty', 'Edm.DateTimeOffset', true, 7),
                 ...this.navigationPropertyFields,
                 /**
                  *

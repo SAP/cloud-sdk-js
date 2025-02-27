@@ -1,9 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util/dist/logger';
-import {
-  MiddlewareContext,
-  executeWithMiddleware,
-  MiddlewareOptions
-} from './middleware';
+import { executeWithMiddleware } from './middleware';
+import type { MiddlewareContext, MiddlewareOptions } from './middleware';
 
 describe('middleware', () => {
   const logger = createLogger('middleware');

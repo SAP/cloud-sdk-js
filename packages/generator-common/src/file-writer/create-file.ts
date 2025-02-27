@@ -1,16 +1,14 @@
-import { join, parse } from 'path';
-import { promises } from 'fs';
+import { join, parse } from 'node:path';
+import { promises } from 'node:fs';
 import {
   codeBlock,
   createLogger,
   ErrorWithCause,
   unixEOL
 } from '@sap-cloud-sdk/util';
-import prettier, {
-  BuiltInParserName,
-  Options as PrettierOptions
-} from 'prettier';
+import { format } from 'prettier';
 import { getCopyrightHeader } from '../util';
+import type { BuiltInParserName, Options as PrettierOptions } from 'prettier';
 
 const { writeFile, readFile } = promises;
 const logger = createLogger('create-file');
@@ -68,7 +66,7 @@ export async function readPrettierConfig(
       const config = await readFile(prettierConfigPath, { encoding: 'utf-8' });
       prettierConfigCache[prettierConfigPath] = JSON.parse(config);
       return prettierConfigCache[prettierConfigPath];
-    } catch (e) {
+    } catch {
       logger.warn(
         `Prettier config file not found: ${prettierConfigPath} - default is used.`
       );
@@ -112,8 +110,8 @@ async function formatWithPrettier(
 
   if (parser) {
     try {
-      return prettier.format(content, { ...prettierOptions, parser });
-    } catch (e) {
+      return format(content, { ...prettierOptions, parser });
+    } catch {
       logger.warn(
         `Error in prettify file ${fileName} - emit unformatted content`
       );

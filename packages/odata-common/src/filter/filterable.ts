@@ -1,14 +1,14 @@
 import { transformVariadicArgumentToArray } from '@sap-cloud-sdk/util';
-import type { EntityBase } from '../entity-base';
-import type { OneToManyLink } from '../selectable/one-to-many-link';
-import { DeSerializers } from '../de-serializers';
-import { EntityApi } from '../entity-api';
-import type { BooleanFilterFunction } from './boolean-filter-function';
-import type { Filter } from './filter';
 import { UnaryFilter } from './unary-filter';
 import { FilterList } from './filter-list';
-import { FilterLambdaExpression } from './filter-lambda-expression';
-import { FilterLink } from './filter-link';
+import type { EntityBase } from '../entity-base';
+import type { OneToManyLink } from '../selectable';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityApi } from '../entity-api';
+import type { BooleanFilterFunction } from './boolean-filter-function';
+import type { Filter } from './filter';
+import type { FilterLambdaExpression } from './filter-lambda-expression';
+import type { FilterLink } from './filter-link';
 
 /**
  * A union of all types that can be used for filtering.

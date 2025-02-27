@@ -58,8 +58,7 @@ describe('OperationRequestBuilder', () => {
     const requestBuilder = testFunctionImportPost({ simpleParam });
 
     nock(defaultHost)
-      .get(`${serviceUrl}/TestFunctionImportPOST`)
-      .query({ SimpleParam: `'${simpleParam}'` })
+      .head(`${serviceUrl}/TestFunctionImportPOST/`)
       .reply(200, undefined, mockedBuildHeaderResponse);
 
     nock(defaultHost)
@@ -168,9 +167,9 @@ describe('OperationRequestBuilder', () => {
     expect(returnValue).toEqual(expected);
   });
 
-  it('returns undefined or throw in failure case', async () => {
+  it('returns undefined', async () => {
     nock(defaultHost)
-      .get(`${serviceUrl}/TestFunctionImportNoReturnType`)
+      .head(`${serviceUrl}/TestFunctionImportNoReturnType/`)
       .reply(200, undefined, mockedBuildHeaderResponse);
 
     nock(defaultHost)
@@ -181,6 +180,12 @@ describe('OperationRequestBuilder', () => {
       defaultDestination
     );
     expect(response).toBe(undefined);
+  });
+
+  it('throws in failure case', async () => {
+    nock(defaultHost)
+      .head(`${serviceUrl}/TestFunctionImportNoReturnType/`)
+      .reply(200, undefined, mockedBuildHeaderResponse);
 
     nock(defaultHost)
       .post(`${serviceUrl}/TestFunctionImportNoReturnType`)
@@ -213,15 +218,14 @@ describe('OperationRequestBuilder', () => {
 
   it('throws an error when shared entity type is used as return type', async () => {
     nock(defaultHost)
-      .get(`${serviceUrl}/TestFunctionImportSharedEntityReturnType()`)
-      .query({})
+      .get(`${serviceUrl}/TestFunctionImportSharedEntityReturnType`)
       .reply(200, {});
     const requestBuilder = testFunctionImportSharedEntityReturnType({}) as any;
 
     await expect(
       requestBuilder.execute(defaultDestination)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"get request to http://example.com/sap/opu/odata/sap/API_TEST_SRV failed! "'
+      "\"Failed to build an entity from the response of the function import or action import: TestFunctionImportSharedEntityReturnType, because the entity type of the return type is shared by multiple entity sets. Please use 'executeRaw' instead of 'execute' to get the raw response. Original response body: {}.\""
     );
   });
 });

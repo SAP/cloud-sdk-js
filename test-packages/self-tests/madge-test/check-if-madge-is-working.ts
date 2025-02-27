@@ -8,7 +8,7 @@ try {
     'madge --extensions ts --ts-config=../../../tsconfig.json --circular ./test-modules',
     { stdio: 'ignore' }
   );
-} catch (error) {
+} catch {
   logger.info('Circular dependency detected as expected.');
   process.exit(0);
 }

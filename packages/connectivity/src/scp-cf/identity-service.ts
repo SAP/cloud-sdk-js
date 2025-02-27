@@ -1,6 +1,6 @@
-import { DestinationOptions } from './destination';
 import { decodeJwt, isXsuaaToken } from './jwt';
 import { jwtBearerToken } from './token-accessor';
+import type { DestinationOptions } from './destination';
 
 /**
  * @internal
@@ -19,9 +19,9 @@ export async function exchangeToken(jwt: string): Promise<string> {
  * @returns A boolean value, that indicates whether the token exchange should be applied.
  */
 export function shouldExchangeToken(options: DestinationOptions): boolean {
-  // iasToXsuaaTokenExchange is optional, token exchange is enabled by default
+  // iasToXsuaaTokenExchange is optional, token exchange is disabled by default
   return (
-    options.iasToXsuaaTokenExchange !== false &&
+    options.iasToXsuaaTokenExchange === true &&
     !!options.jwt &&
     !isXsuaaToken(decodeJwt(options.jwt))
   );

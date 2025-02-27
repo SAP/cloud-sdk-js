@@ -1,6 +1,6 @@
 import { ErrorWithCause, createLogger } from '@sap-cloud-sdk/util';
 import * as asyncRetry from 'async-retry';
-import {
+import type {
   MiddlewareContext,
   Middleware,
   MiddlewareOptions,

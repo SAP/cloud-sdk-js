@@ -1,6 +1,6 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
-import { VdmServiceMetadata } from '../vdm-types';
 import { operationDeclarations } from './import';
+import type { VdmServiceMetadata } from '../vdm-types';
 
 describe('import declarations for operations', () => {
   it('returns empty list when there are no functions', () => {

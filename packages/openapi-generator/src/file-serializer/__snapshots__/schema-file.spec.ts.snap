@@ -23,7 +23,7 @@ exports[`schemaFile serializes schema file for schema 1`] = `
        * Max Length: 10.
        */
       'string-property': string;
-    };"
+    } | null;"
 `;
 
 exports[`schemaFile serializes schema file for schema including ESM references 1`] = `

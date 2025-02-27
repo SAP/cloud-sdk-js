@@ -1,5 +1,4 @@
 import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
-import { VdmEntity, VdmOperation, VdmParameter } from '../vdm-types';
 import {
   sampleOperation,
   getOperationParams,
@@ -7,6 +6,7 @@ import {
   getOperationWithoutParameters,
   getODataEntity
 } from './code-sample-util';
+import type { VdmEntity, VdmOperation, VdmParameter } from '../vdm-types';
 
 describe('code-sample-utils entity', () => {
   it('gets entity based on levenshtein algorithm', () => {

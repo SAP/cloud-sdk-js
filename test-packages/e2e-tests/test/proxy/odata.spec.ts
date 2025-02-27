@@ -1,28 +1,27 @@
-import {
-  ProxyConfiguration,
-  HttpDestination
-} from '@sap-cloud-sdk/connectivity';
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { AxiosError } from 'axios';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { destination as e2eDestination } from '../test-util';
 import { testEntityApi } from '../test-utils/test-entity-operations';
-/* eslint-disable  @typescript-eslint/no-var-requires */
-const {
+import {
   proxyBearAuth,
   proxyHost,
   proxyPort,
   proxyUser,
   proxyPassword
-} = require('./proxy-server-config');
+} from './proxy-server-config';
+import type {
+  ProxyConfiguration,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity';
+import type { ErrorWithCause } from '@sap-cloud-sdk/util';
+import type { AxiosError } from 'axios';
 
 const onPremDestination: HttpDestination = {
   url: e2eDestination?.url,
   proxyType: 'OnPremise',
   // NoAuthentication is not possible with OnPremise proxy type.
   authentication: 'BasicAuthentication',
-  username: '',
-  password: '',
+  username: 'username',
+  password: 'password',
   proxyConfiguration: {
     host: proxyHost,
     port: proxyPort,

@@ -1,9 +1,7 @@
-import { EntityBase } from '../entity-base';
-import { EdmTypeShared } from '../edm-types';
-import {
-  FilterFunction,
-  FilterFunctionParameterType
-} from './filter-function-base';
+import { FilterFunction } from './filter-function-base';
+import type { EntityBase } from '../entity-base';
+import type { EdmTypeShared } from '../edm-types';
+import type { FilterFunctionParameterType } from './filter-function-base';
 
 /**
  * Representation of a filter function, that returns a collection of values.

@@ -1,10 +1,5 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
-import {
-  OpenApiSchema,
-  OpenApiObjectSchema,
-  OpenApiObjectSchemaProperty
-} from '../openapi-types';
-import { getType } from '../parser/type-mapping';
+import { getType } from '../parser';
 import {
   isReferenceObject,
   isArraySchema,
@@ -16,6 +11,13 @@ import {
   isNotSchema,
   getSchemaPropertiesDocumentation
 } from '../schema-util';
+import type {
+  OpenApiSchema,
+  OpenApiObjectSchema,
+  OpenApiObjectSchemaProperty,
+  OpenApiOneOfSchema,
+  OpenApiAnyOfSchema
+} from '../openapi-types';
 
 /**
  * Serialize a schema.
@@ -32,7 +34,9 @@ export function serializeSchema(schema: OpenApiSchema): string {
     const type = serializeSchema(schema.items);
     return schema.uniqueItems
       ? `Set<${type}>`
-      : 'properties' in schema.items
+      : ['properties', 'allOf', 'oneOf', 'anyOf'].some(
+            prop => prop in schema.items
+          )
         ? `(${type})[]`
         : `${type}[]`;
   }
@@ -46,6 +50,10 @@ export function serializeSchema(schema: OpenApiSchema): string {
   }
 
   if (isOneOfSchema(schema)) {
+    if (schema.discriminator) {
+      return serializeXOfSchemaWithDiscriminator(schema);
+    }
+
     return schema.oneOf.map(type => serializeSchema(type)).join(' | ');
   }
 
@@ -54,6 +62,9 @@ export function serializeSchema(schema: OpenApiSchema): string {
   }
 
   if (isAnyOfSchema(schema)) {
+    if (schema.discriminator) {
+      return serializeXOfSchemaWithDiscriminator(schema);
+    }
     return schema.anyOf.map(type => serializeSchema(type)).join(' | ');
   }
 
@@ -96,8 +107,13 @@ function serializeObjectSchemaForProperties(
     }`;
 }
 
-function serializeProperty(name: string, required: boolean, type: string) {
-  return `'${name}'${required ? '' : '?'}: ${type};`;
+function serializeProperty(
+  name: string,
+  required: boolean,
+  nullable: boolean,
+  type: string
+) {
+  return `'${name}'${required ? '' : '?'}: ${type}${nullable ? ' | null' : ''};`;
 }
 
 function serializePropertyWithDocumentation(
@@ -107,6 +123,7 @@ function serializePropertyWithDocumentation(
   const serialized = serializeProperty(
     property.name,
     property.required,
+    property.nullable,
     serializeSchema(property.schema)
   );
   if (documentation) {
@@ -129,4 +146,23 @@ export function schemaPropertyDocumentation(
   signature.push(...getSchemaPropertiesDocumentation(schema.schemaProperties));
 
   return documentationBlock`${signature.join(unixEOL)}`;
+}
+
+function serializeXOfSchemaWithDiscriminator(
+  schema: OpenApiOneOfSchema | OpenApiAnyOfSchema
+) {
+  const { discriminator } = schema;
+
+  if (!discriminator) {
+    throw new Error(
+      'Could not serialize discriminator schema without discriminator.'
+    );
+  }
+
+  return Object.entries(discriminator.mapping)
+    .map(
+      ([propertyValue, mappedSchema]) =>
+        `({ ${discriminator.propertyName}: '${propertyValue}' } & ${serializeSchema(mappedSchema)})`
+    )
+    .join(' | ');
 }

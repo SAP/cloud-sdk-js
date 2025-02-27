@@ -2,13 +2,16 @@ import {
   batch,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
-import { ReadResponse, WriteResponses } from '@sap-cloud-sdk/odata-v4/internal';
 import { expectType } from 'tsd';
-import { BatchResponse } from '@sap-cloud-sdk/odata-v4';
-import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntity';
-import {
+import { customTestDeSerializersV4 } from '../duplicated-types';
+import type {
+  ReadResponse,
+  WriteResponses
+} from '@sap-cloud-sdk/odata-v4/internal';
+import type { BatchResponse } from '@sap-cloud-sdk/odata-v4';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service/TestEntity';
+import type {
   CustomDeSerializerV4,
-  customTestDeSerializersV4,
   DefaultDeSerializersV4
 } from '../duplicated-types';
 

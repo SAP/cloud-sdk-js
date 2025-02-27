@@ -1,5 +1,66 @@
 # @sap-cloud-sdk/generator
 
+## 3.24.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.24.0
+- @sap-cloud-sdk/odata-common@3.24.0
+- @sap-cloud-sdk/odata-v2@3.24.0
+- @sap-cloud-sdk/odata-v4@3.24.0
+- @sap-cloud-sdk/util@3.24.0
+
+## 3.23.0
+
+### Patch Changes
+
+- Updated dependencies [745766e]
+  - @sap-cloud-sdk/generator-common@3.23.0
+  - @sap-cloud-sdk/odata-common@3.23.0
+  - @sap-cloud-sdk/odata-v2@3.23.0
+  - @sap-cloud-sdk/odata-v4@3.23.0
+  - @sap-cloud-sdk/util@3.23.0
+
+## 3.22.2
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.22.2
+- @sap-cloud-sdk/odata-common@3.22.2
+- @sap-cloud-sdk/odata-v2@3.22.2
+- @sap-cloud-sdk/odata-v4@3.22.2
+- @sap-cloud-sdk/util@3.22.2
+
+## 3.22.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.22.1
+- @sap-cloud-sdk/odata-common@3.22.1
+- @sap-cloud-sdk/odata-v2@3.22.1
+- @sap-cloud-sdk/odata-v4@3.22.1
+- @sap-cloud-sdk/util@3.22.1
+
+## 3.22.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.22.0
+- @sap-cloud-sdk/odata-common@3.22.0
+- @sap-cloud-sdk/odata-v2@3.22.0
+- @sap-cloud-sdk/odata-v4@3.22.0
+- @sap-cloud-sdk/util@3.22.0
+
+## 3.21.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@3.21.0
+- @sap-cloud-sdk/odata-common@3.21.0
+- @sap-cloud-sdk/odata-v2@3.21.0
+- @sap-cloud-sdk/odata-v4@3.21.0
+- @sap-cloud-sdk/util@3.21.0
+
 ## 3.20.0
 
 ### Patch Changes

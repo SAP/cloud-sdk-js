@@ -15,7 +15,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
- * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -28,4 +28,14 @@ __exportStar(require("./simple-test-entity-with-symbols-1"), exports);
 __exportStar(require("./complex-test-entity"), exports);
 __exportStar(require("./cyclic-parent"), exports);
 __exportStar(require("./cyclic-child"), exports);
+__exportStar(require("./discriminator-entity-with-mapping"), exports);
+__exportStar(require("./discriminator-entity-without-mapping"), exports);
+__exportStar(require("./discriminator-entity-child-a"), exports);
+__exportStar(require("./discriminator-entity-child-b"), exports);
+__exportStar(require("./discriminator-object-entity-workaround-parent"), exports);
+__exportStar(require("./discriminator-object-entity-workaround-child-type"), exports);
+__exportStar(require("./discriminator-object-entity-workaround-child-a"), exports);
+__exportStar(require("./discriminator-object-entity-workaround-child-b"), exports);
+__exportStar(require("./discriminator-object-entity-workaround-parent-only-type"), exports);
+__exportStar(require("./discriminator-object-entity-workaround-child-only-type"), exports);
 //# sourceMappingURL=index.js.map

@@ -1,12 +1,12 @@
 import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { customTestDeSerializers } from '../../../test-resources/test/test-util';
 import {
   testEntityApi,
   testEntityApiCustom,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
 } from '../test/test-util';
-import { CustomDeSerializers } from './de-serializers';
+import type { customTestDeSerializers } from '../../../test-resources/test/test-util';
+import type { CustomDeSerializers } from './de-serializers';
 
 describe('entity', () => {
   it('returns enumerable false for _oDataVersion', () => {

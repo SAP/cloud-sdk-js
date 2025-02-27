@@ -1,6 +1,6 @@
 import { CountRequestBuilder as CountRequestBuilderCommon } from '@sap-cloud-sdk/odata-common';
-import { Entity } from '../entity';
-import { DeSerializers, DefaultDeSerializers } from '../de-serializers';
+import type { Entity } from '../entity';
+import type { DeSerializers, DefaultDeSerializers } from '../de-serializers';
 
 /**
  * Create an OData request to count entities based on the configuration of the request.

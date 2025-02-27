@@ -1,10 +1,7 @@
-import {
-  ExportDeclarationStructure,
-  SourceFileStructure,
-  StructureKind
-} from 'ts-morph';
-import { VdmServiceMetadata } from '../vdm-types';
+import { StructureKind } from 'ts-morph';
 import { hasEntities } from '../generator-utils';
+import type { ExportDeclarationStructure, SourceFileStructure } from 'ts-morph';
+import type { VdmServiceMetadata } from '../vdm-types';
 
 /**
  * @internal

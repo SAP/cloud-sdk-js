@@ -3,32 +3,30 @@ import {
   joinEntityMetadata,
   navigationPropertyBase,
   transformEntityBase
-} from '../common/entity';
-import {
-  VdmComplexType,
-  VdmEntity,
-  VdmNavigationProperty
-} from '../../vdm-types';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  EdmxEntitySetBase,
-  JoinedEntityMetadata
-} from '../../edmx-parser/common/edmx-types';
-import {
-  EdmxAssociation,
-  EdmxAssociationSet,
-  EdmxEntityTypeV2,
-  End,
-  JoinedAssociationMetadata
-} from '../../edmx-parser/v2/edm-types';
+} from '../common';
 import {
   parseAssociation,
   parseAssociationSets,
   parseEntitySetsV2,
   parseEntityTypes
-} from '../../edmx-parser/v2/edmx-parser';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+} from '../../edmx-parser';
 import { stripNamespace } from '../edmx-to-vdm-util';
+import type {
+  VdmComplexType,
+  VdmEntity,
+  VdmNavigationProperty
+} from '../../vdm-types';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type {
+  EdmxEntitySetBase,
+  JoinedEntityMetadata,
+  EdmxAssociation,
+  EdmxAssociationSet,
+  EdmxEntityTypeV2,
+  End,
+  JoinedAssociationMetadata,
+  ServiceMetadata
+} from '../../edmx-parser';
 
 /**
  * @internal

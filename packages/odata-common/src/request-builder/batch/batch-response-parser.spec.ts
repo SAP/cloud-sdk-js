@@ -1,5 +1,4 @@
 import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   detectNewLineSymbol,
   getResponseBody,
@@ -9,6 +8,7 @@ import {
   splitBatchResponse,
   splitChangeSetResponse
 } from './batch-response-parser';
+import type { HttpResponse } from '@sap-cloud-sdk/http-client';
 
 describe('batch response parser', () => {
   describe('detectNewLineSymbol', () => {

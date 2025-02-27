@@ -1,6 +1,6 @@
-import { PathLike } from 'fs';
-import { ODataVersion } from '@sap-cloud-sdk/util';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type { PathLike } from 'fs';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 /**
  * @internal
  */
@@ -176,6 +176,10 @@ export interface VdmPropertyValueConstraints {
    * @internal
    */
   nullable: boolean;
+  /**
+   * @internal
+   */
+  precision?: number;
 }
 /**
  * @internal

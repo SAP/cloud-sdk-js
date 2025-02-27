@@ -1,5 +1,6 @@
-import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
-import {
+import { createLogger } from '@sap-cloud-sdk/util';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import type {
   VdmNavigationProperty,
   VdmProperty,
   VdmServiceMetadata

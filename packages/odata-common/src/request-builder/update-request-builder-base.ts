@@ -2,22 +2,22 @@ import {
   ErrorWithCause,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { v4 as uuid } from 'uuid';
-import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
-import { EntitySerializer } from '../entity-serializer';
-import { ODataRequest } from '../request/odata-request';
-import { ODataUpdateRequestConfig } from '../request/odata-update-request-config';
-import { ODataUri } from '../uri-conversion';
-import { Selectable } from '../selectable';
-import { DeSerializers } from '../de-serializers/de-serializers';
-import { EntityApi } from '../entity-api';
-import {
+import { ODataUpdateRequestConfig } from '../request';
+import { MethodRequestBuilder } from './request-builder-base';
+import type { HttpResponse } from '@sap-cloud-sdk/http-client';
+import type { EntityBase, EntityIdentifiable } from '../entity-base';
+import type { EntitySerializer } from '../entity-serializer';
+import type {
+  ODataRequest,
   BatchReference,
   WithBatchReference
-} from '../request/odata-request-traits';
-import { MethodRequestBuilder } from './request-builder-base';
+} from '../request';
+import type { ODataUri } from '../uri-conversion';
+import type { Selectable } from '../selectable';
+import type { DeSerializers } from '../de-serializers';
+import type { EntityApi } from '../entity-api';
 
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.

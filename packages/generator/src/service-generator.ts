@@ -4,17 +4,20 @@ import {
   getOptionsPerService,
   getRelPathWithPosixSeparator
 } from '@sap-cloud-sdk/generator-common/internal';
-import { ParsedGeneratorOptions } from './options';
+import { readEdmxAndSwaggerFile } from './edmx-parser';
+import { apiBusinessHubMetadata } from './swagger-parser';
 import {
-  readEdmxAndSwaggerFile,
-  ServiceMetadata
-} from './edmx-parser/edmx-file-reader';
-import { apiBusinessHubMetadata } from './swagger-parser/swagger-util';
-import { VdmServiceMetadata, VdmServicePackageMetaData } from './vdm-types';
-import { isV2Metadata } from './edmx-to-vdm/edmx-to-vdm-util';
-import { getServiceEntitiesV2 } from './edmx-to-vdm/v2';
-import { getServiceEntitiesV4 } from './edmx-to-vdm/v4';
+  isV2Metadata,
+  getServiceEntitiesV2,
+  getServiceEntitiesV4
+} from './edmx-to-vdm';
 import { getBasePath } from './service-base-path';
+import type {
+  VdmServiceMetadata,
+  VdmServicePackageMetaData
+} from './vdm-types';
+import type { ServiceMetadata } from './edmx-parser';
+import type { ParsedGeneratorOptions } from './options';
 
 class ServiceGenerator {
   constructor(readonly options: ParsedGeneratorOptions) {}

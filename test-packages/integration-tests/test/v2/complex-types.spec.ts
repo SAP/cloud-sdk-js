@@ -4,7 +4,6 @@ import {
 } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
-import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { asc } from '@sap-cloud-sdk/odata-common';
 import {
@@ -13,6 +12,7 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 import { testEntityApi } from './test-util';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 const basePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = TestEntity._entityName;

@@ -1,10 +1,11 @@
-import { EntityBase, EntityIdentifiable } from '../entity-base';
-import { Filter } from '../filter/filter';
-import { EdmTypeShared } from '../edm-types';
-import { DeSerializers, DeserializedType } from '../de-serializers';
+import { Filter } from '../filter';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
-import { ConstructorOrField } from './constructor-or-field';
-import { Field, FieldOptions } from './field';
+import { Field } from './field';
+import type { EntityBase, EntityIdentifiable } from '../entity-base';
+import type { EdmTypeShared } from '../edm-types';
+import type { DeSerializers, DeserializedType } from '../de-serializers';
+import type { ConstructorOrField } from './constructor-or-field';
+import type { FieldOptions } from './field';
 
 /**
  * Convenience type that maps the given field type to a new type that is either nullable or not, depending on the given `NullableT`.

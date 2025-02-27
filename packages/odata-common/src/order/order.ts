@@ -1,4 +1,8 @@
-import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
+import type {
+  EntityBase,
+  EntityIdentifiable,
+  Constructable
+} from '../entity-base';
 
 /**
  * Is either ascending or descending.

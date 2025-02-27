@@ -7,12 +7,12 @@ import {
   testTenants
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
-import { Service } from '../environment-accessor/environment-accessor-types';
 import { decodeJwt } from '../jwt';
 import { getDestination } from './destination-accessor';
 import { getDestinationFromServiceBinding } from './destination-from-vcap';
 import { destinationCache } from './destination-cache';
 import SpyInstance = jest.SpyInstance;
+import type { Service } from '../environment-accessor';
 
 describe('vcap-service-destination', () => {
   const serviceTokenSpy = jest.spyOn(tokenAccessor, 'serviceToken');

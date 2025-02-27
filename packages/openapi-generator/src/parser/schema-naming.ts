@@ -1,5 +1,5 @@
 // Most likely this list is not complete
-import { ParserOptions } from './options';
+import type { ParserOptions } from './options';
 
 const illegalCharacterRegex = /[.#@/"'*%]+/g;
 const startsWithNumberRegex = /^\d+/g;

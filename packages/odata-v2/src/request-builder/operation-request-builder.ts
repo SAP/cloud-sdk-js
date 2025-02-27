@@ -1,11 +1,11 @@
-import {
-  OperationParameters,
-  RequestMethodType,
-  OperationRequestBuilderBase
-} from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
+import { OperationRequestBuilderBase } from '@sap-cloud-sdk/odata-common/internal';
 import { ODataFunctionRequestConfig } from '../request';
 import { createODataUri } from '../uri-conversion';
+import type { DeSerializers } from '../de-serializers';
+import type {
+  OperationParameters,
+  RequestMethodType
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Create OData request to execute an operation.

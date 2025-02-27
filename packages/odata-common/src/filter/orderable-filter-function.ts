@@ -1,10 +1,8 @@
-import { EntityBase, ODataVersionOf } from '../entity-base';
-import { EdmTypeShared } from '../edm-types';
 import { Filter } from './filter';
-import {
-  FilterFunction,
-  FilterFunctionParameterType
-} from './filter-function-base';
+import { FilterFunction } from './filter-function-base';
+import type { EntityBase, ODataVersionOf } from '../entity-base';
+import type { EdmTypeShared } from '../edm-types';
+import type { FilterFunctionParameterType } from './filter-function-base';
 
 /**
  * Representation of a filter function, that returns a value of an orderable type. This supports int, double and decimal values.

@@ -1,18 +1,13 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
-  Service,
   getDestinationServiceCredentials,
   getServiceBinding
 } from '../environment-accessor';
 import { exchangeToken, shouldExchangeToken } from '../identity-service';
-import { JwtPair, getSubdomain, isXsuaaToken } from '../jwt';
+import { getSubdomain, isXsuaaToken } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken } from '../token-accessor';
-import {
-  DestinationFetchOptions,
-  DestinationsByType
-} from './destination-accessor-types';
 import {
   destinationCache,
   getDefaultIsolationStrategy
@@ -23,27 +18,31 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import {
-  AuthAndExchangeTokens,
   fetchCertificate,
   fetchDestinationWithTokenRetrieval,
   fetchDestinationWithoutTokenRetrieval
 } from './destination-service';
-import {
-  assertHttpDestination,
-  Destination
-} from './destination-service-types';
+import { assertHttpDestination } from './destination-service-types';
 import { getProviderServiceToken } from './get-provider-token';
 import {
   getRequiredSubscriberToken,
   getSubscriberToken,
-  hasTokens,
-  SubscriberToken
+  hasTokens
 } from './get-subscriber-token';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import type { SubscriberToken } from './get-subscriber-token';
+import type { Destination } from './destination-service-types';
+import type { AuthAndExchangeTokens } from './destination-service';
+import type {
+  DestinationFetchOptions,
+  DestinationsByType
+} from './destination-accessor-types';
+import type { JwtPair } from '../jwt';
+import type { Service } from '../environment-accessor';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -198,7 +197,7 @@ export class DestinationFromServiceRetriever {
         subscriberToken?.userJwt?.decoded
       ),
       selectionStrategy: subscriberFirst,
-      useCache: !!options.isolationStrategy
+      useCache: true
     };
     this.options = { ...defaultOptions, ...options };
   }

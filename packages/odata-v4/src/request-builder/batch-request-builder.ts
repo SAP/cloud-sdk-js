@@ -1,17 +1,14 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import {
   parseBatchResponse,
   BatchRequestBuilder,
   deserializeBatchResponse
 } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  DefaultDeSerializers,
-  DeSerializers,
-  entityDeserializer
-} from '../de-serializers';
-import { BatchResponse } from '../batch-response';
+import { entityDeserializer } from '../de-serializers';
 import { responseDataAccessor } from './response-data-accessor';
+import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
+import type { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import type { BatchResponse } from '../batch-response';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i.e. {@link GetAllRequestBuilder | getAll} and {@link GetByKeyRequestBuilder | getByKey} requests and change sets, which in turn can contain {@link CreateRequestBuilder | create}, {@link UpdateRequestBuilder | update} or {@link DeleteRequestBuilder | delete} requests.

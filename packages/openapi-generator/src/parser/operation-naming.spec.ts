@@ -1,9 +1,9 @@
 import { operationNameExtension } from '../extensions';
-import { OperationInfo } from './parsing-info';
 import {
   getOperationNameFromPatternAndMethod,
   nameOperations
 } from './operation-naming';
+import type { OperationInfo } from './parsing-info';
 
 it('nameOperations adds retrieves initial names for operations', () => {
   const uniqueOperations = nameOperations([

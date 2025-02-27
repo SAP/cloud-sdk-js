@@ -1,7 +1,11 @@
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { parseTopLevelMediaType, parseMediaType } from './media-type';
 
-const defaultOptions = { strictNaming: true };
+const defaultOptions = {
+  strictNaming: true,
+  schemaPrefix: '',
+  resolveExternal: true
+};
 describe('parseTopLevelMediaType', () => {
   it('returns undefined if the media type is not supported', async () => {
     expect(
@@ -19,7 +23,9 @@ describe('parseTopLevelMediaType', () => {
     expect(
       parseTopLevelMediaType(
         {
-          content: { 'application/json': { schema: { type: 'object' } } }
+          content: {
+            'application/json;charset=utf-8': { schema: { type: 'object' } }
+          }
         },
         await createTestRefs(),
         defaultOptions

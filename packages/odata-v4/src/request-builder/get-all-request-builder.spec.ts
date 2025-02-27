@@ -1,4 +1,3 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import {
   createOriginalTestEntityDataV4_1,
   createOriginalTestEntityDataV4_2,
@@ -15,9 +14,10 @@ import {
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
 } from '../../test/test-util';
-import { DefaultDeSerializers } from '../de-serializers';
 import { any } from '../filter';
 import { GetAllRequestBuilder } from './get-all-request-builder';
+import type { DefaultDeSerializers } from '../de-serializers';
+import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 
 describe('GetAllRequestBuilder', () => {
   let requestBuilder: GetAllRequestBuilder<TestEntity, DefaultDeSerializers>;

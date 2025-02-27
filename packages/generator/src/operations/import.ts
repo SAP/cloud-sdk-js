@@ -1,18 +1,19 @@
-import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import { StructureKind } from 'ts-morph';
 import voca from 'voca';
-import {
-  VdmOperationReturnType,
-  VdmOperation,
-  VdmServiceMetadata
-} from '../vdm-types';
 import {
   odataImportDeclarationTsMorph,
   propertyTypeImportNames,
   externalImportDeclarationsTsMorph,
   mergeImportDeclarations
 } from '../imports';
-import { cannotDeserialize } from '../edmx-to-vdm/common';
+import { cannotDeserialize } from '../edmx-to-vdm';
 import { responseTransformerFunctionName } from './response-transformer-function';
+import type {
+  VdmOperationReturnType,
+  VdmOperation,
+  VdmServiceMetadata
+} from '../vdm-types';
+import type { ImportDeclarationStructure } from 'ts-morph';
 
 function complexTypeRelatedImports(returnTypes: VdmOperationReturnType[]) {
   return returnTypes.some(

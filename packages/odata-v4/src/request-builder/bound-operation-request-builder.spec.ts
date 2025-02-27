@@ -1,10 +1,10 @@
-import { HttpDestination } from '@sap-cloud-sdk/connectivity';
 import {
   TestEntity,
   testService
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import moment from 'moment';
 import nock from 'nock';
+import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 describe('bound function import request builder', () => {
   const { testEntityApi } = testService();

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "3.20.0",
+  "version": "3.24.0",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -36,26 +36,25 @@
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/odata-v2,@sap-cloud-sdk/odata-v4'",
-    "check:public-api": "ts-node ../../scripts/check-public-api-cli.ts",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/generator-common": "^3.20.0",
-    "@sap-cloud-sdk/odata-common": "^3.20.0",
-    "@sap-cloud-sdk/odata-v2": "^3.20.0",
-    "@sap-cloud-sdk/odata-v4": "^3.20.0",
-    "@sap-cloud-sdk/util": "^3.20.0",
+    "@sap-cloud-sdk/generator-common": "^3.24.0",
+    "@sap-cloud-sdk/odata-common": "^3.24.0",
+    "@sap-cloud-sdk/odata-v2": "^3.24.0",
+    "@sap-cloud-sdk/odata-v4": "^3.24.0",
+    "@sap-cloud-sdk/util": "^3.24.0",
     "@types/fs-extra": "^11.0.4",
-    "fast-xml-parser": "^4.5.0",
-    "fs-extra": "^11.2.0",
-    "ts-morph": "^23.0.0",
-    "typescript": "~5.6.2",
+    "fast-xml-parser": "^5.0.8",
+    "fs-extra": "^11.3.0",
+    "ts-morph": "^25.0.1",
+    "typescript": "~5.7.3",
     "voca": "^1.4.1",
-    "winston": "^3.14.2"
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "execa": "^5.0.0",
-    "mock-fs": "^5.2.0",
-    "prettier": "^3.3.3"
+    "mock-fs": "^5.5.0",
+    "prettier": "^3.5.2"
   }
 }

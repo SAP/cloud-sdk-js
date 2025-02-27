@@ -5,7 +5,6 @@ export * from './client-credentials-token-cache';
 export * from './connectivity-service';
 export * from './connectivity-service-types';
 export * from './environment-accessor';
-export * from './environment-accessor/environment-accessor-types';
 export * from './get-protocol';
 export * from './header-builder-for-destination';
 export * from './identity-service';

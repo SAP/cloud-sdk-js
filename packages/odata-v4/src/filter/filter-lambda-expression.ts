@@ -1,13 +1,15 @@
 import {
   FilterLambdaExpression,
-  EntityBase,
   and,
+  toFilterableList
+} from '@sap-cloud-sdk/odata-common/internal';
+import type {
+  EntityBase,
   Filterable,
-  toFilterableList,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
-import { Entity } from '../entity';
+import type { DeSerializers } from '../de-serializers';
+import type { Entity } from '../entity';
 
 /**
  * Will return the entity if at least one element of the one-to-many link relation fulfills the condition.

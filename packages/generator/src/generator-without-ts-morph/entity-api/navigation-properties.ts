@@ -1,12 +1,12 @@
 import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { linkClass } from '../../generator-utils';
 import { getStaticNavPropertyDescription } from '../../typedoc';
-import {
+import { matchEntity } from './match-entity';
+import type {
   VdmEntity,
   VdmServiceMetadata,
   VdmNavigationProperty
 } from '../../vdm-types';
-import { matchEntity } from './match-entity';
 
 /**
  * @internal

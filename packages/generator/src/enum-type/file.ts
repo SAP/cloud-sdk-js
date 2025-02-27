@@ -1,6 +1,7 @@
-import { SourceFileStructure, StructureKind } from 'ts-morph';
-import { VdmEnumType } from '../vdm-types';
+import { StructureKind } from 'ts-morph';
 import { enumTypeClass } from './enum';
+import type { SourceFileStructure } from 'ts-morph';
+import type { VdmEnumType } from '../vdm-types';
 
 /**
  * @internal

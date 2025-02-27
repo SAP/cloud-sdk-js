@@ -1,8 +1,6 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import {
-  PackageJsonOptions,
-  packageJsonBase
-} from '@sap-cloud-sdk/generator-common/internal';
+import { packageJsonBase } from '@sap-cloud-sdk/generator-common/internal';
+import type { PackageJsonOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * Generate the package.json for an openapi client so it can be released as an npm module.

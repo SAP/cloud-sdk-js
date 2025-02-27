@@ -22,7 +22,7 @@ export {
   transformReturnValueForEntity,
   transformReturnValueForEntityList,
   transformReturnValueForUndefined
-} from './request-builder/response-transformers';
+} from './request-builder';
 
 export {
   CreateRequestBuilder,

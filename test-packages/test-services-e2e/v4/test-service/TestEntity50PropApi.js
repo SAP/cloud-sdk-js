@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEntity50PropApi = void 0;
 /*
- * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -98,7 +98,7 @@ class TestEntity50PropApi {
                  * Static representation of the {@link dataTimeOffsetTimestampProperty1} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_1: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty1', 'Edm.DateTimeOffset', true),
+                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_1: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty1', 'Edm.DateTimeOffset', true, 7),
                 /**
                  * Static representation of the {@link stringProperty2} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -148,7 +148,7 @@ class TestEntity50PropApi {
                  * Static representation of the {@link dataTimeOffsetTimestampProperty2} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_2: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty2', 'Edm.DateTimeOffset', true),
+                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_2: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty2', 'Edm.DateTimeOffset', true, 7),
                 /**
                  * Static representation of the {@link stringProperty3} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -198,7 +198,7 @@ class TestEntity50PropApi {
                  * Static representation of the {@link dataTimeOffsetTimestampProperty3} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_3: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty3', 'Edm.DateTimeOffset', true),
+                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_3: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty3', 'Edm.DateTimeOffset', true, 7),
                 /**
                  * Static representation of the {@link stringProperty4} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -248,7 +248,7 @@ class TestEntity50PropApi {
                  * Static representation of the {@link dataTimeOffsetTimestampProperty4} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_4: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty4', 'Edm.DateTimeOffset', true),
+                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_4: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty4', 'Edm.DateTimeOffset', true, 7),
                 /**
                  * Static representation of the {@link stringProperty5} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -298,7 +298,7 @@ class TestEntity50PropApi {
                  * Static representation of the {@link dataTimeOffsetTimestampProperty5} property for query construction.
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
-                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_5: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty5', 'Edm.DateTimeOffset', true),
+                DATA_TIME_OFFSET_TIMESTAMP_PROPERTY_5: fieldBuilder.buildEdmTypeField('DataTimeOffsetTimestampProperty5', 'Edm.DateTimeOffset', true, 7),
                 ...this.navigationPropertyFields,
                 /**
                  *

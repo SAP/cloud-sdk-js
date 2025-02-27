@@ -1,6 +1,7 @@
-import { InterfaceDeclarationStructure, StructureKind } from 'ts-morph';
-import { VdmOperation } from '../vdm-types';
+import { StructureKind } from 'ts-morph';
 import { addLeadingNewline } from '../typedoc';
+import type { InterfaceDeclarationStructure } from 'ts-morph';
+import type { VdmOperation } from '../vdm-types';
 
 /**
  * @internal

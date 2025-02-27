@@ -1,5 +1,48 @@
 # @sap-cloud-sdk/test-util
 
+## 3.24.0
+
+### Patch Changes
+
+- Updated dependencies [7ccc9a3]
+  - @sap-cloud-sdk/connectivity@3.24.0
+  - @sap-cloud-sdk/util@3.24.0
+
+## 3.23.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.23.0
+- @sap-cloud-sdk/util@3.23.0
+
+## 3.22.2
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.22.2
+- @sap-cloud-sdk/util@3.22.2
+
+## 3.22.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.22.1
+- @sap-cloud-sdk/util@3.22.1
+
+## 3.22.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.22.0
+- @sap-cloud-sdk/util@3.22.0
+
+## 3.21.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@3.21.0
+- @sap-cloud-sdk/util@3.21.0
+
 ## 3.20.0
 
 ### Patch Changes

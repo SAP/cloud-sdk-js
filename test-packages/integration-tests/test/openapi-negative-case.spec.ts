@@ -18,13 +18,13 @@ describe('openapi negative tests', () => {
       await promises.mkdir(testOutputRootDir);
     }
     if (existsSync(testDir)) {
-      await promises.rmdir(testDir, { recursive: true });
+      await promises.rm(testDir, { recursive: true });
     }
     await promises.mkdir(testDir);
   });
 
   afterAll(async () => {
-    await promises.rmdir(testDir, { recursive: true });
+    await promises.rm(testDir, { recursive: true });
   });
 
   it('should fail on generation for faulty spec file', async () => {
@@ -61,7 +61,7 @@ describe('openapi negative tests', () => {
           '--input',
           resolve(
             testOutputRootDir,
-            '../../openapi-service-specs/test-service.json'
+            '../../openapi-service-specs/specifications/test-service.json'
           ),
           '-o',
           output,
@@ -89,7 +89,7 @@ describe('openapi negative tests', () => {
           '-i',
           resolve(
             testResourcesDir,
-            '../../openapi-service-specs/test-service.json'
+            '../../openapi-service-specs/specifications/test-service.json'
           ),
           '-o',
           output,

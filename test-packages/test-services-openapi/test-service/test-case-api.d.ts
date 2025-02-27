@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -15,6 +15,7 @@ import type {
  * This API is part of the 'test-service' service.
  */
 export declare const TestCaseApi: {
+  _defaultBasePath: undefined;
   /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
    * @param requiredPathItemPathParam - Path parameter.

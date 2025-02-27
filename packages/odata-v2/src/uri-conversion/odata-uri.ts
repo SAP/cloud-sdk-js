@@ -1,10 +1,10 @@
-import {
-  ODataUri,
-  createODataUri as createODataUriBase,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-common/internal';
+import { createODataUri as createODataUriBase } from '@sap-cloud-sdk/odata-common/internal';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
+import type {
+  ODataUri,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-common/internal';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getExpandWrapped(selects, expands, entityConstructor) {

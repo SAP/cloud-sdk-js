@@ -1,8 +1,8 @@
-import { Readable } from 'stream';
-import { Url } from 'url';
-import { ConnectionOptions } from 'tls';
-import net from 'net';
-import {
+import type { Readable } from 'stream';
+import type { Url } from 'url';
+import type { ConnectionOptions } from 'tls';
+import type net from 'net';
+import type {
   AuthenticationType,
   DestinationProxyType,
   ProxyConfiguration
@@ -338,22 +338,4 @@ export interface SmtpTransportOptions {
    * A proxy URL used for connecting the SMTP server. This value will be forwarded to the underlying `nodemailer` lib, so it handles the proxy job for the SDK.
    */
   proxy?: string;
-}
-
-/**
- * @internal
- */
-interface ReadableState {
-  readableListening: boolean;
-}
-
-/**
- * Represents a socket object used fon On-Premise proxy.
- * @internal
- */
-export interface SocksSocket extends net.Socket {
-  /**
-   * @internal
-   */
-  _readableState: ReadableState;
 }

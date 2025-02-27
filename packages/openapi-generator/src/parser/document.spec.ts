@@ -1,11 +1,11 @@
-import { OpenAPIV3 } from 'openapi-types';
-import { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 import { emptyDocument } from '../../test/test-util';
 import { parseOpenApiDocument } from './document';
 import * as api from './api';
+import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
+import type { OpenAPIV3 } from 'openapi-types';
 
-const options = { strictNaming: true };
-describe('parseOpenApiDocument', () => {
+const options = { strictNaming: true, schemaPrefix: '', resolveExternal: true };
+describe('parseOpenApiDocument()', () => {
   it('does not modify input service specification', () => {
     const input: OpenAPIV3.Document = {
       ...emptyDocument,
@@ -54,7 +54,7 @@ describe('parseOpenApiDocument', () => {
         packageName: '@sap/cloud-sdk-openapi-test-service',
         directoryName: 'test-service'
       },
-      { strictNaming: false }
+      { strictNaming: false, schemaPrefix: '', resolveExternal: true }
     );
 
     expect(parsedDocument.schemas).toEqual([
@@ -94,9 +94,164 @@ describe('parseOpenApiDocument', () => {
         description: 'Schema Description',
         schemaName: 'SimpleSchema',
         fileName: 'simple-schema',
+        nullable: false,
         schema: {
           type: 'string'
         },
+        schemaProperties: {}
+      }
+    ]);
+  });
+
+  it('parses discriminator schema with circular references', async () => {
+    const components: OpenAPIV3.ComponentsObject = {
+      schemas: {
+        DiscriminatorSchema: {
+          properties: {
+            discriminatingProp: { type: 'string' }
+          },
+          discriminator: {
+            propertyName: 'discriminatingProp',
+            mapping: {
+              a: '#/components/schemas/SchemaA'
+            }
+          },
+          required: ['discriminatingProp']
+        },
+        SchemaA: {
+          allOf: [
+            { $ref: '#/components/schemas/DiscriminatorSchema' },
+            {
+              properties: {
+                b: { type: 'string' }
+              },
+              additionalProperties: false
+            }
+          ]
+        }
+      }
+    };
+
+    const document: OpenAPIV3.Document = getDocument(
+      getResponse('DiscriminatorSchema'),
+      components
+    );
+
+    const parsed = await parseOpenApiDocument(
+      document,
+      { directoryName: 'myService' } as ServiceOptions,
+      options
+    );
+    expect(parsed.schemas).toStrictEqual([
+      {
+        description: undefined,
+        schemaName: 'DiscriminatorSchema',
+        fileName: 'discriminator-schema',
+        nullable: false,
+        schema: {
+          oneOf: [],
+          discriminator: {
+            propertyName: 'discriminatingProp',
+            mapping: {
+              a: {
+                $ref: '#/components/schemas/SchemaA',
+                fileName: 'schema-a',
+                schemaName: 'SchemaA'
+              }
+            }
+          }
+        },
+        schemaProperties: {}
+      },
+      {
+        description: undefined,
+        schemaName: 'SchemaA',
+        fileName: 'schema-a',
+        nullable: false,
+        schema: {
+          allOf: [
+            {
+              properties: [
+                {
+                  name: 'discriminatingProp',
+                  description: undefined,
+                  nullable: false,
+                  required: true,
+                  schema: {
+                    type: 'string'
+                  },
+                  schemaProperties: {}
+                }
+              ]
+            },
+            {
+              properties: [
+                {
+                  name: 'b',
+                  description: undefined,
+                  nullable: false,
+                  required: false,
+                  schema: {
+                    type: 'string'
+                  },
+                  schemaProperties: {}
+                }
+              ]
+            }
+          ]
+        },
+        schemaProperties: {}
+      }
+    ]);
+  });
+
+  it('parses simple object persisted schema with nullable', async () => {
+    const components: OpenAPIV3.ComponentsObject = {
+      schemas: {
+        SimpleSchema: {
+          description: 'Schema Description',
+          type: 'object',
+          nullable: true,
+          properties: {
+            prop1: { type: 'string' }
+          }
+        }
+      }
+    };
+
+    const document: OpenAPIV3.Document = getDocument(
+      getResponse('SimpleSchema'),
+      components
+    );
+
+    const parsed = await parseOpenApiDocument(
+      document,
+      { directoryName: 'myService' } as ServiceOptions,
+      options
+    );
+    expect(parsed.schemas).toStrictEqual([
+      {
+        description: 'Schema Description',
+        schemaName: 'SimpleSchema',
+        fileName: 'simple-schema',
+        schema: {
+          additionalProperties: {
+            type: 'any'
+          },
+          properties: [
+            {
+              description: undefined,
+              name: 'prop1',
+              nullable: false,
+              required: false,
+              schema: {
+                type: 'string'
+              },
+              schemaProperties: {}
+            }
+          ]
+        },
+        nullable: true,
         schemaProperties: {}
       }
     ]);
@@ -121,7 +276,7 @@ describe('parseOpenApiDocument', () => {
         packageName: '@sap/cloud-sdk-openapi-test-service',
         directoryName: 'test-service'
       },
-      { strictNaming: false }
+      { strictNaming: false, schemaPrefix: '', resolveExternal: true }
     );
 
     expect(parsedDocument.schemas).toEqual([

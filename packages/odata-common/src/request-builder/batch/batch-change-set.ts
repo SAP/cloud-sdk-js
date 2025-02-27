@@ -1,10 +1,10 @@
 import { v4 as uuid } from 'uuid';
-import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
-import { CreateRequestBuilderBase } from '../create-request-builder-base';
-import { EntityBase } from '../../entity-base';
-import { UpdateRequestBuilderBase } from '../update-request-builder-base';
-import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
-import { OperationRequestBuilderBase } from '../operation-request-builder-base';
+import type { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
+import type { CreateRequestBuilderBase } from '../create-request-builder-base';
+import type { EntityBase } from '../../entity-base';
+import type { UpdateRequestBuilderBase } from '../update-request-builder-base';
+import type { DeleteRequestBuilderBase } from '../delete-request-builder-base';
+import type { OperationRequestBuilderBase } from '../operation-request-builder-base';
 
 /**
  * Representation of a batch change set, which holds a collection of write operations.

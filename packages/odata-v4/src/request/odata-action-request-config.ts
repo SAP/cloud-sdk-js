@@ -1,10 +1,10 @@
-import {
-  ODataRequestConfig,
+import { ODataRequestConfig } from '@sap-cloud-sdk/odata-common';
+import type {
   ODataUri,
   OperationParameter,
   OperationParameters
 } from '@sap-cloud-sdk/odata-common';
-import { DeSerializers } from '../de-serializers';
+import type { DeSerializers } from '../de-serializers';
 
 /**
  * Action request configuration for an entity type.

@@ -1,4 +1,4 @@
-import { ODataVersion } from '@sap-cloud-sdk/util';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
 /**
  * Includes all EDM types which are shared between OData version 2 and 4.
  */

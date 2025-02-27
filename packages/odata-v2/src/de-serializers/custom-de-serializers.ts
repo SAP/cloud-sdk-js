@@ -1,13 +1,11 @@
-import {
+import { defaultDeSerializers } from './default-de-serializers';
+import type {
   Time,
   CustomOrDefaultType as CustomOrDefaultTypeCommon
 } from '@sap-cloud-sdk/odata-common';
-import BigNumber from 'bignumber.js';
-import { DeSerializers } from './de-serializers';
-import {
-  DefaultDeSerializers,
-  defaultDeSerializers
-} from './default-de-serializers';
+import type BigNumber from 'bignumber.js';
+import type { DeSerializers } from './de-serializers';
+import type { DefaultDeSerializers } from './default-de-serializers';
 
 /**
  * Get a complete set of (de-)serializers, that consists of the given partial custom (de-)serializers and default (de-)serializers (aka. default (de-)serializers merged with custom (de-)serializers).

@@ -1,4 +1,4 @@
-import { SwaggerEntity } from '../../swagger-parser';
+import type { SwaggerEntity } from '../../swagger-parser';
 /**
  * @internal
  */
@@ -61,6 +61,10 @@ export interface EdmxProperty extends EdmxDocumented, EdmxNamed {
    * @internal
    */
   Type: string;
+  /**
+   * @internal
+   */
+  Precision?: string;
 }
 /**
  * @internal

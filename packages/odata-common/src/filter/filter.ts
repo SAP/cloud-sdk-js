@@ -1,6 +1,10 @@
-import { DeSerializers } from '../de-serializers/de-serializers';
-import { EdmTypeShared } from '../edm-types';
-import { EntityBase, EntityIdentifiable, ODataVersionOf } from '../entity-base';
+import type { DeSerializers } from '../de-serializers';
+import type { EdmTypeShared } from '../edm-types';
+import type {
+  EntityBase,
+  EntityIdentifiable,
+  ODataVersionOf
+} from '../entity-base';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 

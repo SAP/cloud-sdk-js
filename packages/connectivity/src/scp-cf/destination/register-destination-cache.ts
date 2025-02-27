@@ -1,13 +1,11 @@
 import { readFile } from 'fs/promises';
 import { X509Certificate } from 'crypto';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { MtlsOptions } from '../../http-agent';
-import { AsyncCache, AsyncCacheInterface } from '../async-cache';
-import {
-  DefaultDestinationCache,
-  DestinationCache,
-  DestinationCacheType
-} from './destination-cache';
+import { AsyncCache } from '../async-cache';
+import { DefaultDestinationCache, DestinationCache } from './destination-cache';
+import type { MtlsOptions } from '../../http-agent';
+import type { AsyncCacheInterface } from '../async-cache';
+import type { DestinationCacheType } from './destination-cache';
 
 const logger = createLogger('register-destination-cache');
 

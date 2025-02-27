@@ -1,5 +1,5 @@
-import { DeSerializers } from '../de-serializers';
-import { Constructable, EntityBase } from '../entity-base';
+import type { DeSerializers } from '../de-serializers';
+import type { Constructable, EntityBase } from '../entity-base';
 import type { ComplexTypeField } from './complex-type-field';
 
 /**

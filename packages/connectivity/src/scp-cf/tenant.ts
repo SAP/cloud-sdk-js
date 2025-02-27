@@ -1,5 +1,5 @@
-import { JwtPayload } from './jsonwebtoken-type';
 import { getTenantId } from './jwt';
+import type { JwtPayload } from './jsonwebtoken-type';
 
 /**
  * Compare two decoded JWTs based on their `tenantId`s.

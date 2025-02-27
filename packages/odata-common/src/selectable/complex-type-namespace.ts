@@ -1,4 +1,4 @@
-import { EdmTypeShared } from '../edm-types';
+import type { EdmTypeShared } from '../edm-types';
 
 /**
  * Interface to represent meta information on the _propertyMetadata property of a complex type.

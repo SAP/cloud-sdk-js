@@ -1,8 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill';
-import {
-  DeSerializer,
-  durationRegexV4
-} from '@sap-cloud-sdk/odata-common/internal';
+import { durationRegexV4 } from '@sap-cloud-sdk/odata-common/internal';
+import type { DeSerializer } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Temporal (de-)serializers for Odata-v4.
@@ -43,7 +41,7 @@ export function serializePlainTimeToTime(value: Temporal.PlainTime): string {
 export function deserializeDateToTemporal(date: string): Temporal.PlainDate {
   try {
     return Temporal.PlainDate.from(date);
-  } catch (e) {
+  } catch {
     throw new Error(
       `Provided date value ${date} does not follow the Edm.Date pattern: YYYY-MM-DD`
     );
@@ -65,7 +63,7 @@ export function deserializeDateTimeOffsetToTemporal(
 ): Temporal.ZonedDateTime {
   try {
     return Temporal.Instant.from(dateTime).toZonedDateTimeISO('UTC');
-  } catch (err) {
+  } catch {
     throw new Error(
       `Provided date-time value ${dateTime} does not follow the Edm.DateTimeOffset pattern: YYYY-MM-DDTHH:mm(:ss(.SSS))Z`
     );
@@ -99,7 +97,7 @@ export function deserializeDurationToTemporal(
       throw new Error();
     }
     return Temporal.Duration.from(value);
-  } catch (e) {
+  } catch {
     throw new Error(
       `Provided duration value ${value} does not follow the Edm.Duration pattern: +/- P0DT0H0M0S`
     );
@@ -120,7 +118,7 @@ export function deserializeTimeToTemporal(time: string): Temporal.PlainTime {
   try {
     const parsed = Temporal.PlainTime.from(time, { overflow: 'reject' });
     return parsed;
-  } catch (err) {
+  } catch {
     throw new Error(
       `Provided time value ${time} does not follow the Edm.TimeOfDay pattern: HH:MM:SS(.S)`
     );

@@ -1,10 +1,10 @@
 import { XsuaaService } from '@sap/xssec';
-import { JwtPayload } from '../jsonwebtoken-type';
-import {
+import { getServiceCredentials } from './service-credentials';
+import type { JwtPayload } from '../jsonwebtoken-type';
+import type {
   ServiceCredentials,
   XsuaaServiceCredentials
 } from './environment-accessor-types';
-import { getServiceCredentials } from './service-credentials';
 
 /**
  * @internal

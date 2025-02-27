@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "rootDir": "../../",
+      "outDir": "./lib",
+      "tsBuildInfoFile": "./lib/.tsbuildinfo",
+      "composite": false,
+      "incremental": true,
+      "declaration": false,
+      "esModuleInterop": true,
+      "target": "ESNext",
+      "module": "NodeNext"
+    },
+    "include": ["*.ts"],
+    "exclude": []
+  }

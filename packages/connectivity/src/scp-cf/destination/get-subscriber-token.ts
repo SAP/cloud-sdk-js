@@ -1,15 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { JwtPayload } from '../jsonwebtoken-type';
-import {
-  decodeJwt,
-  getJwtPair,
-  isXsuaaToken,
-  JwtPair,
-  verifyJwt
-} from '../jwt';
+import { decodeJwt, getJwtPair, isXsuaaToken, verifyJwt } from '../jwt';
 import { serviceToken } from '../token-accessor';
 import { getIssuerSubdomain } from '../subdomain-replacer';
-import { DestinationOptions } from './destination-accessor-types';
+import type { JwtPair } from '../jwt';
+import type { JwtPayload } from '../jsonwebtoken-type';
+import type { DestinationOptions } from './destination-accessor-types';
 
 const logger = createLogger({
   package: 'connectivity',

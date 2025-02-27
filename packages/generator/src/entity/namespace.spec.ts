@@ -1,4 +1,3 @@
-import { VariableStatementStructure } from 'ts-morph';
 import {
   breakfastEntity,
   breakfastTime,
@@ -8,6 +7,7 @@ import {
   toBrunch
 } from '../../test/test-util/data-model';
 import { entityNamespace } from './namespace';
+import type { VariableStatementStructure } from 'ts-morph';
 
 describe('entity namespace', () => {
   it('creates namespace', () => {

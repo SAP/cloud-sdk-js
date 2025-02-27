@@ -1,10 +1,10 @@
 import { mergeIgnoreCase } from '@sap-cloud-sdk/util';
-import {
-  oDataTypedClientParameterEncoder,
+import { oDataTypedClientParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
+import type {
+  ParameterEncoder,
   HttpMiddleware
 } from '@sap-cloud-sdk/http-client/internal';
-import type { ParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
-import { CustomRequestConfig } from '@sap-cloud-sdk/http-client';
+import type { CustomRequestConfig } from '@sap-cloud-sdk/http-client';
 
 /**
  * Set of possible request methods.

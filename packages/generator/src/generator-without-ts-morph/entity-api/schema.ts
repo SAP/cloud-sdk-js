@@ -1,15 +1,22 @@
 import { documentationBlock } from '@sap-cloud-sdk/util';
-import { VdmEntity, VdmProperty } from '../../vdm-types';
 import { addLeadingNewline, getStaticPropertyDescription } from '../../typedoc';
 import { createPropertyFieldInitializerForEntity } from '../../entity';
+import type {
+  VdmEntity,
+  VdmProperty,
+  VdmServiceMetadata
+} from '../../vdm-types';
 
 /**
  * @internal
  */
-export function getSchema(entity: VdmEntity): string {
+export function getSchema(
+  entity: VdmEntity,
+  service?: VdmServiceMetadata
+): string {
   return `{ 
     ${[
-      ...properties(entity),
+      ...properties(entity, service),
       '...this.navigationPropertyFields',
       // ...navigationProperties(entity, service),
       allFieldsSelector(entity)
@@ -17,16 +24,17 @@ export function getSchema(entity: VdmEntity): string {
   }`;
 }
 
-function properties(entity: VdmEntity): string[] {
-  return entity.properties.map(prop => property(prop));
+function properties(entity: VdmEntity, service?: VdmServiceMetadata): string[] {
+  return entity.properties.map(prop => property(prop, service));
 }
 
-function property(prop: VdmProperty): string {
+function property(prop: VdmProperty, service?: VdmServiceMetadata): string {
   return [
     documentationBlock`${getStaticPropertyDescription(prop)}`,
     `${prop.staticPropertyName}: ${createPropertyFieldInitializerForEntity(
       prop,
-      'fieldBuilder'
+      'fieldBuilder',
+      service
     )}`
   ].join('\n');
 }

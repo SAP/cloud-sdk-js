@@ -1,4 +1,4 @@
-import { ODataVersion } from '@sap-cloud-sdk/util';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
 
 /**
  * @internal

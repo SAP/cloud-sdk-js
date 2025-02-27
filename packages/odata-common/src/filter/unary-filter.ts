@@ -1,5 +1,5 @@
 import type { EntityBase } from '../entity-base';
-import { DeSerializers } from '../de-serializers';
+import type { DeSerializers } from '../de-serializers';
 import type { Filterable } from './filterable';
 
 type UnaryFilterOperator = 'not';

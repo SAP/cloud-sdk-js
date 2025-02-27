@@ -9,12 +9,12 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --ignore-engines
         name: install root
       - run: yarn workspace @sap-cloud-sdk/e2e-tests pretest:e2e
         name: start e2e tests server
@@ -38,7 +38,7 @@ jobs:
         name: compare v2 and canary
       - if: failure() || cancelled()
         name: Slack Notify
-        uses: rtCamp/action-slack-notify@v2.3.0
+        uses: rtCamp/action-slack-notify@v2.3.2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot

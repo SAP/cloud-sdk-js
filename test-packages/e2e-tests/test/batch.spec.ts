@@ -1,5 +1,4 @@
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
-import { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import {
   batch,
   changeset,
@@ -14,6 +13,7 @@ import {
   deleteEntity,
   testEntityApi
 } from './test-utils/test-entity-operations';
+import type { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 
 const entityKey = 456;
 const entityKeysUsedInTests = [77, 456, 1000, 1001];

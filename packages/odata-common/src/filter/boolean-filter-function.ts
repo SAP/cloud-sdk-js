@@ -1,9 +1,7 @@
-import { EntityBase } from '../entity-base';
-import {
-  FilterFunction,
-  FilterFunctionParameterType
-} from './filter-function-base';
-import { Filterable } from './filterable';
+import { FilterFunction } from './filter-function-base';
+import type { EntityBase } from '../entity-base';
+import type { FilterFunctionParameterType } from './filter-function-base';
+import type { Filterable } from './filterable';
 
 /**
  * Representation of a filter function, that returns a value of type boolean.

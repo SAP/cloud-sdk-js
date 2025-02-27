@@ -1,13 +1,13 @@
 import {
   customSubscriberUserToken,
   mockServiceBindings,
+  mockVerifyJwt,
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
   subscriberServiceToken,
   subscriberUserToken
 } from '../../../../../test-resources/test/test-util';
 import * as tokenAccessor from '../token-accessor';
-import * as jwtModule from '../jwt';
 import { getJwtPair } from '../jwt';
 import { getSubscriberToken } from './get-subscriber-token';
 
@@ -15,9 +15,7 @@ describe('getSubscriberToken()', () => {
   let verifyJwtSpy;
   beforeEach(() => {
     mockServiceBindings();
-    verifyJwtSpy = jest
-      .spyOn(jwtModule, 'verifyJwt')
-      .mockResolvedValue(undefined as any);
+    verifyJwtSpy = mockVerifyJwt();
   });
 
   afterEach(() => {

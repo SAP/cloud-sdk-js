@@ -1,5 +1,5 @@
 import { UniqueNameGenerator, camelCase, unique } from '@sap-cloud-sdk/util';
-import { ParserOptions } from './options';
+import type { ParserOptions } from './options';
 
 /**
  * Format names and ensure uniqueness of names.

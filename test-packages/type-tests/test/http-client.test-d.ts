@@ -1,10 +1,10 @@
 import { expectError, expectType } from 'tsd';
 import {
-  HttpResponse,
   executeHttpRequest,
   executeHttpRequestWithOrigin
 } from '@sap-cloud-sdk/http-client';
-import { ServiceBindingTransformFunction } from '@sap-cloud-sdk/connectivity';
+import type { HttpResponse } from '@sap-cloud-sdk/http-client';
+import type { ServiceBindingTransformFunction } from '@sap-cloud-sdk/connectivity';
 
 expectType<Promise<HttpResponse>>(
   executeHttpRequest(

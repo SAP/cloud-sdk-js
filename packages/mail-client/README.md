@@ -3,6 +3,14 @@
 <a href="https://sap.github.io/cloud-sdk/docs/js/overview"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
+> [!caution]
+> This package has been deprecated and is no longer maintained.
+> Use at your own risk.
+>
+> Alternatively, you can use the SAP Cloud SDK to fetch a mail destination and send the mail yourself.
+> This can be done, for example, by reading the SAP BTP [documentation](https://help.sap.com/docs/connectivity/sap-btp-connectivity-cf/using-tcp-protocol-for-cloud-applications?locale=en-US) or by copying the existing SAP Cloud SDK [source code](https://github.com/SAP/cloud-sdk-js/tree/v3-main/packages/mail-client/src) (just 2 files).
+
+
 # @sap-cloud-sdk/mail-client
 With the SAP Cloud SDK mail client you can leverage the connectivity and destination services on SAP BTP to send e-mails from your application.
 

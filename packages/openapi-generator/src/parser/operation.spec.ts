@@ -1,14 +1,18 @@
-import { OpenAPIV3 } from 'openapi-types';
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
-import { OpenApiParameter } from '../openapi-types';
 import {
   parseParameters,
   getRelevantParameters,
   parsePathParameters,
   parsePathPattern
 } from './operation';
+import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenApiParameter } from '../openapi-types';
 
-const defaultOptions = { strictNaming: true };
+const defaultOptions = {
+  strictNaming: true,
+  schemaPrefix: '',
+  resolveExternal: true
+};
 describe('getRelevantParameters', () => {
   it('ignores cookie parameters', async () => {
     expect(
@@ -110,7 +114,9 @@ describe('parsePathParameters', () => {
   it('returns empty arrays if there are no parameters', async () => {
     expect(
       parsePathParameters([], await createTestRefs(), {
-        strictNaming: false
+        strictNaming: false,
+        schemaPrefix: '',
+        resolveExternal: true
       })
     ).toEqual([]);
   });
@@ -129,7 +135,9 @@ describe('parsePathParameters', () => {
     };
     expect(
       parsePathParameters([pathParam1, pathParam2], refs, {
-        strictNaming: false
+        strictNaming: false,
+        schemaPrefix: '',
+        resolveExternal: true
       })
     ).toEqual([
       { ...pathParam1, originalName: 'param1', schemaProperties: {} },

@@ -4,14 +4,14 @@ import {
   isDestinationConfiguration,
   parseDestination
 } from './destination';
-import { DestinationFetchOptions } from './destination-accessor-types';
-import type { Destination } from './destination-service-types';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
 import { isHttpDestination } from './destination-service-types';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import type { Destination } from './destination-service-types';
+import type { DestinationFetchOptions } from './destination-accessor-types';
 
 const logger = createLogger({
   package: 'connectivity',

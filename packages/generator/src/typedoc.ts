@@ -1,6 +1,7 @@
 import { unixEOL, titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot } from './generator-utils';
-import {
+import { getServiceName } from './service-generator';
+import type {
   VdmComplexType,
   VdmEntity,
   VdmEnumType,
@@ -9,7 +10,6 @@ import {
   VdmPropertyValueConstraints,
   VdmServiceMetadata
 } from './vdm-types';
-import { getServiceName } from './service-generator';
 
 /**
  * @internal
@@ -172,6 +172,9 @@ function addConstraints(
   }
   if (constraints.nullable) {
     description += `${unixEOL}@nullable`;
+  }
+  if (constraints.precision !== undefined) {
+    description += `${unixEOL}Precision: ${constraints.precision}.`;
   }
 
   return description;

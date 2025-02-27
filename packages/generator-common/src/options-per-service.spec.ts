@@ -13,9 +13,9 @@ import mock from 'mock-fs';
 import {
   getOptionsPerService,
   getOriginalOptionsPerService,
-  getServiceOptions,
-  OptionsPerService
+  getServiceOptions
 } from './options-per-service';
+import type { OptionsPerService } from './options-per-service';
 
 describe('getOriginalOptionsPerService', () => {
   const config: OptionsPerService = {

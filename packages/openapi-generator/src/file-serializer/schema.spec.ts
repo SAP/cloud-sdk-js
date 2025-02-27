@@ -18,6 +18,7 @@ describe('serializeSchema for object schemas', () => {
           {
             name: 'simpleProperty',
             required: true,
+            nullable: true,
             schema: { type: 'integer' },
             schemaProperties: {
               minimum: 8
@@ -27,11 +28,13 @@ describe('serializeSchema for object schemas', () => {
           {
             name: 'nested-property',
             required: false,
+            nullable: false,
             schema: {
               properties: [
                 {
                   name: 'stringProperty',
                   required: false,
+                  nullable: false,
                   schema: { type: 'string' },
                   schemaProperties: {
                     pattern: '^[p{L}-.^_|~d]+$'
@@ -49,7 +52,7 @@ describe('serializeSchema for object schemas', () => {
             /**
              * Minimum: 8.
              */
-            'simpleProperty': number;
+            'simpleProperty': number | null;
             'nested-property'?: {
                   /**
                    * Pattern: "^[p{L}-.^_|~d]+$".
@@ -93,6 +96,7 @@ describe('serializeSchema for object schemas', () => {
           {
             name: 'simpleProperty',
             required: true,
+            nullable: false,
             schema: { type: 'integer' },
             schemaProperties: {}
           }
@@ -112,6 +116,7 @@ describe('serializeSchema for object schemas', () => {
         properties: [
           {
             name: 'objectArrayProp',
+            nullable: false,
             required: true,
             schema: {
               uniqueItems: false,
@@ -120,6 +125,7 @@ describe('serializeSchema for object schemas', () => {
                   {
                     name: 'name',
                     required: true,
+                    nullable: false,
                     schema: { type: 'string' },
                     schemaProperties: {}
                   }
@@ -200,6 +206,34 @@ describe('serializeSchema for xOf schemas', () => {
     ).toEqual('XOr1 | XOr2');
   });
 
+  it('serializes array schema for oneOf with discriminator', () => {
+    const oneOf = [
+      {
+        $ref: '#/components/schemas/XOr1',
+        schemaName: 'XOr1',
+        fileName: 'x-or-1'
+      },
+      {
+        $ref: '#/components/schemas/XOr2',
+        schemaName: 'XOr2',
+        fileName: 'x-or-2'
+      }
+    ];
+
+    expect(
+      serializeSchema({
+        oneOf,
+        discriminator: {
+          propertyName: 'discr',
+          mapping: {
+            a: oneOf[0],
+            b: oneOf[1]
+          }
+        }
+      })
+    ).toEqual("({ discr: 'a' } & XOr1) | ({ discr: 'b' } & XOr2)");
+  });
+
   it('serializes array schema for anyOf', () => {
     expect(
       serializeSchema({
@@ -217,6 +251,36 @@ describe('serializeSchema for xOf schemas', () => {
         ]
       })
     ).toEqual('InclusiveOr1 | InclusiveOr2');
+  });
+
+  it('serializes array schema for anyOf with discriminator', () => {
+    const anyOf = [
+      {
+        $ref: '#/components/schemas/InclusiveOr1',
+        schemaName: 'InclusiveOr1',
+        fileName: 'inclusive-or-1'
+      },
+      {
+        $ref: '#/components/schemas/InclusiveOr2',
+        schemaName: 'InclusiveOr2',
+        fileName: 'inclusive-or-2'
+      }
+    ];
+
+    expect(
+      serializeSchema({
+        anyOf,
+        discriminator: {
+          propertyName: 'discr',
+          mapping: {
+            a: anyOf[0],
+            b: anyOf[1]
+          }
+        }
+      })
+    ).toEqual(
+      "({ discr: 'a' } & InclusiveOr1) | ({ discr: 'b' } & InclusiveOr2)"
+    );
   });
 
   it('serializes array schema for allOf', () => {

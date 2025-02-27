@@ -1,0 +1,79 @@
+info:
+  title: Swagger Test Service
+  description: Test Service for OpenAPI version 2 (also known as Swagger) as YAML file.
+  version: 1.0.0
+swagger: '2.0'
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /entities/{pathParam}:
+    parameters:
+      - in: path
+        name: pathParam
+        required: true
+        type: string
+    post:
+      summary: Test POST
+      operationId: postEntity
+      description: Test POST
+      parameters:
+        - in: query
+          name: queryParam
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            minItems: 0
+            items:
+              $ref: '#/definitions/TestEntity'
+    patch:
+      summary: Test PATCH
+      operationId: patchEntity
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/TestEntity'
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: string
+definitions:
+  TestEntity:
+    type: object
+    properties:
+      stringProperty:
+        type: string
+        description: A string property
+      integerProperty:
+        type: integer
+        description: An integer property
+        required: false
+  EntityXOfInheritance:
+    type: object
+    description: Composition of extended properties (inheritance) and schema-specific properties together with required attribute.
+    allOf:
+      - $ref: '#/definitions/TestEntity'
+      - properties:
+          booleanProperty:
+            type: boolean
+            required: false
+          integerProperty2:
+            type: integer
+    required:
+      - booleanProperty
+  EntityXOfNormalizedWithObject:
+    type: object
+    description: Entity with xOf and schema properties at same level. This is normalized to only xOf with schema properties inside xOf. Also works if only additionalProperties true is used.
+    anyOf:
+      - $ref: '#/definitions/TestEntity'
+    properties:
+      booleanProperty:
+        type: boolean
+    required:
+      - booleanProperty

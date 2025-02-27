@@ -14,15 +14,30 @@ const generatorConfigOpenApi: Partial<GeneratorOptions> = {
 };
 
 async function generateOpenApi() {
-  await generate({
-    ...generatorConfigOpenApi,
-    input: resolve('..', '..', 'test-resources', 'openapi-service-specs'),
-    outputDir: resolve('.'),
-    transpile: true
-  }).catch(reason => {
-    logger.error(`Unhandled rejection at: ${reason}`);
+  try {
+    await generate({
+      ...generatorConfigOpenApi,
+      input: resolve(
+        '..',
+        '..',
+        'test-resources',
+        'openapi-service-specs',
+        'specifications'
+      ),
+      outputDir: resolve('.'),
+      transpile: true,
+      optionsPerService: resolve(
+        '..',
+        '..',
+        'test-resources',
+        'openapi-service-specs',
+        'config'
+      )
+    });
+  } catch (error) {
+    logger.error(`Unhandled rejection at: ${error}`);
     process.exit(1);
-  });
+  }
 }
 
 generateOpenApi();

@@ -1,10 +1,4 @@
 import {
-  EdmxEntitySetBase,
-  EdmxEntityTypeBase,
-  EdmxNamed,
-  JoinedEntityMetadata
-} from '../../edmx-parser/common';
-import {
   edmToFieldType,
   edmToTsType,
   getFallbackEdmTypeIfNeeded,
@@ -14,16 +8,6 @@ import {
   isUpdatable
 } from '../../generator-utils';
 import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { SwaggerMetadata } from '../../swagger-parser/swagger-types';
-import {
-  VdmComplexType,
-  VdmEntity,
-  VdmEnumType,
-  VdmMappedEdmType,
-  VdmNavigationProperty,
-  VdmProperty
-} from '../../vdm-types';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
   checkCollectionKind,
@@ -37,6 +21,22 @@ import {
   parseCollectionTypeName,
   typesForCollection
 } from '../edmx-to-vdm-util';
+import type {
+  EdmxEntitySetBase,
+  EdmxEntityTypeBase,
+  EdmxNamed,
+  JoinedEntityMetadata
+} from '../../edmx-parser';
+import type { ServiceNameFormatter } from '../../service-name-formatter';
+import type { SwaggerMetadata } from '../../swagger-parser';
+import type {
+  VdmComplexType,
+  VdmEntity,
+  VdmEnumType,
+  VdmMappedEdmType,
+  VdmNavigationProperty,
+  VdmProperty
+} from '../../vdm-types';
 
 /**
  * @internal
@@ -119,6 +119,7 @@ function properties(
       description: propertyDescription(p, swaggerProp),
       nullable: isNullableProperty(p),
       maxLength: p.MaxLength,
+      precision: p.Precision === undefined ? undefined : parseInt(p.Precision),
       isComplex,
       isEnum,
       isCollection

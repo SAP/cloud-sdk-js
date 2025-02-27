@@ -1,5 +1,5 @@
-import { EdmTypeShared } from '../edm-types';
-import { DeSerializers } from './de-serializers';
+import type { EdmTypeShared } from '../edm-types';
+import type { DeSerializers } from './de-serializers';
 
 /**
  * @internal

@@ -3,7 +3,11 @@ import { ensureUniqueNames } from './unique-naming';
 
 describe('ensureUniqueNames', () => {
   describe('with strictNaming enabled', () => {
-    const options = { strictNaming: true };
+    const options = {
+      strictNaming: true,
+      schemaPrefix: '',
+      resolveExternal: true
+    };
     it('does not throw for empty list of names', () => {
       expect(() => ensureUniqueNames([], options)).not.toThrow();
     });
@@ -67,7 +71,11 @@ describe('ensureUniqueNames', () => {
   });
 
   describe('with strictNaming disabled', () => {
-    const options = { strictNaming: false };
+    const options = {
+      strictNaming: false,
+      schemaPrefix: '',
+      resolveExternal: true
+    };
 
     it('replaces duplicate names using defaults', () => {
       expect(ensureUniqueNames(['duplicate', 'duplicate'], options)).toEqual([

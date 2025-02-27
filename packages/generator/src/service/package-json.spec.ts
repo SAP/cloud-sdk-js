@@ -1,5 +1,6 @@
-import { ODataVersion } from '@sap-cloud-sdk/util';
-import { packageJson, PackageJsonOptions } from './package-json';
+import { packageJson } from './package-json';
+import type { ODataVersion } from '@sap-cloud-sdk/util';
+import type { PackageJsonOptions } from './package-json';
 describe('package-json', () => {
   const packageJsonStatic = {
     homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',

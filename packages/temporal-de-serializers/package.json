@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/temporal-de-serializers",
-  "version": "3.20.0",
+  "version": "3.24.0",
   "description": "SAP Cloud SDK for JavaScript temporal-based middleware for date/time (de-)serialization",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -33,14 +33,13 @@
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck .",
-    "check:public-api": "ts-node ../../scripts/check-public-api-cli.ts",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
     "@js-temporal/polyfill": "^0.4.4",
-    "@sap-cloud-sdk/odata-common": "^3.20.0"
+    "@sap-cloud-sdk/odata-common": "^3.24.0"
   },
   "devDependencies": {
-    "typescript": "~5.6.2"
+    "typescript": "~5.7.3"
   }
 }

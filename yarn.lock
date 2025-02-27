@@ -1525,18 +1525,6 @@
   resolved "https://registry.npmjs.org/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@sap-cloud-sdk/util@^3.26.0":
-  version "3.26.1"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-3.26.1.tgz#509645a7edc58ec00d0991d240a1c7fa3d9cdfb8"
-  integrity sha512-NA16P5X48JcqXo8keO4d1xENzl8h0eo3WmO7EPAHFSvaLH7YbNUSzBHGAZlMt7X7H/Mrp5whXuAyP7GFwcXIyw==
-  dependencies:
-    axios "^1.7.9"
-    chalk "^4.1.0"
-    logform "^2.7.0"
-    voca "^1.4.1"
-    winston "^3.17.0"
-    winston-transport "^4.9.0"
-
 "@sap/cds-compiler@>=5.1":
   version "5.4.2"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-5.4.2.tgz#283f2b29c4c09b8fc3dbcbe5728aa19a22d8dd4e"
@@ -2648,7 +2636,7 @@ aws4@^1.8.0:
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.12.0.tgz#ce1c9d143389679e253b314241ea9aa5cec980d3"
   integrity sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==
 
-axios@^1, axios@^1.7.9, axios@^1.8.1:
+axios@^1, axios@^1.8.1:
   version "1.8.1"
   resolved "https://registry.npmjs.org/axios/-/axios-1.8.1.tgz#7c118d2146e9ebac512b7d1128771cdd738d11e3"
   integrity sha512-NN+fvwH/kV01dYUQ3PTOZns4LWtWhOFCAhQ/pHb88WQ1hNe5V/dvFwc4VJcDL11LT9xSX0QtsR8sWUuyOuOq7g==

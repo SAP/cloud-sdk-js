@@ -28,7 +28,7 @@ describe('connectivity-service', () => {
 
   it('adds a proxy configuration containing at least the host, the port, and the "Proxy-Authorization" header to a destination', async () => {
     mockServiceBindings();
-    mockServiceToken();
+    const serviceTokenSpy = mockServiceToken();
 
     const input: Destination = {
       url: 'https://example.com',
@@ -50,6 +50,7 @@ describe('connectivity-service', () => {
 
     const withProxy = await addProxyConfigurationOnPrem(input);
     expect(withProxy).toEqual(expected);
+    expect(serviceTokenSpy).toHaveBeenCalledTimes(1);
   });
 
   it('also contains the "SAP-Connectivity-Authentication" header if a JWT is present', async () => {

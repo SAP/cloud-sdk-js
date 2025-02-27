@@ -70,4 +70,3 @@ and following methods of request builder
 - `execute()`
 - `executeRaw()`
 - `url()`
-- `build()`

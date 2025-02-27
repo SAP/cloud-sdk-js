@@ -32,7 +32,7 @@ export async function getDestinationFromServiceBinding(
     DestinationFetchOptions,
     'jwt' | 'iss' | 'useCache' | 'destinationName'
   > &
-    DestinationForServiceBindingOptions
+    DestinationFromServiceBindingOptions
 ): Promise<Destination> {
   const decodedJwt = options.iss
     ? { iss: options.iss }
@@ -83,7 +83,7 @@ async function retrieveDestinationWithoutCache({
   serviceBindingTransformFn
 }: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
   jwt?: JwtPayload;
-} & DestinationForServiceBindingOptions) {
+} & DestinationFromServiceBindingOptions) {
   const service = getServiceBindingByInstanceName(destinationName);
   const destination = await (serviceBindingTransformFn || transform)(service, {
     useCache,
@@ -96,7 +96,7 @@ async function retrieveDestinationWithoutCache({
 /**
  * Options to customize the behavior of {@link getDestinationFromServiceBinding}.
  */
-export interface DestinationForServiceBindingOptions {
+export interface DestinationFromServiceBindingOptions {
   /**
    * Custom transformation function to control how a {@link Destination} is built from the given {@link Service}.
    */
@@ -141,7 +141,7 @@ function serviceTypeNotSupportedError(service: Service): Error {
  * @internal
  */
 export async function searchServiceBindingForDestination(
-  options: DestinationFetchOptions & DestinationForServiceBindingOptions
+  options: DestinationFetchOptions & DestinationFromServiceBindingOptions
 ): Promise<Destination | null> {
   logger.debug('Attempting to retrieve destination from service binding.');
   try {

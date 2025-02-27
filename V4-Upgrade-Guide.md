@@ -57,6 +57,7 @@ To disable caching set `useCache: false` in the options, for example in `execute
   - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding()` function.
   - The `serviceToken()` function no longer takes `xsuaaCredentials` as part of the `options` parameter.
   - The `parseDestination()` function is no longer a public API.
+  - The `DestinationForServiceBindingOptions` interface has been renamed to `DestinationFromServiceBindingOptions`.
 - `@sap-cloud-sdk/odata-common`
   - The `FunctionImportParameters` type has been removed. Use `OperationParameters` instead.
   - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.

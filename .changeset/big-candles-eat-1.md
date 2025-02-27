@@ -8,3 +8,4 @@
   - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding()` function.
   - The `serviceToken()` function no longer takes `xsuaaCredentials` as part of the `options` parameter.
   - The `parseDestination()` function is no longer a public API.
+  - The `DestinationForServiceBindingOptions` interface has been renamed to `DestinationFromServiceBindingOptions`.

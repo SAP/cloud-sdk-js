@@ -16,7 +16,7 @@ import type {
   AllDestinationOptions,
   DestinationWithoutToken
 } from './destination-accessor-types';
-import type { DestinationForServiceBindingOptions } from './destination-from-vcap';
+import type { DestinationFromServiceBindingOptions } from './destination-from-vcap';
 import type { Destination } from './destination-service-types';
 import type { DestinationOrFetchOptions } from './destination';
 
@@ -84,7 +84,7 @@ export async function resolveDestination(
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestination(
-  options: DestinationFetchOptions & DestinationForServiceBindingOptions
+  options: DestinationFetchOptions & DestinationFromServiceBindingOptions
 ): Promise<Destination | null> {
   const destination =
     searchEnvVariablesForDestination(options) ||

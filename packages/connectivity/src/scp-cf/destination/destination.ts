@@ -1,7 +1,7 @@
 import { isDestinationFetchOptions } from './destination-accessor-types';
 import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
-import type { DestinationForServiceBindingOptions } from './destination-from-vcap';
+import type { DestinationFromServiceBindingOptions } from './destination-from-vcap';
 import type {
   AuthenticationType,
   Destination,
@@ -466,17 +466,17 @@ export function noDestinationErrorMessage(
 }
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
+ * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
  */
 export type DestinationOrFetchOptions = Xor<
   Destination,
-  DestinationFetchOptions & DestinationForServiceBindingOptions
+  DestinationFetchOptions & DestinationFromServiceBindingOptions
 >;
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
+ * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
  */
 export type HttpDestinationOrFetchOptions = Xor<
   HttpDestination,
-  DestinationFetchOptions & DestinationForServiceBindingOptions
+  DestinationFetchOptions & DestinationFromServiceBindingOptions
 >;

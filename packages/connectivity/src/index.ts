@@ -50,7 +50,7 @@ export {
   DestinationConfiguration,
   DestinationJson,
   DestinationsByType,
-  DestinationForServiceBindingOptions,
+  DestinationFromServiceBindingOptions,
   getServiceBinding,
   getDestinationFromServiceBinding,
   ServiceBindingTransformOptions,

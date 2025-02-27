@@ -109,12 +109,12 @@
     "license-checker": "^25.0.1",
     "madge": "^8.0.0",
     "prettier": "^3.5.2",
-    "puppeteer": "^24.2.1",
+    "puppeteer": "^24.3.0",
     "semver": "^7.7.1",
     "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
-    "turbo": "^2.4.2",
-    "typedoc": "^0.27.8",
+    "turbo": "^2.4.4",
+    "typedoc": "^0.27.9",
     "typescript": "~5.7.3"
   },
   "resolutions": {

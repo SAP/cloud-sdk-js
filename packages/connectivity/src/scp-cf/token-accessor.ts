@@ -8,7 +8,7 @@ import {
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
-import type { Service, XsuaaServiceCredentials } from './environment-accessor';
+import type { Service } from './environment-accessor';
 import type { CachingOptions } from './cache';
 import type { JwtPayload } from './jsonwebtoken-type';
 
@@ -27,8 +27,6 @@ export async function serviceToken(
   service: string | Service,
   options?: CachingOptions & {
     jwt?: string | JwtPayload;
-    // TODO: deprecated: 4.0 Remove
-    xsuaaCredentials?: XsuaaServiceCredentials;
   }
 ): Promise<string> {
   const opts = {

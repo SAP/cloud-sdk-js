@@ -25,14 +25,3 @@ export class OperationParameter<ValueT> {
 export type OperationParameters<ParametersT> = {
   [K in keyof ParametersT]: OperationParameter<ParametersT[K]>;
 };
-
-/**
- * @deprecated Since 3.3.0. Use {@link OperationParameter} instead.
- */
-export const FunctionImportParameter = OperationParameter;
-
-/**
- * @deprecated Since 3.3.0. Use {@link OperationParameters} instead.
- */
-export type FunctionImportParameters<ParametersT> =
-  OperationParameters<ParametersT>;

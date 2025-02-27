@@ -27,38 +27,19 @@ const logger = createLogger({
 });
 
 /**
- * Will be renamed to getAgentConfig in the next major release.
  * Returns a promise of the http or https-agent config depending on the destination URL.
  * If the destination contains a proxy configuration, the agent will be a proxy-agent.
  * If not it will be the default http-agent coming from node.
  * @param destination - Determining which kind of configuration is returned.
  * @returns A promise of the HTTP or HTTPS agent configuration.
  */
-export async function getAgentConfigAsync(
+export async function getAgentConfig(
   destination: HttpDestination
 ): Promise<HttpAgentConfig | HttpsAgentConfig> {
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
     ...getKeyStoreOptions(destination),
     ...(await getMtlsOptions(destination))
-  };
-  return createAgent(destination, certificateOptions);
-}
-
-/**
- * Returns the http or https-agent config depending on the destination URL.
- * If the destination contains a proxy configuration, the agent will be a proxy-agent.
- * If not it will be the default http-agent coming from node.
- * @deprecated Temporarily replaced by {@link getAgentConfigAsync}, will change its default behavior to be asynchronous in next major release.
- * @param destination - Determining which kind of configuration is returned.
- * @returns The HTTP or HTTPS agent configuration.
- */
-export function getAgentConfig(
-  destination: HttpDestination
-): HttpAgentConfig | HttpsAgentConfig {
-  const certificateOptions = {
-    ...getTrustStoreOptions(destination),
-    ...getKeyStoreOptions(destination)
   };
   return createAgent(destination, certificateOptions);
 }
@@ -299,7 +280,7 @@ export async function urlAndAgent(targetUri: string): Promise<{
   }
   return {
     baseURL: destination.url,
-    ...(await getAgentConfigAsync(destination)),
+    ...(await getAgentConfig(destination)),
     proxy: getProxyConfig(destination)
   };
 }

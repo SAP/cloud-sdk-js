@@ -16,7 +16,7 @@ import type {
   AllDestinationOptions,
   DestinationWithoutToken
 } from './destination-accessor-types';
-import type { DestinationForServiceBindingOptions } from './destination-from-vcap';
+import type { DestinationFromServiceBindingOptions } from './destination-from-vcap';
 import type { Destination } from './destination-service-types';
 import type { DestinationOrFetchOptions } from './destination';
 
@@ -79,12 +79,12 @@ export async function resolveDestination(
  * - from the destination service.
  *
  * If you want to get a destination only from a specific source, use the corresponding function directly
- * (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
+ * (`getDestinationFromEnvByName`, `getDestinationFromServiceBinding`, `getDestinationFromDestinationService`).
  * @param options - The options to retrieve the destination.
  * @returns A promise returning the requested destination on success.
  */
 export async function getDestination(
-  options: DestinationFetchOptions & DestinationForServiceBindingOptions
+  options: DestinationFetchOptions & DestinationFromServiceBindingOptions
 ): Promise<Destination | null> {
   const destination =
     searchEnvVariablesForDestination(options) ||

@@ -3,7 +3,7 @@
 import * as xssec from '@sap/xssec';
 // import {
 //   Destination,
-//   getAgentConfigAsync,
+//   getAgentConfig,
 //   HttpDestination
 // } from '@sap-cloud-sdk/connectivity';
 // eslint-disable-next-line
@@ -217,7 +217,7 @@ describe('dummy test suite, should be removed', () => {
 //     });
 //     expect(destination?.trustStoreCertificate).toBeDefined();
 //     expect(destination?.trustStoreCertificate?.content).toBeDefined();
-//     const agent = getAgentConfigAsync(destination! as HttpDestination);
+//     const agent = getAgentConfig(destination! as HttpDestination);
 //     expect(agent['httpsAgent'].options.ca[0]).toMatch(/BEGIN CERTIFICATE/);
 //   }, 60000);
 

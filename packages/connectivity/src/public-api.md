@@ -1,7 +1,5 @@
 ### Connectivity Package Public API
 
-- function parseDestination()
-  - interface Destination
 - function useOrFetchDestination()
 - type DestinationOptions
   - DestinationAccessorOptions

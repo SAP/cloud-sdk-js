@@ -21,6 +21,7 @@ The To-Do list is:
 - [Update to Node 22 or Newer](#update-to-node-22-or-newer)
 - [Set `useCache` explicitly to `false` to turn off destination caching](#set-usecache-explicitly-to-false-to-turn-off-destination-caching)
 - [Set `iasToXsuaaTokenExchange` to `true` to enable IAS to XSUAA token exchange](#set-iastoxsuaatokenexchange-to-true-to-enable-ias-to-xsuaa-token-exchange)
+- [Remove Deprecated Content](#remove-deprecated-content)
 
 ## Update Your Project Dependencies
 
@@ -48,7 +49,6 @@ To disable caching set `useCache: false` in the options, for example in `execute
 ```TS
 .execute({ destinationName: 'DESTINATION', jwt: 'JWT', useCache: false })
 ```
-
 ## Set `iasToXsuaaTokenExchange` to `true` to enable IAS to XSUAA token exchange
 
 **Token exchange from IAS to XSUAA is now disabled by default.
@@ -70,3 +70,36 @@ and following methods of request builder
 - `execute()`
 - `executeRaw()`
 - `url()`
+
+## Remove Deprecated Content
+
+- `@sap-cloud-sdk/connectivity`
+  - The `getAgentConfig()` function is now asynchronous. The `getAgentConfigAsync()` function has been removed.
+  - The `destinationForServiceBinding()` function has been removed. Use `getDestinationFromServiceBinding()` instead.
+  - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding()` function.
+  - The `serviceToken()` function no longer takes `xsuaaCredentials` as part of the `options` parameter.
+  - The `parseDestination()` function is no longer a public API.
+  - The `DestinationForServiceBindingOptions` interface has been renamed to `DestinationFromServiceBindingOptions`.
+- `@sap-cloud-sdk/odata-common`
+  - The `FunctionImportParameters` type has been removed. Use `OperationParameters` instead.
+  - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
+  - The `FunctionImportParameter` constant has been removed. Use `OperationParameter` instead.
+  - The `ActionFunctionImportRequestBuilderBase` constant has been removed. Use `OperationRequestBuilderBase` instead.
+- `@sap-cloud-sdk/odata-v2`
+  - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
+  - The `FunctionImportRequestBuilder` constant has been removed. Use `OperationRequestBuilder` instead.
+- `@sap-cloud-sdk/odata-v4`
+  - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
+  - The `ActionImportParameter` class has been removed. Use `OperationParameter` instead.
+  - The `ActionImportParameters` type has been removed. Use `OperationParameters` instead.
+  - The `FunctionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
+  - The `BoundFunctionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
+  - The `BoundActionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
+  - The `ODataActionImportRequestConfig` constant has been removed. Use `ODataActionRequestConfig` instead.
+  - The `ODataBoundActionImportRequestConfig` class has been removed. Use `ODataBoundActionRequestConfig` instead.
+  - The `OdataBoundFunctionImportRequestConfig` constant has been removed. Use `ODataBoundFunctionRequestConfig` instead.
+  - The `ActionImportRequestBuilder` class has been removed. Use `OperationRequestBuilder` instead.
+- `@sap-cloud-sdk/resilience`
+  - The `circuitBreakerHttp` constant has been removed. Use `circuitBreaker` instead.
+- `@sap-cloud-sdk/util`
+  - The `assoc` constant has been removed. There is no replacement.

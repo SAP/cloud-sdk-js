@@ -87,7 +87,6 @@ export {
   GetAllRequestBuilderBase,
   GetByKeyRequestBuilderBase,
   OperationRequestBuilderBase,
-  ActionFunctionImportRequestBuilderBase,
   CountRequestBuilder
 } from './request-builder';
 export type {
@@ -96,7 +95,6 @@ export type {
 } from './request-builder';
 export {
   OperationParameter,
-  FunctionImportParameter,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
   WithKeys,
@@ -109,13 +107,11 @@ export {
   WithGetAllRestrictions,
   WithSelection,
   ODataFunctionRequestConfig,
-  ODataFunctionImportRequestConfig,
   ODataRequest,
   ODataRequestConfig,
   BatchReference,
   OperationParameters,
-  RequestMethodType,
-  FunctionImportParameters
+  RequestMethodType
 } from './request';
 export { throwErrorWhenReturnTypeIsUnionType } from './response-transformer';
 export { isOrderableEdmType } from './edm-types';

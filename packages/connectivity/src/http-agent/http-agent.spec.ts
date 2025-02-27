@@ -3,7 +3,7 @@ import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
-import { getAgentConfigAsync } from './http-agent';
+import { getAgentConfig } from './http-agent';
 import type { HttpDestination } from '../scp-cf/destination';
 import type { DestinationCertificate } from '../scp-cf';
 
@@ -19,14 +19,12 @@ describe('createAgent', () => {
   };
 
   it('returns the default agent if TrustAll is not set', async () => {
-    const agentConfig = (await getAgentConfigAsync(baseDestination))[
-      'httpsAgent'
-    ];
+    const agentConfig = (await getAgentConfig(baseDestination))['httpsAgent'];
     expect(agentConfig.options.rejectUnauthorized).toBe(true);
   });
 
   it('disables rejectUnauthorized agent if TrustAll is configured', async () => {
-    const agentConfig = (await getAgentConfigAsync(trustAllDestination))[
+    const agentConfig = (await getAgentConfig(trustAllDestination))[
       'httpsAgent'
     ];
     expect(agentConfig.options.rejectUnauthorized).toBe(false);
@@ -34,7 +32,7 @@ describe('createAgent', () => {
 
   it('returns a HTTP agent if a destination with http protocol URL is provided', async () => {
     const destHttp = { url: 'http://localhost' };
-    expect((await getAgentConfigAsync(destHttp))['httpAgent']).toHaveProperty(
+    expect((await getAgentConfig(destHttp))['httpAgent']).toHaveProperty(
       'protocol',
       'http:'
     );
@@ -45,7 +43,7 @@ describe('createAgent', () => {
       url: 'http://localhost',
       isTrustingAllCertificates: true
     };
-    expect((await getAgentConfigAsync(destHttp))['httpAgent']).toHaveProperty(
+    expect((await getAgentConfig(destHttp))['httpAgent']).toHaveProperty(
       'protocol',
       'http:'
     );
@@ -69,7 +67,7 @@ describe('createAgent', () => {
     };
 
     expect(
-      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+      (await getAgentConfig(destination))['httpsAgent']['options']
     ).toMatchObject(expectedOptions);
   });
 
@@ -95,7 +93,7 @@ describe('createAgent', () => {
     };
 
     expect(
-      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+      (await getAgentConfig(destination))['httpsAgent']['options']
     ).toMatchObject(expectedOptions);
   });
 
@@ -119,7 +117,7 @@ describe('createAgent', () => {
     };
 
     expect(
-      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+      (await getAgentConfig(destination))['httpsAgent']['options']
     ).toMatchObject(expectedOptions);
   });
 
@@ -146,7 +144,7 @@ describe('createAgent', () => {
     };
 
     expect(
-      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+      (await getAgentConfig(destination))['httpsAgent']['options']
     ).toMatchObject(expectedOptions);
   });
 
@@ -170,7 +168,7 @@ describe('createAgent', () => {
     };
 
     expect(
-      (await getAgentConfigAsync(destination))['httpsAgent']['options']
+      (await getAgentConfig(destination))['httpsAgent']['options']
     ).toMatchObject(expectedOptions);
   });
 
@@ -189,7 +187,7 @@ describe('createAgent', () => {
       ]
     };
 
-    expect(async () => getAgentConfigAsync(destination)).rejects.toThrowError(
+    expect(async () => getAgentConfig(destination)).rejects.toThrowError(
       "The format of the provided certificate 'cert.jks' is not supported. Supported formats are: p12, pfx, pem. You can convert Java Keystores (.jks, .keystore) into PKCS#12 keystores using the JVM's keytool CLI: keytool -importkeystore -srckeystore your-keystore.jks -destkeystore your-keystore.p12 -deststoretype pkcs12"
     );
   });
@@ -209,7 +207,7 @@ describe('createAgent', () => {
       ]
     };
 
-    expect(async () => getAgentConfigAsync(destination)).rejects.toThrowError(
+    expect(async () => getAgentConfig(destination)).rejects.toThrowError(
       'No certificate with name cert.pfx could be found on the destination!'
     );
   });
@@ -217,15 +215,13 @@ describe('createAgent', () => {
   // Check coverage
 });
 
-describe('getAgentConfigAsync', () => {
+describe('getAgentConfig', () => {
   it('returns an object with key "httpsAgent" for destinations with protocol HTTPS', async () => {
     const destination: HttpDestination = {
       url: 'https://example.com'
     };
 
-    expect(
-      (await getAgentConfigAsync(destination))['httpsAgent']
-    ).toBeDefined();
+    expect((await getAgentConfig(destination))['httpsAgent']).toBeDefined();
   });
 
   it('returns an object with key "httpAgent" for destinations with protocol HTTP', async () => {
@@ -233,7 +229,7 @@ describe('getAgentConfigAsync', () => {
       url: 'http://example.com'
     };
 
-    expect((await getAgentConfigAsync(destination))['httpAgent']).toBeDefined();
+    expect((await getAgentConfig(destination))['httpAgent']).toBeDefined();
   });
 
   it('returns an object with key "httpsAgent" for destinations without protocol', async () => {
@@ -241,9 +237,7 @@ describe('getAgentConfigAsync', () => {
       url: 'example.com'
     };
 
-    expect(
-      (await getAgentConfigAsync(destination))['httpsAgent']
-    ).toBeDefined();
+    expect((await getAgentConfig(destination))['httpsAgent']).toBeDefined();
   });
 
   it('throws an error for unsupported protocols', async () => {
@@ -251,7 +245,7 @@ describe('getAgentConfigAsync', () => {
       url: 'rpc://example.com'
     };
 
-    expect(async () => getAgentConfigAsync(destination)).rejects.toThrow();
+    expect(async () => getAgentConfig(destination)).rejects.toThrow();
   });
 
   describe('mTLS', () => {
@@ -283,7 +277,7 @@ describe('getAgentConfigAsync', () => {
           url: 'https://example.com',
           mtls: true
         };
-        const actual = (await getAgentConfigAsync(destination))['httpsAgent']
+        const actual = (await getAgentConfig(destination))['httpsAgent']
           .options;
 
         expect(actual.cert).toEqual(certAsString);
@@ -313,7 +307,7 @@ describe('getAgentConfigAsync', () => {
           'retrieveMtlsOptionsFromCache'
         );
 
-        const actual = (await getAgentConfigAsync(destination))['httpsAgent']
+        const actual = (await getAgentConfig(destination))['httpsAgent']
           .options;
 
         expect(actual.cert).toEqual(certAsString);
@@ -332,8 +326,7 @@ describe('getAgentConfigAsync', () => {
       const logger = createLogger('http-agent');
       const warnSpy = jest.spyOn(logger, 'warn');
 
-      const actual = (await getAgentConfigAsync(destination))['httpsAgent']
-        .options;
+      const actual = (await getAgentConfig(destination))['httpsAgent'].options;
 
       expect(actual.cert).not.toBeDefined();
       expect(actual.key).not.toBeDefined();
@@ -347,8 +340,7 @@ describe('getAgentConfigAsync', () => {
         url: 'https://example.com'
       };
 
-      const actual = (await getAgentConfigAsync(destination))['httpsAgent']
-        .options;
+      const actual = (await getAgentConfig(destination))['httpsAgent'].options;
 
       expect(actual.cert).not.toBeDefined();
       expect(actual.key).not.toBeDefined();

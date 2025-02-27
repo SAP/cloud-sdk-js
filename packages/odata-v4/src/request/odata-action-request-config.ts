@@ -54,8 +54,3 @@ export class ODataActionRequestConfig<
     return payload;
   }
 }
-
-/**
- * @deprecated Since 3.3.0. Use {@link ODataActionRequestConfig} instead.
- */
-export const ODataActionImportRequestConfig = ODataActionRequestConfig;

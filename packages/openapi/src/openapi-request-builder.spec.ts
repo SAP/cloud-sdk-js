@@ -1,9 +1,7 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
-import {
-  parseDestination,
-  sanitizeDestination
-} from '@sap-cloud-sdk/connectivity';
+import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
+import { parseDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { retry, timeout } from '@sap-cloud-sdk/resilience';
 import * as resilienceInternal from '@sap-cloud-sdk/resilience/internal';
 import {

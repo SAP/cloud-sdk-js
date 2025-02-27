@@ -45,7 +45,6 @@
     "moment": "^2.30.1",
     "openapi-backend": "^5.11.1",
     "pm2": "^5.4.3",
-    "smtp-server": "3.13.6",
     "sqlite3": "^5.1.7"
   },
   "cds": {

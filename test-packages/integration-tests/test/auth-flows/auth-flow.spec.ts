@@ -6,8 +6,6 @@ import * as xssec from '@sap/xssec';
 //   getAgentConfig,
 //   HttpDestination
 // } from '@sap-cloud-sdk/connectivity';
-// eslint-disable-next-line
-import { sendMail } from '@sap-cloud-sdk/mail-client';
 
 describe('dummy test suite, should be removed', () => {
   it('dummy test , should be removed', () => {
@@ -508,25 +506,6 @@ describe('dummy test suite, should be removed', () => {
 //     });
 //     expect(myDestination?.proxyType).toEqual('PrivateLink');
 //   });
-
-//   xit('Mail: Provider cloud basic auth', async () => {
-//     const destination = await getDestinationFromDestinationService({
-//       destinationName: systems.email.providerCloudBasic
-//     });
-//     expect(destination?.type).toEqual('MAIL');
-//     expect(destination?.proxyType).toEqual('Internet');
-//     expect(destination?.originalProperties?.['mail.user']).toBeTruthy();
-//     expect(destination?.originalProperties?.['mail.smtp.host']).toBeTruthy();
-
-//     const myEmailAddress = destination?.originalProperties!['mail.user'];
-//     const res = await sendMail(destination!, {
-//       from: myEmailAddress,
-//       to: myEmailAddress,
-//       subject: 'sub',
-//       text: 'txt'
-//     });
-//     expect(res).toBeTruthy();
-//   }, 60000);
 
 //   xit('Mail: Provider op basic auth', async () => {
 //     const destination = await getDestinationFromDestinationService({

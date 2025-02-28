@@ -89,7 +89,7 @@ function validateChangesets(preamble, commitType, isBreaking, fileContents) {
             .join(' or ')}.`);
     }
     const changeTypes = fileContents.flatMap(content => {
-        const matches = content.match(/\[([^\]]+)\]/g);
+        const matches = content.match(/\[([^\]]+)\](?!\([^\]]*\))/g);
         return matches ? matches.map(match => match.slice(1, -1)) : [];
     });
     if (!preamble.startsWith('chore') && !changeTypes.length) {

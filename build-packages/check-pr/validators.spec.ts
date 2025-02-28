@@ -118,5 +118,14 @@ describe('check-pr', () => {
       validateChangesets('chore!', '', true, fileContents);
       expect(process.exitCode).toEqual(0);
     });
+
+    it('should validate with markdown link annotation', async () => {
+      const fileContents = [
+        '"@sap-cloud-sdk/generator": major',
+        '[Fixed Issue] Something is fixed [here](123).'
+      ];
+      validateChangesets('chore!', '', true, fileContents);
+      expect(process.exitCode).toEqual(0);
+    });
   });
 });

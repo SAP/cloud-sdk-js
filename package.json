@@ -16,7 +16,6 @@
   "workspaces": [
     "packages/connectivity",
     "packages/http-client",
-    "packages/mail-client",
     "packages/openapi",
     "packages/odata-common",
     "packages/odata-v2",
@@ -75,7 +74,6 @@
     "generator": "yarn workspace @sap-cloud-sdk/generator",
     "generator-common": "yarn workspace @sap-cloud-sdk/generator-common",
     "http-client": "yarn workspace @sap-cloud-sdk/http-client",
-    "mail-client": "yarn workspace @sap-cloud-sdk/mail-client",
     "openapi": "yarn workspace @sap-cloud-sdk/openapi",
     "resilience": "yarn workspace @sap-cloud-sdk/resilience",
     "openapi-generator": "yarn workspace @sap-cloud-sdk/openapi-generator",

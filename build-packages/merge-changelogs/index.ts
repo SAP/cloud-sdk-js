@@ -8,17 +8,17 @@ const messageTypes = [
   {
     name: 'compat',
     title: 'Compatibility Notes',
-    alternatives: ['compatibility', 'compatibility note']
+    alternatives: ['compatibility', 'compatibility note', 'compat']
   },
   {
     name: 'feat',
     title: 'New Features',
-    alternatives: ['new', 'new functionality']
+    alternatives: ['new', 'new functionality', 'feat']
   },
   {
     name: 'fix',
     title: 'Fixed Issues',
-    alternatives: ['bug', 'bug fix', 'fixed issue']
+    alternatives: ['bug', 'bug fix', 'fixed issue', 'fix', 'fix issue']
   },
   {
     name: 'impr',
@@ -70,7 +70,7 @@ function getMessageType(matchedType: string | undefined): MessageType {
     throw new Error(`Missing message type`);
   }
   const type = messageTypes.find(({ name, alternatives }) =>
-    [name, ...alternatives].includes(matchedType)
+    [name, ...alternatives].includes(matchedType.toLowerCase())
   );
   if (!type) {
     throw new Error(`Invalid message type: ${matchedType}`);

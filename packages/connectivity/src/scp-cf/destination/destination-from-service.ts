@@ -116,7 +116,7 @@ export class DestinationFromServiceRetriever {
     setForwardedAuthTokenIfNeeded(destination, options.jwt);
 
     if (destinationResult.fromCache) {
-      return destination;
+      return da.addProxyConfiguration(destination);
     }
 
     if (!destination.forwardAuthToken) {
@@ -153,13 +153,13 @@ export class DestinationFromServiceRetriever {
       }
     }
 
-    const withProxySetting = await da.addProxyConfiguration(destination);
     const withTrustStore = await da.addTrustStoreConfiguration(
-      withProxySetting,
+      destination,
       destinationResult.origin
     );
     await da.updateDestinationCache(withTrustStore, destinationResult.origin);
-    return withTrustStore;
+
+    return da.addProxyConfiguration(withTrustStore);
   }
 
   private static throwUserTokenMissing(destination) {

@@ -1,22 +1,43 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { setOutput, error, setFailed, info } from '@actions/core';
+import { setOutput, setFailed, info } from '@actions/core';
 import { getPackages } from '@manypkg/get-packages';
 
-export const validMessageTypes = [
-  'Known Issue',
-  'Compatibility Note',
-  'New Functionality',
-  'Improvement',
-  'Fixed Issue',
-  'Updated Dependencies'
-] as const;
+const messageTypes = [
+  {
+    name: 'compat',
+    title: 'Compatibility Notes',
+    alternatives: ['compatibility', 'compatibility note', 'compat']
+  },
+  {
+    name: 'feat',
+    title: 'New Features',
+    alternatives: ['new', 'new functionality', 'feat']
+  },
+  {
+    name: 'fix',
+    title: 'Fixed Issues',
+    alternatives: ['bug', 'bug fix', 'fixed issue', 'fix', 'fix issue']
+  },
+  {
+    name: 'impr',
+    title: 'Improvements',
+    alternatives: ['improvement', 'improv']
+  },
+  {
+    name: 'dep',
+    title: 'Updated Dependencies',
+    alternatives: ['dependency', 'dependency update']
+  }
+];
+
+type MessageType = (typeof messageTypes)[number];
 
 interface Change {
   packageNames: string[];
   commit: string;
-  type: (typeof validMessageTypes)[number];
+  type: MessageType;
   version: string;
   summary: string;
   dependencies?: string;
@@ -44,34 +65,25 @@ function splitByVersion(changelog: string): ContentByVersion[] {
     });
 }
 
-function assertGroups(
-  groups: RegExpMatchArray['groups'] | undefined,
-  packageName: string,
-  version: string
-): asserts groups is {
-  summary: string;
-  commit?: string;
-  type: (typeof validMessageTypes)[number];
-} {
-  // TODO: improve type checking, currently you have to match a long string, allow shortcuts
-  if (!validMessageTypes.includes(groups?.type as any)) {
-    error(
-      groups?.type
-        ? `Error: Type [${groups?.type}] is not valid (${groups?.commit})`
-        : `Error: No type was provided for "${groups?.summary} (${groups?.commit})"`
-    );
-    throw new Error(
-      `Incorrect or missing type in CHANGELOG.md in ${packageName} for v${version}!`
-    );
+function getMessageType(matchedType: string | undefined): MessageType {
+  if (!matchedType) {
+    throw new Error(`Missing message type`);
   }
-  if (typeof groups?.summary !== 'string' || groups?.summary.trim() === '') {
-    error(
-      `Error: Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}! (${groups?.commit})`
-    );
-    throw new Error(
-      `Empty or missing summary in CHANGELOG.md in ${packageName} for v${version}!`
-    );
+  const type = messageTypes.find(({ name, alternatives }) =>
+    [name, ...alternatives].includes(matchedType.toLowerCase())
+  );
+  if (!type) {
+    throw new Error(`Invalid message type: ${matchedType}`);
   }
+  return type;
+}
+
+function getSummary(matchedSummary: string | undefined): string {
+  const summary = matchedSummary?.trim();
+  if (!summary) {
+    throw new Error(`Empty or missing summary`);
+  }
+  return summary;
 }
 
 function parseContent(
@@ -81,17 +93,20 @@ function parseContent(
 ): Change[] {
   // Explanation: https://regex101.com/r/ikvIaa/2
   const contentRegex =
-    /- ((?<commit>\w*):) (\[(?<type>.*?)\])? ?(?<summary>[^]*?)(?=(\n- |\n### |$))/g;
+    /- ((?<commit>.*):) (\[(?<type>.*?)\])? ?(?<summary>[^]*?)(?=(\n- |\n### |$))/g;
+
+  info(`parsing content for ${packageName} v${version}`);
 
   return [...content.matchAll(contentRegex)].map(({ groups }) => {
-    assertGroups(groups, packageName, version);
+    const type = getMessageType(groups?.type);
+    const summary = getSummary(groups?.summary);
     return {
       version,
-      summary: groups.summary.trim(),
+      summary,
       packageNames: [packageName],
       // TODO: add link to commit
       commit: groups.commit ? `(${groups.commit})` : '',
-      type: groups.type
+      type
     };
   });
 }
@@ -102,15 +117,13 @@ function parseChangelog(changelog: string): Change[] {
   return parseContent(latest.content, latest.version, packageName).flat();
 }
 
-function formatMessagesOfType(
-  messages: Change[],
-  type: (typeof validMessageTypes)[number]
-): string {
-  if (!messages.some(msg => msg.type === type)) {
+function formatMessagesOfType(messages: Change[], type: MessageType): string {
+  if (!messages.some(msg => msg.type.name === type.name)) {
     return '';
   }
-  const formatted = messages
-    .filter(msg => msg.type === type)
+
+  const formattedMessages = messages
+    .filter(msg => msg.type.name === type.name)
     .map(
       msg =>
         `- [${msg.packageNames.join(', ')}] ${msg.summary} ${msg.commit}${
@@ -119,10 +132,7 @@ function formatMessagesOfType(
     )
     .join('\n');
 
-  // TODO: this is ugly, e.g. there is no plural for "New Functionality" => use type to title mapping instead
-  const pluralizedType =
-    type.slice(-1) === 'y' ? type.slice(0, -1) + 'ies' : type + 's';
-  return `\n\n## ${pluralizedType}\n\n${formatted}`;
+  return `## ${type.title}\n\n${formattedMessages}`;
 }
 
 function mergeMessages(parsedMessages: Change[]): Change[] {
@@ -132,7 +142,7 @@ function mergeMessages(parsedMessages: Change[]): Change[] {
         msg.summary === curr.summary &&
         msg.dependencies === curr.dependencies &&
         msg.version === curr.version &&
-        msg.type === curr.type
+        msg.type.name === curr.type.name
     );
     if (sameMessage) {
       sameMessage.packageNames.push(curr.packageNames[0]);
@@ -146,19 +156,12 @@ async function formatChangelog(messages: Change[]): Promise<string> {
   if (!messages.length) {
     throw new Error('No messages found in changelogs');
   }
-
-  return (
-    formatMessagesOfType(messages, 'Known Issue') +
-    formatMessagesOfType(messages, 'Compatibility Note') +
-    formatMessagesOfType(messages, 'New Functionality') +
-    formatMessagesOfType(messages, 'Improvement') +
-    formatMessagesOfType(messages, 'Fixed Issue') +
-    formatMessagesOfType(messages, 'Updated Dependencies') +
-    '\n\n'
-  );
+  return messageTypes
+    .map(type => formatMessagesOfType(messages, type))
+    .join('\n\n');
 }
 
-export async function mergeChangelogs(): Promise<void> {
+async function getPublicChangelogs() {
   const { packages } = await getPackages(process.cwd());
   const pathsToPublicLogs = packages
     .filter(({ packageJson }) => !packageJson.private)
@@ -166,14 +169,17 @@ export async function mergeChangelogs(): Promise<void> {
 
   info(`changelogs to merge: ${pathsToPublicLogs.join(', ')}`);
 
-  const changelogs = await Promise.all(
+  return Promise.all(
     pathsToPublicLogs.map(async file => readFile(file, { encoding: 'utf8' }))
   );
+}
 
-  const newChangelog = await formatChangelog(
+export async function mergeChangelogs(): Promise<void> {
+  const changelogs = await getPublicChangelogs();
+  const mergedChangelog = await formatChangelog(
     mergeMessages(changelogs.map(log => parseChangelog(log)).flat())
   );
-  setOutput('changelog', newChangelog);
+  setOutput('changelog', mergedChangelog);
 }
 
 mergeChangelogs().catch(error => {

@@ -1,7 +1,7 @@
 import { isDestinationFetchOptions } from './destination-accessor-types';
 import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
-import type { DestinationForServiceBindingOptions } from './destination-from-vcap';
+import type { DestinationFromServiceBindingOptions } from './destination-from-vcap';
 import type {
   AuthenticationType,
   Destination,
@@ -32,9 +32,9 @@ export function sanitizeDestination(
 /**
  * Takes a JSON object returned by any of the calls to the destination service and returns an SDK compatible destination object.
  * This function only accepts destination configurations of type 'HTTP' and will error if no 'URL' is given.
- * TODO: deprecated: Remove from public api in version 4. (Check if related types can also be removed from public api).
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
+ * @internal
  */
 export function parseDestination(
   destinationJson: DestinationJson | DestinationConfiguration
@@ -466,17 +466,17 @@ export function noDestinationErrorMessage(
 }
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
+ * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
  */
 export type DestinationOrFetchOptions = Xor<
   Destination,
-  DestinationFetchOptions & DestinationForServiceBindingOptions
+  DestinationFetchOptions & DestinationFromServiceBindingOptions
 >;
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationForServiceBindingOptions}.
+ * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
  */
 export type HttpDestinationOrFetchOptions = Xor<
   HttpDestination,
-  DestinationFetchOptions & DestinationForServiceBindingOptions
+  DestinationFetchOptions & DestinationFromServiceBindingOptions
 >;

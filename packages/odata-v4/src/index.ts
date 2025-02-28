@@ -29,17 +29,13 @@ export {
   transformReturnValueForEntity,
   transformReturnValueForEntityList,
   transformReturnValueForUndefined,
-  ActionImportRequestBuilder,
   CountRequestBuilder,
   CreateRequestBuilder,
   DeleteRequestBuilder,
-  FunctionImportRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   UpdateRequestBuilder,
   BoundOperationRequestBuilder,
-  BoundActionImportRequestBuilder,
-  BoundFunctionImportRequestBuilder,
   OperationRequestBuilder
 } from './request-builder';
 
@@ -47,11 +43,7 @@ export { ODataBatchRequestBuilder } from './request-builder';
 
 export {
   ODataActionRequestConfig,
-  ODataFunctionRequestConfig,
-  ActionImportParameter,
-  ActionImportParameters,
-  ODataActionImportRequestConfig,
-  ODataFunctionImportRequestConfig
+  ODataFunctionRequestConfig
 } from './request';
 
 export { Entity } from './entity';
@@ -76,9 +68,7 @@ export type { BatchResponse } from './batch-response';
 
 export type {
   ODataBoundActionRequestConfig,
-  ODataBoundActionImportRequestConfig,
-  ODataBoundFunctionRequestConfig,
-  OdataBoundFunctionImportRequestConfig
+  ODataBoundFunctionRequestConfig
 } from './request';
 
 export * from './common';

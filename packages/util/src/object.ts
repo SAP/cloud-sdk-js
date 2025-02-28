@@ -82,24 +82,6 @@ export const exclude = <T extends Record<string, unknown>>(
 };
 
 /**
- * Adds a key value pair to the given objects and returns a shallow copy.
- * If the key is already present it will be overwritten.
- * @param key - Key to be added.
- * @param value - Value to be added.
- * @param obj - Object the key value pair is added to.
- * @returns The object with the key value pair added.
- * @deprecated  Since v3.12.1. Will not be replaced.
- */
-export const assoc = <T>(
-  key: string,
-  value: any,
-  obj: T
-): T & { [key: string]: any } => ({
-  ...obj,
-  [key]: value
-});
-
-/**
  * Create an object based on the given key and value if neither key nor value are nullish.
  * @param key - Name of the header.
  * @param value - Value of the header.

@@ -3,7 +3,6 @@ import { ODataActionRequestConfig } from './odata-action-request-config';
 import type {
   ODataUri,
   EntityBase,
-  RequestMethodType,
   EntityApi,
   OperationParameters,
   WithKeys
@@ -47,27 +46,5 @@ export class ODataBoundActionRequestConfig<
 
   queryParameters(): Record<string, any> {
     return {};
-  }
-}
-
-/**
- * @deprecated Since 3.3.0. Use {@link ODataBoundActionRequestConfig} instead.
- */
-export class ODataBoundActionImportRequestConfig<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
-  ParametersT
-> extends ODataBoundActionRequestConfig<EntityT, DeSerializersT, ParametersT> {
-  constructor(
-    /**
-     * @deprecated Since 3.3.0. This parameter is unused and will be removed in the next major release.
-     */
-    method: RequestMethodType,
-    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
-    actionName: string,
-    parameters: OperationParameters<ParametersT>,
-    readonly oDataUri: ODataUri<DeSerializersT>
-  ) {
-    super(entityApi, actionName, parameters, oDataUri);
   }
 }

@@ -74651,7 +74651,7 @@ function isNullish(val) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.assoc = exports.exclude = exports.pick = exports.renameKeys = void 0;
+exports.exclude = exports.pick = exports.renameKeys = void 0;
 exports.propertyExists = propertyExists;
 exports.toSanitizedObject = toSanitizedObject;
 exports.pickIgnoreCase = pickIgnoreCase;
@@ -74726,20 +74726,6 @@ const exclude = (keys, obj) => {
     return result;
 };
 exports.exclude = exclude;
-/**
- * Adds a key value pair to the given objects and returns a shallow copy.
- * If the key is already present it will be overwritten.
- * @param key - Key to be added.
- * @param value - Value to be added.
- * @param obj - Object the key value pair is added to.
- * @returns The object with the key value pair added.
- * @deprecated  Since v3.12.1. Will not be replaced.
- */
-const assoc = (key, value, obj) => ({
-    ...obj,
-    [key]: value
-});
-exports.assoc = assoc;
 /**
  * Create an object based on the given key and value if neither key nor value are nullish.
  * @param key - Name of the header.

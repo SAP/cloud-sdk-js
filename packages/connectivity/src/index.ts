@@ -5,7 +5,6 @@
  */
 
 export {
-  parseDestination,
   toDestinationNameUrl,
   sanitizeDestination,
   DestinationCacheInterface,
@@ -51,11 +50,9 @@ export {
   DestinationConfiguration,
   DestinationJson,
   DestinationsByType,
-  DestinationForServiceBindingOptions,
-  destinationForServiceBinding,
+  DestinationFromServiceBindingOptions,
   getServiceBinding,
   getDestinationFromServiceBinding,
-  PartialDestinationFetchOptions,
   ServiceBindingTransformOptions,
   transformServiceBindingToDestination,
   getAllDestinationsFromDestinationService,
@@ -79,7 +76,6 @@ export type {
 } from './scp-cf';
 
 export {
-  getAgentConfigAsync,
   getAgentConfig,
   HttpAgentConfig,
   HttpsAgentConfig

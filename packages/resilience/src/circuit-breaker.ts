@@ -61,13 +61,6 @@ export function circuitBreaker<
   );
 }
 
-/**
- * @deprecated Since v3.0.1. Use `{@link circuitBreaker}` instead.
- * Helper method to build a circuit breaker middleware.
- * @returns The middleware adding a circuit breaker to the function.
- */
-export const circuitBreakerHttp = circuitBreaker;
-
 function circuitBreakerGeneric<
   ArgumentT,
   ReturnT,

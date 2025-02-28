@@ -127,7 +127,7 @@ export function validateChangesets(
   }
 
   const changeTypes = fileContents.flatMap(content => {
-    const matches = content.match(/\[([^\]]+)\]/g);
+    const matches = content.match(/\[([^\]]+)\](?!\([^\]]*\))/g);
     return matches ? matches.map(match => match.slice(1, -1)) : [];
   });
 

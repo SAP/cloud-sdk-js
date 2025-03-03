@@ -36,27 +36,29 @@ describe('ErrorWithCause', () => {
 
   it('adds Axios error to stack', () => {
     const axiosError: AxiosError = {
-      message: "Request failed with status code 400",
-      name: "AxiosError",
-      stack: "AxiosError: Request failed with status code 400",
-      code: "ERR_BAD_REQUEST",
+      message: 'Request failed with status code 400',
+      name: 'AxiosError',
+      stack: 'AxiosError: Request failed with status code 400',
+      code: 'ERR_BAD_REQUEST',
       status: 400,
       response: {
         data: {
           my_error: {
             my_code: 'Four Hundred',
-            my_message: 'This is a bad request',
+            my_message: 'This is a bad request'
           }
         }
       } as any,
       isAxiosError: true,
-      toJSON: () => ({}),
+      toJSON: () => ({})
     };
     const err = new ErrorWithCause('message', axiosError);
     expect(err.stack).toContain('ErrorWithCause: message');
     expect(err.stack).toContain('at ');
     expect(err.stack).toContain('Caused by:');
-    expect(err.stack).toContain('HTTP Response: Request failed with status code 400');
+    expect(err.stack).toContain(
+      'HTTP Response: Request failed with status code 400'
+    );
     expect(err.stack).toContain('Four Hundred');
   });
 });

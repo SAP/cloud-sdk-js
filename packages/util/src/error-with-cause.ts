@@ -1,6 +1,6 @@
 import { unixEOL } from './string-formatter';
-import type { AxiosError } from 'axios';
 import { createLogger } from './logger';
+import type { AxiosError } from 'axios';
 
 const logger = createLogger({
   package: 'util',

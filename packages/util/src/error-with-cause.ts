@@ -1,5 +1,11 @@
 import { unixEOL } from './string-formatter';
 import type { AxiosError } from 'axios';
+import { createLogger } from './logger';
+
+const logger = createLogger({
+  package: 'util',
+  messageContext: 'error-with-cause'
+});
 
 /**
  * Represents an error that was caused by another error.
@@ -29,7 +35,15 @@ export class ErrorWithCause extends Error {
   private addStack(cause: Error) {
     // Axios removed the stack property in version 0.27 which gave no useful information anyway. This adds the http cause.
     if (this.isAxiosError(cause)) {
-      const response = cause.response?.data ? ` - ${cause.response?.data}` : '';
+      let response = '';
+      if (cause.response?.data) {
+        try {
+          response = `${unixEOL}${JSON.stringify(cause.response?.data, null, 2)}`;
+        } catch (error) {
+          logger.warn(`Failed to stringify response data: ${error.message}`);
+          response = `${unixEOL}${cause.response?.data}`;
+        }
+      }
       this.stack = `${this.stack}${unixEOL}Caused by:${unixEOL}HTTP Response: ${cause.message}${response}`;
     } else if (this.stack && cause?.stack) {
       // Stack is a non-standard property according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types

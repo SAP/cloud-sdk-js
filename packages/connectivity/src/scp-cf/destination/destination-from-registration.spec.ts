@@ -47,7 +47,7 @@ describe('register-destination', () => {
 
     afterEach(() => {
       mock.restore();
-    })
+    });
 
     afterAll(() => {
       delete process.env.VCAP_SERVICES;

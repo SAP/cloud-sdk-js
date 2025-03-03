@@ -1,4 +1,5 @@
 import { ErrorWithCause } from './error-with-cause';
+import type { AxiosError } from 'axios';
 
 describe('ErrorWithCause', () => {
   it('creates an error', () => {
@@ -31,5 +32,33 @@ describe('ErrorWithCause', () => {
         "name": "ErrorWithCause"
       }"
     `);
+  });
+
+  it('adds Axios error to stack', () => {
+    const axiosError: AxiosError = {
+      message: 'Request failed with status code 400',
+      name: 'AxiosError',
+      stack: 'AxiosError: Request failed with status code 400',
+      code: 'ERR_BAD_REQUEST',
+      status: 400,
+      response: {
+        data: {
+          my_error: {
+            my_code: 'Four Hundred',
+            my_message: 'This is a bad request'
+          }
+        }
+      } as any,
+      isAxiosError: true,
+      toJSON: () => ({})
+    };
+    const err = new ErrorWithCause('message', axiosError);
+    expect(err.stack).toContain('ErrorWithCause: message');
+    expect(err.stack).toContain('at ');
+    expect(err.stack).toContain('Caused by:');
+    expect(err.stack).toContain(
+      'HTTP Response: Request failed with status code 400'
+    );
+    expect(err.stack).toContain('Four Hundred');
   });
 });

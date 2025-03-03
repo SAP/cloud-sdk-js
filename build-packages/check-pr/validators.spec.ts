@@ -6,16 +6,13 @@ const prTemplate = `unchanged PR template
 with multiple lines`;
 
 describe('check-pr', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mock({
       '.github': {
         'PULL_REQUEST_TEMPLATE.md': prTemplate
       },
       'my-changeset.md': '[Fixed Issue] Something is fixed.'
     });
-  });
-
-  beforeEach(() => {
     jest.spyOn(github, 'getInput').mockReturnValue('my-changeset.md');
     process.exitCode = 0;
   });

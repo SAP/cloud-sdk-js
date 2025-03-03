@@ -11,7 +11,7 @@ import type {
 import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 describe('mTLS on CloudFoundry', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mock({
       'cf-crypto': {
         'cf-cert': 'my-cert',
@@ -23,7 +23,7 @@ describe('mTLS on CloudFoundry', () => {
     process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
   });
 
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
 
     delete process.env.CF_INSTANCE_CERT;

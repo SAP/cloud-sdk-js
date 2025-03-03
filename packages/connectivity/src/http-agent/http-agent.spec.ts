@@ -250,7 +250,7 @@ describe('getAgentConfig', () => {
 
   describe('mTLS', () => {
     describe('on CloudFoundry', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         mock({
           'cf-crypto': {
             'cf-cert': certAsString,
@@ -259,7 +259,7 @@ describe('getAgentConfig', () => {
         });
       });
 
-      afterAll(() => {
+      afterEach(() => {
         mock.restore();
       });
 

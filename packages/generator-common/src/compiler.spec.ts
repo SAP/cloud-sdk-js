@@ -120,7 +120,7 @@ describe('compilation', () => {
     prettierOptions: defaultPrettierConfig
   };
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const rootNodeModules = resolve(__dirname, '../../../node_modules');
     const packageNodeModules = resolve(__dirname, '../node_modules');
     mock({
@@ -152,7 +152,7 @@ describe('compilation', () => {
     };
   }
 
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
   });
 

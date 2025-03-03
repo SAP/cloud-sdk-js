@@ -35,7 +35,7 @@ const mailDestination: DestinationWithName = {
 
 describe('register-destination', () => {
   describe('with XSUAA service binding', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockServiceBindings();
       mock({
         'cf-crypto': {
@@ -45,8 +45,11 @@ describe('register-destination', () => {
       });
     });
 
-    afterAll(() => {
+    afterEach(() => {
       mock.restore();
+    })
+
+    afterAll(() => {
       delete process.env.VCAP_SERVICES;
     });
 

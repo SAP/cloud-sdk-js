@@ -20,7 +20,7 @@ describe('check-pr', () => {
     process.exitCode = 0;
   });
 
-  afterAll(() => mock.restore());
+  afterEach(() => mock.restore());
 
   describe('validateTitle', () => {
     it('should validate title with proper structure', async () => {

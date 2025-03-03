@@ -51,7 +51,7 @@
     "postinstall": "yarn compile",
     "compile": "turbo run compile",
     "test": "turbo run test",
-    "test:unit": "turbo run test --filter=./packages/* --concurrency=1",
+    "test:unit": "turbo run test --filter=./packages/*",
     "test:build-packages": "turbo run test --filter=./build-packages/*",
     "test:integration": "turbo run test --filter=@sap-cloud-sdk/integration-tests",
     "test:type": "turbo run test --filter=@sap-cloud-sdk/type-tests",

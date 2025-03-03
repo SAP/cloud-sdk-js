@@ -1,5 +1,5 @@
 /* eslint-disable jsdoc/require-jsdoc */
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { setOutput, setFailed, info } from '@actions/core';
 import { getPackages } from '@manypkg/get-packages';
@@ -174,12 +174,33 @@ async function getPublicChangelogs() {
   );
 }
 
+async function writeChangelog(changelog: string): Promise<void> {
+  if (!changelog) {
+    throw new Error('CHANGELOG environment variable not set.');
+  }
+  if (!process.env.VERSION) {
+    throw new Error('VERSION environment variable not set.');
+  }
+  const unifiedChangelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
+  await writeFile(
+    'CHANGELOG.md',
+    unifiedChangelog.split('\n').slice(0, 30).join('\n') +
+      `# ${process.env.VERSION}` +
+      '\n' +
+      changelog +
+      '\n\n' +
+      unifiedChangelog.split('\n').slice(30).join('\n'),
+    { encoding: 'utf8' }
+  );
+}
+
 export async function mergeChangelogs(): Promise<void> {
   const changelogs = await getPublicChangelogs();
   const mergedChangelog = await formatChangelog(
     mergeMessages(changelogs.map(log => parseChangelog(log)).flat())
   );
-  setOutput('changelog', mergedChangelog);
+  await writeChangelog(mergedChangelog);
+  // setOutput('changelog', mergedChangelog);
 }
 
 mergeChangelogs().catch(error => {

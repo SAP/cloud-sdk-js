@@ -38,11 +38,8 @@ jobs:
 
       - name: merge Changelogs
         id: merge-changelogs
-        uses: ./.github/actions/merge-changelogs
-
-      - run: yarn -s ts-node ${{ github.workspace }}/scripts/write-changelog.ts
+        uses: ./.github/actions/merge-and-write-changelogs
         env:
-          CHANGELOG: ${{ steps.merge-changelogs.outputs.changelog }}
           VERSION: ${{ steps.bump.outputs.version }}
 
       - name: commit and tag

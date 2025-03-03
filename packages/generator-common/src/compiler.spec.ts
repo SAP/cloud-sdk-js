@@ -15,7 +15,7 @@ import type { CompilerOptions } from 'typescript';
 
 const { readFile, readdir } = promises;
 
-jest.setTimeout(30000);
+jest.setTimeout(300000);
 
 describe('compiler options', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../node_modules');

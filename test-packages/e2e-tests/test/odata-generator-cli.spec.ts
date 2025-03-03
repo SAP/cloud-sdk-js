@@ -26,7 +26,7 @@ describe('OData generator CLI', () => {
   );
   const outputDirGenerateAll = resolve(__dirname, '../generation-e2e-test');
 
-  beforeAll(() => {
+  beforeEach(() => {
     mock({
       [inputDir]: mock.load(inputDir),
       [generatorCommon]: mock.load(generatorCommon),
@@ -37,7 +37,7 @@ describe('OData generator CLI', () => {
     });
   });
 
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
   });
 

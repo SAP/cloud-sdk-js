@@ -42,7 +42,7 @@ describe('generator', () => {
 
   describe('common', () => {
     let project;
-    beforeAll(async () => {
+    beforeEach(async () => {
       mock({
         common: {},
         someDir: {},
@@ -66,7 +66,7 @@ describe('generator', () => {
       await generate(options);
     });
 
-    afterAll(() => mock.restore());
+    afterEach(() => mock.restore());
 
     it('fails if skip validation is not enabled', async () => {
       const options = createOptions({

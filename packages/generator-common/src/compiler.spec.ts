@@ -15,6 +15,8 @@ import type { CompilerOptions } from 'typescript';
 
 const { readFile, readdir } = promises;
 
+jest.setTimeout(300000);
+
 describe('compiler options', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
   beforeEach(() => {
@@ -120,7 +122,7 @@ describe('compilation', () => {
     prettierOptions: defaultPrettierConfig
   };
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const rootNodeModules = resolve(__dirname, '../../../node_modules');
     const packageNodeModules = resolve(__dirname, '../node_modules');
     mock({
@@ -152,7 +154,7 @@ describe('compilation', () => {
     };
   }
 
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
   });
 

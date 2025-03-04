@@ -481,7 +481,7 @@ describe('generator', () => {
   });
 
   describe('logger', () => {
-    afterAll(() => {
+    beforeEach(() => {
       mock({
         common: {},
         '/prettier/config': JSON.stringify({ printWidth: 66 }),

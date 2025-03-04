@@ -28,6 +28,14 @@
 
 - 
 
+# 3.26.2
+
+
+## Fixed Issues
+
+- [connectivity] Add `proxyConfiguration` on the fly to avoid expired proxy authorization token in cached destination if it lives shorter than the token for destination service. (438ebd8)
+- [util] Stringify Axios response data object in the error stack of `ErrorWithCause` class. (782b3fd)
+
 # 3.26.1
 
 

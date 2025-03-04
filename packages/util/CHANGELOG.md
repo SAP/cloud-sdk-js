@@ -1,5 +1,20 @@
 # @sap-cloud-sdk/util
 
+## 4.0.0
+
+### Major Changes
+
+- 7d92a1b: [Compatibility Note] The following deprecated content has been removed from the package:
+  - The `assoc` constant has been removed. There is no replacement.
+
+### Minor Changes
+
+- 936a6eb: [New Functionality] Add `basePath` option in the `options-per-service.json` file in the OpenAPI generator. This option prepends the base URL path to the API path parameter for every request.
+
+### Patch Changes
+
+- 4228412: [Fixed Issue] Stringify Axios response data object in the error stack of `ErrorWithCause` class.
+
 ## 3.24.0
 
 ## 3.23.0

@@ -1,5 +1,30 @@
 # @sap-cloud-sdk/odata-v2
 
+## 4.0.0
+
+### Major Changes
+
+- 7d92a1b: [Compatibility Note] The following deprecated content has been removed from the package:
+  - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
+  - The `FunctionImportRequestBuilder` constant has been removed. Use `OperationRequestBuilder` instead.
+
+### Patch Changes
+
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [d69325a]
+- Updated dependencies [936a6eb]
+- Updated dependencies [4228412]
+- Updated dependencies [ab6ca60]
+- Updated dependencies [e7cf4e7]
+- Updated dependencies [40fa8d9]
+- Updated dependencies [25c9dd8]
+  - @sap-cloud-sdk/connectivity@4.0.0
+  - @sap-cloud-sdk/odata-common@4.0.0
+  - @sap-cloud-sdk/util@4.0.0
+  - @sap-cloud-sdk/http-client@4.0.0
+
 ## 3.24.0
 
 ### Patch Changes

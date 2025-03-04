@@ -1,5 +1,28 @@
 # @sap-cloud-sdk/openapi
 
+## 4.0.0
+
+### Minor Changes
+
+- 936a6eb: [New Functionality] Introduce `setBasePath()` method on the OpenAPI request builder, allowing a custom base path URL to be set for a single request. This base path is prepended to the API path parameter for that single request.
+- 936a6eb: [New Functionality] Add `basePath` option in the `options-per-service.json` file in the OpenAPI generator. This option prepends the base URL path to the API path parameter for every request.
+
+### Patch Changes
+
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [d69325a]
+- Updated dependencies [936a6eb]
+- Updated dependencies [4228412]
+- Updated dependencies [e7cf4e7]
+- Updated dependencies [40fa8d9]
+- Updated dependencies [25c9dd8]
+  - @sap-cloud-sdk/connectivity@4.0.0
+  - @sap-cloud-sdk/resilience@4.0.0
+  - @sap-cloud-sdk/util@4.0.0
+  - @sap-cloud-sdk/http-client@4.0.0
+
 ## 3.24.0
 
 ### Patch Changes

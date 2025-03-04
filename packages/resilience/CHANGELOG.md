@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/resilience
 
+## 4.0.0
+
+### Major Changes
+
+- 7d92a1b: [Compatibility Note] The following deprecated content has been removed from the package:
+  - The `circuitBreakerHttp` constant has been removed. Use `circuitBreaker` instead.
+
+### Patch Changes
+
+- Updated dependencies [7d92a1b]
+- Updated dependencies [936a6eb]
+- Updated dependencies [4228412]
+  - @sap-cloud-sdk/util@4.0.0
+
 ## 3.24.0
 
 ### Patch Changes

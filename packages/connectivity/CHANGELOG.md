@@ -1,5 +1,30 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.0.0
+
+### Major Changes
+
+- 7d92a1b: [Compatibility Note] The following deprecated content has been removed from the package:
+  - The behaviour of `getAgentConfig()` function is changed to be asynchronous. The temporary asynchronous function `getAgentConfigAsync()` has been removed.
+  - The `destinationForServiceBinding()` function has been removed. Use `getDestinationFromServiceBinding()` instead.
+  - The `PartialDestinationFetchOptions` type has been removed. Use either `ServiceBindingTransformOptions` or `getDestinationFromServiceBinding()` function.
+  - The `serviceToken()` function no longer takes `xsuaaCredentials` as part of the `options` parameter.
+  - The `parseDestination()` function is no longer a public API.
+  - The `DestinationForServiceBindingOptions` interface has been renamed to `DestinationFromServiceBindingOptions`.
+- d69325a: [Compatibility Note] Enable destination caching by default when retrieving destinations via the destination service. Change affects behavior of `getDestination()` method, `getAllDestinationsFromDestinationService()` method, generated client's `execute()` method and generic HTTP requests execution using `executeHttpRequest()`.
+- 25c9dd8: [Compatibility Note] Disable `iasToXsuaaTokenExchange` by default if not defined.
+
+### Patch Changes
+
+- e7cf4e7: [Fixed Issue] Reintroduce option to pass `iss` property to `getClientCredentialsToken` function.
+- 40fa8d9: [Fixed Issue] Add `proxyConfiguration` on the fly to avoid expired proxy authorization token in cached destination if it lives shorter than the token for destination service.
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [936a6eb]
+- Updated dependencies [4228412]
+  - @sap-cloud-sdk/resilience@4.0.0
+  - @sap-cloud-sdk/util@4.0.0
+
 ## 3.24.0
 
 ### Minor Changes

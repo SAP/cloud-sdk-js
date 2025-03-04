@@ -1,5 +1,18 @@
 # @sap-cloud-sdk/test-services-odata-v2
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [936a6eb]
+- Updated dependencies [4228412]
+- Updated dependencies [ab6ca60]
+  - @sap-cloud-sdk/odata-v2@4.0.0
+  - @sap-cloud-sdk/util@4.0.0
+  - @sap-cloud-sdk/generator@4.0.0
+
 ## 3.24.0
 
 ## 3.23.0

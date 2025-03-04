@@ -1,33 +1,33 @@
 {
-    "name": "check-public-api",
-    "version": "1.0.0",
-    "description": "Checks if the APIs in a package are correctly marked public or internal.",
-    "license": "Apache-2.0",
-    "private": true,
-    "scripts": {
-      "compile": "tsc -p tsconfig.json",
-      "postcompile": "ncc build lib/index.js --external prettier --external typescript  --out ../../.github/actions/check-public-api/",
-      "test": "yarn test:unit",
-      "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
-      "lint": "eslint && prettier --check **/*.ts",
-      "lint:fix": "eslint --fix --quiet && prettier --write **/*.ts",
-      "check:dependencies": "depcheck --skip-missing=true .",
-      "all": "yarn && yarn run lint && yarn run compile"
-    },
-    "dependencies": {
-      "@actions/core": "^1.10.1",
-      "@manypkg/get-packages": "^2.2.2",
-      "@sap-cloud-sdk/util": "^3.22.2",
-      "@sap-cloud-sdk/generator-common": "^3.22.2",
-      "@types/mock-fs": "^4.13.4",
-      "glob": "^11.0.1",
-      "mock-fs": "^5.5.0"
-    },
-    "devDependencies": {
-      "@vercel/ncc": "^0.38.3",
-      "depcheck": "^1.4.7",
-      "eslint": "^8.57.0",
-      "prettier": "^3.5.3",
-      "typescript": "~5.7.3"
-    }
+  "name": "check-public-api",
+  "version": "1.0.1",
+  "description": "Checks if the APIs in a package are correctly marked public or internal.",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "postcompile": "ncc build lib/index.js --external prettier --external typescript  --out ../../.github/actions/check-public-api/",
+    "test": "yarn test:unit",
+    "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "lint": "eslint && prettier --check **/*.ts",
+    "lint:fix": "eslint --fix --quiet && prettier --write **/*.ts",
+    "check:dependencies": "depcheck --skip-missing=true .",
+    "all": "yarn && yarn run lint && yarn run compile"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@manypkg/get-packages": "^2.2.2",
+    "@sap-cloud-sdk/util": "^4.0.0",
+    "@sap-cloud-sdk/generator-common": "^4.0.0",
+    "@types/mock-fs": "^4.13.4",
+    "glob": "^11.0.1",
+    "mock-fs": "^5.5.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.3",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.57.0",
+    "prettier": "^3.5.3",
+    "typescript": "~5.7.3"
   }
+}

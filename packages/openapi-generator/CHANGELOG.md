@@ -1,5 +1,22 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 4.0.0
+
+### Minor Changes
+
+- 936a6eb: [New Functionality] Add `basePath` option in the `options-per-service.json` file in the OpenAPI generator. This option prepends the base URL path to the API path parameter for every request.
+- d816f5e: [New Functionality] Add `resolveExternal` option to determine whether external $ref pointers will be resolved.
+
+### Patch Changes
+
+- Updated dependencies [7d92a1b]
+- Updated dependencies [936a6eb]
+- Updated dependencies [936a6eb]
+- Updated dependencies [4228412]
+  - @sap-cloud-sdk/util@4.0.0
+  - @sap-cloud-sdk/openapi@4.0.0
+  - @sap-cloud-sdk/generator-common@4.0.0
+
 ## 3.24.0
 
 ### Patch Changes

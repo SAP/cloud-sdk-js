@@ -1,5 +1,26 @@
 # @sap-cloud-sdk/generator
 
+## 4.0.0
+
+### Major Changes
+
+- ab6ca60: [Improvement] Support precision handling during serialization of `Edm.DateTimeOffset` fields in OData v4.
+
+### Patch Changes
+
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [936a6eb]
+- Updated dependencies [4228412]
+- Updated dependencies [ab6ca60]
+  - @sap-cloud-sdk/odata-common@4.0.0
+  - @sap-cloud-sdk/odata-v2@4.0.0
+  - @sap-cloud-sdk/odata-v4@4.0.0
+  - @sap-cloud-sdk/util@4.0.0
+  - @sap-cloud-sdk/generator-common@4.0.0
+
 ## 3.24.0
 
 ### Patch Changes

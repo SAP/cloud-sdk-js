@@ -1,5 +1,30 @@
 # @sap-cloud-sdk/odata-common
 
+## 4.0.0
+
+### Major Changes
+
+- 7d92a1b: [Compatibility Note] The following deprecated content has been removed from the package:
+  - The `FunctionImportParameters` type has been removed. Use `OperationParameters` instead.
+  - The `ODataFunctionImportRequestConfig` constant has been removed. Use `ODataFunctionRequestConfig` instead.
+  - The `FunctionImportParameter` constant has been removed. Use `OperationParameter` instead.
+  - The `ActionFunctionImportRequestBuilderBase` constant has been removed. Use `OperationRequestBuilderBase` instead.
+- ab6ca60: [Improvement] Support precision handling during serialization of `Edm.DateTimeOffset` fields in OData v4.
+
+### Patch Changes
+
+- Updated dependencies [7d92a1b]
+- Updated dependencies [7d92a1b]
+- Updated dependencies [d69325a]
+- Updated dependencies [936a6eb]
+- Updated dependencies [4228412]
+- Updated dependencies [e7cf4e7]
+- Updated dependencies [40fa8d9]
+- Updated dependencies [25c9dd8]
+  - @sap-cloud-sdk/connectivity@4.0.0
+  - @sap-cloud-sdk/util@4.0.0
+  - @sap-cloud-sdk/http-client@4.0.0
+
 ## 3.24.0
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/eslint-config",
-  "version": "3.26.1",
+  "version": "3.26.2",
   "description": "eslint config for the SAP Cloud SDK",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",

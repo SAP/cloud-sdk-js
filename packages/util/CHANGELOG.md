@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/util
 
+## 3.26.2
+
+### Patch Changes
+
+- 782b3fd: [Fixed Issue] Stringify Axios response data object in the error stack of `ErrorWithCause` class.
+
 ## 3.26.1
 
 ## 3.26.0

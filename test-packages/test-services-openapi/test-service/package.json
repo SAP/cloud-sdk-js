@@ -18,7 +18,7 @@
     "compile": "npx tsc"
   },
   "dependencies": {
-    "@sap-cloud-sdk/openapi": "^3.26.1"
+    "@sap-cloud-sdk/openapi": "^3.26.2"
   },
   "devDependencies": {
     "typescript": "~4.1.2"

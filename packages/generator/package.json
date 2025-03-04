@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "3.26.1",
+  "version": "3.26.2",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -39,11 +39,11 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/generator-common": "^3.26.1",
-    "@sap-cloud-sdk/odata-common": "^3.26.1",
-    "@sap-cloud-sdk/odata-v2": "^3.26.1",
-    "@sap-cloud-sdk/odata-v4": "^3.26.1",
-    "@sap-cloud-sdk/util": "^3.26.1",
+    "@sap-cloud-sdk/generator-common": "^3.26.2",
+    "@sap-cloud-sdk/odata-common": "^3.26.2",
+    "@sap-cloud-sdk/odata-v2": "^3.26.2",
+    "@sap-cloud-sdk/odata-v4": "^3.26.2",
+    "@sap-cloud-sdk/util": "^3.26.2",
     "@types/fs-extra": "^11.0.4",
     "fast-xml-parser": "^5.0.8",
     "fs-extra": "^11.3.0",

@@ -1,5 +1,14 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.26.2
+
+### Patch Changes
+
+- 438ebd8: [Fixed Issue] Add `proxyConfiguration` on the fly to avoid expired proxy authorization token in cached destination if it lives shorter than the token for destination service.
+- Updated dependencies [782b3fd]
+  - @sap-cloud-sdk/util@3.26.2
+  - @sap-cloud-sdk/resilience@3.26.2
+
 ## 3.26.1
 
 ### Patch Changes

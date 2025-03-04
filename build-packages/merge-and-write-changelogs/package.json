@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "compile": "tsc -p tsconfig.json",
-    "postcompile": "ncc build lib/build-packages/merge-changelogs/index.js --out ../../.github/actions/merge-changelogs/",
+    "postcompile": "ncc build lib/build-packages/merge-and-write-changelogs/index.js --out ../../.github/actions/merge-and-write-changelogs/",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",

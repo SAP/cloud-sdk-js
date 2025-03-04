@@ -200,7 +200,6 @@ export async function mergeChangelogs(): Promise<void> {
     mergeMessages(changelogs.map(log => parseChangelog(log)).flat())
   );
   await writeChangelog(mergedChangelog);
-  // setOutput('changelog', mergedChangelog);
 }
 
 mergeChangelogs().catch(error => {

@@ -28,6 +28,11 @@
 
 - 
 # 4.0.0
+## Improvements
+
+- [connectivity] Enable destination caching by default when retrieving destinations via the destination service. Change affects behavior of `getDestination()` method, `getAllDestinationsFromDestinationService()` method, generated client's `execute()` method and generic HTTP requests execution using `executeHttpRequest()`. (d69325a)
+- [generator, odata-common, odata-v4] Support precision handling during serialization of `Edm.DateTimeOffset` fields in OData v4. (ab6ca60)
+
 ## Compatibility Notes
 
 - [connectivity] The following deprecated content has been removed from the package:
@@ -37,7 +42,6 @@
   - The `serviceToken()` function no longer takes `xsuaaCredentials` as part of the `options` parameter.
   - The `parseDestination()` function is no longer a public API.
   - The `DestinationForServiceBindingOptions` interface has been renamed to `DestinationFromServiceBindingOptions`. (7d92a1b)
-- [connectivity] Enable destination caching by default when retrieving destinations via the destination service. Change affects behavior of `getDestination()` method, `getAllDestinationsFromDestinationService()` method, generated client's `execute()` method and generic HTTP requests execution using `executeHttpRequest()`. (d69325a)
 - [connectivity] Disable `iasToXsuaaTokenExchange` by default if not defined. (25c9dd8)
 - [odata-common] The following deprecated content has been removed from the package:
   - The `FunctionImportParameters` type has been removed. Use `OperationParameters` instead.
@@ -62,22 +66,3 @@
   - The `circuitBreakerHttp` constant has been removed. Use `circuitBreaker` instead. (7d92a1b)
 - [util] The following deprecated content has been removed from the package:
   - The `assoc` constant has been removed. There is no replacement. (7d92a1b)
-
-## New Features
-
-- [openapi] Introduce `setBasePath()` method on the OpenAPI request builder, allowing a custom base path URL to be set for a single request. This base path is prepended to the API path parameter for that single request. (936a6eb)
-- [openapi, openapi-generator, util] Add `basePath` option in the `options-per-service.json` file in the OpenAPI generator. This option prepends the base URL path to the API path parameter for every request. (936a6eb)
-- [openapi-generator] Add `resolveExternal` option to determine whether external $ref pointers will be resolved. (d816f5e)
-
-## Fixed Issues
-
-- [connectivity] Reintroduce option to pass `iss` property to `getClientCredentialsToken` function. (e7cf4e7)
-- [connectivity] Add `proxyConfiguration` on the fly to avoid expired proxy authorization token in cached destination if it lives shorter than the token for destination service. (40fa8d9)
-- [util] Stringify Axios response data object in the error stack of `ErrorWithCause` class. (4228412)
-
-## Improvements
-
-- [generator, odata-common, odata-v4] Support precision handling during serialization of `Edm.DateTimeOffset` fields in OData v4. (ab6ca60)
-
-
-

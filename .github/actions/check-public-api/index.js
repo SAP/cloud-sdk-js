@@ -74030,6 +74030,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ErrorWithCause = void 0;
 exports.isErrorWithCause = isErrorWithCause;
 const string_formatter_1 = __nccwpck_require__(81366);
+const logger_1 = __nccwpck_require__(14587);
+const logger = (0, logger_1.createLogger)({
+    package: 'util',
+    messageContext: 'error-with-cause'
+});
 /**
  * Represents an error that was caused by another error.
  */
@@ -74053,7 +74058,16 @@ class ErrorWithCause extends Error {
     addStack(cause) {
         // Axios removed the stack property in version 0.27 which gave no useful information anyway. This adds the http cause.
         if (this.isAxiosError(cause)) {
-            const response = cause.response?.data ? ` - ${cause.response?.data}` : '';
+            let response = '';
+            if (cause.response?.data) {
+                try {
+                    response = `${string_formatter_1.unixEOL}${JSON.stringify(cause.response?.data, null, 2)}`;
+                }
+                catch (error) {
+                    logger.warn(`Failed to stringify response data: ${error.message}`);
+                    response = `${string_formatter_1.unixEOL}${cause.response?.data}`;
+                }
+            }
             this.stack = `${this.stack}${string_formatter_1.unixEOL}Caused by:${string_formatter_1.unixEOL}HTTP Response: ${cause.message}${response}`;
         }
         else if (this.stack && cause?.stack) {

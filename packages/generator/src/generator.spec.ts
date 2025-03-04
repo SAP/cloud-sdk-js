@@ -169,7 +169,7 @@ describe('generator', () => {
 
     afterEach(async () => {
       mock.restore();
-    })
+    });
 
     it('generates expected number of files', () => {
       expect(files.length).toBe(34);

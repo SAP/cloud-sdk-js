@@ -183,7 +183,7 @@ jobs:
           yarn changeset pre enter ${date}
           yarn changeset version
           yarn changeset pre exit
-          yarn changeset publish --tag next
+          yarn changeset publish --tag canary
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
   draft-github-release:

@@ -63,18 +63,6 @@
 - [util] The following deprecated content has been removed from the package:
   - The `assoc` constant has been removed. There is no replacement. (7d92a1b)
 
-## New Features
-
-- [openapi] Introduce `setBasePath()` method on the OpenAPI request builder, allowing a custom base path URL to be set for a single request. This base path is prepended to the API path parameter for that single request. (936a6eb)
-- [openapi, openapi-generator, util] Add `basePath` option in the `options-per-service.json` file in the OpenAPI generator. This option prepends the base URL path to the API path parameter for every request. (936a6eb)
-- [openapi-generator] Add `resolveExternal` option to determine whether external $ref pointers will be resolved. (d816f5e)
-
-## Fixed Issues
-
-- [connectivity] Reintroduce option to pass `iss` property to `getClientCredentialsToken` function. (e7cf4e7)
-- [connectivity] Add `proxyConfiguration` on the fly to avoid expired proxy authorization token in cached destination if it lives shorter than the token for destination service. (40fa8d9)
-- [util] Stringify Axios response data object in the error stack of `ErrorWithCause` class. (4228412)
-
 ## Improvements
 
 - [generator, odata-common, odata-v4] Support precision handling during serialization of `Edm.DateTimeOffset` fields in OData v4. (ab6ca60)

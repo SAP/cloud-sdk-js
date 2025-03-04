@@ -28,6 +28,11 @@
 
 - 
 # 4.0.0
+## Improvements
+
+- [connectivity] Enable destination caching by default when retrieving destinations via the destination service. Change affects behavior of `getDestination()` method, `getAllDestinationsFromDestinationService()` method, generated client's `execute()` method and generic HTTP requests execution using `executeHttpRequest()`. (d69325a)
+- [generator, odata-common, odata-v4] Support precision handling during serialization of `Edm.DateTimeOffset` fields in OData v4. (ab6ca60)
+
 ## Compatibility Notes
 
 - [connectivity] The following deprecated content has been removed from the package:
@@ -37,7 +42,6 @@
   - The `serviceToken()` function no longer takes `xsuaaCredentials` as part of the `options` parameter.
   - The `parseDestination()` function is no longer a public API.
   - The `DestinationForServiceBindingOptions` interface has been renamed to `DestinationFromServiceBindingOptions`. (7d92a1b)
-- [connectivity] Enable destination caching by default when retrieving destinations via the destination service. Change affects behavior of `getDestination()` method, `getAllDestinationsFromDestinationService()` method, generated client's `execute()` method and generic HTTP requests execution using `executeHttpRequest()`. (d69325a)
 - [connectivity] Disable `iasToXsuaaTokenExchange` by default if not defined. (25c9dd8)
 - [odata-common] The following deprecated content has been removed from the package:
   - The `FunctionImportParameters` type has been removed. Use `OperationParameters` instead.
@@ -62,10 +66,3 @@
   - The `circuitBreakerHttp` constant has been removed. Use `circuitBreaker` instead. (7d92a1b)
 - [util] The following deprecated content has been removed from the package:
   - The `assoc` constant has been removed. There is no replacement. (7d92a1b)
-
-## Improvements
-
-- [generator, odata-common, odata-v4] Support precision handling during serialization of `Edm.DateTimeOffset` fields in OData v4. (ab6ca60)
-
-
-

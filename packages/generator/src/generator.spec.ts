@@ -159,7 +159,7 @@ describe('generator', () => {
 
   describe('v2', () => {
     let files: SourceFile[];
-    beforeAll(async () => {
+    beforeEach(async () => {
       mock({
         'v2-test': {},
         [pathTestResources]: mock.load(pathTestResources)
@@ -167,9 +167,9 @@ describe('generator', () => {
       files = await getGeneratedFiles('v2', 'v2-test');
     });
 
-    afterAll(async () => {
+    afterEach(async () => {
       mock.restore();
-    });
+    })
 
     it('generates expected number of files', () => {
       expect(files.length).toBe(34);
@@ -198,7 +198,7 @@ describe('generator', () => {
 
   describe('v4', () => {
     let files: SourceFile[];
-    beforeAll(async () => {
+    beforeEach(async () => {
       mock({
         'v4-test': {},
         [pathTestResources]: mock.load(pathTestResources)
@@ -206,7 +206,7 @@ describe('generator', () => {
       files = await getGeneratedFiles('v4', 'v4-test');
     });
 
-    afterAll(() => {
+    afterEach(() => {
       mock.restore();
     });
 
@@ -481,7 +481,7 @@ describe('generator', () => {
   });
 
   describe('logger', () => {
-    beforeAll(() => {
+    afterAll(() => {
       mock({
         common: {},
         '/prettier/config': JSON.stringify({ printWidth: 66 }),
@@ -491,7 +491,7 @@ describe('generator', () => {
       });
     });
 
-    afterAll(() => mock.restore());
+    afterEach(() => mock.restore());
 
     it('should not display verbose logs by default', async () => {
       const consoleSpy = jest.spyOn(process.stdout, 'write');

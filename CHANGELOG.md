@@ -26,7 +26,8 @@
 
 ### Implementation changed
 
-- 
+-
+ 
 # 4.0.0
 ## Improvements
 

@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/eslint-config
 
+## 4.0.1
+
+### Patch Changes
+
+- 97ad0ad: [Fixed Issue] Downgrade `@stylistic/eslint-plugin` to v3 as v4 is EMS-only.
+
 ## 4.0.0
 
 ## 3.24.0

@@ -28,6 +28,13 @@
 
 - 
 
+# 3.26.3
+
+
+## Fixed Issues
+
+- [eslint-config] Downgrade `@stylistic/eslint-plugin` to v3 as v4 is EMS-only. (f1ec5b7)
+
 # 3.26.2
 
 

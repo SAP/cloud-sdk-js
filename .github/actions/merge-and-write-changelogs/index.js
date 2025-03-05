@@ -42663,10 +42663,10 @@ async function writeChangelog(changelog) {
     }
     const unifiedChangelog = await (0, promises_1.readFile)('CHANGELOG.md', { encoding: 'utf8' });
     await (0, promises_1.writeFile)('CHANGELOG.md', unifiedChangelog.split('\n').slice(0, 30).join('\n') +
+        '\n' +
         `# ${process.env.VERSION}` +
         '\n' +
         changelog +
-        '\n\n' +
         unifiedChangelog.split('\n').slice(30).join('\n'), { encoding: 'utf8' });
 }
 async function mergeChangelogs() {

@@ -18,6 +18,9 @@ updates:
       # execa v6 needs ESM, see https://github.com/sindresorhus/execa/releases/tag/v6.0.0, we'll stay on v5 until we can use ESM
       - dependency-name: 'execa'
         update-types: ['version-update:semver-major']
+      # @stylistic/eslint-plugin v4 needs ESM, see https://github.com/eslint-stylistic/eslint-stylistic/releases/tag/v4.0.0, we'll stay on v3 until we can use ESM
+      - dependency-name: '@stylistic/eslint-plugin'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: npm
     target-branch: v3-main
     directory: '/'
@@ -35,6 +38,9 @@ updates:
         update-types: ['version-update:semver-major']
       # execa v6 needs ESM, see https://github.com/sindresorhus/execa/releases/tag/v6.0.0, we'll stay on v5 until we can use ESM
       - dependency-name: 'execa'
+        update-types: ['version-update:semver-major']
+      # @stylistic/eslint-plugin v4 needs ESM, see https://github.com/eslint-stylistic/eslint-stylistic/releases/tag/v4.0.0, we'll stay on v3 until we can use ESM
+      - dependency-name: '@stylistic/eslint-plugin'
         update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
     directory: '/'

@@ -32,6 +32,7 @@ describe('openapi-request-builder', () => {
 
   afterEach(() => {
     httpSpy.mockClear();
+    nock.cleanAll();
   });
 
   it('executes a request without parameters using executeRaw', async () => {

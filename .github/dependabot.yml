@@ -21,6 +21,27 @@ updates:
       # @stylistic/eslint-plugin v4 needs ESM, see https://github.com/eslint-stylistic/eslint-stylistic/releases/tag/v4.0.0, we'll stay on v3 until we can use ESM
       - dependency-name: '@stylistic/eslint-plugin'
         update-types: ['version-update:semver-major']
+  - package-ecosystem: npm
+    target-branch: v3-main
+    directory: '/'
+    schedule:
+      interval: daily
+      time: '01:00'
+      timezone: 'Europe/Berlin'
+    open-pull-requests-limit: 10
+    ignore:
+      # We only want to do major node updates on purpose, so don't create dependabot PRs for major versions
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+      # chalk v5 needs ESM, see https://github.com/chalk/chalk/releases/tag/v5.0.0, we'll stay on v4 until we can use ESM
+      - dependency-name: 'chalk'
+        update-types: ['version-update:semver-major']
+      # execa v6 needs ESM, see https://github.com/sindresorhus/execa/releases/tag/v6.0.0, we'll stay on v5 until we can use ESM
+      - dependency-name: 'execa'
+        update-types: ['version-update:semver-major']
+      # @stylistic/eslint-plugin v4 needs ESM, see https://github.com/eslint-stylistic/eslint-stylistic/releases/tag/v4.0.0, we'll stay on v3 until we can use ESM
+      - dependency-name: '@stylistic/eslint-plugin'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:

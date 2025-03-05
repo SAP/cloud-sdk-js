@@ -270,6 +270,9 @@ describe('Cloud SDK Logger', () => {
     beforeEach(() => {
       logger = createLogger(messageContext);
     });
+    afterEach(() => {
+      mock.restore();
+    })
     it('should replace all transports in all active loggers with the global transport', async () => {
       const consoleSpy = jest.spyOn(process.stdout, 'write');
       const rootNodeModules = path.resolve(
@@ -308,20 +311,22 @@ describe('Cloud SDK Logger', () => {
       );
       expect(consoleSpy).not.toBeCalled();
 
-      logger.on('close', async () => {
+      await new Promise<void>((resolve) => { 
+        logger.on('close', async () => {
         const log = await fs.promises.readFile('test.log', {
           encoding: 'utf-8'
         });
-        expect(log).toMatch(
-          /logs error only in test.log because the level is less than info/
-        );
-        expect(log).toMatch(
-          /logs info only in test.log because the level is equal to info/
-        );
-        expect(log).not.toMatch(
-          /logs verbose nowhere because the level is higher than info/
-        );
-        mock.restore();
+          expect(log).toMatch(
+            /logs error only in test.log because the level is less than info/
+          );
+          expect(log).toMatch(
+            /logs info only in test.log because the level is equal to info/
+          );
+          expect(log).not.toMatch(
+            /logs verbose nowhere because the level is higher than info/
+          );
+
+          resolve();
       });
     });
     it('should accept an array with multiple transports', () => {

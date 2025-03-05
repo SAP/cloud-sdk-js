@@ -27,7 +27,19 @@
 ### Implementation changed
 
 - 
-# 4.0.0
+# 4.0.0# 4.0.1
+
+
+
+
+## Fixed Issues
+
+- [eslint-config] Downgrade `@stylistic/eslint-plugin` to v3 as v4 is EMS-only. (97ad0ad)
+
+
+
+
+
 ## Improvements
 
 - [connectivity] Enable destination caching by default when retrieving destinations via the destination service. Change affects behavior of `getDestination()` method, `getAllDestinationsFromDestinationService()` method, generated client's `execute()` method and generic HTTP requests execution using `executeHttpRequest()`. (d69325a)

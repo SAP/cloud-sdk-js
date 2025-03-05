@@ -185,10 +185,10 @@ async function writeChangelog(changelog: string): Promise<void> {
   await writeFile(
     'CHANGELOG.md',
     unifiedChangelog.split('\n').slice(0, 30).join('\n') +
+      '\n' +
       `# ${process.env.VERSION}` +
       '\n' +
       changelog +
-      '\n\n' +
       unifiedChangelog.split('\n').slice(30).join('\n'),
     { encoding: 'utf8' }
   );

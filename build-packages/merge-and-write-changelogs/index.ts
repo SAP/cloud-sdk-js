@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { setOutput, setFailed, info } from '@actions/core';
+import { setFailed, info } from '@actions/core';
 import { getPackages } from '@manypkg/get-packages';
 
 const messageTypes = [
@@ -67,7 +67,7 @@ function splitByVersion(changelog: string): ContentByVersion[] {
 
 function getMessageType(matchedType: string | undefined): MessageType {
   if (!matchedType) {
-    throw new Error(`Missing message type`);
+    throw new Error('Missing message type');
   }
   const type = messageTypes.find(({ name, alternatives }) =>
     [name, ...alternatives].includes(matchedType.toLowerCase())
@@ -81,7 +81,7 @@ function getMessageType(matchedType: string | undefined): MessageType {
 function getSummary(matchedSummary: string | undefined): string {
   const summary = matchedSummary?.trim();
   if (!summary) {
-    throw new Error(`Empty or missing summary`);
+    throw new Error('Empty or missing summary');
   }
   return summary;
 }
@@ -118,10 +118,6 @@ function parseChangelog(changelog: string): Change[] {
 }
 
 function formatMessagesOfType(messages: Change[], type: MessageType): string {
-  if (!messages.some(msg => msg.type.name === type.name)) {
-    return '';
-  }
-
   const formattedMessages = messages
     .filter(msg => msg.type.name === type.name)
     .map(
@@ -156,7 +152,7 @@ async function formatChangelog(messages: Change[]): Promise<string> {
   if (!messages.length) {
     throw new Error('No messages found in changelogs');
   }
-  return messageTypes
+  return messageTypes.filter(type => messages.some(msg => msg.type.name === type.name))
     .map(type => formatMessagesOfType(messages, type))
     .join('\n\n');
 }

@@ -244,9 +244,9 @@
         }
       }
     },
-    "value" : 6.883420373952291,
+    "value" : 7.3340941328175395,
     "weight" : 1.0,
-    "confidence" : 9.645390070921987,
+    "confidence" : 10.0,
     "usedValues" : [ {
       "type" : "ScoreValue",
       "score" : {
@@ -1375,7 +1375,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 155,
+        "number" : 156,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1383,10 +1383,10 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of contributors in the last three months"
         },
-        "number" : 3,
+        "number" : 4,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "155 commits in the last 3 months results to 10.00 points", "3 contributors increase the score value from 10.00 to 11.00" ],
+      "explanation" : [ "156 commits in the last 3 months results to 10.00 points", "4 contributors increase the score value from 10.00 to 11.00" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -1424,16 +1424,16 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 0.22233333333333336,
+      "value" : 4.458666666666667,
       "weight" : 0.5,
-      "confidence" : 6.666666666666667,
+      "confidence" : 10.0,
       "usedValues" : [ {
         "type" : "IntegerValue",
         "feature" : {
           "type" : "PositiveIntegerFeature",
           "name" : "Number of stars for a GitHub repository"
         },
-        "number" : 169,
+        "number" : 170,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1444,11 +1444,12 @@
         "number" : 16,
         "explanation" : [ ]
       }, {
-        "type" : "UnknownValue",
+        "type" : "IntegerValue",
         "feature" : {
           "type" : "PositiveIntegerFeature",
           "name" : "Number of projects on GitHub that use an open source project"
         },
+        "number" : 6353,
         "explanation" : [ ]
       } ],
       "explanation" : [ ],

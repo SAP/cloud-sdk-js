@@ -9167,9 +9167,9 @@ synckit@^0.9.1:
     tslib "^2.6.2"
 
 systeminformation@^5.7:
-  version "5.22.7"
-  resolved "https://registry.npmjs.org/systeminformation/-/systeminformation-5.22.7.tgz#9a20810c7eacad4aebe7591cb7c78c0dd96dbd1a"
-  integrity sha512-AWxlP05KeHbpGdgvZkcudJpsmChc2Y5Eo/GvxG/iUA/Aws5LZKHAMSeAo+V+nD+nxWZaxrwpWcnx4SH3oxNL3A==
+  version "5.25.11"
+  resolved "https://registry.npmjs.org/systeminformation/-/systeminformation-5.25.11.tgz#7d47a14dafbc9cf6c21bc02d19a2121a8c770d88"
+  integrity sha512-jI01fn/t47rrLTQB0FTlMCC+5dYx8o0RRF+R4BPiUNsvg5OdY0s9DKMFmJGrx5SwMZQ4cag0Gl6v8oycso9b/g==
 
 tapable@^2.2.0:
   version "2.2.1"

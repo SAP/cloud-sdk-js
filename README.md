@@ -10,11 +10,11 @@ An SDK to reduce your development effort when building side-by-side extension ap
 
 ## Announcement - Upgrade Strategy
 
-We have released version 3 of the SAP Cloud SDK for JavaScript on npm.
-Check out the [upgrade guide](https://github.com/SAP/cloud-sdk-js/blob/main/V3-Upgrade-Guide.md) for detailed instructions.
-The upgrade effort should be around 1 day for an average project and should not take more than a week for larger projects.
+We have released version 4 of the SAP Cloud SDK for JavaScript on npm.
+Check out the [upgrade guide](https://sap.github.io/cloud-sdk/docs/js/guides/upgrade-to-version-4) for detailed instructions.
+The upgrade effort should be less than 1 day for an average project and should not take more than a week for larger projects.
 
-It is recommended to upgrade to version 3 as version 2.x will not be actively maintained, with the exception of critical security vulnerabilities for up to 6 months.
+It is recommended to upgrade to version 4 as version 3.x will not be actively maintained, with the exception of critical security vulnerabilities for up to 3 months.
 
 Please share your ideas, suggestions or improvements in our [GitHub discussion](https://github.com/SAP/cloud-sdk-js/discussions/3557).
 

@@ -152,7 +152,8 @@ async function formatChangelog(messages: Change[]): Promise<string> {
   if (!messages.length) {
     throw new Error('No messages found in changelogs');
   }
-  return messageTypes.filter(type => messages.some(msg => msg.type.name === type.name))
+  return messageTypes
+    .filter(type => messages.some(msg => msg.type.name === type.name))
     .map(type => formatMessagesOfType(messages, type))
     .join('\n\n');
 }

@@ -34,7 +34,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "axios": "^1.8.1",
+    "axios": "^1.8.2",
     "chalk": "^4.1.0",
     "logform": "^2.7.0",
     "voca": "^1.4.1",

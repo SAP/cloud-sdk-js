@@ -6,7 +6,6 @@ import {
   proxyStrategy
 } from './http-proxy-util';
 import { isHttpDestination } from './destination-service-types';
-import { destinationCache } from './destination-cache';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
 import type { DestinationFetchOptions } from './destination-accessor-types';
@@ -54,27 +53,8 @@ export async function getDestinationFromServiceBinding(
       : undefined;
 
   const retrievalOptions = { ...options, jwt: decodedJwt };
-  let destination;
-  if (options.useCache) {
-    destination = await destinationCache.retrieveDestinationFromCache(
-      decodeOrMakeJwt(retrievalOptions.jwt),
-      retrievalOptions.destinationName,
-      'tenant'
-    );
-  }
+  const destination = await retrieveDestination(retrievalOptions);
 
-  if (!destination) {
-    destination = await retrieveDestinationWithoutCache(retrievalOptions);
-
-    if (options.useCache) {
-      // As the grant type is clientCredential, isolation strategy is 'tenant'.
-      await destinationCache.cacheRetrievedDestination(
-        decodeOrMakeJwt(options.jwt),
-        destination,
-        'tenant'
-      );
-    }
-  }
   const destWithProxy =
     destination &&
     isHttpDestination(destination) &&
@@ -89,7 +69,7 @@ export async function getDestinationFromServiceBinding(
   return destWithProxy;
 }
 
-async function retrieveDestinationWithoutCache({
+async function retrieveDestination({
   useCache,
   jwt,
   destinationName,
@@ -120,19 +100,6 @@ export async function destinationForServiceBinding(
   options: DestinationForServiceBindingOptions &
     PartialDestinationFetchOptions = {}
 ): Promise<Destination> {
-  if (options.useCache) {
-    const destinationFromCache =
-      await destinationCache.retrieveDestinationFromCache(
-        decodeOrMakeJwt(options.jwt),
-        serviceInstanceName,
-        'tenant'
-      );
-
-    if (destinationFromCache) {
-      return destinationFromCache;
-    }
-  }
-
   const optionsForTransformation = {
     useCache: options.useCache,
     jwt: options.jwt
@@ -147,15 +114,6 @@ export async function destinationForServiceBinding(
     ['internet', 'private-link'].includes(proxyStrategy(destination))
       ? addProxyConfigurationInternet(destination)
       : destination;
-
-  if (options.useCache) {
-    // As the grant type is clientCredential, isolation strategy is 'tenant'.
-    await destinationCache.cacheRetrievedDestination(
-      decodeOrMakeJwt(options.jwt),
-      destWithProxy,
-      'tenant'
-    );
-  }
 
   return destWithProxy;
 }

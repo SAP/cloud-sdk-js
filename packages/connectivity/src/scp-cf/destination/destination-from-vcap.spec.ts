@@ -6,21 +6,15 @@ import {
   signedJwtForVerification,
   testTenants
 } from '../../../../../test-resources/test/test-util';
-import * as tokenAccessor from '../token-accessor';
+import * as xsuaaService from '../xsuaa-service';
 import { decodeJwt } from '../jwt';
 import { getDestination } from './destination-accessor';
 import { getDestinationFromServiceBinding } from './destination-from-vcap';
-import { destinationCache } from './destination-cache';
+import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import SpyInstance = jest.SpyInstance;
 import type { Service } from '../environment-accessor';
 
 describe('vcap-service-destination', () => {
-  const serviceTokenSpy = jest.spyOn(tokenAccessor, 'serviceToken');
-
-  beforeAll(() => {
-    mockServiceToken();
-  });
-
   beforeEach(() => {
     mockServiceBindings();
   });
@@ -28,7 +22,7 @@ describe('vcap-service-destination', () => {
   afterEach(async () => {
     delete process.env.VCAP_SERVICES;
     jest.clearAllMocks();
-    await destinationCache.clear();
+    clientCredentialsTokenCache.clear();
   });
 
   function getActualClientId(spyInstance: SpyInstance): string {
@@ -36,6 +30,7 @@ describe('vcap-service-destination', () => {
   }
 
   it('creates a destination for the aicore service', async () => {
+    const serviceTokenSpy = mockServiceToken();
     await expect(
       getDestinationFromServiceBinding({
         destinationName: 'my-aicore',
@@ -52,6 +47,7 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination for the business logging service', async () => {
+    const serviceTokenSpy = mockServiceToken();
     await expect(
       getDestinationFromServiceBinding({
         destinationName: 'my-business-logging',
@@ -68,6 +64,7 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates ad destination for the xsuaa service', async () => {
+    const serviceTokenSpy = mockServiceToken();
     await expect(
       getDestinationFromServiceBinding({
         destinationName: 'my-xsuaa',
@@ -84,6 +81,7 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination for the service manager service', async () => {
+    const serviceTokenSpy = mockServiceToken();
     await expect(
       getDestinationFromServiceBinding({
         destinationName: 'my-service-manager',
@@ -100,6 +98,7 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination for the destination service', async () => {
+    const serviceTokenSpy = mockServiceToken();
     await expect(
       getDestinationFromServiceBinding({
         destinationName: 'my-destination-service',
@@ -115,6 +114,7 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination for the saas registry', async () => {
+    const serviceTokenSpy = mockServiceToken();
     await expect(
       getDestinationFromServiceBinding({
         destinationName: 'my-saas-registry',
@@ -130,6 +130,7 @@ describe('vcap-service-destination', () => {
   });
 
   it('creates a destination for the workflow', async () => {
+    const serviceTokenSpy = mockServiceToken();
     await expect(
       getDestinationFromServiceBinding({
         destinationName: 'my-workflow',
@@ -157,45 +158,27 @@ describe('vcap-service-destination', () => {
   });
 
   it('uses the cache if enabled', async () => {
-    await getDestinationFromServiceBinding({
-      destinationName: 'my-destination-service',
-      useCache: true,
-      jwt: providerUserToken
-    });
-    await getDestinationFromServiceBinding({
-      destinationName: 'my-destination-service',
-      useCache: true,
-      jwt: providerUserToken
-    });
-    expect(serviceTokenSpy).toBeCalledTimes(1);
-    expect(
-      destinationCache
-        .getCacheInstance()
-        .get(`${providerUserPayload.zid}::my-destination`)
-    ).toBeDefined();
-  });
+    const getClientCredentialsTokenSpy = jest
+      .spyOn(xsuaaService, 'getClientCredentialsToken')
+      .mockResolvedValue({
+        access_token: providerUserToken,
+        token_type: 'bearer',
+        expires_in: 1000,
+        scope: 'some scope',
+        jti: 'some jti'
+      });
 
-  it('returns undefined if cached destination JWT has expired', async () => {
-    const jwtPayload = {
-      iat: 1692273899,
-      exp: 1692317098,
-      zid: testTenants.provider,
-      user_id: 'user-prov',
-      ext_attr: { enhancer: 'XSUAA' }
-    };
-    const jwt = signedJwtForVerification(jwtPayload);
-    jest.useFakeTimers();
     await getDestinationFromServiceBinding({
       destinationName: 'my-destination-service',
       useCache: true,
-      jwt
+      jwt: providerUserToken
     });
-    jest.advanceTimersByTime(720 * 60 * 1000 + 1);
-    await expect(
-      destinationCache
-        .getCacheInstance()
-        .get(`${jwtPayload.zid}::my-destination-service`)
-    ).resolves.toBeUndefined();
+    await getDestinationFromServiceBinding({
+      destinationName: 'my-destination-service',
+      useCache: true,
+      jwt: providerUserToken
+    });
+    expect(getClientCredentialsTokenSpy).toHaveBeenCalledTimes(1);
   });
 
   it('creates a destination using a custom transformation function', async () => {
@@ -274,7 +257,7 @@ describe('vcap-service-destination', () => {
     expect(serviceBindingTransformFn).toBeCalledTimes(1);
   });
 
-  it('sets forwarded auth token if needed (uncached)', async () => {
+  it('sets forwarded auth token if needed', async () => {
     const jwt = signedJwt({});
 
     const destination = await getDestinationFromServiceBinding({
@@ -287,51 +270,6 @@ describe('vcap-service-destination', () => {
     });
 
     expect(destination?.authTokens?.[0]).toMatchObject({ value: jwt });
-  });
-
-  it('sets forwarded auth token if needed (cached)', async () => {
-    const jwt = signedJwt({ zid: 'tenant' });
-
-    destinationCache.cacheRetrievedDestination(
-      decodeJwt(jwt),
-      {
-        name: 'my-custom-service',
-        forwardAuthToken: true
-      },
-      'tenant'
-    );
-
-    const destination = await getDestinationFromServiceBinding({
-      destinationName: 'my-custom-service',
-      useCache: true,
-      jwt
-    });
-
-    expect(destination?.authTokens?.[0]).toMatchObject({ value: jwt });
-  });
-
-  // TODO: fix in #1123
-  it.skip('does not cache the forwarded token', async () => {
-    const jwt = signedJwt({ zid: 'tenant' });
-
-    await getDestinationFromServiceBinding({
-      destinationName: 'my-custom-service',
-      useCache: true,
-      jwt,
-      serviceBindingTransformFn: async ({ name }) => ({
-        forwardAuthToken: true,
-        name
-      })
-    });
-
-    const destination = await destinationCache.retrieveDestinationFromCache(
-      decodeJwt(jwt),
-      'my-custom-service',
-      'tenant'
-    );
-
-    expect(destination).toBeDefined();
-    expect(destination?.authTokens).toBeUndefined();
   });
 });
 

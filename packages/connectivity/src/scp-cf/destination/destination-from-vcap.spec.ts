@@ -1,16 +1,12 @@
 import {
   mockServiceToken,
-  providerUserPayload,
   providerUserToken,
-  signedJwt,
-  signedJwtForVerification,
-  testTenants
+  signedJwt
 } from '../../../../../test-resources/test/test-util';
 import * as xsuaaService from '../xsuaa-service';
-import { decodeJwt } from '../jwt';
+import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { getDestination } from './destination-accessor';
 import { getDestinationFromServiceBinding } from './destination-from-vcap';
-import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import SpyInstance = jest.SpyInstance;
 import type { Service } from '../environment-accessor';
 

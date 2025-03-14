@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { decodeJwt, decodeOrMakeJwt } from '../jwt';
+import { decodeJwt } from '../jwt';
 import { getServiceBindingByInstanceName } from '../environment-accessor';
 import {
   addProxyConfigurationInternet,

@@ -1579,10 +1579,10 @@
     "@sap/hdi-deploy" ">=4"
     axios "^1"
 
-"@sap/cds@>=5.6.0", "@sap/cds@>=7", "@sap/cds@^8.8.1":
-  version "8.8.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-8.8.1.tgz#b7e933d568f0fc31776344f920c19139e7422a82"
-  integrity sha512-9f0ELZMJ6jdXz1drej2zP39B9IXhs29AYo2iz/g+oDjKomwCkdL2I3Ec2aVfi13dG3fOq8ZcIHnEHnMQn2cm2A==
+"@sap/cds@>=5.6.0", "@sap/cds@>=7", "@sap/cds@^8.8.2":
+  version "8.8.2"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-8.8.2.tgz#f7835b861d9eb54cdc7b0c914d4d7373df2ff959"
+  integrity sha512-KfFXSxf2pVLBKZr9Che8FYJ/VUS/UNngWfSHkGqVPPPjpSOHcW/x/h8x8Aiqk6Ze8WcZIl/2PgyKW4809xPDsQ==
   dependencies:
     "@sap/cds-compiler" ">=5.1"
     "@sap/cds-fiori" "^1"

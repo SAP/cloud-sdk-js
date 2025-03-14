@@ -15,10 +15,10 @@ describe('vcap-service-destination', () => {
     mockServiceBindings();
   });
 
-  afterEach(async () => {
+  afterEach(() => {
     delete process.env.VCAP_SERVICES;
-    jest.clearAllMocks();
     clientCredentialsTokenCache.clear();
+    jest.restoreAllMocks();
   });
 
   function getActualClientId(spyInstance: SpyInstance): string {

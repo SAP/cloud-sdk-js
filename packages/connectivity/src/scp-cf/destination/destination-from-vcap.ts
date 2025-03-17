@@ -1,12 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { decodeJwt, decodeOrMakeJwt } from '../jwt';
+import { decodeJwt } from '../jwt';
 import { getServiceBindingByInstanceName } from '../environment-accessor';
 import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
 import { isHttpDestination } from './destination-service-types';
-import { destinationCache } from './destination-cache';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
 import type { DestinationFetchOptions } from './destination-accessor-types';
@@ -41,27 +40,8 @@ export async function getDestinationFromServiceBinding(
       : undefined;
 
   const retrievalOptions = { ...options, jwt: decodedJwt };
-  let destination;
-  if (options.useCache) {
-    destination = await destinationCache.retrieveDestinationFromCache(
-      decodeOrMakeJwt(retrievalOptions.jwt),
-      retrievalOptions.destinationName,
-      'tenant'
-    );
-  }
+  const destination = await retrieveDestination(retrievalOptions);
 
-  if (!destination) {
-    destination = await retrieveDestinationWithoutCache(retrievalOptions);
-
-    if (options.useCache) {
-      // As the grant type is clientCredential, isolation strategy is 'tenant'.
-      await destinationCache.cacheRetrievedDestination(
-        decodeOrMakeJwt(options.jwt),
-        destination,
-        'tenant'
-      );
-    }
-  }
   const destWithProxy =
     destination &&
     isHttpDestination(destination) &&
@@ -76,7 +56,7 @@ export async function getDestinationFromServiceBinding(
   return destWithProxy;
 }
 
-async function retrieveDestinationWithoutCache({
+async function retrieveDestination({
   useCache,
   jwt,
   destinationName,

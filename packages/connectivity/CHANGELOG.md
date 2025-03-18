@@ -1,5 +1,13 @@
 # @sap-cloud-sdk/connectivity
 
+## 3.26.4
+
+### Patch Changes
+
+- 51cab2a: [Fixed Issue] Remove destination cache in `getDestinationFromServiceBinding()` function to let cached destinations retrieved in `getDestinationFromDestinationService()` function be added with the `proxyConfiguration` property.
+  - @sap-cloud-sdk/resilience@3.26.4
+  - @sap-cloud-sdk/util@3.26.4
+
 ## 3.26.3
 
 ### Patch Changes

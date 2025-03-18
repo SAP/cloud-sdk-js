@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/self-tests",
-  "version": "3.26.3",
+  "version": "3.26.4",
   "description": "Self tests to ensure test tools are working in the SAP Cloud SDK for JavaScript.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",

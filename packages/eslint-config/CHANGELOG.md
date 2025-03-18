@@ -1,5 +1,7 @@
 # @sap-cloud-sdk/eslint-config
 
+## 3.26.4
+
 ## 3.26.3
 
 ### Patch Changes

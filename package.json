@@ -113,7 +113,7 @@
     "ts-node": "^10.9.2",
     "turbo": "^2.4.4",
     "typedoc": "^0.28.0",
-    "typescript": "~5.7.3"
+    "typescript": "~5.8.2"
   },
   "resolutions": {
     "color-string": ">=1.5.5 <2.0.0",

@@ -22,7 +22,7 @@
     "@sap-cloud-sdk/test-util": "^4.0.2",
     "@sap-cloud-sdk/util": "^4.0.2",
     "@sap/xssec": "^4.4.0",
-    "axios": "^1.8.3"
+    "axios": "^1.8.4"
   },
   "devDependencies": {
     "@sap-cloud-sdk/generator": "^4.0.2",

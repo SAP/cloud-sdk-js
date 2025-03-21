@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Collect changed files
-        uses: tj-actions/changed-files@v46
+        uses: step-security/changed-files@v45.0.1
         id: changed-files
         with:
           files: |

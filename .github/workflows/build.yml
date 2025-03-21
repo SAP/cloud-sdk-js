@@ -47,7 +47,7 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot
-          SLACK_TITLE: Build tests ${{ job.status }} (${{ matrix.version }})
+          SLACK_TITLE: Build tests ${{ job.status }} (${{ matrix.node-version }})
           SLACK_MESSAGE: 'Test failed'
           MSG_MINIMAL: event,actions url
           SLACK_COLOR: ${{ job.status }}
@@ -92,7 +92,7 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot
-          SLACK_TITLE: Build checks ${{ job.status }} (${{ matrix.version }})
+          SLACK_TITLE: Build checks ${{ job.status }}
           SLACK_MESSAGE: 'Test failed'
           MSG_MINIMAL: event,actions url
           SLACK_COLOR: ${{ job.status }}
@@ -141,20 +141,23 @@ jobs:
     outputs:
       skip-release: ${{ steps.date-check.outputs.skip-release }}
     needs: [tests, checks, e2e-tests]
+    env:
+      REF_NAME: ${{ github.ref_name }}
+      REF: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v4
       - run: git fetch --depth=1
       - id: date-check
         name: Check if latest commit is within 24 hrs
         run: |
-          lastCommitDate=$(git --no-pager log -n 1 ${{ github.ref_name }} --pretty=format:"%at")
+          lastCommitDate=$(git --no-pager log -n 1 $REF_NAME --pretty=format:"%at")
           curDate=$(date +%s)
           dateDiff=$(expr $curDate - $lastCommitDate)
           echo $lastCommitDate, $curDate, $dateDiff
 
           if [[ $dateDiff -gt 86400 ]]
           then
-              echo 'No new commit found on ${{ github.ref }} within the last 24 hrs.'
+              echo 'No new commit found on $REF within the last 24 hrs.'
               echo "skip-release=true" >> $GITHUB_OUTPUT
           else
               echo "skip-release=false" >> $GITHUB_OUTPUT

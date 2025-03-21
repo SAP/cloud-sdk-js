@@ -147,7 +147,7 @@ describe('openapi-request-builder', () => {
   });
 
   it('executes a request using the timeout', async () => {
-    const delayInResponse = 10;
+    const delayInResponse = 2000;
     const slowDestination = { url: 'https://example.com' };
     nock(slowDestination.url, {})
       .get('/with-delay')
@@ -161,18 +161,18 @@ describe('openapi-request-builder', () => {
         .execute(slowDestination);
 
     await expect(timeoutBelowDelay()).rejects.toThrow(
-      'Request to URL: https://example.com ran into a timeout after 5ms.'
+      'Request to URL: https://example.com ran into a timeout after 1000ms.'
     );
 
     const timeoutAboveDelay = () =>
       new OpenApiRequestBuilder('get', '/with-delay')
-        .middleware(timeout(delayInResponse * 10))
+        .middleware(timeout(delayInResponse * 2))
         .execute(slowDestination);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
   });
 
   it('executes a request using retry and timeout (using spread middleware overload)', async () => {
-    const delayInResponse = 10;
+    const delayInResponse = 2000;
     const slowDestination = { url: 'https://example.com' };
     nock(slowDestination.url, {})
       .get('/with-delay')
@@ -184,13 +184,13 @@ describe('openapi-request-builder', () => {
 
     const timeoutAboveDelay = () =>
       new OpenApiRequestBuilder('get', '/with-delay')
-        .middleware(retry(2), timeout(100))
+        .middleware(retry(2), timeout(3000))
         .execute(slowDestination);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
   }, 10000);
 
   it('executes a request using retry and timeout (using array middleware overload)', async () => {
-    const delayInResponse = 10;
+    const delayInResponse = 2000;
     const slowDestination = { url: 'https://example.com' };
     nock(slowDestination.url, {})
       .get('/with-delay')
@@ -202,10 +202,10 @@ describe('openapi-request-builder', () => {
 
     const timeoutAboveDelay = () =>
       new OpenApiRequestBuilder('get', '/with-delay')
-        .middleware([retry(2), timeout(100)])
+        .middleware([retry(2), timeout(3000)])
         .execute(slowDestination);
     await expect(timeoutAboveDelay()).resolves.not.toThrow();
-  });
+  }, 10000);
 
   it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
     mockServiceBindings();

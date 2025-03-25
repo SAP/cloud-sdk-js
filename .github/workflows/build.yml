@@ -157,7 +157,7 @@ jobs:
 
           if [[ $dateDiff -gt 86400 ]]
           then
-              echo 'No new commit found on $REF within the last 24 hrs.'
+              echo "No new commit found on $REF within the last 24 hrs."
               echo "skip-release=true" >> $GITHUB_OUTPUT
           else
               echo "skip-release=false" >> $GITHUB_OUTPUT

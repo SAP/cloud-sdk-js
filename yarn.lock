@@ -677,16 +677,16 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.2.29":
-  version "0.2.29"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.29.tgz#b357de8a882d18f7f44e526dcae00266e983a705"
-  integrity sha512-6I8dSe24v8ChnlrIebGfyQhyVQLXNTXtRvxYCMNoScGD9Iz4PvKLXuLjCKY6wPidd/PtTDhUJDH06kJm9uhN+w==
+"@definitelytyped/dtslint@^0.2.30":
+  version "0.2.30"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.30.tgz#273fda34976dd4cae5c39d9f4be3f8e5e3cb43bf"
+  integrity sha512-nudDjanzYg5oiF3YHtSPDEDijIlpU67R20R5zKRhkX13UH/onJMLFcbihpcYUPM6A3mTfsU7L61WoU127ZEzgw==
   dependencies:
     "@arethetypeswrong/cli" "0.15.1"
     "@arethetypeswrong/core" "0.15.1"
-    "@definitelytyped/header-parser" "0.2.17"
-    "@definitelytyped/typescript-packages" "0.1.7"
-    "@definitelytyped/typescript-versions" "0.1.7"
+    "@definitelytyped/header-parser" "0.2.18"
+    "@definitelytyped/typescript-packages" "0.1.8"
+    "@definitelytyped/typescript-versions" "0.1.8"
     "@definitelytyped/utils" "0.1.8"
     "@typescript-eslint/eslint-plugin" "^8.13.0"
     "@typescript-eslint/parser" "^8.13.0"
@@ -698,22 +698,21 @@
     semver "^7.6.3"
     strip-json-comments "^3.1.1"
 
-"@definitelytyped/header-parser@0.2.17":
-  version "0.2.17"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.17.tgz#1792c0e5dc6b732ee6e5e4ccc8af3c7c91481a16"
-  integrity sha512-U0juKFkTOcbkSfO83WSzMEJHYDwoBFiq0tf/JszulL3+7UoSiqunpGmxXS54bm3eGqy7GWjV8AqPQHdeoEaWBQ==
+"@definitelytyped/header-parser@0.2.18":
+  version "0.2.18"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.18.tgz#aaa5de180b0db4b5238db1daa5c9b3952a35df97"
+  integrity sha512-3JWGzhieGOx+zhy+qaPDoiby2TPA1PZGpEJHt0VwR1aK0R9dER5BoBvnT5zSafg9kHQTw4aBRFbt3o41FNkaLw==
   dependencies:
-    "@definitelytyped/typescript-versions" "0.1.7"
+    "@definitelytyped/typescript-versions" "0.1.8"
     "@definitelytyped/utils" "0.1.8"
     semver "^7.6.3"
 
-"@definitelytyped/typescript-packages@0.1.7":
-  version "0.1.7"
-  resolved "https://registry.npmjs.org/@definitelytyped/typescript-packages/-/typescript-packages-0.1.7.tgz#43643db16ef9636c3aad6b77ebfb5a33a43cb99a"
-  integrity sha512-yS/AkCGMhdCydyxhuvAJBQdZGHOF6JkP4lj8prjtFbcueiMQz+ec5ocGbDMcakKOY0GQbbee6Zz6KVmmfVrdAw==
+"@definitelytyped/typescript-packages@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/@definitelytyped/typescript-packages/-/typescript-packages-0.1.8.tgz#8ffc83e0c043b5976524d586cf8486a1017d1345"
+  integrity sha512-Xdmf2QIGgQflq+Z5xD1PU8Gu29UhDx6NzLcGltVOyHjWBwO2vofWNsS4/aHAc68xbJ9pl8tLxo1PA2xbGYtZDQ==
   dependencies:
-    "@definitelytyped/typescript-versions" "0.1.7"
-    typescript-5.0 "npm:typescript@~5.0.0-0"
+    "@definitelytyped/typescript-versions" "0.1.8"
     typescript-5.1 "npm:typescript@~5.1.0-0"
     typescript-5.2 "npm:typescript@~5.2.0-0"
     typescript-5.3 "npm:typescript@~5.3.0-0"
@@ -724,10 +723,10 @@
     typescript-5.8 "npm:typescript@~5.8.0-0"
     typescript-5.9 "npm:typescript@~5.9.0-0"
 
-"@definitelytyped/typescript-versions@0.1.7":
-  version "0.1.7"
-  resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.1.7.tgz#bd7a50832a21ed5978c2513e558cf0ac0d80cece"
-  integrity sha512-sBzBi1SBn79OkSr8V0H+FzR7QumHk23syPyRxod/VRBrSkgN9rCliIe+nqLoWRAKN8EeKbp00ketnJNLZhucdA==
+"@definitelytyped/typescript-versions@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/@definitelytyped/typescript-versions/-/typescript-versions-0.1.8.tgz#50eb5600f9890eae3e0fdfa11f78622e086dfe20"
+  integrity sha512-iz6q9aTwWW7CzN2g8jFQfZ955D63LA+wdIAKz4+2pCc/7kokmEHie1/jVWSczqLFOlmH+69bWQxIurryBP/sig==
 
 "@definitelytyped/utils@0.1.8":
   version "0.1.8"
@@ -9869,11 +9868,6 @@ typedoc@^0.28.1:
     markdown-it "^14.1.0"
     minimatch "^9.0.5"
     yaml "^2.7.0 "
-
-"typescript-5.0@npm:typescript@~5.0.0-0":
-  version "5.0.4"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-5.0.4.tgz#b217fd20119bd61a94d4011274e0ab369058da3b"
-  integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
 
 "typescript-5.1@npm:typescript@~5.1.0-0":
   version "5.1.6"

@@ -677,14 +677,14 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@definitelytyped/dtslint@^0.2.31":
-  version "0.2.31"
-  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.31.tgz#40557185e88b4f5f3e8d93c2ef94b33dfd869371"
-  integrity sha512-gYlLMNPuLf04ICLQ8yhPaAziiNtApyXJZ1JjZ9VpTnT7yni7sFUFfAT3knPXTNgw/LvBl7dEYD9L1MtaELZQ5Q==
+"@definitelytyped/dtslint@^0.2.32":
+  version "0.2.32"
+  resolved "https://registry.npmjs.org/@definitelytyped/dtslint/-/dtslint-0.2.32.tgz#d051fcb000ecfdf65e941e69d534dc0835ab1988"
+  integrity sha512-lIDZqCXKgarRRiAqj3FPhOKRlfNdO6+YqIKW0PRk+bOJJv+ZVlszghz4TbYPJ9QfxK5ySQdpBz6BX336g0Ok7A==
   dependencies:
     "@arethetypeswrong/cli" "0.15.1"
     "@arethetypeswrong/core" "0.15.1"
-    "@definitelytyped/header-parser" "0.2.18"
+    "@definitelytyped/header-parser" "0.2.19"
     "@definitelytyped/typescript-packages" "0.1.8"
     "@definitelytyped/typescript-versions" "0.1.8"
     "@definitelytyped/utils" "0.1.8"
@@ -698,10 +698,10 @@
     semver "^7.6.3"
     strip-json-comments "^3.1.1"
 
-"@definitelytyped/header-parser@0.2.18":
-  version "0.2.18"
-  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.18.tgz#aaa5de180b0db4b5238db1daa5c9b3952a35df97"
-  integrity sha512-3JWGzhieGOx+zhy+qaPDoiby2TPA1PZGpEJHt0VwR1aK0R9dER5BoBvnT5zSafg9kHQTw4aBRFbt3o41FNkaLw==
+"@definitelytyped/header-parser@0.2.19":
+  version "0.2.19"
+  resolved "https://registry.npmjs.org/@definitelytyped/header-parser/-/header-parser-0.2.19.tgz#630cb8af119f726557a18c22abaef7dcc1e4e357"
+  integrity sha512-zu+RxQpUCgorYUQZoyyrRIn9CljL1CeM4qak3NDeMO1r7tjAkodfpAGnVzx/6JR2OUk0tAgwmZxNMSwd9LVgxw==
   dependencies:
     "@definitelytyped/typescript-versions" "0.1.8"
     "@definitelytyped/utils" "0.1.8"

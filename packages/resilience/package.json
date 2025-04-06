@@ -45,7 +45,7 @@
   "devDependencies": {
     "@types/async-retry": "^1.4.9",
     "@types/opossum": "^8.1.8",
-    "nock": "^14.0.2",
+    "nock": "^14.0.3",
     "typescript": "~5.8.2"
   }
 }

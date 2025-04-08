@@ -92,6 +92,7 @@ function parseContent(
   packageName: string
 ): Change[] {
   // Explanation: https://regex101.com/r/ikvIaa/2
+  // Adapted ? to the original regex <commit>.*? to make it non-greedy
   const contentRegex =
     /- ((?<commit>.*?):) (\[(?<type>.*?)\])? ?(?<summary>[^]*?)(?=(\n- |\n### |$))/g;
 

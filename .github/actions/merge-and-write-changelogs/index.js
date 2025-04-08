@@ -42664,6 +42664,7 @@ function getSummary(matchedSummary) {
 }
 function parseContent(content, version, packageName) {
     // Explanation: https://regex101.com/r/ikvIaa/2
+    // Adapted ? to the original regex <commit>.*? to make it non-greedy
     const contentRegex = /- ((?<commit>.*?):) (\[(?<type>.*?)\])? ?(?<summary>[^]*?)(?=(\n- |\n### |$))/g;
     (0, core_1.info)(`parsing content for ${packageName} v${version}`);
     return [...content.matchAll(contentRegex)].map(({ groups }) => {

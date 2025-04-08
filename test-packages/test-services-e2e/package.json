@@ -21,7 +21,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "bignumber.js": "^9.1.2",
+    "bignumber.js": "^9.2.1",
     "moment": "^2.30.1"
   },
   "peerDependencies": {

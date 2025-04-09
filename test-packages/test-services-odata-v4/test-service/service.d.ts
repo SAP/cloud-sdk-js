@@ -38,7 +38,6 @@ import {
   TestActionImportSharedEntityReturnTypeCollectionParameters,
   TestActionImportNullableTestParameters
 } from './operations';
-import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
   DeSerializers,

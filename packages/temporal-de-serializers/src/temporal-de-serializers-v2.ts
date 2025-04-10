@@ -48,7 +48,9 @@ export function deserializeToZonedDateTime(
     parseInt(dateTimeOffsetComponents.ticks)
   );
   if (dateTimeOffsetComponents.sign && dateTimeOffsetComponents.offset) {
-    return dateTimeInstant.toZonedDateTimeISO(dateTimeOffsetComponents.sign + dateTimeOffsetComponents.offset);
+    return dateTimeInstant.toZonedDateTimeISO(
+      dateTimeOffsetComponents.sign + dateTimeOffsetComponents.offset
+    );
   }
   return dateTimeInstant.toZonedDateTimeISO('UTC');
 }

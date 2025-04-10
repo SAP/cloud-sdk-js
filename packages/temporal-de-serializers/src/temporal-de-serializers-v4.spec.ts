@@ -65,7 +65,9 @@ describe('edmToTs()', () => {
     actual = deserializeDateTimeOffsetToTemporal(
       `${dateTimePrefix}:17.987+03:00`
     );
-    expect(actual.epochMilliseconds).toBe((datePrefixUnix - 3600 * 3 + 17) * 1000 + 987);
+    expect(actual.epochMilliseconds).toBe(
+      (datePrefixUnix - 3600 * 3 + 17) * 1000 + 987
+    );
   });
 
   it('should parse Edm.Duration to Temporal.Duration', () => {

@@ -54,19 +54,18 @@ describe('edmToTs()', () => {
     const dateTimePrefix = '2020-05-13T16:14';
     const datePrefixUnix = 1589386440;
     let actual = deserializeDateTimeOffsetToTemporal(`${dateTimePrefix}Z`);
-    expect(actual.epochSeconds).toBe(datePrefixUnix);
+    expect(actual.epochMilliseconds).toBe(datePrefixUnix * 1000);
 
     actual = deserializeDateTimeOffsetToTemporal(`${dateTimePrefix}:24Z`);
-    expect(actual.epochSeconds).toBe(datePrefixUnix + 24);
+    expect(actual.epochMilliseconds).toBe((datePrefixUnix + 24) * 1000);
 
     actual = deserializeDateTimeOffsetToTemporal(`${dateTimePrefix}+05:00`);
-    expect(actual.epochSeconds).toBe(datePrefixUnix - 3600 * 5);
+    expect(actual.epochMilliseconds).toBe((datePrefixUnix - 3600 * 5) * 1000);
 
     actual = deserializeDateTimeOffsetToTemporal(
       `${dateTimePrefix}:17.987+03:00`
     );
-    expect(actual.epochSeconds).toBe(datePrefixUnix - 3600 * 3 + 17);
-    expect(actual.millisecond).toBe(987);
+    expect(actual.epochMilliseconds).toBe((datePrefixUnix - 3600 * 3 + 17) * 1000 + 987);
   });
 
   it('should parse Edm.Duration to Temporal.Duration', () => {

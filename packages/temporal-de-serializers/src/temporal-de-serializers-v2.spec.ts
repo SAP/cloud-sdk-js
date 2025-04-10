@@ -14,22 +14,18 @@ describe('EDM to Temporal', () => {
       '/Date(1556630382000)/'
     ) as Temporal.PlainDateTime;
     expect(dateTimePlain.toString()).toBe('2019-04-30T13:19:42');
-    expect(() => Temporal.TimeZone.from(dateTimePlain.toString())).toThrowError(
-      /Invalid time zone/
+    expect(() => Temporal.ZonedDateTime.from(dateTimePlain)).toThrow(
+      /required property 'timeZone' missing or undefined/
     );
   });
 
   it('returns a utc date if there is an offset', () => {
     const dateTimeZoned = deserializeToZonedDateTime(
-      '/Date(1556630382000+0000)/'
+      '/Date(1556630382000+0100)/'
     );
-    const zonedString = dateTimeZoned.toString({
-      fractionalSecondDigits: 0,
-      timeZoneName: 'never'
-    });
-    expect(zonedString).toBe('2019-04-30T13:19:42+00:00');
-    expect(Temporal.TimeZone.from(dateTimeZoned.toString()).id).toEqual(
-      '+00:00'
+    expect(dateTimeZoned.toString()).toBe('2019-04-30T14:19:42+01:00[+01:00]');
+    expect(Temporal.ZonedDateTime.from(dateTimeZoned).timeZoneId).toEqual(
+      '+01:00'
     );
   });
 

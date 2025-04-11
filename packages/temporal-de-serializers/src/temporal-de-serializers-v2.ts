@@ -48,10 +48,9 @@ export function deserializeToZonedDateTime(
     parseInt(dateTimeOffsetComponents.ticks)
   );
   if (dateTimeOffsetComponents.sign && dateTimeOffsetComponents.offset) {
-    const timeZone = Temporal.TimeZone.from(
+    return dateTimeInstant.toZonedDateTimeISO(
       dateTimeOffsetComponents.sign + dateTimeOffsetComponents.offset
     );
-    return dateTimeInstant.toZonedDateTimeISO(timeZone);
   }
   return dateTimeInstant.toZonedDateTimeISO('UTC');
 }
@@ -88,7 +87,7 @@ function isDateTimeOffsetComponents(
 export function serializeFromPlainDateTime(
   value: Temporal.PlainDateTime
 ): string {
-  const instant = new Temporal.TimeZone('UTC').getInstantFor(value);
+  const instant = value.toZonedDateTime('UTC').toInstant();
   return `/Date(${instant.epochMilliseconds})/`;
 }
 

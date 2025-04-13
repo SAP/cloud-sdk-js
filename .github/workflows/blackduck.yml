@@ -34,7 +34,7 @@ jobs:
           DETECT_YARN_DEPENDENCY_TYPES_EXCLUDED: NON_PRODUCTION
       - if: failure() || cancelled()
         name: Slack Notify
-        uses: rtCamp/action-slack-notify@v2.3.2
+        uses: rtCamp/action-slack-notify@v2.3.3
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot

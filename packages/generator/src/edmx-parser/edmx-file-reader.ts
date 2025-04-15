@@ -73,7 +73,8 @@ function parseEdmxFile(edmx: string, edmxPath: PathLike): EdmxMetadata {
 }
 
 function getODataVersion(edmx): ODataVersion {
-  return edmx['edmx:Edmx'].Version === '4.0' ? 'v4' : 'v2';
+  const odataV4VersionRegex = new RegExp('^4.0\\d{0,1}$'); // Regex for 4.0, 4.0X
+  return odataV4VersionRegex.test(edmx['edmx:Edmx'].Version) ? 'v4' : 'v2';
 }
 
 function getRoot(edmx) {

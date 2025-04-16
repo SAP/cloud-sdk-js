@@ -9516,7 +9516,7 @@ async function filterChangesetsSinceRef(changesets, changesetBase, sinceRef) {
     cwd: changesetBase,
     ref: sinceRef
   });
-  const newHashes = newChangesets.map(c => c.split("/")[1]);
+  const newHashes = newChangesets.map(c => c.split("/").pop());
   return changesets.filter(dir => newHashes.includes(dir));
 }
 async function getChangesets(cwd, sinceRef) {

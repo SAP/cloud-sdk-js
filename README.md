@@ -24,9 +24,6 @@ Check our [API documentation](https://sap.github.io/cloud-sdk/api/latest/) and [
 
 ### Table of Contents
 
-- [Announcement - Upgrade Strategy](#announcement---upgrade-strategy)
-- [Looking for documentation?](#looking-for-documentation)
-  - [Table of Contents](#table-of-contents)
 - [Packages](#packages)
   - [@sap-cloud-sdk/http-client](#sap-cloud-sdkhttp-client)
   - [@sap-cloud-sdk/connectivity](#sap-cloud-sdkconnectivity)

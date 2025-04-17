@@ -130,7 +130,6 @@ Want to contribute? Check out our [contribution](./CONTRIBUTING.md) guide and fo
 - [Sample repository](https://github.com/SAP-samples/cloud-sdk-js)
 - SAP Cloud SDK for AI
   - [SAP Cloud SDK for AI (JavaScript)](https://github.com/SAP/ai-sdk-js)
-  - [SAP Cloud SDK for AI (Java)](https://github.com/SAP/ai-sdk-java)
   - [SAP Cloud SDK for AI Documentation portal](https://sap.github.io/ai-sdk)
 
 ## License

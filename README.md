@@ -24,6 +24,9 @@ Check our [API documentation](https://sap.github.io/cloud-sdk/api/latest/) and [
 
 ### Table of Contents
 
+- [Announcement - Upgrade Strategy](#announcement---upgrade-strategy)
+- [Looking for documentation?](#looking-for-documentation)
+  - [Table of Contents](#table-of-contents)
 - [Packages](#packages)
   - [@sap-cloud-sdk/http-client](#sap-cloud-sdkhttp-client)
   - [@sap-cloud-sdk/connectivity](#sap-cloud-sdkconnectivity)
@@ -121,16 +124,16 @@ Want to contribute? Check out our [contribution](./CONTRIBUTING.md) guide and fo
 ## Links
 
 - [Official support channel](https://github.com/SAP/cloud-sdk-js/issues/new/choose)
-- [Github](https://github.com/SAP/cloud-sdk-js)
-- [SAP Cloud SDK Documentation portal](https://sap.github.io/cloud-sdk)
-  - [SAP Cloud SDK Documentation portal - Overview](https://sap.github.io/cloud-sdk/docs/js/overview)
-  - [SAP Cloud SDK Documentation portal - Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
-  - [SAP Cloud SDK Documentation portal - API documentation](https://sap.github.io/cloud-sdk/api/latest)
-  - [SAP Cloud SDK Documentation portal - Release notes](https://sap.github.io/cloud-sdk/docs/js/release-notes)
+- [GitHub](https://github.com/SAP/cloud-sdk-js)
+- [SAP Cloud SDK Documentation](https://sap.github.io/cloud-sdk)
+  - [Overview](https://sap.github.io/cloud-sdk/docs/js/overview)
+  - [Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
+  - [API documentation](https://sap.github.io/cloud-sdk/api/latest)
+  - [Release notes](https://sap.github.io/cloud-sdk/docs/js/release-notes)
 - [Sample repository](https://github.com/SAP-samples/cloud-sdk-js)
-- SAP Cloud SDK for AI
-  - [SAP Cloud SDK for AI (JavaScript)](https://github.com/SAP/ai-sdk-js)
-  - [SAP Cloud SDK for AI Documentation portal](https://sap.github.io/ai-sdk)
+- SAP Cloud SDK for AI (JavaScript)
+  - [GitHub](https://github.com/SAP/ai-sdk-js)
+  - [Documentation](https://sap.github.io/ai-sdk)
 
 ## License
 

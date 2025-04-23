@@ -30,9 +30,9 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
   - [SAP Cloud SDK Documentation portal - API documentation](https://sap.github.io/cloud-sdk/api/latest)
   - [SAP Cloud SDK Documentation portal - Release notes](https://sap.github.io/cloud-sdk/docs/js/release-notes)
 - [Sample repository](https://github.com/SAP-samples/cloud-sdk-js)
-- SAP Cloud SDK for AI
-  - [SAP Cloud SDK for AI (JavaScript)](https://github.com/SAP/ai-sdk-js)
-  - [SAP Cloud SDK for AI Documentation portal](https://sap.github.io/ai-sdk)
+- SAP Cloud SDK for AI (JavaScript)
+  - [GitHub](https://github.com/SAP/ai-sdk-js)
+  - [Documentation](https://sap.github.io/ai-sdk)
 
 ## License
 

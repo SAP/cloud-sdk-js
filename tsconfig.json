@@ -11,6 +11,7 @@
     "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "inlineSources": false
+    "inlineSources": false,
+    "isolatedModules": true
   }
 }

@@ -6,5 +6,5 @@
 
 export {
   OpenApiRequestBuilder,
-  OpenApiRequestParameters
+  type OpenApiRequestParameters
 } from './openapi-request-builder';

@@ -42,7 +42,7 @@ export {
   edmToTs,
   entityDeserializer,
   mergeDefaultDeSerializersWith,
-  DeSerializers
+  type DeSerializers
 } from './de-serializers';
 
 export type {

@@ -4,4 +4,4 @@
  * @module @sap-cloud-sdk/generator-common
  */
 
-export { CommonGeneratorOptions } from './options';
+export type { CommonGeneratorOptions } from './options';

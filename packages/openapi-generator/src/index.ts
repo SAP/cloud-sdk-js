@@ -5,4 +5,4 @@
  */
 
 export { generate } from './generator';
-export { GeneratorOptions, OpenAPIGeneratorOptions } from './options';
+export type { GeneratorOptions, OpenAPIGeneratorOptions } from './options';

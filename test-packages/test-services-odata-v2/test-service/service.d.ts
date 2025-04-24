@@ -34,6 +34,7 @@ import {
   CreateTestComplexTypeParameters,
   FContinueParameters
 } from './operations';
+import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 import {
   DeSerializers,

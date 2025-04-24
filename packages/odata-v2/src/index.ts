@@ -41,14 +41,14 @@ export {
   defaultDeSerializers,
   edmToTs,
   entityDeserializer,
-  mergeDefaultDeSerializersWith,
-  type DeSerializers
+  mergeDefaultDeSerializersWith
 } from './de-serializers';
 
 export type {
   CustomDeSerializers,
   DefaultDeSerializers,
-  CustomOrDefaultType
+  CustomOrDefaultType,
+  DeSerializers
 } from './de-serializers';
 
 export { ODataFunctionRequestConfig } from './request';

@@ -9,4 +9,5 @@ export { retry } from './retry';
 export { circuitBreaker } from './circuit-breaker';
 export type { Middleware, MiddlewareFunction } from './middleware';
 export type { MiddlewareOptions, MiddlewareContext } from './middleware';
-export { type ResilienceOptions, resilience } from './resilience';
+export { resilience } from './resilience';
+export type { ResilienceOptions } from './resilience';

@@ -33,6 +33,7 @@ module.exports = {
     'test-packages/test-services-odata-common',
     'test-packages/test-services-openapi',
     'test-packages/test-services-e2e',
+    'test-packages/e2e-tests/test/generator-test-output',
     'test-packages/memory-tests/sdk-v1/test-service',
     'test-packages/memory-tests/sdk-canary/test-service',
     'packages/rest-generator/test/test-services',

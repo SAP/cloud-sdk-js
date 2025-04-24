@@ -38,3 +38,4 @@ test-packages/memory-tests/**/yarn.lock
 
 test-packages/e2e-tests/test/generator-test-output
 test-packages/e2e-tests/test/mail/test-output
+test-packages/e2e-tests/db.sqlite*

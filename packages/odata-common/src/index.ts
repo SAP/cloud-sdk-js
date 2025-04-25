@@ -4,7 +4,7 @@
  * @module @sap-cloud-sdk/odata-common
  */
 
-export { WithBatchReference } from './request';
+export type { WithBatchReference } from './request';
 export {
   and,
   or,
@@ -16,12 +16,12 @@ export {
   UnaryFilter,
   BooleanFilterFunction,
   FilterFunction,
-  FilterFunctionsType,
   NumberFilterFunction,
   StringFilterFunction,
   CollectionFilterFunction,
   filterFunction
 } from './filter';
+export type { FilterFunctionsType } from './filter';
 export type {
   Filterable,
   FilterFunctionParameterType,
@@ -33,7 +33,7 @@ export type {
   FilterOperatorNumber,
   FilterFunctionTypes
 } from './filter';
-export { Time } from './time';
+export type { Time } from './time';
 export {
   AllFields,
   CollectionField,
@@ -41,15 +41,17 @@ export {
   EdmTypeField,
   EnumField,
   FieldBuilder,
-  FieldOptions,
   Link,
   OneToManyLink,
   OneToOneLink,
   OrderableEdmTypeField,
-  PropertyMetadata,
-  ComplexTypeNamespace,
   CustomField,
   Field
+} from './selectable';
+export type {
+  FieldOptions,
+  PropertyMetadata,
+  ComplexTypeNamespace
 } from './selectable';
 export type {
   ConstructorOrField,
@@ -63,16 +65,12 @@ export type {
   ComplexTypePropertyFields,
   ComplexTypeFieldConstructor
 } from './selectable';
-export {
-  entityBuilder,
-  EntityIdentifiable,
-  Constructable,
-  EntityBase
-} from './entity-base';
+export { entityBuilder, EntityBase } from './entity-base';
+export type { EntityIdentifiable, Constructable } from './entity-base';
 export type { EntityBuilderType, ODataVersionOf } from './entity-base';
-export { EntityApi } from './entity-api';
+export type { EntityApi } from './entity-api';
 export type { EntityType } from './entity-api';
-export { DeSerializers, DeSerializer } from './de-serializers';
+export type { DeSerializers, DeSerializer } from './de-serializers';
 export type {
   DeserializedType,
   CustomOrDefaultType,
@@ -97,18 +95,20 @@ export {
   OperationParameter,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
-  WithKeys,
-  WithETag,
   ODataUpdateRequestConfig,
   ODataCountRequestConfig,
   ODataGetAllRequestConfig,
   ODataGetByKeyRequestConfig,
   ODataBatchRequestConfig,
-  WithGetAllRestrictions,
-  WithSelection,
   ODataFunctionRequestConfig,
   ODataRequest,
-  ODataRequestConfig,
+  ODataRequestConfig
+} from './request';
+export type {
+  WithKeys,
+  WithETag,
+  WithGetAllRestrictions,
+  WithSelection,
   BatchReference,
   OperationParameters,
   RequestMethodType
@@ -139,12 +139,14 @@ export type {
   NonNullishType,
   NullishTypes
 } from './entity-builder';
-export { EntityDeserializer, entityDeserializer } from './entity-deserializer';
-export { ODataUri } from './uri-conversion';
-export { ResponseDataAccessor } from './response-data-accessor';
-export { EntitySerializer, entitySerializer } from './entity-serializer';
+export { entityDeserializer } from './entity-deserializer';
+export type { EntityDeserializer } from './entity-deserializer';
+export type { ODataUri } from './uri-conversion';
+export type { ResponseDataAccessor } from './response-data-accessor';
+export { entitySerializer } from './entity-serializer';
+export type { EntitySerializer } from './entity-serializer';
 export type { Expandable } from './expandable';
-export {
+export type {
   ErrorResponse,
   WriteResponses,
   ReadResponse,

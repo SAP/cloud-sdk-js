@@ -3,13 +3,9 @@
  * @packageDocumentation
  * @module @sap-cloud-sdk/connectivity
  */
-
 export {
   toDestinationNameUrl,
   sanitizeDestination,
-  DestinationCacheInterface,
-  CacheEntry,
-  CachingOptions,
   getDestination,
   useOrFetchDestination,
   getDestinationFromDestinationService,
@@ -17,32 +13,43 @@ export {
   alwaysSubscriber,
   subscriberFirst,
   parseProxyEnv,
-  Protocol,
-  IsolationStrategy,
   decodeJwt,
   retrieveJwt,
   jwtBearerToken,
   serviceToken,
+  isHttpDestination,
+  assertHttpDestination,
+  DestinationSelectionStrategies,
+  buildHeadersForDestination,
+  getClientCredentialsToken,
+  getUserToken,
+  registerDestination,
+  setDestinationCache,
+  getServiceBinding,
+  getDestinationFromServiceBinding,
+  transformServiceBindingToDestination,
+  getAllDestinationsFromDestinationService,
+  getTenantId,
+  transformServiceBindingToClientCredentialsDestination
+} from './scp-cf';
+export type {
+  DestinationCacheInterface,
+  CacheEntry,
+  CachingOptions,
+  Protocol,
+  IsolationStrategy,
   Destination,
   HttpDestination,
-  isHttpDestination,
   HttpDestinationOrFetchOptions,
-  assertHttpDestination,
   DestinationFetchOptions,
   ServiceBindingTransformFunction,
   DestinationAccessorOptions,
-  DestinationSelectionStrategies,
   JwtPayload,
   BasicProxyConfiguration,
   ProxyConfiguration,
   ProxyConfigurationHeaders,
   Service,
   VerifyJwtOptions,
-  buildHeadersForDestination,
-  getClientCredentialsToken,
-  getUserToken,
-  registerDestination,
-  setDestinationCache,
   DestinationAuthToken,
   DestinationCertificate,
   ClientCredentialsResponse,
@@ -51,13 +58,7 @@ export {
   DestinationJson,
   DestinationsByType,
   DestinationFromServiceBindingOptions,
-  getServiceBinding,
-  getDestinationFromServiceBinding,
-  ServiceBindingTransformOptions,
-  transformServiceBindingToDestination,
-  getAllDestinationsFromDestinationService,
-  getTenantId,
-  transformServiceBindingToClientCredentialsDestination
+  ServiceBindingTransformOptions
 } from './scp-cf';
 
 export type {
@@ -75,8 +76,5 @@ export type {
   AllDestinationOptions
 } from './scp-cf';
 
-export {
-  getAgentConfig,
-  HttpAgentConfig,
-  HttpsAgentConfig
-} from './http-agent';
+export { getAgentConfig } from './http-agent';
+export type { HttpAgentConfig, HttpsAgentConfig } from './http-agent';

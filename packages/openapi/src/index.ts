@@ -4,7 +4,5 @@
  * @module @sap-cloud-sdk/openapi
  */
 
-export {
-  OpenApiRequestBuilder,
-  OpenApiRequestParameters
-} from './openapi-request-builder';
+export { OpenApiRequestBuilder } from './openapi-request-builder';
+export type { OpenApiRequestParameters } from './openapi-request-builder';

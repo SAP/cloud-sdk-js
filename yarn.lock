@@ -1636,10 +1636,10 @@
   dependencies:
     async "^3.2.3"
 
-"@sap/xsenv@^5.2.0", "@sap/xsenv@^5.6.0":
-  version "5.6.0"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-5.6.0.tgz#658c62445477566b1b368c2896a443a215d037d0"
-  integrity sha512-3OOtxUgwZZZUtfx9K9hdlemo9kQUO7KUWmuM3KaVcsVzjO1+kc8yS/SJ1Anrv4xhkDhpGoRWkJ/3XEzZuv33HA==
+"@sap/xsenv@^5.2.0", "@sap/xsenv@^5.6.1":
+  version "5.6.1"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-5.6.1.tgz#c7b62cd0891397f4f30b1855213930cff08ebb21"
+  integrity sha512-4pDpsYLNJsLUBWtTSG+TJ8ul5iY0dWDyJgTy2H/WZGZww9CSPLP/39x+syDDTjkggsmZAlo9t7y9TiXMmtAunw==
   dependencies:
     debug "4.4.0"
     node-cache "^5.1.2"

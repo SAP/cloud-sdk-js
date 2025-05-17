@@ -244,7 +244,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 1 vulnerability, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** Not found
 
 
 ### Unpatched vulnerabilities
@@ -259,7 +259,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 1 vulnerability, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** Not found
 
 
 ### Community commitment
@@ -581,5 +581,4 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2021-41251](https://nvd.nist.gov/vuln/detail/CVE-2021-41251): @sap-cloud-sdk/core contains the core functionality of the SAP Cloud SDK as well as the SAP Business Technology Platform abstractions. This affects applications on SAP Business Technology Platform that use the SAP Cloud SDK and enabled caching of destinations. In affected versions and in some cases, when user information was missing, destinations were cached without user information, allowing other users to retrieve the same destination with its permissions. By default, destination caching is disabled. The security for caching has been increased. The changes are released in version 1.52.0. Users unable to upgrade are advised to disable destination caching (it is disabled by default).
-
+No vulnerabilities found

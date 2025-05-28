@@ -42,7 +42,7 @@
     "glob": "^11.0.2",
     "typescript": "~5.8.3",
     "prettier": "^3.5.3",
-    "yargs": "^17.7.2",
+    "yargs": "^18.0.0",
     "voca": "^1.4.1"
   },
   "devDependencies": {

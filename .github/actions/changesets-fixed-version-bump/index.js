@@ -3890,7 +3890,7 @@ function getPreInfo(changesets, packagesByName, config, preState) {
   for (const [, pkg] of packagesByName) {
     if (shouldSkipPackage.shouldSkipPackage(pkg, {
       ignore: config.ignore,
-      allowPrivatePackages: config.privatePackages.tag
+      allowPrivatePackages: config.privatePackages.version
     })) {
       continue;
     }

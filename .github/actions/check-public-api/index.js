@@ -7349,24 +7349,6 @@ exports["default"] = Settings;
 
 /***/ }),
 
-/***/ 31513:
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = ({onlyFirst = false} = {}) => {
-	const pattern = [
-		'[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
-		'(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))'
-	].join('|');
-
-	return new RegExp(pattern, onlyFirst ? undefined : 'g');
-};
-
-
-/***/ }),
-
 /***/ 18344:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -15417,20 +15399,6 @@ module.exports = desc && typeof desc.get === 'function'
 
 /***/ }),
 
-/***/ 75892:
-/***/ ((module) => {
-
-"use strict";
-
-
-module.exports = function () {
-  // https://mths.be/emoji
-  return /\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62(?:\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67|\uDB40\uDC73\uDB40\uDC63\uDB40\uDC74|\uDB40\uDC77\uDB40\uDC6C\uDB40\uDC73)\uDB40\uDC7F|\uD83D\uDC68(?:\uD83C\uDFFC\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68\uD83C\uDFFB|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFF\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFE])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFE\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFD])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFD\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFC])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\u200D(?:\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D)?\uD83D\uDC68|(?:\uD83D[\uDC68\uDC69])\u200D(?:\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67]))|\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67])|(?:\uD83D[\uDC68\uDC69])\u200D(?:\uD83D[\uDC66\uDC67])|[\u2695\u2696\u2708]\uFE0F|\uD83D[\uDC66\uDC67]|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|(?:\uD83C\uDFFB\u200D[\u2695\u2696\u2708]|\uD83C\uDFFF\u200D[\u2695\u2696\u2708]|\uD83C\uDFFE\u200D[\u2695\u2696\u2708]|\uD83C\uDFFD\u200D[\u2695\u2696\u2708]|\uD83C\uDFFC\u200D[\u2695\u2696\u2708])\uFE0F|\uD83C\uDFFB\u200D(?:\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C[\uDFFB-\uDFFF])|(?:\uD83E\uDDD1\uD83C\uDFFB\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFC\u200D\uD83E\uDD1D\u200D\uD83D\uDC69)\uD83C\uDFFB|\uD83E\uDDD1(?:\uD83C\uDFFF\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1(?:\uD83C[\uDFFB-\uDFFF])|\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1)|(?:\uD83E\uDDD1\uD83C\uDFFE\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFF\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69]))(?:\uD83C[\uDFFB-\uDFFE])|(?:\uD83E\uDDD1\uD83C\uDFFC\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFD\u200D\uD83E\uDD1D\u200D\uD83D\uDC69)(?:\uD83C[\uDFFB\uDFFC])|\uD83D\uDC69(?:\uD83C\uDFFE\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFD\uDFFF])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFC\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFD-\uDFFF])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFB\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFC-\uDFFF])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFD\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\u200D(?:\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D(?:\uD83D[\uDC68\uDC69])|\uD83D[\uDC68\uDC69])|\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFF\u200D(?:\uD83C[\uDF3E\uDF73\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD]))|\uD83D\uDC69\u200D\uD83D\uDC69\u200D(?:\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67]))|(?:\uD83E\uDDD1\uD83C\uDFFD\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFE\u200D\uD83E\uDD1D\u200D\uD83D\uDC69)(?:\uD83C[\uDFFB-\uDFFD])|\uD83D\uDC69\u200D\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC69\u200D\uD83D\uDC69\u200D(?:\uD83D[\uDC66\uDC67])|(?:\uD83D\uDC41\uFE0F\u200D\uD83D\uDDE8|\uD83D\uDC69(?:\uD83C\uDFFF\u200D[\u2695\u2696\u2708]|\uD83C\uDFFE\u200D[\u2695\u2696\u2708]|\uD83C\uDFFC\u200D[\u2695\u2696\u2708]|\uD83C\uDFFB\u200D[\u2695\u2696\u2708]|\uD83C\uDFFD\u200D[\u2695\u2696\u2708]|\u200D[\u2695\u2696\u2708])|(?:(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)\uFE0F|\uD83D\uDC6F|\uD83E[\uDD3C\uDDDE\uDDDF])\u200D[\u2640\u2642]|(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)(?:\uD83C[\uDFFB-\uDFFF])\u200D[\u2640\u2642]|(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD6-\uDDDD])(?:(?:\uD83C[\uDFFB-\uDFFF])\u200D[\u2640\u2642]|\u200D[\u2640\u2642])|\uD83C\uDFF4\u200D\u2620)\uFE0F|\uD83D\uDC69\u200D\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67])|\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08|\uD83D\uDC15\u200D\uD83E\uDDBA|\uD83D\uDC69\u200D\uD83D\uDC66|\uD83D\uDC69\u200D\uD83D\uDC67|\uD83C\uDDFD\uD83C\uDDF0|\uD83C\uDDF4\uD83C\uDDF2|\uD83C\uDDF6\uD83C\uDDE6|[#\*0-9]\uFE0F\u20E3|\uD83C\uDDE7(?:\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEF\uDDF1-\uDDF4\uDDF6-\uDDF9\uDDFB\uDDFC\uDDFE\uDDFF])|\uD83C\uDDF9(?:\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDED\uDDEF-\uDDF4\uDDF7\uDDF9\uDDFB\uDDFC\uDDFF])|\uD83C\uDDEA(?:\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDED\uDDF7-\uDDFA])|\uD83E\uDDD1(?:\uD83C[\uDFFB-\uDFFF])|\uD83C\uDDF7(?:\uD83C[\uDDEA\uDDF4\uDDF8\uDDFA\uDDFC])|\uD83D\uDC69(?:\uD83C[\uDFFB-\uDFFF])|\uD83C\uDDF2(?:\uD83C[\uDDE6\uDDE8-\uDDED\uDDF0-\uDDFF])|\uD83C\uDDE6(?:\uD83C[\uDDE8-\uDDEC\uDDEE\uDDF1\uDDF2\uDDF4\uDDF6-\uDDFA\uDDFC\uDDFD\uDDFF])|\uD83C\uDDF0(?:\uD83C[\uDDEA\uDDEC-\uDDEE\uDDF2\uDDF3\uDDF5\uDDF7\uDDFC\uDDFE\uDDFF])|\uD83C\uDDED(?:\uD83C[\uDDF0\uDDF2\uDDF3\uDDF7\uDDF9\uDDFA])|\uD83C\uDDE9(?:\uD83C[\uDDEA\uDDEC\uDDEF\uDDF0\uDDF2\uDDF4\uDDFF])|\uD83C\uDDFE(?:\uD83C[\uDDEA\uDDF9])|\uD83C\uDDEC(?:\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEE\uDDF1-\uDDF3\uDDF5-\uDDFA\uDDFC\uDDFE])|\uD83C\uDDF8(?:\uD83C[\uDDE6-\uDDEA\uDDEC-\uDDF4\uDDF7-\uDDF9\uDDFB\uDDFD-\uDDFF])|\uD83C\uDDEB(?:\uD83C[\uDDEE-\uDDF0\uDDF2\uDDF4\uDDF7])|\uD83C\uDDF5(?:\uD83C[\uDDE6\uDDEA-\uDDED\uDDF0-\uDDF3\uDDF7-\uDDF9\uDDFC\uDDFE])|\uD83C\uDDFB(?:\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDEE\uDDF3\uDDFA])|\uD83C\uDDF3(?:\uD83C[\uDDE6\uDDE8\uDDEA-\uDDEC\uDDEE\uDDF1\uDDF4\uDDF5\uDDF7\uDDFA\uDDFF])|\uD83C\uDDE8(?:\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDEE\uDDF0-\uDDF5\uDDF7\uDDFA-\uDDFF])|\uD83C\uDDF1(?:\uD83C[\uDDE6-\uDDE8\uDDEE\uDDF0\uDDF7-\uDDFB\uDDFE])|\uD83C\uDDFF(?:\uD83C[\uDDE6\uDDF2\uDDFC])|\uD83C\uDDFC(?:\uD83C[\uDDEB\uDDF8])|\uD83C\uDDFA(?:\uD83C[\uDDE6\uDDEC\uDDF2\uDDF3\uDDF8\uDDFE\uDDFF])|\uD83C\uDDEE(?:\uD83C[\uDDE8-\uDDEA\uDDF1-\uDDF4\uDDF6-\uDDF9])|\uD83C\uDDEF(?:\uD83C[\uDDEA\uDDF2\uDDF4\uDDF5])|(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD6-\uDDDD])(?:\uD83C[\uDFFB-\uDFFF])|(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)(?:\uD83C[\uDFFB-\uDFFF])|(?:[\u261D\u270A-\u270D]|\uD83C[\uDF85\uDFC2\uDFC7]|\uD83D[\uDC42\uDC43\uDC46-\uDC50\uDC66\uDC67\uDC6B-\uDC6D\uDC70\uDC72\uDC74-\uDC76\uDC78\uDC7C\uDC83\uDC85\uDCAA\uDD74\uDD7A\uDD90\uDD95\uDD96\uDE4C\uDE4F\uDEC0\uDECC]|\uD83E[\uDD0F\uDD18-\uDD1C\uDD1E\uDD1F\uDD30-\uDD36\uDDB5\uDDB6\uDDBB\uDDD2-\uDDD5])(?:\uD83C[\uDFFB-\uDFFF])|(?:[\u231A\u231B\u23E9-\u23EC\u23F0\u23F3\u25FD\u25FE\u2614\u2615\u2648-\u2653\u267F\u2693\u26A1\u26AA\u26AB\u26BD\u26BE\u26C4\u26C5\u26CE\u26D4\u26EA\u26F2\u26F3\u26F5\u26FA\u26FD\u2705\u270A\u270B\u2728\u274C\u274E\u2753-\u2755\u2757\u2795-\u2797\u27B0\u27BF\u2B1B\u2B1C\u2B50\u2B55]|\uD83C[\uDC04\uDCCF\uDD8E\uDD91-\uDD9A\uDDE6-\uDDFF\uDE01\uDE1A\uDE2F\uDE32-\uDE36\uDE38-\uDE3A\uDE50\uDE51\uDF00-\uDF20\uDF2D-\uDF35\uDF37-\uDF7C\uDF7E-\uDF93\uDFA0-\uDFCA\uDFCF-\uDFD3\uDFE0-\uDFF0\uDFF4\uDFF8-\uDFFF]|\uD83D[\uDC00-\uDC3E\uDC40\uDC42-\uDCFC\uDCFF-\uDD3D\uDD4B-\uDD4E\uDD50-\uDD67\uDD7A\uDD95\uDD96\uDDA4\uDDFB-\uDE4F\uDE80-\uDEC5\uDECC\uDED0-\uDED2\uDED5\uDEEB\uDEEC\uDEF4-\uDEFA\uDFE0-\uDFEB]|\uD83E[\uDD0D-\uDD3A\uDD3C-\uDD45\uDD47-\uDD71\uDD73-\uDD76\uDD7A-\uDDA2\uDDA5-\uDDAA\uDDAE-\uDDCA\uDDCD-\uDDFF\uDE70-\uDE73\uDE78-\uDE7A\uDE80-\uDE82\uDE90-\uDE95])|(?:[#\*0-9\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2640\u2642\u2648-\u2653\u265F\u2660\u2663\u2665\u2666\u2668\u267B\u267E\u267F\u2692-\u2697\u2699\u269B\u269C\u26A0\u26A1\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDDE6-\uDDFF\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD7A\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA4\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDE8\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED2\uDED5\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3-\uDEFA\uDFE0-\uDFEB]|\uD83E[\uDD0D-\uDD3A\uDD3C-\uDD45\uDD47-\uDD71\uDD73-\uDD76\uDD7A-\uDDA2\uDDA5-\uDDAA\uDDAE-\uDDCA\uDDCD-\uDDFF\uDE70-\uDE73\uDE78-\uDE7A\uDE80-\uDE82\uDE90-\uDE95])\uFE0F|(?:[\u261D\u26F9\u270A-\u270D]|\uD83C[\uDF85\uDFC2-\uDFC4\uDFC7\uDFCA-\uDFCC]|\uD83D[\uDC42\uDC43\uDC46-\uDC50\uDC66-\uDC78\uDC7C\uDC81-\uDC83\uDC85-\uDC87\uDC8F\uDC91\uDCAA\uDD74\uDD75\uDD7A\uDD90\uDD95\uDD96\uDE45-\uDE47\uDE4B-\uDE4F\uDEA3\uDEB4-\uDEB6\uDEC0\uDECC]|\uD83E[\uDD0F\uDD18-\uDD1F\uDD26\uDD30-\uDD39\uDD3C-\uDD3E\uDDB5\uDDB6\uDDB8\uDDB9\uDDBB\uDDCD-\uDDCF\uDDD1-\uDDDD])/g;
-};
-
-
-/***/ }),
-
 /***/ 15601:
 /***/ ((module) => {
 
@@ -15630,31 +15598,6 @@ module.exports = function setToStringTag(object, value) {
 		}
 	}
 };
-
-
-/***/ }),
-
-/***/ 11022:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const { dirname, resolve } = __nccwpck_require__(16928);
-const { readdirSync, statSync } = __nccwpck_require__(79896);
-
-module.exports = function (start, callback) {
-	let dir = resolve('.', start);
-	let tmp, stats = statSync(dir);
-
-	if (!stats.isDirectory()) {
-		dir = dirname(dir);
-	}
-
-	while (true) {
-		tmp = callback(dir, readdirSync(dir));
-		if (tmp) return resolve(dir, tmp);
-		dir = dirname(tmp = dir);
-		if (tmp === dir) break;
-	}
-}
 
 
 /***/ }),
@@ -21450,64 +21393,6 @@ module.exports = function isExtglob(str) {
 
   return false;
 };
-
-
-/***/ }),
-
-/***/ 39659:
-/***/ ((module) => {
-
-"use strict";
-/* eslint-disable yoda */
-
-
-const isFullwidthCodePoint = codePoint => {
-	if (Number.isNaN(codePoint)) {
-		return false;
-	}
-
-	// Code points are derived from:
-	// http://www.unix.org/Public/UNIDATA/EastAsianWidth.txt
-	if (
-		codePoint >= 0x1100 && (
-			codePoint <= 0x115F || // Hangul Jamo
-			codePoint === 0x2329 || // LEFT-POINTING ANGLE BRACKET
-			codePoint === 0x232A || // RIGHT-POINTING ANGLE BRACKET
-			// CJK Radicals Supplement .. Enclosed CJK Letters and Months
-			(0x2E80 <= codePoint && codePoint <= 0x3247 && codePoint !== 0x303F) ||
-			// Enclosed CJK Letters and Months .. CJK Unified Ideographs Extension A
-			(0x3250 <= codePoint && codePoint <= 0x4DBF) ||
-			// CJK Unified Ideographs .. Yi Radicals
-			(0x4E00 <= codePoint && codePoint <= 0xA4C6) ||
-			// Hangul Jamo Extended-A
-			(0xA960 <= codePoint && codePoint <= 0xA97C) ||
-			// Hangul Syllables
-			(0xAC00 <= codePoint && codePoint <= 0xD7A3) ||
-			// CJK Compatibility Ideographs
-			(0xF900 <= codePoint && codePoint <= 0xFAFF) ||
-			// Vertical Forms
-			(0xFE10 <= codePoint && codePoint <= 0xFE19) ||
-			// CJK Compatibility Forms .. Small Form Variants
-			(0xFE30 <= codePoint && codePoint <= 0xFE6B) ||
-			// Halfwidth and Fullwidth Forms
-			(0xFF01 <= codePoint && codePoint <= 0xFF60) ||
-			(0xFFE0 <= codePoint && codePoint <= 0xFFE6) ||
-			// Kana Supplement
-			(0x1B000 <= codePoint && codePoint <= 0x1B001) ||
-			// Enclosed Ideographic Supplement
-			(0x1F200 <= codePoint && codePoint <= 0x1F251) ||
-			// CJK Unified Ideographs Extension B .. Tertiary Ideographic Plane
-			(0x20000 <= codePoint && codePoint <= 0x3FFFD)
-		)
-	) {
-		return true;
-	}
-
-	return false;
-};
-
-module.exports = isFullwidthCodePoint;
-module.exports["default"] = isFullwidthCodePoint;
 
 
 /***/ }),
@@ -38706,100 +38591,6 @@ if (process.env.READABLE_STREAM === 'disable' && Stream) {
 
 /***/ }),
 
-/***/ 82613:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var fs = __nccwpck_require__(79896),
-  join = (__nccwpck_require__(16928).join),
-  resolve = (__nccwpck_require__(16928).resolve),
-  dirname = (__nccwpck_require__(16928).dirname),
-  defaultOptions = {
-    extensions: ['js', 'json', 'coffee'],
-    recurse: true,
-    rename: function (name) {
-      return name;
-    },
-    visit: function (obj) {
-      return obj;
-    }
-  };
-
-function checkFileInclusion(path, filename, options) {
-  return (
-    // verify file has valid extension
-    (new RegExp('\\.(' + options.extensions.join('|') + ')$', 'i').test(filename)) &&
-
-    // if options.include is a RegExp, evaluate it and make sure the path passes
-    !(options.include && options.include instanceof RegExp && !options.include.test(path)) &&
-
-    // if options.include is a function, evaluate it and make sure the path passes
-    !(options.include && typeof options.include === 'function' && !options.include(path, filename)) &&
-
-    // if options.exclude is a RegExp, evaluate it and make sure the path doesn't pass
-    !(options.exclude && options.exclude instanceof RegExp && options.exclude.test(path)) &&
-
-    // if options.exclude is a function, evaluate it and make sure the path doesn't pass
-    !(options.exclude && typeof options.exclude === 'function' && options.exclude(path, filename))
-  );
-}
-
-function requireDirectory(m, path, options) {
-  var retval = {};
-
-  // path is optional
-  if (path && !options && typeof path !== 'string') {
-    options = path;
-    path = null;
-  }
-
-  // default options
-  options = options || {};
-  for (var prop in defaultOptions) {
-    if (typeof options[prop] === 'undefined') {
-      options[prop] = defaultOptions[prop];
-    }
-  }
-
-  // if no path was passed in, assume the equivelant of __dirname from caller
-  // otherwise, resolve path relative to the equivalent of __dirname
-  path = !path ? dirname(m.filename) : resolve(dirname(m.filename), path);
-
-  // get the path of each file in specified directory, append to current tree node, recurse
-  fs.readdirSync(path).forEach(function (filename) {
-    var joined = join(path, filename),
-      files,
-      key,
-      obj;
-
-    if (fs.statSync(joined).isDirectory() && options.recurse) {
-      // this node is a directory; recurse
-      files = requireDirectory(m, joined, options);
-      // exclude empty directories
-      if (Object.keys(files).length) {
-        retval[options.rename(filename, joined, filename)] = files;
-      }
-    } else {
-      if (joined !== m.filename && checkFileInclusion(joined, filename, options)) {
-        // hash node key shouldn't include file extension
-        key = filename.substring(0, filename.lastIndexOf('.'));
-        obj = m.require(joined);
-        retval[options.rename(key, joined, filename)] = options.visit(obj, joined, filename) || obj;
-      }
-    }
-  });
-
-  return retval;
-}
-
-module.exports = requireDirectory;
-module.exports.defaults = defaultOptions;
-
-
-/***/ }),
-
 /***/ 14088:
 /***/ ((module) => {
 
@@ -39800,61 +39591,6 @@ exports._createParsedCallSite = function(properties) {
 
 /***/ }),
 
-/***/ 75296:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-const stripAnsi = __nccwpck_require__(24586);
-const isFullwidthCodePoint = __nccwpck_require__(39659);
-const emojiRegex = __nccwpck_require__(75892);
-
-const stringWidth = string => {
-	if (typeof string !== 'string' || string.length === 0) {
-		return 0;
-	}
-
-	string = stripAnsi(string);
-
-	if (string.length === 0) {
-		return 0;
-	}
-
-	string = string.replace(emojiRegex(), '  ');
-
-	let width = 0;
-
-	for (let i = 0; i < string.length; i++) {
-		const code = string.codePointAt(i);
-
-		// Ignore control characters
-		if (code <= 0x1F || (code >= 0x7F && code <= 0x9F)) {
-			continue;
-		}
-
-		// Ignore combining characters
-		if (code >= 0x300 && code <= 0x36F) {
-			continue;
-		}
-
-		// Surrogates
-		if (code > 0xFFFF) {
-			i++;
-		}
-
-		width += isFullwidthCodePoint(code) ? 2 : 1;
-	}
-
-	return width;
-};
-
-module.exports = stringWidth;
-// TODO: remove this in the next major version
-module.exports["default"] = stringWidth;
-
-
-/***/ }),
-
 /***/ 43062:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -40155,18 +39891,6 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-
-/***/ }),
-
-/***/ 24586:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-const ansiRegex = __nccwpck_require__(31513);
-
-module.exports = string => typeof string === 'string' ? string.replace(ansiRegex(), '') : string;
-
 
 /***/ }),
 
@@ -71349,230 +71073,6 @@ module.exports = class Stream extends TransportStream {
 
 /***/ }),
 
-/***/ 83184:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-const stringWidth = __nccwpck_require__(75296);
-const stripAnsi = __nccwpck_require__(24586);
-const ansiStyles = __nccwpck_require__(18344);
-
-const ESCAPES = new Set([
-	'\u001B',
-	'\u009B'
-]);
-
-const END_CODE = 39;
-
-const ANSI_ESCAPE_BELL = '\u0007';
-const ANSI_CSI = '[';
-const ANSI_OSC = ']';
-const ANSI_SGR_TERMINATOR = 'm';
-const ANSI_ESCAPE_LINK = `${ANSI_OSC}8;;`;
-
-const wrapAnsi = code => `${ESCAPES.values().next().value}${ANSI_CSI}${code}${ANSI_SGR_TERMINATOR}`;
-const wrapAnsiHyperlink = uri => `${ESCAPES.values().next().value}${ANSI_ESCAPE_LINK}${uri}${ANSI_ESCAPE_BELL}`;
-
-// Calculate the length of words split on ' ', ignoring
-// the extra characters added by ansi escape codes
-const wordLengths = string => string.split(' ').map(character => stringWidth(character));
-
-// Wrap a long word across multiple rows
-// Ansi escape codes do not count towards length
-const wrapWord = (rows, word, columns) => {
-	const characters = [...word];
-
-	let isInsideEscape = false;
-	let isInsideLinkEscape = false;
-	let visible = stringWidth(stripAnsi(rows[rows.length - 1]));
-
-	for (const [index, character] of characters.entries()) {
-		const characterLength = stringWidth(character);
-
-		if (visible + characterLength <= columns) {
-			rows[rows.length - 1] += character;
-		} else {
-			rows.push(character);
-			visible = 0;
-		}
-
-		if (ESCAPES.has(character)) {
-			isInsideEscape = true;
-			isInsideLinkEscape = characters.slice(index + 1).join('').startsWith(ANSI_ESCAPE_LINK);
-		}
-
-		if (isInsideEscape) {
-			if (isInsideLinkEscape) {
-				if (character === ANSI_ESCAPE_BELL) {
-					isInsideEscape = false;
-					isInsideLinkEscape = false;
-				}
-			} else if (character === ANSI_SGR_TERMINATOR) {
-				isInsideEscape = false;
-			}
-
-			continue;
-		}
-
-		visible += characterLength;
-
-		if (visible === columns && index < characters.length - 1) {
-			rows.push('');
-			visible = 0;
-		}
-	}
-
-	// It's possible that the last row we copy over is only
-	// ansi escape characters, handle this edge-case
-	if (!visible && rows[rows.length - 1].length > 0 && rows.length > 1) {
-		rows[rows.length - 2] += rows.pop();
-	}
-};
-
-// Trims spaces from a string ignoring invisible sequences
-const stringVisibleTrimSpacesRight = string => {
-	const words = string.split(' ');
-	let last = words.length;
-
-	while (last > 0) {
-		if (stringWidth(words[last - 1]) > 0) {
-			break;
-		}
-
-		last--;
-	}
-
-	if (last === words.length) {
-		return string;
-	}
-
-	return words.slice(0, last).join(' ') + words.slice(last).join('');
-};
-
-// The wrap-ansi module can be invoked in either 'hard' or 'soft' wrap mode
-//
-// 'hard' will never allow a string to take up more than columns characters
-//
-// 'soft' allows long words to expand past the column length
-const exec = (string, columns, options = {}) => {
-	if (options.trim !== false && string.trim() === '') {
-		return '';
-	}
-
-	let returnValue = '';
-	let escapeCode;
-	let escapeUrl;
-
-	const lengths = wordLengths(string);
-	let rows = [''];
-
-	for (const [index, word] of string.split(' ').entries()) {
-		if (options.trim !== false) {
-			rows[rows.length - 1] = rows[rows.length - 1].trimStart();
-		}
-
-		let rowLength = stringWidth(rows[rows.length - 1]);
-
-		if (index !== 0) {
-			if (rowLength >= columns && (options.wordWrap === false || options.trim === false)) {
-				// If we start with a new word but the current row length equals the length of the columns, add a new row
-				rows.push('');
-				rowLength = 0;
-			}
-
-			if (rowLength > 0 || options.trim === false) {
-				rows[rows.length - 1] += ' ';
-				rowLength++;
-			}
-		}
-
-		// In 'hard' wrap mode, the length of a line is never allowed to extend past 'columns'
-		if (options.hard && lengths[index] > columns) {
-			const remainingColumns = (columns - rowLength);
-			const breaksStartingThisLine = 1 + Math.floor((lengths[index] - remainingColumns - 1) / columns);
-			const breaksStartingNextLine = Math.floor((lengths[index] - 1) / columns);
-			if (breaksStartingNextLine < breaksStartingThisLine) {
-				rows.push('');
-			}
-
-			wrapWord(rows, word, columns);
-			continue;
-		}
-
-		if (rowLength + lengths[index] > columns && rowLength > 0 && lengths[index] > 0) {
-			if (options.wordWrap === false && rowLength < columns) {
-				wrapWord(rows, word, columns);
-				continue;
-			}
-
-			rows.push('');
-		}
-
-		if (rowLength + lengths[index] > columns && options.wordWrap === false) {
-			wrapWord(rows, word, columns);
-			continue;
-		}
-
-		rows[rows.length - 1] += word;
-	}
-
-	if (options.trim !== false) {
-		rows = rows.map(stringVisibleTrimSpacesRight);
-	}
-
-	const pre = [...rows.join('\n')];
-
-	for (const [index, character] of pre.entries()) {
-		returnValue += character;
-
-		if (ESCAPES.has(character)) {
-			const {groups} = new RegExp(`(?:\\${ANSI_CSI}(?<code>\\d+)m|\\${ANSI_ESCAPE_LINK}(?<uri>.*)${ANSI_ESCAPE_BELL})`).exec(pre.slice(index).join('')) || {groups: {}};
-			if (groups.code !== undefined) {
-				const code = Number.parseFloat(groups.code);
-				escapeCode = code === END_CODE ? undefined : code;
-			} else if (groups.uri !== undefined) {
-				escapeUrl = groups.uri.length === 0 ? undefined : groups.uri;
-			}
-		}
-
-		const code = ansiStyles.codes.get(Number(escapeCode));
-
-		if (pre[index + 1] === '\n') {
-			if (escapeUrl) {
-				returnValue += wrapAnsiHyperlink('');
-			}
-
-			if (escapeCode && code) {
-				returnValue += wrapAnsi(code);
-			}
-		} else if (character === '\n') {
-			if (escapeCode && code) {
-				returnValue += wrapAnsi(escapeCode);
-			}
-
-			if (escapeUrl) {
-				returnValue += wrapAnsiHyperlink(escapeUrl);
-			}
-		}
-	}
-
-	return returnValue;
-};
-
-// For each newline, invoke the method separately
-module.exports = (string, columns, options) => {
-	return String(string)
-		.normalize()
-		.replace(/\r\n/g, '\n')
-		.split('\n')
-		.map(line => exec(line, columns, options))
-		.join('\n');
-};
-
-
-/***/ }),
-
 /***/ 5235:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -71583,7 +71083,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseCmdArgsBuilder = parseCmdArgsBuilder;
-const yargs_1 = __importDefault(__nccwpck_require__(95569));
+const yargs_1 = __importDefault(__nccwpck_require__(9784));
 const options_parser_1 = __nccwpck_require__(42011);
 /**
  * @internal
@@ -73054,6 +72554,17 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
  */
 __export(__nccwpck_require__(94732));
 // # sourceMappingURL=internal.js.map
+
+
+/***/ }),
+
+/***/ 13784:
+/***/ ((module) => {
+
+module.exports = () => {
+	// https://mths.be/emoji
+	return /[#*0-9]\uFE0F?\u20E3|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23ED-\u23EF\u23F1\u23F2\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB\u25FC\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2640\u2642\u2648-\u2653\u265F\u2660\u2663\u2665\u2666\u2668\u267B\u267E\u267F\u2692\u2694-\u2697\u2699\u269B\u269C\u26A0\u26A7\u26AA\u26B0\u26B1\u26BD\u26BE\u26C4\u26C8\u26CF\u26D1\u26E9\u26F0-\u26F5\u26F7\u26F8\u26FA\u2702\u2708\u2709\u270F\u2712\u2714\u2716\u271D\u2721\u2733\u2734\u2744\u2747\u2757\u2763\u27A1\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B55\u3030\u303D\u3297\u3299]\uFE0F?|[\u261D\u270C\u270D](?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?|[\u270A\u270B](?:\uD83C[\uDFFB-\uDFFF])?|[\u23E9-\u23EC\u23F0\u23F3\u25FD\u2693\u26A1\u26AB\u26C5\u26CE\u26D4\u26EA\u26FD\u2705\u2728\u274C\u274E\u2753-\u2755\u2795-\u2797\u27B0\u27BF\u2B50]|\u26D3\uFE0F?(?:\u200D\uD83D\uDCA5)?|\u26F9(?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?(?:\u200D[\u2640\u2642]\uFE0F?)?|\u2764\uFE0F?(?:\u200D(?:\uD83D\uDD25|\uD83E\uDE79))?|\uD83C(?:[\uDC04\uDD70\uDD71\uDD7E\uDD7F\uDE02\uDE37\uDF21\uDF24-\uDF2C\uDF36\uDF7D\uDF96\uDF97\uDF99-\uDF9B\uDF9E\uDF9F\uDFCD\uDFCE\uDFD4-\uDFDF\uDFF5\uDFF7]\uFE0F?|[\uDF85\uDFC2\uDFC7](?:\uD83C[\uDFFB-\uDFFF])?|[\uDFC4\uDFCA](?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDFCB\uDFCC](?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?(?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDCCF\uDD8E\uDD91-\uDD9A\uDE01\uDE1A\uDE2F\uDE32-\uDE36\uDE38-\uDE3A\uDE50\uDE51\uDF00-\uDF20\uDF2D-\uDF35\uDF37-\uDF43\uDF45-\uDF4A\uDF4C-\uDF7C\uDF7E-\uDF84\uDF86-\uDF93\uDFA0-\uDFC1\uDFC5\uDFC6\uDFC8\uDFC9\uDFCF-\uDFD3\uDFE0-\uDFF0\uDFF8-\uDFFF]|\uDDE6\uD83C[\uDDE8-\uDDEC\uDDEE\uDDF1\uDDF2\uDDF4\uDDF6-\uDDFA\uDDFC\uDDFD\uDDFF]|\uDDE7\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEF\uDDF1-\uDDF4\uDDF6-\uDDF9\uDDFB\uDDFC\uDDFE\uDDFF]|\uDDE8\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDEE\uDDF0-\uDDF7\uDDFA-\uDDFF]|\uDDE9\uD83C[\uDDEA\uDDEC\uDDEF\uDDF0\uDDF2\uDDF4\uDDFF]|\uDDEA\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDED\uDDF7-\uDDFA]|\uDDEB\uD83C[\uDDEE-\uDDF0\uDDF2\uDDF4\uDDF7]|\uDDEC\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEE\uDDF1-\uDDF3\uDDF5-\uDDFA\uDDFC\uDDFE]|\uDDED\uD83C[\uDDF0\uDDF2\uDDF3\uDDF7\uDDF9\uDDFA]|\uDDEE\uD83C[\uDDE8-\uDDEA\uDDF1-\uDDF4\uDDF6-\uDDF9]|\uDDEF\uD83C[\uDDEA\uDDF2\uDDF4\uDDF5]|\uDDF0\uD83C[\uDDEA\uDDEC-\uDDEE\uDDF2\uDDF3\uDDF5\uDDF7\uDDFC\uDDFE\uDDFF]|\uDDF1\uD83C[\uDDE6-\uDDE8\uDDEE\uDDF0\uDDF7-\uDDFB\uDDFE]|\uDDF2\uD83C[\uDDE6\uDDE8-\uDDED\uDDF0-\uDDFF]|\uDDF3\uD83C[\uDDE6\uDDE8\uDDEA-\uDDEC\uDDEE\uDDF1\uDDF4\uDDF5\uDDF7\uDDFA\uDDFF]|\uDDF4\uD83C\uDDF2|\uDDF5\uD83C[\uDDE6\uDDEA-\uDDED\uDDF0-\uDDF3\uDDF7-\uDDF9\uDDFC\uDDFE]|\uDDF6\uD83C\uDDE6|\uDDF7\uD83C[\uDDEA\uDDF4\uDDF8\uDDFA\uDDFC]|\uDDF8\uD83C[\uDDE6-\uDDEA\uDDEC-\uDDF4\uDDF7-\uDDF9\uDDFB\uDDFD-\uDDFF]|\uDDF9\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDED\uDDEF-\uDDF4\uDDF7\uDDF9\uDDFB\uDDFC\uDDFF]|\uDDFA\uD83C[\uDDE6\uDDEC\uDDF2\uDDF3\uDDF8\uDDFE\uDDFF]|\uDDFB\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDEE\uDDF3\uDDFA]|\uDDFC\uD83C[\uDDEB\uDDF8]|\uDDFD\uD83C\uDDF0|\uDDFE\uD83C[\uDDEA\uDDF9]|\uDDFF\uD83C[\uDDE6\uDDF2\uDDFC]|\uDF44(?:\u200D\uD83D\uDFEB)?|\uDF4B(?:\u200D\uD83D\uDFE9)?|\uDFC3(?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[\u2640\u2642]\uFE0F?(?:\u200D\u27A1\uFE0F?)?|\u27A1\uFE0F?))?|\uDFF3\uFE0F?(?:\u200D(?:\u26A7\uFE0F?|\uD83C\uDF08))?|\uDFF4(?:\u200D\u2620\uFE0F?|\uDB40\uDC67\uDB40\uDC62\uDB40(?:\uDC65\uDB40\uDC6E\uDB40\uDC67|\uDC73\uDB40\uDC63\uDB40\uDC74|\uDC77\uDB40\uDC6C\uDB40\uDC73)\uDB40\uDC7F)?)|\uD83D(?:[\uDC3F\uDCFD\uDD49\uDD4A\uDD6F\uDD70\uDD73\uDD76-\uDD79\uDD87\uDD8A-\uDD8D\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDE8\uDDEF\uDDF3\uDDFA\uDECB\uDECD-\uDECF\uDEE0-\uDEE5\uDEE9\uDEF0\uDEF3]\uFE0F?|[\uDC42\uDC43\uDC46-\uDC50\uDC66\uDC67\uDC6B-\uDC6D\uDC72\uDC74-\uDC76\uDC78\uDC7C\uDC83\uDC85\uDC8F\uDC91\uDCAA\uDD7A\uDD95\uDD96\uDE4C\uDE4F\uDEC0\uDECC](?:\uD83C[\uDFFB-\uDFFF])?|[\uDC6E\uDC70\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4\uDEB5](?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDD74\uDD90](?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?|[\uDC00-\uDC07\uDC09-\uDC14\uDC16-\uDC25\uDC27-\uDC3A\uDC3C-\uDC3E\uDC40\uDC44\uDC45\uDC51-\uDC65\uDC6A\uDC79-\uDC7B\uDC7D-\uDC80\uDC84\uDC88-\uDC8E\uDC90\uDC92-\uDCA9\uDCAB-\uDCFC\uDCFF-\uDD3D\uDD4B-\uDD4E\uDD50-\uDD67\uDDA4\uDDFB-\uDE2D\uDE2F-\uDE34\uDE37-\uDE41\uDE43\uDE44\uDE48-\uDE4A\uDE80-\uDEA2\uDEA4-\uDEB3\uDEB7-\uDEBF\uDEC1-\uDEC5\uDED0-\uDED2\uDED5-\uDED7\uDEDC-\uDEDF\uDEEB\uDEEC\uDEF4-\uDEFC\uDFE0-\uDFEB\uDFF0]|\uDC08(?:\u200D\u2B1B)?|\uDC15(?:\u200D\uD83E\uDDBA)?|\uDC26(?:\u200D(?:\u2B1B|\uD83D\uDD25))?|\uDC3B(?:\u200D\u2744\uFE0F?)?|\uDC41\uFE0F?(?:\u200D\uD83D\uDDE8\uFE0F?)?|\uDC68(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDC68\uDC69]\u200D\uD83D(?:\uDC66(?:\u200D\uD83D\uDC66)?|\uDC67(?:\u200D\uD83D[\uDC66\uDC67])?)|[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC66(?:\u200D\uD83D\uDC66)?|\uDC67(?:\u200D\uD83D[\uDC66\uDC67])?)|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]))|\uD83C(?:\uDFFB(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D\uDC68\uD83C[\uDFFC-\uDFFF])))?|\uDFFC(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D\uDC68\uD83C[\uDFFB\uDFFD-\uDFFF])))?|\uDFFD(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D\uDC68\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])))?|\uDFFE(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D\uDC68\uD83C[\uDFFB-\uDFFD\uDFFF])))?|\uDFFF(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?\uDC68\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D\uDC68\uD83C[\uDFFB-\uDFFE])))?))?|\uDC69(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:\uDC8B\u200D\uD83D)?[\uDC68\uDC69]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D(?:[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uDC66(?:\u200D\uD83D\uDC66)?|\uDC67(?:\u200D\uD83D[\uDC66\uDC67])?|\uDC69\u200D\uD83D(?:\uDC66(?:\u200D\uD83D\uDC66)?|\uDC67(?:\u200D\uD83D[\uDC66\uDC67])?))|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]))|\uD83C(?:\uDFFB(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFC-\uDFFF])))?|\uDFFC(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFB\uDFFD-\uDFFF])))?|\uDFFD(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])))?|\uDFFE(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFB-\uDFFD\uDFFF])))?|\uDFFF(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D\uD83D(?:[\uDC68\uDC69]|\uDC8B\u200D\uD83D[\uDC68\uDC69])\uD83C[\uDFFB-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83D[\uDC68\uDC69]\uD83C[\uDFFB-\uDFFE])))?))?|\uDC6F(?:\u200D[\u2640\u2642]\uFE0F?)?|\uDD75(?:\uD83C[\uDFFB-\uDFFF]|\uFE0F)?(?:\u200D[\u2640\u2642]\uFE0F?)?|\uDE2E(?:\u200D\uD83D\uDCA8)?|\uDE35(?:\u200D\uD83D\uDCAB)?|\uDE36(?:\u200D\uD83C\uDF2B\uFE0F?)?|\uDE42(?:\u200D[\u2194\u2195]\uFE0F?)?|\uDEB6(?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[\u2640\u2642]\uFE0F?(?:\u200D\u27A1\uFE0F?)?|\u27A1\uFE0F?))?)|\uD83E(?:[\uDD0C\uDD0F\uDD18-\uDD1F\uDD30-\uDD34\uDD36\uDD77\uDDB5\uDDB6\uDDBB\uDDD2\uDDD3\uDDD5\uDEC3-\uDEC5\uDEF0\uDEF2-\uDEF8](?:\uD83C[\uDFFB-\uDFFF])?|[\uDD26\uDD35\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD\uDDCF\uDDD4\uDDD6-\uDDDD](?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDDDE\uDDDF](?:\u200D[\u2640\u2642]\uFE0F?)?|[\uDD0D\uDD0E\uDD10-\uDD17\uDD20-\uDD25\uDD27-\uDD2F\uDD3A\uDD3F-\uDD45\uDD47-\uDD76\uDD78-\uDDB4\uDDB7\uDDBA\uDDBC-\uDDCC\uDDD0\uDDE0-\uDDFF\uDE70-\uDE7C\uDE80-\uDE89\uDE8F-\uDEC2\uDEC6\uDECE-\uDEDC\uDEDF-\uDEE9]|\uDD3C(?:\u200D[\u2640\u2642]\uFE0F?|\uD83C[\uDFFB-\uDFFF])?|\uDDCE(?:\uD83C[\uDFFB-\uDFFF])?(?:\u200D(?:[\u2640\u2642]\uFE0F?(?:\u200D\u27A1\uFE0F?)?|\u27A1\uFE0F?))?|\uDDD1(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83E\uDDD1|\uDDD1\u200D\uD83E\uDDD2(?:\u200D\uD83E\uDDD2)?|\uDDD2(?:\u200D\uD83E\uDDD2)?))|\uD83C(?:\uDFFB(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFC-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF])))?|\uDFFC(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFB\uDFFD-\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF])))?|\uDFFD(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF])))?|\uDFFE(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFB-\uDFFD\uDFFF]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF])))?|\uDFFF(?:\u200D(?:[\u2695\u2696\u2708]\uFE0F?|\u2764\uFE0F?\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1\uD83C[\uDFFB-\uDFFE]|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E(?:[\uDDAF\uDDBC\uDDBD](?:\u200D\u27A1\uFE0F?)?|[\uDDB0-\uDDB3]|\uDD1D\u200D\uD83E\uDDD1\uD83C[\uDFFB-\uDFFF])))?))?|\uDEF1(?:\uD83C(?:\uDFFB(?:\u200D\uD83E\uDEF2\uD83C[\uDFFC-\uDFFF])?|\uDFFC(?:\u200D\uD83E\uDEF2\uD83C[\uDFFB\uDFFD-\uDFFF])?|\uDFFD(?:\u200D\uD83E\uDEF2\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])?|\uDFFE(?:\u200D\uD83E\uDEF2\uD83C[\uDFFB-\uDFFD\uDFFF])?|\uDFFF(?:\u200D\uD83E\uDEF2\uD83C[\uDFFB-\uDFFE])?))?)/g;
+};
 
 
 /***/ }),
@@ -76383,51 +75894,6 @@ async function checkUrlExists(url) {
         .then(response => response.status);
 }
 //# sourceMappingURL=url.js.map
-
-/***/ }),
-
-/***/ 47934:
-/***/ ((module) => {
-
-function webpackEmptyContext(req) {
-	var e = new Error("Cannot find module '" + req + "'");
-	e.code = 'MODULE_NOT_FOUND';
-	throw e;
-}
-webpackEmptyContext.keys = () => ([]);
-webpackEmptyContext.resolve = webpackEmptyContext;
-webpackEmptyContext.id = 47934;
-module.exports = webpackEmptyContext;
-
-/***/ }),
-
-/***/ 85396:
-/***/ ((module) => {
-
-function webpackEmptyContext(req) {
-	var e = new Error("Cannot find module '" + req + "'");
-	e.code = 'MODULE_NOT_FOUND';
-	throw e;
-}
-webpackEmptyContext.keys = () => ([]);
-webpackEmptyContext.resolve = webpackEmptyContext;
-webpackEmptyContext.id = 85396;
-module.exports = webpackEmptyContext;
-
-/***/ }),
-
-/***/ 37781:
-/***/ ((module) => {
-
-function webpackEmptyContext(req) {
-	var e = new Error("Cannot find module '" + req + "'");
-	e.code = 'MODULE_NOT_FOUND';
-	throw e;
-}
-webpackEmptyContext.keys = () => ([]);
-webpackEmptyContext.resolve = webpackEmptyContext;
-webpackEmptyContext.id = 37781;
-module.exports = webpackEmptyContext;
 
 /***/ }),
 
@@ -92101,17 +91567,28 @@ module.exports = axios;
 
 /***/ }),
 
-/***/ 73602:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+/***/ 9784:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 "use strict";
+// ESM COMPAT FLAG
+__nccwpck_require__.r(__webpack_exports__);
 
+// EXPORTS
+__nccwpck_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ yargs),
+  "module.exports": () => (/* binding */ Yargs)
+});
+
+// EXTERNAL MODULE: external "assert"
+var external_assert_ = __nccwpck_require__(42613);
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/cliui/build/lib/index.js
 
 const align = {
     right: alignRight,
     center: alignCenter
 };
-const top = 0;
+const lib_top = 0;
 const right = 1;
 const bottom = 2;
 const left = 3;
@@ -92284,7 +91761,7 @@ class UI {
             }
             // add top and bottom padding.
             if (col.padding) {
-                wrapped.unshift(...new Array(col.padding[top] || 0).fill(''));
+                wrapped.unshift(...new Array(col.padding[lib_top] || 0).fill(''));
                 wrapped.push(...new Array(col.padding[bottom] || 0).fill(''));
             }
             wrapped.forEach((str, r) => {
@@ -92362,7 +91839,7 @@ function _minWidth(col) {
     return minWidth;
 }
 function getWindowWidth() {
-    /* istanbul ignore next: depends on terminal */
+    /* c8 ignore next 5: depends on terminal */
     if (typeof process === 'object' && process.stdout && process.stdout.columns) {
         return process.stdout.columns;
     }
@@ -92379,7 +91856,7 @@ function alignRight(str, width) {
 function alignCenter(str, width) {
     str = str.trim();
     const strWidth = mixin.stringWidth(str);
-    /* istanbul ignore next */
+    /* c8 ignore next 3 */
     if (strWidth >= width) {
         return str;
     }
@@ -92394,33 +91871,2332 @@ function cliui(opts, _mixin) {
     });
 }
 
-// Bootstrap cliui with CommonJS dependencies:
-const stringWidth = __nccwpck_require__(75296);
-const stripAnsi = __nccwpck_require__(24586);
-const wrap = __nccwpck_require__(83184);
-function ui(opts) {
-    return cliui(opts, {
-        stringWidth,
-        stripAnsi,
-        wrap
-    });
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/ansi-regex/index.js
+function ansiRegex({onlyFirst = false} = {}) {
+	// Valid string terminator sequences are BEL, ESC\, and 0x9c
+	const ST = '(?:\\u0007|\\u001B\\u005C|\\u009C)';
+	const pattern = [
+		`[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?${ST})`,
+		'(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))',
+	].join('|');
+
+	return new RegExp(pattern, onlyFirst ? undefined : 'g');
 }
 
-module.exports = ui;
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/strip-ansi/index.js
 
 
-/***/ }),
+const regex = ansiRegex();
 
-/***/ 13774:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+function stripAnsi(string) {
+	if (typeof string !== 'string') {
+		throw new TypeError(`Expected a \`string\`, got \`${typeof string}\``);
+	}
 
-"use strict";
+	// Even though the regex is global, we don't need to reset the `.lastIndex`
+	// because unlike `.exec()` and `.test()`, `.replace()` does it automatically
+	// and doing it manually has a performance penalty.
+	return string.replace(regex, '');
+}
+
+;// CONCATENATED MODULE: ../../node_modules/get-east-asian-width/lookup.js
+// Generated code.
+
+function isAmbiguous(x) {
+	return x === 0xA1
+		|| x === 0xA4
+		|| x === 0xA7
+		|| x === 0xA8
+		|| x === 0xAA
+		|| x === 0xAD
+		|| x === 0xAE
+		|| x >= 0xB0 && x <= 0xB4
+		|| x >= 0xB6 && x <= 0xBA
+		|| x >= 0xBC && x <= 0xBF
+		|| x === 0xC6
+		|| x === 0xD0
+		|| x === 0xD7
+		|| x === 0xD8
+		|| x >= 0xDE && x <= 0xE1
+		|| x === 0xE6
+		|| x >= 0xE8 && x <= 0xEA
+		|| x === 0xEC
+		|| x === 0xED
+		|| x === 0xF0
+		|| x === 0xF2
+		|| x === 0xF3
+		|| x >= 0xF7 && x <= 0xFA
+		|| x === 0xFC
+		|| x === 0xFE
+		|| x === 0x101
+		|| x === 0x111
+		|| x === 0x113
+		|| x === 0x11B
+		|| x === 0x126
+		|| x === 0x127
+		|| x === 0x12B
+		|| x >= 0x131 && x <= 0x133
+		|| x === 0x138
+		|| x >= 0x13F && x <= 0x142
+		|| x === 0x144
+		|| x >= 0x148 && x <= 0x14B
+		|| x === 0x14D
+		|| x === 0x152
+		|| x === 0x153
+		|| x === 0x166
+		|| x === 0x167
+		|| x === 0x16B
+		|| x === 0x1CE
+		|| x === 0x1D0
+		|| x === 0x1D2
+		|| x === 0x1D4
+		|| x === 0x1D6
+		|| x === 0x1D8
+		|| x === 0x1DA
+		|| x === 0x1DC
+		|| x === 0x251
+		|| x === 0x261
+		|| x === 0x2C4
+		|| x === 0x2C7
+		|| x >= 0x2C9 && x <= 0x2CB
+		|| x === 0x2CD
+		|| x === 0x2D0
+		|| x >= 0x2D8 && x <= 0x2DB
+		|| x === 0x2DD
+		|| x === 0x2DF
+		|| x >= 0x300 && x <= 0x36F
+		|| x >= 0x391 && x <= 0x3A1
+		|| x >= 0x3A3 && x <= 0x3A9
+		|| x >= 0x3B1 && x <= 0x3C1
+		|| x >= 0x3C3 && x <= 0x3C9
+		|| x === 0x401
+		|| x >= 0x410 && x <= 0x44F
+		|| x === 0x451
+		|| x === 0x2010
+		|| x >= 0x2013 && x <= 0x2016
+		|| x === 0x2018
+		|| x === 0x2019
+		|| x === 0x201C
+		|| x === 0x201D
+		|| x >= 0x2020 && x <= 0x2022
+		|| x >= 0x2024 && x <= 0x2027
+		|| x === 0x2030
+		|| x === 0x2032
+		|| x === 0x2033
+		|| x === 0x2035
+		|| x === 0x203B
+		|| x === 0x203E
+		|| x === 0x2074
+		|| x === 0x207F
+		|| x >= 0x2081 && x <= 0x2084
+		|| x === 0x20AC
+		|| x === 0x2103
+		|| x === 0x2105
+		|| x === 0x2109
+		|| x === 0x2113
+		|| x === 0x2116
+		|| x === 0x2121
+		|| x === 0x2122
+		|| x === 0x2126
+		|| x === 0x212B
+		|| x === 0x2153
+		|| x === 0x2154
+		|| x >= 0x215B && x <= 0x215E
+		|| x >= 0x2160 && x <= 0x216B
+		|| x >= 0x2170 && x <= 0x2179
+		|| x === 0x2189
+		|| x >= 0x2190 && x <= 0x2199
+		|| x === 0x21B8
+		|| x === 0x21B9
+		|| x === 0x21D2
+		|| x === 0x21D4
+		|| x === 0x21E7
+		|| x === 0x2200
+		|| x === 0x2202
+		|| x === 0x2203
+		|| x === 0x2207
+		|| x === 0x2208
+		|| x === 0x220B
+		|| x === 0x220F
+		|| x === 0x2211
+		|| x === 0x2215
+		|| x === 0x221A
+		|| x >= 0x221D && x <= 0x2220
+		|| x === 0x2223
+		|| x === 0x2225
+		|| x >= 0x2227 && x <= 0x222C
+		|| x === 0x222E
+		|| x >= 0x2234 && x <= 0x2237
+		|| x === 0x223C
+		|| x === 0x223D
+		|| x === 0x2248
+		|| x === 0x224C
+		|| x === 0x2252
+		|| x === 0x2260
+		|| x === 0x2261
+		|| x >= 0x2264 && x <= 0x2267
+		|| x === 0x226A
+		|| x === 0x226B
+		|| x === 0x226E
+		|| x === 0x226F
+		|| x === 0x2282
+		|| x === 0x2283
+		|| x === 0x2286
+		|| x === 0x2287
+		|| x === 0x2295
+		|| x === 0x2299
+		|| x === 0x22A5
+		|| x === 0x22BF
+		|| x === 0x2312
+		|| x >= 0x2460 && x <= 0x24E9
+		|| x >= 0x24EB && x <= 0x254B
+		|| x >= 0x2550 && x <= 0x2573
+		|| x >= 0x2580 && x <= 0x258F
+		|| x >= 0x2592 && x <= 0x2595
+		|| x === 0x25A0
+		|| x === 0x25A1
+		|| x >= 0x25A3 && x <= 0x25A9
+		|| x === 0x25B2
+		|| x === 0x25B3
+		|| x === 0x25B6
+		|| x === 0x25B7
+		|| x === 0x25BC
+		|| x === 0x25BD
+		|| x === 0x25C0
+		|| x === 0x25C1
+		|| x >= 0x25C6 && x <= 0x25C8
+		|| x === 0x25CB
+		|| x >= 0x25CE && x <= 0x25D1
+		|| x >= 0x25E2 && x <= 0x25E5
+		|| x === 0x25EF
+		|| x === 0x2605
+		|| x === 0x2606
+		|| x === 0x2609
+		|| x === 0x260E
+		|| x === 0x260F
+		|| x === 0x261C
+		|| x === 0x261E
+		|| x === 0x2640
+		|| x === 0x2642
+		|| x === 0x2660
+		|| x === 0x2661
+		|| x >= 0x2663 && x <= 0x2665
+		|| x >= 0x2667 && x <= 0x266A
+		|| x === 0x266C
+		|| x === 0x266D
+		|| x === 0x266F
+		|| x === 0x269E
+		|| x === 0x269F
+		|| x === 0x26BF
+		|| x >= 0x26C6 && x <= 0x26CD
+		|| x >= 0x26CF && x <= 0x26D3
+		|| x >= 0x26D5 && x <= 0x26E1
+		|| x === 0x26E3
+		|| x === 0x26E8
+		|| x === 0x26E9
+		|| x >= 0x26EB && x <= 0x26F1
+		|| x === 0x26F4
+		|| x >= 0x26F6 && x <= 0x26F9
+		|| x === 0x26FB
+		|| x === 0x26FC
+		|| x === 0x26FE
+		|| x === 0x26FF
+		|| x === 0x273D
+		|| x >= 0x2776 && x <= 0x277F
+		|| x >= 0x2B56 && x <= 0x2B59
+		|| x >= 0x3248 && x <= 0x324F
+		|| x >= 0xE000 && x <= 0xF8FF
+		|| x >= 0xFE00 && x <= 0xFE0F
+		|| x === 0xFFFD
+		|| x >= 0x1F100 && x <= 0x1F10A
+		|| x >= 0x1F110 && x <= 0x1F12D
+		|| x >= 0x1F130 && x <= 0x1F169
+		|| x >= 0x1F170 && x <= 0x1F18D
+		|| x === 0x1F18F
+		|| x === 0x1F190
+		|| x >= 0x1F19B && x <= 0x1F1AC
+		|| x >= 0xE0100 && x <= 0xE01EF
+		|| x >= 0xF0000 && x <= 0xFFFFD
+		|| x >= 0x100000 && x <= 0x10FFFD;
+}
+
+function lookup_isFullWidth(x) {
+	return x === 0x3000
+		|| x >= 0xFF01 && x <= 0xFF60
+		|| x >= 0xFFE0 && x <= 0xFFE6;
+}
+
+function lookup_isWide(x) {
+	return x >= 0x1100 && x <= 0x115F
+		|| x === 0x231A
+		|| x === 0x231B
+		|| x === 0x2329
+		|| x === 0x232A
+		|| x >= 0x23E9 && x <= 0x23EC
+		|| x === 0x23F0
+		|| x === 0x23F3
+		|| x === 0x25FD
+		|| x === 0x25FE
+		|| x === 0x2614
+		|| x === 0x2615
+		|| x >= 0x2630 && x <= 0x2637
+		|| x >= 0x2648 && x <= 0x2653
+		|| x === 0x267F
+		|| x >= 0x268A && x <= 0x268F
+		|| x === 0x2693
+		|| x === 0x26A1
+		|| x === 0x26AA
+		|| x === 0x26AB
+		|| x === 0x26BD
+		|| x === 0x26BE
+		|| x === 0x26C4
+		|| x === 0x26C5
+		|| x === 0x26CE
+		|| x === 0x26D4
+		|| x === 0x26EA
+		|| x === 0x26F2
+		|| x === 0x26F3
+		|| x === 0x26F5
+		|| x === 0x26FA
+		|| x === 0x26FD
+		|| x === 0x2705
+		|| x === 0x270A
+		|| x === 0x270B
+		|| x === 0x2728
+		|| x === 0x274C
+		|| x === 0x274E
+		|| x >= 0x2753 && x <= 0x2755
+		|| x === 0x2757
+		|| x >= 0x2795 && x <= 0x2797
+		|| x === 0x27B0
+		|| x === 0x27BF
+		|| x === 0x2B1B
+		|| x === 0x2B1C
+		|| x === 0x2B50
+		|| x === 0x2B55
+		|| x >= 0x2E80 && x <= 0x2E99
+		|| x >= 0x2E9B && x <= 0x2EF3
+		|| x >= 0x2F00 && x <= 0x2FD5
+		|| x >= 0x2FF0 && x <= 0x2FFF
+		|| x >= 0x3001 && x <= 0x303E
+		|| x >= 0x3041 && x <= 0x3096
+		|| x >= 0x3099 && x <= 0x30FF
+		|| x >= 0x3105 && x <= 0x312F
+		|| x >= 0x3131 && x <= 0x318E
+		|| x >= 0x3190 && x <= 0x31E5
+		|| x >= 0x31EF && x <= 0x321E
+		|| x >= 0x3220 && x <= 0x3247
+		|| x >= 0x3250 && x <= 0xA48C
+		|| x >= 0xA490 && x <= 0xA4C6
+		|| x >= 0xA960 && x <= 0xA97C
+		|| x >= 0xAC00 && x <= 0xD7A3
+		|| x >= 0xF900 && x <= 0xFAFF
+		|| x >= 0xFE10 && x <= 0xFE19
+		|| x >= 0xFE30 && x <= 0xFE52
+		|| x >= 0xFE54 && x <= 0xFE66
+		|| x >= 0xFE68 && x <= 0xFE6B
+		|| x >= 0x16FE0 && x <= 0x16FE4
+		|| x === 0x16FF0
+		|| x === 0x16FF1
+		|| x >= 0x17000 && x <= 0x187F7
+		|| x >= 0x18800 && x <= 0x18CD5
+		|| x >= 0x18CFF && x <= 0x18D08
+		|| x >= 0x1AFF0 && x <= 0x1AFF3
+		|| x >= 0x1AFF5 && x <= 0x1AFFB
+		|| x === 0x1AFFD
+		|| x === 0x1AFFE
+		|| x >= 0x1B000 && x <= 0x1B122
+		|| x === 0x1B132
+		|| x >= 0x1B150 && x <= 0x1B152
+		|| x === 0x1B155
+		|| x >= 0x1B164 && x <= 0x1B167
+		|| x >= 0x1B170 && x <= 0x1B2FB
+		|| x >= 0x1D300 && x <= 0x1D356
+		|| x >= 0x1D360 && x <= 0x1D376
+		|| x === 0x1F004
+		|| x === 0x1F0CF
+		|| x === 0x1F18E
+		|| x >= 0x1F191 && x <= 0x1F19A
+		|| x >= 0x1F200 && x <= 0x1F202
+		|| x >= 0x1F210 && x <= 0x1F23B
+		|| x >= 0x1F240 && x <= 0x1F248
+		|| x === 0x1F250
+		|| x === 0x1F251
+		|| x >= 0x1F260 && x <= 0x1F265
+		|| x >= 0x1F300 && x <= 0x1F320
+		|| x >= 0x1F32D && x <= 0x1F335
+		|| x >= 0x1F337 && x <= 0x1F37C
+		|| x >= 0x1F37E && x <= 0x1F393
+		|| x >= 0x1F3A0 && x <= 0x1F3CA
+		|| x >= 0x1F3CF && x <= 0x1F3D3
+		|| x >= 0x1F3E0 && x <= 0x1F3F0
+		|| x === 0x1F3F4
+		|| x >= 0x1F3F8 && x <= 0x1F43E
+		|| x === 0x1F440
+		|| x >= 0x1F442 && x <= 0x1F4FC
+		|| x >= 0x1F4FF && x <= 0x1F53D
+		|| x >= 0x1F54B && x <= 0x1F54E
+		|| x >= 0x1F550 && x <= 0x1F567
+		|| x === 0x1F57A
+		|| x === 0x1F595
+		|| x === 0x1F596
+		|| x === 0x1F5A4
+		|| x >= 0x1F5FB && x <= 0x1F64F
+		|| x >= 0x1F680 && x <= 0x1F6C5
+		|| x === 0x1F6CC
+		|| x >= 0x1F6D0 && x <= 0x1F6D2
+		|| x >= 0x1F6D5 && x <= 0x1F6D7
+		|| x >= 0x1F6DC && x <= 0x1F6DF
+		|| x === 0x1F6EB
+		|| x === 0x1F6EC
+		|| x >= 0x1F6F4 && x <= 0x1F6FC
+		|| x >= 0x1F7E0 && x <= 0x1F7EB
+		|| x === 0x1F7F0
+		|| x >= 0x1F90C && x <= 0x1F93A
+		|| x >= 0x1F93C && x <= 0x1F945
+		|| x >= 0x1F947 && x <= 0x1F9FF
+		|| x >= 0x1FA70 && x <= 0x1FA7C
+		|| x >= 0x1FA80 && x <= 0x1FA89
+		|| x >= 0x1FA8F && x <= 0x1FAC6
+		|| x >= 0x1FACE && x <= 0x1FADC
+		|| x >= 0x1FADF && x <= 0x1FAE9
+		|| x >= 0x1FAF0 && x <= 0x1FAF8
+		|| x >= 0x20000 && x <= 0x2FFFD
+		|| x >= 0x30000 && x <= 0x3FFFD;
+}
+
+function lookup_getCategory(x) {
+	if (isAmbiguous(x)) return 'ambiguous';
+
+	if (lookup_isFullWidth(x)) return 'fullwidth';
+
+	if (
+		x === 0x20A9
+		|| x >= 0xFF61 && x <= 0xFFBE
+		|| x >= 0xFFC2 && x <= 0xFFC7
+		|| x >= 0xFFCA && x <= 0xFFCF
+		|| x >= 0xFFD2 && x <= 0xFFD7
+		|| x >= 0xFFDA && x <= 0xFFDC
+		|| x >= 0xFFE8 && x <= 0xFFEE
+	) {
+		return 'halfwidth';
+	}
+
+	if (
+		x >= 0x20 && x <= 0x7E
+		|| x === 0xA2
+		|| x === 0xA3
+		|| x === 0xA5
+		|| x === 0xA6
+		|| x === 0xAC
+		|| x === 0xAF
+		|| x >= 0x27E6 && x <= 0x27ED
+		|| x === 0x2985
+		|| x === 0x2986
+	) {
+		return 'narrow';
+	}
+
+	if (lookup_isWide(x)) return 'wide';
+
+	return 'neutral';
+}
 
 
-var fs = __nccwpck_require__(79896);
-var util = __nccwpck_require__(39023);
-var path = __nccwpck_require__(16928);
 
+;// CONCATENATED MODULE: ../../node_modules/get-east-asian-width/index.js
+
+
+function validate(codePoint) {
+	if (!Number.isSafeInteger(codePoint)) {
+		throw new TypeError(`Expected a code point, got \`${typeof codePoint}\`.`);
+	}
+}
+
+function eastAsianWidthType(codePoint) {
+	validate(codePoint);
+
+	return getCategory(codePoint);
+}
+
+function eastAsianWidth(codePoint, {ambiguousAsWide = false} = {}) {
+	validate(codePoint);
+
+	if (
+		lookup_isFullWidth(codePoint)
+		|| lookup_isWide(codePoint)
+		|| (ambiguousAsWide && isAmbiguous(codePoint))
+	) {
+		return 2;
+	}
+
+	return 1;
+}
+
+// For Prettier. This doesn't count "ambiguous" characters or check for valid input.
+// https://github.com/sindresorhus/get-east-asian-width/pull/6
+const _isNarrowWidth = codePoint => !(isFullWidth(codePoint) || isWide(codePoint));
+
+// EXTERNAL MODULE: ../../packages/generator-common/node_modules/emoji-regex/index.js
+var emoji_regex = __nccwpck_require__(13784);
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/string-width/index.js
+
+
+
+
+const segmenter = new Intl.Segmenter();
+
+const defaultIgnorableCodePointRegex = /^\p{Default_Ignorable_Code_Point}$/u;
+
+function stringWidth(string, options = {}) {
+	if (typeof string !== 'string' || string.length === 0) {
+		return 0;
+	}
+
+	const {
+		ambiguousIsNarrow = true,
+		countAnsiEscapeCodes = false,
+	} = options;
+
+	if (!countAnsiEscapeCodes) {
+		string = stripAnsi(string);
+	}
+
+	if (string.length === 0) {
+		return 0;
+	}
+
+	let width = 0;
+	const eastAsianWidthOptions = {ambiguousAsWide: !ambiguousIsNarrow};
+
+	for (const {segment: character} of segmenter.segment(string)) {
+		const codePoint = character.codePointAt(0);
+
+		// Ignore control characters
+		if (codePoint <= 0x1F || (codePoint >= 0x7F && codePoint <= 0x9F)) {
+			continue;
+		}
+
+		// Ignore zero-width characters
+		if (
+			(codePoint >= 0x20_0B && codePoint <= 0x20_0F) // Zero-width space, non-joiner, joiner, left-to-right mark, right-to-left mark
+			|| codePoint === 0xFE_FF // Zero-width no-break space
+		) {
+			continue;
+		}
+
+		// Ignore combining characters
+		if (
+			(codePoint >= 0x3_00 && codePoint <= 0x3_6F) // Combining diacritical marks
+			|| (codePoint >= 0x1A_B0 && codePoint <= 0x1A_FF) // Combining diacritical marks extended
+			|| (codePoint >= 0x1D_C0 && codePoint <= 0x1D_FF) // Combining diacritical marks supplement
+			|| (codePoint >= 0x20_D0 && codePoint <= 0x20_FF) // Combining diacritical marks for symbols
+			|| (codePoint >= 0xFE_20 && codePoint <= 0xFE_2F) // Combining half marks
+		) {
+			continue;
+		}
+
+		// Ignore surrogate pairs
+		if (codePoint >= 0xD8_00 && codePoint <= 0xDF_FF) {
+			continue;
+		}
+
+		// Ignore variation selectors
+		if (codePoint >= 0xFE_00 && codePoint <= 0xFE_0F) {
+			continue;
+		}
+
+		// This covers some of the above cases, but we still keep them for performance reasons.
+		if (defaultIgnorableCodePointRegex.test(character)) {
+			continue;
+		}
+
+		// TODO: Use `/\p{RGI_Emoji}/v` when targeting Node.js 20.
+		if (emoji_regex().test(character)) {
+			width += 2;
+			continue;
+		}
+
+		width += eastAsianWidth(codePoint, eastAsianWidthOptions);
+	}
+
+	return width;
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/ansi-styles/index.js
+const ANSI_BACKGROUND_OFFSET = 10;
+
+const wrapAnsi16 = (offset = 0) => code => `\u001B[${code + offset}m`;
+
+const wrapAnsi256 = (offset = 0) => code => `\u001B[${38 + offset};5;${code}m`;
+
+const wrapAnsi16m = (offset = 0) => (red, green, blue) => `\u001B[${38 + offset};2;${red};${green};${blue}m`;
+
+const styles = {
+	modifier: {
+		reset: [0, 0],
+		// 21 isn't widely supported and 22 does the same thing
+		bold: [1, 22],
+		dim: [2, 22],
+		italic: [3, 23],
+		underline: [4, 24],
+		overline: [53, 55],
+		inverse: [7, 27],
+		hidden: [8, 28],
+		strikethrough: [9, 29],
+	},
+	color: {
+		black: [30, 39],
+		red: [31, 39],
+		green: [32, 39],
+		yellow: [33, 39],
+		blue: [34, 39],
+		magenta: [35, 39],
+		cyan: [36, 39],
+		white: [37, 39],
+
+		// Bright color
+		blackBright: [90, 39],
+		gray: [90, 39], // Alias of `blackBright`
+		grey: [90, 39], // Alias of `blackBright`
+		redBright: [91, 39],
+		greenBright: [92, 39],
+		yellowBright: [93, 39],
+		blueBright: [94, 39],
+		magentaBright: [95, 39],
+		cyanBright: [96, 39],
+		whiteBright: [97, 39],
+	},
+	bgColor: {
+		bgBlack: [40, 49],
+		bgRed: [41, 49],
+		bgGreen: [42, 49],
+		bgYellow: [43, 49],
+		bgBlue: [44, 49],
+		bgMagenta: [45, 49],
+		bgCyan: [46, 49],
+		bgWhite: [47, 49],
+
+		// Bright color
+		bgBlackBright: [100, 49],
+		bgGray: [100, 49], // Alias of `bgBlackBright`
+		bgGrey: [100, 49], // Alias of `bgBlackBright`
+		bgRedBright: [101, 49],
+		bgGreenBright: [102, 49],
+		bgYellowBright: [103, 49],
+		bgBlueBright: [104, 49],
+		bgMagentaBright: [105, 49],
+		bgCyanBright: [106, 49],
+		bgWhiteBright: [107, 49],
+	},
+};
+
+const modifierNames = Object.keys(styles.modifier);
+const foregroundColorNames = Object.keys(styles.color);
+const backgroundColorNames = Object.keys(styles.bgColor);
+const colorNames = [...foregroundColorNames, ...backgroundColorNames];
+
+function assembleStyles() {
+	const codes = new Map();
+
+	for (const [groupName, group] of Object.entries(styles)) {
+		for (const [styleName, style] of Object.entries(group)) {
+			styles[styleName] = {
+				open: `\u001B[${style[0]}m`,
+				close: `\u001B[${style[1]}m`,
+			};
+
+			group[styleName] = styles[styleName];
+
+			codes.set(style[0], style[1]);
+		}
+
+		Object.defineProperty(styles, groupName, {
+			value: group,
+			enumerable: false,
+		});
+	}
+
+	Object.defineProperty(styles, 'codes', {
+		value: codes,
+		enumerable: false,
+	});
+
+	styles.color.close = '\u001B[39m';
+	styles.bgColor.close = '\u001B[49m';
+
+	styles.color.ansi = wrapAnsi16();
+	styles.color.ansi256 = wrapAnsi256();
+	styles.color.ansi16m = wrapAnsi16m();
+	styles.bgColor.ansi = wrapAnsi16(ANSI_BACKGROUND_OFFSET);
+	styles.bgColor.ansi256 = wrapAnsi256(ANSI_BACKGROUND_OFFSET);
+	styles.bgColor.ansi16m = wrapAnsi16m(ANSI_BACKGROUND_OFFSET);
+
+	// From https://github.com/Qix-/color-convert/blob/3f0e0d4e92e235796ccb17f6e85c72094a651f49/conversions.js
+	Object.defineProperties(styles, {
+		rgbToAnsi256: {
+			value: (red, green, blue) => {
+				// We use the extended greyscale palette here, with the exception of
+				// black and white. normal palette only has 4 greyscale shades.
+				if (red === green && green === blue) {
+					if (red < 8) {
+						return 16;
+					}
+
+					if (red > 248) {
+						return 231;
+					}
+
+					return Math.round(((red - 8) / 247) * 24) + 232;
+				}
+
+				return 16
+					+ (36 * Math.round(red / 255 * 5))
+					+ (6 * Math.round(green / 255 * 5))
+					+ Math.round(blue / 255 * 5);
+			},
+			enumerable: false,
+		},
+		hexToRgb: {
+			value: hex => {
+				const matches = /[a-f\d]{6}|[a-f\d]{3}/i.exec(hex.toString(16));
+				if (!matches) {
+					return [0, 0, 0];
+				}
+
+				let [colorString] = matches;
+
+				if (colorString.length === 3) {
+					colorString = [...colorString].map(character => character + character).join('');
+				}
+
+				const integer = Number.parseInt(colorString, 16);
+
+				return [
+					/* eslint-disable no-bitwise */
+					(integer >> 16) & 0xFF,
+					(integer >> 8) & 0xFF,
+					integer & 0xFF,
+					/* eslint-enable no-bitwise */
+				];
+			},
+			enumerable: false,
+		},
+		hexToAnsi256: {
+			value: hex => styles.rgbToAnsi256(...styles.hexToRgb(hex)),
+			enumerable: false,
+		},
+		ansi256ToAnsi: {
+			value: code => {
+				if (code < 8) {
+					return 30 + code;
+				}
+
+				if (code < 16) {
+					return 90 + (code - 8);
+				}
+
+				let red;
+				let green;
+				let blue;
+
+				if (code >= 232) {
+					red = (((code - 232) * 10) + 8) / 255;
+					green = red;
+					blue = red;
+				} else {
+					code -= 16;
+
+					const remainder = code % 36;
+
+					red = Math.floor(code / 36) / 5;
+					green = Math.floor(remainder / 6) / 5;
+					blue = (remainder % 6) / 5;
+				}
+
+				const value = Math.max(red, green, blue) * 2;
+
+				if (value === 0) {
+					return 30;
+				}
+
+				// eslint-disable-next-line no-bitwise
+				let result = 30 + ((Math.round(blue) << 2) | (Math.round(green) << 1) | Math.round(red));
+
+				if (value === 2) {
+					result += 60;
+				}
+
+				return result;
+			},
+			enumerable: false,
+		},
+		rgbToAnsi: {
+			value: (red, green, blue) => styles.ansi256ToAnsi(styles.rgbToAnsi256(red, green, blue)),
+			enumerable: false,
+		},
+		hexToAnsi: {
+			value: hex => styles.ansi256ToAnsi(styles.hexToAnsi256(hex)),
+			enumerable: false,
+		},
+	});
+
+	return styles;
+}
+
+const ansiStyles = assembleStyles();
+
+/* harmony default export */ const ansi_styles = (ansiStyles);
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/wrap-ansi/index.js
+
+
+
+
+const ESCAPES = new Set([
+	'\u001B',
+	'\u009B',
+]);
+
+const END_CODE = 39;
+const ANSI_ESCAPE_BELL = '\u0007';
+const ANSI_CSI = '[';
+const ANSI_OSC = ']';
+const ANSI_SGR_TERMINATOR = 'm';
+const ANSI_ESCAPE_LINK = `${ANSI_OSC}8;;`;
+
+const wrapAnsiCode = code => `${ESCAPES.values().next().value}${ANSI_CSI}${code}${ANSI_SGR_TERMINATOR}`;
+const wrapAnsiHyperlink = url => `${ESCAPES.values().next().value}${ANSI_ESCAPE_LINK}${url}${ANSI_ESCAPE_BELL}`;
+
+// Calculate the length of words split on ' ', ignoring
+// the extra characters added by ansi escape codes
+const wordLengths = string => string.split(' ').map(character => stringWidth(character));
+
+// Wrap a long word across multiple rows
+// Ansi escape codes do not count towards length
+const wrapWord = (rows, word, columns) => {
+	const characters = [...word];
+
+	let isInsideEscape = false;
+	let isInsideLinkEscape = false;
+	let visible = stringWidth(stripAnsi(rows.at(-1)));
+
+	for (const [index, character] of characters.entries()) {
+		const characterLength = stringWidth(character);
+
+		if (visible + characterLength <= columns) {
+			rows[rows.length - 1] += character;
+		} else {
+			rows.push(character);
+			visible = 0;
+		}
+
+		if (ESCAPES.has(character)) {
+			isInsideEscape = true;
+
+			const ansiEscapeLinkCandidate = characters.slice(index + 1, index + 1 + ANSI_ESCAPE_LINK.length).join('');
+			isInsideLinkEscape = ansiEscapeLinkCandidate === ANSI_ESCAPE_LINK;
+		}
+
+		if (isInsideEscape) {
+			if (isInsideLinkEscape) {
+				if (character === ANSI_ESCAPE_BELL) {
+					isInsideEscape = false;
+					isInsideLinkEscape = false;
+				}
+			} else if (character === ANSI_SGR_TERMINATOR) {
+				isInsideEscape = false;
+			}
+
+			continue;
+		}
+
+		visible += characterLength;
+
+		if (visible === columns && index < characters.length - 1) {
+			rows.push('');
+			visible = 0;
+		}
+	}
+
+	// It's possible that the last row we copy over is only
+	// ansi escape characters, handle this edge-case
+	if (!visible && rows.at(-1).length > 0 && rows.length > 1) {
+		rows[rows.length - 2] += rows.pop();
+	}
+};
+
+// Trims spaces from a string ignoring invisible sequences
+const stringVisibleTrimSpacesRight = string => {
+	const words = string.split(' ');
+	let last = words.length;
+
+	while (last > 0) {
+		if (stringWidth(words[last - 1]) > 0) {
+			break;
+		}
+
+		last--;
+	}
+
+	if (last === words.length) {
+		return string;
+	}
+
+	return words.slice(0, last).join(' ') + words.slice(last).join('');
+};
+
+// The wrap-ansi module can be invoked in either 'hard' or 'soft' wrap mode.
+//
+// 'hard' will never allow a string to take up more than columns characters.
+//
+// 'soft' allows long words to expand past the column length.
+const exec = (string, columns, options = {}) => {
+	if (options.trim !== false && string.trim() === '') {
+		return '';
+	}
+
+	let returnValue = '';
+	let escapeCode;
+	let escapeUrl;
+
+	const lengths = wordLengths(string);
+	let rows = [''];
+
+	for (const [index, word] of string.split(' ').entries()) {
+		if (options.trim !== false) {
+			rows[rows.length - 1] = rows.at(-1).trimStart();
+		}
+
+		let rowLength = stringWidth(rows.at(-1));
+
+		if (index !== 0) {
+			if (rowLength >= columns && (options.wordWrap === false || options.trim === false)) {
+				// If we start with a new word but the current row length equals the length of the columns, add a new row
+				rows.push('');
+				rowLength = 0;
+			}
+
+			if (rowLength > 0 || options.trim === false) {
+				rows[rows.length - 1] += ' ';
+				rowLength++;
+			}
+		}
+
+		// In 'hard' wrap mode, the length of a line is never allowed to extend past 'columns'
+		if (options.hard && lengths[index] > columns) {
+			const remainingColumns = (columns - rowLength);
+			const breaksStartingThisLine = 1 + Math.floor((lengths[index] - remainingColumns - 1) / columns);
+			const breaksStartingNextLine = Math.floor((lengths[index] - 1) / columns);
+			if (breaksStartingNextLine < breaksStartingThisLine) {
+				rows.push('');
+			}
+
+			wrapWord(rows, word, columns);
+			continue;
+		}
+
+		if (rowLength + lengths[index] > columns && rowLength > 0 && lengths[index] > 0) {
+			if (options.wordWrap === false && rowLength < columns) {
+				wrapWord(rows, word, columns);
+				continue;
+			}
+
+			rows.push('');
+		}
+
+		if (rowLength + lengths[index] > columns && options.wordWrap === false) {
+			wrapWord(rows, word, columns);
+			continue;
+		}
+
+		rows[rows.length - 1] += word;
+	}
+
+	if (options.trim !== false) {
+		rows = rows.map(row => stringVisibleTrimSpacesRight(row));
+	}
+
+	const preString = rows.join('\n');
+	const pre = [...preString];
+
+	// We need to keep a separate index as `String#slice()` works on Unicode code units, while `pre` is an array of codepoints.
+	let preStringIndex = 0;
+
+	for (const [index, character] of pre.entries()) {
+		returnValue += character;
+
+		if (ESCAPES.has(character)) {
+			const {groups} = new RegExp(`(?:\\${ANSI_CSI}(?<code>\\d+)m|\\${ANSI_ESCAPE_LINK}(?<uri>.*)${ANSI_ESCAPE_BELL})`).exec(preString.slice(preStringIndex)) || {groups: {}};
+			if (groups.code !== undefined) {
+				const code = Number.parseFloat(groups.code);
+				escapeCode = code === END_CODE ? undefined : code;
+			} else if (groups.uri !== undefined) {
+				escapeUrl = groups.uri.length === 0 ? undefined : groups.uri;
+			}
+		}
+
+		const code = ansi_styles.codes.get(Number(escapeCode));
+
+		if (pre[index + 1] === '\n') {
+			if (escapeUrl) {
+				returnValue += wrapAnsiHyperlink('');
+			}
+
+			if (escapeCode && code) {
+				returnValue += wrapAnsiCode(code);
+			}
+		} else if (character === '\n') {
+			if (escapeCode && code) {
+				returnValue += wrapAnsiCode(escapeCode);
+			}
+
+			if (escapeUrl) {
+				returnValue += wrapAnsiHyperlink(escapeUrl);
+			}
+		}
+
+		preStringIndex += character.length;
+	}
+
+	return returnValue;
+};
+
+// For each newline, invoke the method separately
+function wrapAnsi(string, columns, options) {
+	return String(string)
+		.normalize()
+		.replaceAll('\r\n', '\n')
+		.split('\n')
+		.map(line => exec(line, columns, options))
+		.join('\n');
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/cliui/index.mjs
+// Bootstrap cliui with CommonJS dependencies:
+
+
+
+
+
+function ui (opts) {
+  return cliui(opts, {
+    stringWidth: stringWidth,
+    stripAnsi: stripAnsi,
+    wrap: wrapAnsi
+  })
+}
+
+
+
+// EXTERNAL MODULE: external "path"
+var external_path_ = __nccwpck_require__(16928);
+// EXTERNAL MODULE: external "fs"
+var external_fs_ = __nccwpck_require__(79896);
+;// CONCATENATED MODULE: ../../node_modules/escalade/sync/index.mjs
+
+
+
+/* harmony default export */ function sync(start, callback) {
+	let dir = (0,external_path_.resolve)('.', start);
+	let tmp, stats = (0,external_fs_.statSync)(dir);
+
+	if (!stats.isDirectory()) {
+		dir = (0,external_path_.dirname)(dir);
+	}
+
+	while (true) {
+		tmp = callback(dir, (0,external_fs_.readdirSync)(dir));
+		if (tmp) return (0,external_path_.resolve)(dir, tmp);
+		dir = (0,external_path_.dirname)(tmp = dir);
+		if (tmp === dir) break;
+	}
+}
+
+// EXTERNAL MODULE: external "util"
+var external_util_ = __nccwpck_require__(39023);
+// EXTERNAL MODULE: external "url"
+var external_url_ = __nccwpck_require__(87016);
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs-parser/build/lib/string-utils.js
+/**
+ * @license
+ * Copyright (c) 2016, Contributors
+ * SPDX-License-Identifier: ISC
+ */
+function camelCase(str) {
+    // Handle the case where an argument is provided as camel case, e.g., fooBar.
+    // by ensuring that the string isn't already mixed case:
+    const isCamelCase = str !== str.toLowerCase() && str !== str.toUpperCase();
+    if (!isCamelCase) {
+        str = str.toLowerCase();
+    }
+    if (str.indexOf('-') === -1 && str.indexOf('_') === -1) {
+        return str;
+    }
+    else {
+        let camelcase = '';
+        let nextChrUpper = false;
+        const leadingHyphens = str.match(/^-+/);
+        for (let i = leadingHyphens ? leadingHyphens[0].length : 0; i < str.length; i++) {
+            let chr = str.charAt(i);
+            if (nextChrUpper) {
+                nextChrUpper = false;
+                chr = chr.toUpperCase();
+            }
+            if (i !== 0 && (chr === '-' || chr === '_')) {
+                nextChrUpper = true;
+            }
+            else if (chr !== '-' && chr !== '_') {
+                camelcase += chr;
+            }
+        }
+        return camelcase;
+    }
+}
+function decamelize(str, joinString) {
+    const lowercase = str.toLowerCase();
+    joinString = joinString || '-';
+    let notCamelcase = '';
+    for (let i = 0; i < str.length; i++) {
+        const chrLower = lowercase.charAt(i);
+        const chrString = str.charAt(i);
+        if (chrLower !== chrString && i > 0) {
+            notCamelcase += `${joinString}${lowercase.charAt(i)}`;
+        }
+        else {
+            notCamelcase += chrString;
+        }
+    }
+    return notCamelcase;
+}
+function looksLikeNumber(x) {
+    if (x === null || x === undefined)
+        return false;
+    // if loaded from config, may already be a number.
+    if (typeof x === 'number')
+        return true;
+    // hexadecimal.
+    if (/^0x[0-9a-f]+$/i.test(x))
+        return true;
+    // don't treat 0123 as a number; as it drops the leading '0'.
+    if (/^0[^.]/.test(x))
+        return false;
+    return /^[-]?(?:\d+(?:\.\d*)?|\.\d+)(e[-+]?\d+)?$/.test(x);
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs-parser/build/lib/tokenize-arg-string.js
+/**
+ * @license
+ * Copyright (c) 2016, Contributors
+ * SPDX-License-Identifier: ISC
+ */
+// take an un-split argv string and tokenize it.
+function tokenizeArgString(argString) {
+    if (Array.isArray(argString)) {
+        return argString.map(e => typeof e !== 'string' ? e + '' : e);
+    }
+    argString = argString.trim();
+    let i = 0;
+    let prevC = null;
+    let c = null;
+    let opening = null;
+    const args = [];
+    for (let ii = 0; ii < argString.length; ii++) {
+        prevC = c;
+        c = argString.charAt(ii);
+        // split on spaces unless we're in quotes.
+        if (c === ' ' && !opening) {
+            if (!(prevC === ' ')) {
+                i++;
+            }
+            continue;
+        }
+        // don't split the string if we're in matching
+        // opening or closing single and double quotes.
+        if (c === opening) {
+            opening = null;
+        }
+        else if ((c === "'" || c === '"') && !opening) {
+            opening = c;
+        }
+        if (!args[i])
+            args[i] = '';
+        args[i] += c;
+    }
+    return args;
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs-parser/build/lib/yargs-parser-types.js
+/**
+ * @license
+ * Copyright (c) 2016, Contributors
+ * SPDX-License-Identifier: ISC
+ */
+var DefaultValuesForTypeKey;
+(function (DefaultValuesForTypeKey) {
+    DefaultValuesForTypeKey["BOOLEAN"] = "boolean";
+    DefaultValuesForTypeKey["STRING"] = "string";
+    DefaultValuesForTypeKey["NUMBER"] = "number";
+    DefaultValuesForTypeKey["ARRAY"] = "array";
+})(DefaultValuesForTypeKey || (DefaultValuesForTypeKey = {}));
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs-parser/build/lib/yargs-parser.js
+/**
+ * @license
+ * Copyright (c) 2016, Contributors
+ * SPDX-License-Identifier: ISC
+ */
+/* eslint-disable prefer-arrow-callback */
+
+
+
+let yargs_parser_mixin;
+class YargsParser {
+    constructor(_mixin) {
+        yargs_parser_mixin = _mixin;
+    }
+    parse(argsInput, options) {
+        const opts = Object.assign({
+            alias: undefined,
+            array: undefined,
+            boolean: undefined,
+            config: undefined,
+            configObjects: undefined,
+            configuration: undefined,
+            coerce: undefined,
+            count: undefined,
+            default: undefined,
+            envPrefix: undefined,
+            narg: undefined,
+            normalize: undefined,
+            string: undefined,
+            number: undefined,
+            __: undefined,
+            key: undefined
+        }, options);
+        // allow a string argument to be passed in rather
+        // than an argv array.
+        const args = tokenizeArgString(argsInput);
+        // tokenizeArgString adds extra quotes to args if argsInput is a string
+        // only strip those extra quotes in processValue if argsInput is a string
+        const inputIsString = typeof argsInput === 'string';
+        // aliases might have transitive relationships, normalize this.
+        const aliases = combineAliases(Object.assign(Object.create(null), opts.alias));
+        const configuration = Object.assign({
+            'boolean-negation': true,
+            'camel-case-expansion': true,
+            'combine-arrays': false,
+            'dot-notation': true,
+            'duplicate-arguments-array': true,
+            'flatten-duplicate-arrays': true,
+            'greedy-arrays': true,
+            'halt-at-non-option': false,
+            'nargs-eats-options': false,
+            'negation-prefix': 'no-',
+            'parse-numbers': true,
+            'parse-positional-numbers': true,
+            'populate--': false,
+            'set-placeholder-key': false,
+            'short-option-groups': true,
+            'strip-aliased': false,
+            'strip-dashed': false,
+            'unknown-options-as-args': false
+        }, opts.configuration);
+        const defaults = Object.assign(Object.create(null), opts.default);
+        const configObjects = opts.configObjects || [];
+        const envPrefix = opts.envPrefix;
+        const notFlagsOption = configuration['populate--'];
+        const notFlagsArgv = notFlagsOption ? '--' : '_';
+        const newAliases = Object.create(null);
+        const defaulted = Object.create(null);
+        // allow a i18n handler to be passed in, default to a fake one (util.format).
+        const __ = opts.__ || yargs_parser_mixin.format;
+        const flags = {
+            aliases: Object.create(null),
+            arrays: Object.create(null),
+            bools: Object.create(null),
+            strings: Object.create(null),
+            numbers: Object.create(null),
+            counts: Object.create(null),
+            normalize: Object.create(null),
+            configs: Object.create(null),
+            nargs: Object.create(null),
+            coercions: Object.create(null),
+            keys: []
+        };
+        const negative = /^-([0-9]+(\.[0-9]+)?|\.[0-9]+)$/;
+        const negatedBoolean = new RegExp('^--' + configuration['negation-prefix'] + '(.+)');
+        [].concat(opts.array || []).filter(Boolean).forEach(function (opt) {
+            const key = typeof opt === 'object' ? opt.key : opt;
+            // assign to flags[bools|strings|numbers]
+            const assignment = Object.keys(opt).map(function (key) {
+                const arrayFlagKeys = {
+                    boolean: 'bools',
+                    string: 'strings',
+                    number: 'numbers'
+                };
+                return arrayFlagKeys[key];
+            }).filter(Boolean).pop();
+            // assign key to be coerced
+            if (assignment) {
+                flags[assignment][key] = true;
+            }
+            flags.arrays[key] = true;
+            flags.keys.push(key);
+        });
+        [].concat(opts.boolean || []).filter(Boolean).forEach(function (key) {
+            flags.bools[key] = true;
+            flags.keys.push(key);
+        });
+        [].concat(opts.string || []).filter(Boolean).forEach(function (key) {
+            flags.strings[key] = true;
+            flags.keys.push(key);
+        });
+        [].concat(opts.number || []).filter(Boolean).forEach(function (key) {
+            flags.numbers[key] = true;
+            flags.keys.push(key);
+        });
+        [].concat(opts.count || []).filter(Boolean).forEach(function (key) {
+            flags.counts[key] = true;
+            flags.keys.push(key);
+        });
+        [].concat(opts.normalize || []).filter(Boolean).forEach(function (key) {
+            flags.normalize[key] = true;
+            flags.keys.push(key);
+        });
+        if (typeof opts.narg === 'object') {
+            Object.entries(opts.narg).forEach(([key, value]) => {
+                if (typeof value === 'number') {
+                    flags.nargs[key] = value;
+                    flags.keys.push(key);
+                }
+            });
+        }
+        if (typeof opts.coerce === 'object') {
+            Object.entries(opts.coerce).forEach(([key, value]) => {
+                if (typeof value === 'function') {
+                    flags.coercions[key] = value;
+                    flags.keys.push(key);
+                }
+            });
+        }
+        if (typeof opts.config !== 'undefined') {
+            if (Array.isArray(opts.config) || typeof opts.config === 'string') {
+                ;
+                [].concat(opts.config).filter(Boolean).forEach(function (key) {
+                    flags.configs[key] = true;
+                });
+            }
+            else if (typeof opts.config === 'object') {
+                Object.entries(opts.config).forEach(([key, value]) => {
+                    if (typeof value === 'boolean' || typeof value === 'function') {
+                        flags.configs[key] = value;
+                    }
+                });
+            }
+        }
+        // create a lookup table that takes into account all
+        // combinations of aliases: {f: ['foo'], foo: ['f']}
+        extendAliases(opts.key, aliases, opts.default, flags.arrays);
+        // apply default values to all aliases.
+        Object.keys(defaults).forEach(function (key) {
+            (flags.aliases[key] || []).forEach(function (alias) {
+                defaults[alias] = defaults[key];
+            });
+        });
+        let error = null;
+        checkConfiguration();
+        let notFlags = [];
+        const argv = Object.assign(Object.create(null), { _: [] });
+        // TODO(bcoe): for the first pass at removing object prototype  we didn't
+        // remove all prototypes from objects returned by this API, we might want
+        // to gradually move towards doing so.
+        const argvReturn = {};
+        for (let i = 0; i < args.length; i++) {
+            const arg = args[i];
+            const truncatedArg = arg.replace(/^-{3,}/, '---');
+            let broken;
+            let key;
+            let letters;
+            let m;
+            let next;
+            let value;
+            // any unknown option (except for end-of-options, "--")
+            if (arg !== '--' && /^-/.test(arg) && isUnknownOptionAsArg(arg)) {
+                pushPositional(arg);
+                // ---, ---=, ----, etc,
+            }
+            else if (truncatedArg.match(/^---+(=|$)/)) {
+                // options without key name are invalid.
+                pushPositional(arg);
+                continue;
+                // -- separated by =
+            }
+            else if (arg.match(/^--.+=/) || (!configuration['short-option-groups'] && arg.match(/^-.+=/))) {
+                // Using [\s\S] instead of . because js doesn't support the
+                // 'dotall' regex modifier. See:
+                // http://stackoverflow.com/a/1068308/13216
+                m = arg.match(/^--?([^=]+)=([\s\S]*)$/);
+                // arrays format = '--f=a b c'
+                if (m !== null && Array.isArray(m) && m.length >= 3) {
+                    if (checkAllAliases(m[1], flags.arrays)) {
+                        i = eatArray(i, m[1], args, m[2]);
+                    }
+                    else if (checkAllAliases(m[1], flags.nargs) !== false) {
+                        // nargs format = '--f=monkey washing cat'
+                        i = eatNargs(i, m[1], args, m[2]);
+                    }
+                    else {
+                        setArg(m[1], m[2], true);
+                    }
+                }
+            }
+            else if (arg.match(negatedBoolean) && configuration['boolean-negation']) {
+                m = arg.match(negatedBoolean);
+                if (m !== null && Array.isArray(m) && m.length >= 2) {
+                    key = m[1];
+                    setArg(key, checkAllAliases(key, flags.arrays) ? [false] : false);
+                }
+                // -- separated by space.
+            }
+            else if (arg.match(/^--.+/) || (!configuration['short-option-groups'] && arg.match(/^-[^-]+/))) {
+                m = arg.match(/^--?(.+)/);
+                if (m !== null && Array.isArray(m) && m.length >= 2) {
+                    key = m[1];
+                    if (checkAllAliases(key, flags.arrays)) {
+                        // array format = '--foo a b c'
+                        i = eatArray(i, key, args);
+                    }
+                    else if (checkAllAliases(key, flags.nargs) !== false) {
+                        // nargs format = '--foo a b c'
+                        // should be truthy even if: flags.nargs[key] === 0
+                        i = eatNargs(i, key, args);
+                    }
+                    else {
+                        next = args[i + 1];
+                        if (next !== undefined && (!next.match(/^-/) ||
+                            next.match(negative)) &&
+                            !checkAllAliases(key, flags.bools) &&
+                            !checkAllAliases(key, flags.counts)) {
+                            setArg(key, next);
+                            i++;
+                        }
+                        else if (/^(true|false)$/.test(next)) {
+                            setArg(key, next);
+                            i++;
+                        }
+                        else {
+                            setArg(key, defaultValue(key));
+                        }
+                    }
+                }
+                // dot-notation flag separated by '='.
+            }
+            else if (arg.match(/^-.\..+=/)) {
+                m = arg.match(/^-([^=]+)=([\s\S]*)$/);
+                if (m !== null && Array.isArray(m) && m.length >= 3) {
+                    setArg(m[1], m[2]);
+                }
+                // dot-notation flag separated by space.
+            }
+            else if (arg.match(/^-.\..+/) && !arg.match(negative)) {
+                next = args[i + 1];
+                m = arg.match(/^-(.\..+)/);
+                if (m !== null && Array.isArray(m) && m.length >= 2) {
+                    key = m[1];
+                    if (next !== undefined && !next.match(/^-/) &&
+                        !checkAllAliases(key, flags.bools) &&
+                        !checkAllAliases(key, flags.counts)) {
+                        setArg(key, next);
+                        i++;
+                    }
+                    else {
+                        setArg(key, defaultValue(key));
+                    }
+                }
+            }
+            else if (arg.match(/^-[^-]+/) && !arg.match(negative)) {
+                letters = arg.slice(1, -1).split('');
+                broken = false;
+                for (let j = 0; j < letters.length; j++) {
+                    next = arg.slice(j + 2);
+                    if (letters[j + 1] && letters[j + 1] === '=') {
+                        value = arg.slice(j + 3);
+                        key = letters[j];
+                        if (checkAllAliases(key, flags.arrays)) {
+                            // array format = '-f=a b c'
+                            i = eatArray(i, key, args, value);
+                        }
+                        else if (checkAllAliases(key, flags.nargs) !== false) {
+                            // nargs format = '-f=monkey washing cat'
+                            i = eatNargs(i, key, args, value);
+                        }
+                        else {
+                            setArg(key, value);
+                        }
+                        broken = true;
+                        break;
+                    }
+                    if (next === '-') {
+                        setArg(letters[j], next);
+                        continue;
+                    }
+                    // current letter is an alphabetic character and next value is a number
+                    if (/[A-Za-z]/.test(letters[j]) &&
+                        /^-?\d+(\.\d*)?(e-?\d+)?$/.test(next) &&
+                        checkAllAliases(next, flags.bools) === false) {
+                        setArg(letters[j], next);
+                        broken = true;
+                        break;
+                    }
+                    if (letters[j + 1] && letters[j + 1].match(/\W/)) {
+                        setArg(letters[j], next);
+                        broken = true;
+                        break;
+                    }
+                    else {
+                        setArg(letters[j], defaultValue(letters[j]));
+                    }
+                }
+                key = arg.slice(-1)[0];
+                if (!broken && key !== '-') {
+                    if (checkAllAliases(key, flags.arrays)) {
+                        // array format = '-f a b c'
+                        i = eatArray(i, key, args);
+                    }
+                    else if (checkAllAliases(key, flags.nargs) !== false) {
+                        // nargs format = '-f a b c'
+                        // should be truthy even if: flags.nargs[key] === 0
+                        i = eatNargs(i, key, args);
+                    }
+                    else {
+                        next = args[i + 1];
+                        if (next !== undefined && (!/^(-|--)[^-]/.test(next) ||
+                            next.match(negative)) &&
+                            !checkAllAliases(key, flags.bools) &&
+                            !checkAllAliases(key, flags.counts)) {
+                            setArg(key, next);
+                            i++;
+                        }
+                        else if (/^(true|false)$/.test(next)) {
+                            setArg(key, next);
+                            i++;
+                        }
+                        else {
+                            setArg(key, defaultValue(key));
+                        }
+                    }
+                }
+            }
+            else if (arg.match(/^-[0-9]$/) &&
+                arg.match(negative) &&
+                checkAllAliases(arg.slice(1), flags.bools)) {
+                // single-digit boolean alias, e.g: xargs -0
+                key = arg.slice(1);
+                setArg(key, defaultValue(key));
+            }
+            else if (arg === '--') {
+                notFlags = args.slice(i + 1);
+                break;
+            }
+            else if (configuration['halt-at-non-option']) {
+                notFlags = args.slice(i);
+                break;
+            }
+            else {
+                pushPositional(arg);
+            }
+        }
+        // order of precedence:
+        // 1. command line arg
+        // 2. value from env var
+        // 3. value from config file
+        // 4. value from config objects
+        // 5. configured default value
+        applyEnvVars(argv, true); // special case: check env vars that point to config file
+        applyEnvVars(argv, false);
+        setConfig(argv);
+        setConfigObjects();
+        applyDefaultsAndAliases(argv, flags.aliases, defaults, true);
+        applyCoercions(argv);
+        if (configuration['set-placeholder-key'])
+            setPlaceholderKeys(argv);
+        // for any counts either not in args or without an explicit default, set to 0
+        Object.keys(flags.counts).forEach(function (key) {
+            if (!hasKey(argv, key.split('.')))
+                setArg(key, 0);
+        });
+        // '--' defaults to undefined.
+        if (notFlagsOption && notFlags.length)
+            argv[notFlagsArgv] = [];
+        notFlags.forEach(function (key) {
+            argv[notFlagsArgv].push(key);
+        });
+        if (configuration['camel-case-expansion'] && configuration['strip-dashed']) {
+            Object.keys(argv).filter(key => key !== '--' && key.includes('-')).forEach(key => {
+                delete argv[key];
+            });
+        }
+        if (configuration['strip-aliased']) {
+            ;
+            [].concat(...Object.keys(aliases).map(k => aliases[k])).forEach(alias => {
+                if (configuration['camel-case-expansion'] && alias.includes('-')) {
+                    delete argv[alias.split('.').map(prop => camelCase(prop)).join('.')];
+                }
+                delete argv[alias];
+            });
+        }
+        // Push argument into positional array, applying numeric coercion:
+        function pushPositional(arg) {
+            const maybeCoercedNumber = maybeCoerceNumber('_', arg);
+            if (typeof maybeCoercedNumber === 'string' || typeof maybeCoercedNumber === 'number') {
+                argv._.push(maybeCoercedNumber);
+            }
+        }
+        // how many arguments should we consume, based
+        // on the nargs option?
+        function eatNargs(i, key, args, argAfterEqualSign) {
+            let ii;
+            let toEat = checkAllAliases(key, flags.nargs);
+            // NaN has a special meaning for the array type, indicating that one or
+            // more values are expected.
+            toEat = typeof toEat !== 'number' || isNaN(toEat) ? 1 : toEat;
+            if (toEat === 0) {
+                if (!isUndefined(argAfterEqualSign)) {
+                    error = Error(__('Argument unexpected for: %s', key));
+                }
+                setArg(key, defaultValue(key));
+                return i;
+            }
+            let available = isUndefined(argAfterEqualSign) ? 0 : 1;
+            if (configuration['nargs-eats-options']) {
+                // classic behavior, yargs eats positional and dash arguments.
+                if (args.length - (i + 1) + available < toEat) {
+                    error = Error(__('Not enough arguments following: %s', key));
+                }
+                available = toEat;
+            }
+            else {
+                // nargs will not consume flag arguments, e.g., -abc, --foo,
+                // and terminates when one is observed.
+                for (ii = i + 1; ii < args.length; ii++) {
+                    if (!args[ii].match(/^-[^0-9]/) || args[ii].match(negative) || isUnknownOptionAsArg(args[ii]))
+                        available++;
+                    else
+                        break;
+                }
+                if (available < toEat)
+                    error = Error(__('Not enough arguments following: %s', key));
+            }
+            let consumed = Math.min(available, toEat);
+            if (!isUndefined(argAfterEqualSign) && consumed > 0) {
+                setArg(key, argAfterEqualSign);
+                consumed--;
+            }
+            for (ii = i + 1; ii < (consumed + i + 1); ii++) {
+                setArg(key, args[ii]);
+            }
+            return (i + consumed);
+        }
+        // if an option is an array, eat all non-hyphenated arguments
+        // following it... YUM!
+        // e.g., --foo apple banana cat becomes ["apple", "banana", "cat"]
+        function eatArray(i, key, args, argAfterEqualSign) {
+            let argsToSet = [];
+            let next = argAfterEqualSign || args[i + 1];
+            // If both array and nargs are configured, enforce the nargs count:
+            const nargsCount = checkAllAliases(key, flags.nargs);
+            if (checkAllAliases(key, flags.bools) && !(/^(true|false)$/.test(next))) {
+                argsToSet.push(true);
+            }
+            else if (isUndefined(next) ||
+                (isUndefined(argAfterEqualSign) && /^-/.test(next) && !negative.test(next) && !isUnknownOptionAsArg(next))) {
+                // for keys without value ==> argsToSet remains an empty []
+                // set user default value, if available
+                if (defaults[key] !== undefined) {
+                    const defVal = defaults[key];
+                    argsToSet = Array.isArray(defVal) ? defVal : [defVal];
+                }
+            }
+            else {
+                // value in --option=value is eaten as is
+                if (!isUndefined(argAfterEqualSign)) {
+                    argsToSet.push(processValue(key, argAfterEqualSign, true));
+                }
+                for (let ii = i + 1; ii < args.length; ii++) {
+                    if ((!configuration['greedy-arrays'] && argsToSet.length > 0) ||
+                        (nargsCount && typeof nargsCount === 'number' && argsToSet.length >= nargsCount))
+                        break;
+                    next = args[ii];
+                    if (/^-/.test(next) && !negative.test(next) && !isUnknownOptionAsArg(next))
+                        break;
+                    i = ii;
+                    argsToSet.push(processValue(key, next, inputIsString));
+                }
+            }
+            // If both array and nargs are configured, create an error if less than
+            // nargs positionals were found. NaN has special meaning, indicating
+            // that at least one value is required (more are okay).
+            if (typeof nargsCount === 'number' && ((nargsCount && argsToSet.length < nargsCount) ||
+                (isNaN(nargsCount) && argsToSet.length === 0))) {
+                error = Error(__('Not enough arguments following: %s', key));
+            }
+            setArg(key, argsToSet);
+            return i;
+        }
+        function setArg(key, val, shouldStripQuotes = inputIsString) {
+            if (/-/.test(key) && configuration['camel-case-expansion']) {
+                const alias = key.split('.').map(function (prop) {
+                    return camelCase(prop);
+                }).join('.');
+                addNewAlias(key, alias);
+            }
+            const value = processValue(key, val, shouldStripQuotes);
+            const splitKey = key.split('.');
+            setKey(argv, splitKey, value);
+            // handle populating aliases of the full key
+            if (flags.aliases[key]) {
+                flags.aliases[key].forEach(function (x) {
+                    const keyProperties = x.split('.');
+                    setKey(argv, keyProperties, value);
+                });
+            }
+            // handle populating aliases of the first element of the dot-notation key
+            if (splitKey.length > 1 && configuration['dot-notation']) {
+                ;
+                (flags.aliases[splitKey[0]] || []).forEach(function (x) {
+                    let keyProperties = x.split('.');
+                    // expand alias with nested objects in key
+                    const a = [].concat(splitKey);
+                    a.shift(); // nuke the old key.
+                    keyProperties = keyProperties.concat(a);
+                    // populate alias only if is not already an alias of the full key
+                    // (already populated above)
+                    if (!(flags.aliases[key] || []).includes(keyProperties.join('.'))) {
+                        setKey(argv, keyProperties, value);
+                    }
+                });
+            }
+            // Set normalize getter and setter when key is in 'normalize' but isn't an array
+            if (checkAllAliases(key, flags.normalize) && !checkAllAliases(key, flags.arrays)) {
+                const keys = [key].concat(flags.aliases[key] || []);
+                keys.forEach(function (key) {
+                    Object.defineProperty(argvReturn, key, {
+                        enumerable: true,
+                        get() {
+                            return val;
+                        },
+                        set(value) {
+                            val = typeof value === 'string' ? yargs_parser_mixin.normalize(value) : value;
+                        }
+                    });
+                });
+            }
+        }
+        function addNewAlias(key, alias) {
+            if (!(flags.aliases[key] && flags.aliases[key].length)) {
+                flags.aliases[key] = [alias];
+                newAliases[alias] = true;
+            }
+            if (!(flags.aliases[alias] && flags.aliases[alias].length)) {
+                addNewAlias(alias, key);
+            }
+        }
+        function processValue(key, val, shouldStripQuotes) {
+            // strings may be quoted, clean this up as we assign values.
+            if (shouldStripQuotes) {
+                val = stripQuotes(val);
+            }
+            // handle parsing boolean arguments --foo=true --bar false.
+            if (checkAllAliases(key, flags.bools) || checkAllAliases(key, flags.counts)) {
+                if (typeof val === 'string')
+                    val = val === 'true';
+            }
+            let value = Array.isArray(val)
+                ? val.map(function (v) { return maybeCoerceNumber(key, v); })
+                : maybeCoerceNumber(key, val);
+            // increment a count given as arg (either no value or value parsed as boolean)
+            if (checkAllAliases(key, flags.counts) && (isUndefined(value) || typeof value === 'boolean')) {
+                value = increment();
+            }
+            // Set normalized value when key is in 'normalize' and in 'arrays'
+            if (checkAllAliases(key, flags.normalize) && checkAllAliases(key, flags.arrays)) {
+                if (Array.isArray(val))
+                    value = val.map((val) => { return yargs_parser_mixin.normalize(val); });
+                else
+                    value = yargs_parser_mixin.normalize(val);
+            }
+            return value;
+        }
+        function maybeCoerceNumber(key, value) {
+            if (!configuration['parse-positional-numbers'] && key === '_')
+                return value;
+            if (!checkAllAliases(key, flags.strings) && !checkAllAliases(key, flags.bools) && !Array.isArray(value)) {
+                const shouldCoerceNumber = looksLikeNumber(value) && configuration['parse-numbers'] && (Number.isSafeInteger(Math.floor(parseFloat(`${value}`))));
+                if (shouldCoerceNumber || (!isUndefined(value) && checkAllAliases(key, flags.numbers))) {
+                    value = Number(value);
+                }
+            }
+            return value;
+        }
+        // set args from config.json file, this should be
+        // applied last so that defaults can be applied.
+        function setConfig(argv) {
+            const configLookup = Object.create(null);
+            // expand defaults/aliases, in-case any happen to reference
+            // the config.json file.
+            applyDefaultsAndAliases(configLookup, flags.aliases, defaults);
+            Object.keys(flags.configs).forEach(function (configKey) {
+                const configPath = argv[configKey] || configLookup[configKey];
+                if (configPath) {
+                    try {
+                        let config = null;
+                        const resolvedConfigPath = yargs_parser_mixin.resolve(yargs_parser_mixin.cwd(), configPath);
+                        const resolveConfig = flags.configs[configKey];
+                        if (typeof resolveConfig === 'function') {
+                            try {
+                                config = resolveConfig(resolvedConfigPath);
+                            }
+                            catch (e) {
+                                config = e;
+                            }
+                            if (config instanceof Error) {
+                                error = config;
+                                return;
+                            }
+                        }
+                        else {
+                            config = yargs_parser_mixin.require(resolvedConfigPath);
+                        }
+                        setConfigObject(config);
+                    }
+                    catch (ex) {
+                        // Deno will receive a PermissionDenied error if an attempt is
+                        // made to load config without the --allow-read flag:
+                        if (ex.name === 'PermissionDenied')
+                            error = ex;
+                        else if (argv[configKey])
+                            error = Error(__('Invalid JSON config file: %s', configPath));
+                    }
+                }
+            });
+        }
+        // set args from config object.
+        // it recursively checks nested objects.
+        function setConfigObject(config, prev) {
+            Object.keys(config).forEach(function (key) {
+                const value = config[key];
+                const fullKey = prev ? prev + '.' + key : key;
+                // if the value is an inner object and we have dot-notation
+                // enabled, treat inner objects in config the same as
+                // heavily nested dot notations (foo.bar.apple).
+                if (typeof value === 'object' && value !== null && !Array.isArray(value) && configuration['dot-notation']) {
+                    // if the value is an object but not an array, check nested object
+                    setConfigObject(value, fullKey);
+                }
+                else {
+                    // setting arguments via CLI takes precedence over
+                    // values within the config file.
+                    if (!hasKey(argv, fullKey.split('.')) || (checkAllAliases(fullKey, flags.arrays) && configuration['combine-arrays'])) {
+                        setArg(fullKey, value);
+                    }
+                }
+            });
+        }
+        // set all config objects passed in opts
+        function setConfigObjects() {
+            if (typeof configObjects !== 'undefined') {
+                configObjects.forEach(function (configObject) {
+                    setConfigObject(configObject);
+                });
+            }
+        }
+        function applyEnvVars(argv, configOnly) {
+            if (typeof envPrefix === 'undefined')
+                return;
+            const prefix = typeof envPrefix === 'string' ? envPrefix : '';
+            const env = yargs_parser_mixin.env();
+            Object.keys(env).forEach(function (envVar) {
+                if (prefix === '' || envVar.lastIndexOf(prefix, 0) === 0) {
+                    // get array of nested keys and convert them to camel case
+                    const keys = envVar.split('__').map(function (key, i) {
+                        if (i === 0) {
+                            key = key.substring(prefix.length);
+                        }
+                        return camelCase(key);
+                    });
+                    if (((configOnly && flags.configs[keys.join('.')]) || !configOnly) && !hasKey(argv, keys)) {
+                        setArg(keys.join('.'), env[envVar]);
+                    }
+                }
+            });
+        }
+        function applyCoercions(argv) {
+            let coerce;
+            const applied = new Set();
+            Object.keys(argv).forEach(function (key) {
+                if (!applied.has(key)) { // If we haven't already coerced this option via one of its aliases
+                    coerce = checkAllAliases(key, flags.coercions);
+                    if (typeof coerce === 'function') {
+                        try {
+                            const value = maybeCoerceNumber(key, coerce(argv[key]));
+                            ([].concat(flags.aliases[key] || [], key)).forEach(ali => {
+                                applied.add(ali);
+                                argv[ali] = value;
+                            });
+                        }
+                        catch (err) {
+                            error = err;
+                        }
+                    }
+                }
+            });
+        }
+        function setPlaceholderKeys(argv) {
+            flags.keys.forEach((key) => {
+                // don't set placeholder keys for dot notation options 'foo.bar'.
+                if (~key.indexOf('.'))
+                    return;
+                if (typeof argv[key] === 'undefined')
+                    argv[key] = undefined;
+            });
+            return argv;
+        }
+        function applyDefaultsAndAliases(obj, aliases, defaults, canLog = false) {
+            Object.keys(defaults).forEach(function (key) {
+                if (!hasKey(obj, key.split('.'))) {
+                    setKey(obj, key.split('.'), defaults[key]);
+                    if (canLog)
+                        defaulted[key] = true;
+                    (aliases[key] || []).forEach(function (x) {
+                        if (hasKey(obj, x.split('.')))
+                            return;
+                        setKey(obj, x.split('.'), defaults[key]);
+                    });
+                }
+            });
+        }
+        function hasKey(obj, keys) {
+            let o = obj;
+            if (!configuration['dot-notation'])
+                keys = [keys.join('.')];
+            keys.slice(0, -1).forEach(function (key) {
+                o = (o[key] || {});
+            });
+            const key = keys[keys.length - 1];
+            if (typeof o !== 'object')
+                return false;
+            else
+                return key in o;
+        }
+        function setKey(obj, keys, value) {
+            let o = obj;
+            if (!configuration['dot-notation'])
+                keys = [keys.join('.')];
+            keys.slice(0, -1).forEach(function (key) {
+                // TODO(bcoe): in the next major version of yargs, switch to
+                // Object.create(null) for dot notation:
+                key = sanitizeKey(key);
+                if (typeof o === 'object' && o[key] === undefined) {
+                    o[key] = {};
+                }
+                if (typeof o[key] !== 'object' || Array.isArray(o[key])) {
+                    // ensure that o[key] is an array, and that the last item is an empty object.
+                    if (Array.isArray(o[key])) {
+                        o[key].push({});
+                    }
+                    else {
+                        o[key] = [o[key], {}];
+                    }
+                    // we want to update the empty object at the end of the o[key] array, so set o to that object
+                    o = o[key][o[key].length - 1];
+                }
+                else {
+                    o = o[key];
+                }
+            });
+            // TODO(bcoe): in the next major version of yargs, switch to
+            // Object.create(null) for dot notation:
+            const key = sanitizeKey(keys[keys.length - 1]);
+            const isTypeArray = checkAllAliases(keys.join('.'), flags.arrays);
+            const isValueArray = Array.isArray(value);
+            let duplicate = configuration['duplicate-arguments-array'];
+            // nargs has higher priority than duplicate
+            if (!duplicate && checkAllAliases(key, flags.nargs)) {
+                duplicate = true;
+                if ((!isUndefined(o[key]) && flags.nargs[key] === 1) || (Array.isArray(o[key]) && o[key].length === flags.nargs[key])) {
+                    o[key] = undefined;
+                }
+            }
+            if (value === increment()) {
+                o[key] = increment(o[key]);
+            }
+            else if (Array.isArray(o[key])) {
+                if (duplicate && isTypeArray && isValueArray) {
+                    o[key] = configuration['flatten-duplicate-arrays'] ? o[key].concat(value) : (Array.isArray(o[key][0]) ? o[key] : [o[key]]).concat([value]);
+                }
+                else if (!duplicate && Boolean(isTypeArray) === Boolean(isValueArray)) {
+                    o[key] = value;
+                }
+                else {
+                    o[key] = o[key].concat([value]);
+                }
+            }
+            else if (o[key] === undefined && isTypeArray) {
+                o[key] = isValueArray ? value : [value];
+            }
+            else if (duplicate && !(o[key] === undefined ||
+                checkAllAliases(key, flags.counts) ||
+                checkAllAliases(key, flags.bools))) {
+                o[key] = [o[key], value];
+            }
+            else {
+                o[key] = value;
+            }
+        }
+        // extend the aliases list with inferred aliases.
+        function extendAliases(...args) {
+            args.forEach(function (obj) {
+                Object.keys(obj || {}).forEach(function (key) {
+                    // short-circuit if we've already added a key
+                    // to the aliases array, for example it might
+                    // exist in both 'opts.default' and 'opts.key'.
+                    if (flags.aliases[key])
+                        return;
+                    flags.aliases[key] = [].concat(aliases[key] || []);
+                    // For "--option-name", also set argv.optionName
+                    flags.aliases[key].concat(key).forEach(function (x) {
+                        if (/-/.test(x) && configuration['camel-case-expansion']) {
+                            const c = camelCase(x);
+                            if (c !== key && flags.aliases[key].indexOf(c) === -1) {
+                                flags.aliases[key].push(c);
+                                newAliases[c] = true;
+                            }
+                        }
+                    });
+                    // For "--optionName", also set argv['option-name']
+                    flags.aliases[key].concat(key).forEach(function (x) {
+                        if (x.length > 1 && /[A-Z]/.test(x) && configuration['camel-case-expansion']) {
+                            const c = decamelize(x, '-');
+                            if (c !== key && flags.aliases[key].indexOf(c) === -1) {
+                                flags.aliases[key].push(c);
+                                newAliases[c] = true;
+                            }
+                        }
+                    });
+                    flags.aliases[key].forEach(function (x) {
+                        flags.aliases[x] = [key].concat(flags.aliases[key].filter(function (y) {
+                            return x !== y;
+                        }));
+                    });
+                });
+            });
+        }
+        function checkAllAliases(key, flag) {
+            const toCheck = [].concat(flags.aliases[key] || [], key);
+            const keys = Object.keys(flag);
+            const setAlias = toCheck.find(key => keys.includes(key));
+            return setAlias ? flag[setAlias] : false;
+        }
+        function hasAnyFlag(key) {
+            const flagsKeys = Object.keys(flags);
+            const toCheck = [].concat(flagsKeys.map(k => flags[k]));
+            return toCheck.some(function (flag) {
+                return Array.isArray(flag) ? flag.includes(key) : flag[key];
+            });
+        }
+        function hasFlagsMatching(arg, ...patterns) {
+            const toCheck = [].concat(...patterns);
+            return toCheck.some(function (pattern) {
+                const match = arg.match(pattern);
+                return match && hasAnyFlag(match[1]);
+            });
+        }
+        // based on a simplified version of the short flag group parsing logic
+        function hasAllShortFlags(arg) {
+            // if this is a negative number, or doesn't start with a single hyphen, it's not a short flag group
+            if (arg.match(negative) || !arg.match(/^-[^-]+/)) {
+                return false;
+            }
+            let hasAllFlags = true;
+            let next;
+            const letters = arg.slice(1).split('');
+            for (let j = 0; j < letters.length; j++) {
+                next = arg.slice(j + 2);
+                if (!hasAnyFlag(letters[j])) {
+                    hasAllFlags = false;
+                    break;
+                }
+                if ((letters[j + 1] && letters[j + 1] === '=') ||
+                    next === '-' ||
+                    (/[A-Za-z]/.test(letters[j]) && /^-?\d+(\.\d*)?(e-?\d+)?$/.test(next)) ||
+                    (letters[j + 1] && letters[j + 1].match(/\W/))) {
+                    break;
+                }
+            }
+            return hasAllFlags;
+        }
+        function isUnknownOptionAsArg(arg) {
+            return configuration['unknown-options-as-args'] && isUnknownOption(arg);
+        }
+        function isUnknownOption(arg) {
+            arg = arg.replace(/^-{3,}/, '--');
+            // ignore negative numbers
+            if (arg.match(negative)) {
+                return false;
+            }
+            // if this is a short option group and all of them are configured, it isn't unknown
+            if (hasAllShortFlags(arg)) {
+                return false;
+            }
+            // e.g. '--count=2'
+            const flagWithEquals = /^-+([^=]+?)=[\s\S]*$/;
+            // e.g. '-a' or '--arg'
+            const normalFlag = /^-+([^=]+?)$/;
+            // e.g. '-a-'
+            const flagEndingInHyphen = /^-+([^=]+?)-$/;
+            // e.g. '-abc123'
+            const flagEndingInDigits = /^-+([^=]+?\d+)$/;
+            // e.g. '-a/usr/local'
+            const flagEndingInNonWordCharacters = /^-+([^=]+?)\W+.*$/;
+            // check the different types of flag styles, including negatedBoolean, a pattern defined near the start of the parse method
+            return !hasFlagsMatching(arg, flagWithEquals, negatedBoolean, normalFlag, flagEndingInHyphen, flagEndingInDigits, flagEndingInNonWordCharacters);
+        }
+        // make a best effort to pick a default value
+        // for an option based on name and type.
+        function defaultValue(key) {
+            if (!checkAllAliases(key, flags.bools) &&
+                !checkAllAliases(key, flags.counts) &&
+                `${key}` in defaults) {
+                return defaults[key];
+            }
+            else {
+                return defaultForType(guessType(key));
+            }
+        }
+        // return a default value, given the type of a flag.,
+        function defaultForType(type) {
+            const def = {
+                [DefaultValuesForTypeKey.BOOLEAN]: true,
+                [DefaultValuesForTypeKey.STRING]: '',
+                [DefaultValuesForTypeKey.NUMBER]: undefined,
+                [DefaultValuesForTypeKey.ARRAY]: []
+            };
+            return def[type];
+        }
+        // given a flag, enforce a default type.
+        function guessType(key) {
+            let type = DefaultValuesForTypeKey.BOOLEAN;
+            if (checkAllAliases(key, flags.strings))
+                type = DefaultValuesForTypeKey.STRING;
+            else if (checkAllAliases(key, flags.numbers))
+                type = DefaultValuesForTypeKey.NUMBER;
+            else if (checkAllAliases(key, flags.bools))
+                type = DefaultValuesForTypeKey.BOOLEAN;
+            else if (checkAllAliases(key, flags.arrays))
+                type = DefaultValuesForTypeKey.ARRAY;
+            return type;
+        }
+        function isUndefined(num) {
+            return num === undefined;
+        }
+        // check user configuration settings for inconsistencies
+        function checkConfiguration() {
+            // count keys should not be set as array/narg
+            Object.keys(flags.counts).find(key => {
+                if (checkAllAliases(key, flags.arrays)) {
+                    error = Error(__('Invalid configuration: %s, opts.count excludes opts.array.', key));
+                    return true;
+                }
+                else if (checkAllAliases(key, flags.nargs)) {
+                    error = Error(__('Invalid configuration: %s, opts.count excludes opts.narg.', key));
+                    return true;
+                }
+                return false;
+            });
+        }
+        return {
+            aliases: Object.assign({}, flags.aliases),
+            argv: Object.assign(argvReturn, argv),
+            configuration: configuration,
+            defaulted: Object.assign({}, defaulted),
+            error: error,
+            newAliases: Object.assign({}, newAliases)
+        };
+    }
+}
+// if any aliases reference each other, we should
+// merge them together.
+function combineAliases(aliases) {
+    const aliasArrays = [];
+    const combined = Object.create(null);
+    let change = true;
+    // turn alias lookup hash {key: ['alias1', 'alias2']} into
+    // a simple array ['key', 'alias1', 'alias2']
+    Object.keys(aliases).forEach(function (key) {
+        aliasArrays.push([].concat(aliases[key], key));
+    });
+    // combine arrays until zero changes are
+    // made in an iteration.
+    while (change) {
+        change = false;
+        for (let i = 0; i < aliasArrays.length; i++) {
+            for (let ii = i + 1; ii < aliasArrays.length; ii++) {
+                const intersect = aliasArrays[i].filter(function (v) {
+                    return aliasArrays[ii].indexOf(v) !== -1;
+                });
+                if (intersect.length) {
+                    aliasArrays[i] = aliasArrays[i].concat(aliasArrays[ii]);
+                    aliasArrays.splice(ii, 1);
+                    change = true;
+                    break;
+                }
+            }
+        }
+    }
+    // map arrays back to the hash-lookup (de-dupe while
+    // we're at it).
+    aliasArrays.forEach(function (aliasArray) {
+        aliasArray = aliasArray.filter(function (v, i, self) {
+            return self.indexOf(v) === i;
+        });
+        const lastAlias = aliasArray.pop();
+        if (lastAlias !== undefined && typeof lastAlias === 'string') {
+            combined[lastAlias] = aliasArray;
+        }
+    });
+    return combined;
+}
+// this function should only be called when a count is given as an arg
+// it is NOT called to set a default value
+// thus we can start the count at 1 instead of 0
+function increment(orig) {
+    return orig !== undefined ? orig + 1 : 1;
+}
+// TODO(bcoe): in the next major version of yargs, switch to
+// Object.create(null) for dot notation:
+function sanitizeKey(key) {
+    if (key === '__proto__')
+        return '___proto___';
+    return key;
+}
+function stripQuotes(val) {
+    return (typeof val === 'string' &&
+        (val[0] === "'" || val[0] === '"') &&
+        val[val.length - 1] === val[0])
+        ? val.substring(1, val.length - 1)
+        : val;
+}
+
+;// CONCATENATED MODULE: external "node:module"
+const external_node_module_namespaceObject = require("node:module");
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs-parser/build/lib/index.js
+/**
+ * @fileoverview Main entrypoint for libraries using yargs-parser in Node.js
+ *
+ * @license
+ * Copyright (c) 2016, Contributors
+ * SPDX-License-Identifier: ISC
+ */
+var _a, _b, _c;
+/* eslint-disable n/no-unpublished-import */
+
+
+
+
+
+
+// See https://github.com/yargs/yargs-parser#supported-nodejs-versions for our
+// version support policy. The YARGS_MIN_NODE_VERSION is used for testing only.
+const minNodeVersion = (process && process.env && process.env.YARGS_MIN_NODE_VERSION)
+    ? Number(process.env.YARGS_MIN_NODE_VERSION)
+    : 20;
+const nodeVersion = (_b = (_a = process === null || process === void 0 ? void 0 : process.versions) === null || _a === void 0 ? void 0 : _a.node) !== null && _b !== void 0 ? _b : (_c = process === null || process === void 0 ? void 0 : process.version) === null || _c === void 0 ? void 0 : _c.slice(1);
+if (nodeVersion) {
+    const major = Number(nodeVersion.match(/^([^.]+)/)[1]);
+    if (major < minNodeVersion) {
+        throw Error(`yargs parser supports a minimum Node.js version of ${minNodeVersion}. Read our version support policy: https://github.com/yargs/yargs-parser#supported-nodejs-versions`);
+    }
+}
+// Creates a yargs-parser instance using Node.js standard libraries:
+const env = process ? process.env : {};
+const lib_require = external_node_module_namespaceObject.createRequire ? (0,external_node_module_namespaceObject.createRequire)(import.meta.url) : undefined;
+const parser = new YargsParser({
+    cwd: process.cwd,
+    env: () => {
+        return env;
+    },
+    format: external_util_.format,
+    normalize: external_path_.normalize,
+    resolve: external_path_.resolve,
+    require: (path) => {
+        if (typeof lib_require !== 'undefined') {
+            return lib_require(path);
+        }
+        else if (path.match(/\.json$/)) {
+            // Addresses: https://github.com/yargs/yargs/issues/2040
+            return JSON.parse((0,external_fs_.readFileSync)(path, 'utf8'));
+        }
+        else {
+            throw Error('only .json config files are supported in ESM');
+        }
+    }
+});
+const yargsParser = function Parser(args, opts) {
+    const result = parser.parse(args.slice(), opts);
+    return result.argv;
+};
+yargsParser.detailed = function (args, opts) {
+    return parser.parse(args.slice(), opts);
+};
+yargsParser.camelCase = camelCase;
+yargsParser.decamelize = decamelize;
+yargsParser.looksLikeNumber = looksLikeNumber;
+/* harmony default export */ const lib = (yargsParser);
+// special syntax to allow unqualified default export from CommonJS
+
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/utils/process-argv.js
+function getProcessArgvBinIndex() {
+    if (isBundledElectronApp())
+        return 0;
+    return 1;
+}
+function isBundledElectronApp() {
+    return isElectronApp() && !process.defaultApp;
+}
+function isElectronApp() {
+    return !!process.versions.electron;
+}
+function hideBin(argv) {
+    return argv.slice(getProcessArgvBinIndex() + 1);
+}
+function getProcessArgvBin() {
+    return process.argv[getProcessArgvBinIndex()];
+}
+
+;// CONCATENATED MODULE: ../../node_modules/y18n/build/lib/platform-shims/node.js
+
+
+
+/* harmony default export */ const node = ({
+    fs: {
+        readFileSync: external_fs_.readFileSync,
+        writeFile: external_fs_.writeFile
+    },
+    format: external_util_.format,
+    resolve: external_path_.resolve,
+    exists: (file) => {
+        try {
+            return (0,external_fs_.statSync)(file).isFile();
+        }
+        catch (err) {
+            return false;
+        }
+    }
+});
+
+;// CONCATENATED MODULE: ../../node_modules/y18n/build/lib/index.js
 let shim;
 class Y18N {
     constructor(opts) {
@@ -92583,7 +94359,7 @@ class Y18N {
         return shim.exists(file);
     }
 }
-function y18n$1(opts, _shim) {
+function y18n(opts, _shim) {
     shim = _shim;
     const y18n = new Y18N(opts);
     return {
@@ -92596,1151 +94372,3656 @@ function y18n$1(opts, _shim) {
     };
 }
 
-var nodePlatformShim = {
-    fs: {
-        readFileSync: fs.readFileSync,
-        writeFile: fs.writeFile
+;// CONCATENATED MODULE: ../../node_modules/y18n/index.mjs
+
+
+
+const y18n_y18n = (opts) => {
+  return y18n(opts, node)
+}
+
+/* harmony default export */ const node_modules_y18n = (y18n_y18n);
+
+// EXTERNAL MODULE: ../../node_modules/get-caller-file/index.js
+var get_caller_file = __nccwpck_require__(50505);
+// EXTERNAL MODULE: external "node:fs"
+var external_node_fs_ = __nccwpck_require__(73024);
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/lib/platform-shims/esm.mjs
+
+
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+const esm_dirname = (0,external_url_.fileURLToPath)(import.meta.url);
+const mainFilename = esm_dirname.substring(0, esm_dirname.lastIndexOf('node_modules'));
+const esm_require = (0,external_node_module_namespaceObject.createRequire)(import.meta.url);
+
+/* harmony default export */ const esm = ({
+  assert: {
+    notStrictEqual: external_assert_.notStrictEqual,
+    strictEqual: external_assert_.strictEqual
+  },
+  cliui: ui,
+  findUp: sync,
+  getEnv: (key) => {
+    return process.env[key]
+  },
+  inspect: external_util_.inspect,
+  getProcessArgvBin: getProcessArgvBin,
+  mainFilename: mainFilename || process.cwd(),
+  Parser: lib,
+  path: {
+    basename: external_path_.basename,
+    dirname: external_path_.dirname,
+    extname: external_path_.extname,
+    relative: external_path_.relative,
+    resolve: external_path_.resolve,
+    join: external_path_.join
+  },
+  process: {
+    argv: () => process.argv,
+    cwd: process.cwd,
+    emitWarning: (warning, type) => process.emitWarning(warning, type),
+    execPath: () => process.execPath,
+    exit: (code) => {
+      // eslint-disable-next-line n/no-process-exit
+      process.exit(code);
     },
-    format: util.format,
-    resolve: path.resolve,
-    exists: (file) => {
-        try {
-            return fs.statSync(file).isFile();
+    nextTick: process.nextTick,
+    stdColumns: typeof process.stdout.columns !== 'undefined' ? process.stdout.columns : null
+  },
+  readFileSync: external_node_fs_.readFileSync,
+  readdirSync: external_node_fs_.readdirSync,
+  require: esm_require,
+  getCallerFile: () => {
+    const callerFile = get_caller_file(3);
+    return callerFile.match(/^file:\/\//) ? (0,external_url_.fileURLToPath)(callerFile) : callerFile;
+  },
+  stringWidth: stringWidth,
+  y18n: node_modules_y18n({
+    directory: (0,external_path_.resolve)(esm_dirname, '../../../locales'),
+    updateFiles: false
+  })
+});
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/typings/common-types.js
+function assertNotStrictEqual(actual, expected, shim, message) {
+    shim.assert.notStrictEqual(actual, expected, message);
+}
+function assertSingleKey(actual, shim) {
+    shim.assert.strictEqual(typeof actual, 'string');
+}
+function objectKeys(object) {
+    return Object.keys(object);
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/utils/is-promise.js
+function isPromise(maybePromise) {
+    return (!!maybePromise &&
+        !!maybePromise.then &&
+        typeof maybePromise.then === 'function');
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/yerror.js
+class YError extends Error {
+    constructor(msg) {
+        super(msg || 'yargs error');
+        this.name = 'YError';
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, YError);
         }
-        catch (err) {
-            return false;
-        }
-    }
-};
-
-const y18n = (opts) => {
-    return y18n$1(opts, nodePlatformShim);
-};
-
-module.exports = y18n;
-
-
-/***/ }),
-
-/***/ 86208:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-var t=__nccwpck_require__(42613);class e extends Error{constructor(t){super(t||"yargs error"),this.name="YError",Error.captureStackTrace&&Error.captureStackTrace(this,e)}}let s,i=[];function n(t,o,a,h){s=h;let l={};if(Object.prototype.hasOwnProperty.call(t,"extends")){if("string"!=typeof t.extends)return l;const r=/\.json|\..*rc$/.test(t.extends);let h=null;if(r)h=function(t,e){return s.path.resolve(t,e)}(o,t.extends);else try{h=/*require.resolve*/(__nccwpck_require__(47934).resolve(t.extends))}catch(e){return t}!function(t){if(i.indexOf(t)>-1)throw new e(`Circular extended configurations: '${t}'.`)}(h),i.push(h),l=r?JSON.parse(s.readFileSync(h,"utf8")):__nccwpck_require__(47934)(t.extends),delete t.extends,l=n(l,s.path.dirname(h),a,s)}return i=[],a?r(l,t):Object.assign({},l,t)}function r(t,e){const s={};function i(t){return t&&"object"==typeof t&&!Array.isArray(t)}Object.assign(s,t);for(const n of Object.keys(e))i(e[n])&&i(s[n])?s[n]=r(t[n],e[n]):s[n]=e[n];return s}function o(t){const e=t.replace(/\s{2,}/g," ").split(/\s+(?![^[]*]|[^<]*>)/),s=/\.*[\][<>]/g,i=e.shift();if(!i)throw new Error(`No command found in: ${t}`);const n={cmd:i.replace(s,""),demanded:[],optional:[]};return e.forEach(((t,i)=>{let r=!1;t=t.replace(/\s/g,""),/\.+[\]>]/.test(t)&&i===e.length-1&&(r=!0),/^\[/.test(t)?n.optional.push({cmd:t.replace(s,"").split("|"),variadic:r}):n.demanded.push({cmd:t.replace(s,"").split("|"),variadic:r})})),n}const a=["first","second","third","fourth","fifth","sixth"];function h(t,s,i){try{let n=0;const[r,a,h]="object"==typeof t?[{demanded:[],optional:[]},t,s]:[o(`cmd ${t}`),s,i],f=[].slice.call(a);for(;f.length&&void 0===f[f.length-1];)f.pop();const d=h||f.length;if(d<r.demanded.length)throw new e(`Not enough arguments provided. Expected ${r.demanded.length} but received ${f.length}.`);const u=r.demanded.length+r.optional.length;if(d>u)throw new e(`Too many arguments provided. Expected max ${u} but received ${d}.`);r.demanded.forEach((t=>{const e=l(f.shift());0===t.cmd.filter((t=>t===e||"*"===t)).length&&c(e,t.cmd,n),n+=1})),r.optional.forEach((t=>{if(0===f.length)return;const e=l(f.shift());0===t.cmd.filter((t=>t===e||"*"===t)).length&&c(e,t.cmd,n),n+=1}))}catch(t){console.warn(t.stack)}}function l(t){return Array.isArray(t)?"array":null===t?"null":typeof t}function c(t,s,i){throw new e(`Invalid ${a[i]||"manyith"} argument. Expected ${s.join(" or ")} but received ${t}.`)}function f(t){return!!t&&!!t.then&&"function"==typeof t.then}function d(t,e,s,i){s.assert.notStrictEqual(t,e,i)}function u(t,e){e.assert.strictEqual(typeof t,"string")}function p(t){return Object.keys(t)}function g(t={},e=(()=>!0)){const s={};return p(t).forEach((i=>{e(i,t[i])&&(s[i]=t[i])})),s}function m(){return process.versions.electron&&!process.defaultApp?0:1}function y(){return process.argv[m()]}var b=Object.freeze({__proto__:null,hideBin:function(t){return t.slice(m()+1)},getProcessArgvBin:y});function v(t,e,s,i){if("a"===s&&!i)throw new TypeError("Private accessor was defined without a getter");if("function"==typeof e?t!==e||!i:!e.has(t))throw new TypeError("Cannot read private member from an object whose class did not declare it");return"m"===s?i:"a"===s?i.call(t):i?i.value:e.get(t)}function O(t,e,s,i,n){if("m"===i)throw new TypeError("Private method is not writable");if("a"===i&&!n)throw new TypeError("Private accessor was defined without a setter");if("function"==typeof e?t!==e||!n:!e.has(t))throw new TypeError("Cannot write private member to an object whose class did not declare it");return"a"===i?n.call(t,s):n?n.value=s:e.set(t,s),s}class w{constructor(t){this.globalMiddleware=[],this.frozens=[],this.yargs=t}addMiddleware(t,e,s=!0,i=!1){if(h("<array|function> [boolean] [boolean] [boolean]",[t,e,s],arguments.length),Array.isArray(t)){for(let i=0;i<t.length;i++){if("function"!=typeof t[i])throw Error("middleware must be a function");const n=t[i];n.applyBeforeValidation=e,n.global=s}Array.prototype.push.apply(this.globalMiddleware,t)}else if("function"==typeof t){const n=t;n.applyBeforeValidation=e,n.global=s,n.mutates=i,this.globalMiddleware.push(t)}return this.yargs}addCoerceMiddleware(t,e){const s=this.yargs.getAliases();return this.globalMiddleware=this.globalMiddleware.filter((t=>{const i=[...s[e]||[],e];return!t.option||!i.includes(t.option)})),t.option=e,this.addMiddleware(t,!0,!0,!0)}getMiddleware(){return this.globalMiddleware}freeze(){this.frozens.push([...this.globalMiddleware])}unfreeze(){const t=this.frozens.pop();void 0!==t&&(this.globalMiddleware=t)}reset(){this.globalMiddleware=this.globalMiddleware.filter((t=>t.global))}}function C(t,e,s,i){return s.reduce(((t,s)=>{if(s.applyBeforeValidation!==i)return t;if(s.mutates){if(s.applied)return t;s.applied=!0}if(f(t))return t.then((t=>Promise.all([t,s(t,e)]))).then((([t,e])=>Object.assign(t,e)));{const i=s(t,e);return f(i)?i.then((e=>Object.assign(t,e))):Object.assign(t,i)}}),t)}function j(t,e,s=(t=>{throw t})){try{const s="function"==typeof t?t():t;return f(s)?s.then((t=>e(t))):e(s)}catch(t){return s(t)}}const M=/(^\*)|(^\$0)/;class _{constructor(t,e,s,i){this.requireCache=new Set,this.handlers={},this.aliasMap={},this.frozens=[],this.shim=i,this.usage=t,this.globalMiddleware=s,this.validation=e}addDirectory(t,e,s,i){"boolean"!=typeof(i=i||{}).recurse&&(i.recurse=!1),Array.isArray(i.extensions)||(i.extensions=["js"]);const n="function"==typeof i.visit?i.visit:t=>t;i.visit=(t,e,s)=>{const i=n(t,e,s);if(i){if(this.requireCache.has(e))return i;this.requireCache.add(e),this.addHandler(i)}return i},this.shim.requireDirectory({require:e,filename:s},t,i)}addHandler(t,e,s,i,n,r){let a=[];const h=function(t){return t?t.map((t=>(t.applyBeforeValidation=!1,t))):[]}(n);if(i=i||(()=>{}),Array.isArray(t))if(function(t){return t.every((t=>"string"==typeof t))}(t))[t,...a]=t;else for(const e of t)this.addHandler(e);else{if(function(t){return"object"==typeof t&&!Array.isArray(t)}(t)){let e=Array.isArray(t.command)||"string"==typeof t.command?t.command:this.moduleName(t);return t.aliases&&(e=[].concat(e).concat(t.aliases)),void this.addHandler(e,this.extractDesc(t),t.builder,t.handler,t.middlewares,t.deprecated)}if(k(s))return void this.addHandler([t].concat(a),e,s.builder,s.handler,s.middlewares,s.deprecated)}if("string"==typeof t){const n=o(t);a=a.map((t=>o(t).cmd));let l=!1;const c=[n.cmd].concat(a).filter((t=>!M.test(t)||(l=!0,!1)));0===c.length&&l&&c.push("$0"),l&&(n.cmd=c[0],a=c.slice(1),t=t.replace(M,n.cmd)),a.forEach((t=>{this.aliasMap[t]=n.cmd})),!1!==e&&this.usage.command(t,e,l,a,r),this.handlers[n.cmd]={original:t,description:e,handler:i,builder:s||{},middlewares:h,deprecated:r,demanded:n.demanded,optional:n.optional},l&&(this.defaultCommand=this.handlers[n.cmd])}}getCommandHandlers(){return this.handlers}getCommands(){return Object.keys(this.handlers).concat(Object.keys(this.aliasMap))}hasDefaultCommand(){return!!this.defaultCommand}runCommand(t,e,s,i,n,r){const o=this.handlers[t]||this.handlers[this.aliasMap[t]]||this.defaultCommand,a=e.getInternalMethods().getContext(),h=a.commands.slice(),l=!t;t&&(a.commands.push(t),a.fullCommands.push(o.original));const c=this.applyBuilderUpdateUsageAndParse(l,o,e,s.aliases,h,i,n,r);return f(c)?c.then((t=>this.applyMiddlewareAndGetResult(l,o,t.innerArgv,a,n,t.aliases,e))):this.applyMiddlewareAndGetResult(l,o,c.innerArgv,a,n,c.aliases,e)}applyBuilderUpdateUsageAndParse(t,e,s,i,n,r,o,a){const h=e.builder;let l=s;if(x(h)){s.getInternalMethods().getUsageInstance().freeze();const c=h(s.getInternalMethods().reset(i),a);if(f(c))return c.then((i=>{var a;return l=(a=i)&&"function"==typeof a.getInternalMethods?i:s,this.parseAndUpdateUsage(t,e,l,n,r,o)}))}else(function(t){return"object"==typeof t})(h)&&(s.getInternalMethods().getUsageInstance().freeze(),l=s.getInternalMethods().reset(i),Object.keys(e.builder).forEach((t=>{l.option(t,h[t])})));return this.parseAndUpdateUsage(t,e,l,n,r,o)}parseAndUpdateUsage(t,e,s,i,n,r){t&&s.getInternalMethods().getUsageInstance().unfreeze(!0),this.shouldUpdateUsage(s)&&s.getInternalMethods().getUsageInstance().usage(this.usageFromParentCommandsCommandHandler(i,e),e.description);const o=s.getInternalMethods().runYargsParserAndExecuteCommands(null,void 0,!0,n,r);return f(o)?o.then((t=>({aliases:s.parsed.aliases,innerArgv:t}))):{aliases:s.parsed.aliases,innerArgv:o}}shouldUpdateUsage(t){return!t.getInternalMethods().getUsageInstance().getUsageDisabled()&&0===t.getInternalMethods().getUsageInstance().getUsage().length}usageFromParentCommandsCommandHandler(t,e){const s=M.test(e.original)?e.original.replace(M,"").trim():e.original,i=t.filter((t=>!M.test(t)));return i.push(s),`$0 ${i.join(" ")}`}handleValidationAndGetResult(t,e,s,i,n,r,o,a){if(!r.getInternalMethods().getHasOutput()){const e=r.getInternalMethods().runValidation(n,a,r.parsed.error,t);s=j(s,(t=>(e(t),t)))}if(e.handler&&!r.getInternalMethods().getHasOutput()){r.getInternalMethods().setHasOutput();const i=!!r.getOptions().configuration["populate--"];r.getInternalMethods().postProcess(s,i,!1,!1),s=j(s=C(s,r,o,!1),(t=>{const s=e.handler(t);return f(s)?s.then((()=>t)):t})),t||r.getInternalMethods().getUsageInstance().cacheHelpMessage(),f(s)&&!r.getInternalMethods().hasParseCallback()&&s.catch((t=>{try{r.getInternalMethods().getUsageInstance().fail(null,t)}catch(t){}}))}return t||(i.commands.pop(),i.fullCommands.pop()),s}applyMiddlewareAndGetResult(t,e,s,i,n,r,o){let a={};if(n)return s;o.getInternalMethods().getHasOutput()||(a=this.populatePositionals(e,s,i,o));const h=this.globalMiddleware.getMiddleware().slice(0).concat(e.middlewares),l=C(s,o,h,!0);return f(l)?l.then((s=>this.handleValidationAndGetResult(t,e,s,i,r,o,h,a))):this.handleValidationAndGetResult(t,e,l,i,r,o,h,a)}populatePositionals(t,e,s,i){e._=e._.slice(s.commands.length);const n=t.demanded.slice(0),r=t.optional.slice(0),o={};for(this.validation.positionalCount(n.length,e._.length);n.length;){const t=n.shift();this.populatePositional(t,e,o)}for(;r.length;){const t=r.shift();this.populatePositional(t,e,o)}return e._=s.commands.concat(e._.map((t=>""+t))),this.postProcessPositionals(e,o,this.cmdToParseOptions(t.original),i),o}populatePositional(t,e,s){const i=t.cmd[0];t.variadic?s[i]=e._.splice(0).map(String):e._.length&&(s[i]=[String(e._.shift())])}cmdToParseOptions(t){const e={array:[],default:{},alias:{},demand:{}},s=o(t);return s.demanded.forEach((t=>{const[s,...i]=t.cmd;t.variadic&&(e.array.push(s),e.default[s]=[]),e.alias[s]=i,e.demand[s]=!0})),s.optional.forEach((t=>{const[s,...i]=t.cmd;t.variadic&&(e.array.push(s),e.default[s]=[]),e.alias[s]=i})),e}postProcessPositionals(t,e,s,i){const n=Object.assign({},i.getOptions());n.default=Object.assign(s.default,n.default);for(const t of Object.keys(s.alias))n.alias[t]=(n.alias[t]||[]).concat(s.alias[t]);n.array=n.array.concat(s.array),n.config={};const r=[];if(Object.keys(e).forEach((t=>{e[t].map((e=>{n.configuration["unknown-options-as-args"]&&(n.key[t]=!0),r.push(`--${t}`),r.push(e)}))})),!r.length)return;const o=Object.assign({},n.configuration,{"populate--":!1}),a=this.shim.Parser.detailed(r,Object.assign({},n,{configuration:o}));if(a.error)i.getInternalMethods().getUsageInstance().fail(a.error.message,a.error);else{const s=Object.keys(e);Object.keys(e).forEach((t=>{s.push(...a.aliases[t])})),Object.keys(a.argv).forEach((n=>{s.includes(n)&&(e[n]||(e[n]=a.argv[n]),!this.isInConfigs(i,n)&&!this.isDefaulted(i,n)&&Object.prototype.hasOwnProperty.call(t,n)&&Object.prototype.hasOwnProperty.call(a.argv,n)&&(Array.isArray(t[n])||Array.isArray(a.argv[n]))?t[n]=[].concat(t[n],a.argv[n]):t[n]=a.argv[n])}))}}isDefaulted(t,e){const{default:s}=t.getOptions();return Object.prototype.hasOwnProperty.call(s,e)||Object.prototype.hasOwnProperty.call(s,this.shim.Parser.camelCase(e))}isInConfigs(t,e){const{configObjects:s}=t.getOptions();return s.some((t=>Object.prototype.hasOwnProperty.call(t,e)))||s.some((t=>Object.prototype.hasOwnProperty.call(t,this.shim.Parser.camelCase(e))))}runDefaultBuilderOn(t){if(!this.defaultCommand)return;if(this.shouldUpdateUsage(t)){const e=M.test(this.defaultCommand.original)?this.defaultCommand.original:this.defaultCommand.original.replace(/^[^[\]<>]*/,"$0 ");t.getInternalMethods().getUsageInstance().usage(e,this.defaultCommand.description)}const e=this.defaultCommand.builder;if(x(e))return e(t,!0);k(e)||Object.keys(e).forEach((s=>{t.option(s,e[s])}))}moduleName(t){const e=function(t){if(false){}for(let e,s=0,i=Object.keys(__nccwpck_require__.c);s<i.length;s++)if(e=__nccwpck_require__.c[i[s]],e.exports===t)return e;return null}(t);if(!e)throw new Error(`No command name given for module: ${this.shim.inspect(t)}`);return this.commandFromFilename(e.filename)}commandFromFilename(t){return this.shim.path.basename(t,this.shim.path.extname(t))}extractDesc({describe:t,description:e,desc:s}){for(const i of[t,e,s]){if("string"==typeof i||!1===i)return i;d(i,!0,this.shim)}return!1}freeze(){this.frozens.push({handlers:this.handlers,aliasMap:this.aliasMap,defaultCommand:this.defaultCommand})}unfreeze(){const t=this.frozens.pop();d(t,void 0,this.shim),({handlers:this.handlers,aliasMap:this.aliasMap,defaultCommand:this.defaultCommand}=t)}reset(){return this.handlers={},this.aliasMap={},this.defaultCommand=void 0,this.requireCache=new Set,this}}function k(t){return"object"==typeof t&&!!t.builder&&"function"==typeof t.handler}function x(t){return"function"==typeof t}function E(t){"undefined"!=typeof process&&[process.stdout,process.stderr].forEach((e=>{const s=e;s._handle&&s.isTTY&&"function"==typeof s._handle.setBlocking&&s._handle.setBlocking(t)}))}function A(t){return"boolean"==typeof t}function P(t,s){const i=s.y18n.__,n={},r=[];n.failFn=function(t){r.push(t)};let o=null,a=null,h=!0;n.showHelpOnFail=function(e=!0,s){const[i,r]="string"==typeof e?[!0,e]:[e,s];return t.getInternalMethods().isGlobalContext()&&(a=r),o=r,h=i,n};let l=!1;n.fail=function(s,i){const c=t.getInternalMethods().getLoggerInstance();if(!r.length){if(t.getExitProcess()&&E(!0),!l){l=!0,h&&(t.showHelp("error"),c.error()),(s||i)&&c.error(s||i);const e=o||a;e&&((s||i)&&c.error(""),c.error(e))}if(i=i||new e(s),t.getExitProcess())return t.exit(1);if(t.getInternalMethods().hasParseCallback())return t.exit(1,i);throw i}for(let t=r.length-1;t>=0;--t){const e=r[t];if(A(e)){if(i)throw i;if(s)throw Error(s)}else e(s,i,n)}};let c=[],f=!1;n.usage=(t,e)=>null===t?(f=!0,c=[],n):(f=!1,c.push([t,e||""]),n),n.getUsage=()=>c,n.getUsageDisabled=()=>f,n.getPositionalGroupName=()=>i("Positionals:");let d=[];n.example=(t,e)=>{d.push([t,e||""])};let u=[];n.command=function(t,e,s,i,n=!1){s&&(u=u.map((t=>(t[2]=!1,t)))),u.push([t,e||"",s,i,n])},n.getCommands=()=>u;let p={};n.describe=function(t,e){Array.isArray(t)?t.forEach((t=>{n.describe(t,e)})):"object"==typeof t?Object.keys(t).forEach((e=>{n.describe(e,t[e])})):p[t]=e},n.getDescriptions=()=>p;let m=[];n.epilog=t=>{m.push(t)};let y,b=!1;n.wrap=t=>{b=!0,y=t},n.getWrap=()=>s.getEnv("YARGS_DISABLE_WRAP")?null:(b||(y=function(){const t=80;return s.process.stdColumns?Math.min(t,s.process.stdColumns):t}(),b=!0),y);const v="__yargsString__:";function O(t,e,i){let n=0;return Array.isArray(t)||(t=Object.values(t).map((t=>[t]))),t.forEach((t=>{n=Math.max(s.stringWidth(i?`${i} ${I(t[0])}`:I(t[0]))+$(t[0]),n)})),e&&(n=Math.min(n,parseInt((.5*e).toString(),10))),n}let w;function C(e){return t.getOptions().hiddenOptions.indexOf(e)<0||t.parsed.argv[t.getOptions().showHiddenOpt]}function j(t,e){let s=`[${i("default:")} `;if(void 0===t&&!e)return null;if(e)s+=e;else switch(typeof t){case"string":s+=`"${t}"`;break;case"object":s+=JSON.stringify(t);break;default:s+=t}return`${s}]`}n.deferY18nLookup=t=>v+t,n.help=function(){if(w)return w;!function(){const e=t.getDemandedOptions(),s=t.getOptions();(Object.keys(s.alias)||[]).forEach((i=>{s.alias[i].forEach((r=>{p[r]&&n.describe(i,p[r]),r in e&&t.demandOption(i,e[r]),s.boolean.includes(r)&&t.boolean(i),s.count.includes(r)&&t.count(i),s.string.includes(r)&&t.string(i),s.normalize.includes(r)&&t.normalize(i),s.array.includes(r)&&t.array(i),s.number.includes(r)&&t.number(i)}))}))}();const e=t.customScriptName?t.$0:s.path.basename(t.$0),r=t.getDemandedOptions(),o=t.getDemandedCommands(),a=t.getDeprecatedOptions(),h=t.getGroups(),l=t.getOptions();let g=[];g=g.concat(Object.keys(p)),g=g.concat(Object.keys(r)),g=g.concat(Object.keys(o)),g=g.concat(Object.keys(l.default)),g=g.filter(C),g=Object.keys(g.reduce(((t,e)=>("_"!==e&&(t[e]=!0),t)),{}));const y=n.getWrap(),b=s.cliui({width:y,wrap:!!y});if(!f)if(c.length)c.forEach((t=>{b.div({text:`${t[0].replace(/\$0/g,e)}`}),t[1]&&b.div({text:`${t[1]}`,padding:[1,0,0,0]})})),b.div();else if(u.length){let t=null;t=o._?`${e} <${i("command")}>\n`:`${e} [${i("command")}]\n`,b.div(`${t}`)}if(u.length>1||1===u.length&&!u[0][2]){b.div(i("Commands:"));const s=t.getInternalMethods().getContext(),n=s.commands.length?`${s.commands.join(" ")} `:"";!0===t.getInternalMethods().getParserConfiguration()["sort-commands"]&&(u=u.sort(((t,e)=>t[0].localeCompare(e[0]))));const r=e?`${e} `:"";u.forEach((t=>{const s=`${r}${n}${t[0].replace(/^\$0 ?/,"")}`;b.span({text:s,padding:[0,2,0,2],width:O(u,y,`${e}${n}`)+4},{text:t[1]});const o=[];t[2]&&o.push(`[${i("default")}]`),t[3]&&t[3].length&&o.push(`[${i("aliases:")} ${t[3].join(", ")}]`),t[4]&&("string"==typeof t[4]?o.push(`[${i("deprecated: %s",t[4])}]`):o.push(`[${i("deprecated")}]`)),o.length?b.div({text:o.join(" "),padding:[0,0,0,2],align:"right"}):b.div()})),b.div()}const M=(Object.keys(l.alias)||[]).concat(Object.keys(t.parsed.newAliases)||[]);g=g.filter((e=>!t.parsed.newAliases[e]&&M.every((t=>-1===(l.alias[t]||[]).indexOf(e)))));const _=i("Options:");h[_]||(h[_]=[]),function(t,e,s,i){let n=[],r=null;Object.keys(s).forEach((t=>{n=n.concat(s[t])})),t.forEach((t=>{r=[t].concat(e[t]),r.some((t=>-1!==n.indexOf(t)))||s[i].push(t)}))}(g,l.alias,h,_);const k=t=>/^--/.test(I(t)),x=Object.keys(h).filter((t=>h[t].length>0)).map((t=>({groupName:t,normalizedKeys:h[t].filter(C).map((t=>{if(M.includes(t))return t;for(let e,s=0;void 0!==(e=M[s]);s++)if((l.alias[e]||[]).includes(t))return e;return t}))}))).filter((({normalizedKeys:t})=>t.length>0)).map((({groupName:t,normalizedKeys:e})=>{const s=e.reduce(((e,s)=>(e[s]=[s].concat(l.alias[s]||[]).map((e=>t===n.getPositionalGroupName()?e:(/^[0-9]$/.test(e)?l.boolean.includes(s)?"-":"--":e.length>1?"--":"-")+e)).sort(((t,e)=>k(t)===k(e)?0:k(t)?1:-1)).join(", "),e)),{});return{groupName:t,normalizedKeys:e,switches:s}}));if(x.filter((({groupName:t})=>t!==n.getPositionalGroupName())).some((({normalizedKeys:t,switches:e})=>!t.every((t=>k(e[t])))))&&x.filter((({groupName:t})=>t!==n.getPositionalGroupName())).forEach((({normalizedKeys:t,switches:e})=>{t.forEach((t=>{var s,i;k(e[t])&&(e[t]=(s=e[t],i=4,S(s)?{text:s.text,indentation:s.indentation+i}:{text:s,indentation:i}))}))})),x.forEach((({groupName:e,normalizedKeys:s,switches:o})=>{b.div(e),s.forEach((e=>{const s=o[e];let h=p[e]||"",c=null;h.includes(v)&&(h=i(h.substring(16))),l.boolean.includes(e)&&(c=`[${i("boolean")}]`),l.count.includes(e)&&(c=`[${i("count")}]`),l.string.includes(e)&&(c=`[${i("string")}]`),l.normalize.includes(e)&&(c=`[${i("string")}]`),l.array.includes(e)&&(c=`[${i("array")}]`),l.number.includes(e)&&(c=`[${i("number")}]`);const f=[e in a?(d=a[e],"string"==typeof d?`[${i("deprecated: %s",d)}]`:`[${i("deprecated")}]`):null,c,e in r?`[${i("required")}]`:null,l.choices&&l.choices[e]?`[${i("choices:")} ${n.stringifiedValues(l.choices[e])}]`:null,j(l.default[e],l.defaultDescription[e])].filter(Boolean).join(" ");var d;b.span({text:I(s),padding:[0,2,0,2+$(s)],width:O(o,y)+4},h);const u=!0===t.getInternalMethods().getUsageConfiguration()["hide-types"];f&&!u?b.div({text:f,padding:[0,0,0,2],align:"right"}):b.div()})),b.div()})),d.length&&(b.div(i("Examples:")),d.forEach((t=>{t[0]=t[0].replace(/\$0/g,e)})),d.forEach((t=>{""===t[1]?b.div({text:t[0],padding:[0,2,0,2]}):b.div({text:t[0],padding:[0,2,0,2],width:O(d,y)+4},{text:t[1]})})),b.div()),m.length>0){const t=m.map((t=>t.replace(/\$0/g,e))).join("\n");b.div(`${t}\n`)}return b.toString().replace(/\s*$/,"")},n.cacheHelpMessage=function(){w=this.help()},n.clearCachedHelpMessage=function(){w=void 0},n.hasCachedHelpMessage=function(){return!!w},n.showHelp=e=>{const s=t.getInternalMethods().getLoggerInstance();e||(e="error");("function"==typeof e?e:s[e])(n.help())},n.functionDescription=t=>["(",t.name?s.Parser.decamelize(t.name,"-"):i("generated-value"),")"].join(""),n.stringifiedValues=function(t,e){let s="";const i=e||", ",n=[].concat(t);return t&&n.length?(n.forEach((t=>{s.length&&(s+=i),s+=JSON.stringify(t)})),s):s};let M=null;n.version=t=>{M=t},n.showVersion=e=>{const s=t.getInternalMethods().getLoggerInstance();e||(e="error");("function"==typeof e?e:s[e])(M)},n.reset=function(t){return o=null,l=!1,c=[],f=!1,m=[],d=[],u=[],p=g(p,(e=>!t[e])),n};const _=[];return n.freeze=function(){_.push({failMessage:o,failureOutput:l,usages:c,usageDisabled:f,epilogs:m,examples:d,commands:u,descriptions:p})},n.unfreeze=function(t=!1){const e=_.pop();e&&(t?(p={...e.descriptions,...p},u=[...e.commands,...u],c=[...e.usages,...c],d=[...e.examples,...d],m=[...e.epilogs,...m]):({failMessage:o,failureOutput:l,usages:c,usageDisabled:f,epilogs:m,examples:d,commands:u,descriptions:p}=e))},n}function S(t){return"object"==typeof t}function $(t){return S(t)?t.indentation:0}function I(t){return S(t)?t.text:t}class D{constructor(t,e,s,i){var n,r,o;this.yargs=t,this.usage=e,this.command=s,this.shim=i,this.completionKey="get-yargs-completions",this.aliases=null,this.customCompletionFunction=null,this.indexAfterLastReset=0,this.zshShell=null!==(o=(null===(n=this.shim.getEnv("SHELL"))||void 0===n?void 0:n.includes("zsh"))||(null===(r=this.shim.getEnv("ZSH_NAME"))||void 0===r?void 0:r.includes("zsh")))&&void 0!==o&&o}defaultCompletion(t,e,s,i){const n=this.command.getCommandHandlers();for(let e=0,s=t.length;e<s;++e)if(n[t[e]]&&n[t[e]].builder){const s=n[t[e]].builder;if(x(s)){this.indexAfterLastReset=e+1;const t=this.yargs.getInternalMethods().reset();return s(t,!0),t.argv}}const r=[];this.commandCompletions(r,t,s),this.optionCompletions(r,t,e,s),this.choicesFromOptionsCompletions(r,t,e,s),this.choicesFromPositionalsCompletions(r,t,e,s),i(null,r)}commandCompletions(t,e,s){const i=this.yargs.getInternalMethods().getContext().commands;s.match(/^-/)||i[i.length-1]===s||this.previousArgHasChoices(e)||this.usage.getCommands().forEach((s=>{const i=o(s[0]).cmd;if(-1===e.indexOf(i))if(this.zshShell){const e=s[1]||"";t.push(i.replace(/:/g,"\\:")+":"+e)}else t.push(i)}))}optionCompletions(t,e,s,i){if((i.match(/^-/)||""===i&&0===t.length)&&!this.previousArgHasChoices(e)){const s=this.yargs.getOptions(),n=this.yargs.getGroups()[this.usage.getPositionalGroupName()]||[];Object.keys(s.key).forEach((r=>{const o=!!s.configuration["boolean-negation"]&&s.boolean.includes(r);n.includes(r)||s.hiddenOptions.includes(r)||this.argsContainKey(e,r,o)||this.completeOptionKey(r,t,i,o&&!!s.default[r])}))}}choicesFromOptionsCompletions(t,e,s,i){if(this.previousArgHasChoices(e)){const s=this.getPreviousArgChoices(e);s&&s.length>0&&t.push(...s.map((t=>t.replace(/:/g,"\\:"))))}}choicesFromPositionalsCompletions(t,e,s,i){if(""===i&&t.length>0&&this.previousArgHasChoices(e))return;const n=this.yargs.getGroups()[this.usage.getPositionalGroupName()]||[],r=Math.max(this.indexAfterLastReset,this.yargs.getInternalMethods().getContext().commands.length+1),o=n[s._.length-r-1];if(!o)return;const a=this.yargs.getOptions().choices[o]||[];for(const e of a)e.startsWith(i)&&t.push(e.replace(/:/g,"\\:"))}getPreviousArgChoices(t){if(t.length<1)return;let e=t[t.length-1],s="";if(!e.startsWith("-")&&t.length>1&&(s=e,e=t[t.length-2]),!e.startsWith("-"))return;const i=e.replace(/^-+/,""),n=this.yargs.getOptions(),r=[i,...this.yargs.getAliases()[i]||[]];let o;for(const t of r)if(Object.prototype.hasOwnProperty.call(n.key,t)&&Array.isArray(n.choices[t])){o=n.choices[t];break}return o?o.filter((t=>!s||t.startsWith(s))):void 0}previousArgHasChoices(t){const e=this.getPreviousArgChoices(t);return void 0!==e&&e.length>0}argsContainKey(t,e,s){const i=e=>-1!==t.indexOf((/^[^0-9]$/.test(e)?"-":"--")+e);if(i(e))return!0;if(s&&i(`no-${e}`))return!0;if(this.aliases)for(const t of this.aliases[e])if(i(t))return!0;return!1}completeOptionKey(t,e,s,i){var n,r,o,a;let h=t;if(this.zshShell){const e=this.usage.getDescriptions(),s=null===(r=null===(n=null==this?void 0:this.aliases)||void 0===n?void 0:n[t])||void 0===r?void 0:r.find((t=>{const s=e[t];return"string"==typeof s&&s.length>0})),i=s?e[s]:void 0,l=null!==(a=null!==(o=e[t])&&void 0!==o?o:i)&&void 0!==a?a:"";h=`${t.replace(/:/g,"\\:")}:${l.replace("__yargsString__:","").replace(/(\r\n|\n|\r)/gm," ")}`}const l=!/^--/.test(s)&&(t=>/^[^0-9]$/.test(t))(t)?"-":"--";e.push(l+h),i&&e.push(l+"no-"+h)}customCompletion(t,e,s,i){if(d(this.customCompletionFunction,null,this.shim),this.customCompletionFunction.length<3){const t=this.customCompletionFunction(s,e);return f(t)?t.then((t=>{this.shim.process.nextTick((()=>{i(null,t)}))})).catch((t=>{this.shim.process.nextTick((()=>{i(t,void 0)}))})):i(null,t)}return function(t){return t.length>3}(this.customCompletionFunction)?this.customCompletionFunction(s,e,((n=i)=>this.defaultCompletion(t,e,s,n)),(t=>{i(null,t)})):this.customCompletionFunction(s,e,(t=>{i(null,t)}))}getCompletion(t,e){const s=t.length?t[t.length-1]:"",i=this.yargs.parse(t,!0),n=this.customCompletionFunction?i=>this.customCompletion(t,i,s,e):i=>this.defaultCompletion(t,i,s,e);return f(i)?i.then(n):n(i)}generateCompletionScript(t,e){let s=this.zshShell?'#compdef {{app_name}}\n###-begin-{{app_name}}-completions-###\n#\n# yargs command completion script\n#\n# Installation: {{app_path}} {{completion_command}} >> ~/.zshrc\n#    or {{app_path}} {{completion_command}} >> ~/.zprofile on OSX.\n#\n_{{app_name}}_yargs_completions()\n{\n  local reply\n  local si=$IFS\n  IFS=$\'\n\' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" {{app_path}} --get-yargs-completions "${words[@]}"))\n  IFS=$si\n  _describe \'values\' reply\n}\ncompdef _{{app_name}}_yargs_completions {{app_name}}\n###-end-{{app_name}}-completions-###\n':'###-begin-{{app_name}}-completions-###\n#\n# yargs command completion script\n#\n# Installation: {{app_path}} {{completion_command}} >> ~/.bashrc\n#    or {{app_path}} {{completion_command}} >> ~/.bash_profile on OSX.\n#\n_{{app_name}}_yargs_completions()\n{\n    local cur_word args type_list\n\n    cur_word="${COMP_WORDS[COMP_CWORD]}"\n    args=("${COMP_WORDS[@]}")\n\n    # ask yargs to generate completions.\n    type_list=$({{app_path}} --get-yargs-completions "${args[@]}")\n\n    COMPREPLY=( $(compgen -W "${type_list}" -- ${cur_word}) )\n\n    # if no match was found, fall back to filename completion\n    if [ ${#COMPREPLY[@]} -eq 0 ]; then\n      COMPREPLY=()\n    fi\n\n    return 0\n}\ncomplete -o bashdefault -o default -F _{{app_name}}_yargs_completions {{app_name}}\n###-end-{{app_name}}-completions-###\n';const i=this.shim.path.basename(t);return t.match(/\.js$/)&&(t=`./${t}`),s=s.replace(/{{app_name}}/g,i),s=s.replace(/{{completion_command}}/g,e),s.replace(/{{app_path}}/g,t)}registerFunction(t){this.customCompletionFunction=t}setParsed(t){this.aliases=t.aliases}}function N(t,e){if(0===t.length)return e.length;if(0===e.length)return t.length;const s=[];let i,n;for(i=0;i<=e.length;i++)s[i]=[i];for(n=0;n<=t.length;n++)s[0][n]=n;for(i=1;i<=e.length;i++)for(n=1;n<=t.length;n++)e.charAt(i-1)===t.charAt(n-1)?s[i][n]=s[i-1][n-1]:i>1&&n>1&&e.charAt(i-2)===t.charAt(n-1)&&e.charAt(i-1)===t.charAt(n-2)?s[i][n]=s[i-2][n-2]+1:s[i][n]=Math.min(s[i-1][n-1]+1,Math.min(s[i][n-1]+1,s[i-1][n]+1));return s[e.length][t.length]}const H=["$0","--","_"];var z,W,q,U,F,L,V,G,R,T,B,Y,K,J,Z,X,Q,tt,et,st,it,nt,rt,ot,at,ht,lt,ct,ft,dt,ut,pt,gt,mt,yt;const bt=Symbol("copyDoubleDash"),vt=Symbol("copyDoubleDash"),Ot=Symbol("deleteFromParserHintObject"),wt=Symbol("emitWarning"),Ct=Symbol("freeze"),jt=Symbol("getDollarZero"),Mt=Symbol("getParserConfiguration"),_t=Symbol("getUsageConfiguration"),kt=Symbol("guessLocale"),xt=Symbol("guessVersion"),Et=Symbol("parsePositionalNumbers"),At=Symbol("pkgUp"),Pt=Symbol("populateParserHintArray"),St=Symbol("populateParserHintSingleValueDictionary"),$t=Symbol("populateParserHintArrayDictionary"),It=Symbol("populateParserHintDictionary"),Dt=Symbol("sanitizeKey"),Nt=Symbol("setKey"),Ht=Symbol("unfreeze"),zt=Symbol("validateAsync"),Wt=Symbol("getCommandInstance"),qt=Symbol("getContext"),Ut=Symbol("getHasOutput"),Ft=Symbol("getLoggerInstance"),Lt=Symbol("getParseContext"),Vt=Symbol("getUsageInstance"),Gt=Symbol("getValidationInstance"),Rt=Symbol("hasParseCallback"),Tt=Symbol("isGlobalContext"),Bt=Symbol("postProcess"),Yt=Symbol("rebase"),Kt=Symbol("reset"),Jt=Symbol("runYargsParserAndExecuteCommands"),Zt=Symbol("runValidation"),Xt=Symbol("setHasOutput"),Qt=Symbol("kTrackManuallySetKeys");class te{constructor(t=[],e,s,i){this.customScriptName=!1,this.parsed=!1,z.set(this,void 0),W.set(this,void 0),q.set(this,{commands:[],fullCommands:[]}),U.set(this,null),F.set(this,null),L.set(this,"show-hidden"),V.set(this,null),G.set(this,!0),R.set(this,{}),T.set(this,!0),B.set(this,[]),Y.set(this,void 0),K.set(this,{}),J.set(this,!1),Z.set(this,null),X.set(this,!0),Q.set(this,void 0),tt.set(this,""),et.set(this,void 0),st.set(this,void 0),it.set(this,{}),nt.set(this,null),rt.set(this,null),ot.set(this,{}),at.set(this,{}),ht.set(this,void 0),lt.set(this,!1),ct.set(this,void 0),ft.set(this,!1),dt.set(this,!1),ut.set(this,!1),pt.set(this,void 0),gt.set(this,{}),mt.set(this,null),yt.set(this,void 0),O(this,ct,i,"f"),O(this,ht,t,"f"),O(this,W,e,"f"),O(this,st,s,"f"),O(this,Y,new w(this),"f"),this.$0=this[jt](),this[Kt](),O(this,z,v(this,z,"f"),"f"),O(this,pt,v(this,pt,"f"),"f"),O(this,yt,v(this,yt,"f"),"f"),O(this,et,v(this,et,"f"),"f"),v(this,et,"f").showHiddenOpt=v(this,L,"f"),O(this,Q,this[vt](),"f")}addHelpOpt(t,e){return h("[string|boolean] [string]",[t,e],arguments.length),v(this,Z,"f")&&(this[Ot](v(this,Z,"f")),O(this,Z,null,"f")),!1===t&&void 0===e||(O(this,Z,"string"==typeof t?t:"help","f"),this.boolean(v(this,Z,"f")),this.describe(v(this,Z,"f"),e||v(this,pt,"f").deferY18nLookup("Show help"))),this}help(t,e){return this.addHelpOpt(t,e)}addShowHiddenOpt(t,e){if(h("[string|boolean] [string]",[t,e],arguments.length),!1===t&&void 0===e)return this;const s="string"==typeof t?t:v(this,L,"f");return this.boolean(s),this.describe(s,e||v(this,pt,"f").deferY18nLookup("Show hidden options")),v(this,et,"f").showHiddenOpt=s,this}showHidden(t,e){return this.addShowHiddenOpt(t,e)}alias(t,e){return h("<object|string|array> [string|array]",[t,e],arguments.length),this[$t](this.alias.bind(this),"alias",t,e),this}array(t){return h("<array|string>",[t],arguments.length),this[Pt]("array",t),this[Qt](t),this}boolean(t){return h("<array|string>",[t],arguments.length),this[Pt]("boolean",t),this[Qt](t),this}check(t,e){return h("<function> [boolean]",[t,e],arguments.length),this.middleware(((e,s)=>j((()=>t(e,s.getOptions())),(s=>(s?("string"==typeof s||s instanceof Error)&&v(this,pt,"f").fail(s.toString(),s):v(this,pt,"f").fail(v(this,ct,"f").y18n.__("Argument check failed: %s",t.toString())),e)),(t=>(v(this,pt,"f").fail(t.message?t.message:t.toString(),t),e)))),!1,e),this}choices(t,e){return h("<object|string|array> [string|array]",[t,e],arguments.length),this[$t](this.choices.bind(this),"choices",t,e),this}coerce(t,s){if(h("<object|string|array> [function]",[t,s],arguments.length),Array.isArray(t)){if(!s)throw new e("coerce callback must be provided");for(const e of t)this.coerce(e,s);return this}if("object"==typeof t){for(const e of Object.keys(t))this.coerce(e,t[e]);return this}if(!s)throw new e("coerce callback must be provided");return v(this,et,"f").key[t]=!0,v(this,Y,"f").addCoerceMiddleware(((i,n)=>{let r;return Object.prototype.hasOwnProperty.call(i,t)?j((()=>(r=n.getAliases(),s(i[t]))),(e=>{i[t]=e;const s=n.getInternalMethods().getParserConfiguration()["strip-aliased"];if(r[t]&&!0!==s)for(const s of r[t])i[s]=e;return i}),(t=>{throw new e(t.message)})):i}),t),this}conflicts(t,e){return h("<string|object> [string|array]",[t,e],arguments.length),v(this,yt,"f").conflicts(t,e),this}config(t="config",e,s){return h("[object|string] [string|function] [function]",[t,e,s],arguments.length),"object"!=typeof t||Array.isArray(t)?("function"==typeof e&&(s=e,e=void 0),this.describe(t,e||v(this,pt,"f").deferY18nLookup("Path to JSON config file")),(Array.isArray(t)?t:[t]).forEach((t=>{v(this,et,"f").config[t]=s||!0})),this):(t=n(t,v(this,W,"f"),this[Mt]()["deep-merge-config"]||!1,v(this,ct,"f")),v(this,et,"f").configObjects=(v(this,et,"f").configObjects||[]).concat(t),this)}completion(t,e,s){return h("[string] [string|boolean|function] [function]",[t,e,s],arguments.length),"function"==typeof e&&(s=e,e=void 0),O(this,F,t||v(this,F,"f")||"completion","f"),e||!1===e||(e="generate completion script"),this.command(v(this,F,"f"),e),s&&v(this,U,"f").registerFunction(s),this}command(t,e,s,i,n,r){return h("<string|array|object> [string|boolean] [function|object] [function] [array] [boolean|string]",[t,e,s,i,n,r],arguments.length),v(this,z,"f").addHandler(t,e,s,i,n,r),this}commands(t,e,s,i,n,r){return this.command(t,e,s,i,n,r)}commandDir(t,e){h("<string> [object]",[t,e],arguments.length);const s=v(this,st,"f")||v(this,ct,"f").require;return v(this,z,"f").addDirectory(t,s,v(this,ct,"f").getCallerFile(),e),this}count(t){return h("<array|string>",[t],arguments.length),this[Pt]("count",t),this[Qt](t),this}default(t,e,s){return h("<object|string|array> [*] [string]",[t,e,s],arguments.length),s&&(u(t,v(this,ct,"f")),v(this,et,"f").defaultDescription[t]=s),"function"==typeof e&&(u(t,v(this,ct,"f")),v(this,et,"f").defaultDescription[t]||(v(this,et,"f").defaultDescription[t]=v(this,pt,"f").functionDescription(e)),e=e.call()),this[St](this.default.bind(this),"default",t,e),this}defaults(t,e,s){return this.default(t,e,s)}demandCommand(t=1,e,s,i){return h("[number] [number|string] [string|null|undefined] [string|null|undefined]",[t,e,s,i],arguments.length),"number"!=typeof e&&(s=e,e=1/0),this.global("_",!1),v(this,et,"f").demandedCommands._={min:t,max:e,minMsg:s,maxMsg:i},this}demand(t,e,s){return Array.isArray(e)?(e.forEach((t=>{d(s,!0,v(this,ct,"f")),this.demandOption(t,s)})),e=1/0):"number"!=typeof e&&(s=e,e=1/0),"number"==typeof t?(d(s,!0,v(this,ct,"f")),this.demandCommand(t,e,s,s)):Array.isArray(t)?t.forEach((t=>{d(s,!0,v(this,ct,"f")),this.demandOption(t,s)})):"string"==typeof s?this.demandOption(t,s):!0!==s&&void 0!==s||this.demandOption(t),this}demandOption(t,e){return h("<object|string|array> [string]",[t,e],arguments.length),this[St](this.demandOption.bind(this),"demandedOptions",t,e),this}deprecateOption(t,e){return h("<string> [string|boolean]",[t,e],arguments.length),v(this,et,"f").deprecatedOptions[t]=e,this}describe(t,e){return h("<object|string|array> [string]",[t,e],arguments.length),this[Nt](t,!0),v(this,pt,"f").describe(t,e),this}detectLocale(t){return h("<boolean>",[t],arguments.length),O(this,G,t,"f"),this}env(t){return h("[string|boolean]",[t],arguments.length),!1===t?delete v(this,et,"f").envPrefix:v(this,et,"f").envPrefix=t||"",this}epilogue(t){return h("<string>",[t],arguments.length),v(this,pt,"f").epilog(t),this}epilog(t){return this.epilogue(t)}example(t,e){return h("<string|array> [string]",[t,e],arguments.length),Array.isArray(t)?t.forEach((t=>this.example(...t))):v(this,pt,"f").example(t,e),this}exit(t,e){O(this,J,!0,"f"),O(this,V,e,"f"),v(this,T,"f")&&v(this,ct,"f").process.exit(t)}exitProcess(t=!0){return h("[boolean]",[t],arguments.length),O(this,T,t,"f"),this}fail(t){if(h("<function|boolean>",[t],arguments.length),"boolean"==typeof t&&!1!==t)throw new e("Invalid first argument. Expected function or boolean 'false'");return v(this,pt,"f").failFn(t),this}getAliases(){return this.parsed?this.parsed.aliases:{}}async getCompletion(t,e){return h("<array> [function]",[t,e],arguments.length),e?v(this,U,"f").getCompletion(t,e):new Promise(((e,s)=>{v(this,U,"f").getCompletion(t,((t,i)=>{t?s(t):e(i)}))}))}getDemandedOptions(){return h([],0),v(this,et,"f").demandedOptions}getDemandedCommands(){return h([],0),v(this,et,"f").demandedCommands}getDeprecatedOptions(){return h([],0),v(this,et,"f").deprecatedOptions}getDetectLocale(){return v(this,G,"f")}getExitProcess(){return v(this,T,"f")}getGroups(){return Object.assign({},v(this,K,"f"),v(this,at,"f"))}getHelp(){if(O(this,J,!0,"f"),!v(this,pt,"f").hasCachedHelpMessage()){if(!this.parsed){const t=this[Jt](v(this,ht,"f"),void 0,void 0,0,!0);if(f(t))return t.then((()=>v(this,pt,"f").help()))}const t=v(this,z,"f").runDefaultBuilderOn(this);if(f(t))return t.then((()=>v(this,pt,"f").help()))}return Promise.resolve(v(this,pt,"f").help())}getOptions(){return v(this,et,"f")}getStrict(){return v(this,ft,"f")}getStrictCommands(){return v(this,dt,"f")}getStrictOptions(){return v(this,ut,"f")}global(t,e){return h("<string|array> [boolean]",[t,e],arguments.length),t=[].concat(t),!1!==e?v(this,et,"f").local=v(this,et,"f").local.filter((e=>-1===t.indexOf(e))):t.forEach((t=>{v(this,et,"f").local.includes(t)||v(this,et,"f").local.push(t)})),this}group(t,e){h("<string|array> <string>",[t,e],arguments.length);const s=v(this,at,"f")[e]||v(this,K,"f")[e];v(this,at,"f")[e]&&delete v(this,at,"f")[e];const i={};return v(this,K,"f")[e]=(s||[]).concat(t).filter((t=>!i[t]&&(i[t]=!0))),this}hide(t){return h("<string>",[t],arguments.length),v(this,et,"f").hiddenOptions.push(t),this}implies(t,e){return h("<string|object> [number|string|array]",[t,e],arguments.length),v(this,yt,"f").implies(t,e),this}locale(t){return h("[string]",[t],arguments.length),void 0===t?(this[kt](),v(this,ct,"f").y18n.getLocale()):(O(this,G,!1,"f"),v(this,ct,"f").y18n.setLocale(t),this)}middleware(t,e,s){return v(this,Y,"f").addMiddleware(t,!!e,s)}nargs(t,e){return h("<string|object|array> [number]",[t,e],arguments.length),this[St](this.nargs.bind(this),"narg",t,e),this}normalize(t){return h("<array|string>",[t],arguments.length),this[Pt]("normalize",t),this}number(t){return h("<array|string>",[t],arguments.length),this[Pt]("number",t),this[Qt](t),this}option(t,e){if(h("<string|object> [object]",[t,e],arguments.length),"object"==typeof t)Object.keys(t).forEach((e=>{this.options(e,t[e])}));else{"object"!=typeof e&&(e={}),this[Qt](t),!v(this,mt,"f")||"version"!==t&&"version"!==(null==e?void 0:e.alias)||this[wt](['"version" is a reserved word.',"Please do one of the following:",'- Disable version with `yargs.version(false)` if using "version" as an option',"- Use the built-in `yargs.version` method instead (if applicable)","- Use a different option key","https://yargs.js.org/docs/#api-reference-version"].join("\n"),void 0,"versionWarning"),v(this,et,"f").key[t]=!0,e.alias&&this.alias(t,e.alias);const s=e.deprecate||e.deprecated;s&&this.deprecateOption(t,s);const i=e.demand||e.required||e.require;i&&this.demand(t,i),e.demandOption&&this.demandOption(t,"string"==typeof e.demandOption?e.demandOption:void 0),e.conflicts&&this.conflicts(t,e.conflicts),"default"in e&&this.default(t,e.default),void 0!==e.implies&&this.implies(t,e.implies),void 0!==e.nargs&&this.nargs(t,e.nargs),e.config&&this.config(t,e.configParser),e.normalize&&this.normalize(t),e.choices&&this.choices(t,e.choices),e.coerce&&this.coerce(t,e.coerce),e.group&&this.group(t,e.group),(e.boolean||"boolean"===e.type)&&(this.boolean(t),e.alias&&this.boolean(e.alias)),(e.array||"array"===e.type)&&(this.array(t),e.alias&&this.array(e.alias)),(e.number||"number"===e.type)&&(this.number(t),e.alias&&this.number(e.alias)),(e.string||"string"===e.type)&&(this.string(t),e.alias&&this.string(e.alias)),(e.count||"count"===e.type)&&this.count(t),"boolean"==typeof e.global&&this.global(t,e.global),e.defaultDescription&&(v(this,et,"f").defaultDescription[t]=e.defaultDescription),e.skipValidation&&this.skipValidation(t);const n=e.describe||e.description||e.desc,r=v(this,pt,"f").getDescriptions();Object.prototype.hasOwnProperty.call(r,t)&&"string"!=typeof n||this.describe(t,n),e.hidden&&this.hide(t),e.requiresArg&&this.requiresArg(t)}return this}options(t,e){return this.option(t,e)}parse(t,e,s){h("[string|array] [function|boolean|object] [function]",[t,e,s],arguments.length),this[Ct](),void 0===t&&(t=v(this,ht,"f")),"object"==typeof e&&(O(this,rt,e,"f"),e=s),"function"==typeof e&&(O(this,nt,e,"f"),e=!1),e||O(this,ht,t,"f"),v(this,nt,"f")&&O(this,T,!1,"f");const i=this[Jt](t,!!e),n=this.parsed;return v(this,U,"f").setParsed(this.parsed),f(i)?i.then((t=>(v(this,nt,"f")&&v(this,nt,"f").call(this,v(this,V,"f"),t,v(this,tt,"f")),t))).catch((t=>{throw v(this,nt,"f")&&v(this,nt,"f")(t,this.parsed.argv,v(this,tt,"f")),t})).finally((()=>{this[Ht](),this.parsed=n})):(v(this,nt,"f")&&v(this,nt,"f").call(this,v(this,V,"f"),i,v(this,tt,"f")),this[Ht](),this.parsed=n,i)}parseAsync(t,e,s){const i=this.parse(t,e,s);return f(i)?i:Promise.resolve(i)}parseSync(t,s,i){const n=this.parse(t,s,i);if(f(n))throw new e(".parseSync() must not be used with asynchronous builders, handlers, or middleware");return n}parserConfiguration(t){return h("<object>",[t],arguments.length),O(this,it,t,"f"),this}pkgConf(t,e){h("<string> [string]",[t,e],arguments.length);let s=null;const i=this[At](e||v(this,W,"f"));return i[t]&&"object"==typeof i[t]&&(s=n(i[t],e||v(this,W,"f"),this[Mt]()["deep-merge-config"]||!1,v(this,ct,"f")),v(this,et,"f").configObjects=(v(this,et,"f").configObjects||[]).concat(s)),this}positional(t,e){h("<string> <object>",[t,e],arguments.length);const s=["default","defaultDescription","implies","normalize","choices","conflicts","coerce","type","describe","desc","description","alias"];e=g(e,((t,e)=>!("type"===t&&!["string","number","boolean"].includes(e))&&s.includes(t)));const i=v(this,q,"f").fullCommands[v(this,q,"f").fullCommands.length-1],n=i?v(this,z,"f").cmdToParseOptions(i):{array:[],alias:{},default:{},demand:{}};return p(n).forEach((s=>{const i=n[s];Array.isArray(i)?-1!==i.indexOf(t)&&(e[s]=!0):i[t]&&!(s in e)&&(e[s]=i[t])})),this.group(t,v(this,pt,"f").getPositionalGroupName()),this.option(t,e)}recommendCommands(t=!0){return h("[boolean]",[t],arguments.length),O(this,lt,t,"f"),this}required(t,e,s){return this.demand(t,e,s)}require(t,e,s){return this.demand(t,e,s)}requiresArg(t){return h("<array|string|object> [number]",[t],arguments.length),"string"==typeof t&&v(this,et,"f").narg[t]||this[St](this.requiresArg.bind(this),"narg",t,NaN),this}showCompletionScript(t,e){return h("[string] [string]",[t,e],arguments.length),t=t||this.$0,v(this,Q,"f").log(v(this,U,"f").generateCompletionScript(t,e||v(this,F,"f")||"completion")),this}showHelp(t){if(h("[string|function]",[t],arguments.length),O(this,J,!0,"f"),!v(this,pt,"f").hasCachedHelpMessage()){if(!this.parsed){const e=this[Jt](v(this,ht,"f"),void 0,void 0,0,!0);if(f(e))return e.then((()=>{v(this,pt,"f").showHelp(t)})),this}const e=v(this,z,"f").runDefaultBuilderOn(this);if(f(e))return e.then((()=>{v(this,pt,"f").showHelp(t)})),this}return v(this,pt,"f").showHelp(t),this}scriptName(t){return this.customScriptName=!0,this.$0=t,this}showHelpOnFail(t,e){return h("[boolean|string] [string]",[t,e],arguments.length),v(this,pt,"f").showHelpOnFail(t,e),this}showVersion(t){return h("[string|function]",[t],arguments.length),v(this,pt,"f").showVersion(t),this}skipValidation(t){return h("<array|string>",[t],arguments.length),this[Pt]("skipValidation",t),this}strict(t){return h("[boolean]",[t],arguments.length),O(this,ft,!1!==t,"f"),this}strictCommands(t){return h("[boolean]",[t],arguments.length),O(this,dt,!1!==t,"f"),this}strictOptions(t){return h("[boolean]",[t],arguments.length),O(this,ut,!1!==t,"f"),this}string(t){return h("<array|string>",[t],arguments.length),this[Pt]("string",t),this[Qt](t),this}terminalWidth(){return h([],0),v(this,ct,"f").process.stdColumns}updateLocale(t){return this.updateStrings(t)}updateStrings(t){return h("<object>",[t],arguments.length),O(this,G,!1,"f"),v(this,ct,"f").y18n.updateLocale(t),this}usage(t,s,i,n){if(h("<string|null|undefined> [string|boolean] [function|object] [function]",[t,s,i,n],arguments.length),void 0!==s){if(d(t,null,v(this,ct,"f")),(t||"").match(/^\$0( |$)/))return this.command(t,s,i,n);throw new e(".usage() description must start with $0 if being used as alias for .command()")}return v(this,pt,"f").usage(t),this}usageConfiguration(t){return h("<object>",[t],arguments.length),O(this,gt,t,"f"),this}version(t,e,s){const i="version";if(h("[boolean|string] [string] [string]",[t,e,s],arguments.length),v(this,mt,"f")&&(this[Ot](v(this,mt,"f")),v(this,pt,"f").version(void 0),O(this,mt,null,"f")),0===arguments.length)s=this[xt](),t=i;else if(1===arguments.length){if(!1===t)return this;s=t,t=i}else 2===arguments.length&&(s=e,e=void 0);return O(this,mt,"string"==typeof t?t:i,"f"),e=e||v(this,pt,"f").deferY18nLookup("Show version number"),v(this,pt,"f").version(s||void 0),this.boolean(v(this,mt,"f")),this.describe(v(this,mt,"f"),e),this}wrap(t){return h("<number|null|undefined>",[t],arguments.length),v(this,pt,"f").wrap(t),this}[(z=new WeakMap,W=new WeakMap,q=new WeakMap,U=new WeakMap,F=new WeakMap,L=new WeakMap,V=new WeakMap,G=new WeakMap,R=new WeakMap,T=new WeakMap,B=new WeakMap,Y=new WeakMap,K=new WeakMap,J=new WeakMap,Z=new WeakMap,X=new WeakMap,Q=new WeakMap,tt=new WeakMap,et=new WeakMap,st=new WeakMap,it=new WeakMap,nt=new WeakMap,rt=new WeakMap,ot=new WeakMap,at=new WeakMap,ht=new WeakMap,lt=new WeakMap,ct=new WeakMap,ft=new WeakMap,dt=new WeakMap,ut=new WeakMap,pt=new WeakMap,gt=new WeakMap,mt=new WeakMap,yt=new WeakMap,bt)](t){if(!t._||!t["--"])return t;t._.push.apply(t._,t["--"]);try{delete t["--"]}catch(t){}return t}[vt](){return{log:(...t)=>{this[Rt]()||console.log(...t),O(this,J,!0,"f"),v(this,tt,"f").length&&O(this,tt,v(this,tt,"f")+"\n","f"),O(this,tt,v(this,tt,"f")+t.join(" "),"f")},error:(...t)=>{this[Rt]()||console.error(...t),O(this,J,!0,"f"),v(this,tt,"f").length&&O(this,tt,v(this,tt,"f")+"\n","f"),O(this,tt,v(this,tt,"f")+t.join(" "),"f")}}}[Ot](t){p(v(this,et,"f")).forEach((e=>{if("configObjects"===e)return;const s=v(this,et,"f")[e];Array.isArray(s)?s.includes(t)&&s.splice(s.indexOf(t),1):"object"==typeof s&&delete s[t]})),delete v(this,pt,"f").getDescriptions()[t]}[wt](t,e,s){v(this,R,"f")[s]||(v(this,ct,"f").process.emitWarning(t,e),v(this,R,"f")[s]=!0)}[Ct](){v(this,B,"f").push({options:v(this,et,"f"),configObjects:v(this,et,"f").configObjects.slice(0),exitProcess:v(this,T,"f"),groups:v(this,K,"f"),strict:v(this,ft,"f"),strictCommands:v(this,dt,"f"),strictOptions:v(this,ut,"f"),completionCommand:v(this,F,"f"),output:v(this,tt,"f"),exitError:v(this,V,"f"),hasOutput:v(this,J,"f"),parsed:this.parsed,parseFn:v(this,nt,"f"),parseContext:v(this,rt,"f")}),v(this,pt,"f").freeze(),v(this,yt,"f").freeze(),v(this,z,"f").freeze(),v(this,Y,"f").freeze()}[jt](){let t,e="";return t=/\b(node|iojs|electron)(\.exe)?$/.test(v(this,ct,"f").process.argv()[0])?v(this,ct,"f").process.argv().slice(1,2):v(this,ct,"f").process.argv().slice(0,1),e=t.map((t=>{const e=this[Yt](v(this,W,"f"),t);return t.match(/^(\/|([a-zA-Z]:)?\\)/)&&e.length<t.length?e:t})).join(" ").trim(),v(this,ct,"f").getEnv("_")&&v(this,ct,"f").getProcessArgvBin()===v(this,ct,"f").getEnv("_")&&(e=v(this,ct,"f").getEnv("_").replace(`${v(this,ct,"f").path.dirname(v(this,ct,"f").process.execPath())}/`,"")),e}[Mt](){return v(this,it,"f")}[_t](){return v(this,gt,"f")}[kt](){if(!v(this,G,"f"))return;const t=v(this,ct,"f").getEnv("LC_ALL")||v(this,ct,"f").getEnv("LC_MESSAGES")||v(this,ct,"f").getEnv("LANG")||v(this,ct,"f").getEnv("LANGUAGE")||"en_US";this.locale(t.replace(/[.:].*/,""))}[xt](){return this[At]().version||"unknown"}[Et](t){const e=t["--"]?t["--"]:t._;for(let t,s=0;void 0!==(t=e[s]);s++)v(this,ct,"f").Parser.looksLikeNumber(t)&&Number.isSafeInteger(Math.floor(parseFloat(`${t}`)))&&(e[s]=Number(t));return t}[At](t){const e=t||"*";if(v(this,ot,"f")[e])return v(this,ot,"f")[e];let s={};try{let e=t||v(this,ct,"f").mainFilename;!t&&v(this,ct,"f").path.extname(e)&&(e=v(this,ct,"f").path.dirname(e));const i=v(this,ct,"f").findUp(e,((t,e)=>e.includes("package.json")?"package.json":void 0));d(i,void 0,v(this,ct,"f")),s=JSON.parse(v(this,ct,"f").readFileSync(i,"utf8"))}catch(t){}return v(this,ot,"f")[e]=s||{},v(this,ot,"f")[e]}[Pt](t,e){(e=[].concat(e)).forEach((e=>{e=this[Dt](e),v(this,et,"f")[t].push(e)}))}[St](t,e,s,i){this[It](t,e,s,i,((t,e,s)=>{v(this,et,"f")[t][e]=s}))}[$t](t,e,s,i){this[It](t,e,s,i,((t,e,s)=>{v(this,et,"f")[t][e]=(v(this,et,"f")[t][e]||[]).concat(s)}))}[It](t,e,s,i,n){if(Array.isArray(s))s.forEach((e=>{t(e,i)}));else if((t=>"object"==typeof t)(s))for(const e of p(s))t(e,s[e]);else n(e,this[Dt](s),i)}[Dt](t){return"__proto__"===t?"___proto___":t}[Nt](t,e){return this[St](this[Nt].bind(this),"key",t,e),this}[Ht](){var t,e,s,i,n,r,o,a,h,l,c,f;const u=v(this,B,"f").pop();let p;d(u,void 0,v(this,ct,"f")),t=this,e=this,s=this,i=this,n=this,r=this,o=this,a=this,h=this,l=this,c=this,f=this,({options:{set value(e){O(t,et,e,"f")}}.value,configObjects:p,exitProcess:{set value(t){O(e,T,t,"f")}}.value,groups:{set value(t){O(s,K,t,"f")}}.value,output:{set value(t){O(i,tt,t,"f")}}.value,exitError:{set value(t){O(n,V,t,"f")}}.value,hasOutput:{set value(t){O(r,J,t,"f")}}.value,parsed:this.parsed,strict:{set value(t){O(o,ft,t,"f")}}.value,strictCommands:{set value(t){O(a,dt,t,"f")}}.value,strictOptions:{set value(t){O(h,ut,t,"f")}}.value,completionCommand:{set value(t){O(l,F,t,"f")}}.value,parseFn:{set value(t){O(c,nt,t,"f")}}.value,parseContext:{set value(t){O(f,rt,t,"f")}}.value}=u),v(this,et,"f").configObjects=p,v(this,pt,"f").unfreeze(),v(this,yt,"f").unfreeze(),v(this,z,"f").unfreeze(),v(this,Y,"f").unfreeze()}[zt](t,e){return j(e,(e=>(t(e),e)))}getInternalMethods(){return{getCommandInstance:this[Wt].bind(this),getContext:this[qt].bind(this),getHasOutput:this[Ut].bind(this),getLoggerInstance:this[Ft].bind(this),getParseContext:this[Lt].bind(this),getParserConfiguration:this[Mt].bind(this),getUsageConfiguration:this[_t].bind(this),getUsageInstance:this[Vt].bind(this),getValidationInstance:this[Gt].bind(this),hasParseCallback:this[Rt].bind(this),isGlobalContext:this[Tt].bind(this),postProcess:this[Bt].bind(this),reset:this[Kt].bind(this),runValidation:this[Zt].bind(this),runYargsParserAndExecuteCommands:this[Jt].bind(this),setHasOutput:this[Xt].bind(this)}}[Wt](){return v(this,z,"f")}[qt](){return v(this,q,"f")}[Ut](){return v(this,J,"f")}[Ft](){return v(this,Q,"f")}[Lt](){return v(this,rt,"f")||{}}[Vt](){return v(this,pt,"f")}[Gt](){return v(this,yt,"f")}[Rt](){return!!v(this,nt,"f")}[Tt](){return v(this,X,"f")}[Bt](t,e,s,i){if(s)return t;if(f(t))return t;e||(t=this[bt](t));return(this[Mt]()["parse-positional-numbers"]||void 0===this[Mt]()["parse-positional-numbers"])&&(t=this[Et](t)),i&&(t=C(t,this,v(this,Y,"f").getMiddleware(),!1)),t}[Kt](t={}){O(this,et,v(this,et,"f")||{},"f");const e={};e.local=v(this,et,"f").local||[],e.configObjects=v(this,et,"f").configObjects||[];const s={};e.local.forEach((e=>{s[e]=!0,(t[e]||[]).forEach((t=>{s[t]=!0}))})),Object.assign(v(this,at,"f"),Object.keys(v(this,K,"f")).reduce(((t,e)=>{const i=v(this,K,"f")[e].filter((t=>!(t in s)));return i.length>0&&(t[e]=i),t}),{})),O(this,K,{},"f");return["array","boolean","string","skipValidation","count","normalize","number","hiddenOptions"].forEach((t=>{e[t]=(v(this,et,"f")[t]||[]).filter((t=>!s[t]))})),["narg","key","alias","default","defaultDescription","config","choices","demandedOptions","demandedCommands","deprecatedOptions"].forEach((t=>{e[t]=g(v(this,et,"f")[t],(t=>!s[t]))})),e.envPrefix=v(this,et,"f").envPrefix,O(this,et,e,"f"),O(this,pt,v(this,pt,"f")?v(this,pt,"f").reset(s):P(this,v(this,ct,"f")),"f"),O(this,yt,v(this,yt,"f")?v(this,yt,"f").reset(s):function(t,e,s){const i=s.y18n.__,n=s.y18n.__n,r={nonOptionCount:function(s){const i=t.getDemandedCommands(),r=s._.length+(s["--"]?s["--"].length:0)-t.getInternalMethods().getContext().commands.length;i._&&(r<i._.min||r>i._.max)&&(r<i._.min?void 0!==i._.minMsg?e.fail(i._.minMsg?i._.minMsg.replace(/\$0/g,r.toString()).replace(/\$1/,i._.min.toString()):null):e.fail(n("Not enough non-option arguments: got %s, need at least %s","Not enough non-option arguments: got %s, need at least %s",r,r.toString(),i._.min.toString())):r>i._.max&&(void 0!==i._.maxMsg?e.fail(i._.maxMsg?i._.maxMsg.replace(/\$0/g,r.toString()).replace(/\$1/,i._.max.toString()):null):e.fail(n("Too many non-option arguments: got %s, maximum of %s","Too many non-option arguments: got %s, maximum of %s",r,r.toString(),i._.max.toString()))))},positionalCount:function(t,s){s<t&&e.fail(n("Not enough non-option arguments: got %s, need at least %s","Not enough non-option arguments: got %s, need at least %s",s,s+"",t+""))},requiredArguments:function(t,s){let i=null;for(const e of Object.keys(s))Object.prototype.hasOwnProperty.call(t,e)&&void 0!==t[e]||(i=i||{},i[e]=s[e]);if(i){const t=[];for(const e of Object.keys(i)){const s=i[e];s&&t.indexOf(s)<0&&t.push(s)}const s=t.length?`\n${t.join("\n")}`:"";e.fail(n("Missing required argument: %s","Missing required arguments: %s",Object.keys(i).length,Object.keys(i).join(", ")+s))}},unknownArguments:function(s,i,o,a,h=!0){var l;const c=t.getInternalMethods().getCommandInstance().getCommands(),f=[],d=t.getInternalMethods().getContext();if(Object.keys(s).forEach((e=>{H.includes(e)||Object.prototype.hasOwnProperty.call(o,e)||Object.prototype.hasOwnProperty.call(t.getInternalMethods().getParseContext(),e)||r.isValidAndSomeAliasIsNotNew(e,i)||f.push(e)})),h&&(d.commands.length>0||c.length>0||a)&&s._.slice(d.commands.length).forEach((t=>{c.includes(""+t)||f.push(""+t)})),h){const e=(null===(l=t.getDemandedCommands()._)||void 0===l?void 0:l.max)||0,i=d.commands.length+e;i<s._.length&&s._.slice(i).forEach((t=>{t=String(t),d.commands.includes(t)||f.includes(t)||f.push(t)}))}f.length&&e.fail(n("Unknown argument: %s","Unknown arguments: %s",f.length,f.map((t=>t.trim()?t:`"${t}"`)).join(", ")))},unknownCommands:function(s){const i=t.getInternalMethods().getCommandInstance().getCommands(),r=[],o=t.getInternalMethods().getContext();return(o.commands.length>0||i.length>0)&&s._.slice(o.commands.length).forEach((t=>{i.includes(""+t)||r.push(""+t)})),r.length>0&&(e.fail(n("Unknown command: %s","Unknown commands: %s",r.length,r.join(", "))),!0)},isValidAndSomeAliasIsNotNew:function(e,s){if(!Object.prototype.hasOwnProperty.call(s,e))return!1;const i=t.parsed.newAliases;return[e,...s[e]].some((t=>!Object.prototype.hasOwnProperty.call(i,t)||!i[e]))},limitedChoices:function(s){const n=t.getOptions(),r={};if(!Object.keys(n.choices).length)return;Object.keys(s).forEach((t=>{-1===H.indexOf(t)&&Object.prototype.hasOwnProperty.call(n.choices,t)&&[].concat(s[t]).forEach((e=>{-1===n.choices[t].indexOf(e)&&void 0!==e&&(r[t]=(r[t]||[]).concat(e))}))}));const o=Object.keys(r);if(!o.length)return;let a=i("Invalid values:");o.forEach((t=>{a+=`\n  ${i("Argument: %s, Given: %s, Choices: %s",t,e.stringifiedValues(r[t]),e.stringifiedValues(n.choices[t]))}`})),e.fail(a)}};let o={};function a(t,e){const s=Number(e);return"number"==typeof(e=isNaN(s)?e:s)?e=t._.length>=e:e.match(/^--no-.+/)?(e=e.match(/^--no-(.+)/)[1],e=!Object.prototype.hasOwnProperty.call(t,e)):e=Object.prototype.hasOwnProperty.call(t,e),e}r.implies=function(e,i){h("<string|object> [array|number|string]",[e,i],arguments.length),"object"==typeof e?Object.keys(e).forEach((t=>{r.implies(t,e[t])})):(t.global(e),o[e]||(o[e]=[]),Array.isArray(i)?i.forEach((t=>r.implies(e,t))):(d(i,void 0,s),o[e].push(i)))},r.getImplied=function(){return o},r.implications=function(t){const s=[];if(Object.keys(o).forEach((e=>{const i=e;(o[e]||[]).forEach((e=>{let n=i;const r=e;n=a(t,n),e=a(t,e),n&&!e&&s.push(` ${i} -> ${r}`)}))})),s.length){let t=`${i("Implications failed:")}\n`;s.forEach((e=>{t+=e})),e.fail(t)}};let l={};r.conflicts=function(e,s){h("<string|object> [array|string]",[e,s],arguments.length),"object"==typeof e?Object.keys(e).forEach((t=>{r.conflicts(t,e[t])})):(t.global(e),l[e]||(l[e]=[]),Array.isArray(s)?s.forEach((t=>r.conflicts(e,t))):l[e].push(s))},r.getConflicting=()=>l,r.conflicting=function(n){Object.keys(n).forEach((t=>{l[t]&&l[t].forEach((s=>{s&&void 0!==n[t]&&void 0!==n[s]&&e.fail(i("Arguments %s and %s are mutually exclusive",t,s))}))})),t.getInternalMethods().getParserConfiguration()["strip-dashed"]&&Object.keys(l).forEach((t=>{l[t].forEach((r=>{r&&void 0!==n[s.Parser.camelCase(t)]&&void 0!==n[s.Parser.camelCase(r)]&&e.fail(i("Arguments %s and %s are mutually exclusive",t,r))}))}))},r.recommendCommands=function(t,s){s=s.sort(((t,e)=>e.length-t.length));let n=null,r=1/0;for(let e,i=0;void 0!==(e=s[i]);i++){const s=N(t,e);s<=3&&s<r&&(r=s,n=e)}n&&e.fail(i("Did you mean %s?",n))},r.reset=function(t){return o=g(o,(e=>!t[e])),l=g(l,(e=>!t[e])),r};const c=[];return r.freeze=function(){c.push({implied:o,conflicting:l})},r.unfreeze=function(){const t=c.pop();d(t,void 0,s),({implied:o,conflicting:l}=t)},r}(this,v(this,pt,"f"),v(this,ct,"f")),"f"),O(this,z,v(this,z,"f")?v(this,z,"f").reset():function(t,e,s,i){return new _(t,e,s,i)}(v(this,pt,"f"),v(this,yt,"f"),v(this,Y,"f"),v(this,ct,"f")),"f"),v(this,U,"f")||O(this,U,function(t,e,s,i){return new D(t,e,s,i)}(this,v(this,pt,"f"),v(this,z,"f"),v(this,ct,"f")),"f"),v(this,Y,"f").reset(),O(this,F,null,"f"),O(this,tt,"","f"),O(this,V,null,"f"),O(this,J,!1,"f"),this.parsed=!1,this}[Yt](t,e){return v(this,ct,"f").path.relative(t,e)}[Jt](t,s,i,n=0,r=!1){let o=!!i||r;t=t||v(this,ht,"f"),v(this,et,"f").__=v(this,ct,"f").y18n.__,v(this,et,"f").configuration=this[Mt]();const a=!!v(this,et,"f").configuration["populate--"],h=Object.assign({},v(this,et,"f").configuration,{"populate--":!0}),l=v(this,ct,"f").Parser.detailed(t,Object.assign({},v(this,et,"f"),{configuration:{"parse-positional-numbers":!1,...h}})),c=Object.assign(l.argv,v(this,rt,"f"));let d;const u=l.aliases;let p=!1,g=!1;Object.keys(c).forEach((t=>{t===v(this,Z,"f")&&c[t]?p=!0:t===v(this,mt,"f")&&c[t]&&(g=!0)})),c.$0=this.$0,this.parsed=l,0===n&&v(this,pt,"f").clearCachedHelpMessage();try{if(this[kt](),s)return this[Bt](c,a,!!i,!1);if(v(this,Z,"f")){[v(this,Z,"f")].concat(u[v(this,Z,"f")]||[]).filter((t=>t.length>1)).includes(""+c._[c._.length-1])&&(c._.pop(),p=!0)}O(this,X,!1,"f");const h=v(this,z,"f").getCommands(),m=v(this,U,"f").completionKey in c,y=p||m||r;if(c._.length){if(h.length){let t;for(let e,s=n||0;void 0!==c._[s];s++){if(e=String(c._[s]),h.includes(e)&&e!==v(this,F,"f")){const t=v(this,z,"f").runCommand(e,this,l,s+1,r,p||g||r);return this[Bt](t,a,!!i,!1)}if(!t&&e!==v(this,F,"f")){t=e;break}}!v(this,z,"f").hasDefaultCommand()&&v(this,lt,"f")&&t&&!y&&v(this,yt,"f").recommendCommands(t,h)}v(this,F,"f")&&c._.includes(v(this,F,"f"))&&!m&&(v(this,T,"f")&&E(!0),this.showCompletionScript(),this.exit(0))}if(v(this,z,"f").hasDefaultCommand()&&!y){const t=v(this,z,"f").runCommand(null,this,l,0,r,p||g||r);return this[Bt](t,a,!!i,!1)}if(m){v(this,T,"f")&&E(!0);const s=(t=[].concat(t)).slice(t.indexOf(`--${v(this,U,"f").completionKey}`)+1);return v(this,U,"f").getCompletion(s,((t,s)=>{if(t)throw new e(t.message);(s||[]).forEach((t=>{v(this,Q,"f").log(t)})),this.exit(0)})),this[Bt](c,!a,!!i,!1)}if(v(this,J,"f")||(p?(v(this,T,"f")&&E(!0),o=!0,this.showHelp("log"),this.exit(0)):g&&(v(this,T,"f")&&E(!0),o=!0,v(this,pt,"f").showVersion("log"),this.exit(0))),!o&&v(this,et,"f").skipValidation.length>0&&(o=Object.keys(c).some((t=>v(this,et,"f").skipValidation.indexOf(t)>=0&&!0===c[t]))),!o){if(l.error)throw new e(l.error.message);if(!m){const t=this[Zt](u,{},l.error);i||(d=C(c,this,v(this,Y,"f").getMiddleware(),!0)),d=this[zt](t,null!=d?d:c),f(d)&&!i&&(d=d.then((()=>C(c,this,v(this,Y,"f").getMiddleware(),!1))))}}}catch(t){if(!(t instanceof e))throw t;v(this,pt,"f").fail(t.message,t)}return this[Bt](null!=d?d:c,a,!!i,!0)}[Zt](t,s,i,n){const r={...this.getDemandedOptions()};return o=>{if(i)throw new e(i.message);v(this,yt,"f").nonOptionCount(o),v(this,yt,"f").requiredArguments(o,r);let a=!1;v(this,dt,"f")&&(a=v(this,yt,"f").unknownCommands(o)),v(this,ft,"f")&&!a?v(this,yt,"f").unknownArguments(o,t,s,!!n):v(this,ut,"f")&&v(this,yt,"f").unknownArguments(o,t,{},!1,!1),v(this,yt,"f").limitedChoices(o),v(this,yt,"f").implications(o),v(this,yt,"f").conflicting(o)}}[Xt](){O(this,J,!0,"f")}[Qt](t){if("string"==typeof t)v(this,et,"f").key[t]=!0;else for(const e of t)v(this,et,"f").key[e]=!0}}var ee,se;const{readFileSync:ie}=__nccwpck_require__(79896),{inspect:ne}=__nccwpck_require__(39023),{resolve:re}=__nccwpck_require__(16928),oe=__nccwpck_require__(13774),ae=__nccwpck_require__(31222);var he,le={assert:{notStrictEqual:t.notStrictEqual,strictEqual:t.strictEqual},cliui:__nccwpck_require__(73602),findUp:__nccwpck_require__(11022),getEnv:t=>process.env[t],getCallerFile:__nccwpck_require__(50505),getProcessArgvBin:y,inspect:ne,mainFilename:null!==(se=null===(ee= false||void 0===__nccwpck_require__(47934)?void 0:__nccwpck_require__.c[__nccwpck_require__.s])||void 0===ee?void 0:ee.filename)&&void 0!==se?se:process.cwd(),Parser:ae,path:__nccwpck_require__(16928),process:{argv:()=>process.argv,cwd:process.cwd,emitWarning:(t,e)=>process.emitWarning(t,e),execPath:()=>process.execPath,exit:t=>{process.exit(t)},nextTick:process.nextTick,stdColumns:void 0!==process.stdout.columns?process.stdout.columns:null},readFileSync:ie,require:__nccwpck_require__(47934),requireDirectory:__nccwpck_require__(82613),stringWidth:__nccwpck_require__(75296),y18n:oe({directory:re(__dirname,"../locales"),updateFiles:!1})};const ce=(null===(he=null===process||void 0===process?void 0:process.env)||void 0===he?void 0:he.YARGS_MIN_NODE_VERSION)?Number(process.env.YARGS_MIN_NODE_VERSION):12;if(process&&process.version){if(Number(process.version.match(/v([^.]+)/)[1])<ce)throw Error(`yargs supports a minimum Node.js version of ${ce}. Read our version support policy: https://github.com/yargs/yargs#supported-nodejs-versions`)}const fe=__nccwpck_require__(31222);var de,ue={applyExtends:n,cjsPlatformShim:le,Yargs:(de=le,(t=[],e=de.process.cwd(),s)=>{const i=new te(t,e,s,de);return Object.defineProperty(i,"argv",{get:()=>i.parse(),enumerable:!0}),i.help(),i.version(),i}),argsert:h,isPromise:f,objFilter:g,parseCommand:o,Parser:fe,processArgv:b,YError:e};module.exports=ue;
-
-
-/***/ }),
-
-/***/ 95569:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-// classic singleton yargs API, to use yargs
-// without running as a singleton do:
-// require('yargs/yargs')(process.argv.slice(2))
-const {Yargs, processArgv} = __nccwpck_require__(86208);
-
-Argv(processArgv.hideBin(process.argv));
-
-module.exports = Argv;
-
-function Argv(processArgs, cwd) {
-  const argv = Yargs(processArgs, cwd, __nccwpck_require__(37781));
-  singletonify(argv);
-  // TODO(bcoe): warn if argv.parse() or argv.argv is used directly.
-  return argv;
-}
-
-function defineGetter(obj, key, getter) {
-  Object.defineProperty(obj, key, {
-    configurable: true,
-    enumerable: true,
-    get: getter,
-  });
-}
-function lookupGetter(obj, key) {
-  const desc = Object.getOwnPropertyDescriptor(obj, key);
-  if (typeof desc !== 'undefined') {
-    return desc.get;
-  }
-}
-
-/*  Hack an instance of Argv with process.argv into Argv
-    so people can do
-    require('yargs')(['--beeble=1','-z','zizzle']).argv
-    to parse a list of args and
-    require('yargs').argv
-    to get a parsed version of process.argv.
-*/
-function singletonify(inst) {
-  [
-    ...Object.keys(inst),
-    ...Object.getOwnPropertyNames(inst.constructor.prototype),
-  ].forEach(key => {
-    if (key === 'argv') {
-      defineGetter(Argv, key, lookupGetter(inst, key));
-    } else if (typeof inst[key] === 'function') {
-      Argv[key] = inst[key].bind(inst);
-    } else {
-      defineGetter(Argv, '$0', () => inst.$0);
-      defineGetter(Argv, 'parsed', () => inst.parsed);
-    }
-  });
-}
-
-
-/***/ }),
-
-/***/ 31222:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var util = __nccwpck_require__(39023);
-var path = __nccwpck_require__(16928);
-var fs = __nccwpck_require__(79896);
-
-function camelCase(str) {
-    const isCamelCase = str !== str.toLowerCase() && str !== str.toUpperCase();
-    if (!isCamelCase) {
-        str = str.toLowerCase();
-    }
-    if (str.indexOf('-') === -1 && str.indexOf('_') === -1) {
-        return str;
-    }
-    else {
-        let camelcase = '';
-        let nextChrUpper = false;
-        const leadingHyphens = str.match(/^-+/);
-        for (let i = leadingHyphens ? leadingHyphens[0].length : 0; i < str.length; i++) {
-            let chr = str.charAt(i);
-            if (nextChrUpper) {
-                nextChrUpper = false;
-                chr = chr.toUpperCase();
-            }
-            if (i !== 0 && (chr === '-' || chr === '_')) {
-                nextChrUpper = true;
-            }
-            else if (chr !== '-' && chr !== '_') {
-                camelcase += chr;
-            }
-        }
-        return camelcase;
     }
 }
-function decamelize(str, joinString) {
-    const lowercase = str.toLowerCase();
-    joinString = joinString || '-';
-    let notCamelcase = '';
-    for (let i = 0; i < str.length; i++) {
-        const chrLower = lowercase.charAt(i);
-        const chrString = str.charAt(i);
-        if (chrLower !== chrString && i > 0) {
-            notCamelcase += `${joinString}${lowercase.charAt(i)}`;
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/parse-command.js
+function parseCommand(cmd) {
+    const extraSpacesStrippedCommand = cmd.replace(/\s{2,}/g, ' ');
+    const splitCommand = extraSpacesStrippedCommand.split(/\s+(?![^[]*]|[^<]*>)/);
+    const bregex = /\.*[\][<>]/g;
+    const firstCommand = splitCommand.shift();
+    if (!firstCommand)
+        throw new Error(`No command found in: ${cmd}`);
+    const parsedCommand = {
+        cmd: firstCommand.replace(bregex, ''),
+        demanded: [],
+        optional: [],
+    };
+    splitCommand.forEach((cmd, i) => {
+        let variadic = false;
+        cmd = cmd.replace(/\s/g, '');
+        if (/\.+[\]>]/.test(cmd) && i === splitCommand.length - 1)
+            variadic = true;
+        if (/^\[/.test(cmd)) {
+            parsedCommand.optional.push({
+                cmd: cmd.replace(bregex, '').split('|'),
+                variadic,
+            });
         }
         else {
-            notCamelcase += chrString;
+            parsedCommand.demanded.push({
+                cmd: cmd.replace(bregex, '').split('|'),
+                variadic,
+            });
         }
-    }
-    return notCamelcase;
-}
-function looksLikeNumber(x) {
-    if (x === null || x === undefined)
-        return false;
-    if (typeof x === 'number')
-        return true;
-    if (/^0x[0-9a-f]+$/i.test(x))
-        return true;
-    if (/^0[^.]/.test(x))
-        return false;
-    return /^[-]?(?:\d+(?:\.\d*)?|\.\d+)(e[-+]?\d+)?$/.test(x);
+    });
+    return parsedCommand;
 }
 
-function tokenizeArgString(argString) {
-    if (Array.isArray(argString)) {
-        return argString.map(e => typeof e !== 'string' ? e + '' : e);
-    }
-    argString = argString.trim();
-    let i = 0;
-    let prevC = null;
-    let c = null;
-    let opening = null;
-    const args = [];
-    for (let ii = 0; ii < argString.length; ii++) {
-        prevC = c;
-        c = argString.charAt(ii);
-        if (c === ' ' && !opening) {
-            if (!(prevC === ' ')) {
-                i++;
-            }
-            continue;
-        }
-        if (c === opening) {
-            opening = null;
-        }
-        else if ((c === "'" || c === '"') && !opening) {
-            opening = c;
-        }
-        if (!args[i])
-            args[i] = '';
-        args[i] += c;
-    }
-    return args;
-}
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/argsert.js
 
-var DefaultValuesForTypeKey;
-(function (DefaultValuesForTypeKey) {
-    DefaultValuesForTypeKey["BOOLEAN"] = "boolean";
-    DefaultValuesForTypeKey["STRING"] = "string";
-    DefaultValuesForTypeKey["NUMBER"] = "number";
-    DefaultValuesForTypeKey["ARRAY"] = "array";
-})(DefaultValuesForTypeKey || (DefaultValuesForTypeKey = {}));
 
-let mixin;
-class YargsParser {
-    constructor(_mixin) {
-        mixin = _mixin;
+const positionName = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'];
+function argsert(arg1, arg2, arg3) {
+    function parseArgs() {
+        return typeof arg1 === 'object'
+            ? [{ demanded: [], optional: [] }, arg1, arg2]
+            : [
+                parseCommand(`cmd ${arg1}`),
+                arg2,
+                arg3,
+            ];
     }
-    parse(argsInput, options) {
-        const opts = Object.assign({
-            alias: undefined,
-            array: undefined,
-            boolean: undefined,
-            config: undefined,
-            configObjects: undefined,
-            configuration: undefined,
-            coerce: undefined,
-            count: undefined,
-            default: undefined,
-            envPrefix: undefined,
-            narg: undefined,
-            normalize: undefined,
-            string: undefined,
-            number: undefined,
-            __: undefined,
-            key: undefined
-        }, options);
-        const args = tokenizeArgString(argsInput);
-        const inputIsString = typeof argsInput === 'string';
-        const aliases = combineAliases(Object.assign(Object.create(null), opts.alias));
-        const configuration = Object.assign({
-            'boolean-negation': true,
-            'camel-case-expansion': true,
-            'combine-arrays': false,
-            'dot-notation': true,
-            'duplicate-arguments-array': true,
-            'flatten-duplicate-arrays': true,
-            'greedy-arrays': true,
-            'halt-at-non-option': false,
-            'nargs-eats-options': false,
-            'negation-prefix': 'no-',
-            'parse-numbers': true,
-            'parse-positional-numbers': true,
-            'populate--': false,
-            'set-placeholder-key': false,
-            'short-option-groups': true,
-            'strip-aliased': false,
-            'strip-dashed': false,
-            'unknown-options-as-args': false
-        }, opts.configuration);
-        const defaults = Object.assign(Object.create(null), opts.default);
-        const configObjects = opts.configObjects || [];
-        const envPrefix = opts.envPrefix;
-        const notFlagsOption = configuration['populate--'];
-        const notFlagsArgv = notFlagsOption ? '--' : '_';
-        const newAliases = Object.create(null);
-        const defaulted = Object.create(null);
-        const __ = opts.__ || mixin.format;
-        const flags = {
-            aliases: Object.create(null),
-            arrays: Object.create(null),
-            bools: Object.create(null),
-            strings: Object.create(null),
-            numbers: Object.create(null),
-            counts: Object.create(null),
-            normalize: Object.create(null),
-            configs: Object.create(null),
-            nargs: Object.create(null),
-            coercions: Object.create(null),
-            keys: []
-        };
-        const negative = /^-([0-9]+(\.[0-9]+)?|\.[0-9]+)$/;
-        const negatedBoolean = new RegExp('^--' + configuration['negation-prefix'] + '(.+)');
-        [].concat(opts.array || []).filter(Boolean).forEach(function (opt) {
-            const key = typeof opt === 'object' ? opt.key : opt;
-            const assignment = Object.keys(opt).map(function (key) {
-                const arrayFlagKeys = {
-                    boolean: 'bools',
-                    string: 'strings',
-                    number: 'numbers'
-                };
-                return arrayFlagKeys[key];
-            }).filter(Boolean).pop();
-            if (assignment) {
-                flags[assignment][key] = true;
-            }
-            flags.arrays[key] = true;
-            flags.keys.push(key);
+    try {
+        let position = 0;
+        const [parsed, callerArguments, _length] = parseArgs();
+        const args = [].slice.call(callerArguments);
+        while (args.length && args[args.length - 1] === undefined)
+            args.pop();
+        const length = _length || args.length;
+        if (length < parsed.demanded.length) {
+            throw new YError(`Not enough arguments provided. Expected ${parsed.demanded.length} but received ${args.length}.`);
+        }
+        const totalCommands = parsed.demanded.length + parsed.optional.length;
+        if (length > totalCommands) {
+            throw new YError(`Too many arguments provided. Expected max ${totalCommands} but received ${length}.`);
+        }
+        parsed.demanded.forEach(demanded => {
+            const arg = args.shift();
+            const observedType = guessType(arg);
+            const matchingTypes = demanded.cmd.filter(type => type === observedType || type === '*');
+            if (matchingTypes.length === 0)
+                argumentTypeError(observedType, demanded.cmd, position);
+            position += 1;
         });
-        [].concat(opts.boolean || []).filter(Boolean).forEach(function (key) {
-            flags.bools[key] = true;
-            flags.keys.push(key);
-        });
-        [].concat(opts.string || []).filter(Boolean).forEach(function (key) {
-            flags.strings[key] = true;
-            flags.keys.push(key);
-        });
-        [].concat(opts.number || []).filter(Boolean).forEach(function (key) {
-            flags.numbers[key] = true;
-            flags.keys.push(key);
-        });
-        [].concat(opts.count || []).filter(Boolean).forEach(function (key) {
-            flags.counts[key] = true;
-            flags.keys.push(key);
-        });
-        [].concat(opts.normalize || []).filter(Boolean).forEach(function (key) {
-            flags.normalize[key] = true;
-            flags.keys.push(key);
-        });
-        if (typeof opts.narg === 'object') {
-            Object.entries(opts.narg).forEach(([key, value]) => {
-                if (typeof value === 'number') {
-                    flags.nargs[key] = value;
-                    flags.keys.push(key);
-                }
-            });
-        }
-        if (typeof opts.coerce === 'object') {
-            Object.entries(opts.coerce).forEach(([key, value]) => {
-                if (typeof value === 'function') {
-                    flags.coercions[key] = value;
-                    flags.keys.push(key);
-                }
-            });
-        }
-        if (typeof opts.config !== 'undefined') {
-            if (Array.isArray(opts.config) || typeof opts.config === 'string') {
-                [].concat(opts.config).filter(Boolean).forEach(function (key) {
-                    flags.configs[key] = true;
-                });
-            }
-            else if (typeof opts.config === 'object') {
-                Object.entries(opts.config).forEach(([key, value]) => {
-                    if (typeof value === 'boolean' || typeof value === 'function') {
-                        flags.configs[key] = value;
-                    }
-                });
-            }
-        }
-        extendAliases(opts.key, aliases, opts.default, flags.arrays);
-        Object.keys(defaults).forEach(function (key) {
-            (flags.aliases[key] || []).forEach(function (alias) {
-                defaults[alias] = defaults[key];
-            });
-        });
-        let error = null;
-        checkConfiguration();
-        let notFlags = [];
-        const argv = Object.assign(Object.create(null), { _: [] });
-        const argvReturn = {};
-        for (let i = 0; i < args.length; i++) {
-            const arg = args[i];
-            const truncatedArg = arg.replace(/^-{3,}/, '---');
-            let broken;
-            let key;
-            let letters;
-            let m;
-            let next;
-            let value;
-            if (arg !== '--' && /^-/.test(arg) && isUnknownOptionAsArg(arg)) {
-                pushPositional(arg);
-            }
-            else if (truncatedArg.match(/^---+(=|$)/)) {
-                pushPositional(arg);
-                continue;
-            }
-            else if (arg.match(/^--.+=/) || (!configuration['short-option-groups'] && arg.match(/^-.+=/))) {
-                m = arg.match(/^--?([^=]+)=([\s\S]*)$/);
-                if (m !== null && Array.isArray(m) && m.length >= 3) {
-                    if (checkAllAliases(m[1], flags.arrays)) {
-                        i = eatArray(i, m[1], args, m[2]);
-                    }
-                    else if (checkAllAliases(m[1], flags.nargs) !== false) {
-                        i = eatNargs(i, m[1], args, m[2]);
-                    }
-                    else {
-                        setArg(m[1], m[2], true);
-                    }
-                }
-            }
-            else if (arg.match(negatedBoolean) && configuration['boolean-negation']) {
-                m = arg.match(negatedBoolean);
-                if (m !== null && Array.isArray(m) && m.length >= 2) {
-                    key = m[1];
-                    setArg(key, checkAllAliases(key, flags.arrays) ? [false] : false);
-                }
-            }
-            else if (arg.match(/^--.+/) || (!configuration['short-option-groups'] && arg.match(/^-[^-]+/))) {
-                m = arg.match(/^--?(.+)/);
-                if (m !== null && Array.isArray(m) && m.length >= 2) {
-                    key = m[1];
-                    if (checkAllAliases(key, flags.arrays)) {
-                        i = eatArray(i, key, args);
-                    }
-                    else if (checkAllAliases(key, flags.nargs) !== false) {
-                        i = eatNargs(i, key, args);
-                    }
-                    else {
-                        next = args[i + 1];
-                        if (next !== undefined && (!next.match(/^-/) ||
-                            next.match(negative)) &&
-                            !checkAllAliases(key, flags.bools) &&
-                            !checkAllAliases(key, flags.counts)) {
-                            setArg(key, next);
-                            i++;
-                        }
-                        else if (/^(true|false)$/.test(next)) {
-                            setArg(key, next);
-                            i++;
-                        }
-                        else {
-                            setArg(key, defaultValue(key));
-                        }
-                    }
-                }
-            }
-            else if (arg.match(/^-.\..+=/)) {
-                m = arg.match(/^-([^=]+)=([\s\S]*)$/);
-                if (m !== null && Array.isArray(m) && m.length >= 3) {
-                    setArg(m[1], m[2]);
-                }
-            }
-            else if (arg.match(/^-.\..+/) && !arg.match(negative)) {
-                next = args[i + 1];
-                m = arg.match(/^-(.\..+)/);
-                if (m !== null && Array.isArray(m) && m.length >= 2) {
-                    key = m[1];
-                    if (next !== undefined && !next.match(/^-/) &&
-                        !checkAllAliases(key, flags.bools) &&
-                        !checkAllAliases(key, flags.counts)) {
-                        setArg(key, next);
-                        i++;
-                    }
-                    else {
-                        setArg(key, defaultValue(key));
-                    }
-                }
-            }
-            else if (arg.match(/^-[^-]+/) && !arg.match(negative)) {
-                letters = arg.slice(1, -1).split('');
-                broken = false;
-                for (let j = 0; j < letters.length; j++) {
-                    next = arg.slice(j + 2);
-                    if (letters[j + 1] && letters[j + 1] === '=') {
-                        value = arg.slice(j + 3);
-                        key = letters[j];
-                        if (checkAllAliases(key, flags.arrays)) {
-                            i = eatArray(i, key, args, value);
-                        }
-                        else if (checkAllAliases(key, flags.nargs) !== false) {
-                            i = eatNargs(i, key, args, value);
-                        }
-                        else {
-                            setArg(key, value);
-                        }
-                        broken = true;
-                        break;
-                    }
-                    if (next === '-') {
-                        setArg(letters[j], next);
-                        continue;
-                    }
-                    if (/[A-Za-z]/.test(letters[j]) &&
-                        /^-?\d+(\.\d*)?(e-?\d+)?$/.test(next) &&
-                        checkAllAliases(next, flags.bools) === false) {
-                        setArg(letters[j], next);
-                        broken = true;
-                        break;
-                    }
-                    if (letters[j + 1] && letters[j + 1].match(/\W/)) {
-                        setArg(letters[j], next);
-                        broken = true;
-                        break;
-                    }
-                    else {
-                        setArg(letters[j], defaultValue(letters[j]));
-                    }
-                }
-                key = arg.slice(-1)[0];
-                if (!broken && key !== '-') {
-                    if (checkAllAliases(key, flags.arrays)) {
-                        i = eatArray(i, key, args);
-                    }
-                    else if (checkAllAliases(key, flags.nargs) !== false) {
-                        i = eatNargs(i, key, args);
-                    }
-                    else {
-                        next = args[i + 1];
-                        if (next !== undefined && (!/^(-|--)[^-]/.test(next) ||
-                            next.match(negative)) &&
-                            !checkAllAliases(key, flags.bools) &&
-                            !checkAllAliases(key, flags.counts)) {
-                            setArg(key, next);
-                            i++;
-                        }
-                        else if (/^(true|false)$/.test(next)) {
-                            setArg(key, next);
-                            i++;
-                        }
-                        else {
-                            setArg(key, defaultValue(key));
-                        }
-                    }
-                }
-            }
-            else if (arg.match(/^-[0-9]$/) &&
-                arg.match(negative) &&
-                checkAllAliases(arg.slice(1), flags.bools)) {
-                key = arg.slice(1);
-                setArg(key, defaultValue(key));
-            }
-            else if (arg === '--') {
-                notFlags = args.slice(i + 1);
-                break;
-            }
-            else if (configuration['halt-at-non-option']) {
-                notFlags = args.slice(i);
-                break;
-            }
-            else {
-                pushPositional(arg);
-            }
-        }
-        applyEnvVars(argv, true);
-        applyEnvVars(argv, false);
-        setConfig(argv);
-        setConfigObjects();
-        applyDefaultsAndAliases(argv, flags.aliases, defaults, true);
-        applyCoercions(argv);
-        if (configuration['set-placeholder-key'])
-            setPlaceholderKeys(argv);
-        Object.keys(flags.counts).forEach(function (key) {
-            if (!hasKey(argv, key.split('.')))
-                setArg(key, 0);
-        });
-        if (notFlagsOption && notFlags.length)
-            argv[notFlagsArgv] = [];
-        notFlags.forEach(function (key) {
-            argv[notFlagsArgv].push(key);
-        });
-        if (configuration['camel-case-expansion'] && configuration['strip-dashed']) {
-            Object.keys(argv).filter(key => key !== '--' && key.includes('-')).forEach(key => {
-                delete argv[key];
-            });
-        }
-        if (configuration['strip-aliased']) {
-            [].concat(...Object.keys(aliases).map(k => aliases[k])).forEach(alias => {
-                if (configuration['camel-case-expansion'] && alias.includes('-')) {
-                    delete argv[alias.split('.').map(prop => camelCase(prop)).join('.')];
-                }
-                delete argv[alias];
-            });
-        }
-        function pushPositional(arg) {
-            const maybeCoercedNumber = maybeCoerceNumber('_', arg);
-            if (typeof maybeCoercedNumber === 'string' || typeof maybeCoercedNumber === 'number') {
-                argv._.push(maybeCoercedNumber);
-            }
-        }
-        function eatNargs(i, key, args, argAfterEqualSign) {
-            let ii;
-            let toEat = checkAllAliases(key, flags.nargs);
-            toEat = typeof toEat !== 'number' || isNaN(toEat) ? 1 : toEat;
-            if (toEat === 0) {
-                if (!isUndefined(argAfterEqualSign)) {
-                    error = Error(__('Argument unexpected for: %s', key));
-                }
-                setArg(key, defaultValue(key));
-                return i;
-            }
-            let available = isUndefined(argAfterEqualSign) ? 0 : 1;
-            if (configuration['nargs-eats-options']) {
-                if (args.length - (i + 1) + available < toEat) {
-                    error = Error(__('Not enough arguments following: %s', key));
-                }
-                available = toEat;
-            }
-            else {
-                for (ii = i + 1; ii < args.length; ii++) {
-                    if (!args[ii].match(/^-[^0-9]/) || args[ii].match(negative) || isUnknownOptionAsArg(args[ii]))
-                        available++;
-                    else
-                        break;
-                }
-                if (available < toEat)
-                    error = Error(__('Not enough arguments following: %s', key));
-            }
-            let consumed = Math.min(available, toEat);
-            if (!isUndefined(argAfterEqualSign) && consumed > 0) {
-                setArg(key, argAfterEqualSign);
-                consumed--;
-            }
-            for (ii = i + 1; ii < (consumed + i + 1); ii++) {
-                setArg(key, args[ii]);
-            }
-            return (i + consumed);
-        }
-        function eatArray(i, key, args, argAfterEqualSign) {
-            let argsToSet = [];
-            let next = argAfterEqualSign || args[i + 1];
-            const nargsCount = checkAllAliases(key, flags.nargs);
-            if (checkAllAliases(key, flags.bools) && !(/^(true|false)$/.test(next))) {
-                argsToSet.push(true);
-            }
-            else if (isUndefined(next) ||
-                (isUndefined(argAfterEqualSign) && /^-/.test(next) && !negative.test(next) && !isUnknownOptionAsArg(next))) {
-                if (defaults[key] !== undefined) {
-                    const defVal = defaults[key];
-                    argsToSet = Array.isArray(defVal) ? defVal : [defVal];
-                }
-            }
-            else {
-                if (!isUndefined(argAfterEqualSign)) {
-                    argsToSet.push(processValue(key, argAfterEqualSign, true));
-                }
-                for (let ii = i + 1; ii < args.length; ii++) {
-                    if ((!configuration['greedy-arrays'] && argsToSet.length > 0) ||
-                        (nargsCount && typeof nargsCount === 'number' && argsToSet.length >= nargsCount))
-                        break;
-                    next = args[ii];
-                    if (/^-/.test(next) && !negative.test(next) && !isUnknownOptionAsArg(next))
-                        break;
-                    i = ii;
-                    argsToSet.push(processValue(key, next, inputIsString));
-                }
-            }
-            if (typeof nargsCount === 'number' && ((nargsCount && argsToSet.length < nargsCount) ||
-                (isNaN(nargsCount) && argsToSet.length === 0))) {
-                error = Error(__('Not enough arguments following: %s', key));
-            }
-            setArg(key, argsToSet);
-            return i;
-        }
-        function setArg(key, val, shouldStripQuotes = inputIsString) {
-            if (/-/.test(key) && configuration['camel-case-expansion']) {
-                const alias = key.split('.').map(function (prop) {
-                    return camelCase(prop);
-                }).join('.');
-                addNewAlias(key, alias);
-            }
-            const value = processValue(key, val, shouldStripQuotes);
-            const splitKey = key.split('.');
-            setKey(argv, splitKey, value);
-            if (flags.aliases[key]) {
-                flags.aliases[key].forEach(function (x) {
-                    const keyProperties = x.split('.');
-                    setKey(argv, keyProperties, value);
-                });
-            }
-            if (splitKey.length > 1 && configuration['dot-notation']) {
-                (flags.aliases[splitKey[0]] || []).forEach(function (x) {
-                    let keyProperties = x.split('.');
-                    const a = [].concat(splitKey);
-                    a.shift();
-                    keyProperties = keyProperties.concat(a);
-                    if (!(flags.aliases[key] || []).includes(keyProperties.join('.'))) {
-                        setKey(argv, keyProperties, value);
-                    }
-                });
-            }
-            if (checkAllAliases(key, flags.normalize) && !checkAllAliases(key, flags.arrays)) {
-                const keys = [key].concat(flags.aliases[key] || []);
-                keys.forEach(function (key) {
-                    Object.defineProperty(argvReturn, key, {
-                        enumerable: true,
-                        get() {
-                            return val;
-                        },
-                        set(value) {
-                            val = typeof value === 'string' ? mixin.normalize(value) : value;
-                        }
-                    });
-                });
-            }
-        }
-        function addNewAlias(key, alias) {
-            if (!(flags.aliases[key] && flags.aliases[key].length)) {
-                flags.aliases[key] = [alias];
-                newAliases[alias] = true;
-            }
-            if (!(flags.aliases[alias] && flags.aliases[alias].length)) {
-                addNewAlias(alias, key);
-            }
-        }
-        function processValue(key, val, shouldStripQuotes) {
-            if (shouldStripQuotes) {
-                val = stripQuotes(val);
-            }
-            if (checkAllAliases(key, flags.bools) || checkAllAliases(key, flags.counts)) {
-                if (typeof val === 'string')
-                    val = val === 'true';
-            }
-            let value = Array.isArray(val)
-                ? val.map(function (v) { return maybeCoerceNumber(key, v); })
-                : maybeCoerceNumber(key, val);
-            if (checkAllAliases(key, flags.counts) && (isUndefined(value) || typeof value === 'boolean')) {
-                value = increment();
-            }
-            if (checkAllAliases(key, flags.normalize) && checkAllAliases(key, flags.arrays)) {
-                if (Array.isArray(val))
-                    value = val.map((val) => { return mixin.normalize(val); });
-                else
-                    value = mixin.normalize(val);
-            }
-            return value;
-        }
-        function maybeCoerceNumber(key, value) {
-            if (!configuration['parse-positional-numbers'] && key === '_')
-                return value;
-            if (!checkAllAliases(key, flags.strings) && !checkAllAliases(key, flags.bools) && !Array.isArray(value)) {
-                const shouldCoerceNumber = looksLikeNumber(value) && configuration['parse-numbers'] && (Number.isSafeInteger(Math.floor(parseFloat(`${value}`))));
-                if (shouldCoerceNumber || (!isUndefined(value) && checkAllAliases(key, flags.numbers))) {
-                    value = Number(value);
-                }
-            }
-            return value;
-        }
-        function setConfig(argv) {
-            const configLookup = Object.create(null);
-            applyDefaultsAndAliases(configLookup, flags.aliases, defaults);
-            Object.keys(flags.configs).forEach(function (configKey) {
-                const configPath = argv[configKey] || configLookup[configKey];
-                if (configPath) {
-                    try {
-                        let config = null;
-                        const resolvedConfigPath = mixin.resolve(mixin.cwd(), configPath);
-                        const resolveConfig = flags.configs[configKey];
-                        if (typeof resolveConfig === 'function') {
-                            try {
-                                config = resolveConfig(resolvedConfigPath);
-                            }
-                            catch (e) {
-                                config = e;
-                            }
-                            if (config instanceof Error) {
-                                error = config;
-                                return;
-                            }
-                        }
-                        else {
-                            config = mixin.require(resolvedConfigPath);
-                        }
-                        setConfigObject(config);
-                    }
-                    catch (ex) {
-                        if (ex.name === 'PermissionDenied')
-                            error = ex;
-                        else if (argv[configKey])
-                            error = Error(__('Invalid JSON config file: %s', configPath));
-                    }
-                }
-            });
-        }
-        function setConfigObject(config, prev) {
-            Object.keys(config).forEach(function (key) {
-                const value = config[key];
-                const fullKey = prev ? prev + '.' + key : key;
-                if (typeof value === 'object' && value !== null && !Array.isArray(value) && configuration['dot-notation']) {
-                    setConfigObject(value, fullKey);
-                }
-                else {
-                    if (!hasKey(argv, fullKey.split('.')) || (checkAllAliases(fullKey, flags.arrays) && configuration['combine-arrays'])) {
-                        setArg(fullKey, value);
-                    }
-                }
-            });
-        }
-        function setConfigObjects() {
-            if (typeof configObjects !== 'undefined') {
-                configObjects.forEach(function (configObject) {
-                    setConfigObject(configObject);
-                });
-            }
-        }
-        function applyEnvVars(argv, configOnly) {
-            if (typeof envPrefix === 'undefined')
+        parsed.optional.forEach(optional => {
+            if (args.length === 0)
                 return;
-            const prefix = typeof envPrefix === 'string' ? envPrefix : '';
-            const env = mixin.env();
-            Object.keys(env).forEach(function (envVar) {
-                if (prefix === '' || envVar.lastIndexOf(prefix, 0) === 0) {
-                    const keys = envVar.split('__').map(function (key, i) {
-                        if (i === 0) {
-                            key = key.substring(prefix.length);
-                        }
-                        return camelCase(key);
-                    });
-                    if (((configOnly && flags.configs[keys.join('.')]) || !configOnly) && !hasKey(argv, keys)) {
-                        setArg(keys.join('.'), env[envVar]);
-                    }
+            const arg = args.shift();
+            const observedType = guessType(arg);
+            const matchingTypes = optional.cmd.filter(type => type === observedType || type === '*');
+            if (matchingTypes.length === 0)
+                argumentTypeError(observedType, optional.cmd, position);
+            position += 1;
+        });
+    }
+    catch (err) {
+        console.warn(err.stack);
+    }
+}
+function guessType(arg) {
+    if (Array.isArray(arg)) {
+        return 'array';
+    }
+    else if (arg === null) {
+        return 'null';
+    }
+    return typeof arg;
+}
+function argumentTypeError(observedType, allowedTypes, position) {
+    throw new YError(`Invalid ${positionName[position] || 'manyith'} argument. Expected ${allowedTypes.join(' or ')} but received ${observedType}.`);
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/middleware.js
+
+
+class GlobalMiddleware {
+    constructor(yargs) {
+        this.globalMiddleware = [];
+        this.frozens = [];
+        this.yargs = yargs;
+    }
+    addMiddleware(callback, applyBeforeValidation, global = true, mutates = false) {
+        argsert('<array|function> [boolean] [boolean] [boolean]', [callback, applyBeforeValidation, global], arguments.length);
+        if (Array.isArray(callback)) {
+            for (let i = 0; i < callback.length; i++) {
+                if (typeof callback[i] !== 'function') {
+                    throw Error('middleware must be a function');
                 }
-            });
+                const m = callback[i];
+                m.applyBeforeValidation = applyBeforeValidation;
+                m.global = global;
+            }
+            Array.prototype.push.apply(this.globalMiddleware, callback);
         }
-        function applyCoercions(argv) {
-            let coerce;
-            const applied = new Set();
-            Object.keys(argv).forEach(function (key) {
-                if (!applied.has(key)) {
-                    coerce = checkAllAliases(key, flags.coercions);
-                    if (typeof coerce === 'function') {
-                        try {
-                            const value = maybeCoerceNumber(key, coerce(argv[key]));
-                            ([].concat(flags.aliases[key] || [], key)).forEach(ali => {
-                                applied.add(ali);
-                                argv[ali] = value;
-                            });
-                        }
-                        catch (err) {
-                            error = err;
-                        }
-                    }
-                }
-            });
+        else if (typeof callback === 'function') {
+            const m = callback;
+            m.applyBeforeValidation = applyBeforeValidation;
+            m.global = global;
+            m.mutates = mutates;
+            this.globalMiddleware.push(callback);
         }
-        function setPlaceholderKeys(argv) {
-            flags.keys.forEach((key) => {
-                if (~key.indexOf('.'))
-                    return;
-                if (typeof argv[key] === 'undefined')
-                    argv[key] = undefined;
-            });
-            return argv;
-        }
-        function applyDefaultsAndAliases(obj, aliases, defaults, canLog = false) {
-            Object.keys(defaults).forEach(function (key) {
-                if (!hasKey(obj, key.split('.'))) {
-                    setKey(obj, key.split('.'), defaults[key]);
-                    if (canLog)
-                        defaulted[key] = true;
-                    (aliases[key] || []).forEach(function (x) {
-                        if (hasKey(obj, x.split('.')))
-                            return;
-                        setKey(obj, x.split('.'), defaults[key]);
-                    });
-                }
-            });
-        }
-        function hasKey(obj, keys) {
-            let o = obj;
-            if (!configuration['dot-notation'])
-                keys = [keys.join('.')];
-            keys.slice(0, -1).forEach(function (key) {
-                o = (o[key] || {});
-            });
-            const key = keys[keys.length - 1];
-            if (typeof o !== 'object')
-                return false;
+        return this.yargs;
+    }
+    addCoerceMiddleware(callback, option) {
+        const aliases = this.yargs.getAliases();
+        this.globalMiddleware = this.globalMiddleware.filter(m => {
+            const toCheck = [...(aliases[option] || []), option];
+            if (!m.option)
+                return true;
             else
-                return key in o;
+                return !toCheck.includes(m.option);
+        });
+        callback.option = option;
+        return this.addMiddleware(callback, true, true, true);
+    }
+    getMiddleware() {
+        return this.globalMiddleware;
+    }
+    freeze() {
+        this.frozens.push([...this.globalMiddleware]);
+    }
+    unfreeze() {
+        const frozen = this.frozens.pop();
+        if (frozen !== undefined)
+            this.globalMiddleware = frozen;
+    }
+    reset() {
+        this.globalMiddleware = this.globalMiddleware.filter(m => m.global);
+    }
+}
+function commandMiddlewareFactory(commandMiddleware) {
+    if (!commandMiddleware)
+        return [];
+    return commandMiddleware.map(middleware => {
+        middleware.applyBeforeValidation = false;
+        return middleware;
+    });
+}
+function applyMiddleware(argv, yargs, middlewares, beforeValidation) {
+    return middlewares.reduce((acc, middleware) => {
+        if (middleware.applyBeforeValidation !== beforeValidation) {
+            return acc;
         }
-        function setKey(obj, keys, value) {
-            let o = obj;
-            if (!configuration['dot-notation'])
-                keys = [keys.join('.')];
-            keys.slice(0, -1).forEach(function (key) {
-                key = sanitizeKey(key);
-                if (typeof o === 'object' && o[key] === undefined) {
-                    o[key] = {};
+        if (middleware.mutates) {
+            if (middleware.applied)
+                return acc;
+            middleware.applied = true;
+        }
+        if (isPromise(acc)) {
+            return acc
+                .then(initialObj => Promise.all([initialObj, middleware(initialObj, yargs)]))
+                .then(([initialObj, middlewareObj]) => Object.assign(initialObj, middlewareObj));
+        }
+        else {
+            const result = middleware(acc, yargs);
+            return isPromise(result)
+                ? result.then(middlewareObj => Object.assign(acc, middlewareObj))
+                : Object.assign(acc, result);
+        }
+    }, argv);
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/utils/maybe-async-result.js
+
+function maybeAsyncResult(getResult, resultHandler, errorHandler = (err) => {
+    throw err;
+}) {
+    try {
+        const result = isFunction(getResult) ? getResult() : getResult;
+        return isPromise(result)
+            ? result.then((result) => resultHandler(result))
+            : resultHandler(result);
+    }
+    catch (err) {
+        return errorHandler(err);
+    }
+}
+function isFunction(arg) {
+    return typeof arg === 'function';
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/command.js
+
+
+
+
+
+
+const DEFAULT_MARKER = /(^\*)|(^\$0)/;
+class CommandInstance {
+    constructor(usage, validation, globalMiddleware, shim) {
+        this.requireCache = new Set();
+        this.handlers = {};
+        this.aliasMap = {};
+        this.frozens = [];
+        this.shim = shim;
+        this.usage = usage;
+        this.globalMiddleware = globalMiddleware;
+        this.validation = validation;
+    }
+    addDirectory(dir, req, callerFile, opts) {
+        opts = opts || {};
+        this.requireCache.add(callerFile);
+        const fullDirPath = this.shim.path.resolve(this.shim.path.dirname(callerFile), dir);
+        const files = this.shim.readdirSync(fullDirPath, {
+            recursive: opts.recurse ? true : false,
+        });
+        if (!Array.isArray(opts.extensions))
+            opts.extensions = ['js'];
+        const visit = typeof opts.visit === 'function' ? opts.visit : (o) => o;
+        for (const fileb of files) {
+            const file = fileb.toString();
+            if (opts.exclude) {
+                let exclude = false;
+                if (typeof opts.exclude === 'function') {
+                    exclude = opts.exclude(file);
                 }
-                if (typeof o[key] !== 'object' || Array.isArray(o[key])) {
-                    if (Array.isArray(o[key])) {
-                        o[key].push({});
+                else {
+                    exclude = opts.exclude.test(file);
+                }
+                if (exclude)
+                    continue;
+            }
+            if (opts.include) {
+                let include = false;
+                if (typeof opts.include === 'function') {
+                    include = opts.include(file);
+                }
+                else {
+                    include = opts.include.test(file);
+                }
+                if (!include)
+                    continue;
+            }
+            let supportedExtension = false;
+            for (const ext of opts.extensions) {
+                if (file.endsWith(ext))
+                    supportedExtension = true;
+            }
+            if (supportedExtension) {
+                const joined = this.shim.path.join(fullDirPath, file);
+                const module = req(joined);
+                const extendableModule = Object.create(null, Object.getOwnPropertyDescriptors({ ...module }));
+                const visited = visit(extendableModule, joined, file);
+                if (visited) {
+                    if (this.requireCache.has(joined))
+                        continue;
+                    else
+                        this.requireCache.add(joined);
+                    if (!extendableModule.command) {
+                        extendableModule.command = this.shim.path.basename(joined, this.shim.path.extname(joined));
+                    }
+                    this.addHandler(extendableModule);
+                }
+            }
+        }
+    }
+    addHandler(cmd, description, builder, handler, commandMiddleware, deprecated) {
+        let aliases = [];
+        const middlewares = commandMiddlewareFactory(commandMiddleware);
+        handler = handler || (() => { });
+        if (Array.isArray(cmd)) {
+            if (isCommandAndAliases(cmd)) {
+                [cmd, ...aliases] = cmd;
+            }
+            else {
+                for (const command of cmd) {
+                    this.addHandler(command);
+                }
+            }
+        }
+        else if (isCommandHandlerDefinition(cmd)) {
+            let command = Array.isArray(cmd.command) || typeof cmd.command === 'string'
+                ? cmd.command
+                : null;
+            if (command === null) {
+                throw new Error(`No command name given for module: ${this.shim.inspect(cmd)}`);
+            }
+            if (cmd.aliases)
+                command = [].concat(command).concat(cmd.aliases);
+            this.addHandler(command, this.extractDesc(cmd), cmd.builder, cmd.handler, cmd.middlewares, cmd.deprecated);
+            return;
+        }
+        else if (isCommandBuilderDefinition(builder)) {
+            this.addHandler([cmd].concat(aliases), description, builder.builder, builder.handler, builder.middlewares, builder.deprecated);
+            return;
+        }
+        if (typeof cmd === 'string') {
+            const parsedCommand = parseCommand(cmd);
+            aliases = aliases.map(alias => parseCommand(alias).cmd);
+            let isDefault = false;
+            const parsedAliases = [parsedCommand.cmd].concat(aliases).filter(c => {
+                if (DEFAULT_MARKER.test(c)) {
+                    isDefault = true;
+                    return false;
+                }
+                return true;
+            });
+            if (parsedAliases.length === 0 && isDefault)
+                parsedAliases.push('$0');
+            if (isDefault) {
+                parsedCommand.cmd = parsedAliases[0];
+                aliases = parsedAliases.slice(1);
+                cmd = cmd.replace(DEFAULT_MARKER, parsedCommand.cmd);
+            }
+            aliases.forEach(alias => {
+                this.aliasMap[alias] = parsedCommand.cmd;
+            });
+            if (description !== false) {
+                this.usage.command(cmd, description, isDefault, aliases, deprecated);
+            }
+            this.handlers[parsedCommand.cmd] = {
+                original: cmd,
+                description,
+                handler,
+                builder: builder || {},
+                middlewares,
+                deprecated,
+                demanded: parsedCommand.demanded,
+                optional: parsedCommand.optional,
+            };
+            if (isDefault)
+                this.defaultCommand = this.handlers[parsedCommand.cmd];
+        }
+    }
+    getCommandHandlers() {
+        return this.handlers;
+    }
+    getCommands() {
+        return Object.keys(this.handlers).concat(Object.keys(this.aliasMap));
+    }
+    hasDefaultCommand() {
+        return !!this.defaultCommand;
+    }
+    runCommand(command, yargs, parsed, commandIndex, helpOnly, helpOrVersionSet) {
+        const commandHandler = this.handlers[command] ||
+            this.handlers[this.aliasMap[command]] ||
+            this.defaultCommand;
+        const currentContext = yargs.getInternalMethods().getContext();
+        const parentCommands = currentContext.commands.slice();
+        const isDefaultCommand = !command;
+        if (command) {
+            currentContext.commands.push(command);
+            currentContext.fullCommands.push(commandHandler.original);
+        }
+        const builderResult = this.applyBuilderUpdateUsageAndParse(isDefaultCommand, commandHandler, yargs, parsed.aliases, parentCommands, commandIndex, helpOnly, helpOrVersionSet);
+        return isPromise(builderResult)
+            ? builderResult.then(result => this.applyMiddlewareAndGetResult(isDefaultCommand, commandHandler, result.innerArgv, currentContext, helpOnly, result.aliases, yargs))
+            : this.applyMiddlewareAndGetResult(isDefaultCommand, commandHandler, builderResult.innerArgv, currentContext, helpOnly, builderResult.aliases, yargs);
+    }
+    applyBuilderUpdateUsageAndParse(isDefaultCommand, commandHandler, yargs, aliases, parentCommands, commandIndex, helpOnly, helpOrVersionSet) {
+        const builder = commandHandler.builder;
+        let innerYargs = yargs;
+        if (isCommandBuilderCallback(builder)) {
+            yargs.getInternalMethods().getUsageInstance().freeze();
+            const builderOutput = builder(yargs.getInternalMethods().reset(aliases), helpOrVersionSet);
+            if (isPromise(builderOutput)) {
+                return builderOutput.then(output => {
+                    innerYargs = isYargsInstance(output) ? output : yargs;
+                    return this.parseAndUpdateUsage(isDefaultCommand, commandHandler, innerYargs, parentCommands, commandIndex, helpOnly);
+                });
+            }
+        }
+        else if (isCommandBuilderOptionDefinitions(builder)) {
+            yargs.getInternalMethods().getUsageInstance().freeze();
+            innerYargs = yargs.getInternalMethods().reset(aliases);
+            Object.keys(commandHandler.builder).forEach(key => {
+                innerYargs.option(key, builder[key]);
+            });
+        }
+        return this.parseAndUpdateUsage(isDefaultCommand, commandHandler, innerYargs, parentCommands, commandIndex, helpOnly);
+    }
+    parseAndUpdateUsage(isDefaultCommand, commandHandler, innerYargs, parentCommands, commandIndex, helpOnly) {
+        if (isDefaultCommand)
+            innerYargs.getInternalMethods().getUsageInstance().unfreeze(true);
+        if (this.shouldUpdateUsage(innerYargs)) {
+            innerYargs
+                .getInternalMethods()
+                .getUsageInstance()
+                .usage(this.usageFromParentCommandsCommandHandler(parentCommands, commandHandler), commandHandler.description);
+        }
+        const innerArgv = innerYargs
+            .getInternalMethods()
+            .runYargsParserAndExecuteCommands(null, undefined, true, commandIndex, helpOnly);
+        return isPromise(innerArgv)
+            ? innerArgv.then(argv => ({
+                aliases: innerYargs.parsed.aliases,
+                innerArgv: argv,
+            }))
+            : {
+                aliases: innerYargs.parsed.aliases,
+                innerArgv: innerArgv,
+            };
+    }
+    shouldUpdateUsage(yargs) {
+        return (!yargs.getInternalMethods().getUsageInstance().getUsageDisabled() &&
+            yargs.getInternalMethods().getUsageInstance().getUsage().length === 0);
+    }
+    usageFromParentCommandsCommandHandler(parentCommands, commandHandler) {
+        const c = DEFAULT_MARKER.test(commandHandler.original)
+            ? commandHandler.original.replace(DEFAULT_MARKER, '').trim()
+            : commandHandler.original;
+        const pc = parentCommands.filter(c => {
+            return !DEFAULT_MARKER.test(c);
+        });
+        pc.push(c);
+        return `$0 ${pc.join(' ')}`;
+    }
+    handleValidationAndGetResult(isDefaultCommand, commandHandler, innerArgv, currentContext, aliases, yargs, middlewares, positionalMap) {
+        if (!yargs.getInternalMethods().getHasOutput()) {
+            const validation = yargs
+                .getInternalMethods()
+                .runValidation(aliases, positionalMap, yargs.parsed.error, isDefaultCommand);
+            innerArgv = maybeAsyncResult(innerArgv, result => {
+                validation(result);
+                return result;
+            });
+        }
+        if (commandHandler.handler && !yargs.getInternalMethods().getHasOutput()) {
+            yargs.getInternalMethods().setHasOutput();
+            const populateDoubleDash = !!yargs.getOptions().configuration['populate--'];
+            yargs
+                .getInternalMethods()
+                .postProcess(innerArgv, populateDoubleDash, false, false);
+            innerArgv = applyMiddleware(innerArgv, yargs, middlewares, false);
+            innerArgv = maybeAsyncResult(innerArgv, result => {
+                const handlerResult = commandHandler.handler(result);
+                return isPromise(handlerResult)
+                    ? handlerResult.then(() => result)
+                    : result;
+            });
+            if (!isDefaultCommand) {
+                yargs.getInternalMethods().getUsageInstance().cacheHelpMessage();
+            }
+            if (isPromise(innerArgv) &&
+                !yargs.getInternalMethods().hasParseCallback()) {
+                innerArgv.catch(error => {
+                    try {
+                        yargs.getInternalMethods().getUsageInstance().fail(null, error);
+                    }
+                    catch (_err) {
+                    }
+                });
+            }
+        }
+        if (!isDefaultCommand) {
+            currentContext.commands.pop();
+            currentContext.fullCommands.pop();
+        }
+        return innerArgv;
+    }
+    applyMiddlewareAndGetResult(isDefaultCommand, commandHandler, innerArgv, currentContext, helpOnly, aliases, yargs) {
+        let positionalMap = {};
+        if (helpOnly)
+            return innerArgv;
+        if (!yargs.getInternalMethods().getHasOutput()) {
+            positionalMap = this.populatePositionals(commandHandler, innerArgv, currentContext, yargs);
+        }
+        const middlewares = this.globalMiddleware
+            .getMiddleware()
+            .slice(0)
+            .concat(commandHandler.middlewares);
+        const maybePromiseArgv = applyMiddleware(innerArgv, yargs, middlewares, true);
+        return isPromise(maybePromiseArgv)
+            ? maybePromiseArgv.then(resolvedInnerArgv => this.handleValidationAndGetResult(isDefaultCommand, commandHandler, resolvedInnerArgv, currentContext, aliases, yargs, middlewares, positionalMap))
+            : this.handleValidationAndGetResult(isDefaultCommand, commandHandler, maybePromiseArgv, currentContext, aliases, yargs, middlewares, positionalMap);
+    }
+    populatePositionals(commandHandler, argv, context, yargs) {
+        argv._ = argv._.slice(context.commands.length);
+        const demanded = commandHandler.demanded.slice(0);
+        const optional = commandHandler.optional.slice(0);
+        const positionalMap = {};
+        this.validation.positionalCount(demanded.length, argv._.length);
+        while (demanded.length) {
+            const demand = demanded.shift();
+            this.populatePositional(demand, argv, positionalMap);
+        }
+        while (optional.length) {
+            const maybe = optional.shift();
+            this.populatePositional(maybe, argv, positionalMap);
+        }
+        argv._ = context.commands.concat(argv._.map(a => '' + a));
+        this.postProcessPositionals(argv, positionalMap, this.cmdToParseOptions(commandHandler.original), yargs);
+        return positionalMap;
+    }
+    populatePositional(positional, argv, positionalMap) {
+        const cmd = positional.cmd[0];
+        if (positional.variadic) {
+            positionalMap[cmd] = argv._.splice(0).map(String);
+        }
+        else {
+            if (argv._.length)
+                positionalMap[cmd] = [String(argv._.shift())];
+        }
+    }
+    cmdToParseOptions(cmdString) {
+        const parseOptions = {
+            array: [],
+            default: {},
+            alias: {},
+            demand: {},
+        };
+        const parsed = parseCommand(cmdString);
+        parsed.demanded.forEach(d => {
+            const [cmd, ...aliases] = d.cmd;
+            if (d.variadic) {
+                parseOptions.array.push(cmd);
+                parseOptions.default[cmd] = [];
+            }
+            parseOptions.alias[cmd] = aliases;
+            parseOptions.demand[cmd] = true;
+        });
+        parsed.optional.forEach(o => {
+            const [cmd, ...aliases] = o.cmd;
+            if (o.variadic) {
+                parseOptions.array.push(cmd);
+                parseOptions.default[cmd] = [];
+            }
+            parseOptions.alias[cmd] = aliases;
+        });
+        return parseOptions;
+    }
+    postProcessPositionals(argv, positionalMap, parseOptions, yargs) {
+        const options = Object.assign({}, yargs.getOptions());
+        options.default = Object.assign(parseOptions.default, options.default);
+        for (const key of Object.keys(parseOptions.alias)) {
+            options.alias[key] = (options.alias[key] || []).concat(parseOptions.alias[key]);
+        }
+        options.array = options.array.concat(parseOptions.array);
+        options.config = {};
+        const unparsed = [];
+        Object.keys(positionalMap).forEach(key => {
+            positionalMap[key].map(value => {
+                if (options.configuration['unknown-options-as-args'])
+                    options.key[key] = true;
+                unparsed.push(`--${key}`);
+                unparsed.push(value);
+            });
+        });
+        if (!unparsed.length)
+            return;
+        const config = Object.assign({}, options.configuration, {
+            'populate--': false,
+        });
+        const parsed = this.shim.Parser.detailed(unparsed, Object.assign({}, options, {
+            configuration: config,
+        }));
+        if (parsed.error) {
+            yargs
+                .getInternalMethods()
+                .getUsageInstance()
+                .fail(parsed.error.message, parsed.error);
+        }
+        else {
+            const positionalKeys = Object.keys(positionalMap);
+            Object.keys(positionalMap).forEach(key => {
+                positionalKeys.push(...parsed.aliases[key]);
+            });
+            Object.keys(parsed.argv).forEach(key => {
+                if (positionalKeys.includes(key)) {
+                    if (!positionalMap[key])
+                        positionalMap[key] = parsed.argv[key];
+                    if (!this.isInConfigs(yargs, key) &&
+                        !this.isDefaulted(yargs, key) &&
+                        Object.prototype.hasOwnProperty.call(argv, key) &&
+                        Object.prototype.hasOwnProperty.call(parsed.argv, key) &&
+                        (Array.isArray(argv[key]) || Array.isArray(parsed.argv[key]))) {
+                        argv[key] = [].concat(argv[key], parsed.argv[key]);
                     }
                     else {
-                        o[key] = [o[key], {}];
+                        argv[key] = parsed.argv[key];
                     }
-                    o = o[key][o[key].length - 1];
-                }
-                else {
-                    o = o[key];
                 }
             });
-            const key = sanitizeKey(keys[keys.length - 1]);
-            const isTypeArray = checkAllAliases(keys.join('.'), flags.arrays);
-            const isValueArray = Array.isArray(value);
-            let duplicate = configuration['duplicate-arguments-array'];
-            if (!duplicate && checkAllAliases(key, flags.nargs)) {
-                duplicate = true;
-                if ((!isUndefined(o[key]) && flags.nargs[key] === 1) || (Array.isArray(o[key]) && o[key].length === flags.nargs[key])) {
-                    o[key] = undefined;
-                }
-            }
-            if (value === increment()) {
-                o[key] = increment(o[key]);
-            }
-            else if (Array.isArray(o[key])) {
-                if (duplicate && isTypeArray && isValueArray) {
-                    o[key] = configuration['flatten-duplicate-arrays'] ? o[key].concat(value) : (Array.isArray(o[key][0]) ? o[key] : [o[key]]).concat([value]);
-                }
-                else if (!duplicate && Boolean(isTypeArray) === Boolean(isValueArray)) {
-                    o[key] = value;
+        }
+    }
+    isDefaulted(yargs, key) {
+        const { default: defaults } = yargs.getOptions();
+        return (Object.prototype.hasOwnProperty.call(defaults, key) ||
+            Object.prototype.hasOwnProperty.call(defaults, this.shim.Parser.camelCase(key)));
+    }
+    isInConfigs(yargs, key) {
+        const { configObjects } = yargs.getOptions();
+        return (configObjects.some(c => Object.prototype.hasOwnProperty.call(c, key)) ||
+            configObjects.some(c => Object.prototype.hasOwnProperty.call(c, this.shim.Parser.camelCase(key))));
+    }
+    runDefaultBuilderOn(yargs) {
+        if (!this.defaultCommand)
+            return;
+        if (this.shouldUpdateUsage(yargs)) {
+            const commandString = DEFAULT_MARKER.test(this.defaultCommand.original)
+                ? this.defaultCommand.original
+                : this.defaultCommand.original.replace(/^[^[\]<>]*/, '$0 ');
+            yargs
+                .getInternalMethods()
+                .getUsageInstance()
+                .usage(commandString, this.defaultCommand.description);
+        }
+        const builder = this.defaultCommand.builder;
+        if (isCommandBuilderCallback(builder)) {
+            return builder(yargs, true);
+        }
+        else if (!isCommandBuilderDefinition(builder)) {
+            Object.keys(builder).forEach(key => {
+                yargs.option(key, builder[key]);
+            });
+        }
+        return undefined;
+    }
+    extractDesc({ describe, description, desc }) {
+        for (const test of [describe, description, desc]) {
+            if (typeof test === 'string' || test === false)
+                return test;
+            assertNotStrictEqual(test, true, this.shim);
+        }
+        return false;
+    }
+    freeze() {
+        this.frozens.push({
+            handlers: this.handlers,
+            aliasMap: this.aliasMap,
+            defaultCommand: this.defaultCommand,
+        });
+    }
+    unfreeze() {
+        const frozen = this.frozens.pop();
+        assertNotStrictEqual(frozen, undefined, this.shim);
+        ({
+            handlers: this.handlers,
+            aliasMap: this.aliasMap,
+            defaultCommand: this.defaultCommand,
+        } = frozen);
+    }
+    reset() {
+        this.handlers = {};
+        this.aliasMap = {};
+        this.defaultCommand = undefined;
+        this.requireCache = new Set();
+        return this;
+    }
+}
+function command(usage, validation, globalMiddleware, shim) {
+    return new CommandInstance(usage, validation, globalMiddleware, shim);
+}
+function isCommandBuilderDefinition(builder) {
+    return (typeof builder === 'object' &&
+        !!builder.builder &&
+        typeof builder.handler === 'function');
+}
+function isCommandAndAliases(cmd) {
+    return cmd.every(c => typeof c === 'string');
+}
+function isCommandBuilderCallback(builder) {
+    return typeof builder === 'function';
+}
+function isCommandBuilderOptionDefinitions(builder) {
+    return typeof builder === 'object';
+}
+function isCommandHandlerDefinition(cmd) {
+    return typeof cmd === 'object' && !Array.isArray(cmd);
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/utils/obj-filter.js
+
+function objFilter(original = {}, filter = () => true) {
+    const obj = {};
+    objectKeys(original).forEach(key => {
+        if (filter(key, original[key])) {
+            obj[key] = original[key];
+        }
+    });
+    return obj;
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/utils/set-blocking.js
+function setBlocking(blocking) {
+    if (typeof process === 'undefined')
+        return;
+    [process.stdout, process.stderr].forEach(_stream => {
+        const stream = _stream;
+        if (stream._handle &&
+            stream.isTTY &&
+            typeof stream._handle.setBlocking === 'function') {
+            stream._handle.setBlocking(blocking);
+        }
+    });
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/usage.js
+
+
+
+function isBoolean(fail) {
+    return typeof fail === 'boolean';
+}
+function usage(yargs, shim) {
+    const __ = shim.y18n.__;
+    const self = {};
+    const fails = [];
+    self.failFn = function failFn(f) {
+        fails.push(f);
+    };
+    let failMessage = null;
+    let globalFailMessage = null;
+    let showHelpOnFail = true;
+    self.showHelpOnFail = function showHelpOnFailFn(arg1 = true, arg2) {
+        const [enabled, message] = typeof arg1 === 'string' ? [true, arg1] : [arg1, arg2];
+        if (yargs.getInternalMethods().isGlobalContext()) {
+            globalFailMessage = message;
+        }
+        failMessage = message;
+        showHelpOnFail = enabled;
+        return self;
+    };
+    let failureOutput = false;
+    self.fail = function fail(msg, err) {
+        const logger = yargs.getInternalMethods().getLoggerInstance();
+        if (fails.length) {
+            for (let i = fails.length - 1; i >= 0; --i) {
+                const fail = fails[i];
+                if (isBoolean(fail)) {
+                    if (err)
+                        throw err;
+                    else if (msg)
+                        throw Error(msg);
                 }
                 else {
-                    o[key] = o[key].concat([value]);
+                    fail(msg, err, self);
                 }
             }
-            else if (o[key] === undefined && isTypeArray) {
-                o[key] = isValueArray ? value : [value];
+        }
+        else {
+            if (yargs.getExitProcess())
+                setBlocking(true);
+            if (!failureOutput) {
+                failureOutput = true;
+                if (showHelpOnFail) {
+                    yargs.showHelp('error');
+                    logger.error();
+                }
+                if (msg || err)
+                    logger.error(msg || err);
+                const globalOrCommandFailMessage = failMessage || globalFailMessage;
+                if (globalOrCommandFailMessage) {
+                    if (msg || err)
+                        logger.error('');
+                    logger.error(globalOrCommandFailMessage);
+                }
             }
-            else if (duplicate && !(o[key] === undefined ||
-                checkAllAliases(key, flags.counts) ||
-                checkAllAliases(key, flags.bools))) {
-                o[key] = [o[key], value];
+            err = err || new YError(msg);
+            if (yargs.getExitProcess()) {
+                return yargs.exit(1);
+            }
+            else if (yargs.getInternalMethods().hasParseCallback()) {
+                return yargs.exit(1, err);
             }
             else {
-                o[key] = value;
+                throw err;
             }
         }
-        function extendAliases(...args) {
-            args.forEach(function (obj) {
-                Object.keys(obj || {}).forEach(function (key) {
-                    if (flags.aliases[key])
-                        return;
-                    flags.aliases[key] = [].concat(aliases[key] || []);
-                    flags.aliases[key].concat(key).forEach(function (x) {
-                        if (/-/.test(x) && configuration['camel-case-expansion']) {
-                            const c = camelCase(x);
-                            if (c !== key && flags.aliases[key].indexOf(c) === -1) {
-                                flags.aliases[key].push(c);
-                                newAliases[c] = true;
-                            }
-                        }
+    };
+    let usages = [];
+    let usageDisabled = false;
+    self.usage = (msg, description) => {
+        if (msg === null) {
+            usageDisabled = true;
+            usages = [];
+            return self;
+        }
+        usageDisabled = false;
+        usages.push([msg, description || '']);
+        return self;
+    };
+    self.getUsage = () => {
+        return usages;
+    };
+    self.getUsageDisabled = () => {
+        return usageDisabled;
+    };
+    self.getPositionalGroupName = () => {
+        return __('Positionals:');
+    };
+    let examples = [];
+    self.example = (cmd, description) => {
+        examples.push([cmd, description || '']);
+    };
+    let commands = [];
+    self.command = function command(cmd, description, isDefault, aliases, deprecated = false) {
+        if (isDefault) {
+            commands = commands.map(cmdArray => {
+                cmdArray[2] = false;
+                return cmdArray;
+            });
+        }
+        commands.push([cmd, description || '', isDefault, aliases, deprecated]);
+    };
+    self.getCommands = () => commands;
+    let descriptions = {};
+    self.describe = function describe(keyOrKeys, desc) {
+        if (Array.isArray(keyOrKeys)) {
+            keyOrKeys.forEach(k => {
+                self.describe(k, desc);
+            });
+        }
+        else if (typeof keyOrKeys === 'object') {
+            Object.keys(keyOrKeys).forEach(k => {
+                self.describe(k, keyOrKeys[k]);
+            });
+        }
+        else {
+            descriptions[keyOrKeys] = desc;
+        }
+    };
+    self.getDescriptions = () => descriptions;
+    let epilogs = [];
+    self.epilog = msg => {
+        epilogs.push(msg);
+    };
+    let wrapSet = false;
+    let wrap;
+    self.wrap = cols => {
+        wrapSet = true;
+        wrap = cols;
+    };
+    self.getWrap = () => {
+        if (shim.getEnv('YARGS_DISABLE_WRAP')) {
+            return null;
+        }
+        if (!wrapSet) {
+            wrap = windowWidth();
+            wrapSet = true;
+        }
+        return wrap;
+    };
+    const deferY18nLookupPrefix = '__yargsString__:';
+    self.deferY18nLookup = str => deferY18nLookupPrefix + str;
+    self.help = function help() {
+        if (cachedHelpMessage)
+            return cachedHelpMessage;
+        normalizeAliases();
+        const base$0 = yargs.customScriptName
+            ? yargs.$0
+            : shim.path.basename(yargs.$0);
+        const demandedOptions = yargs.getDemandedOptions();
+        const demandedCommands = yargs.getDemandedCommands();
+        const deprecatedOptions = yargs.getDeprecatedOptions();
+        const groups = yargs.getGroups();
+        const options = yargs.getOptions();
+        let keys = [];
+        keys = keys.concat(Object.keys(descriptions));
+        keys = keys.concat(Object.keys(demandedOptions));
+        keys = keys.concat(Object.keys(demandedCommands));
+        keys = keys.concat(Object.keys(options.default));
+        keys = keys.filter(filterHiddenOptions);
+        keys = Object.keys(keys.reduce((acc, key) => {
+            if (key !== '_')
+                acc[key] = true;
+            return acc;
+        }, {}));
+        const theWrap = self.getWrap();
+        const ui = shim.cliui({
+            width: theWrap,
+            wrap: !!theWrap,
+        });
+        if (!usageDisabled) {
+            if (usages.length) {
+                usages.forEach(usage => {
+                    ui.div({ text: `${usage[0].replace(/\$0/g, base$0)}` });
+                    if (usage[1]) {
+                        ui.div({ text: `${usage[1]}`, padding: [1, 0, 0, 0] });
+                    }
+                });
+                ui.div();
+            }
+            else if (commands.length) {
+                let u = null;
+                if (demandedCommands._) {
+                    u = `${base$0} <${__('command')}>\n`;
+                }
+                else {
+                    u = `${base$0} [${__('command')}]\n`;
+                }
+                ui.div(`${u}`);
+            }
+        }
+        if (commands.length > 1 || (commands.length === 1 && !commands[0][2])) {
+            ui.div(__('Commands:'));
+            const context = yargs.getInternalMethods().getContext();
+            const parentCommands = context.commands.length
+                ? `${context.commands.join(' ')} `
+                : '';
+            if (yargs.getInternalMethods().getParserConfiguration()['sort-commands'] ===
+                true) {
+                commands = commands.sort((a, b) => a[0].localeCompare(b[0]));
+            }
+            const prefix = base$0 ? `${base$0} ` : '';
+            commands.forEach(command => {
+                const commandString = `${prefix}${parentCommands}${command[0].replace(/^\$0 ?/, '')}`;
+                ui.span({
+                    text: commandString,
+                    padding: [0, 2, 0, 2],
+                    width: maxWidth(commands, theWrap, `${base$0}${parentCommands}`) + 4,
+                }, { text: command[1] });
+                const hints = [];
+                if (command[2])
+                    hints.push(`[${__('default')}]`);
+                if (command[3] && command[3].length) {
+                    hints.push(`[${__('aliases:')} ${command[3].join(', ')}]`);
+                }
+                if (command[4]) {
+                    if (typeof command[4] === 'string') {
+                        hints.push(`[${__('deprecated: %s', command[4])}]`);
+                    }
+                    else {
+                        hints.push(`[${__('deprecated')}]`);
+                    }
+                }
+                if (hints.length) {
+                    ui.div({
+                        text: hints.join(' '),
+                        padding: [0, 0, 0, 2],
+                        align: 'right',
                     });
-                    flags.aliases[key].concat(key).forEach(function (x) {
-                        if (x.length > 1 && /[A-Z]/.test(x) && configuration['camel-case-expansion']) {
-                            const c = decamelize(x, '-');
-                            if (c !== key && flags.aliases[key].indexOf(c) === -1) {
-                                flags.aliases[key].push(c);
-                                newAliases[c] = true;
-                            }
-                        }
-                    });
-                    flags.aliases[key].forEach(function (x) {
-                        flags.aliases[x] = [key].concat(flags.aliases[key].filter(function (y) {
-                            return x !== y;
-                        }));
-                    });
+                }
+                else {
+                    ui.div();
+                }
+            });
+            ui.div();
+        }
+        const aliasKeys = (Object.keys(options.alias) || []).concat(Object.keys(yargs.parsed.newAliases) || []);
+        keys = keys.filter(key => !yargs.parsed.newAliases[key] &&
+            aliasKeys.every(alias => (options.alias[alias] || []).indexOf(key) === -1));
+        const defaultGroup = __('Options:');
+        if (!groups[defaultGroup])
+            groups[defaultGroup] = [];
+        addUngroupedKeys(keys, options.alias, groups, defaultGroup);
+        const isLongSwitch = (sw) => /^--/.test(getText(sw));
+        const displayedGroups = Object.keys(groups)
+            .filter(groupName => groups[groupName].length > 0)
+            .map(groupName => {
+            const normalizedKeys = groups[groupName]
+                .filter(filterHiddenOptions)
+                .map(key => {
+                if (aliasKeys.includes(key))
+                    return key;
+                for (let i = 0, aliasKey; (aliasKey = aliasKeys[i]) !== undefined; i++) {
+                    if ((options.alias[aliasKey] || []).includes(key))
+                        return aliasKey;
+                }
+                return key;
+            });
+            return { groupName, normalizedKeys };
+        })
+            .filter(({ normalizedKeys }) => normalizedKeys.length > 0)
+            .map(({ groupName, normalizedKeys }) => {
+            const switches = normalizedKeys.reduce((acc, key) => {
+                acc[key] = [key]
+                    .concat(options.alias[key] || [])
+                    .map(sw => {
+                    if (groupName === self.getPositionalGroupName())
+                        return sw;
+                    else {
+                        return ((/^[0-9]$/.test(sw)
+                            ? options.boolean.includes(key)
+                                ? '-'
+                                : '--'
+                            : sw.length > 1
+                                ? '--'
+                                : '-') + sw);
+                    }
+                })
+                    .sort((sw1, sw2) => isLongSwitch(sw1) === isLongSwitch(sw2)
+                    ? 0
+                    : isLongSwitch(sw1)
+                        ? 1
+                        : -1)
+                    .join(', ');
+                return acc;
+            }, {});
+            return { groupName, normalizedKeys, switches };
+        });
+        const shortSwitchesUsed = displayedGroups
+            .filter(({ groupName }) => groupName !== self.getPositionalGroupName())
+            .some(({ normalizedKeys, switches }) => !normalizedKeys.every(key => isLongSwitch(switches[key])));
+        if (shortSwitchesUsed) {
+            displayedGroups
+                .filter(({ groupName }) => groupName !== self.getPositionalGroupName())
+                .forEach(({ normalizedKeys, switches }) => {
+                normalizedKeys.forEach(key => {
+                    if (isLongSwitch(switches[key])) {
+                        switches[key] = addIndentation(switches[key], '-x, '.length);
+                    }
                 });
             });
         }
-        function checkAllAliases(key, flag) {
-            const toCheck = [].concat(flags.aliases[key] || [], key);
-            const keys = Object.keys(flag);
-            const setAlias = toCheck.find(key => keys.includes(key));
-            return setAlias ? flag[setAlias] : false;
+        displayedGroups.forEach(({ groupName, normalizedKeys, switches }) => {
+            ui.div(groupName);
+            normalizedKeys.forEach(key => {
+                const kswitch = switches[key];
+                let desc = descriptions[key] || '';
+                let type = null;
+                if (desc.includes(deferY18nLookupPrefix))
+                    desc = __(desc.substring(deferY18nLookupPrefix.length));
+                if (options.boolean.includes(key))
+                    type = `[${__('boolean')}]`;
+                if (options.count.includes(key))
+                    type = `[${__('count')}]`;
+                if (options.string.includes(key))
+                    type = `[${__('string')}]`;
+                if (options.normalize.includes(key))
+                    type = `[${__('string')}]`;
+                if (options.array.includes(key))
+                    type = `[${__('array')}]`;
+                if (options.number.includes(key))
+                    type = `[${__('number')}]`;
+                const deprecatedExtra = (deprecated) => typeof deprecated === 'string'
+                    ? `[${__('deprecated: %s', deprecated)}]`
+                    : `[${__('deprecated')}]`;
+                const extra = [
+                    key in deprecatedOptions
+                        ? deprecatedExtra(deprecatedOptions[key])
+                        : null,
+                    type,
+                    key in demandedOptions ? `[${__('required')}]` : null,
+                    options.choices && options.choices[key]
+                        ? `[${__('choices:')} ${self.stringifiedValues(options.choices[key])}]`
+                        : null,
+                    defaultString(options.default[key], options.defaultDescription[key]),
+                ]
+                    .filter(Boolean)
+                    .join(' ');
+                ui.span({
+                    text: getText(kswitch),
+                    padding: [0, 2, 0, 2 + getIndentation(kswitch)],
+                    width: maxWidth(switches, theWrap) + 4,
+                }, desc);
+                const shouldHideOptionExtras = yargs.getInternalMethods().getUsageConfiguration()['hide-types'] ===
+                    true;
+                if (extra && !shouldHideOptionExtras)
+                    ui.div({ text: extra, padding: [0, 0, 0, 2], align: 'right' });
+                else
+                    ui.div();
+            });
+            ui.div();
+        });
+        if (examples.length) {
+            ui.div(__('Examples:'));
+            examples.forEach(example => {
+                example[0] = example[0].replace(/\$0/g, base$0);
+            });
+            examples.forEach(example => {
+                if (example[1] === '') {
+                    ui.div({
+                        text: example[0],
+                        padding: [0, 2, 0, 2],
+                    });
+                }
+                else {
+                    ui.div({
+                        text: example[0],
+                        padding: [0, 2, 0, 2],
+                        width: maxWidth(examples, theWrap) + 4,
+                    }, {
+                        text: example[1],
+                    });
+                }
+            });
+            ui.div();
         }
-        function hasAnyFlag(key) {
-            const flagsKeys = Object.keys(flags);
-            const toCheck = [].concat(flagsKeys.map(k => flags[k]));
-            return toCheck.some(function (flag) {
-                return Array.isArray(flag) ? flag.includes(key) : flag[key];
+        if (epilogs.length > 0) {
+            const e = epilogs
+                .map(epilog => epilog.replace(/\$0/g, base$0))
+                .join('\n');
+            ui.div(`${e}\n`);
+        }
+        return ui.toString().replace(/\s*$/, '');
+    };
+    function maxWidth(table, theWrap, modifier) {
+        let width = 0;
+        if (!Array.isArray(table)) {
+            table = Object.values(table).map(v => [v]);
+        }
+        table.forEach(v => {
+            width = Math.max(shim.stringWidth(modifier ? `${modifier} ${getText(v[0])}` : getText(v[0])) + getIndentation(v[0]), width);
+        });
+        if (theWrap)
+            width = Math.min(width, parseInt((theWrap * 0.5).toString(), 10));
+        return width;
+    }
+    function normalizeAliases() {
+        const demandedOptions = yargs.getDemandedOptions();
+        const options = yargs.getOptions();
+        (Object.keys(options.alias) || []).forEach(key => {
+            options.alias[key].forEach(alias => {
+                if (descriptions[alias])
+                    self.describe(key, descriptions[alias]);
+                if (alias in demandedOptions)
+                    yargs.demandOption(key, demandedOptions[alias]);
+                if (options.boolean.includes(alias))
+                    yargs.boolean(key);
+                if (options.count.includes(alias))
+                    yargs.count(key);
+                if (options.string.includes(alias))
+                    yargs.string(key);
+                if (options.normalize.includes(alias))
+                    yargs.normalize(key);
+                if (options.array.includes(alias))
+                    yargs.array(key);
+                if (options.number.includes(alias))
+                    yargs.number(key);
+            });
+        });
+    }
+    let cachedHelpMessage;
+    self.cacheHelpMessage = function () {
+        cachedHelpMessage = this.help();
+    };
+    self.clearCachedHelpMessage = function () {
+        cachedHelpMessage = undefined;
+    };
+    self.hasCachedHelpMessage = function () {
+        return !!cachedHelpMessage;
+    };
+    function addUngroupedKeys(keys, aliases, groups, defaultGroup) {
+        let groupedKeys = [];
+        let toCheck = null;
+        Object.keys(groups).forEach(group => {
+            groupedKeys = groupedKeys.concat(groups[group]);
+        });
+        keys.forEach(key => {
+            toCheck = [key].concat(aliases[key]);
+            if (!toCheck.some(k => groupedKeys.indexOf(k) !== -1)) {
+                groups[defaultGroup].push(key);
+            }
+        });
+        return groupedKeys;
+    }
+    function filterHiddenOptions(key) {
+        return (yargs.getOptions().hiddenOptions.indexOf(key) < 0 ||
+            yargs.parsed.argv[yargs.getOptions().showHiddenOpt]);
+    }
+    self.showHelp = (level) => {
+        const logger = yargs.getInternalMethods().getLoggerInstance();
+        if (!level)
+            level = 'error';
+        const emit = typeof level === 'function' ? level : logger[level];
+        emit(self.help());
+    };
+    self.functionDescription = fn => {
+        const description = fn.name
+            ? shim.Parser.decamelize(fn.name, '-')
+            : __('generated-value');
+        return ['(', description, ')'].join('');
+    };
+    self.stringifiedValues = function stringifiedValues(values, separator) {
+        let string = '';
+        const sep = separator || ', ';
+        const array = [].concat(values);
+        if (!values || !array.length)
+            return string;
+        array.forEach(value => {
+            if (string.length)
+                string += sep;
+            string += JSON.stringify(value);
+        });
+        return string;
+    };
+    function defaultString(value, defaultDescription) {
+        let string = `[${__('default:')} `;
+        if (value === undefined && !defaultDescription)
+            return null;
+        if (defaultDescription) {
+            string += defaultDescription;
+        }
+        else {
+            switch (typeof value) {
+                case 'string':
+                    string += `"${value}"`;
+                    break;
+                case 'object':
+                    string += JSON.stringify(value);
+                    break;
+                default:
+                    string += value;
+            }
+        }
+        return `${string}]`;
+    }
+    function windowWidth() {
+        const maxWidth = 80;
+        if (shim.process.stdColumns) {
+            return Math.min(maxWidth, shim.process.stdColumns);
+        }
+        else {
+            return maxWidth;
+        }
+    }
+    let version = null;
+    self.version = ver => {
+        version = ver;
+    };
+    self.showVersion = level => {
+        const logger = yargs.getInternalMethods().getLoggerInstance();
+        if (!level)
+            level = 'error';
+        const emit = typeof level === 'function' ? level : logger[level];
+        emit(version);
+    };
+    self.reset = function reset(localLookup) {
+        failMessage = null;
+        failureOutput = false;
+        usages = [];
+        usageDisabled = false;
+        epilogs = [];
+        examples = [];
+        commands = [];
+        descriptions = objFilter(descriptions, k => !localLookup[k]);
+        return self;
+    };
+    const frozens = [];
+    self.freeze = function freeze() {
+        frozens.push({
+            failMessage,
+            failureOutput,
+            usages,
+            usageDisabled,
+            epilogs,
+            examples,
+            commands,
+            descriptions,
+        });
+    };
+    self.unfreeze = function unfreeze(defaultCommand = false) {
+        const frozen = frozens.pop();
+        if (!frozen)
+            return;
+        if (defaultCommand) {
+            descriptions = { ...frozen.descriptions, ...descriptions };
+            commands = [...frozen.commands, ...commands];
+            usages = [...frozen.usages, ...usages];
+            examples = [...frozen.examples, ...examples];
+            epilogs = [...frozen.epilogs, ...epilogs];
+        }
+        else {
+            ({
+                failMessage,
+                failureOutput,
+                usages,
+                usageDisabled,
+                epilogs,
+                examples,
+                commands,
+                descriptions,
+            } = frozen);
+        }
+    };
+    return self;
+}
+function isIndentedText(text) {
+    return typeof text === 'object';
+}
+function addIndentation(text, indent) {
+    return isIndentedText(text)
+        ? { text: text.text, indentation: text.indentation + indent }
+        : { text, indentation: indent };
+}
+function getIndentation(text) {
+    return isIndentedText(text) ? text.indentation : 0;
+}
+function getText(text) {
+    return isIndentedText(text) ? text.text : text;
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/completion-templates.js
+const completionShTemplate = `###-begin-{{app_name}}-completions-###
+#
+# yargs command completion script
+#
+# Installation: {{app_path}} {{completion_command}} >> ~/.bashrc
+#    or {{app_path}} {{completion_command}} >> ~/.bash_profile on OSX.
+#
+_{{app_name}}_yargs_completions()
+{
+    local cur_word args type_list
+
+    cur_word="\${COMP_WORDS[COMP_CWORD]}"
+    args=("\${COMP_WORDS[@]}")
+
+    # ask yargs to generate completions.
+    # see https://stackoverflow.com/a/40944195/7080036 for the spaces-handling awk
+    mapfile -t type_list < <({{app_path}} --get-yargs-completions "\${args[@]}")
+    mapfile -t COMPREPLY < <(compgen -W "$( printf '%q ' "\${type_list[@]}" )" -- "\${cur_word}" |
+        awk '/ / { print "\\""$0"\\"" } /^[^ ]+$/ { print $0 }')
+
+    # if no match was found, fall back to filename completion
+    if [ \${#COMPREPLY[@]} -eq 0 ]; then
+      COMPREPLY=()
+    fi
+
+    return 0
+}
+complete -o bashdefault -o default -F _{{app_name}}_yargs_completions {{app_name}}
+###-end-{{app_name}}-completions-###
+`;
+const completionZshTemplate = `#compdef {{app_name}}
+###-begin-{{app_name}}-completions-###
+#
+# yargs command completion script
+#
+# Installation: {{app_path}} {{completion_command}} >> ~/.zshrc
+#    or {{app_path}} {{completion_command}} >> ~/.zprofile on OSX.
+#
+_{{app_name}}_yargs_completions()
+{
+  local reply
+  local si=$IFS
+  IFS=$'\n' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" {{app_path}} --get-yargs-completions "\${words[@]}"))
+  IFS=$si
+  if [[ \${#reply} -gt 0 ]]; then
+    _describe 'values' reply
+  else
+    _default
+  fi
+}
+if [[ "'\${zsh_eval_context[-1]}" == "loadautofunc" ]]; then
+  _{{app_name}}_yargs_completions "$@"
+else
+  compdef _{{app_name}}_yargs_completions {{app_name}}
+fi
+###-end-{{app_name}}-completions-###
+`;
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/completion.js
+
+
+
+
+
+class Completion {
+    constructor(yargs, usage, command, shim) {
+        var _a, _b, _c;
+        this.yargs = yargs;
+        this.usage = usage;
+        this.command = command;
+        this.shim = shim;
+        this.completionKey = 'get-yargs-completions';
+        this.aliases = null;
+        this.customCompletionFunction = null;
+        this.indexAfterLastReset = 0;
+        this.zshShell =
+            (_c = (((_a = this.shim.getEnv('SHELL')) === null || _a === void 0 ? void 0 : _a.includes('zsh')) ||
+                ((_b = this.shim.getEnv('ZSH_NAME')) === null || _b === void 0 ? void 0 : _b.includes('zsh')))) !== null && _c !== void 0 ? _c : false;
+    }
+    defaultCompletion(args, argv, current, done) {
+        const handlers = this.command.getCommandHandlers();
+        for (let i = 0, ii = args.length; i < ii; ++i) {
+            if (handlers[args[i]] && handlers[args[i]].builder) {
+                const builder = handlers[args[i]].builder;
+                if (isCommandBuilderCallback(builder)) {
+                    this.indexAfterLastReset = i + 1;
+                    const y = this.yargs.getInternalMethods().reset();
+                    builder(y, true);
+                    return y.argv;
+                }
+            }
+        }
+        const completions = [];
+        this.commandCompletions(completions, args, current);
+        this.optionCompletions(completions, args, argv, current);
+        this.choicesFromOptionsCompletions(completions, args, argv, current);
+        this.choicesFromPositionalsCompletions(completions, args, argv, current);
+        done(null, completions);
+    }
+    commandCompletions(completions, args, current) {
+        const parentCommands = this.yargs
+            .getInternalMethods()
+            .getContext().commands;
+        if (!current.match(/^-/) &&
+            parentCommands[parentCommands.length - 1] !== current &&
+            !this.previousArgHasChoices(args)) {
+            this.usage.getCommands().forEach(usageCommand => {
+                const commandName = parseCommand(usageCommand[0]).cmd;
+                if (args.indexOf(commandName) === -1) {
+                    if (!this.zshShell) {
+                        completions.push(commandName);
+                    }
+                    else {
+                        const desc = usageCommand[1] || '';
+                        completions.push(commandName.replace(/:/g, '\\:') + ':' + desc);
+                    }
+                }
             });
         }
-        function hasFlagsMatching(arg, ...patterns) {
-            const toCheck = [].concat(...patterns);
-            return toCheck.some(function (pattern) {
-                const match = arg.match(pattern);
-                return match && hasAnyFlag(match[1]);
+    }
+    optionCompletions(completions, args, argv, current) {
+        if ((current.match(/^-/) || (current === '' && completions.length === 0)) &&
+            !this.previousArgHasChoices(args)) {
+            const options = this.yargs.getOptions();
+            const positionalKeys = this.yargs.getGroups()[this.usage.getPositionalGroupName()] || [];
+            Object.keys(options.key).forEach(key => {
+                const negable = !!options.configuration['boolean-negation'] &&
+                    options.boolean.includes(key);
+                const isPositionalKey = positionalKeys.includes(key);
+                if (!isPositionalKey &&
+                    !options.hiddenOptions.includes(key) &&
+                    !this.argsContainKey(args, key, negable)) {
+                    this.completeOptionKey(key, completions, current, negable && !!options.default[key]);
+                }
             });
         }
-        function hasAllShortFlags(arg) {
-            if (arg.match(negative) || !arg.match(/^-[^-]+/)) {
-                return false;
+    }
+    choicesFromOptionsCompletions(completions, args, argv, current) {
+        if (this.previousArgHasChoices(args)) {
+            const choices = this.getPreviousArgChoices(args);
+            if (choices && choices.length > 0) {
+                completions.push(...choices.map(c => c.replace(/:/g, '\\:')));
             }
-            let hasAllFlags = true;
-            let next;
-            const letters = arg.slice(1).split('');
-            for (let j = 0; j < letters.length; j++) {
-                next = arg.slice(j + 2);
-                if (!hasAnyFlag(letters[j])) {
-                    hasAllFlags = false;
-                    break;
-                }
-                if ((letters[j + 1] && letters[j + 1] === '=') ||
-                    next === '-' ||
-                    (/[A-Za-z]/.test(letters[j]) && /^-?\d+(\.\d*)?(e-?\d+)?$/.test(next)) ||
-                    (letters[j + 1] && letters[j + 1].match(/\W/))) {
-                    break;
-                }
-            }
-            return hasAllFlags;
         }
-        function isUnknownOptionAsArg(arg) {
-            return configuration['unknown-options-as-args'] && isUnknownOption(arg);
+    }
+    choicesFromPositionalsCompletions(completions, args, argv, current) {
+        if (current === '' &&
+            completions.length > 0 &&
+            this.previousArgHasChoices(args)) {
+            return;
         }
-        function isUnknownOption(arg) {
-            arg = arg.replace(/^-{3,}/, '--');
-            if (arg.match(negative)) {
-                return false;
-            }
-            if (hasAllShortFlags(arg)) {
-                return false;
-            }
-            const flagWithEquals = /^-+([^=]+?)=[\s\S]*$/;
-            const normalFlag = /^-+([^=]+?)$/;
-            const flagEndingInHyphen = /^-+([^=]+?)-$/;
-            const flagEndingInDigits = /^-+([^=]+?\d+)$/;
-            const flagEndingInNonWordCharacters = /^-+([^=]+?)\W+.*$/;
-            return !hasFlagsMatching(arg, flagWithEquals, negatedBoolean, normalFlag, flagEndingInHyphen, flagEndingInDigits, flagEndingInNonWordCharacters);
+        const positionalKeys = this.yargs.getGroups()[this.usage.getPositionalGroupName()] || [];
+        const offset = Math.max(this.indexAfterLastReset, this.yargs.getInternalMethods().getContext().commands.length +
+            1);
+        const positionalKey = positionalKeys[argv._.length - offset - 1];
+        if (!positionalKey) {
+            return;
         }
-        function defaultValue(key) {
-            if (!checkAllAliases(key, flags.bools) &&
-                !checkAllAliases(key, flags.counts) &&
-                `${key}` in defaults) {
-                return defaults[key];
+        const choices = this.yargs.getOptions().choices[positionalKey] || [];
+        for (const choice of choices) {
+            if (choice.startsWith(current)) {
+                completions.push(choice.replace(/:/g, '\\:'));
+            }
+        }
+    }
+    getPreviousArgChoices(args) {
+        if (args.length < 1)
+            return;
+        let previousArg = args[args.length - 1];
+        let filter = '';
+        if (!previousArg.startsWith('-') && args.length > 1) {
+            filter = previousArg;
+            previousArg = args[args.length - 2];
+        }
+        if (!previousArg.startsWith('-'))
+            return;
+        const previousArgKey = previousArg.replace(/^-+/, '');
+        const options = this.yargs.getOptions();
+        const possibleAliases = [
+            previousArgKey,
+            ...(this.yargs.getAliases()[previousArgKey] || []),
+        ];
+        let choices;
+        for (const possibleAlias of possibleAliases) {
+            if (Object.prototype.hasOwnProperty.call(options.key, possibleAlias) &&
+                Array.isArray(options.choices[possibleAlias])) {
+                choices = options.choices[possibleAlias];
+                break;
+            }
+        }
+        if (choices) {
+            return choices.filter(choice => !filter || choice.startsWith(filter));
+        }
+    }
+    previousArgHasChoices(args) {
+        const choices = this.getPreviousArgChoices(args);
+        return choices !== undefined && choices.length > 0;
+    }
+    argsContainKey(args, key, negable) {
+        const argsContains = (s) => args.indexOf((/^[^0-9]$/.test(s) ? '-' : '--') + s) !== -1;
+        if (argsContains(key))
+            return true;
+        if (negable && argsContains(`no-${key}`))
+            return true;
+        if (this.aliases) {
+            for (const alias of this.aliases[key]) {
+                if (argsContains(alias))
+                    return true;
+            }
+        }
+        return false;
+    }
+    completeOptionKey(key, completions, current, negable) {
+        var _a, _b, _c, _d;
+        let keyWithDesc = key;
+        if (this.zshShell) {
+            const descs = this.usage.getDescriptions();
+            const aliasKey = (_b = (_a = this === null || this === void 0 ? void 0 : this.aliases) === null || _a === void 0 ? void 0 : _a[key]) === null || _b === void 0 ? void 0 : _b.find(alias => {
+                const desc = descs[alias];
+                return typeof desc === 'string' && desc.length > 0;
+            });
+            const descFromAlias = aliasKey ? descs[aliasKey] : undefined;
+            const desc = (_d = (_c = descs[key]) !== null && _c !== void 0 ? _c : descFromAlias) !== null && _d !== void 0 ? _d : '';
+            keyWithDesc = `${key.replace(/:/g, '\\:')}:${desc
+                .replace('__yargsString__:', '')
+                .replace(/(\r\n|\n|\r)/gm, ' ')}`;
+        }
+        const startsByTwoDashes = (s) => /^--/.test(s);
+        const isShortOption = (s) => /^[^0-9]$/.test(s);
+        const dashes = !startsByTwoDashes(current) && isShortOption(key) ? '-' : '--';
+        completions.push(dashes + keyWithDesc);
+        if (negable) {
+            completions.push(dashes + 'no-' + keyWithDesc);
+        }
+    }
+    customCompletion(args, argv, current, done) {
+        assertNotStrictEqual(this.customCompletionFunction, null, this.shim);
+        if (isSyncCompletionFunction(this.customCompletionFunction)) {
+            const result = this.customCompletionFunction(current, argv);
+            if (isPromise(result)) {
+                return result
+                    .then(list => {
+                    this.shim.process.nextTick(() => {
+                        done(null, list);
+                    });
+                })
+                    .catch(err => {
+                    this.shim.process.nextTick(() => {
+                        done(err, undefined);
+                    });
+                });
+            }
+            return done(null, result);
+        }
+        else if (isFallbackCompletionFunction(this.customCompletionFunction)) {
+            return this.customCompletionFunction(current, argv, (onCompleted = done) => this.defaultCompletion(args, argv, current, onCompleted), completions => {
+                done(null, completions);
+            });
+        }
+        else {
+            return this.customCompletionFunction(current, argv, completions => {
+                done(null, completions);
+            });
+        }
+    }
+    getCompletion(args, done) {
+        const current = args.length ? args[args.length - 1] : '';
+        const argv = this.yargs.parse(args, true);
+        const completionFunction = this.customCompletionFunction
+            ? (argv) => this.customCompletion(args, argv, current, done)
+            : (argv) => this.defaultCompletion(args, argv, current, done);
+        return isPromise(argv)
+            ? argv.then(completionFunction)
+            : completionFunction(argv);
+    }
+    generateCompletionScript($0, cmd) {
+        let script = this.zshShell
+            ? completionZshTemplate
+            : completionShTemplate;
+        const name = this.shim.path.basename($0);
+        if ($0.match(/\.js$/))
+            $0 = `./${$0}`;
+        script = script.replace(/{{app_name}}/g, name);
+        script = script.replace(/{{completion_command}}/g, cmd);
+        return script.replace(/{{app_path}}/g, $0);
+    }
+    registerFunction(fn) {
+        this.customCompletionFunction = fn;
+    }
+    setParsed(parsed) {
+        this.aliases = parsed.aliases;
+    }
+}
+function completion(yargs, usage, command, shim) {
+    return new Completion(yargs, usage, command, shim);
+}
+function isSyncCompletionFunction(completionFunction) {
+    return completionFunction.length < 3;
+}
+function isFallbackCompletionFunction(completionFunction) {
+    return completionFunction.length > 3;
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/utils/levenshtein.js
+function levenshtein(a, b) {
+    if (a.length === 0)
+        return b.length;
+    if (b.length === 0)
+        return a.length;
+    const matrix = [];
+    let i;
+    for (i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+    }
+    let j;
+    for (j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+    }
+    for (i = 1; i <= b.length; i++) {
+        for (j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
             }
             else {
-                return defaultForType(guessType(key));
+                if (i > 1 &&
+                    j > 1 &&
+                    b.charAt(i - 2) === a.charAt(j - 1) &&
+                    b.charAt(i - 1) === a.charAt(j - 2)) {
+                    matrix[i][j] = matrix[i - 2][j - 2] + 1;
+                }
+                else {
+                    matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
+                }
             }
         }
-        function defaultForType(type) {
-            const def = {
-                [DefaultValuesForTypeKey.BOOLEAN]: true,
-                [DefaultValuesForTypeKey.STRING]: '',
-                [DefaultValuesForTypeKey.NUMBER]: undefined,
-                [DefaultValuesForTypeKey.ARRAY]: []
-            };
-            return def[type];
-        }
-        function guessType(key) {
-            let type = DefaultValuesForTypeKey.BOOLEAN;
-            if (checkAllAliases(key, flags.strings))
-                type = DefaultValuesForTypeKey.STRING;
-            else if (checkAllAliases(key, flags.numbers))
-                type = DefaultValuesForTypeKey.NUMBER;
-            else if (checkAllAliases(key, flags.bools))
-                type = DefaultValuesForTypeKey.BOOLEAN;
-            else if (checkAllAliases(key, flags.arrays))
-                type = DefaultValuesForTypeKey.ARRAY;
-            return type;
-        }
-        function isUndefined(num) {
-            return num === undefined;
-        }
-        function checkConfiguration() {
-            Object.keys(flags.counts).find(key => {
-                if (checkAllAliases(key, flags.arrays)) {
-                    error = Error(__('Invalid configuration: %s, opts.count excludes opts.array.', key));
-                    return true;
+    }
+    return matrix[b.length][a.length];
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/validation.js
+
+
+
+
+const specialKeys = ['$0', '--', '_'];
+function validation(yargs, usage, shim) {
+    const __ = shim.y18n.__;
+    const __n = shim.y18n.__n;
+    const self = {};
+    self.nonOptionCount = function nonOptionCount(argv) {
+        const demandedCommands = yargs.getDemandedCommands();
+        const positionalCount = argv._.length + (argv['--'] ? argv['--'].length : 0);
+        const _s = positionalCount - yargs.getInternalMethods().getContext().commands.length;
+        if (demandedCommands._ &&
+            (_s < demandedCommands._.min || _s > demandedCommands._.max)) {
+            if (_s < demandedCommands._.min) {
+                if (demandedCommands._.minMsg !== undefined) {
+                    usage.fail(demandedCommands._.minMsg
+                        ? demandedCommands._.minMsg
+                            .replace(/\$0/g, _s.toString())
+                            .replace(/\$1/, demandedCommands._.min.toString())
+                        : null);
                 }
-                else if (checkAllAliases(key, flags.nargs)) {
-                    error = Error(__('Invalid configuration: %s, opts.count excludes opts.narg.', key));
-                    return true;
+                else {
+                    usage.fail(__n('Not enough non-option arguments: got %s, need at least %s', 'Not enough non-option arguments: got %s, need at least %s', _s, _s.toString(), demandedCommands._.min.toString()));
                 }
-                return false;
+            }
+            else if (_s > demandedCommands._.max) {
+                if (demandedCommands._.maxMsg !== undefined) {
+                    usage.fail(demandedCommands._.maxMsg
+                        ? demandedCommands._.maxMsg
+                            .replace(/\$0/g, _s.toString())
+                            .replace(/\$1/, demandedCommands._.max.toString())
+                        : null);
+                }
+                else {
+                    usage.fail(__n('Too many non-option arguments: got %s, maximum of %s', 'Too many non-option arguments: got %s, maximum of %s', _s, _s.toString(), demandedCommands._.max.toString()));
+                }
+            }
+        }
+    };
+    self.positionalCount = function positionalCount(required, observed) {
+        if (observed < required) {
+            usage.fail(__n('Not enough non-option arguments: got %s, need at least %s', 'Not enough non-option arguments: got %s, need at least %s', observed, observed + '', required + ''));
+        }
+    };
+    self.requiredArguments = function requiredArguments(argv, demandedOptions) {
+        let missing = null;
+        for (const key of Object.keys(demandedOptions)) {
+            if (!Object.prototype.hasOwnProperty.call(argv, key) ||
+                typeof argv[key] === 'undefined') {
+                missing = missing || {};
+                missing[key] = demandedOptions[key];
+            }
+        }
+        if (missing) {
+            const customMsgs = [];
+            for (const key of Object.keys(missing)) {
+                const msg = missing[key];
+                if (msg && customMsgs.indexOf(msg) < 0) {
+                    customMsgs.push(msg);
+                }
+            }
+            const customMsg = customMsgs.length ? `\n${customMsgs.join('\n')}` : '';
+            usage.fail(__n('Missing required argument: %s', 'Missing required arguments: %s', Object.keys(missing).length, Object.keys(missing).join(', ') + customMsg));
+        }
+    };
+    self.unknownArguments = function unknownArguments(argv, aliases, positionalMap, isDefaultCommand, checkPositionals = true) {
+        var _a;
+        const commandKeys = yargs
+            .getInternalMethods()
+            .getCommandInstance()
+            .getCommands();
+        const unknown = [];
+        const currentContext = yargs.getInternalMethods().getContext();
+        Object.keys(argv).forEach(key => {
+            if (!specialKeys.includes(key) &&
+                !Object.prototype.hasOwnProperty.call(positionalMap, key) &&
+                !Object.prototype.hasOwnProperty.call(yargs.getInternalMethods().getParseContext(), key) &&
+                !self.isValidAndSomeAliasIsNotNew(key, aliases)) {
+                unknown.push(key);
+            }
+        });
+        if (checkPositionals &&
+            (currentContext.commands.length > 0 ||
+                commandKeys.length > 0 ||
+                isDefaultCommand)) {
+            argv._.slice(currentContext.commands.length).forEach(key => {
+                if (!commandKeys.includes('' + key)) {
+                    unknown.push('' + key);
+                }
             });
         }
+        if (checkPositionals) {
+            const demandedCommands = yargs.getDemandedCommands();
+            const maxNonOptDemanded = ((_a = demandedCommands._) === null || _a === void 0 ? void 0 : _a.max) || 0;
+            const expected = currentContext.commands.length + maxNonOptDemanded;
+            if (expected < argv._.length) {
+                argv._.slice(expected).forEach(key => {
+                    key = String(key);
+                    if (!currentContext.commands.includes(key) &&
+                        !unknown.includes(key)) {
+                        unknown.push(key);
+                    }
+                });
+            }
+        }
+        if (unknown.length) {
+            usage.fail(__n('Unknown argument: %s', 'Unknown arguments: %s', unknown.length, unknown.map(s => (s.trim() ? s : `"${s}"`)).join(', ')));
+        }
+    };
+    self.unknownCommands = function unknownCommands(argv) {
+        const commandKeys = yargs
+            .getInternalMethods()
+            .getCommandInstance()
+            .getCommands();
+        const unknown = [];
+        const currentContext = yargs.getInternalMethods().getContext();
+        if (currentContext.commands.length > 0 || commandKeys.length > 0) {
+            argv._.slice(currentContext.commands.length).forEach(key => {
+                if (!commandKeys.includes('' + key)) {
+                    unknown.push('' + key);
+                }
+            });
+        }
+        if (unknown.length > 0) {
+            usage.fail(__n('Unknown command: %s', 'Unknown commands: %s', unknown.length, unknown.join(', ')));
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    self.isValidAndSomeAliasIsNotNew = function isValidAndSomeAliasIsNotNew(key, aliases) {
+        if (!Object.prototype.hasOwnProperty.call(aliases, key)) {
+            return false;
+        }
+        const newAliases = yargs.parsed.newAliases;
+        return [key, ...aliases[key]].some(a => !Object.prototype.hasOwnProperty.call(newAliases, a) || !newAliases[key]);
+    };
+    self.limitedChoices = function limitedChoices(argv) {
+        const options = yargs.getOptions();
+        const invalid = {};
+        if (!Object.keys(options.choices).length)
+            return;
+        Object.keys(argv).forEach(key => {
+            if (specialKeys.indexOf(key) === -1 &&
+                Object.prototype.hasOwnProperty.call(options.choices, key)) {
+                [].concat(argv[key]).forEach(value => {
+                    if (options.choices[key].indexOf(value) === -1 &&
+                        value !== undefined) {
+                        invalid[key] = (invalid[key] || []).concat(value);
+                    }
+                });
+            }
+        });
+        const invalidKeys = Object.keys(invalid);
+        if (!invalidKeys.length)
+            return;
+        let msg = __('Invalid values:');
+        invalidKeys.forEach(key => {
+            msg += `\n  ${__('Argument: %s, Given: %s, Choices: %s', key, usage.stringifiedValues(invalid[key]), usage.stringifiedValues(options.choices[key]))}`;
+        });
+        usage.fail(msg);
+    };
+    let implied = {};
+    self.implies = function implies(key, value) {
+        argsert('<string|object> [array|number|string]', [key, value], arguments.length);
+        if (typeof key === 'object') {
+            Object.keys(key).forEach(k => {
+                self.implies(k, key[k]);
+            });
+        }
+        else {
+            yargs.global(key);
+            if (!implied[key]) {
+                implied[key] = [];
+            }
+            if (Array.isArray(value)) {
+                value.forEach(i => self.implies(key, i));
+            }
+            else {
+                assertNotStrictEqual(value, undefined, shim);
+                implied[key].push(value);
+            }
+        }
+    };
+    self.getImplied = function getImplied() {
+        return implied;
+    };
+    function keyExists(argv, val) {
+        const num = Number(val);
+        val = isNaN(num) ? val : num;
+        if (typeof val === 'number') {
+            val = argv._.length >= val;
+        }
+        else if (val.match(/^--no-.+/)) {
+            val = val.match(/^--no-(.+)/)[1];
+            val = !Object.prototype.hasOwnProperty.call(argv, val);
+        }
+        else {
+            val = Object.prototype.hasOwnProperty.call(argv, val);
+        }
+        return val;
+    }
+    self.implications = function implications(argv) {
+        const implyFail = [];
+        Object.keys(implied).forEach(key => {
+            const origKey = key;
+            (implied[key] || []).forEach(value => {
+                let key = origKey;
+                const origValue = value;
+                key = keyExists(argv, key);
+                value = keyExists(argv, value);
+                if (key && !value) {
+                    implyFail.push(` ${origKey} -> ${origValue}`);
+                }
+            });
+        });
+        if (implyFail.length) {
+            let msg = `${__('Implications failed:')}\n`;
+            implyFail.forEach(value => {
+                msg += value;
+            });
+            usage.fail(msg);
+        }
+    };
+    let conflicting = {};
+    self.conflicts = function conflicts(key, value) {
+        argsert('<string|object> [array|string]', [key, value], arguments.length);
+        if (typeof key === 'object') {
+            Object.keys(key).forEach(k => {
+                self.conflicts(k, key[k]);
+            });
+        }
+        else {
+            yargs.global(key);
+            if (!conflicting[key]) {
+                conflicting[key] = [];
+            }
+            if (Array.isArray(value)) {
+                value.forEach(i => self.conflicts(key, i));
+            }
+            else {
+                conflicting[key].push(value);
+            }
+        }
+    };
+    self.getConflicting = () => conflicting;
+    self.conflicting = function conflictingFn(argv) {
+        Object.keys(argv).forEach(key => {
+            if (conflicting[key]) {
+                conflicting[key].forEach(value => {
+                    if (value && argv[key] !== undefined && argv[value] !== undefined) {
+                        usage.fail(__('Arguments %s and %s are mutually exclusive', key, value));
+                    }
+                });
+            }
+        });
+        if (yargs.getInternalMethods().getParserConfiguration()['strip-dashed']) {
+            Object.keys(conflicting).forEach(key => {
+                conflicting[key].forEach(value => {
+                    if (value &&
+                        argv[shim.Parser.camelCase(key)] !== undefined &&
+                        argv[shim.Parser.camelCase(value)] !== undefined) {
+                        usage.fail(__('Arguments %s and %s are mutually exclusive', key, value));
+                    }
+                });
+            });
+        }
+    };
+    self.recommendCommands = function recommendCommands(cmd, potentialCommands) {
+        const threshold = 3;
+        potentialCommands = potentialCommands.sort((a, b) => b.length - a.length);
+        let recommended = null;
+        let bestDistance = Infinity;
+        for (let i = 0, candidate; (candidate = potentialCommands[i]) !== undefined; i++) {
+            const d = levenshtein(cmd, candidate);
+            if (d <= threshold && d < bestDistance) {
+                bestDistance = d;
+                recommended = candidate;
+            }
+        }
+        if (recommended)
+            usage.fail(__('Did you mean %s?', recommended));
+    };
+    self.reset = function reset(localLookup) {
+        implied = objFilter(implied, k => !localLookup[k]);
+        conflicting = objFilter(conflicting, k => !localLookup[k]);
+        return self;
+    };
+    const frozens = [];
+    self.freeze = function freeze() {
+        frozens.push({
+            implied,
+            conflicting,
+        });
+    };
+    self.unfreeze = function unfreeze() {
+        const frozen = frozens.pop();
+        assertNotStrictEqual(frozen, undefined, shim);
+        ({ implied, conflicting } = frozen);
+    };
+    return self;
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/utils/apply-extends.js
+
+let previouslyVisitedConfigs = [];
+let apply_extends_shim;
+function applyExtends(config, cwd, mergeExtends, _shim) {
+    apply_extends_shim = _shim;
+    let defaultConfig = {};
+    if (Object.prototype.hasOwnProperty.call(config, 'extends')) {
+        if (typeof config.extends !== 'string')
+            return defaultConfig;
+        const isPath = /\.json|\..*rc$/.test(config.extends);
+        let pathToDefault = null;
+        if (!isPath) {
+            try {
+                pathToDefault = import.meta.resolve(config.extends);
+            }
+            catch (_err) {
+                return config;
+            }
+        }
+        else {
+            pathToDefault = getPathToDefaultConfig(cwd, config.extends);
+        }
+        checkForCircularExtends(pathToDefault);
+        previouslyVisitedConfigs.push(pathToDefault);
+        defaultConfig = isPath
+            ? JSON.parse(apply_extends_shim.readFileSync(pathToDefault, 'utf8'))
+            : _shim.require(config.extends);
+        delete config.extends;
+        defaultConfig = applyExtends(defaultConfig, apply_extends_shim.path.dirname(pathToDefault), mergeExtends, apply_extends_shim);
+    }
+    previouslyVisitedConfigs = [];
+    return mergeExtends
+        ? mergeDeep(defaultConfig, config)
+        : Object.assign({}, defaultConfig, config);
+}
+function checkForCircularExtends(cfgPath) {
+    if (previouslyVisitedConfigs.indexOf(cfgPath) > -1) {
+        throw new YError(`Circular extended configurations: '${cfgPath}'.`);
+    }
+}
+function getPathToDefaultConfig(cwd, pathToExtend) {
+    return apply_extends_shim.path.resolve(cwd, pathToExtend);
+}
+function mergeDeep(config1, config2) {
+    const target = {};
+    function isObject(obj) {
+        return obj && typeof obj === 'object' && !Array.isArray(obj);
+    }
+    Object.assign(target, config1);
+    for (const key of Object.keys(config2)) {
+        if (isObject(config2[key]) && isObject(target[key])) {
+            target[key] = mergeDeep(config1[key], config2[key]);
+        }
+        else {
+            target[key] = config2[key];
+        }
+    }
+    return target;
+}
+
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/build/lib/yargs-factory.js
+var __classPrivateFieldSet = (undefined && undefined.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var _YargsInstance_command, _YargsInstance_cwd, _YargsInstance_context, _YargsInstance_completion, _YargsInstance_completionCommand, _YargsInstance_defaultShowHiddenOpt, _YargsInstance_exitError, _YargsInstance_detectLocale, _YargsInstance_emittedWarnings, _YargsInstance_exitProcess, _YargsInstance_frozens, _YargsInstance_globalMiddleware, _YargsInstance_groups, _YargsInstance_hasOutput, _YargsInstance_helpOpt, _YargsInstance_isGlobalContext, _YargsInstance_logger, _YargsInstance_output, _YargsInstance_options, _YargsInstance_parentRequire, _YargsInstance_parserConfig, _YargsInstance_parseFn, _YargsInstance_parseContext, _YargsInstance_pkgs, _YargsInstance_preservedGroups, _YargsInstance_processArgs, _YargsInstance_recommendCommands, _YargsInstance_shim, _YargsInstance_strict, _YargsInstance_strictCommands, _YargsInstance_strictOptions, _YargsInstance_usage, _YargsInstance_usageConfig, _YargsInstance_versionOpt, _YargsInstance_validation;
+
+
+
+
+
+
+
+
+
+
+
+
+
+function YargsFactory(_shim) {
+    return (processArgs = [], cwd = _shim.process.cwd(), parentRequire) => {
+        const yargs = new YargsInstance(processArgs, cwd, parentRequire, _shim);
+        Object.defineProperty(yargs, 'argv', {
+            get: () => {
+                return yargs.parse();
+            },
+            enumerable: true,
+        });
+        yargs.help();
+        yargs.version();
+        return yargs;
+    };
+}
+const kCopyDoubleDash = Symbol('copyDoubleDash');
+const kCreateLogger = Symbol('copyDoubleDash');
+const kDeleteFromParserHintObject = Symbol('deleteFromParserHintObject');
+const kEmitWarning = Symbol('emitWarning');
+const kFreeze = Symbol('freeze');
+const kGetDollarZero = Symbol('getDollarZero');
+const kGetParserConfiguration = Symbol('getParserConfiguration');
+const kGetUsageConfiguration = Symbol('getUsageConfiguration');
+const kGuessLocale = Symbol('guessLocale');
+const kGuessVersion = Symbol('guessVersion');
+const kParsePositionalNumbers = Symbol('parsePositionalNumbers');
+const kPkgUp = Symbol('pkgUp');
+const kPopulateParserHintArray = Symbol('populateParserHintArray');
+const kPopulateParserHintSingleValueDictionary = Symbol('populateParserHintSingleValueDictionary');
+const kPopulateParserHintArrayDictionary = Symbol('populateParserHintArrayDictionary');
+const kPopulateParserHintDictionary = Symbol('populateParserHintDictionary');
+const kSanitizeKey = Symbol('sanitizeKey');
+const kSetKey = Symbol('setKey');
+const kUnfreeze = Symbol('unfreeze');
+const kValidateAsync = Symbol('validateAsync');
+const kGetCommandInstance = Symbol('getCommandInstance');
+const kGetContext = Symbol('getContext');
+const kGetHasOutput = Symbol('getHasOutput');
+const kGetLoggerInstance = Symbol('getLoggerInstance');
+const kGetParseContext = Symbol('getParseContext');
+const kGetUsageInstance = Symbol('getUsageInstance');
+const kGetValidationInstance = Symbol('getValidationInstance');
+const kHasParseCallback = Symbol('hasParseCallback');
+const kIsGlobalContext = Symbol('isGlobalContext');
+const kPostProcess = Symbol('postProcess');
+const kRebase = Symbol('rebase');
+const kReset = Symbol('reset');
+const kRunYargsParserAndExecuteCommands = Symbol('runYargsParserAndExecuteCommands');
+const kRunValidation = Symbol('runValidation');
+const kSetHasOutput = Symbol('setHasOutput');
+const kTrackManuallySetKeys = Symbol('kTrackManuallySetKeys');
+const DEFAULT_LOCALE = 'en_US';
+class YargsInstance {
+    constructor(processArgs = [], cwd, parentRequire, shim) {
+        this.customScriptName = false;
+        this.parsed = false;
+        _YargsInstance_command.set(this, void 0);
+        _YargsInstance_cwd.set(this, void 0);
+        _YargsInstance_context.set(this, { commands: [], fullCommands: [] });
+        _YargsInstance_completion.set(this, null);
+        _YargsInstance_completionCommand.set(this, null);
+        _YargsInstance_defaultShowHiddenOpt.set(this, 'show-hidden');
+        _YargsInstance_exitError.set(this, null);
+        _YargsInstance_detectLocale.set(this, true);
+        _YargsInstance_emittedWarnings.set(this, {});
+        _YargsInstance_exitProcess.set(this, true);
+        _YargsInstance_frozens.set(this, []);
+        _YargsInstance_globalMiddleware.set(this, void 0);
+        _YargsInstance_groups.set(this, {});
+        _YargsInstance_hasOutput.set(this, false);
+        _YargsInstance_helpOpt.set(this, null);
+        _YargsInstance_isGlobalContext.set(this, true);
+        _YargsInstance_logger.set(this, void 0);
+        _YargsInstance_output.set(this, '');
+        _YargsInstance_options.set(this, void 0);
+        _YargsInstance_parentRequire.set(this, void 0);
+        _YargsInstance_parserConfig.set(this, {});
+        _YargsInstance_parseFn.set(this, null);
+        _YargsInstance_parseContext.set(this, null);
+        _YargsInstance_pkgs.set(this, {});
+        _YargsInstance_preservedGroups.set(this, {});
+        _YargsInstance_processArgs.set(this, void 0);
+        _YargsInstance_recommendCommands.set(this, false);
+        _YargsInstance_shim.set(this, void 0);
+        _YargsInstance_strict.set(this, false);
+        _YargsInstance_strictCommands.set(this, false);
+        _YargsInstance_strictOptions.set(this, false);
+        _YargsInstance_usage.set(this, void 0);
+        _YargsInstance_usageConfig.set(this, {});
+        _YargsInstance_versionOpt.set(this, null);
+        _YargsInstance_validation.set(this, void 0);
+        __classPrivateFieldSet(this, _YargsInstance_shim, shim, "f");
+        __classPrivateFieldSet(this, _YargsInstance_processArgs, processArgs, "f");
+        __classPrivateFieldSet(this, _YargsInstance_cwd, cwd, "f");
+        __classPrivateFieldSet(this, _YargsInstance_parentRequire, parentRequire, "f");
+        __classPrivateFieldSet(this, _YargsInstance_globalMiddleware, new GlobalMiddleware(this), "f");
+        this.$0 = this[kGetDollarZero]();
+        this[kReset]();
+        __classPrivateFieldSet(this, _YargsInstance_command, __classPrivateFieldGet(this, _YargsInstance_command, "f"), "f");
+        __classPrivateFieldSet(this, _YargsInstance_usage, __classPrivateFieldGet(this, _YargsInstance_usage, "f"), "f");
+        __classPrivateFieldSet(this, _YargsInstance_validation, __classPrivateFieldGet(this, _YargsInstance_validation, "f"), "f");
+        __classPrivateFieldSet(this, _YargsInstance_options, __classPrivateFieldGet(this, _YargsInstance_options, "f"), "f");
+        __classPrivateFieldGet(this, _YargsInstance_options, "f").showHiddenOpt = __classPrivateFieldGet(this, _YargsInstance_defaultShowHiddenOpt, "f");
+        __classPrivateFieldSet(this, _YargsInstance_logger, this[kCreateLogger](), "f");
+        __classPrivateFieldGet(this, _YargsInstance_shim, "f").y18n.setLocale(DEFAULT_LOCALE);
+    }
+    addHelpOpt(opt, msg) {
+        const defaultHelpOpt = 'help';
+        argsert('[string|boolean] [string]', [opt, msg], arguments.length);
+        if (__classPrivateFieldGet(this, _YargsInstance_helpOpt, "f")) {
+            this[kDeleteFromParserHintObject](__classPrivateFieldGet(this, _YargsInstance_helpOpt, "f"));
+            __classPrivateFieldSet(this, _YargsInstance_helpOpt, null, "f");
+        }
+        if (opt === false && msg === undefined)
+            return this;
+        __classPrivateFieldSet(this, _YargsInstance_helpOpt, typeof opt === 'string' ? opt : defaultHelpOpt, "f");
+        this.boolean(__classPrivateFieldGet(this, _YargsInstance_helpOpt, "f"));
+        this.describe(__classPrivateFieldGet(this, _YargsInstance_helpOpt, "f"), msg || __classPrivateFieldGet(this, _YargsInstance_usage, "f").deferY18nLookup('Show help'));
+        return this;
+    }
+    help(opt, msg) {
+        return this.addHelpOpt(opt, msg);
+    }
+    addShowHiddenOpt(opt, msg) {
+        argsert('[string|boolean] [string]', [opt, msg], arguments.length);
+        if (opt === false && msg === undefined)
+            return this;
+        const showHiddenOpt = typeof opt === 'string' ? opt : __classPrivateFieldGet(this, _YargsInstance_defaultShowHiddenOpt, "f");
+        this.boolean(showHiddenOpt);
+        this.describe(showHiddenOpt, msg || __classPrivateFieldGet(this, _YargsInstance_usage, "f").deferY18nLookup('Show hidden options'));
+        __classPrivateFieldGet(this, _YargsInstance_options, "f").showHiddenOpt = showHiddenOpt;
+        return this;
+    }
+    showHidden(opt, msg) {
+        return this.addShowHiddenOpt(opt, msg);
+    }
+    alias(key, value) {
+        argsert('<object|string|array> [string|array]', [key, value], arguments.length);
+        this[kPopulateParserHintArrayDictionary](this.alias.bind(this), 'alias', key, value);
+        return this;
+    }
+    array(keys) {
+        argsert('<array|string>', [keys], arguments.length);
+        this[kPopulateParserHintArray]('array', keys);
+        this[kTrackManuallySetKeys](keys);
+        return this;
+    }
+    boolean(keys) {
+        argsert('<array|string>', [keys], arguments.length);
+        this[kPopulateParserHintArray]('boolean', keys);
+        this[kTrackManuallySetKeys](keys);
+        return this;
+    }
+    check(f, global) {
+        argsert('<function> [boolean]', [f, global], arguments.length);
+        this.middleware((argv, _yargs) => {
+            return maybeAsyncResult(() => {
+                return f(argv, _yargs.getOptions());
+            }, (result) => {
+                if (!result) {
+                    __classPrivateFieldGet(this, _YargsInstance_usage, "f").fail(__classPrivateFieldGet(this, _YargsInstance_shim, "f").y18n.__('Argument check failed: %s', f.toString()));
+                }
+                else if (typeof result === 'string' || result instanceof Error) {
+                    __classPrivateFieldGet(this, _YargsInstance_usage, "f").fail(result.toString(), result);
+                }
+                return argv;
+            }, (err) => {
+                __classPrivateFieldGet(this, _YargsInstance_usage, "f").fail(err.message ? err.message : err.toString(), err);
+                return argv;
+            });
+        }, false, global);
+        return this;
+    }
+    choices(key, value) {
+        argsert('<object|string|array> [string|array]', [key, value], arguments.length);
+        this[kPopulateParserHintArrayDictionary](this.choices.bind(this), 'choices', key, value);
+        return this;
+    }
+    coerce(keys, value) {
+        argsert('<object|string|array> [function]', [keys, value], arguments.length);
+        if (Array.isArray(keys)) {
+            if (!value) {
+                throw new YError('coerce callback must be provided');
+            }
+            for (const key of keys) {
+                this.coerce(key, value);
+            }
+            return this;
+        }
+        else if (typeof keys === 'object') {
+            for (const key of Object.keys(keys)) {
+                this.coerce(key, keys[key]);
+            }
+            return this;
+        }
+        if (!value) {
+            throw new YError('coerce callback must be provided');
+        }
+        const coerceKey = keys;
+        __classPrivateFieldGet(this, _YargsInstance_options, "f").key[coerceKey] = true;
+        __classPrivateFieldGet(this, _YargsInstance_globalMiddleware, "f").addCoerceMiddleware((argv, yargs) => {
+            var _a;
+            const coerceKeyAliases = (_a = yargs.getAliases()[coerceKey]) !== null && _a !== void 0 ? _a : [];
+            const argvKeys = [coerceKey, ...coerceKeyAliases].filter(key => Object.prototype.hasOwnProperty.call(argv, key));
+            if (argvKeys.length === 0) {
+                return argv;
+            }
+            return maybeAsyncResult(() => {
+                return value(argv[argvKeys[0]]);
+            }, (result) => {
+                argvKeys.forEach(key => {
+                    argv[key] = result;
+                });
+                return argv;
+            }, (err) => {
+                throw new YError(err.message);
+            });
+        }, coerceKey);
+        return this;
+    }
+    conflicts(key1, key2) {
+        argsert('<string|object> [string|array]', [key1, key2], arguments.length);
+        __classPrivateFieldGet(this, _YargsInstance_validation, "f").conflicts(key1, key2);
+        return this;
+    }
+    config(key = 'config', msg, parseFn) {
+        argsert('[object|string] [string|function] [function]', [key, msg, parseFn], arguments.length);
+        if (typeof key === 'object' && !Array.isArray(key)) {
+            key = applyExtends(key, __classPrivateFieldGet(this, _YargsInstance_cwd, "f"), this[kGetParserConfiguration]()['deep-merge-config'] || false, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+            __classPrivateFieldGet(this, _YargsInstance_options, "f").configObjects = (__classPrivateFieldGet(this, _YargsInstance_options, "f").configObjects || []).concat(key);
+            return this;
+        }
+        if (typeof msg === 'function') {
+            parseFn = msg;
+            msg = undefined;
+        }
+        this.describe(key, msg || __classPrivateFieldGet(this, _YargsInstance_usage, "f").deferY18nLookup('Path to JSON config file'));
+        (Array.isArray(key) ? key : [key]).forEach(k => {
+            __classPrivateFieldGet(this, _YargsInstance_options, "f").config[k] = parseFn || true;
+        });
+        return this;
+    }
+    completion(cmd, desc, fn) {
+        argsert('[string] [string|boolean|function] [function]', [cmd, desc, fn], arguments.length);
+        if (typeof desc === 'function') {
+            fn = desc;
+            desc = undefined;
+        }
+        __classPrivateFieldSet(this, _YargsInstance_completionCommand, cmd || __classPrivateFieldGet(this, _YargsInstance_completionCommand, "f") || 'completion', "f");
+        if (!desc && desc !== false) {
+            desc = 'generate completion script';
+        }
+        this.command(__classPrivateFieldGet(this, _YargsInstance_completionCommand, "f"), desc);
+        if (fn)
+            __classPrivateFieldGet(this, _YargsInstance_completion, "f").registerFunction(fn);
+        return this;
+    }
+    command(cmd, description, builder, handler, middlewares, deprecated) {
+        argsert('<string|array|object> [string|boolean] [function|object] [function] [array] [boolean|string]', [cmd, description, builder, handler, middlewares, deprecated], arguments.length);
+        __classPrivateFieldGet(this, _YargsInstance_command, "f").addHandler(cmd, description, builder, handler, middlewares, deprecated);
+        return this;
+    }
+    commands(cmd, description, builder, handler, middlewares, deprecated) {
+        return this.command(cmd, description, builder, handler, middlewares, deprecated);
+    }
+    commandDir(dir, opts) {
+        argsert('<string> [object]', [dir, opts], arguments.length);
+        const req = __classPrivateFieldGet(this, _YargsInstance_parentRequire, "f") || __classPrivateFieldGet(this, _YargsInstance_shim, "f").require;
+        __classPrivateFieldGet(this, _YargsInstance_command, "f").addDirectory(dir, req, __classPrivateFieldGet(this, _YargsInstance_shim, "f").getCallerFile(), opts);
+        return this;
+    }
+    count(keys) {
+        argsert('<array|string>', [keys], arguments.length);
+        this[kPopulateParserHintArray]('count', keys);
+        this[kTrackManuallySetKeys](keys);
+        return this;
+    }
+    default(key, value, defaultDescription) {
+        argsert('<object|string|array> [*] [string]', [key, value, defaultDescription], arguments.length);
+        if (defaultDescription) {
+            assertSingleKey(key, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+            __classPrivateFieldGet(this, _YargsInstance_options, "f").defaultDescription[key] = defaultDescription;
+        }
+        if (typeof value === 'function') {
+            assertSingleKey(key, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+            if (!__classPrivateFieldGet(this, _YargsInstance_options, "f").defaultDescription[key])
+                __classPrivateFieldGet(this, _YargsInstance_options, "f").defaultDescription[key] =
+                    __classPrivateFieldGet(this, _YargsInstance_usage, "f").functionDescription(value);
+            value = value.call();
+        }
+        this[kPopulateParserHintSingleValueDictionary](this.default.bind(this), 'default', key, value);
+        return this;
+    }
+    defaults(key, value, defaultDescription) {
+        return this.default(key, value, defaultDescription);
+    }
+    demandCommand(min = 1, max, minMsg, maxMsg) {
+        argsert('[number] [number|string] [string|null|undefined] [string|null|undefined]', [min, max, minMsg, maxMsg], arguments.length);
+        if (typeof max !== 'number') {
+            minMsg = max;
+            max = Infinity;
+        }
+        this.global('_', false);
+        __classPrivateFieldGet(this, _YargsInstance_options, "f").demandedCommands._ = {
+            min,
+            max,
+            minMsg,
+            maxMsg,
+        };
+        return this;
+    }
+    demand(keys, max, msg) {
+        if (Array.isArray(max)) {
+            max.forEach(key => {
+                assertNotStrictEqual(msg, true, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+                this.demandOption(key, msg);
+            });
+            max = Infinity;
+        }
+        else if (typeof max !== 'number') {
+            msg = max;
+            max = Infinity;
+        }
+        if (typeof keys === 'number') {
+            assertNotStrictEqual(msg, true, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+            this.demandCommand(keys, max, msg, msg);
+        }
+        else if (Array.isArray(keys)) {
+            keys.forEach(key => {
+                assertNotStrictEqual(msg, true, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+                this.demandOption(key, msg);
+            });
+        }
+        else {
+            if (typeof msg === 'string') {
+                this.demandOption(keys, msg);
+            }
+            else if (msg === true || typeof msg === 'undefined') {
+                this.demandOption(keys);
+            }
+        }
+        return this;
+    }
+    demandOption(keys, msg) {
+        argsert('<object|string|array> [string]', [keys, msg], arguments.length);
+        this[kPopulateParserHintSingleValueDictionary](this.demandOption.bind(this), 'demandedOptions', keys, msg);
+        return this;
+    }
+    deprecateOption(option, message) {
+        argsert('<string> [string|boolean]', [option, message], arguments.length);
+        __classPrivateFieldGet(this, _YargsInstance_options, "f").deprecatedOptions[option] = message;
+        return this;
+    }
+    describe(keys, description) {
+        argsert('<object|string|array> [string]', [keys, description], arguments.length);
+        this[kSetKey](keys, true);
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").describe(keys, description);
+        return this;
+    }
+    detectLocale(detect) {
+        argsert('<boolean>', [detect], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_detectLocale, detect, "f");
+        return this;
+    }
+    env(prefix) {
+        argsert('[string|boolean]', [prefix], arguments.length);
+        if (prefix === false)
+            delete __classPrivateFieldGet(this, _YargsInstance_options, "f").envPrefix;
+        else
+            __classPrivateFieldGet(this, _YargsInstance_options, "f").envPrefix = prefix || '';
+        return this;
+    }
+    epilogue(msg) {
+        argsert('<string>', [msg], arguments.length);
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").epilog(msg);
+        return this;
+    }
+    epilog(msg) {
+        return this.epilogue(msg);
+    }
+    example(cmd, description) {
+        argsert('<string|array> [string]', [cmd, description], arguments.length);
+        if (Array.isArray(cmd)) {
+            cmd.forEach(exampleParams => this.example(...exampleParams));
+        }
+        else {
+            __classPrivateFieldGet(this, _YargsInstance_usage, "f").example(cmd, description);
+        }
+        return this;
+    }
+    exit(code, err) {
+        __classPrivateFieldSet(this, _YargsInstance_hasOutput, true, "f");
+        __classPrivateFieldSet(this, _YargsInstance_exitError, err, "f");
+        if (__classPrivateFieldGet(this, _YargsInstance_exitProcess, "f"))
+            __classPrivateFieldGet(this, _YargsInstance_shim, "f").process.exit(code);
+    }
+    exitProcess(enabled = true) {
+        argsert('[boolean]', [enabled], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_exitProcess, enabled, "f");
+        return this;
+    }
+    fail(f) {
+        argsert('<function|boolean>', [f], arguments.length);
+        if (typeof f === 'boolean' && f !== false) {
+            throw new YError("Invalid first argument. Expected function or boolean 'false'");
+        }
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").failFn(f);
+        return this;
+    }
+    getAliases() {
+        return this.parsed ? this.parsed.aliases : {};
+    }
+    async getCompletion(args, done) {
+        argsert('<array> [function]', [args, done], arguments.length);
+        if (!done) {
+            return new Promise((resolve, reject) => {
+                __classPrivateFieldGet(this, _YargsInstance_completion, "f").getCompletion(args, (err, completions) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(completions);
+                });
+            });
+        }
+        else {
+            return __classPrivateFieldGet(this, _YargsInstance_completion, "f").getCompletion(args, done);
+        }
+    }
+    getDemandedOptions() {
+        argsert([], 0);
+        return __classPrivateFieldGet(this, _YargsInstance_options, "f").demandedOptions;
+    }
+    getDemandedCommands() {
+        argsert([], 0);
+        return __classPrivateFieldGet(this, _YargsInstance_options, "f").demandedCommands;
+    }
+    getDeprecatedOptions() {
+        argsert([], 0);
+        return __classPrivateFieldGet(this, _YargsInstance_options, "f").deprecatedOptions;
+    }
+    getDetectLocale() {
+        return __classPrivateFieldGet(this, _YargsInstance_detectLocale, "f");
+    }
+    getExitProcess() {
+        return __classPrivateFieldGet(this, _YargsInstance_exitProcess, "f");
+    }
+    getGroups() {
+        return Object.assign({}, __classPrivateFieldGet(this, _YargsInstance_groups, "f"), __classPrivateFieldGet(this, _YargsInstance_preservedGroups, "f"));
+    }
+    getHelp() {
+        __classPrivateFieldSet(this, _YargsInstance_hasOutput, true, "f");
+        if (!__classPrivateFieldGet(this, _YargsInstance_usage, "f").hasCachedHelpMessage()) {
+            if (!this.parsed) {
+                const parse = this[kRunYargsParserAndExecuteCommands](__classPrivateFieldGet(this, _YargsInstance_processArgs, "f"), undefined, undefined, 0, true);
+                if (isPromise(parse)) {
+                    return parse.then(() => {
+                        return __classPrivateFieldGet(this, _YargsInstance_usage, "f").help();
+                    });
+                }
+            }
+            const builderResponse = __classPrivateFieldGet(this, _YargsInstance_command, "f").runDefaultBuilderOn(this);
+            if (isPromise(builderResponse)) {
+                return builderResponse.then(() => {
+                    return __classPrivateFieldGet(this, _YargsInstance_usage, "f").help();
+                });
+            }
+        }
+        return Promise.resolve(__classPrivateFieldGet(this, _YargsInstance_usage, "f").help());
+    }
+    getOptions() {
+        return __classPrivateFieldGet(this, _YargsInstance_options, "f");
+    }
+    getStrict() {
+        return __classPrivateFieldGet(this, _YargsInstance_strict, "f");
+    }
+    getStrictCommands() {
+        return __classPrivateFieldGet(this, _YargsInstance_strictCommands, "f");
+    }
+    getStrictOptions() {
+        return __classPrivateFieldGet(this, _YargsInstance_strictOptions, "f");
+    }
+    global(globals, global) {
+        argsert('<string|array> [boolean]', [globals, global], arguments.length);
+        globals = [].concat(globals);
+        if (global !== false) {
+            __classPrivateFieldGet(this, _YargsInstance_options, "f").local = __classPrivateFieldGet(this, _YargsInstance_options, "f").local.filter(l => globals.indexOf(l) === -1);
+        }
+        else {
+            globals.forEach(g => {
+                if (!__classPrivateFieldGet(this, _YargsInstance_options, "f").local.includes(g))
+                    __classPrivateFieldGet(this, _YargsInstance_options, "f").local.push(g);
+            });
+        }
+        return this;
+    }
+    group(opts, groupName) {
+        argsert('<string|array> <string>', [opts, groupName], arguments.length);
+        const existing = __classPrivateFieldGet(this, _YargsInstance_preservedGroups, "f")[groupName] || __classPrivateFieldGet(this, _YargsInstance_groups, "f")[groupName];
+        if (__classPrivateFieldGet(this, _YargsInstance_preservedGroups, "f")[groupName]) {
+            delete __classPrivateFieldGet(this, _YargsInstance_preservedGroups, "f")[groupName];
+        }
+        const seen = {};
+        __classPrivateFieldGet(this, _YargsInstance_groups, "f")[groupName] = (existing || []).concat(opts).filter(key => {
+            if (seen[key])
+                return false;
+            return (seen[key] = true);
+        });
+        return this;
+    }
+    hide(key) {
+        argsert('<string>', [key], arguments.length);
+        __classPrivateFieldGet(this, _YargsInstance_options, "f").hiddenOptions.push(key);
+        return this;
+    }
+    implies(key, value) {
+        argsert('<string|object> [number|string|array]', [key, value], arguments.length);
+        __classPrivateFieldGet(this, _YargsInstance_validation, "f").implies(key, value);
+        return this;
+    }
+    locale(locale) {
+        argsert('[string]', [locale], arguments.length);
+        if (locale === undefined) {
+            this[kGuessLocale]();
+            return __classPrivateFieldGet(this, _YargsInstance_shim, "f").y18n.getLocale();
+        }
+        __classPrivateFieldSet(this, _YargsInstance_detectLocale, false, "f");
+        __classPrivateFieldGet(this, _YargsInstance_shim, "f").y18n.setLocale(locale);
+        return this;
+    }
+    middleware(callback, applyBeforeValidation, global) {
+        return __classPrivateFieldGet(this, _YargsInstance_globalMiddleware, "f").addMiddleware(callback, !!applyBeforeValidation, global);
+    }
+    nargs(key, value) {
+        argsert('<string|object|array> [number]', [key, value], arguments.length);
+        this[kPopulateParserHintSingleValueDictionary](this.nargs.bind(this), 'narg', key, value);
+        return this;
+    }
+    normalize(keys) {
+        argsert('<array|string>', [keys], arguments.length);
+        this[kPopulateParserHintArray]('normalize', keys);
+        return this;
+    }
+    number(keys) {
+        argsert('<array|string>', [keys], arguments.length);
+        this[kPopulateParserHintArray]('number', keys);
+        this[kTrackManuallySetKeys](keys);
+        return this;
+    }
+    option(key, opt) {
+        argsert('<string|object> [object]', [key, opt], arguments.length);
+        if (typeof key === 'object') {
+            Object.keys(key).forEach(k => {
+                this.options(k, key[k]);
+            });
+        }
+        else {
+            if (typeof opt !== 'object') {
+                opt = {};
+            }
+            this[kTrackManuallySetKeys](key);
+            if (__classPrivateFieldGet(this, _YargsInstance_versionOpt, "f") && (key === 'version' || (opt === null || opt === void 0 ? void 0 : opt.alias) === 'version')) {
+                this[kEmitWarning]([
+                    '"version" is a reserved word.',
+                    'Please do one of the following:',
+                    '- Disable version with `yargs.version(false)` if using "version" as an option',
+                    '- Use the built-in `yargs.version` method instead (if applicable)',
+                    '- Use a different option key',
+                    'https://yargs.js.org/docs/#api-reference-version',
+                ].join('\n'), undefined, 'versionWarning');
+            }
+            __classPrivateFieldGet(this, _YargsInstance_options, "f").key[key] = true;
+            if (opt.alias)
+                this.alias(key, opt.alias);
+            const deprecate = opt.deprecate || opt.deprecated;
+            if (deprecate) {
+                this.deprecateOption(key, deprecate);
+            }
+            const demand = opt.demand || opt.required || opt.require;
+            if (demand) {
+                this.demand(key, demand);
+            }
+            if (opt.demandOption) {
+                this.demandOption(key, typeof opt.demandOption === 'string' ? opt.demandOption : undefined);
+            }
+            if (opt.conflicts) {
+                this.conflicts(key, opt.conflicts);
+            }
+            if ('default' in opt) {
+                this.default(key, opt.default);
+            }
+            if (opt.implies !== undefined) {
+                this.implies(key, opt.implies);
+            }
+            if (opt.nargs !== undefined) {
+                this.nargs(key, opt.nargs);
+            }
+            if (opt.config) {
+                this.config(key, opt.configParser);
+            }
+            if (opt.normalize) {
+                this.normalize(key);
+            }
+            if (opt.choices) {
+                this.choices(key, opt.choices);
+            }
+            if (opt.coerce) {
+                this.coerce(key, opt.coerce);
+            }
+            if (opt.group) {
+                this.group(key, opt.group);
+            }
+            if (opt.boolean || opt.type === 'boolean') {
+                this.boolean(key);
+                if (opt.alias)
+                    this.boolean(opt.alias);
+            }
+            if (opt.array || opt.type === 'array') {
+                this.array(key);
+                if (opt.alias)
+                    this.array(opt.alias);
+            }
+            if (opt.number || opt.type === 'number') {
+                this.number(key);
+                if (opt.alias)
+                    this.number(opt.alias);
+            }
+            if (opt.string || opt.type === 'string') {
+                this.string(key);
+                if (opt.alias)
+                    this.string(opt.alias);
+            }
+            if (opt.count || opt.type === 'count') {
+                this.count(key);
+            }
+            if (typeof opt.global === 'boolean') {
+                this.global(key, opt.global);
+            }
+            if (opt.defaultDescription) {
+                __classPrivateFieldGet(this, _YargsInstance_options, "f").defaultDescription[key] = opt.defaultDescription;
+            }
+            if (opt.skipValidation) {
+                this.skipValidation(key);
+            }
+            const desc = opt.describe || opt.description || opt.desc;
+            const descriptions = __classPrivateFieldGet(this, _YargsInstance_usage, "f").getDescriptions();
+            if (!Object.prototype.hasOwnProperty.call(descriptions, key) ||
+                typeof desc === 'string') {
+                this.describe(key, desc);
+            }
+            if (opt.hidden) {
+                this.hide(key);
+            }
+            if (opt.requiresArg) {
+                this.requiresArg(key);
+            }
+        }
+        return this;
+    }
+    options(key, opt) {
+        return this.option(key, opt);
+    }
+    parse(args, shortCircuit, _parseFn) {
+        argsert('[string|array] [function|boolean|object] [function]', [args, shortCircuit, _parseFn], arguments.length);
+        this[kFreeze]();
+        if (typeof args === 'undefined') {
+            args = __classPrivateFieldGet(this, _YargsInstance_processArgs, "f");
+        }
+        if (typeof shortCircuit === 'object') {
+            __classPrivateFieldSet(this, _YargsInstance_parseContext, shortCircuit, "f");
+            shortCircuit = _parseFn;
+        }
+        if (typeof shortCircuit === 'function') {
+            __classPrivateFieldSet(this, _YargsInstance_parseFn, shortCircuit, "f");
+            shortCircuit = false;
+        }
+        if (!shortCircuit)
+            __classPrivateFieldSet(this, _YargsInstance_processArgs, args, "f");
+        if (__classPrivateFieldGet(this, _YargsInstance_parseFn, "f"))
+            __classPrivateFieldSet(this, _YargsInstance_exitProcess, false, "f");
+        const parsed = this[kRunYargsParserAndExecuteCommands](args, !!shortCircuit);
+        const tmpParsed = this.parsed;
+        __classPrivateFieldGet(this, _YargsInstance_completion, "f").setParsed(this.parsed);
+        if (isPromise(parsed)) {
+            return parsed
+                .then(argv => {
+                if (__classPrivateFieldGet(this, _YargsInstance_parseFn, "f"))
+                    __classPrivateFieldGet(this, _YargsInstance_parseFn, "f").call(this, __classPrivateFieldGet(this, _YargsInstance_exitError, "f"), argv, __classPrivateFieldGet(this, _YargsInstance_output, "f"));
+                return argv;
+            })
+                .catch(err => {
+                if (__classPrivateFieldGet(this, _YargsInstance_parseFn, "f")) {
+                    __classPrivateFieldGet(this, _YargsInstance_parseFn, "f")(err, this.parsed.argv, __classPrivateFieldGet(this, _YargsInstance_output, "f"));
+                }
+                throw err;
+            })
+                .finally(() => {
+                this[kUnfreeze]();
+                this.parsed = tmpParsed;
+            });
+        }
+        else {
+            if (__classPrivateFieldGet(this, _YargsInstance_parseFn, "f"))
+                __classPrivateFieldGet(this, _YargsInstance_parseFn, "f").call(this, __classPrivateFieldGet(this, _YargsInstance_exitError, "f"), parsed, __classPrivateFieldGet(this, _YargsInstance_output, "f"));
+            this[kUnfreeze]();
+            this.parsed = tmpParsed;
+        }
+        return parsed;
+    }
+    parseAsync(args, shortCircuit, _parseFn) {
+        const maybePromise = this.parse(args, shortCircuit, _parseFn);
+        return !isPromise(maybePromise)
+            ? Promise.resolve(maybePromise)
+            : maybePromise;
+    }
+    parseSync(args, shortCircuit, _parseFn) {
+        const maybePromise = this.parse(args, shortCircuit, _parseFn);
+        if (isPromise(maybePromise)) {
+            throw new YError('.parseSync() must not be used with asynchronous builders, handlers, or middleware');
+        }
+        return maybePromise;
+    }
+    parserConfiguration(config) {
+        argsert('<object>', [config], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_parserConfig, config, "f");
+        return this;
+    }
+    pkgConf(key, rootPath) {
+        argsert('<string> [string]', [key, rootPath], arguments.length);
+        let conf = null;
+        const obj = this[kPkgUp](rootPath || __classPrivateFieldGet(this, _YargsInstance_cwd, "f"));
+        if (obj[key] && typeof obj[key] === 'object') {
+            conf = applyExtends(obj[key], rootPath || __classPrivateFieldGet(this, _YargsInstance_cwd, "f"), this[kGetParserConfiguration]()['deep-merge-config'] || false, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+            __classPrivateFieldGet(this, _YargsInstance_options, "f").configObjects = (__classPrivateFieldGet(this, _YargsInstance_options, "f").configObjects || []).concat(conf);
+        }
+        return this;
+    }
+    positional(key, opts) {
+        argsert('<string> <object>', [key, opts], arguments.length);
+        const supportedOpts = [
+            'default',
+            'defaultDescription',
+            'implies',
+            'normalize',
+            'choices',
+            'conflicts',
+            'coerce',
+            'type',
+            'describe',
+            'desc',
+            'description',
+            'alias',
+        ];
+        opts = objFilter(opts, (k, v) => {
+            if (k === 'type' && !['string', 'number', 'boolean'].includes(v))
+                return false;
+            return supportedOpts.includes(k);
+        });
+        const fullCommand = __classPrivateFieldGet(this, _YargsInstance_context, "f").fullCommands[__classPrivateFieldGet(this, _YargsInstance_context, "f").fullCommands.length - 1];
+        const parseOptions = fullCommand
+            ? __classPrivateFieldGet(this, _YargsInstance_command, "f").cmdToParseOptions(fullCommand)
+            : {
+                array: [],
+                alias: {},
+                default: {},
+                demand: {},
+            };
+        objectKeys(parseOptions).forEach(pk => {
+            const parseOption = parseOptions[pk];
+            if (Array.isArray(parseOption)) {
+                if (parseOption.indexOf(key) !== -1)
+                    opts[pk] = true;
+            }
+            else {
+                if (parseOption[key] && !(pk in opts))
+                    opts[pk] = parseOption[key];
+            }
+        });
+        this.group(key, __classPrivateFieldGet(this, _YargsInstance_usage, "f").getPositionalGroupName());
+        return this.option(key, opts);
+    }
+    recommendCommands(recommend = true) {
+        argsert('[boolean]', [recommend], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_recommendCommands, recommend, "f");
+        return this;
+    }
+    required(keys, max, msg) {
+        return this.demand(keys, max, msg);
+    }
+    require(keys, max, msg) {
+        return this.demand(keys, max, msg);
+    }
+    requiresArg(keys) {
+        argsert('<array|string|object> [number]', [keys], arguments.length);
+        if (typeof keys === 'string' && __classPrivateFieldGet(this, _YargsInstance_options, "f").narg[keys]) {
+            return this;
+        }
+        else {
+            this[kPopulateParserHintSingleValueDictionary](this.requiresArg.bind(this), 'narg', keys, NaN);
+        }
+        return this;
+    }
+    showCompletionScript($0, cmd) {
+        argsert('[string] [string]', [$0, cmd], arguments.length);
+        $0 = $0 || this.$0;
+        __classPrivateFieldGet(this, _YargsInstance_logger, "f").log(__classPrivateFieldGet(this, _YargsInstance_completion, "f").generateCompletionScript($0, cmd || __classPrivateFieldGet(this, _YargsInstance_completionCommand, "f") || 'completion'));
+        return this;
+    }
+    showHelp(level) {
+        argsert('[string|function]', [level], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_hasOutput, true, "f");
+        if (!__classPrivateFieldGet(this, _YargsInstance_usage, "f").hasCachedHelpMessage()) {
+            if (!this.parsed) {
+                const parse = this[kRunYargsParserAndExecuteCommands](__classPrivateFieldGet(this, _YargsInstance_processArgs, "f"), undefined, undefined, 0, true);
+                if (isPromise(parse)) {
+                    parse.then(() => {
+                        __classPrivateFieldGet(this, _YargsInstance_usage, "f").showHelp(level);
+                    });
+                    return this;
+                }
+            }
+            const builderResponse = __classPrivateFieldGet(this, _YargsInstance_command, "f").runDefaultBuilderOn(this);
+            if (isPromise(builderResponse)) {
+                builderResponse.then(() => {
+                    __classPrivateFieldGet(this, _YargsInstance_usage, "f").showHelp(level);
+                });
+                return this;
+            }
+        }
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").showHelp(level);
+        return this;
+    }
+    scriptName(scriptName) {
+        this.customScriptName = true;
+        this.$0 = scriptName;
+        return this;
+    }
+    showHelpOnFail(enabled, message) {
+        argsert('[boolean|string] [string]', [enabled, message], arguments.length);
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").showHelpOnFail(enabled, message);
+        return this;
+    }
+    showVersion(level) {
+        argsert('[string|function]', [level], arguments.length);
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").showVersion(level);
+        return this;
+    }
+    skipValidation(keys) {
+        argsert('<array|string>', [keys], arguments.length);
+        this[kPopulateParserHintArray]('skipValidation', keys);
+        return this;
+    }
+    strict(enabled) {
+        argsert('[boolean]', [enabled], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_strict, enabled !== false, "f");
+        return this;
+    }
+    strictCommands(enabled) {
+        argsert('[boolean]', [enabled], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_strictCommands, enabled !== false, "f");
+        return this;
+    }
+    strictOptions(enabled) {
+        argsert('[boolean]', [enabled], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_strictOptions, enabled !== false, "f");
+        return this;
+    }
+    string(keys) {
+        argsert('<array|string>', [keys], arguments.length);
+        this[kPopulateParserHintArray]('string', keys);
+        this[kTrackManuallySetKeys](keys);
+        return this;
+    }
+    terminalWidth() {
+        argsert([], 0);
+        return __classPrivateFieldGet(this, _YargsInstance_shim, "f").process.stdColumns;
+    }
+    updateLocale(obj) {
+        return this.updateStrings(obj);
+    }
+    updateStrings(obj) {
+        argsert('<object>', [obj], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_detectLocale, false, "f");
+        __classPrivateFieldGet(this, _YargsInstance_shim, "f").y18n.updateLocale(obj);
+        return this;
+    }
+    usage(msg, description, builder, handler) {
+        argsert('<string|null|undefined> [string|boolean] [function|object] [function]', [msg, description, builder, handler], arguments.length);
+        if (description !== undefined) {
+            assertNotStrictEqual(msg, null, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+            if ((msg || '').match(/^\$0( |$)/)) {
+                return this.command(msg, description, builder, handler);
+            }
+            else {
+                throw new YError('.usage() description must start with $0 if being used as alias for .command()');
+            }
+        }
+        else {
+            __classPrivateFieldGet(this, _YargsInstance_usage, "f").usage(msg);
+            return this;
+        }
+    }
+    usageConfiguration(config) {
+        argsert('<object>', [config], arguments.length);
+        __classPrivateFieldSet(this, _YargsInstance_usageConfig, config, "f");
+        return this;
+    }
+    version(opt, msg, ver) {
+        const defaultVersionOpt = 'version';
+        argsert('[boolean|string] [string] [string]', [opt, msg, ver], arguments.length);
+        if (__classPrivateFieldGet(this, _YargsInstance_versionOpt, "f")) {
+            this[kDeleteFromParserHintObject](__classPrivateFieldGet(this, _YargsInstance_versionOpt, "f"));
+            __classPrivateFieldGet(this, _YargsInstance_usage, "f").version(undefined);
+            __classPrivateFieldSet(this, _YargsInstance_versionOpt, null, "f");
+        }
+        if (arguments.length === 0) {
+            ver = this[kGuessVersion]();
+            opt = defaultVersionOpt;
+        }
+        else if (arguments.length === 1) {
+            if (opt === false) {
+                return this;
+            }
+            ver = opt;
+            opt = defaultVersionOpt;
+        }
+        else if (arguments.length === 2) {
+            ver = msg;
+            msg = undefined;
+        }
+        __classPrivateFieldSet(this, _YargsInstance_versionOpt, typeof opt === 'string' ? opt : defaultVersionOpt, "f");
+        msg = msg || __classPrivateFieldGet(this, _YargsInstance_usage, "f").deferY18nLookup('Show version number');
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").version(ver || undefined);
+        this.boolean(__classPrivateFieldGet(this, _YargsInstance_versionOpt, "f"));
+        this.describe(__classPrivateFieldGet(this, _YargsInstance_versionOpt, "f"), msg);
+        return this;
+    }
+    wrap(cols) {
+        argsert('<number|null|undefined>', [cols], arguments.length);
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").wrap(cols);
+        return this;
+    }
+    [(_YargsInstance_command = new WeakMap(), _YargsInstance_cwd = new WeakMap(), _YargsInstance_context = new WeakMap(), _YargsInstance_completion = new WeakMap(), _YargsInstance_completionCommand = new WeakMap(), _YargsInstance_defaultShowHiddenOpt = new WeakMap(), _YargsInstance_exitError = new WeakMap(), _YargsInstance_detectLocale = new WeakMap(), _YargsInstance_emittedWarnings = new WeakMap(), _YargsInstance_exitProcess = new WeakMap(), _YargsInstance_frozens = new WeakMap(), _YargsInstance_globalMiddleware = new WeakMap(), _YargsInstance_groups = new WeakMap(), _YargsInstance_hasOutput = new WeakMap(), _YargsInstance_helpOpt = new WeakMap(), _YargsInstance_isGlobalContext = new WeakMap(), _YargsInstance_logger = new WeakMap(), _YargsInstance_output = new WeakMap(), _YargsInstance_options = new WeakMap(), _YargsInstance_parentRequire = new WeakMap(), _YargsInstance_parserConfig = new WeakMap(), _YargsInstance_parseFn = new WeakMap(), _YargsInstance_parseContext = new WeakMap(), _YargsInstance_pkgs = new WeakMap(), _YargsInstance_preservedGroups = new WeakMap(), _YargsInstance_processArgs = new WeakMap(), _YargsInstance_recommendCommands = new WeakMap(), _YargsInstance_shim = new WeakMap(), _YargsInstance_strict = new WeakMap(), _YargsInstance_strictCommands = new WeakMap(), _YargsInstance_strictOptions = new WeakMap(), _YargsInstance_usage = new WeakMap(), _YargsInstance_usageConfig = new WeakMap(), _YargsInstance_versionOpt = new WeakMap(), _YargsInstance_validation = new WeakMap(), kCopyDoubleDash)](argv) {
+        if (!argv._ || !argv['--'])
+            return argv;
+        argv._.push.apply(argv._, argv['--']);
+        try {
+            delete argv['--'];
+        }
+        catch (_err) { }
+        return argv;
+    }
+    [kCreateLogger]() {
         return {
-            aliases: Object.assign({}, flags.aliases),
-            argv: Object.assign(argvReturn, argv),
-            configuration: configuration,
-            defaulted: Object.assign({}, defaulted),
-            error: error,
-            newAliases: Object.assign({}, newAliases)
+            log: (...args) => {
+                if (!this[kHasParseCallback]())
+                    console.log(...args);
+                __classPrivateFieldSet(this, _YargsInstance_hasOutput, true, "f");
+                if (__classPrivateFieldGet(this, _YargsInstance_output, "f").length)
+                    __classPrivateFieldSet(this, _YargsInstance_output, __classPrivateFieldGet(this, _YargsInstance_output, "f") + '\n', "f");
+                __classPrivateFieldSet(this, _YargsInstance_output, __classPrivateFieldGet(this, _YargsInstance_output, "f") + args.join(' '), "f");
+            },
+            error: (...args) => {
+                if (!this[kHasParseCallback]())
+                    console.error(...args);
+                __classPrivateFieldSet(this, _YargsInstance_hasOutput, true, "f");
+                if (__classPrivateFieldGet(this, _YargsInstance_output, "f").length)
+                    __classPrivateFieldSet(this, _YargsInstance_output, __classPrivateFieldGet(this, _YargsInstance_output, "f") + '\n', "f");
+                __classPrivateFieldSet(this, _YargsInstance_output, __classPrivateFieldGet(this, _YargsInstance_output, "f") + args.join(' '), "f");
+            },
         };
     }
-}
-function combineAliases(aliases) {
-    const aliasArrays = [];
-    const combined = Object.create(null);
-    let change = true;
-    Object.keys(aliases).forEach(function (key) {
-        aliasArrays.push([].concat(aliases[key], key));
-    });
-    while (change) {
-        change = false;
-        for (let i = 0; i < aliasArrays.length; i++) {
-            for (let ii = i + 1; ii < aliasArrays.length; ii++) {
-                const intersect = aliasArrays[i].filter(function (v) {
-                    return aliasArrays[ii].indexOf(v) !== -1;
+    [kDeleteFromParserHintObject](optionKey) {
+        objectKeys(__classPrivateFieldGet(this, _YargsInstance_options, "f")).forEach((hintKey) => {
+            if (((key) => key === 'configObjects')(hintKey))
+                return;
+            const hint = __classPrivateFieldGet(this, _YargsInstance_options, "f")[hintKey];
+            if (Array.isArray(hint)) {
+                if (hint.includes(optionKey))
+                    hint.splice(hint.indexOf(optionKey), 1);
+            }
+            else if (typeof hint === 'object') {
+                delete hint[optionKey];
+            }
+        });
+        delete __classPrivateFieldGet(this, _YargsInstance_usage, "f").getDescriptions()[optionKey];
+    }
+    [kEmitWarning](warning, type, deduplicationId) {
+        if (!__classPrivateFieldGet(this, _YargsInstance_emittedWarnings, "f")[deduplicationId]) {
+            __classPrivateFieldGet(this, _YargsInstance_shim, "f").process.emitWarning(warning, type);
+            __classPrivateFieldGet(this, _YargsInstance_emittedWarnings, "f")[deduplicationId] = true;
+        }
+    }
+    [kFreeze]() {
+        __classPrivateFieldGet(this, _YargsInstance_frozens, "f").push({
+            options: __classPrivateFieldGet(this, _YargsInstance_options, "f"),
+            configObjects: __classPrivateFieldGet(this, _YargsInstance_options, "f").configObjects.slice(0),
+            exitProcess: __classPrivateFieldGet(this, _YargsInstance_exitProcess, "f"),
+            groups: __classPrivateFieldGet(this, _YargsInstance_groups, "f"),
+            strict: __classPrivateFieldGet(this, _YargsInstance_strict, "f"),
+            strictCommands: __classPrivateFieldGet(this, _YargsInstance_strictCommands, "f"),
+            strictOptions: __classPrivateFieldGet(this, _YargsInstance_strictOptions, "f"),
+            completionCommand: __classPrivateFieldGet(this, _YargsInstance_completionCommand, "f"),
+            output: __classPrivateFieldGet(this, _YargsInstance_output, "f"),
+            exitError: __classPrivateFieldGet(this, _YargsInstance_exitError, "f"),
+            hasOutput: __classPrivateFieldGet(this, _YargsInstance_hasOutput, "f"),
+            parsed: this.parsed,
+            parseFn: __classPrivateFieldGet(this, _YargsInstance_parseFn, "f"),
+            parseContext: __classPrivateFieldGet(this, _YargsInstance_parseContext, "f"),
+        });
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").freeze();
+        __classPrivateFieldGet(this, _YargsInstance_validation, "f").freeze();
+        __classPrivateFieldGet(this, _YargsInstance_command, "f").freeze();
+        __classPrivateFieldGet(this, _YargsInstance_globalMiddleware, "f").freeze();
+    }
+    [kGetDollarZero]() {
+        let $0 = '';
+        let default$0;
+        if (/\b(node|iojs|electron)(\.exe)?$/.test(__classPrivateFieldGet(this, _YargsInstance_shim, "f").process.argv()[0])) {
+            default$0 = __classPrivateFieldGet(this, _YargsInstance_shim, "f").process.argv().slice(1, 2);
+        }
+        else {
+            default$0 = __classPrivateFieldGet(this, _YargsInstance_shim, "f").process.argv().slice(0, 1);
+        }
+        $0 = default$0
+            .map(x => {
+            const b = this[kRebase](__classPrivateFieldGet(this, _YargsInstance_cwd, "f"), x);
+            return x.match(/^(\/|([a-zA-Z]:)?\\)/) && b.length < x.length ? b : x;
+        })
+            .join(' ')
+            .trim();
+        if (__classPrivateFieldGet(this, _YargsInstance_shim, "f").getEnv('_') &&
+            __classPrivateFieldGet(this, _YargsInstance_shim, "f").getProcessArgvBin() === __classPrivateFieldGet(this, _YargsInstance_shim, "f").getEnv('_')) {
+            $0 = __classPrivateFieldGet(this, _YargsInstance_shim, "f")
+                .getEnv('_')
+                .replace(`${__classPrivateFieldGet(this, _YargsInstance_shim, "f").path.dirname(__classPrivateFieldGet(this, _YargsInstance_shim, "f").process.execPath())}/`, '');
+        }
+        return $0;
+    }
+    [kGetParserConfiguration]() {
+        return __classPrivateFieldGet(this, _YargsInstance_parserConfig, "f");
+    }
+    [kGetUsageConfiguration]() {
+        return __classPrivateFieldGet(this, _YargsInstance_usageConfig, "f");
+    }
+    [kGuessLocale]() {
+        if (!__classPrivateFieldGet(this, _YargsInstance_detectLocale, "f"))
+            return;
+        const locale = __classPrivateFieldGet(this, _YargsInstance_shim, "f").getEnv('LC_ALL') ||
+            __classPrivateFieldGet(this, _YargsInstance_shim, "f").getEnv('LC_MESSAGES') ||
+            __classPrivateFieldGet(this, _YargsInstance_shim, "f").getEnv('LANG') ||
+            __classPrivateFieldGet(this, _YargsInstance_shim, "f").getEnv('LANGUAGE') ||
+            'en_US';
+        this.locale(locale.replace(/[.:].*/, ''));
+    }
+    [kGuessVersion]() {
+        const obj = this[kPkgUp]();
+        return obj.version || 'unknown';
+    }
+    [kParsePositionalNumbers](argv) {
+        const args = argv['--'] ? argv['--'] : argv._;
+        for (let i = 0, arg; (arg = args[i]) !== undefined; i++) {
+            if (__classPrivateFieldGet(this, _YargsInstance_shim, "f").Parser.looksLikeNumber(arg) &&
+                Number.isSafeInteger(Math.floor(parseFloat(`${arg}`)))) {
+                args[i] = Number(arg);
+            }
+        }
+        return argv;
+    }
+    [kPkgUp](rootPath) {
+        const npath = rootPath || '*';
+        if (__classPrivateFieldGet(this, _YargsInstance_pkgs, "f")[npath])
+            return __classPrivateFieldGet(this, _YargsInstance_pkgs, "f")[npath];
+        let obj = {};
+        try {
+            let startDir = rootPath || __classPrivateFieldGet(this, _YargsInstance_shim, "f").mainFilename;
+            if (__classPrivateFieldGet(this, _YargsInstance_shim, "f").path.extname(startDir)) {
+                startDir = __classPrivateFieldGet(this, _YargsInstance_shim, "f").path.dirname(startDir);
+            }
+            const pkgJsonPath = __classPrivateFieldGet(this, _YargsInstance_shim, "f").findUp(startDir, (dir, names) => {
+                if (names.includes('package.json')) {
+                    return 'package.json';
+                }
+                else {
+                    return undefined;
+                }
+            });
+            assertNotStrictEqual(pkgJsonPath, undefined, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+            obj = JSON.parse(__classPrivateFieldGet(this, _YargsInstance_shim, "f").readFileSync(pkgJsonPath, 'utf8'));
+        }
+        catch (_noop) { }
+        __classPrivateFieldGet(this, _YargsInstance_pkgs, "f")[npath] = obj || {};
+        return __classPrivateFieldGet(this, _YargsInstance_pkgs, "f")[npath];
+    }
+    [kPopulateParserHintArray](type, keys) {
+        keys = [].concat(keys);
+        keys.forEach(key => {
+            key = this[kSanitizeKey](key);
+            __classPrivateFieldGet(this, _YargsInstance_options, "f")[type].push(key);
+        });
+    }
+    [kPopulateParserHintSingleValueDictionary](builder, type, key, value) {
+        this[kPopulateParserHintDictionary](builder, type, key, value, (type, key, value) => {
+            __classPrivateFieldGet(this, _YargsInstance_options, "f")[type][key] = value;
+        });
+    }
+    [kPopulateParserHintArrayDictionary](builder, type, key, value) {
+        this[kPopulateParserHintDictionary](builder, type, key, value, (type, key, value) => {
+            __classPrivateFieldGet(this, _YargsInstance_options, "f")[type][key] = (__classPrivateFieldGet(this, _YargsInstance_options, "f")[type][key] || []).concat(value);
+        });
+    }
+    [kPopulateParserHintDictionary](builder, type, key, value, singleKeyHandler) {
+        if (Array.isArray(key)) {
+            key.forEach(k => {
+                builder(k, value);
+            });
+        }
+        else if (((key) => typeof key === 'object')(key)) {
+            for (const k of objectKeys(key)) {
+                builder(k, key[k]);
+            }
+        }
+        else {
+            singleKeyHandler(type, this[kSanitizeKey](key), value);
+        }
+    }
+    [kSanitizeKey](key) {
+        if (key === '__proto__')
+            return '___proto___';
+        return key;
+    }
+    [kSetKey](key, set) {
+        this[kPopulateParserHintSingleValueDictionary](this[kSetKey].bind(this), 'key', key, set);
+        return this;
+    }
+    [kUnfreeze]() {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        const frozen = __classPrivateFieldGet(this, _YargsInstance_frozens, "f").pop();
+        assertNotStrictEqual(frozen, undefined, __classPrivateFieldGet(this, _YargsInstance_shim, "f"));
+        let configObjects;
+        (_a = this, _b = this, _c = this, _d = this, _e = this, _f = this, _g = this, _h = this, _j = this, _k = this, _l = this, _m = this, {
+            options: ({ set value(_o) { __classPrivateFieldSet(_a, _YargsInstance_options, _o, "f"); } }).value,
+            configObjects,
+            exitProcess: ({ set value(_o) { __classPrivateFieldSet(_b, _YargsInstance_exitProcess, _o, "f"); } }).value,
+            groups: ({ set value(_o) { __classPrivateFieldSet(_c, _YargsInstance_groups, _o, "f"); } }).value,
+            output: ({ set value(_o) { __classPrivateFieldSet(_d, _YargsInstance_output, _o, "f"); } }).value,
+            exitError: ({ set value(_o) { __classPrivateFieldSet(_e, _YargsInstance_exitError, _o, "f"); } }).value,
+            hasOutput: ({ set value(_o) { __classPrivateFieldSet(_f, _YargsInstance_hasOutput, _o, "f"); } }).value,
+            parsed: this.parsed,
+            strict: ({ set value(_o) { __classPrivateFieldSet(_g, _YargsInstance_strict, _o, "f"); } }).value,
+            strictCommands: ({ set value(_o) { __classPrivateFieldSet(_h, _YargsInstance_strictCommands, _o, "f"); } }).value,
+            strictOptions: ({ set value(_o) { __classPrivateFieldSet(_j, _YargsInstance_strictOptions, _o, "f"); } }).value,
+            completionCommand: ({ set value(_o) { __classPrivateFieldSet(_k, _YargsInstance_completionCommand, _o, "f"); } }).value,
+            parseFn: ({ set value(_o) { __classPrivateFieldSet(_l, _YargsInstance_parseFn, _o, "f"); } }).value,
+            parseContext: ({ set value(_o) { __classPrivateFieldSet(_m, _YargsInstance_parseContext, _o, "f"); } }).value,
+        } = frozen);
+        __classPrivateFieldGet(this, _YargsInstance_options, "f").configObjects = configObjects;
+        __classPrivateFieldGet(this, _YargsInstance_usage, "f").unfreeze();
+        __classPrivateFieldGet(this, _YargsInstance_validation, "f").unfreeze();
+        __classPrivateFieldGet(this, _YargsInstance_command, "f").unfreeze();
+        __classPrivateFieldGet(this, _YargsInstance_globalMiddleware, "f").unfreeze();
+    }
+    [kValidateAsync](validation, argv) {
+        return maybeAsyncResult(argv, result => {
+            validation(result);
+            return result;
+        });
+    }
+    getInternalMethods() {
+        return {
+            getCommandInstance: this[kGetCommandInstance].bind(this),
+            getContext: this[kGetContext].bind(this),
+            getHasOutput: this[kGetHasOutput].bind(this),
+            getLoggerInstance: this[kGetLoggerInstance].bind(this),
+            getParseContext: this[kGetParseContext].bind(this),
+            getParserConfiguration: this[kGetParserConfiguration].bind(this),
+            getUsageConfiguration: this[kGetUsageConfiguration].bind(this),
+            getUsageInstance: this[kGetUsageInstance].bind(this),
+            getValidationInstance: this[kGetValidationInstance].bind(this),
+            hasParseCallback: this[kHasParseCallback].bind(this),
+            isGlobalContext: this[kIsGlobalContext].bind(this),
+            postProcess: this[kPostProcess].bind(this),
+            reset: this[kReset].bind(this),
+            runValidation: this[kRunValidation].bind(this),
+            runYargsParserAndExecuteCommands: this[kRunYargsParserAndExecuteCommands].bind(this),
+            setHasOutput: this[kSetHasOutput].bind(this),
+        };
+    }
+    [kGetCommandInstance]() {
+        return __classPrivateFieldGet(this, _YargsInstance_command, "f");
+    }
+    [kGetContext]() {
+        return __classPrivateFieldGet(this, _YargsInstance_context, "f");
+    }
+    [kGetHasOutput]() {
+        return __classPrivateFieldGet(this, _YargsInstance_hasOutput, "f");
+    }
+    [kGetLoggerInstance]() {
+        return __classPrivateFieldGet(this, _YargsInstance_logger, "f");
+    }
+    [kGetParseContext]() {
+        return __classPrivateFieldGet(this, _YargsInstance_parseContext, "f") || {};
+    }
+    [kGetUsageInstance]() {
+        return __classPrivateFieldGet(this, _YargsInstance_usage, "f");
+    }
+    [kGetValidationInstance]() {
+        return __classPrivateFieldGet(this, _YargsInstance_validation, "f");
+    }
+    [kHasParseCallback]() {
+        return !!__classPrivateFieldGet(this, _YargsInstance_parseFn, "f");
+    }
+    [kIsGlobalContext]() {
+        return __classPrivateFieldGet(this, _YargsInstance_isGlobalContext, "f");
+    }
+    [kPostProcess](argv, populateDoubleDash, calledFromCommand, runGlobalMiddleware) {
+        if (calledFromCommand)
+            return argv;
+        if (isPromise(argv))
+            return argv;
+        if (!populateDoubleDash) {
+            argv = this[kCopyDoubleDash](argv);
+        }
+        const parsePositionalNumbers = this[kGetParserConfiguration]()['parse-positional-numbers'] ||
+            this[kGetParserConfiguration]()['parse-positional-numbers'] === undefined;
+        if (parsePositionalNumbers) {
+            argv = this[kParsePositionalNumbers](argv);
+        }
+        if (runGlobalMiddleware) {
+            argv = applyMiddleware(argv, this, __classPrivateFieldGet(this, _YargsInstance_globalMiddleware, "f").getMiddleware(), false);
+        }
+        return argv;
+    }
+    [kReset](aliases = {}) {
+        __classPrivateFieldSet(this, _YargsInstance_options, __classPrivateFieldGet(this, _YargsInstance_options, "f") || {}, "f");
+        const tmpOptions = {};
+        tmpOptions.local = __classPrivateFieldGet(this, _YargsInstance_options, "f").local || [];
+        tmpOptions.configObjects = __classPrivateFieldGet(this, _YargsInstance_options, "f").configObjects || [];
+        const localLookup = {};
+        tmpOptions.local.forEach(l => {
+            localLookup[l] = true;
+            (aliases[l] || []).forEach(a => {
+                localLookup[a] = true;
+            });
+        });
+        Object.assign(__classPrivateFieldGet(this, _YargsInstance_preservedGroups, "f"), Object.keys(__classPrivateFieldGet(this, _YargsInstance_groups, "f")).reduce((acc, groupName) => {
+            const keys = __classPrivateFieldGet(this, _YargsInstance_groups, "f")[groupName].filter(key => !(key in localLookup));
+            if (keys.length > 0) {
+                acc[groupName] = keys;
+            }
+            return acc;
+        }, {}));
+        __classPrivateFieldSet(this, _YargsInstance_groups, {}, "f");
+        const arrayOptions = [
+            'array',
+            'boolean',
+            'string',
+            'skipValidation',
+            'count',
+            'normalize',
+            'number',
+            'hiddenOptions',
+        ];
+        const objectOptions = [
+            'narg',
+            'key',
+            'alias',
+            'default',
+            'defaultDescription',
+            'config',
+            'choices',
+            'demandedOptions',
+            'demandedCommands',
+            'deprecatedOptions',
+        ];
+        arrayOptions.forEach(k => {
+            tmpOptions[k] = (__classPrivateFieldGet(this, _YargsInstance_options, "f")[k] || []).filter((k) => !localLookup[k]);
+        });
+        objectOptions.forEach((k) => {
+            tmpOptions[k] = objFilter(__classPrivateFieldGet(this, _YargsInstance_options, "f")[k], k => !localLookup[k]);
+        });
+        tmpOptions.envPrefix = __classPrivateFieldGet(this, _YargsInstance_options, "f").envPrefix;
+        __classPrivateFieldSet(this, _YargsInstance_options, tmpOptions, "f");
+        __classPrivateFieldSet(this, _YargsInstance_usage, __classPrivateFieldGet(this, _YargsInstance_usage, "f")
+            ? __classPrivateFieldGet(this, _YargsInstance_usage, "f").reset(localLookup)
+            : usage(this, __classPrivateFieldGet(this, _YargsInstance_shim, "f")), "f");
+        __classPrivateFieldSet(this, _YargsInstance_validation, __classPrivateFieldGet(this, _YargsInstance_validation, "f")
+            ? __classPrivateFieldGet(this, _YargsInstance_validation, "f").reset(localLookup)
+            : validation(this, __classPrivateFieldGet(this, _YargsInstance_usage, "f"), __classPrivateFieldGet(this, _YargsInstance_shim, "f")), "f");
+        __classPrivateFieldSet(this, _YargsInstance_command, __classPrivateFieldGet(this, _YargsInstance_command, "f")
+            ? __classPrivateFieldGet(this, _YargsInstance_command, "f").reset()
+            : command(__classPrivateFieldGet(this, _YargsInstance_usage, "f"), __classPrivateFieldGet(this, _YargsInstance_validation, "f"), __classPrivateFieldGet(this, _YargsInstance_globalMiddleware, "f"), __classPrivateFieldGet(this, _YargsInstance_shim, "f")), "f");
+        if (!__classPrivateFieldGet(this, _YargsInstance_completion, "f"))
+            __classPrivateFieldSet(this, _YargsInstance_completion, completion(this, __classPrivateFieldGet(this, _YargsInstance_usage, "f"), __classPrivateFieldGet(this, _YargsInstance_command, "f"), __classPrivateFieldGet(this, _YargsInstance_shim, "f")), "f");
+        __classPrivateFieldGet(this, _YargsInstance_globalMiddleware, "f").reset();
+        __classPrivateFieldSet(this, _YargsInstance_completionCommand, null, "f");
+        __classPrivateFieldSet(this, _YargsInstance_output, '', "f");
+        __classPrivateFieldSet(this, _YargsInstance_exitError, null, "f");
+        __classPrivateFieldSet(this, _YargsInstance_hasOutput, false, "f");
+        this.parsed = false;
+        return this;
+    }
+    [kRebase](base, dir) {
+        return __classPrivateFieldGet(this, _YargsInstance_shim, "f").path.relative(base, dir);
+    }
+    [kRunYargsParserAndExecuteCommands](args, shortCircuit, calledFromCommand, commandIndex = 0, helpOnly = false) {
+        var _a, _b, _c, _d;
+        let skipValidation = !!calledFromCommand || helpOnly;
+        args = args || __classPrivateFieldGet(this, _YargsInstance_processArgs, "f");
+        __classPrivateFieldGet(this, _YargsInstance_options, "f").__ = __classPrivateFieldGet(this, _YargsInstance_shim, "f").y18n.__;
+        __classPrivateFieldGet(this, _YargsInstance_options, "f").configuration = this[kGetParserConfiguration]();
+        const populateDoubleDash = !!__classPrivateFieldGet(this, _YargsInstance_options, "f").configuration['populate--'];
+        const config = Object.assign({}, __classPrivateFieldGet(this, _YargsInstance_options, "f").configuration, {
+            'populate--': true,
+        });
+        const parsed = __classPrivateFieldGet(this, _YargsInstance_shim, "f").Parser.detailed(args, Object.assign({}, __classPrivateFieldGet(this, _YargsInstance_options, "f"), {
+            configuration: { 'parse-positional-numbers': false, ...config },
+        }));
+        const argv = Object.assign(parsed.argv, __classPrivateFieldGet(this, _YargsInstance_parseContext, "f"));
+        let argvPromise = undefined;
+        const aliases = parsed.aliases;
+        let helpOptSet = false;
+        let versionOptSet = false;
+        Object.keys(argv).forEach(key => {
+            if (key === __classPrivateFieldGet(this, _YargsInstance_helpOpt, "f") && argv[key]) {
+                helpOptSet = true;
+            }
+            else if (key === __classPrivateFieldGet(this, _YargsInstance_versionOpt, "f") && argv[key]) {
+                versionOptSet = true;
+            }
+        });
+        argv.$0 = this.$0;
+        this.parsed = parsed;
+        if (commandIndex === 0) {
+            __classPrivateFieldGet(this, _YargsInstance_usage, "f").clearCachedHelpMessage();
+        }
+        try {
+            this[kGuessLocale]();
+            if (shortCircuit) {
+                return this[kPostProcess](argv, populateDoubleDash, !!calledFromCommand, false);
+            }
+            if (__classPrivateFieldGet(this, _YargsInstance_helpOpt, "f")) {
+                const helpCmds = [__classPrivateFieldGet(this, _YargsInstance_helpOpt, "f")]
+                    .concat(aliases[__classPrivateFieldGet(this, _YargsInstance_helpOpt, "f")] || [])
+                    .filter(k => k.length > 1);
+                if (helpCmds.includes('' + argv._[argv._.length - 1])) {
+                    argv._.pop();
+                    helpOptSet = true;
+                }
+            }
+            __classPrivateFieldSet(this, _YargsInstance_isGlobalContext, false, "f");
+            const handlerKeys = __classPrivateFieldGet(this, _YargsInstance_command, "f").getCommands();
+            const requestCompletions = ((_a = __classPrivateFieldGet(this, _YargsInstance_completion, "f")) === null || _a === void 0 ? void 0 : _a.completionKey)
+                ? [
+                    (_b = __classPrivateFieldGet(this, _YargsInstance_completion, "f")) === null || _b === void 0 ? void 0 : _b.completionKey,
+                    ...((_d = this.getAliases()[(_c = __classPrivateFieldGet(this, _YargsInstance_completion, "f")) === null || _c === void 0 ? void 0 : _c.completionKey]) !== null && _d !== void 0 ? _d : []),
+                ].some((key) => Object.prototype.hasOwnProperty.call(argv, key))
+                : false;
+            const skipRecommendation = helpOptSet || requestCompletions || helpOnly;
+            if (argv._.length) {
+                if (handlerKeys.length) {
+                    let firstUnknownCommand;
+                    for (let i = commandIndex || 0, cmd; argv._[i] !== undefined; i++) {
+                        cmd = String(argv._[i]);
+                        if (handlerKeys.includes(cmd) && cmd !== __classPrivateFieldGet(this, _YargsInstance_completionCommand, "f")) {
+                            const innerArgv = __classPrivateFieldGet(this, _YargsInstance_command, "f").runCommand(cmd, this, parsed, i + 1, helpOnly, helpOptSet || versionOptSet || helpOnly);
+                            return this[kPostProcess](innerArgv, populateDoubleDash, !!calledFromCommand, false);
+                        }
+                        else if (!firstUnknownCommand &&
+                            cmd !== __classPrivateFieldGet(this, _YargsInstance_completionCommand, "f")) {
+                            firstUnknownCommand = cmd;
+                            break;
+                        }
+                    }
+                    if (!__classPrivateFieldGet(this, _YargsInstance_command, "f").hasDefaultCommand() &&
+                        __classPrivateFieldGet(this, _YargsInstance_recommendCommands, "f") &&
+                        firstUnknownCommand &&
+                        !skipRecommendation) {
+                        __classPrivateFieldGet(this, _YargsInstance_validation, "f").recommendCommands(firstUnknownCommand, handlerKeys);
+                    }
+                }
+                if (__classPrivateFieldGet(this, _YargsInstance_completionCommand, "f") &&
+                    argv._.includes(__classPrivateFieldGet(this, _YargsInstance_completionCommand, "f")) &&
+                    !requestCompletions) {
+                    if (__classPrivateFieldGet(this, _YargsInstance_exitProcess, "f"))
+                        setBlocking(true);
+                    this.showCompletionScript();
+                    this.exit(0);
+                }
+            }
+            if (__classPrivateFieldGet(this, _YargsInstance_command, "f").hasDefaultCommand() && !skipRecommendation) {
+                const innerArgv = __classPrivateFieldGet(this, _YargsInstance_command, "f").runCommand(null, this, parsed, 0, helpOnly, helpOptSet || versionOptSet || helpOnly);
+                return this[kPostProcess](innerArgv, populateDoubleDash, !!calledFromCommand, false);
+            }
+            if (requestCompletions) {
+                if (__classPrivateFieldGet(this, _YargsInstance_exitProcess, "f"))
+                    setBlocking(true);
+                args = [].concat(args);
+                const completionArgs = args.slice(args.indexOf(`--${__classPrivateFieldGet(this, _YargsInstance_completion, "f").completionKey}`) + 1);
+                __classPrivateFieldGet(this, _YargsInstance_completion, "f").getCompletion(completionArgs, (err, completions) => {
+                    if (err)
+                        throw new YError(err.message);
+                    (completions || []).forEach(completion => {
+                        __classPrivateFieldGet(this, _YargsInstance_logger, "f").log(completion);
+                    });
+                    this.exit(0);
                 });
-                if (intersect.length) {
-                    aliasArrays[i] = aliasArrays[i].concat(aliasArrays[ii]);
-                    aliasArrays.splice(ii, 1);
-                    change = true;
-                    break;
+                return this[kPostProcess](argv, !populateDoubleDash, !!calledFromCommand, false);
+            }
+            if (!__classPrivateFieldGet(this, _YargsInstance_hasOutput, "f")) {
+                if (helpOptSet) {
+                    if (__classPrivateFieldGet(this, _YargsInstance_exitProcess, "f"))
+                        setBlocking(true);
+                    skipValidation = true;
+                    this.showHelp(message => {
+                        __classPrivateFieldGet(this, _YargsInstance_logger, "f").log(message);
+                        this.exit(0);
+                    });
+                }
+                else if (versionOptSet) {
+                    if (__classPrivateFieldGet(this, _YargsInstance_exitProcess, "f"))
+                        setBlocking(true);
+                    skipValidation = true;
+                    __classPrivateFieldGet(this, _YargsInstance_usage, "f").showVersion('log');
+                    this.exit(0);
+                }
+            }
+            if (!skipValidation && __classPrivateFieldGet(this, _YargsInstance_options, "f").skipValidation.length > 0) {
+                skipValidation = Object.keys(argv).some(key => __classPrivateFieldGet(this, _YargsInstance_options, "f").skipValidation.indexOf(key) >= 0 && argv[key] === true);
+            }
+            if (!skipValidation) {
+                if (parsed.error)
+                    throw new YError(parsed.error.message);
+                if (!requestCompletions) {
+                    const validation = this[kRunValidation](aliases, {}, parsed.error);
+                    if (!calledFromCommand) {
+                        argvPromise = applyMiddleware(argv, this, __classPrivateFieldGet(this, _YargsInstance_globalMiddleware, "f").getMiddleware(), true);
+                    }
+                    argvPromise = this[kValidateAsync](validation, argvPromise !== null && argvPromise !== void 0 ? argvPromise : argv);
+                    if (isPromise(argvPromise) && !calledFromCommand) {
+                        argvPromise = argvPromise.then(() => {
+                            return applyMiddleware(argv, this, __classPrivateFieldGet(this, _YargsInstance_globalMiddleware, "f").getMiddleware(), false);
+                        });
+                    }
                 }
             }
         }
-    }
-    aliasArrays.forEach(function (aliasArray) {
-        aliasArray = aliasArray.filter(function (v, i, self) {
-            return self.indexOf(v) === i;
-        });
-        const lastAlias = aliasArray.pop();
-        if (lastAlias !== undefined && typeof lastAlias === 'string') {
-            combined[lastAlias] = aliasArray;
+        catch (err) {
+            if (err instanceof YError)
+                __classPrivateFieldGet(this, _YargsInstance_usage, "f").fail(err.message, err);
+            else
+                throw err;
         }
-    });
-    return combined;
+        return this[kPostProcess](argvPromise !== null && argvPromise !== void 0 ? argvPromise : argv, populateDoubleDash, !!calledFromCommand, true);
+    }
+    [kRunValidation](aliases, positionalMap, parseErrors, isDefaultCommand) {
+        const demandedOptions = { ...this.getDemandedOptions() };
+        return (argv) => {
+            if (parseErrors)
+                throw new YError(parseErrors.message);
+            __classPrivateFieldGet(this, _YargsInstance_validation, "f").nonOptionCount(argv);
+            __classPrivateFieldGet(this, _YargsInstance_validation, "f").requiredArguments(argv, demandedOptions);
+            let failedStrictCommands = false;
+            if (__classPrivateFieldGet(this, _YargsInstance_strictCommands, "f")) {
+                failedStrictCommands = __classPrivateFieldGet(this, _YargsInstance_validation, "f").unknownCommands(argv);
+            }
+            if (__classPrivateFieldGet(this, _YargsInstance_strict, "f") && !failedStrictCommands) {
+                __classPrivateFieldGet(this, _YargsInstance_validation, "f").unknownArguments(argv, aliases, positionalMap, !!isDefaultCommand);
+            }
+            else if (__classPrivateFieldGet(this, _YargsInstance_strictOptions, "f")) {
+                __classPrivateFieldGet(this, _YargsInstance_validation, "f").unknownArguments(argv, aliases, {}, false, false);
+            }
+            __classPrivateFieldGet(this, _YargsInstance_validation, "f").limitedChoices(argv);
+            __classPrivateFieldGet(this, _YargsInstance_validation, "f").implications(argv);
+            __classPrivateFieldGet(this, _YargsInstance_validation, "f").conflicting(argv);
+        };
+    }
+    [kSetHasOutput]() {
+        __classPrivateFieldSet(this, _YargsInstance_hasOutput, true, "f");
+    }
+    [kTrackManuallySetKeys](keys) {
+        if (typeof keys === 'string') {
+            __classPrivateFieldGet(this, _YargsInstance_options, "f").key[keys] = true;
+        }
+        else {
+            for (const k of keys) {
+                __classPrivateFieldGet(this, _YargsInstance_options, "f").key[k] = true;
+            }
+        }
+    }
 }
-function increment(orig) {
-    return orig !== undefined ? orig + 1 : 1;
-}
-function sanitizeKey(key) {
-    if (key === '__proto__')
-        return '___proto___';
-    return key;
-}
-function stripQuotes(val) {
-    return (typeof val === 'string' &&
-        (val[0] === "'" || val[0] === '"') &&
-        val[val.length - 1] === val[0])
-        ? val.substring(1, val.length - 1)
-        : val;
+function isYargsInstance(y) {
+    return !!y && typeof y.getInternalMethods === 'function';
 }
 
-var _a, _b, _c;
-const minNodeVersion = (process && process.env && process.env.YARGS_MIN_NODE_VERSION)
-    ? Number(process.env.YARGS_MIN_NODE_VERSION)
-    : 12;
-const nodeVersion = (_b = (_a = process === null || process === void 0 ? void 0 : process.versions) === null || _a === void 0 ? void 0 : _a.node) !== null && _b !== void 0 ? _b : (_c = process === null || process === void 0 ? void 0 : process.version) === null || _c === void 0 ? void 0 : _c.slice(1);
-if (nodeVersion) {
-    const major = Number(nodeVersion.match(/^([^.]+)/)[1]);
-    if (major < minNodeVersion) {
-        throw Error(`yargs parser supports a minimum Node.js version of ${minNodeVersion}. Read our version support policy: https://github.com/yargs/yargs-parser#supported-nodejs-versions`);
-    }
-}
-const env = process ? process.env : {};
-const parser = new YargsParser({
-    cwd: process.cwd,
-    env: () => {
-        return env;
-    },
-    format: util.format,
-    normalize: path.normalize,
-    resolve: path.resolve,
-    require: (path) => {
-        if (true) {
-            return __nccwpck_require__(85396)(path);
-        }
-        else {}
-    }
-});
-const yargsParser = function Parser(args, opts) {
-    const result = parser.parse(args.slice(), opts);
-    return result.argv;
-};
-yargsParser.detailed = function (args, opts) {
-    return parser.parse(args.slice(), opts);
-};
-yargsParser.camelCase = camelCase;
-yargsParser.decamelize = decamelize;
-yargsParser.looksLikeNumber = looksLikeNumber;
+;// CONCATENATED MODULE: ../../packages/generator-common/node_modules/yargs/index.mjs
 
-module.exports = yargsParser;
+
+// Bootstraps yargs for ESM:
+
+
+
+const Yargs = YargsFactory(esm);
+/* harmony default export */ const yargs = (Yargs);
+
+
 
 
 /***/ }),
@@ -93796,13 +98077,33 @@ module.exports = {"version":"3.17.0"};
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
-/******/ 	// expose the module cache
-/******/ 	__nccwpck_require__.c = __webpack_module_cache__;
-/******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__nccwpck_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
@@ -93820,10 +98121,10 @@ module.exports = {"version":"3.17.0"};
 /******/ 	
 /************************************************************************/
 /******/ 	
-/******/ 	// module cache are used so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	var __webpack_exports__ = __nccwpck_require__(__nccwpck_require__.s = 36487);
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(36487);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()

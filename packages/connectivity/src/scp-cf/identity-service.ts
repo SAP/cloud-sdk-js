@@ -1,6 +1,5 @@
 import { decodeJwt, isXsuaaToken } from './jwt';
-import { resolveServiceBinding } from './environment-accessor';
-import { getUserToken } from './xsuaa-service';
+import { jwtBearerToken } from './token-accessor';
 import type { DestinationOptions } from './destination';
 
 /**
@@ -10,9 +9,7 @@ import type { DestinationOptions } from './destination';
  * @returns Exchanged XSUAA token.
  */
 export async function exchangeToken(jwt: string): Promise<string> {
-  // Get XSUAA credentials from destination service binding
-  const destinationServiceBinding = resolveServiceBinding('destination');
-  return getUserToken(destinationServiceBinding, jwt);
+  return jwtBearerToken('destination', jwt);
 }
 
 /**

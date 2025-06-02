@@ -1,8 +1,7 @@
 import { decodeJwt, isXsuaaToken } from './jwt';
-import { getDestinationServiceCredentials } from './environment-accessor';
+import { resolveServiceBinding } from './environment-accessor';
 import { getUserToken } from './xsuaa-service';
 import type { DestinationOptions } from './destination';
-import type { Service } from './environment-accessor';
 
 /**
  * @internal
@@ -12,15 +11,8 @@ import type { Service } from './environment-accessor';
  */
 export async function exchangeToken(jwt: string): Promise<string> {
   // Get XSUAA credentials from destination service binding
-  const destinationServiceCredentials = getDestinationServiceCredentials();
-  const xsuaaService: Service = {
-    name: 'destination-xsuaa',
-    label: 'xsuaa',
-    tags: ['xsuaa'],
-    credentials: destinationServiceCredentials
-  };
-
-  return getUserToken(xsuaaService, jwt);
+  const destinationServiceBinding = resolveServiceBinding('destination');
+  return getUserToken(destinationServiceBinding, jwt);
 }
 
 /**

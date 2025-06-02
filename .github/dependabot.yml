@@ -21,6 +21,9 @@ updates:
       # @stylistic/eslint-plugin v4 needs ESM, see https://github.com/eslint-stylistic/eslint-stylistic/releases/tag/v4.0.0, we'll stay on v3 until we can use ESM
       - dependency-name: '@stylistic/eslint-plugin'
         update-types: ['version-update:semver-major']
+      # @manypkg/get-packages v3 needs ESM, see https://github.com/Thinkmill/manypkg/releases/tag/%40manypkg%2Fget-packages%403.0.0, we'll stay on v2 until we can use ESM
+      - dependency-name: '@manypkg/get-packages'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:

@@ -1,15 +1,26 @@
 import { decodeJwt, isXsuaaToken } from './jwt';
-import { jwtBearerToken } from './token-accessor';
+import { getDestinationServiceCredentials } from './environment-accessor';
+import { getUserToken } from './xsuaa-service';
 import type { DestinationOptions } from './destination';
+import type { Service } from './environment-accessor';
 
 /**
  * @internal
- * Make a token exchange from IAS token to XSUAA token.
- * @param options - Configuration for how to retrieve destinations from the destination service.
- * @returns Exchanged token.
+ * Make a token exchange from IAS token to XSUAA token using embedded XSUAA credentials from destination service.
+ * @param jwt - The IAS JWT to exchange.
+ * @returns Exchanged XSUAA token.
  */
 export async function exchangeToken(jwt: string): Promise<string> {
-  return jwtBearerToken(jwt, 'xsuaa');
+  // Get XSUAA credentials from destination service binding
+  const destinationServiceCredentials = getDestinationServiceCredentials();
+  const xsuaaService: Service = {
+    name: 'destination-xsuaa',
+    label: 'xsuaa',
+    tags: ['xsuaa'],
+    credentials: destinationServiceCredentials
+  };
+
+  return getUserToken(xsuaaService, jwt);
 }
 
 /**

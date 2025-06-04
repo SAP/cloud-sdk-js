@@ -1471,13 +1471,6 @@
   resolved "https://registry.npmjs.org/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@sap/cds-compiler@^5":
-  version "5.9.2"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-5.9.2.tgz#30181028cec2b39d10d6268d9076e35a7efd8496"
-  integrity sha512-YpRUD3L0Ylg7KNoDqdCmsH1n6vt22Uvyvtc7Maj0wPl7haqeDOax2ouOAtqgJaYJfu83pcyx04sWLK6oH+Lh0w==
-  dependencies:
-    antlr4 "4.9.3"
-
 "@sap/cds-compiler@^6":
   version "6.0.10"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.0.10.tgz#a5593568cec2b859680d5a36784b0db5fa070f99"
@@ -1505,25 +1498,10 @@
   optionalDependencies:
     "@cap-js/sqlite" ">=1"
 
-"@sap/cds-fiori@^1":
-  version "1.4.0"
-  resolved "https://registry.npmjs.org/@sap/cds-fiori/-/cds-fiori-1.4.0.tgz#80723940a4f3891a4205756e2be879f0bfe4cda5"
-  integrity sha512-Ge0Lwr2W1jUGepA4uABVB2szA/PBpmZDQt2CZdU1Ihc8LlgcdCoiulEYkiJvX3mTcQJEWCTEEsCNpQUqniEtTw==
-
 "@sap/cds-fiori@^2":
   version "2.0.1"
   resolved "https://registry.npmjs.org/@sap/cds-fiori/-/cds-fiori-2.0.1.tgz#8f9b514b784fdb5402e3a8b1ad5b11803588bfb1"
   integrity sha512-KZVLWXndydgqdlao8OL1gtgd/XMgBdiKBmmgwGpBL1y4S21FOXglnWh6d3bnSZL/qwR3z50D+0PoGghjhayF0Q==
-
-"@sap/cds-foss@^5.0.0":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-5.0.1.tgz#e2338e43182e32ca2cf80d59013257297dc99988"
-  integrity sha512-q6h7LkEx6w9LswCIQzJJ2mnoyeGS8jrmBXN4I4+aECRL60mkLskoqGetot+2tX2xXGxCYJuo5v1dtSafwBqTRQ==
-  dependencies:
-    big.js "^6.1.1"
-    generic-pool "^3.8.2"
-    xmlbuilder "^15.1.1"
-    yaml "^2.2.2"
 
 "@sap/cds-mtxs@>=2":
   version "3.0.1"
@@ -1532,7 +1510,7 @@
   dependencies:
     "@sap/hdi-deploy" "^5"
 
-"@sap/cds@>=8.3":
+"@sap/cds@>=8.3", "@sap/cds@^9.0.2":
   version "9.0.2"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-9.0.2.tgz#26bc0315eeb93f386a11346bc98ed454864e1218"
   integrity sha512-mlbQy0fLmsIK9cMs41XXyaOCXo6aSv7JMp+2SuHIeh5DMPjtP+FDNIOOBL6xKtlJAP9rhXy0sdGszxSR1hxnpg==
@@ -1540,15 +1518,6 @@
     "@sap/cds-compiler" "^6"
     "@sap/cds-fiori" "^2"
     js-yaml "^4.1.0"
-
-"@sap/cds@^8.9.4":
-  version "8.9.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-8.9.4.tgz#52ee331942a2de4e041274939a7c45ca36d6d8b2"
-  integrity sha512-pgEx855xxtrBkYEtvWOLHqBCvFePbV4ERCpssDn7K4G8WipoXMcOPCkAYq1aP+OVpjz2WMb3p7QSwu4qHwWFKw==
-  dependencies:
-    "@sap/cds-compiler" "^5"
-    "@sap/cds-fiori" "^1"
-    "@sap/cds-foss" "^5.0.0"
 
 "@sap/hdi-deploy@^5":
   version "5.4.1"
@@ -2415,11 +2384,6 @@ ansis@4.0.0:
   resolved "https://registry.npmjs.org/ansis/-/ansis-4.0.0.tgz#0adef09876871c7c4d01af4c87faa4112d8d39e1"
   integrity sha512-P8nrHI1EyW9OfBt1X7hMSwGN2vwRuqHSKJAT1gbLWZRzDa24oHjYwGHvEgHeBepupzk878yS/HBZ0NMPYtbolw==
 
-antlr4@4.9.3:
-  version "4.9.3"
-  resolved "https://registry.npmjs.org/antlr4/-/antlr4-4.9.3.tgz#268b844ff8ce97d022399a05d4b37aa6ab4047b2"
-  integrity sha512-qNy2odgsa0skmNMCuxzXhM4M8J1YDaPv3TI+vCdnOAanu0N982wBrSqziDKRDctEZLZy9VffqIZXc0UGjjSP/g==
-
 any-promise@^1.0.0, any-promise@^1.1.0:
   version "1.3.0"
   resolved "https://registry.npmjs.org/any-promise/-/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
@@ -2813,11 +2777,6 @@ better-sqlite3@^11.0.0:
   dependencies:
     bindings "^1.5.0"
     prebuild-install "^7.1.1"
-
-big.js@^6.1.1:
-  version "6.2.2"
-  resolved "https://registry.npmjs.org/big.js/-/big.js-6.2.2.tgz#be3bb9ac834558b53b099deef2a1d06ac6368e1a"
-  integrity sha512-y/ie+Faknx7sZA5MfGA2xKlu0GDv8RWrXGsmlteyJQ2lvoKv9GBK/fpRMc2qlSoBAgNxrixICFCBefIq8WCQpQ==
 
 bignumber.js@^9.3.0:
   version "9.3.0"
@@ -4895,7 +4854,7 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-generic-pool@^3.8.2, generic-pool@^3.9.0:
+generic-pool@^3.9.0:
   version "3.9.0"
   resolved "https://registry.npmjs.org/generic-pool/-/generic-pool-3.9.0.tgz#36f4a678e963f4fdb8707eab050823abc4e8f5e4"
   integrity sha512-hymDOu5B53XvN4QT9dBmZxPX4CWhBPPLguTZ9MMFeFa/Kg0xWVfylOVNlJji/E7yTZWFd/q9GO5TxDLq156D7g==
@@ -10309,11 +10268,6 @@ xml@^1.0.1:
   resolved "https://registry.npmjs.org/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
   integrity sha512-huCv9IH9Tcf95zuYCsQraZtWnJvBtLVE0QHMOs8bWyZAFZNDcYjsPq1nEx8jKA9y+Beo9v+7OBPRisQTjinQMw==
 
-xmlbuilder@^15.1.1:
-  version "15.1.1"
-  resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-15.1.1.tgz#9dcdce49eea66d8d10b42cae94a79c3c8d0c2ec5"
-  integrity sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==
-
 xmlchars@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/xmlchars/-/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
@@ -10339,7 +10293,7 @@ yallist@^5.0.0:
   resolved "https://registry.npmjs.org/yallist/-/yallist-5.0.0.tgz#00e2de443639ed0d78fd87de0d27469fbcffb533"
   integrity sha512-YgvUTfwqyc7UXVMrB+SImsVYSmTS8X/tSrtdNZMImM+n7+QTriRXyXim0mBrTXNeqzVF0KWGgHPeiyViFFrNDw==
 
-yaml@>=2.2.2, yaml@^1.10.0, yaml@^2, yaml@^2.2.2, yaml@^2.7.1:
+yaml@>=2.2.2, yaml@^1.10.0, yaml@^2, yaml@^2.7.1:
   version "2.8.0"
   resolved "https://registry.npmjs.org/yaml/-/yaml-2.8.0.tgz#15f8c9866211bdc2d3781a0890e44d4fa1a5fff6"
   integrity sha512-4lLa/EcQCB0cJkyts+FpIRx5G/llPxfP6VQU5KByHEhLxY3IJCH0f0Hy1MHI8sClTvsIb8qwRJ6R/ZdlDJ/leQ==

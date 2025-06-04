@@ -58,9 +58,9 @@ async function retrieveUserToken(
   isXsuaaJwt: boolean
 ): Promise<JwtPair | undefined> {
   if (options.jwt) {
-    if (!options.iss && isXsuaaJwt) {
-      await verifyJwt(options.jwt, options);
-    }
+    // if (!options.iss && isXsuaaJwt) {
+    //   await verifyJwt(options.jwt, options);
+    // }
     return getJwtPair(options.jwt);
   }
 }

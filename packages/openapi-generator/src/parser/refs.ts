@@ -4,7 +4,7 @@ import { isReferenceObject } from '../schema-util';
 import { ensureUniqueNames } from './unique-naming';
 import { ensureValidSchemaNames } from './schema-naming';
 import type { OpenAPIV3 } from 'openapi-types';
-import type { $Refs } from '@apidevtools/swagger-parser';
+import type { $Refs } from '@apidevtools/json-schema-ref-parser';
 import type { SchemaNaming } from '../openapi-types';
 import type { SchemaRefMapping } from './parsing-info';
 import type { ParserOptions } from './options';
@@ -99,7 +99,7 @@ export class OpenApiDocumentRefs {
    * @returns A resolved object.
    */
   resolveObject<T>(obj: T | OpenAPIV3.ReferenceObject): T {
-    return isReferenceObject(obj) ? this.refs.get(obj.$ref) : obj;
+    return isReferenceObject(obj) ? this.refs.get(obj.$ref) as any : obj;
   }
 
   /**

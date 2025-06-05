@@ -56,7 +56,7 @@
   resolved "https://registry.npmjs.org/@andrewbranch/untar.js/-/untar.js-1.0.3.tgz#ba9494f85eb83017c5c855763969caf1d0adea00"
   integrity sha512-Jh15/qVmrLGhkKJBdXlK1+9tY4lZruYjsgkDFj08ZmDiWVBLJcqkok7Z0/R0In+i1rScBpJlSvrTS2Lm41Pbnw==
 
-"@apidevtools/json-schema-ref-parser@13.0.1":
+"@apidevtools/json-schema-ref-parser@13.0.1", "@apidevtools/json-schema-ref-parser@^13.0.1":
   version "13.0.1"
   resolved "https://registry.npmjs.org/@apidevtools/json-schema-ref-parser/-/json-schema-ref-parser-13.0.1.tgz#1c1e8adce1a4eee22339424c71bc88451177ef3f"
   integrity sha512-91uy6MGWqu7CjcV7tLPMuYh/Wj/RNPBXquSdEaCEpj2H/cFy0Yu+t1EdxExSyaryl1ykhDo30plq9tIm/HVZnw==

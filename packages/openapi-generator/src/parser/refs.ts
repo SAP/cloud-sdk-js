@@ -99,7 +99,7 @@ export class OpenApiDocumentRefs {
    * @returns A resolved object.
    */
   resolveObject<T>(obj: T | OpenAPIV3.ReferenceObject): T {
-    return isReferenceObject(obj) ? this.refs.get(obj.$ref) as any : obj;
+    return isReferenceObject(obj) ? (this.refs.get(obj.$ref) as any) : obj;
   }
 
   /**

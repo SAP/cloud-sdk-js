@@ -4155,10 +4155,10 @@ eslint-plugin-import@^2.31.0:
     string.prototype.trimend "^1.0.8"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsdoc@^50.7.1:
-  version "50.7.1"
-  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-50.7.1.tgz#f3475c5545473f1d3e5fb272ad2f3988283b42e5"
-  integrity sha512-XBnVA5g2kUVokTNUiE1McEPse5n9/mNUmuJcx52psT6zBs2eVcXSmQBvjfa7NZdfLVSy3u1pEDDUxoxpwy89WA==
+eslint-plugin-jsdoc@^50.8.0:
+  version "50.8.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-50.8.0.tgz#a8d192ccca26df368a2fbaff17c9dddefacd773f"
+  integrity sha512-UyGb5755LMFWPrZTEqqvTJ3urLz1iqj+bYOHFNag+sw3NvaMWP9K2z+uIn37XfNALmQLQyrBlJ5mkiVPL7ADEg==
   dependencies:
     "@es-joy/jsdoccomment" "~0.50.2"
     are-docs-informative "^0.0.2"
@@ -7798,9 +7798,9 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.4.23, postcss@^8.5.1, postcss@^8.5.3:
-  version "8.5.4"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.4.tgz#d61014ac00e11d5f58458ed7247d899bd65f99c0"
-  integrity sha512-QSa9EBe+uwlGTFmHsPKokv3B/oEMQZxfqW0QqNCyhpa6mB1afzulwn8hihglqAb2pOw+BJgNlmXQ8la2VeHB7w==
+  version "8.5.5"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.5.tgz#04de7797f6911fb1c96550e96616d08681537ef3"
+  integrity sha512-d/jtm+rdNT8tpXuHY5MMtcbJFBkhXE6593XVR9UoGCH8jSFGci7jGvMGH5RYd5PBJW+00NZQt6gf7CbagJCrhg==
   dependencies:
     nanoid "^3.3.11"
     picocolors "^1.1.1"

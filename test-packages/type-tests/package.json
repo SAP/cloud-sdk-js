@@ -25,6 +25,6 @@
     "@sap-cloud-sdk/temporal-de-serializers": "^4.0.2",
     "@sap-cloud-sdk/test-services-odata-v2": "^4.0.2",
     "@sap-cloud-sdk/test-services-odata-v4": "^4.0.2",
-    "@types/jsonwebtoken": "^9.0.9"
+    "@types/jsonwebtoken": "^9.0.10"
   }
 }

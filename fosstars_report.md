@@ -285,15 +285,14 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-179 commits in the last 3 months results to 10.00 points
-2 contributors increase the score value from 10.00 to 10.50
+175 commits in the last 3 months results to 10.00 points
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 179
-1.  **Number of contributors in the last three months:** 2
+1.  **Number of commits in the last three months:** 175
+1.  **Number of contributors in the last three months:** 1
 
 
 ### Project popularity

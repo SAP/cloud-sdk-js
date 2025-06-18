@@ -1459,10 +1459,10 @@
   dependencies:
     "@sap/hdi-deploy" "^5"
 
-"@sap/cds@>=8.3", "@sap/cds@^9.0.3":
-  version "9.0.3"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-9.0.3.tgz#d0f48a5fc1b471adef4b13f191864f1b1911c24f"
-  integrity sha512-9bMeDY66A8Eh+AkmemK1EdDmquswofn7qISNp9SGiIJ1cmF1LtysiAjs9IR/taHnv7IEacvHUK+A7X3VDm0iQg==
+"@sap/cds@>=8.3", "@sap/cds@^9.0.4":
+  version "9.0.4"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-9.0.4.tgz#0de27c5af79eebe5a0b73ba84134fedcb371ce4d"
+  integrity sha512-KaGI9DHLfs8SD44zgNQuODKOU5n8c4fer3a0hg2kmqvmTtATswnW4QuU9b8Wddx+bkoJDQYs8IZjAkWq21perw==
   dependencies:
     "@sap/cds-compiler" "^6"
     "@sap/cds-fiori" "^2"
@@ -1797,9 +1797,9 @@
   integrity sha512-ju/75+YPkNE5vX1iPer+qtI1eI/LqJVYZgOsmSHI1iiEM1bQL5Gh1lEvyjR9T7ZXVE1FwJa2doWJEEmPNwbZkw==
 
 "@types/lodash@>=4.14.200":
-  version "4.17.17"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.17.tgz#fb85a04f47e9e4da888384feead0de05f7070355"
-  integrity sha512-RRVJ+J3J+WmyOTqnz3PiBLA501eKwXl2noseKOrNo/6+XEHjTAxO4xHvxQB6QuNm+s4WRbn6rSiap8+EA+ykFQ==
+  version "4.17.18"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.18.tgz#4710e7db5b3857103764bf7b7b666414e6141baf"
+  integrity sha512-KJ65INaxqxmU6EoCiJmRPZC9H9RVWCRd349tXM2M3O5NA7cY6YL7c0bHAHQ93NOfTObEQ004kd2QVHs/r0+m4g==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"

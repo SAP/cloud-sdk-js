@@ -1,5 +1,8 @@
 import { signedJwt } from '../../../../test-resources/test/test-util';
-import { shouldExchangeToken, exchangeToken } from './identity-service';
+import {
+  shouldExchangeToken,
+  exchangeTokenToXsuaaToken
+} from './identity-service';
 import * as tokenAccessor from './token-accessor';
 
 describe('shouldExchangeToken', () => {
@@ -52,7 +55,7 @@ describe('exchangeToken', () => {
       .spyOn(tokenAccessor, 'jwtBearerToken')
       .mockResolvedValue(expectedResult);
 
-    const result = await exchangeToken(testJwt);
+    const result = await exchangeTokenToXsuaaToken(testJwt);
 
     expect(tokenAccessor.jwtBearerToken).toHaveBeenCalledWith(
       testJwt,
@@ -69,7 +72,7 @@ describe('exchangeToken', () => {
       .spyOn(tokenAccessor, 'jwtBearerToken')
       .mockRejectedValue(new Error(errorMessage));
 
-    await expect(exchangeToken(testJwt)).rejects.toThrow(
+    await expect(exchangeTokenToXsuaaToken(testJwt)).rejects.toThrow(
       errorMessage
     );
     expect(tokenAccessor.jwtBearerToken).toHaveBeenCalledWith(

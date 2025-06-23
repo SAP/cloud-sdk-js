@@ -8,7 +8,7 @@ import type { DestinationOptions } from './destination';
  * @param jwt - The IAS JWT to exchange.
  * @returns Exchanged XSUAA token.
  */
-export async function exchangeToken(jwt: string): Promise<string> {
+export async function exchangeTokenToXsuaaToken(jwt: string): Promise<string> {
   return jwtBearerToken(jwt, 'destination');
 }
 

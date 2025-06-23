@@ -1,5 +1,8 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { exchangeToken, shouldExchangeToken } from '../identity-service';
+import {
+  exchangeTokenToXsuaaToken,
+  shouldExchangeToken
+} from '../identity-service';
 import { getDestinationServiceCredentials } from '../environment-accessor';
 import { getSubdomain } from '../jwt';
 import { sanitizeDestination, toDestinationNameUrl } from './destination';
@@ -130,7 +133,7 @@ export async function getAllDestinationsFromDestinationService(
     'Attempting to retrieve all destinations from destination service.'
   );
   if (shouldExchangeToken(options) && options.jwt) {
-    options.jwt = await exchangeToken(options.jwt);
+    options.jwt = await exchangeTokenToXsuaaToken(options.jwt);
   }
 
   const token =

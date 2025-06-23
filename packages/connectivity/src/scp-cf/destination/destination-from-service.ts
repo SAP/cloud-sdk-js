@@ -4,7 +4,10 @@ import {
   getDestinationServiceCredentials,
   getServiceBinding
 } from '../environment-accessor';
-import { exchangeToken, shouldExchangeToken } from '../identity-service';
+import {
+  exchangeTokenToXsuaaToken,
+  shouldExchangeToken
+} from '../identity-service';
 import { getSubdomain, isXsuaaToken } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken } from '../token-accessor';
@@ -92,7 +95,7 @@ export class DestinationFromServiceRetriever {
     // TODO: This is currently always skipped for tokens issued by XSUAA
     // in the XSUAA case no exchange takes place
     if (shouldExchangeToken(options) && options.jwt) {
-      options.jwt = await exchangeToken(options.jwt);
+      options.jwt = await exchangeTokenToXsuaaToken(options.jwt);
     }
 
     const subscriberToken = await getSubscriberToken(options);

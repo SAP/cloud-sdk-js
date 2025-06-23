@@ -46,21 +46,16 @@ export function isSubscriberToken(token: any): token is SubscriberToken {
 export async function getSubscriberToken(
   options: DestinationOptions
 ): Promise<SubscriberToken> {
-  const isXsuaaJwt = !!options.jwt && isXsuaaToken(decodeJwt(options.jwt));
-  const userJwt = await retrieveUserToken(options, isXsuaaJwt);
+  const userJwt = await retrieveUserToken(options);
   const serviceJwt = await retrieveServiceToken(options, userJwt?.decoded);
 
   return { userJwt, serviceJwt };
 }
 
 async function retrieveUserToken(
-  options: DestinationOptions,
-  isXsuaaJwt: boolean
+  options: DestinationOptions
 ): Promise<JwtPair | undefined> {
   if (options.jwt) {
-    // if (!options.iss && isXsuaaJwt) {
-    //   await verifyJwt(options.jwt, options);
-    // }
     return getJwtPair(options.jwt);
   }
 }

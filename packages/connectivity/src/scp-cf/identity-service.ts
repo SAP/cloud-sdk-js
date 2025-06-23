@@ -6,10 +6,14 @@ import type { DestinationOptions } from './destination';
  * @internal
  * Make a token exchange from IAS token to XSUAA token using credentials from destination service.
  * @param jwt - The IAS JWT to exchange.
+ * @param service - The service used for the token exchange.
  * @returns Exchanged XSUAA token.
  */
-export async function exchangeToken(jwt: string): Promise<string> {
-  return jwtBearerToken(jwt, 'destination');
+export async function exchangeToken(
+  jwt: string,
+  service: string
+): Promise<string> {
+  return jwtBearerToken(jwt, service);
 }
 
 /**

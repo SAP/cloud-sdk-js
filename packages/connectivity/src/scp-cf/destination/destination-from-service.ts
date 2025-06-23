@@ -90,10 +90,9 @@ export class DestinationFromServiceRetriever {
     options: DestinationFetchOptions
   ): Promise<Destination | null> {
     // TODO: This is currently always skipped for tokens issued by XSUAA
-    // in the XSUAA case no exchange takes place, but instead the JWT is verified
-    // in the future we should just let it verify here, but skip it later (get-subscriber-token)
+    // in the XSUAA case no exchange takes place
     if (shouldExchangeToken(options) && options.jwt) {
-      options.jwt = await exchangeToken(options.jwt);
+      options.jwt = await exchangeToken(options.jwt, 'destination');
     }
 
     const subscriberToken = await getSubscriberToken(options);

@@ -92,7 +92,7 @@ export class DestinationFromServiceRetriever {
     // TODO: This is currently always skipped for tokens issued by XSUAA
     // in the XSUAA case no exchange takes place
     if (shouldExchangeToken(options) && options.jwt) {
-      options.jwt = await exchangeToken(options.jwt, 'destination');
+      options.jwt = await exchangeToken(options.jwt);
     }
 
     const subscriberToken = await getSubscriberToken(options);

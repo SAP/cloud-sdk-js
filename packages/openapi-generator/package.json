@@ -36,7 +36,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@apidevtools/swagger-parser": "^10.1.1",
+    "@apidevtools/swagger-parser": "^12.0.0",
     "@sap-cloud-sdk/generator-common": "^4.0.2",
     "@sap-cloud-sdk/openapi": "^4.0.2",
     "@sap-cloud-sdk/util": "^4.0.2",
@@ -45,6 +45,7 @@
     "swagger2openapi": "^7.0.4"
   },
   "devDependencies": {
+    "@apidevtools/json-schema-ref-parser": "^14.0.2",
     "@types/js-yaml": "^4.0.9",
     "mock-fs": "^5.5.0",
     "prettier": "^3.5.3",

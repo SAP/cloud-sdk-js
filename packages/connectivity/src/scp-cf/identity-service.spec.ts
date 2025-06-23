@@ -69,9 +69,7 @@ describe('exchangeToken', () => {
       .spyOn(tokenAccessor, 'jwtBearerToken')
       .mockRejectedValue(new Error(errorMessage));
 
-    await expect(exchangeToken(testJwt)).rejects.toThrow(
-      errorMessage
-    );
+    await expect(exchangeToken(testJwt)).rejects.toThrow(errorMessage);
     expect(tokenAccessor.jwtBearerToken).toHaveBeenCalledWith(
       testJwt,
       'destination'

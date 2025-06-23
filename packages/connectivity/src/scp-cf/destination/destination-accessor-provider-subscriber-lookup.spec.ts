@@ -256,7 +256,7 @@ describe('JWT type and selection strategies', () => {
       mockServiceToken();
 
       jest
-        .spyOn(identityService, 'exchangeToken')
+        .spyOn(identityService, 'exchangeTokenToXsuaaToken')
         .mockImplementationOnce(() => Promise.resolve(subscriberUserToken));
 
       mockFetchDestinationCalls(samlAssertionMultipleResponse[0], {

@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { decodeJwt, getJwtPair, isXsuaaToken} from '../jwt';
+import { getJwtPair } from '../jwt';
 import { serviceToken } from '../token-accessor';
 import { getIssuerSubdomain } from '../subdomain-replacer';
 import type { JwtPair } from '../jwt';

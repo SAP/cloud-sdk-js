@@ -1,9 +1,8 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import {
-  shouldExchangeToken
-} from '../identity-service';
+import { shouldExchangeToken } from '../identity-service';
 import { getDestinationServiceCredentials } from '../environment-accessor';
 import { getSubdomain } from '../jwt';
+import { jwtBearerToken } from '../token-accessor';
 import { sanitizeDestination, toDestinationNameUrl } from './destination';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import { searchServiceBindingForDestination } from './destination-from-vcap';
@@ -21,7 +20,6 @@ import type {
 import type { DestinationFromServiceBindingOptions } from './destination-from-vcap';
 import type { Destination } from './destination-service-types';
 import type { DestinationOrFetchOptions } from './destination';
-import { jwtBearerToken } from '../token-accessor';
 
 const logger = createLogger({
   package: 'connectivity',

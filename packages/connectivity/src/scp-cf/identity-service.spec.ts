@@ -1,8 +1,5 @@
 import { signedJwt } from '../../../../test-resources/test/test-util';
-import {
-  shouldExchangeToken,
-  exchangeTokenToXsuaaToken
-} from './identity-service';
+import { shouldExchangeToken } from './identity-service';
 import * as tokenAccessor from './token-accessor';
 
 describe('shouldExchangeToken', () => {
@@ -39,45 +36,5 @@ describe('shouldExchangeToken', () => {
         jwt: signedJwt({})
       })
     ).toBe(false);
-  });
-});
-
-describe('exchangeToken', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should call jwtBearerToken with destination service', async () => {
-    const testJwt = 'test.jwt.token';
-    const expectedResult = 'exchanged.token';
-
-    jest
-      .spyOn(tokenAccessor, 'jwtBearerToken')
-      .mockResolvedValue(expectedResult);
-
-    const result = await exchangeTokenToXsuaaToken(testJwt);
-
-    expect(tokenAccessor.jwtBearerToken).toHaveBeenCalledWith(
-      testJwt,
-      'destination'
-    );
-    expect(result).toBe(expectedResult);
-  });
-
-  it('should handle jwtBearerToken errors', async () => {
-    const testJwt = 'test.jwt.token';
-    const errorMessage = 'Token exchange failed';
-
-    jest
-      .spyOn(tokenAccessor, 'jwtBearerToken')
-      .mockRejectedValue(new Error(errorMessage));
-
-    await expect(exchangeTokenToXsuaaToken(testJwt)).rejects.toThrow(
-      errorMessage
-    );
-    expect(tokenAccessor.jwtBearerToken).toHaveBeenCalledWith(
-      testJwt,
-      'destination'
-    );
   });
 });

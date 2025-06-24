@@ -5,7 +5,6 @@ import {
   getServiceBinding
 } from '../environment-accessor';
 import {
-  exchangeTokenToXsuaaToken,
   shouldExchangeToken
 } from '../identity-service';
 import { getSubdomain, isXsuaaToken } from '../jwt';
@@ -95,7 +94,8 @@ export class DestinationFromServiceRetriever {
     // TODO: This is currently always skipped for tokens issued by XSUAA
     // in the XSUAA case no exchange takes place
     if (shouldExchangeToken(options) && options.jwt) {
-      options.jwt = await exchangeTokenToXsuaaToken(options.jwt);
+      // Exchange the IAS token to a XSUAA token using the destination service credentials
+      options.jwt = await jwtBearerToken(options.jwt, 'destination');
     }
 
     const subscriberToken = await getSubscriberToken(options);

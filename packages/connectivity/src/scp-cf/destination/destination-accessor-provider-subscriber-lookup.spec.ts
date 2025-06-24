@@ -26,7 +26,7 @@ import {
   subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
-import * as identityService from '../identity-service';
+import * as tokenAccessor from '../token-accessor';
 import { decodeJwt } from '../jwt';
 import { parseDestination } from './destination';
 import {
@@ -256,7 +256,7 @@ describe('JWT type and selection strategies', () => {
       mockServiceToken();
 
       jest
-        .spyOn(identityService, 'exchangeTokenToXsuaaToken')
+        .spyOn(tokenAccessor, 'jwtBearerToken')
         .mockImplementationOnce(() => Promise.resolve(subscriberUserToken));
 
       mockFetchDestinationCalls(samlAssertionMultipleResponse[0], {

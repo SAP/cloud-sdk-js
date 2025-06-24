@@ -1,6 +1,5 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
-  exchangeTokenToXsuaaToken,
   shouldExchangeToken
 } from '../identity-service';
 import { getDestinationServiceCredentials } from '../environment-accessor';
@@ -22,6 +21,7 @@ import type {
 import type { DestinationFromServiceBindingOptions } from './destination-from-vcap';
 import type { Destination } from './destination-service-types';
 import type { DestinationOrFetchOptions } from './destination';
+import { jwtBearerToken } from '../token-accessor';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -133,7 +133,8 @@ export async function getAllDestinationsFromDestinationService(
     'Attempting to retrieve all destinations from destination service.'
   );
   if (shouldExchangeToken(options) && options.jwt) {
-    options.jwt = await exchangeTokenToXsuaaToken(options.jwt);
+    // Exchange the IAS token to a XSUAA token using the destination service credentials
+    options.jwt = await jwtBearerToken(options.jwt, 'destination');
   }
 
   const token =

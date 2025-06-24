@@ -2,15 +2,6 @@ import { decodeJwt, isXsuaaToken } from './jwt';
 import { jwtBearerToken } from './token-accessor';
 import type { DestinationOptions } from './destination';
 
-/**
- * @internal
- * Make a token exchange from IAS token to XSUAA token using credentials from destination service.
- * @param jwt - The IAS JWT to exchange.
- * @returns Exchanged XSUAA token.
- */
-export async function exchangeTokenToXsuaaToken(jwt: string): Promise<string> {
-  return jwtBearerToken(jwt, 'destination');
-}
 
 /**
  * @internal

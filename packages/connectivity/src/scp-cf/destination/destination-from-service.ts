@@ -4,9 +4,7 @@ import {
   getDestinationServiceCredentials,
   getServiceBinding
 } from '../environment-accessor';
-import {
-  shouldExchangeToken
-} from '../identity-service';
+import { shouldExchangeToken } from '../identity-service';
 import { getSubdomain, isXsuaaToken } from '../jwt';
 import { isIdenticalTenant } from '../tenant';
 import { jwtBearerToken } from '../token-accessor';

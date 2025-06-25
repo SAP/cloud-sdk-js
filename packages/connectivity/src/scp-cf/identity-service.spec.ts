@@ -1,6 +1,5 @@
 import { signedJwt } from '../../../../test-resources/test/test-util';
 import { shouldExchangeToken } from './identity-service';
-import * as tokenAccessor from './token-accessor';
 
 describe('shouldExchangeToken', () => {
   it('should not exchange token from XSUAA', async () => {

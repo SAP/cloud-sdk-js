@@ -1,75 +1,9 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import {
   clearXsuaaServices,
-  getXsuaaInstanceFromSuppliedCredentials,
-  getXsuaaServiceCredentials
+  getXsuaaInstanceFromServiceCredentials
 } from './xsuaa';
 import type { ServiceCredentials } from './environment-accessor-types';
-
-const clientId = 'sb-jwt-app';
-
-const services = {
-  xsuaa: [
-    {
-      credentials: {
-        clientid: clientId,
-        url: 'https://tenant-id.authentication.sap.hana.ondemand.com'
-      },
-      plan: 'application',
-      label: 'xsuaa',
-      name: 'my-xsuaa'
-    }
-  ]
-};
-
 describe('xsuaa', () => {
-  describe('getXsuaaServiceCredentials()', () => {
-    beforeEach(() => {
-      process.env.VCAP_SERVICES = JSON.stringify(services);
-    });
-
-    afterEach(() => {
-      jest.resetAllMocks();
-      delete process.env.VCAP_SERVICES;
-    });
-
-    it('throws an error if no match can be found', () => {
-      process.env.VCAP_SERVICES = JSON.stringify({
-        xsuaa: [
-          { name: 'xsuaa1', label: 'xsuaa' },
-          { name: 'xsuaa2', label: 'xsuaa' }
-        ]
-      });
-
-      expect(() =>
-        getXsuaaServiceCredentials()
-      ).toThrowErrorMatchingInlineSnapshot(
-        '"Could not find XSUAA service binding."'
-      );
-    });
-
-    it('logs a message if multiple credentials were found', () => {
-      const logger = createLogger('environment-accessor');
-      const warnSpy = jest.spyOn(logger, 'warn');
-
-      process.env.VCAP_SERVICES = JSON.stringify({
-        xsuaa: [
-          {
-            name: 'xsuaa1',
-            label: 'xsuaa',
-            credentials: { xsappname: 'app1' }
-          },
-          { name: 'xsuaa2', label: 'xsuaa', credentials: { xsappname: 'app2' } }
-        ]
-      });
-
-      getXsuaaServiceCredentials();
-      expect(warnSpy).toHaveBeenCalledWith(
-        "Found multiple bindings for service 'xsuaa'. App names:\n\t- app1\n\t- app2\nChoosing first one ('app1')."
-      );
-    });
-  });
-
   describe('getXsuaaInstanceFromSuppliedCredentials()', () => {
     afterEach(() => {
       clearXsuaaServices();
@@ -77,7 +11,7 @@ describe('xsuaa', () => {
 
     it('creates a new service instance', () => {
       expect(
-        getXsuaaInstanceFromSuppliedCredentials({
+        getXsuaaInstanceFromServiceCredentials({
           credentials: createServiceCredentials()
         })
       ).toBeDefined();
@@ -85,11 +19,11 @@ describe('xsuaa', () => {
 
     it('retrieves the same service instance for the same credentials', () => {
       expect(
-        getXsuaaInstanceFromSuppliedCredentials({
+        getXsuaaInstanceFromServiceCredentials({
           credentials: createServiceCredentials()
         })
       ).toBe(
-        getXsuaaInstanceFromSuppliedCredentials({
+        getXsuaaInstanceFromServiceCredentials({
           credentials: createServiceCredentials()
         })
       );
@@ -97,11 +31,11 @@ describe('xsuaa', () => {
 
     it('retrieves different service instances for the different credentials', () => {
       expect(
-        getXsuaaInstanceFromSuppliedCredentials({
+        getXsuaaInstanceFromServiceCredentials({
           credentials: createServiceCredentials()
         })
       ).not.toBe(
-        getXsuaaInstanceFromSuppliedCredentials({
+        getXsuaaInstanceFromServiceCredentials({
           credentials: createServiceCredentials('another-clientid')
         })
       );
@@ -109,11 +43,11 @@ describe('xsuaa', () => {
 
     it('retrieves different service instances for the same credentials, but different caching behavior', () => {
       expect(
-        getXsuaaInstanceFromSuppliedCredentials({
+        getXsuaaInstanceFromServiceCredentials({
           credentials: createServiceCredentials()
         })
       ).not.toBe(
-        getXsuaaInstanceFromSuppliedCredentials({
+        getXsuaaInstanceFromServiceCredentials({
           credentials: createServiceCredentials(),
           disableCache: true
         })

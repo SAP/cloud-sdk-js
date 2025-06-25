@@ -1,7 +1,7 @@
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience } from '@sap-cloud-sdk/resilience';
 import {
-  getXsuaaInstanceFromSuppliedCredentials,
+  getXsuaaInstanceFromServiceCredentials,
   resolveServiceBinding
 } from './environment-accessor';
 import { decodeJwt, getSubdomain, getTenantId } from './jwt';
@@ -35,7 +35,7 @@ export async function getClientCredentialsToken(
   };
 
   const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
-    const xsuaaService = getXsuaaInstanceFromSuppliedCredentials({
+    const xsuaaService = getXsuaaInstanceFromServiceCredentials({
       credentials: arg.serviceCredentials
     });
 
@@ -85,7 +85,7 @@ export function getUserToken(
   };
 
   const xssecPromise = function (arg: XsuaaParameters): Promise<string> {
-    const xsuaaService = getXsuaaInstanceFromSuppliedCredentials({
+    const xsuaaService = getXsuaaInstanceFromServiceCredentials({
       credentials: arg.serviceCredentials
     });
     return xsuaaService

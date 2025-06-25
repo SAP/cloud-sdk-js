@@ -85,11 +85,6 @@ export function getUserToken(
   };
 
   const xssecPromise = function (arg: XsuaaParameters): Promise<string> {
-    if (!arg.serviceCredentials) {
-      throw new Error(
-        'Service credentials are required to make user token exchange'
-      );
-    }
     const xsuaaService = getXsuaaInstanceFromSuppliedCredentials({
       credentials: arg.serviceCredentials
     });

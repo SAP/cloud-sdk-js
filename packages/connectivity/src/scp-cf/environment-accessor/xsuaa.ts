@@ -44,19 +44,15 @@ export function clearXsuaaServices(): void {
 
 /**
  * @internal
- * @param options - Options on how to configure the XSUAA service.
  * @param options.disableCache - Value to enable or disable JWKS cache in xssec library. Defaults to false.
- * @param options.jwt - Either a JWT payload or an encoded JWT. Will be ignored if `credentials` are provided. If not provided, the first XSUAA service binding is used.
- * @param options.credentials - Xsuaa service credentials. If not provided, the credentials are fetched based on the JWT
- * @returns An instance of the xsuaa service that the application is bound to.
+ * @param options.credentials - Xsuaa service credentials. Required to create the XSUAA instance.
+ * @returns An instance of the xsuaa service for the provided credentials.
  */
-export function getXsuaaService(options?: {
+export function getXsuaaInstanceFromSuppliedCredentials(options: {
   disableCache?: boolean;
-  jwt?: JwtPayload | string;
-  credentials?: ServiceCredentials;
+  credentials: ServiceCredentials;
 }): any {
-  const credentials =
-    options?.credentials || getXsuaaServiceCredentials(options?.jwt);
+  const { credentials } = options;
   const disableCache = !!options?.disableCache;
 
   const serviceConfig = disableCache

@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   clearXsuaaServices,
-  getXsuaaService,
+  getXsuaaInstanceFromSuppliedCredentials,
   getXsuaaServiceCredentials
 } from './xsuaa';
 import type { ServiceCredentials } from './environment-accessor-types';
@@ -70,14 +70,14 @@ describe('xsuaa', () => {
     });
   });
 
-  describe('getXsuaaService()', () => {
+  describe('getXsuaaInstanceFromSuppliedCredentials()', () => {
     afterEach(() => {
       clearXsuaaServices();
     });
 
     it('creates a new service instance', () => {
       expect(
-        getXsuaaService({
+        getXsuaaInstanceFromSuppliedCredentials({
           credentials: createServiceCredentials()
         })
       ).toBeDefined();
@@ -85,11 +85,11 @@ describe('xsuaa', () => {
 
     it('retrieves the same service instance for the same credentials', () => {
       expect(
-        getXsuaaService({
+        getXsuaaInstanceFromSuppliedCredentials({
           credentials: createServiceCredentials()
         })
       ).toBe(
-        getXsuaaService({
+        getXsuaaInstanceFromSuppliedCredentials({
           credentials: createServiceCredentials()
         })
       );
@@ -97,11 +97,11 @@ describe('xsuaa', () => {
 
     it('retrieves different service instances for the different credentials', () => {
       expect(
-        getXsuaaService({
+        getXsuaaInstanceFromSuppliedCredentials({
           credentials: createServiceCredentials()
         })
       ).not.toBe(
-        getXsuaaService({
+        getXsuaaInstanceFromSuppliedCredentials({
           credentials: createServiceCredentials('another-clientid')
         })
       );
@@ -109,11 +109,11 @@ describe('xsuaa', () => {
 
     it('retrieves different service instances for the same credentials, but different caching behavior', () => {
       expect(
-        getXsuaaService({
+        getXsuaaInstanceFromSuppliedCredentials({
           credentials: createServiceCredentials()
         })
       ).not.toBe(
-        getXsuaaService({
+        getXsuaaInstanceFromSuppliedCredentials({
           credentials: createServiceCredentials(),
           disableCache: true
         })

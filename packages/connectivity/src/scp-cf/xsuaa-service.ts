@@ -1,6 +1,9 @@
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience } from '@sap-cloud-sdk/resilience';
-import { getXsuaaService, resolveServiceBinding } from './environment-accessor';
+import {
+  getXsuaaInstanceFromSuppliedCredentials,
+  resolveServiceBinding
+} from './environment-accessor';
 import { decodeJwt, getSubdomain, getTenantId } from './jwt';
 import type { MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import type { JwtPayload } from './jsonwebtoken-type';
@@ -32,7 +35,7 @@ export async function getClientCredentialsToken(
   };
 
   const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
-    const xsuaaService = getXsuaaService({
+    const xsuaaService = getXsuaaInstanceFromSuppliedCredentials({
       credentials: arg.serviceCredentials
     });
 
@@ -82,7 +85,12 @@ export function getUserToken(
   };
 
   const xssecPromise = function (arg: XsuaaParameters): Promise<string> {
-    const xsuaaService = getXsuaaService({
+    if (!arg.serviceCredentials) {
+      throw new Error(
+        'Service credentials are required to make user token exchange'
+      );
+    }
+    const xsuaaService = getXsuaaInstanceFromSuppliedCredentials({
       credentials: arg.serviceCredentials
     });
     return xsuaaService

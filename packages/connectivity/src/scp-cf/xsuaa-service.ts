@@ -35,9 +35,9 @@ export async function getClientCredentialsToken(
   };
 
   const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
-    const xsuaaService = getXsuaaInstanceFromServiceCredentials({
-      credentials: arg.serviceCredentials
-    });
+    const xsuaaService = getXsuaaInstanceFromServiceCredentials(
+      arg.serviceCredentials
+    );
 
     return xsuaaService.fetchClientCredentialsToken({
       // tenant is the subdomain, not tenant ID
@@ -85,9 +85,9 @@ export function getUserToken(
   };
 
   const xssecPromise = function (arg: XsuaaParameters): Promise<string> {
-    const xsuaaService = getXsuaaInstanceFromServiceCredentials({
-      credentials: arg.serviceCredentials
-    });
+    const xsuaaService = getXsuaaInstanceFromServiceCredentials(
+      arg.serviceCredentials
+    );
     return xsuaaService
       .fetchJwtBearerToken(arg.userJwt, {
         // tenant is the subdomain, not tenant ID

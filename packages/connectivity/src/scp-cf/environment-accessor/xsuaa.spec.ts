@@ -11,46 +11,46 @@ describe('xsuaa', () => {
 
     it('creates a new service instance', () => {
       expect(
-        getXsuaaInstanceFromServiceCredentials({
-          credentials: createServiceCredentials()
-        })
+        getXsuaaInstanceFromServiceCredentials(
+          createServiceCredentials()
+        )
       ).toBeDefined();
     });
 
     it('retrieves the same service instance for the same credentials', () => {
       expect(
-        getXsuaaInstanceFromServiceCredentials({
-          credentials: createServiceCredentials()
-        })
+        getXsuaaInstanceFromServiceCredentials(
+          createServiceCredentials()
+        )
       ).toBe(
-        getXsuaaInstanceFromServiceCredentials({
-          credentials: createServiceCredentials()
-        })
+        getXsuaaInstanceFromServiceCredentials(
+          createServiceCredentials()
+        )
       );
     });
 
     it('retrieves different service instances for the different credentials', () => {
       expect(
-        getXsuaaInstanceFromServiceCredentials({
-          credentials: createServiceCredentials()
-        })
+        getXsuaaInstanceFromServiceCredentials(
+          createServiceCredentials()
+        )
       ).not.toBe(
-        getXsuaaInstanceFromServiceCredentials({
-          credentials: createServiceCredentials('another-clientid')
-        })
+        getXsuaaInstanceFromServiceCredentials(
+        createServiceCredentials('another-clientid')
+        )
       );
     });
 
     it('retrieves different service instances for the same credentials, but different caching behavior', () => {
       expect(
-        getXsuaaInstanceFromServiceCredentials({
-          credentials: createServiceCredentials()
-        })
+        getXsuaaInstanceFromServiceCredentials(
+          createServiceCredentials()
+        )
       ).not.toBe(
-        getXsuaaInstanceFromServiceCredentials({
-          credentials: createServiceCredentials(),
-          disableCache: true
-        })
+        getXsuaaInstanceFromServiceCredentials(
+          createServiceCredentials(),
+          true
+        )
       );
     });
   });

@@ -1,7 +1,7 @@
 import { createSecurityContext } from '@sap/xssec';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
-  getXsuaaInstanceFromSuppliedCredentials,
+  getXsuaaInstanceFromServiceCredentials,
   getXsuaaServiceCredentials
 } from '../environment-accessor';
 import type { JwtPayload } from '../jsonwebtoken-type';
@@ -21,10 +21,10 @@ export async function verifyJwt(
     .cacheVerificationKeys;
 
   const xsuaaServiceCredentials = getXsuaaServiceCredentials(jwt);
-  const xsuaaService = getXsuaaInstanceFromSuppliedCredentials({
-    disableCache,
-    credentials: xsuaaServiceCredentials
-  });
+  const xsuaaService = getXsuaaInstanceFromServiceCredentials(
+    xsuaaServiceCredentials,
+    disableCache
+  );
 
   const { token } = await createSecurityContext(xsuaaService, {
     jwt

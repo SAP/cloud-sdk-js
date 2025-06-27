@@ -47,7 +47,10 @@ export async function getSubscriberToken(
   options: DestinationOptions
 ): Promise<SubscriberToken> {
   const incomingUserJwtPair = options.jwt ? getJwtPair(options.jwt) : undefined;
-  const serviceJwt = await retrieveServiceToken(options, incomingUserJwtPair?.decoded);
+  const serviceJwt = await retrieveServiceToken(
+    options,
+    incomingUserJwtPair?.decoded
+  );
 
   return { userJwt: incomingUserJwtPair, serviceJwt };
 }

@@ -6,9 +6,7 @@ import {
   subscriberServiceToken,
   subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
-import {
-  mockSubaccountDestinationsCall
-} from '../../../../../test-resources/test/test-util/destination-service-mocks';
+import { mockSubaccountDestinationsCall } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import { decodeJwt } from '../jwt';
 import { destinationServiceCache } from './destination-service-cache';
 import { fetchDestinations } from './destination-service';

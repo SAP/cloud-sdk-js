@@ -4,7 +4,7 @@ import {
   mockFetchDestinationCalls,
   mockFetchDestinationCallsNotFound,
   mockInstanceDestinationsCall,
-  mockSubaccountDestinationsCall,
+  mockSubaccountDestinationsCall
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,

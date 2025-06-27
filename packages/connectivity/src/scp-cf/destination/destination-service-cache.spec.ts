@@ -7,8 +7,7 @@ import {
   subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
-  mockSubaccountDestinationsCall,
-  mockVerifyJwt
+  mockSubaccountDestinationsCall
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import { decodeJwt } from '../jwt';
 import { destinationServiceCache } from './destination-service-cache';
@@ -38,7 +37,6 @@ const providerDest = {
 
 describe('DestinationServiceCache', () => {
   beforeEach(() => {
-    mockVerifyJwt();
     mockServiceBindings();
     mockServiceToken();
 

@@ -5,7 +5,6 @@ import {
   mockFetchDestinationCallsNotFound,
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
-  mockVerifyJwt
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
@@ -166,7 +165,6 @@ function assertMockUsed(mock: nock.Scope, used: boolean) {
 describe('JWT type and selection strategies', () => {
   beforeEach(() => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
   });
 
@@ -334,7 +332,6 @@ describe('JWT type and selection strategies', () => {
 describe('call getAllDestinations with and without subscriber token', () => {
   beforeEach(() => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
     destinationServiceCache.clear();
   });

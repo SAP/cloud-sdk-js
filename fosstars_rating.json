@@ -1375,7 +1375,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 168,
+        "number" : 166,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1386,7 +1386,7 @@
         "number" : 1,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "168 commits in the last 3 months results to 10.00 points" ],
+      "explanation" : [ "166 commits in the last 3 months results to 10.00 points" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {

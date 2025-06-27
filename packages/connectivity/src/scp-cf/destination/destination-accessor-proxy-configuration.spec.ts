@@ -11,7 +11,6 @@ import {
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   mockCertificateCall,
-  mockVerifyJwt,
   mockFetchDestinationCalls
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
@@ -34,7 +33,6 @@ import type { Destination } from './destination-service-types';
 describe('proxy configuration', () => {
   beforeEach(() => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
   });
 
@@ -88,7 +86,6 @@ describe('proxy configuration', () => {
 describe('get destination with PrivateLink proxy type', () => {
   beforeEach(() => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
     mockJwtBearerToken();
 
@@ -171,7 +168,6 @@ describe('truststore configuration', () => {
     };
     mockCertificateCall('my-cert.pem', providerServiceToken, 'subaccount');
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
     mockJwtBearerToken();
 

@@ -14,8 +14,7 @@ import {
   mockFetchDestinationCalls,
   mockFetchDestinationCallsNotFound,
   mockInstanceDestinationsCall,
-  mockSubaccountDestinationsCall,
-  mockVerifyJwt
+  mockSubaccountDestinationsCall
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   basicMultipleResponse,
@@ -33,8 +32,6 @@ describe('Failure cases', () => {
       xsuaa: [xsuaaBindingMock]
     });
 
-    mockVerifyJwt();
-
     await expect(
       getDestination({
         destinationName,
@@ -48,8 +45,6 @@ describe('Failure cases', () => {
 
   it('throws an error when the provide userJwt is invalid', async () => {
     mockServiceBindings();
-    mockVerifyJwt();
-
     await expect(
       getDestination({
         destinationName,
@@ -63,9 +58,7 @@ describe('Failure cases', () => {
 
   it('throws an error if the subaccount/instance destinations call fails', async () => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
-
     const httpMocks = [
       mockInstanceDestinationsCall(
         {
@@ -96,7 +89,6 @@ describe('Failure cases', () => {
 
   it('returns an error if the single destination call fails for OAuth2SAMLBearerAssertion destinations', async () => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
     mockJwtBearerToken();
 
@@ -130,7 +122,6 @@ describe('Failure cases', () => {
 
   it('returns null if no destinations are found', async () => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
 
     const httpMocks = [
@@ -152,9 +143,7 @@ describe('Failure cases', () => {
 
   it('should throw an error when neither userJwt nor SystemUser are defined', async () => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
-
     const [httpMock] = mockFetchDestinationCalls(oauthMultipleResponse[0], {
       mockWithTokenRetrievalCall: false
     });

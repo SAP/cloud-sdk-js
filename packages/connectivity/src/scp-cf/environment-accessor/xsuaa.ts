@@ -23,7 +23,7 @@ export function clearXsuaaServices(): void {
  */
 export function getXsuaaInstanceFromServiceCredentials(
   credentials: ServiceCredentials,
-  disableCache = false
+  disableCache: boolean = false
 ): any {
   const serviceConfig = disableCache
     ? {

@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/connectivity': minor
 ---
 
-[Compatibility Note] The incoming XSUAA JWT is not verified anymore with the XSUAA instance bound to the application while retrieving destinations using `getDestinationFromDestinationService()` function.
+[Compatibility Note] The `getDestinationFromDestinationService()` function no longer verifies the incoming XSUAA JWT against the application's bound XSUAA instance. Consequently, the `cacheVerificationKeys` option is now deprecated and has no effect.

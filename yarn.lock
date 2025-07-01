@@ -1817,9 +1817,9 @@
   integrity sha512-ju/75+YPkNE5vX1iPer+qtI1eI/LqJVYZgOsmSHI1iiEM1bQL5Gh1lEvyjR9T7ZXVE1FwJa2doWJEEmPNwbZkw==
 
 "@types/lodash@>=4.14.200":
-  version "4.17.19"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.19.tgz#de18c90b7891f00fed7c1273495a2f851efd99c4"
-  integrity sha512-NYqRyg/hIQrYPT9lbOeYc3kIRabJDn/k4qQHIXUpx88CBDww2fD15Sg5kbXlW86zm2XEW4g0QxkTI3/Kfkc7xQ==
+  version "4.17.20"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.20.tgz#1ca77361d7363432d29f5e55950d9ec1e1c6ea93"
+  integrity sha512-H3MHACvFUEiujabxhaI/ImO6gUrd8oOurg7LQtS7mbwIXA/cUqWrvBsaeJ23aZEPk1TAYkurjfMbSELfoCXlGA==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -7350,10 +7350,10 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-openapi-backend@^5.12.0:
-  version "5.12.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.12.0.tgz#553b851b9ce3d234b10aa58643465a0b4548ec3d"
-  integrity sha512-tD4Ak8w5XBlGVi4gso/QNbxcfrj3j6ypuKg9bx7l6hQaeMVxEdf5Ro8M/SVoNg7L8VptzIkwE8Lp3H+Ba88hWA==
+openapi-backend@^5.13.0:
+  version "5.13.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.13.0.tgz#dd7b305a063bffaca7ae966ee05fbb161f9c79f1"
+  integrity sha512-dE2f0MCpL2ZKctVG4w+Nl+1C4GQput5dQ4QYy6XeblGvM2Z1b3JcP2FzL6DrLzzDYEKTLgAaQM3jD7yhftwKSg==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^11.1.0"
     ajv "^8.6.2"

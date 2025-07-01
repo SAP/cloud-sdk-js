@@ -39,7 +39,7 @@ export function getXsuaaInstanceFromServiceCredentials(
   const cacheKey = `${credentials.clientid}:${disableCache}`;
 
   if (!xsuaaServices[cacheKey]) {
-    // XsuaaService is a class that extends Service from @sap/xssec and is a representation of XSUAA credentials
+    // XsuaaService is a representation of XSUAA credentials extracted from a reuse service, e.g., destination
     // extracted from a reuse service like for e.g destination service
     xsuaaServices[cacheKey] = new XsuaaService(
       credentials as XsuaaServiceCredentials,

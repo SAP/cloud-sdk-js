@@ -46,13 +46,10 @@ export function isSubscriberToken(token: any): token is SubscriberToken {
 export async function getSubscriberToken(
   options: DestinationOptions
 ): Promise<SubscriberToken> {
-  const incomingUserJwtPair = options.jwt ? getJwtPair(options.jwt) : undefined;
-  const serviceJwt = await retrieveServiceToken(
-    options,
-    incomingUserJwtPair?.decoded
-  );
+  const userJwt = options.jwt ? getJwtPair(options.jwt) : undefined;
+  const serviceJwt = await retrieveServiceToken(options, userJwt?.decoded);
 
-  return { userJwt: incomingUserJwtPair, serviceJwt };
+  return { userJwt, serviceJwt };
 }
 
 async function retrieveServiceToken(

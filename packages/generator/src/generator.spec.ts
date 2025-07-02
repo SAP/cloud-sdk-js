@@ -511,7 +511,7 @@ describe('generator', () => {
       await generateProject(createParsedOptions(options));
       await generate(options);
       expect(logger.level).toBe('info');
-      expect(consoleSpy).not.toBeCalled();
+      expect(consoleSpy).not.toHaveBeenCalled();
     });
 
     it('should display verbose logs when verbose option is set to true', async () => {

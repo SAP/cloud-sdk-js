@@ -308,7 +308,7 @@ describe('generator', () => {
           input: 'specs',
           outputDir: 'out'
         })
-      ).rejects.toThrowError(
+      ).rejects.toThrow(
         /File already exists. If you want to allow overwriting files/
       );
     });

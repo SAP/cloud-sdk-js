@@ -74,8 +74,8 @@ describe('createFile', () => {
         ...defaultCreateConfig,
         overwrite: false
       })
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not write file "existingFile". File already exists. If you want to allow overwriting files, enable the `overwrite` flag."'
+    ).rejects.toThrow(
+      'Could not write file "existingFile". File already exists. If you want to allow overwriting files, enable the `overwrite` flag.'
     );
   });
 

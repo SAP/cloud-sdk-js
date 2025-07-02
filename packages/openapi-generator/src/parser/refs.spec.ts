@@ -203,7 +203,7 @@ describe('OpenApiDocumentRefs', () => {
           },
           { strictNaming: true, schemaPrefix: '', resolveExternal: true }
         )
-      ).rejects.toThrowError(
+      ).rejects.toThrow(
         'The service specification contains invalid schema names.'
       );
     });

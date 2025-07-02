@@ -273,9 +273,7 @@ describe('CreateRequestBuilder', () => {
       someEntity
     ).execute(defaultDestination);
 
-    await expect(createRequest).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Create request failed!"'
-    );
+    await expect(createRequest).rejects.toThrow('Create request failed!');
   });
 
   it('create an entity with csrf token request when the option is set to false', async () => {

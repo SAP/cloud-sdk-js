@@ -809,7 +809,7 @@ describe('destination service', () => {
         fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
           destinationName
         })
-      ).rejects.toThrowError();
+      ).rejects.toThrow();
     });
 
     it('returns 400 for an invalid JWT', async () => {
@@ -831,7 +831,7 @@ describe('destination service', () => {
         fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
           destinationName
         })
-      ).rejects.toThrowError();
+      ).rejects.toThrow();
     });
   });
 

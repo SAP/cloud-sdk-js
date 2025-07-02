@@ -187,7 +187,7 @@ describe('createAgent', () => {
       ]
     };
 
-    expect(async () => getAgentConfig(destination)).rejects.toThrowError(
+    expect(async () => getAgentConfig(destination)).rejects.toThrow(
       "The format of the provided certificate 'cert.jks' is not supported. Supported formats are: p12, pfx, pem. You can convert Java Keystores (.jks, .keystore) into PKCS#12 keystores using the JVM's keytool CLI: keytool -importkeystore -srckeystore your-keystore.jks -destkeystore your-keystore.p12 -deststoretype pkcs12"
     );
   });
@@ -207,7 +207,7 @@ describe('createAgent', () => {
       ]
     };
 
-    expect(async () => getAgentConfig(destination)).rejects.toThrowError(
+    expect(async () => getAgentConfig(destination)).rejects.toThrow(
       'No certificate with name cert.pfx could be found on the destination!'
     );
   });

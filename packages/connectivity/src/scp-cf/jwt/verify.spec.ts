@@ -151,7 +151,7 @@ describe('verifyJwt())', () => {
 
     await expect(() =>
       verifyJwt(signedJwtForVerification(jwtPayload))
-    ).rejects.toThrowErrorMatchingInlineSnapshot('"Failed to verify JWT."');
+    ).rejects.toThrow('Failed to verify JWT.');
   });
 
   it('caches by default', async () => {

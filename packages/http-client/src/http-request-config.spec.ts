@@ -26,7 +26,7 @@ describe('filterCustomRequestConfig', () => {
       responseType: 'arraybuffer',
       method: 'delete'
     });
-    expect(warnSpy).toBeCalledWith(
+    expect(warnSpy).toHaveBeenCalledWith(
       'The following keys are found in the custom request config that will be removed: url'
     );
   });

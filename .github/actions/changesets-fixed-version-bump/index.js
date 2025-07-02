@@ -3569,24 +3569,26 @@ function getDependencyVersionRanges(dependentPkgJSON, dependencyRelease) {
   const dependencyVersionRanges = [];
   for (const type of DEPENDENCY_TYPES) {
     var _dependentPkgJSON$typ;
-    const versionRange = (_dependentPkgJSON$typ = dependentPkgJSON[type]) === null || _dependentPkgJSON$typ === void 0 ? void 0 : _dependentPkgJSON$typ[dependencyRelease.name];
+    let versionRange = (_dependentPkgJSON$typ = dependentPkgJSON[type]) === null || _dependentPkgJSON$typ === void 0 ? void 0 : _dependentPkgJSON$typ[dependencyRelease.name];
     if (!versionRange) continue;
     if (versionRange.startsWith("workspace:")) {
-      dependencyVersionRanges.push({
-        depType: type,
-        versionRange:
-        // intentionally keep other workspace ranges untouched
-        // this has to be fixed but this should only be done when adding appropriate tests
-        versionRange === "workspace:*" ?
-        // workspace:* actually means the current exact version, and not a wildcard similar to a reguler * range
-        dependencyRelease.oldVersion : versionRange.replace(/^workspace:/, "")
-      });
-    } else {
-      dependencyVersionRanges.push({
-        depType: type,
-        versionRange
-      });
+      versionRange = versionRange.replace(/^workspace:/, "");
+      switch (versionRange) {
+        case "*":
+          // workspace:* actually means the current exact version, and not a wildcard similar to a reguler * range
+          versionRange = dependencyRelease.oldVersion;
+          break;
+        case "^":
+        case "~":
+          versionRange = `${versionRange}${dependencyRelease.oldVersion}`;
+          break;
+        // default: keep the stripped range as is
+      }
     }
+    dependencyVersionRanges.push({
+      depType: type,
+      versionRange
+    });
   }
   return dependencyVersionRanges;
 }
@@ -59909,7 +59911,7 @@ function _regenerator() {
             i = p[t],
             d = G.p,
             l = i[2];
-          r > 3 ? (o = l === n) && (c = i[4] || 3, u = i[5] === e ? i[3] : i[5], i[4] = 3, i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0));
+          r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0));
         }
         if (o || r > 1) return a;
         throw y = !0, n;

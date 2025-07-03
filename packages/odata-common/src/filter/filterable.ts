@@ -30,7 +30,7 @@ export type Filterable<
   | BooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
 
-// eslint-disable-next-line jsdoc/require-returns-check
+/* eslint-disable jsdoc/require-returns-check, jsdoc/require-param, jsdoc/check-param-names */
 /**
  * Combine {@link Filterable}s with logical `and` to create a {@link FilterList}.
  * @example
@@ -75,8 +75,9 @@ export function and<
 ): FilterList<EntityT, DeSerializersT> {
   return new FilterList(transformVariadicArgumentToArray(first, rest));
 }
+/* eslint-enable jsdoc/require-returns-check, jsdoc/require-param, jsdoc/check-param-names */
 
-// eslint-disable-next-line jsdoc/require-returns-check
+/* eslint-disable jsdoc/require-returns-check, jsdoc/require-param, jsdoc/check-param-names */
 /**
  * Combine {@link Filterable}s with logical `or` to create a {@link FilterList}.
  * @example
@@ -113,6 +114,7 @@ export function or<
 ): FilterList<EntityT, DeSerializersT> {
   return new FilterList([], transformVariadicArgumentToArray(first, rest));
 }
+/* eslint-enable jsdoc/require-returns-check, jsdoc/require-param, jsdoc/check-param-names */
 
 /**
  * Negate a filter.

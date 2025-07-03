@@ -4,8 +4,7 @@ import {
   mockFetchDestinationCalls,
   mockFetchDestinationCallsNotFound,
   mockInstanceDestinationsCall,
-  mockSubaccountDestinationsCall,
-  mockVerifyJwt
+  mockSubaccountDestinationsCall
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
@@ -26,7 +25,7 @@ import {
   subscriberUserToken
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
-import * as identityService from '../identity-service';
+import * as tokenAccessor from '../token-accessor';
 import { decodeJwt } from '../jwt';
 import { parseDestination } from './destination';
 import {
@@ -166,7 +165,6 @@ function assertMockUsed(mock: nock.Scope, used: boolean) {
 describe('JWT type and selection strategies', () => {
   beforeEach(() => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
   });
 
@@ -256,7 +254,7 @@ describe('JWT type and selection strategies', () => {
       mockServiceToken();
 
       jest
-        .spyOn(identityService, 'exchangeToken')
+        .spyOn(tokenAccessor, 'jwtBearerToken')
         .mockImplementationOnce(() => Promise.resolve(subscriberUserToken));
 
       mockFetchDestinationCalls(samlAssertionMultipleResponse[0], {
@@ -334,7 +332,6 @@ describe('JWT type and selection strategies', () => {
 describe('call getAllDestinations with and without subscriber token', () => {
   beforeEach(() => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
     destinationServiceCache.clear();
   });

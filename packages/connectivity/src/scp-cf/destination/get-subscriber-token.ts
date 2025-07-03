@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { decodeJwt, getJwtPair, isXsuaaToken, verifyJwt } from '../jwt';
+import { getJwtPair } from '../jwt';
 import { serviceToken } from '../token-accessor';
 import { getIssuerSubdomain } from '../subdomain-replacer';
 import type { JwtPair } from '../jwt';
@@ -46,23 +46,10 @@ export function isSubscriberToken(token: any): token is SubscriberToken {
 export async function getSubscriberToken(
   options: DestinationOptions
 ): Promise<SubscriberToken> {
-  const isXsuaaJwt = !!options.jwt && isXsuaaToken(decodeJwt(options.jwt));
-  const userJwt = await retrieveUserToken(options, isXsuaaJwt);
+  const userJwt = options.jwt ? getJwtPair(options.jwt) : undefined;
   const serviceJwt = await retrieveServiceToken(options, userJwt?.decoded);
 
   return { userJwt, serviceJwt };
-}
-
-async function retrieveUserToken(
-  options: DestinationOptions,
-  isXsuaaJwt: boolean
-): Promise<JwtPair | undefined> {
-  if (options.jwt) {
-    if (!options.iss && isXsuaaJwt) {
-      await verifyJwt(options.jwt, options);
-    }
-    return getJwtPair(options.jwt);
-  }
 }
 
 async function retrieveServiceToken(

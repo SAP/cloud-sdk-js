@@ -185,7 +185,7 @@ describe('vcap-service-destination', () => {
       serviceBindingTransformFn
     });
 
-    expect(serviceBindingTransformFn).toBeCalledTimes(1);
+    expect(serviceBindingTransformFn).toHaveBeenCalledTimes(1);
   });
 
   it("adds a name to transformed destinations that don't have a name", async () => {
@@ -250,7 +250,7 @@ describe('vcap-service-destination', () => {
       url: 'https://custom-service.my.example.com',
       name: 'my-custom-service'
     });
-    expect(serviceBindingTransformFn).toBeCalledTimes(1);
+    expect(serviceBindingTransformFn).toHaveBeenCalledTimes(1);
   });
 
   it('sets forwarded auth token if needed', async () => {

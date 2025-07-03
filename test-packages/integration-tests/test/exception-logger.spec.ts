@@ -18,7 +18,7 @@ describe('exception logger', () => {
       execa('ts-node', [
         resolve(__dirname, 'throw-exception-with-logger-script.ts')
       ])
-    ).rejects.toThrowError(/Test Exception Logger\n\s*at Object/);
+    ).rejects.toThrow(/Test Exception Logger\n\s*at Object/);
     delete process.env.NODE_ENV;
   }, 15000);
 
@@ -28,7 +28,7 @@ describe('exception logger', () => {
       execa('ts-node', [
         resolve(__dirname, 'throw-exception-with-logger-script.ts')
       ])
-    ).rejects.toThrowError(/Test Exception Logger\\n\s*at Object/);
+    ).rejects.toThrow(/Test Exception Logger\\n\s*at Object/);
     delete process.env.NODE_ENV;
   }, 15000);
 
@@ -47,7 +47,7 @@ describe('exception logger', () => {
     logger = createLogger('stack-logger-local');
     logger.error(new Error('My Error'));
 
-    expect(tranformerSpy).toReturnWith(
+    expect(tranformerSpy).toHaveReturnedWith(
       expect.objectContaining({
         message: expect.stringMatching(/My Error\n\s+at\sObject/)
       })
@@ -60,7 +60,7 @@ describe('exception logger', () => {
     logger.format = kibana;
     logger.error(new Error('My Error'));
 
-    expect(tranformerSpy).toReturnWith(
+    expect(tranformerSpy).toHaveReturnedWith(
       expect.objectContaining({
         msg: expect.stringMatching(/My Error\n\s+at\sObject/)
       })
@@ -71,7 +71,7 @@ describe('exception logger', () => {
     const tranformerSpy = jest.spyOn(local, 'transform');
     logger = createLogger('stack-logger-string');
     logger.error('My Error.');
-    expect(tranformerSpy).toReturnWith(
+    expect(tranformerSpy).toHaveReturnedWith(
       expect.objectContaining({ message: '   My Error.' })
     );
   });
@@ -80,7 +80,7 @@ describe('exception logger', () => {
     const tranformerSpy = jest.spyOn(local, 'transform');
     logger = createLogger('stack-logger-string');
     logger.info(new Error('My Error'));
-    expect(tranformerSpy).toReturnWith(
+    expect(tranformerSpy).toHaveReturnedWith(
       expect.objectContaining({ message: '   My Error.' })
     );
   });

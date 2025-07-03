@@ -68,7 +68,7 @@ describe('get resource path', () => {
     };
 
     expect(() => getResourcePathForKeys(keys, testEntityApi)).not.toThrow();
-    expect(warnSpy).toBeCalledWith(
+    expect(warnSpy).toHaveBeenCalledWith(
       'There are too many key properties. Ignoring the following keys: StringProperty'
     );
   });

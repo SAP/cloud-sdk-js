@@ -25,7 +25,7 @@ describe('CSRF middleware', () => {
       { url: host },
       { method: 'GET', url: 'some/path' }
     );
-    expect(spy).toBeCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('does nothing if header is already present', async () => {
@@ -39,7 +39,7 @@ describe('CSRF middleware', () => {
         headers: { 'x-csrf-token': 'tokenAlreadyThere' }
       }
     );
-    expect(spy).toBeCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('does not fail if header can not fetched from response', async () => {

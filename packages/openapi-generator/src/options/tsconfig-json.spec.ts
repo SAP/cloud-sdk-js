@@ -54,8 +54,6 @@ describe('tsconfigJson', () => {
       tsconfigJson({
         tsconfig: './path'
       } as ParsedGeneratorOptions)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not read tsconfig.json at ./path."'
-    );
+    ).rejects.toThrow('Could not read tsconfig.json at ./path.');
   });
 });

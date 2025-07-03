@@ -130,9 +130,9 @@ describe('name-formatter', () => {
       expect(formatter.originalToEntityClassName('A_SomeEntity')).toBe(
         'SomeEntity'
       );
-      expect(() =>
-        formatter.originalToEntityClassName('SomeEntity')
-      ).toThrowError(/A naming conflict appears for/);
+      expect(() => formatter.originalToEntityClassName('SomeEntity')).toThrow(
+        /A naming conflict appears for/
+      );
     });
 
     it('entities, function imports and complex types vs external imports - skip validation', () => {

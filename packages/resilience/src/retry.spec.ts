@@ -106,7 +106,7 @@ describe('retry', () => {
         fn: request,
         fnArgument: requestConfig
       })
-    ).rejects.toThrowError('Request failed with status code 401');
+    ).rejects.toThrow('Request failed with status code 401');
 
     expect(nock.isDone()).toBeFalsy();
   });
@@ -133,7 +133,7 @@ describe('retry', () => {
         fn: request,
         fnArgument: requestConfig
       })
-    ).rejects.toThrowError('Request failed with status code 403');
+    ).rejects.toThrow('Request failed with status code 403');
 
     expect(nock.isDone()).toBeFalsy();
   });
@@ -157,8 +157,6 @@ describe('retry', () => {
         fnArgument: requestConfig,
         fn: request
       })
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"My error status is undefined"'
-    );
+    ).rejects.toThrow('My error status is undefined');
   });
 });

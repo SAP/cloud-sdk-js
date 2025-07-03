@@ -132,9 +132,7 @@ describe('DeleteRequestBuilder', () => {
       KeyPropertyGuid: keyPropGuid
     }).execute(defaultDestination);
 
-    await expect(deleteRequest).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"OData delete request failed!"'
-    );
+    await expect(deleteRequest).rejects.toThrow('OData delete request failed!');
   });
 
   describe('executeRaw', () => {

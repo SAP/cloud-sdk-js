@@ -53,7 +53,7 @@ describe('custom JWTs', () => {
         jwt: userJwt,
         selectionStrategy: alwaysProvider
       })
-    ).rejects.toThrowError(
+    ).rejects.toThrow(
       'Failed to verify the JWT with no JKU! Destination must have `x_user_token.jwks` or `x_user_token.jwks_uri` property.'
     );
   });

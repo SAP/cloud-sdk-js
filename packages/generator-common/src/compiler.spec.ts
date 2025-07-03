@@ -242,7 +242,7 @@ describe('compilation', () => {
         compilerOptions: compilerConfig('broken-dist'),
         createFileOptions
       })
-    ).rejects.toThrowError(
+    ).rejects.toThrow(
       "error TS2588: Cannot assign to 'foo' because it is a constant"
     );
   });
@@ -255,7 +255,7 @@ describe('compilation', () => {
     };
     await expect(
       transpileDirectory('test-src', { compilerOptions, createFileOptions })
-    ).rejects.toThrowError(
+    ).rejects.toThrow(
       /error TS6231: Could not resolve the path .* with the extensions: '\.ts', '\.tsx', '\.d\.ts'\.*/
     );
   });

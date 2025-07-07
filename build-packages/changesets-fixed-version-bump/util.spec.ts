@@ -7,10 +7,11 @@ describe('getNextVersion', () => {
     mock.restore();
   });
   const sharedMock = {
-    'package.json': `{ "name": "sap-cloud-sdk", "version": "1.2.3", "workspaces": ["packages/connectivity"] }`,
+    'package.json':
+      '{ "name": "sap-cloud-sdk", "version": "1.2.3", "workspaces": ["packages/connectivity"] }',
     packages: {
       connectivity: {
-        'package.json': `{ "name": "@sap-cloud-sdk/connectivity" }`
+        'package.json': '{ "name": "@sap-cloud-sdk/connectivity" }'
       }
     }
   };
@@ -70,8 +71,8 @@ describe('getNextVersion', () => {
       }
     });
 
-    await expect(getNextVersion()).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Invalid new version -- the current version: 1.2.3 and the release type: none."`
+    await expect(getNextVersion()).rejects.toThrow(
+      'Invalid new version -- the current version: 1.2.3 and the release type: none."'
     );
   });
 });

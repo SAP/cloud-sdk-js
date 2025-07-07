@@ -158,7 +158,7 @@ describe('combined resilience features', () => {
         fn: request,
         fnArgument: requestConfig
       })
-    ).rejects.toThrowError(/Request failed with status code 401/);
+    ).rejects.toThrow(/Request failed with status code 401/);
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
     expect(circuitBreakers[`${host}::myTestTenant`].stats.failures).toBe(0);
     expect(circuitBreakers[`${host}::myTestTenant`].stats.fires).toBe(1);
@@ -191,19 +191,19 @@ describe('combined resilience features', () => {
         fn: request,
         fnArgument: requestConfig
       })
-    ).resolves.not.toThrowError();
+    ).resolves.not.toThrow();
 
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);
   }, 15000);
 
   it('throws an error when retry is less than 1', async () => {
-    expect(() => resilience({ retry: -2 })).toThrowError(
+    expect(() => resilience({ retry: -2 })).toThrow(
       'Number of retries must be greater or equal to 0.'
     );
   });
 
   it('throws an error when timeout is less or equal to 0', async () => {
-    expect(() => resilience({ timeout: 0 })).toThrowError(
+    expect(() => resilience({ timeout: 0 })).toThrow(
       'Timeout must be greater than 0.'
     );
   });

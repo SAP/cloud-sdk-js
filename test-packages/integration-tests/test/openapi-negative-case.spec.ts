@@ -45,7 +45,7 @@ describe('openapi negative tests', () => {
         { cwd: __dirname }
       )
       // In the spec file the http method is not set
-    ).rejects.toThrowError(
+    ).rejects.toThrow(
       'Could not parse APIs. The document does not contain any operations.'
     );
   }, 120000);
@@ -73,9 +73,7 @@ describe('openapi negative tests', () => {
         { cwd: __dirname }
       )
       // In the faulty tsconfig.json a non existing lib is included
-    ).rejects.toThrowError(
-      "typescript/lib/lib.non-exisiting-lib.d.ts' not found"
-    );
+    ).rejects.toThrow("typescript/lib/lib.non-exisiting-lib.d.ts' not found");
   }, 120000);
 
   it('should fail on transpilation on faulty ts source file- this also checks that --include is done before transpile', async () => {
@@ -102,6 +100,6 @@ describe('openapi negative tests', () => {
         { cwd: __dirname }
       )
       // In the faulty tsconfig.json a non existing lib is included
-    ).rejects.toThrowError("Cannot assign to 'foo' because it is a constant.");
+    ).rejects.toThrow("Cannot assign to 'foo' because it is a constant.");
   }, 120000);
 });

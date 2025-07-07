@@ -40,7 +40,7 @@ describe('odata negative tests', () => {
         ],
         { cwd: __dirname }
       )
-    ).rejects.toThrowError(
+    ).rejects.toThrow(
       'No types found for API_TEST_SRV.A_TestComplexTypeMISTAKE'
     );
   }, 150000);
@@ -70,6 +70,6 @@ describe('odata negative tests', () => {
         ],
         { cwd: __dirname }
       )
-    ).rejects.toThrowError("Cannot assign to 'foo' because it is a constant.");
+    ).rejects.toThrow("Cannot assign to 'foo' because it is a constant.");
   }, 150000);
 });

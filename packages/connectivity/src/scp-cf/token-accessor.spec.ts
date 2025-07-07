@@ -306,10 +306,8 @@ describe('token accessor', () => {
         destinationBindingClientSecretMock.credentials
       );
 
-      await expect(
-        serviceToken('destination')
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Could not fetch client credentials token for service of type "destination"."'
+      await expect(serviceToken('destination')).rejects.toThrow(
+        'Could not fetch client credentials token for service of type "destination".'
       );
     });
 

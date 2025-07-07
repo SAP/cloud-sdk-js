@@ -375,9 +375,7 @@ describe('Request Builder', () => {
       )
       .execute(destination);
 
-    await expect(request).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"OData update request failed!"'
-    );
+    await expect(request).rejects.toThrow('OData update request failed!');
   });
 
   it('should resolve for delete with keys', async () => {

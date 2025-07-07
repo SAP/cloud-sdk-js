@@ -70,7 +70,7 @@ describe('service bindings', () => {
       const warnSpy = jest.spyOn(logger, 'warn');
       const service = getServiceBinding('destination');
       expect(service).toEqual(services.destination[0]);
-      expect(warnSpy).toBeCalledWith(
+      expect(warnSpy).toHaveBeenCalledWith(
         `Found more than one service binding for service type 'destination':
 \t- my-destination-service1
 \t- my-destination-service2
@@ -82,7 +82,7 @@ Selecting the first one.`
       const warnSpy = jest.spyOn(logger, 'warn');
       const service = getServiceBinding('unknown');
       expect(service).toBeUndefined();
-      expect(warnSpy).toBeCalledWith(
+      expect(warnSpy).toHaveBeenCalledWith(
         "Could not find service binding of type 'unknown'. This might cause errors in other parts of the application."
       );
     });

@@ -306,7 +306,7 @@ describe('Cloud SDK Logger', () => {
       logger.verbose(
         'logs verbose nowhere because the level is higher than info'
       );
-      expect(consoleSpy).not.toBeCalled();
+      expect(consoleSpy).not.toHaveBeenCalled();
 
       logger.on('close', async () => {
         const log = await fs.promises.readFile('test.log', {

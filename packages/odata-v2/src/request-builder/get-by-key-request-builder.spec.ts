@@ -199,8 +199,8 @@ describe('GetByKeyRequestBuilder', () => {
       KeyPropertyGuid: uuid(),
       KeyPropertyString: 'test'
     }).execute(defaultDestination);
-    await expect(getByKeyRequest).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"OData get by key request failed!"'
+    await expect(getByKeyRequest).rejects.toThrow(
+      'OData get by key request failed!'
     );
   });
 });

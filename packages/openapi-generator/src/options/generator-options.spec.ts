@@ -129,7 +129,7 @@ describe('parseGeneratorOptions', () => {
       throw new Error('process.exit: ' + number);
     });
 
-    expect(() => parseCmdArgs([])).toThrowError();
+    expect(() => parseCmdArgs([])).toThrow();
     expect(spyError).toHaveBeenCalledWith(
       'Missing required arguments: input, outputDir'
     );
@@ -140,7 +140,7 @@ describe('parseGeneratorOptions', () => {
       throw new Error('process.exit: ' + number);
     });
 
-    expect(() => parseCmdArgs(['--input', 'someValue'])).toThrowError();
+    expect(() => parseCmdArgs(['--input', 'someValue'])).toThrow();
     expect(spyError).toHaveBeenCalledWith(
       'Missing required argument: outputDir'
     );
@@ -151,9 +151,7 @@ describe('parseGeneratorOptions', () => {
       throw new Error('process.exit: ' + number);
     });
 
-    expect(() =>
-      parseCmdArgs(['--outputDir', 'someOutputValue'])
-    ).toThrowError();
+    expect(() => parseCmdArgs(['--outputDir', 'someOutputValue'])).toThrow();
     expect(spyError).toHaveBeenCalledWith('Missing required argument: input');
   });
 
@@ -165,7 +163,7 @@ describe('parseGeneratorOptions', () => {
         '--outputDir',
         'someOutputValue'
       ])
-    ).not.toThrowError();
+    ).not.toThrow();
   });
 
   it('parses a given path to a config file and returns its content as parsed generator options', () => {
@@ -187,7 +185,7 @@ describe('parseGeneratorOptions', () => {
     const path = resolve(__dirname, '../../test/test-config-wrong-key.json');
     expect(() =>
       parseOptions(cliOptions, parseCmdArgs(['--config', path]))
-    ).toThrowError();
+    ).toThrow();
     expect(spyError).toHaveBeenCalledWith('Unknown argument: wrongKey');
   });
 });

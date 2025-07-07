@@ -129,15 +129,15 @@ describe('batch response parser', () => {
       const response = createBatchResponse(body, {
         'Content-Type': 'multipart/mixed'
       });
-      expect(() =>
-        splitBatchResponse(response)
-      ).toThrowErrorMatchingInlineSnapshot('"Could not parse batch response."');
+      expect(() => splitBatchResponse(response)).toThrow(
+        'Could not parse batch response.'
+      );
     });
 
     it('throws an error when there are not enough boundaries', () => {
       expect(() =>
         splitBatchResponse(createBatchResponse(retrieveResponse))
-      ).toThrowErrorMatchingInlineSnapshot('"Could not parse batch response."');
+      ).toThrow('Could not parse batch response.');
     });
   });
 
@@ -175,10 +175,8 @@ describe('batch response parser', () => {
 
     it('throws error if there is no boundary in the headers', () => {
       const changeSet = ['', ''].join(unixEOL);
-      expect(() =>
-        splitChangeSetResponse(changeSet)
-      ).toThrowErrorMatchingInlineSnapshot(
-        '"Could not parse change set response."'
+      expect(() => splitChangeSetResponse(changeSet)).toThrow(
+        'Could not parse change set response.'
       );
     });
   });

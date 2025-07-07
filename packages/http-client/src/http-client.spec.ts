@@ -151,9 +151,7 @@ describe('generic http client', () => {
     it('throws useful error messages when finding the destination fails', async () => {
       await expect(
         buildHttpRequest({ destinationName: 'does not exist' })
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Failed to load destination."'
-      );
+      ).rejects.toThrow('Failed to load destination.');
     });
 
     it('throws useful error messages when building headers fails', async () => {
@@ -162,9 +160,7 @@ describe('generic http client', () => {
           url: 'https://example.com',
           authentication: 'BasicAuthentication'
         })
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Failed to build headers."'
-      );
+      ).rejects.toThrow('Failed to build headers.');
     });
 
     it('defaults to NoAuthentication/does not throw if no credentials are provided', async () => {
@@ -963,7 +959,7 @@ sap-client:001`);
 
       await executeHttpRequest(httpsDestination, config);
 
-      expect(debugSpy).nthCalledWith(
+      expect(debugSpy).toHaveBeenNthCalledWith(
         1,
         `The following custom headers will overwrite headers created by the SDK, if they use the same key:
   - "authorization"

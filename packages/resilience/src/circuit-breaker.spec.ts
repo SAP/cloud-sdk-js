@@ -220,7 +220,7 @@ describe('circuit-breaker', () => {
           fn: request,
           fnArgument: requestConfig
         })
-      ).rejects.toThrowError(/Request failed with status code 401/);
+      ).rejects.toThrow(/Request failed with status code 401/);
       keepCalling = !mock.isDone();
     }
     expect(circuitBreakers[`${host}::myTestTenant`].opened).toBe(false);

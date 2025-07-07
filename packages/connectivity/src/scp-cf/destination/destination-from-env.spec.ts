@@ -115,7 +115,7 @@ describe('env-destination-accessor', () => {
       const warnSpy = jest.spyOn(logger, 'warn');
 
       getDestinationsFromEnv();
-      expect(warnSpy).toBeCalledWith(
+      expect(warnSpy).toHaveBeenCalledWith(
         expect.stringMatching(
           "Destination from 'destinations' env variable is missing 'name' or 'Name' property."
         )
@@ -162,7 +162,7 @@ describe('env-destination-accessor', () => {
       const warnSpy = jest.spyOn(logger, 'warn');
 
       getDestinationFromEnvByName('FINAL-DESTINATION');
-      expect(warnSpy).toBeCalledWith(
+      expect(warnSpy).toHaveBeenCalledWith(
         "The 'destinations' env variable contains multiple destinations with the name 'FINAL-DESTINATION'. Only the first entry will be considered."
       );
     });
@@ -190,8 +190,8 @@ describe('env-destination-accessor', () => {
 
     it('should throw for ill formatted JSON', () => {
       process.env.destinations = 'Improper JSON string';
-      expect(() => getDestinationsFromEnv()).toThrowErrorMatchingInlineSnapshot(
-        '"Error in parsing the destinations from the environment variable."'
+      expect(() => getDestinationsFromEnv()).toThrow(
+        'Error in parsing the destinations from the environment variable.'
       );
     });
 

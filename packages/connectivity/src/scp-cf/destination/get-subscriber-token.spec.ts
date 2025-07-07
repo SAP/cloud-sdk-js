@@ -1,7 +1,6 @@
 import {
   customSubscriberUserToken,
   mockServiceBindings,
-  mockVerifyJwt,
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl,
   subscriberServiceToken,
@@ -12,10 +11,8 @@ import { getJwtPair } from '../jwt';
 import { getSubscriberToken } from './get-subscriber-token';
 
 describe('getSubscriberToken()', () => {
-  let verifyJwtSpy;
   beforeEach(() => {
     mockServiceBindings();
-    verifyJwtSpy = mockVerifyJwt();
   });
 
   afterEach(() => {
@@ -31,7 +28,6 @@ describe('getSubscriberToken()', () => {
       userJwt: getJwtPair(subscriberUserToken),
       serviceJwt: getJwtPair(subscriberServiceToken)
     });
-    expect(verifyJwtSpy).toHaveBeenCalled();
   });
 
   it('creates only user token based on user JWT (custom)', async () => {
@@ -39,7 +35,6 @@ describe('getSubscriberToken()', () => {
     expect(token).toEqual({
       userJwt: getJwtPair(customSubscriberUserToken)
     });
-    expect(verifyJwtSpy).not.toHaveBeenCalled();
   });
 
   it('creates only service token based on issuer URL', async () => {
@@ -50,7 +45,6 @@ describe('getSubscriberToken()', () => {
     expect(token).toEqual({
       serviceJwt: getJwtPair(onlyIssuerServiceToken)
     });
-    expect(verifyJwtSpy).not.toHaveBeenCalled();
   });
 
   it('creates user token based on JWT and service token based on issuer URL', async () => {
@@ -71,6 +65,5 @@ describe('getSubscriberToken()', () => {
         jwt: { ext_attr: { zdn: 'subscriber-only-iss' } }
       })
     );
-    expect(verifyJwtSpy).not.toHaveBeenCalled();
   });
 });

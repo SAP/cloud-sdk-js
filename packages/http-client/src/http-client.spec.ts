@@ -1,5 +1,6 @@
 import https from 'https';
 import http from 'http';
+import { createPublicKey } from 'node:crypto';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
@@ -13,7 +14,6 @@ import {
 } from '@sap-cloud-sdk/resilience/internal';
 import { registerDestination } from '@sap-cloud-sdk/connectivity';
 import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
-import { responseWithPublicKey } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt/verify.spec';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,
@@ -30,7 +30,8 @@ import {
   subscriberServiceToken,
   subscriberUserToken,
   testTenants,
-  xsuaaBindingMock
+  xsuaaBindingMock,
+  publicKey
 } from '../../../test-resources/test/test-util';
 import * as csrf from './csrf-token-middleware';
 import {
@@ -93,6 +94,21 @@ describe('generic http client', () => {
     authentication: 'NoAuthentication',
     name: 'FORWARD-TOKEN-NOAUTH'
   };
+
+  function responseWithPublicKey(key: string = publicKey) {
+    const pubKey = createPublicKey(key);
+    const jwk = pubKey.export({ format: 'jwk' });
+    return {
+      keys: [
+        {
+          use: 'sig',
+          kid: 'key-id-1',
+          alg: 'RS256',
+          ...jwk
+        }
+      ]
+    };
+  }
 
   describe('buildHttpRequest', () => {
     it('creates an https request', async () => {

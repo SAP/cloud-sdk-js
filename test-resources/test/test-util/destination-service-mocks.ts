@@ -1,13 +1,11 @@
 import nock from 'nock';
-import * as sdkJwtVerify from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt/verify';
-import * as sdkJwtJwt from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt/jwt';
+import { destinationServiceUri as defaultDestinationServiceUri } from './environment-mocks';
+import { providerServiceToken } from './mocked-access-tokens';
+import { destinationSingleResponse } from './example-destination-service-responses';
 import type {
   DestinationConfiguration,
   DestinationJson
 } from '@sap-cloud-sdk/connectivity';
-import { destinationServiceUri as defaultDestinationServiceUri } from './environment-mocks';
-import { providerServiceToken } from './mocked-access-tokens';
-import { destinationSingleResponse } from './example-destination-service-responses';
 
 export function mockCertificateCall(
   certificateName: string,
@@ -229,10 +227,4 @@ export function mockFetchDestinationCalls(
     );
   }
   return nockScopes;
-}
-
-export function mockVerifyJwt() {
-  return jest
-    .spyOn(sdkJwtVerify, 'verifyJwt')
-    .mockImplementation(token => Promise.resolve(sdkJwtJwt.decodeJwt(token)));
 }

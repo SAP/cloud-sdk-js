@@ -2,7 +2,6 @@ import {
   mockServiceBindings,
   mockServiceToken,
   mockFetchDestinationCalls,
-  mockVerifyJwt,
   providerServiceToken
 } from '../../../../../test-resources/test/test-util';
 import { getDestinationFromDestinationService } from './destination-from-service';
@@ -11,7 +10,6 @@ describe('getDestinationFromDestinationService', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
   });
 

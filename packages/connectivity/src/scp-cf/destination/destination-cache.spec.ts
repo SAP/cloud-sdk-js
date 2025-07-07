@@ -3,8 +3,7 @@ import nock from 'nock';
 import { decodeJwt } from '../jwt';
 import {
   mockFetchDestinationCalls,
-  mockFetchDestinationCallsNotFound,
-  mockVerifyJwt
+  mockFetchDestinationCallsNotFound
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   connectivityProxyConfigMock,
@@ -120,7 +119,6 @@ describe('destination cache', () => {
 
   describe('caching', () => {
     beforeEach(() => {
-      mockVerifyJwt();
       mockServiceBindings();
       mockServiceToken();
 
@@ -234,7 +232,6 @@ describe('destination cache', () => {
     });
 
     it('caches only subscriber if selection strategy always subscriber', async () => {
-      mockVerifyJwt();
       await getDestination({
         destinationName: 'SubscriberDest',
         jwt: subscriberUserToken,
@@ -251,7 +248,6 @@ describe('destination cache', () => {
     });
 
     it('caches nothing if the destination is not found', async () => {
-      mockVerifyJwt();
       mockFetchDestinationCallsNotFound('ANY', {
         serviceToken: subscriberServiceToken,
         mockWithTokenRetrievalCall: false
@@ -273,7 +269,6 @@ describe('destination cache', () => {
     });
 
     it('caches only the found destination not other ones received from the service', async () => {
-      mockVerifyJwt();
       await getDestination({
         destinationName: 'SubscriberDest2',
         jwt: subscriberUserToken,
@@ -305,7 +300,6 @@ describe('destination cache', () => {
     beforeEach(() => {
       mockServiceBindings({ xsuaaBinding: false });
       mockServiceToken();
-      mockVerifyJwt();
     });
 
     const destName = destinationOne.name!;
@@ -414,7 +408,6 @@ describe('destination cache', () => {
   describe('caching of destinations with special information (e.g. authTokens, certificates)', () => {
     it('destinations with certificates are cached ', async () => {
       mockServiceBindings();
-      mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
 
@@ -456,7 +449,6 @@ describe('destination cache', () => {
 
     it('destinations with authTokens are cached correctly', async () => {
       mockServiceBindings();
-      mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
 
@@ -507,7 +499,6 @@ describe('destination cache', () => {
 
     it('destinations with proxy configuration are cached correctly', async () => {
       mockServiceBindings();
-      mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
 
@@ -568,8 +559,6 @@ describe('destination cache', () => {
     it('retrieves subscriber cached destination', async () => {
       mockServiceBindings();
       mockServiceToken();
-      mockVerifyJwt();
-
       const authType = 'NoAuthentication' as AuthenticationType;
       const subscriberDest = {
         URL: 'https://subscriber.example',
@@ -597,7 +586,6 @@ describe('destination cache', () => {
 
     it('retrieves provider cached destination', async () => {
       mockServiceBindings();
-      mockVerifyJwt();
       mockServiceToken();
 
       const authType = 'NoAuthentication' as AuthenticationType;
@@ -627,7 +615,6 @@ describe('destination cache', () => {
 
     it('should return cached provider destination from cache after checking for remote subscriber destination when subscriberFirst is specified and destinations are tenant isolated', async () => {
       mockServiceBindings();
-      mockVerifyJwt();
       mockServiceToken();
 
       const authType = 'NoAuthentication' as AuthenticationType;

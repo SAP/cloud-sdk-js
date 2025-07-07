@@ -75,7 +75,7 @@ export async function serviceToken(
  * Returns a JWT bearer token that can be used to call the given service.
  * The token is fetched via a JWT bearer token grant using the user token + client credentials.
  *
- * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
+ * Throws an error if there is no instance of the given service type.
  * @param jwt - The JWT of the user for whom the access token should be fetched.
  * @param service - The type of the service or an instance of {@link Service}.
  * @returns A JWT bearer token.

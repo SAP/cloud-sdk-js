@@ -11,8 +11,7 @@ import {
 } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   mockFetchDestinationCalls,
-  mockFetchDestinationCallsNotFound,
-  mockVerifyJwt
+  mockFetchDestinationCallsNotFound
 } from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   onlyIssuerServiceToken,
@@ -48,7 +47,6 @@ import {
 describe('authentication types', () => {
   beforeEach(() => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
   });
 
@@ -412,7 +410,6 @@ describe('authentication types', () => {
 
     it('returns a destination without authTokens if its authenticationType is Basic', async () => {
       mockServiceBindings();
-      mockVerifyJwt();
       const serviceTokenSpy = mockServiceToken();
 
       const httpMocks = mockFetchDestinationCalls(basicMultipleResponse[0], {
@@ -500,7 +497,6 @@ describe('authentication types', () => {
 
   it('works for onPremise Basic and issuer JWT', async () => {
     mockServiceBindings();
-    mockVerifyJwt();
     mockServiceToken();
 
     const httpMocks = mockFetchDestinationCalls(

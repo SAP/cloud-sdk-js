@@ -45,7 +45,7 @@
     "swagger2openapi": "^7.0.4"
   },
   "devDependencies": {
-    "@apidevtools/json-schema-ref-parser": "^14.0.3",
+    "@apidevtools/json-schema-ref-parser": "^14.1.0",
     "@types/js-yaml": "^4.0.9",
     "mock-fs": "^5.5.0",
     "prettier": "^3.6.2",

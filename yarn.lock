@@ -3100,10 +3100,10 @@ chownr@^3.0.0:
   resolved "https://registry.npmjs.org/chownr/-/chownr-3.0.0.tgz#9855e64ecd240a9cc4267ce8a4aa5d24a1da15e4"
   integrity sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==
 
-chromium-bidi@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-5.1.0.tgz#8d0e47f7ac9270262df29792318dd5378e983e62"
-  integrity sha512-9MSRhWRVoRPDG0TgzkHrshFSJJNZzfY5UFqUMuksg7zL1yoZIZ3jLB0YAgHclbiAxPI86pBnwDX1tbzoiV8aFw==
+chromium-bidi@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-7.1.0.tgz#0e562c804e7fe5b8d69cecd46c3b22cab053b400"
+  integrity sha512-UVYuuZfwi7AIiV+OWIRePZD6kX1bSNxoWjEsYG+Xkb97hzQIt9qnV662I5A6BAcdKO4bcZQVrkK/VhNHzFjNDg==
   dependencies:
     mitt "^3.0.1"
     zod "^3.24.1"
@@ -8041,28 +8041,28 @@ punycode@^2.1.0, punycode@^2.1.1, punycode@^2.3.1:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-puppeteer-core@24.12.0:
-  version "24.12.0"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.12.0.tgz#34606d9764380892d75af6db02c3d7eecd22d8f5"
-  integrity sha512-VrPXPho5Q90Ao86FwJVb+JeAF2Tf41wOTGg8k2SyQJePiJ6hJ5iujYpmP+bmhlb6o+J26bQYRDPOYXP7ALWcxQ==
+puppeteer-core@24.13.0:
+  version "24.13.0"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.13.0.tgz#4b4524486fb788e35c3a4d09174527612a26c5b6"
+  integrity sha512-2Mr1zFCMfAJpKN5mRGqDAmwVEtS6qsalLnUZJn1uJxMdbZLMiqNuMf12gDmZGizg0CjvcfXxoaJhEZB8W0DXlw==
   dependencies:
     "@puppeteer/browsers" "2.10.5"
-    chromium-bidi "5.1.0"
+    chromium-bidi "7.1.0"
     debug "^4.4.1"
     devtools-protocol "0.0.1464554"
     typed-query-selector "^2.12.0"
     ws "^8.18.3"
 
-puppeteer@^24.12.0:
-  version "24.12.0"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.12.0.tgz#73e2a86f9616303c5830dca34acc389ac5cea27c"
-  integrity sha512-MJtM71qex8h03bDBZTyPfSC7tfvDLILnWWl4rNdo3+HODiFZX+3yj/qLVwVu/gXoxQ7U8dNDKyFz4e8VBHdcmw==
+puppeteer@^24.13.0:
+  version "24.13.0"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.13.0.tgz#ce6e0fcfcc3d3b28ebe408ad898159fa4107a005"
+  integrity sha512-3dpT7LIdlRBJBGKb7SjJeno/C3cl0bBpgwie+cxvf8PKmK502QdRU9TT/hvfchyFG7BzJKBHPxK5Boholx7zow==
   dependencies:
     "@puppeteer/browsers" "2.10.5"
-    chromium-bidi "5.1.0"
+    chromium-bidi "7.1.0"
     cosmiconfig "^9.0.0"
     devtools-protocol "0.0.1464554"
-    puppeteer-core "24.12.0"
+    puppeteer-core "24.13.0"
     typed-query-selector "^2.12.0"
 
 pure-rand@^7.0.0:

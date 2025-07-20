@@ -43,7 +43,7 @@
     "axios": "^1.10.0"
   },
   "devDependencies": {
-    "nock": "^14.0.5",
+    "nock": "^14.0.6",
     "typescript": "~5.8.3"
   }
 }

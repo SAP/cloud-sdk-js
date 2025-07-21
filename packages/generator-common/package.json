@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator-common",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "SAP Cloud SDK for JavaScript common functions of OData client generator and OpenAPI clint generator.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -36,7 +36,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^4.0.2",
+    "@sap-cloud-sdk/util": "^4.1.0",
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^11.3.0",
     "glob": "^11.0.3",

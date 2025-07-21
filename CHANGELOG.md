@@ -28,6 +28,15 @@
 
 -
  
+# 4.1.0
+## Compatibility Notes
+
+- [connectivity] The `getDestinationFromDestinationService()` function no longer verifies the incoming XSUAA JWT against the application's bound XSUAA instance. Consequently, the `cacheVerificationKeys` option is now deprecated and has no effect. (3c19ffa)
+
+## Improvements
+
+- [connectivity] Remove dependency on XSUAA service binding while retrieving destinations using `getDestinationFromDestinationService()` and `getAllDestinationsFromDestinationService()` functions. (3c19ffa)
+
 # 4.0.2
 ## Fixed Issues
 

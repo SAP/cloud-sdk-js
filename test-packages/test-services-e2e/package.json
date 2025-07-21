@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services-e2e",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "Custom Services for testing",
   "files": [
     "**/*.js",

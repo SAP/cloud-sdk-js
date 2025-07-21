@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.1.0
+
+### Minor Changes
+
+- 3c19ffa: [Compatibility Note] The `getDestinationFromDestinationService()` function no longer verifies the incoming XSUAA JWT against the application's bound XSUAA instance. Consequently, the `cacheVerificationKeys` option is now deprecated and has no effect.
+- 3c19ffa: [Improvement] Remove dependency on XSUAA service binding while retrieving destinations using `getDestinationFromDestinationService()` and `getAllDestinationsFromDestinationService()` functions.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.1.0
+- @sap-cloud-sdk/util@4.1.0
+
 ## 4.0.2
 
 ### Patch Changes
@@ -145,7 +157,6 @@
 
 - efa75d3: [New Functionality] Add convenience function `transformServiceBindingToDestination()` to create destination from service bindings.
   The following service bindings are supported:
-
   - business-logging
   - destination
   - s4-hana-cloud
@@ -310,7 +321,6 @@
 - 6b58354e8: [Fixed Issue] Remove dependency to XSUAA service binding when checking whether a JWT was issued by XSUAA for destination retrieval. Now, the `ext_attr.ehancer` property is checked.
 - c09b1d06f: [Compatibility Note] The `expiresIn` property of `authTokens` on a `Destination` can be undefined.
 - 36a01f775: [Compatibility Note] Deprecate `getAgentConfig()`:
-
   - Temporarily use replacement function `getAgentConfigAsync()`.
   - Rename `getAgentConfigAsync()` to `getAgentConfig()` in next major version.
 

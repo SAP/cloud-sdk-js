@@ -275,8 +275,10 @@ export function parseExportedObjectsInFile(
  */
 export function parseBarrelFile(fileContent: string, regex: RegExp): string[] {
   // Remove block comments, single-line comments, 'as' keyword and aliases, and whitespace characters
-  const normalized = fileContent
-    .replace(/\/\*[\s\S]*?\*\/|\/\/.*|[\s]+as[\s]+[a-zA-Z_$][0-9a-zA-Z_$]*|[\s]+/g, '');
+  const normalized = fileContent.replace(
+    /\/\*[\s\S]*?\*\/|\/\/.*|[\s]+as[\s]+[a-zA-Z_$][0-9a-zA-Z_$]*|[\s]+/g,
+    ''
+  );
   const groups = captureGroupsFromGlobalRegex(regex, normalized);
 
   return flatten(groups.map(group => group.split(',')));

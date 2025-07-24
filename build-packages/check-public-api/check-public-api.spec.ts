@@ -235,9 +235,11 @@ export declare type MyType = {value:string}
 
 const dummyIndexFile = `export { o1 } from './bla';
     
-    export { o2, o3 } from './bla';
-    export { o4, 
-    
+    export { o2,  o3 as o3$Some_thing   } from './bla';  // :-) This is a comment
+    export { o4     as  o4Something, 
+    /****
+      * * This is a block comment **??? *
+      * **/
     o5,o6,
      o7} from './bla';
 `;

@@ -216,8 +216,7 @@ function parseExportedObjectsInFile(fileContent) {
  */
 function parseBarrelFile(fileContent, regex) {
     // Remove block comments, single-line comments, 'as' keyword and aliases, and whitespace characters
-    const normalized = fileContent
-        .replace(/\/\*[\s\S]*?\*\/|\/\/.*|[\s]+as[\s]+[a-zA-Z_$][0-9a-zA-Z_$]*|[\s]+/g, '');
+    const normalized = fileContent.replace(/\/\*[\s\S]*?\*\/|\/\/.*|[\s]+as[\s]+[a-zA-Z_$][0-9a-zA-Z_$]*|[\s]+/g, '');
     const groups = captureGroupsFromGlobalRegex(regex, normalized);
     return (0, util_1.flatten)(groups.map(group => group.split(',')));
 }

@@ -244,7 +244,7 @@
         }
       }
     },
-    "value" : 6.884838813668601,
+    "value" : 6.501860090264346,
     "weight" : 1.0,
     "confidence" : 9.645390070921987,
     "usedValues" : [ {
@@ -253,7 +253,7 @@
         "type" : "ProjectSecurityAwarenessScore",
         "name" : "How well open-source community is aware about security"
       },
-      "value" : 3.5,
+      "value" : 1.5,
       "weight" : 0.9,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -262,8 +262,8 @@
           "type" : "BooleanFeature",
           "name" : "If an open-source project has a security policy"
         },
-        "flag" : true,
-        "explanation" : [ ]
+        "flag" : false,
+        "explanation" : [ "Neither the project nor organization has a security policy" ]
       }, {
         "type" : "BooleanValue",
         "feature" : {
@@ -1375,7 +1375,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 155,
+        "number" : 152,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1386,7 +1386,7 @@
         "number" : 2,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "155 commits in the last 3 months results to 10.00 points", "2 contributors increase the score value from 10.00 to 10.50" ],
+      "explanation" : [ "152 commits in the last 3 months results to 10.00 points", "2 contributors increase the score value from 10.00 to 10.50" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {

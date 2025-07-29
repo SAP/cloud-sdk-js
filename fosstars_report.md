@@ -1,6 +1,6 @@
 **Rating**: **GOOD**
 
-**Score**: **6.88**, max score value is 10.0
+**Score**: **6.5**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -41,7 +41,7 @@ It used the following sub-scores:
         
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
-1.  **[Security awareness](#security-awareness)**: **3.5** (weight is 0.9)
+1.  **[Security awareness](#security-awareness)**: **1.5** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **10.0** (weight is 0.6)
     1.  **[Security testing](#security-testing)**: **9.09** (weight is 1.0)
@@ -84,6 +84,13 @@ It used the following sub-scores:
 
 
 # ## How to improve the rating
+
+You can open a pull request to add a security policy for the project.
+More info:
+1.  [About adding a security policy to a repository on GitHub](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+1.  [An example of a security policy](https://github.com/apache/nifi/blob/main/SECURITY.md)
+1.  [Suggest a security policy for the project](https://github.com/SAP/cloud-sdk-js/security/policy)
+
 
 You can open a pull request to enable FindSecBugs for the project.
 More info:
@@ -169,7 +176,7 @@ This sub-score is based on the following sub-scores:
 
 ### Security awareness
 
-Score: **3.5**, confidence is 10.0 (max), weight is 0.9 (high)
+Score: **1.5**, confidence is 10.0 (max), weight is 0.9 (high)
 
 The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00. If the project has executable binaries, then the score subtracts 2.00.
 
@@ -180,7 +187,7 @@ This sub-score is based on 18 features:
 
 
 1.  **Does it have a bug bounty program?** No
-1.  **Does it have a security policy?** Yes
+1.  **Does it have a security policy?** No
 1.  **Does it have a security team?** No
 1.  **Does it have executable binaries?** No
 1.  **Does it sign artifacts?** No
@@ -285,14 +292,14 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-155 commits in the last 3 months results to 10.00 points
+152 commits in the last 3 months results to 10.00 points
 2 contributors increase the score value from 10.00 to 10.50
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 155
+1.  **Number of commits in the last three months:** 152
 1.  **Number of contributors in the last three months:** 2
 
 

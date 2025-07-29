@@ -112,7 +112,7 @@
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "turbo": "^2.5.5",
-    "typedoc": "^0.28.7",
+    "typedoc": "^0.28.8",
     "typescript": "~5.8.3"
   },
   "resolutions": {

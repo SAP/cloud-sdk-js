@@ -93,11 +93,11 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.4",
-    "@types/node": "^22.16.5",
+    "@types/node": "^22.17.0",
     "@types/uuid": "^10.0.0",
     "@types/voca": "^1.4.6",
-    "axios": "^1.10.0",
-    "cross-env": "7.0.3",
+    "axios": "^1.11.0",
+    "cross-env": "10.0.0",
     "depcheck": "^1.4.7",
     "eslint": "^8.57.1",
     "execa": "^5.0.0",
@@ -112,7 +112,7 @@
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "turbo": "^2.5.5",
-    "typedoc": "^0.28.7",
+    "typedoc": "^0.28.8",
     "typescript": "~5.8.3"
   },
   "resolutions": {

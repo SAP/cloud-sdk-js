@@ -268,13 +268,17 @@ export function parseExportedObjectsInFile(
 /**
  * Parse a barrel file for the exported objects.
  * It selects all string in \{\} e.g. export \{a,b,c\} from './xyz' will result in [a,b,c].
- * /\/\*[\s\S]*?\*\/|\/\/.*|[\s]+/g - Matches single-line comments or multi-line comments or whitespaces.
+ * Aliases defined with 'as' keyword are removed.
  * @param fileContent - Content of the index file to be parsed.
  * @param regex - Regular expression used for matching exports.
  * @returns List of objects exported by the given index file.
  */
 export function parseBarrelFile(fileContent: string, regex: RegExp): string[] {
-  const normalized = fileContent.replace(/\/\*[\s\S]*?\*\/|\/\/.*|[\s]+/g, '');
+  // Remove block comments, single-line comments, 'as' keyword and aliases, and whitespace characters
+  const normalized = fileContent.replace(
+    /\/\*[\s\S]*?\*\/|\/\/.*|[\s]+as[\s]+[a-zA-Z_$][0-9a-zA-Z_$]*|[\s]+/g,
+    ''
+  );
   const groups = captureGroupsFromGlobalRegex(regex, normalized);
 
   return flatten(groups.map(group => group.split(',')));

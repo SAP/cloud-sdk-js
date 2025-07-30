@@ -1931,10 +1931,10 @@
   dependencies:
     undici-types "~5.26.4"
 
-"@types/node@^22.16.5":
-  version "22.16.5"
-  resolved "https://registry.npmjs.org/@types/node/-/node-22.16.5.tgz#cc46ac3994cd957000d0c11095a0b1dae2ea2368"
-  integrity sha512-bJFoMATwIGaxxx8VJPeM8TonI8t579oRvgAuT8zFugJsJZgzqv0Fu8Mhp68iecjzG7cnN3mO2dJQ5uUM2EFrgQ==
+"@types/node@^22.17.0":
+  version "22.17.0"
+  resolved "https://registry.npmjs.org/@types/node/-/node-22.17.0.tgz#e8c9090e957bd4d9860efb323eb92d297347eac7"
+  integrity sha512-bbAKTCqX5aNVryi7qXVMi+OkB3w/OyblodicMbvE38blyAz7GxXf6XYhklokijuPwwVg9sDLKRxt0ZHXQwZVfQ==
   dependencies:
     undici-types "~6.21.0"
 
@@ -4203,10 +4203,10 @@ eslint-plugin-import@^2.31.0, eslint-plugin-import@^2.32.0:
     string.prototype.trimend "^1.0.9"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsdoc@^51.4.1:
-  version "51.4.1"
-  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-51.4.1.tgz#a512460da6ba328ac3be0c3e7b2aaa4633175625"
-  integrity sha512-y4CA9OkachG8v5nAtrwvcvjIbdcKgSyS6U//IfQr4FZFFyeBFwZFf/tfSsMr46mWDJgidZjBTqoCRlXywfFBMg==
+eslint-plugin-jsdoc@^52.0.1:
+  version "52.0.1"
+  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-52.0.1.tgz#c771a1f963454acf90a43da63b3a2864eff4ba62"
+  integrity sha512-zJdjpC9z4x28BBdCoxH+/h0BdDLZ9KXQGVKU9gHt3TQJ9kMraep+DgfTIVaXu9u1wy0HyhK2eFMp3icQBV4dkw==
   dependencies:
     "@es-joy/jsdoccomment" "~0.52.0"
     are-docs-informative "^0.0.2"
@@ -9742,10 +9742,10 @@ typedarray@^0.0.6:
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typedoc@^0.28.7:
-  version "0.28.7"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.28.7.tgz#30453a9517b49e53f06e08954ef3dd106381447d"
-  integrity sha512-lpz0Oxl6aidFkmS90VQDQjk/Qf2iw0IUvFqirdONBdj7jPSN9mGXhy66BcGNDxx5ZMyKKiBVAREvPEzT6Uxipw==
+typedoc@^0.28.8:
+  version "0.28.8"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.28.8.tgz#3f2de31e8b2233bab12fb40d25ff861a4fac0962"
+  integrity sha512-16GfLopc8icHfdvqZDqdGBoS2AieIRP2rpf9mU+MgN+gGLyEQvAO0QgOa6NJ5QNmQi0LFrDY9in4F2fUNKgJKA==
   dependencies:
     "@gerrit0/mini-shiki" "^3.7.0"
     lunr "^2.3.9"

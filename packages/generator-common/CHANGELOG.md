@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/generator-common
 
+## 4.1.1
+
+### Patch Changes
+
+- Updated dependencies [b502b40]
+  - @sap-cloud-sdk/util@4.1.1
+
 ## 4.1.0
 
 ### Patch Changes

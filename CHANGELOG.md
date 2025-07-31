@@ -28,6 +28,11 @@
 
 -
  
+# 4.1.1
+## Fixed Issues
+
+- [connectivity, http-client, openapi, resilience, util] Update `axios` to `1.11.0` to use non-vulnerable version of `form-data`. (b502b40)
+
 # 4.1.0
 ## Compatibility Notes
 

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services-odata-v4",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Custom Services for testing",
   "files": [
     "**/*.js",

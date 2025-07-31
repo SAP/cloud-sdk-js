@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/util
 
+## 4.1.1
+
+### Patch Changes
+
+- b502b40: [Fixed Issue] Update `axios` to `1.11.0` to use non-vulnerable version of `form-data`.
+
 ## 4.1.0
 
 ## 4.0.2

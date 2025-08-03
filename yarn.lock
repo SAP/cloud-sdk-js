@@ -1459,12 +1459,21 @@
   dependencies:
     async "^3.2.3"
 
-"@sap/xsenv@^5.2.0", "@sap/xsenv@^5.6.1":
+"@sap/xsenv@^5.2.0":
   version "5.6.1"
   resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-5.6.1.tgz#c7b62cd0891397f4f30b1855213930cff08ebb21"
   integrity sha512-4pDpsYLNJsLUBWtTSG+TJ8ul5iY0dWDyJgTy2H/WZGZww9CSPLP/39x+syDDTjkggsmZAlo9t7y9TiXMmtAunw==
   dependencies:
     debug "4.4.0"
+    node-cache "^5.1.2"
+    verror "1.10.1"
+
+"@sap/xsenv@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-6.0.0.tgz#28d2d3857a1df84595bc5f67613b4d44b4f958b3"
+  integrity sha512-9bNpJXmxndWn5JbRCPPtbeMqldXOn2Od17ybS92PHd1rNkZ80IMmOURHNct5YSVQ1MKBIDAyC+ck6VL7cVAfUA==
+  dependencies:
+    debug "4.4.1"
     node-cache "^5.1.2"
     verror "1.10.1"
 
@@ -3246,7 +3255,7 @@ debug@2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4, debug@^4.3.6, debug@^4.3.7, debug@^4.4.1:
+debug@4, debug@4.4.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4, debug@^4.3.6, debug@^4.3.7, debug@^4.4.1:
   version "4.4.1"
   resolved "https://registry.npmjs.org/debug/-/debug-4.4.1.tgz#e5a8bc6cbc4c6cd3e64308b0693a3d4fa550189b"
   integrity sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ==

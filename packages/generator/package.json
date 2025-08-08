@@ -48,7 +48,7 @@
     "fast-xml-parser": "^5.2.5",
     "fs-extra": "^11.3.1",
     "ts-morph": "^26.0.0",
-    "typescript": "~5.8.3",
+    "typescript": "~5.9.2",
     "voca": "^1.4.1",
     "winston": "^3.17.0"
   },

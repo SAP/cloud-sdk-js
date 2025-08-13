@@ -47,7 +47,7 @@
   "devDependencies": {
     "@sap-cloud-sdk/test-services-odata-v2": "^4.1.1",
     "@sap-cloud-sdk/resilience": "^4.1.1",
-    "nock": "^14.0.9",
+    "nock": "^14.0.10",
     "typescript": "~5.9.2"
   }
 }

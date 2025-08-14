@@ -7635,10 +7635,10 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-puppeteer-core@24.16.1:
-  version "24.16.1"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.16.1.tgz#f407862bd5bde1fa22c56c223abb93002c4e1852"
-  integrity sha512-0dGD2kxoH9jqj/xiz4KZLcPKpqWygs+VSEBzvuVbU3KoT2cCw4HnMT9r/7NvYl1lIa+JCa5yIyRqi+4R3UyYfQ==
+puppeteer-core@24.16.2:
+  version "24.16.2"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.16.2.tgz#f210ca0efefb7ded0f40fb783878968913b83206"
+  integrity sha512-areKSSQzpoHa5nCk3uD/o504yjrW5ws0N6jZfdFZ3a4H+Q7NBgvuDydjN5P87jN4Rj+eIpLcK3ELOThTtYuuxg==
   dependencies:
     "@puppeteer/browsers" "2.10.6"
     chromium-bidi "7.3.1"
@@ -7647,16 +7647,16 @@ puppeteer-core@24.16.1:
     typed-query-selector "^2.12.0"
     ws "^8.18.3"
 
-puppeteer@^24.16.1:
-  version "24.16.1"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.16.1.tgz#6b6d4d031f2c691b3df40a9738aaee263a35a0fe"
-  integrity sha512-3jrx2BrOBb8yr3+KE7OyxVtI2fjPNZi46/SQGxFvlKZX4/56i2LbdArEhNvlQw/xxmsZfpjFRbGtkMavgh3I+g==
+puppeteer@^24.16.2:
+  version "24.16.2"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.16.2.tgz#e3c08b26b7832779c0e1dbef0542f5242aadde16"
+  integrity sha512-eNjKzwjITM4Lvho6iHb+VQamadUBgc8TsjAApsKi5N8DXipxAaAZWssBOFsrIOLo4eYWYj0Qk5gmr4wBSqzJWw==
   dependencies:
     "@puppeteer/browsers" "2.10.6"
     chromium-bidi "7.3.1"
     cosmiconfig "^9.0.0"
     devtools-protocol "0.0.1475386"
-    puppeteer-core "24.16.1"
+    puppeteer-core "24.16.2"
     typed-query-selector "^2.12.0"
 
 pure-rand@^7.0.0:

@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: 'Security rating'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: SAP/fosstars-rating-core-action@v1.14.0
         with:
           report-branch: fosstars-report

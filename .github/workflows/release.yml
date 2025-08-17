@@ -8,7 +8,7 @@ jobs:
   stable-release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: 'main'
       - uses: actions/setup-node@v4
@@ -29,7 +29,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
       - name: Checkout Docs
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: SAP/cloud-sdk
           token: ${{ secrets.GH_DOCS_TOKEN }}

@@ -7,7 +7,7 @@ import {
 } from './http-proxy-util';
 import { isHttpDestination } from './destination-service-types';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
-import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import { addForwardedAuthTokenIfNeeded } from './forward-auth-token';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import type { Destination } from './destination-service-types';
 import type { CachingOptions } from '../cache';
@@ -40,20 +40,14 @@ export async function getDestinationFromServiceBinding(
       : undefined;
 
   const retrievalOptions = { ...options, jwt: decodedJwt };
-  const destination = await retrieveDestination(retrievalOptions);
+  let destination = await retrieveDestination(retrievalOptions) as Destination;
 
-  const destWithProxy =
-    destination &&
-    isHttpDestination(destination) &&
+  destination = addForwardedAuthTokenIfNeeded(destination, options.jwt);
+
+  return isHttpDestination(destination) &&
     ['internet', 'private-link'].includes(proxyStrategy(destination))
       ? addProxyConfigurationInternet(destination)
       : destination;
-
-  if (destWithProxy) {
-    setForwardedAuthTokenIfNeeded(destWithProxy, options.jwt);
-  }
-
-  return destWithProxy;
 }
 
 async function retrieveDestination({

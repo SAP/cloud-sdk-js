@@ -121,8 +121,6 @@ export class DestinationFromServiceRetriever {
       // AND authentication is one of the supported types
 
       // TODO: Check if the auth token is bound to options.jwt which might change next time for caching.
-
-      //
       destination = await retriever.fetchAndAddAuthTokenIfNeeded(
         destination,
         origin
@@ -416,6 +414,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       (authentication === 'OAuth2SAMLBearerAssertion' &&
         !this.usesSystemUser(destination))
     ) {
+      // VERY BAD...
+      // If origin is provider, next time subscriber jwt might change.
+      // -> It might be an invalid user jwt next time, and SDK won't throw as destination cached already.
+      // -> SDK will use auth token retrieved with the previous subscriber jwt for a different subscriber next time.
       destination = await this.fetchDestinationWithUserExchangeFlows(
         destination,
         origin
@@ -426,21 +428,37 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       authentication === 'OAuth2ClientCredentials' ||
       this.usesSystemUser(destination)
     ) {
+      // OK!
+      // If origin is provider
+      // -> Auth token can be cached in destination cache as subscriber jwt is not used.
+      // If origin is subscriber
+      // -> Auth token can be cached in destination cache as destination is tenant-isolated.
       destination = await this.fetchDestinationWithNonUserExchangeFlows(
         destination,
         origin
       );
     } else if (authentication === 'OAuth2RefreshToken') {
+      // OK!
+      // If origin is provider, provider jwt + refresh token is used.
+      // -> Auth token can be cached in destination cache as subscriber is not used.
+      // If origin is subscriber, subscriber jwt + refresh token is used.
+      // -> Auth token can be cached in destination cache as destination is tenant-isolated.
       destination = await this.fetchDestinationWithRefreshTokenFlow(
         destination,
         origin
       );
     } else if (authentication === 'PrincipalPropagation') {
+      // BAD...
+      // If origin is provider, next time subscriber jwt might change
+      // -> It might be an invalid user jwt next time, and SDK won't throw as destination cached already.
       if (!DestinationFromServiceRetriever.isUserJwt(this.subscriberToken)) {
         DestinationFromServiceRetriever.throwUserTokenMissing(destination);
       }
     }
     return destination;
+
+    // For BAD cases above, we need to isolate the cache additionally with the subscriber jwt (better than using user jwt directly).
+    // `getSubscriberToken()` can be called freely as it is calling `serviceToken()` which uses caching itself.
   }
 
   private async addProxyConfiguration(

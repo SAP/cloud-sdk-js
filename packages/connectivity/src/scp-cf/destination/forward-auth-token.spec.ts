@@ -7,10 +7,7 @@ describe('forward auth token', () => {
   it('sets an auth token, when `forwardAuthToken` is set', () => {
     const jwt = signedJwt({});
     let destination: Destination = { forwardAuthToken: true };
-    destination = addForwardedAuthTokenIfNeeded(
-      destination,
-      jwt
-    );
+    destination = addForwardedAuthTokenIfNeeded(destination, jwt);
     expect(destination.authTokens?.[0]).toMatchObject({ value: jwt });
   });
 

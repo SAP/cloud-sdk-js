@@ -40,14 +40,16 @@ export async function getDestinationFromServiceBinding(
       : undefined;
 
   const retrievalOptions = { ...options, jwt: decodedJwt };
-  let destination = await retrieveDestination(retrievalOptions) as Destination;
+  let destination = (await retrieveDestination(
+    retrievalOptions
+  )) as Destination;
 
   destination = addForwardedAuthTokenIfNeeded(destination, options.jwt);
 
   return isHttpDestination(destination) &&
     ['internet', 'private-link'].includes(proxyStrategy(destination))
-      ? addProxyConfigurationInternet(destination)
-      : destination;
+    ? addProxyConfigurationInternet(destination)
+    : destination;
 }
 
 async function retrieveDestination({

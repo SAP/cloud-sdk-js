@@ -102,7 +102,8 @@ export class DestinationFromServiceRetriever {
     );
 
     // Search destination with selection strategy and cache
-    const destinationSearchResult = await retriever.searchDestinationWithSelectionStrategyAndCache();
+    const destinationSearchResult =
+      await retriever.searchDestinationWithSelectionStrategyAndCache();
 
     // Immediately return null if no destination found
     if (!destinationSearchResult) {
@@ -118,11 +119,21 @@ export class DestinationFromServiceRetriever {
       // Fetch and add auth token if needed,
       // meaning `forwardAuthToken` is `false`
       // AND authentication is one of the supported types
-      destination = await retriever.fetchAndAddAuthTokenIfNeeded(destination, origin);
+
+      // TODO: Check if the auth token is bound to options.jwt which might change next time for caching.
+
+      //
+      destination = await retriever.fetchAndAddAuthTokenIfNeeded(
+        destination,
+        origin
+      );
 
       // Add trust store configuration if needed,
       // meaning `TrustStoreLocation` is defined
-      destination = await retriever.addTrustStoreConfigurationIfNeeded(destination, origin);
+      destination = await retriever.addTrustStoreConfigurationIfNeeded(
+        destination,
+        origin
+      );
 
       // Cache the destination
       await retriever.cacheDestination(destination, origin);
@@ -304,7 +315,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       origin === 'provider'
         ? this.providerServiceToken
         : // on type level this could be undefined, but logically if the origin is subscriber, it must be defined.
-        this.subscriberToken.serviceJwt!;
+          this.subscriberToken.serviceJwt!;
 
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`
@@ -345,8 +356,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destination: Destination,
     origin: DestinationOrigin
   ): Promise<Destination> {
-    const token =
-      await this.getAuthTokenForOAuth2ClientCredentials(destination, origin);
+    const token = await this.getAuthTokenForOAuth2ClientCredentials(
+      destination,
+      origin
+    );
 
     return fetchDestinationWithTokenRetrieval(
       getDestinationServiceCredentials().uri,
@@ -359,11 +372,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destination: Destination,
     origin: DestinationOrigin
   ): Promise<Destination> {
-    const token =
-      await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
-        destination,
-        origin
-      );
+    const token = await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
+      destination,
+      origin
+    );
 
     return fetchDestinationWithTokenRetrieval(
       getDestinationServiceCredentials().uri,
@@ -376,8 +388,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destination: Destination,
     origin: DestinationOrigin
   ): Promise<Destination> {
-    const token =
-      await this.getAuthTokenForOAuth2RefreshToken(destination, origin);
+    const token = await this.getAuthTokenForOAuth2RefreshToken(
+      destination,
+      origin
+    );
 
     return fetchDestinationWithTokenRetrieval(
       getDestinationServiceCredentials().uri,
@@ -402,21 +416,29 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       (authentication === 'OAuth2SAMLBearerAssertion' &&
         !this.usesSystemUser(destination))
     ) {
-      destination = await this.fetchDestinationWithUserExchangeFlows(destination, origin);
-    } else if (authentication === 'PrincipalPropagation') {
-      if (!DestinationFromServiceRetriever.isUserJwt(this.subscriberToken)) {
-        DestinationFromServiceRetriever.throwUserTokenMissing(destination);
-      }
+      destination = await this.fetchDestinationWithUserExchangeFlows(
+        destination,
+        origin
+      );
     } else if (
       authentication === 'OAuth2Password' ||
       authentication === 'ClientCertificateAuthentication' ||
       authentication === 'OAuth2ClientCredentials' ||
       this.usesSystemUser(destination)
     ) {
-      destination = await this.fetchDestinationWithNonUserExchangeFlows(destination, origin);
+      destination = await this.fetchDestinationWithNonUserExchangeFlows(
+        destination,
+        origin
+      );
     } else if (authentication === 'OAuth2RefreshToken') {
-      destination =
-        await this.fetchDestinationWithRefreshTokenFlow(destination, origin);
+      destination = await this.fetchDestinationWithRefreshTokenFlow(
+        destination,
+        origin
+      );
+    } else if (authentication === 'PrincipalPropagation') {
+      if (!DestinationFromServiceRetriever.isUserJwt(this.subscriberToken)) {
+        DestinationFromServiceRetriever.throwUserTokenMissing(destination);
+      }
     }
     return destination;
   }
@@ -550,7 +572,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
     if (
       this.options.selectionStrategy.toString() ===
-      subscriberFirst.toString() &&
+        subscriberFirst.toString() &&
       resultFromSubscriber
     ) {
       return false;
@@ -591,7 +613,8 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destination: Destination,
     origin: DestinationOrigin
   ): Promise<Destination> {
-    const trustStoreLocation = destination.originalProperties?.TrustStoreLocation;
+    const trustStoreLocation =
+      destination.originalProperties?.TrustStoreLocation;
     if (trustStoreLocation) {
       const trustStoreCertificate = await fetchCertificate(
         getDestinationServiceCredentials().uri,
@@ -604,7 +627,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         ...destination,
         trustStoreCertificate
       };
-    };
+    }
     return destination;
   }
 }

@@ -1382,10 +1382,10 @@
   dependencies:
     debug "^4.3.1"
 
-"@puppeteer/browsers@2.10.7":
-  version "2.10.7"
-  resolved "https://registry.npmjs.org/@puppeteer/browsers/-/browsers-2.10.7.tgz#a28f622b2da0ee131c9a576d25d8c4e31fc24135"
-  integrity sha512-wHWLkQWBjHtajZeqCB74nsa/X70KheyOhySYBRmVQDJiNj0zjZR/naPCvdWjMhcG1LmjaMV/9WtTo5mpe8qWLw==
+"@puppeteer/browsers@2.10.8":
+  version "2.10.8"
+  resolved "https://registry.npmjs.org/@puppeteer/browsers/-/browsers-2.10.8.tgz#80e983ca0365478b39c4c0f559785345393f8fa2"
+  integrity sha512-f02QYEnBDE0p8cteNoPYHHjbDuwyfbe4cCIVlNi8/MRicIxFW4w4CfgU0LNgWEID6s06P+hRJ1qjpBLMhPRCiQ==
   dependencies:
     debug "^4.4.1"
     extract-zip "^2.0.1"
@@ -7634,28 +7634,28 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-puppeteer-core@24.17.0:
-  version "24.17.0"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.17.0.tgz#66eaa3532d06c22fbbdc36e09f416cb69b8c8637"
-  integrity sha512-RYOBKFiF+3RdwIZTEacqNpD567gaFcBAOKTT7742FdB1icXudrPI7BlZbYTYWK2wgGQUXt9Zi1Yn+D5PmCs4CA==
+puppeteer-core@24.17.1:
+  version "24.17.1"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.17.1.tgz#b71955b757cc315c5b23c3adbe878708d0a7d09c"
+  integrity sha512-Msh/kf9k1XFN0wuKiT4/npMmMWOT7kPBEUw01gWvRoKOOoz3It9TEmWjnt4Gl4eO+p73VMrvR+wfa0dm9rfxjw==
   dependencies:
-    "@puppeteer/browsers" "2.10.7"
+    "@puppeteer/browsers" "2.10.8"
     chromium-bidi "8.0.0"
     debug "^4.4.1"
     devtools-protocol "0.0.1475386"
     typed-query-selector "^2.12.0"
     ws "^8.18.3"
 
-puppeteer@^24.17.0:
-  version "24.17.0"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.17.0.tgz#2fa286ed7b755846ef6064c1ee42b5491abcd21b"
-  integrity sha512-CGrmJ8WgilK3nyE73k+pbxHggETPpEvL6AQ9H5JSK1RgZRGMQVJ+iO3MocGm9yBQXQJ9U5xijyLvkYXFeb0/+g==
+puppeteer@^24.17.1:
+  version "24.17.1"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.17.1.tgz#a83fa102a8d0dfb9341d7312f34d40fc95e28f85"
+  integrity sha512-KIuX0w+0um4TUbm55yFl2WIsbgjya2BHIgW9ylTuhavtwjXCOM7lMo9oLR1jQnCxrFvm9h/Yeb+zfs4nlgntPg==
   dependencies:
-    "@puppeteer/browsers" "2.10.7"
+    "@puppeteer/browsers" "2.10.8"
     chromium-bidi "8.0.0"
     cosmiconfig "^9.0.0"
     devtools-protocol "0.0.1475386"
-    puppeteer-core "24.17.0"
+    puppeteer-core "24.17.1"
     typed-query-selector "^2.12.0"
 
 pure-rand@^7.0.0:

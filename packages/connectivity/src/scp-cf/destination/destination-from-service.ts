@@ -432,7 +432,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       // If origin is provider
       // -> Auth token can be cached in destination cache as subscriber jwt is not used.
       // -> UNLESS for `OAuth2ClientCredentials`, if `x-tenant` is used with `tokenServiceURLType` set to `Common` (see `getExchangeTenant()`),
-      //   then again tenant id is sent to destination service and jwt will be exchanged based on the templated token service url.
+      //   then the subdomain of the tenant is sent to destination service and jwt will be exchanged based on the templated token service url.
       // If origin is subscriber
       // -> Auth token can be cached in destination cache as destination is tenant-isolated.
       destination = await this.fetchDestinationWithNonUserExchangeFlows(

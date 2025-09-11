@@ -650,16 +650,16 @@
   resolved "https://registry.npmjs.org/@epic-web/invariant/-/invariant-1.0.0.tgz#1073e5dee6dd540410784990eb73e4acd25c9813"
   integrity sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==
 
-"@es-joy/jsdoccomment@~0.56.0":
-  version "0.56.0"
-  resolved "https://registry.npmjs.org/@es-joy/jsdoccomment/-/jsdoccomment-0.56.0.tgz#bcc1802ae77d17d03f6fbe6eeb27d4a9cef4a086"
-  integrity sha512-c6EW+aA1w2rjqOMjbL93nZlwxp6c1Ln06vTYs5FjRRhmJXK8V/OrSXdT+pUr4aRYgjCgu8/OkiZr0tzeVrRSbw==
+"@es-joy/jsdoccomment@~0.58.0":
+  version "0.58.0"
+  resolved "https://registry.npmjs.org/@es-joy/jsdoccomment/-/jsdoccomment-0.58.0.tgz#2f8771754369bfa02688cd593a0d688e15fb3449"
+  integrity sha512-smMc5pDht/UVsCD3hhw/a/e/p8m0RdRYiluXToVfd+d4yaQQh7nn9bACjkk6nXJvat7EWPAxuFkMEFfrxeGa3Q==
   dependencies:
     "@types/estree" "^1.0.8"
-    "@typescript-eslint/types" "^8.42.0"
+    "@typescript-eslint/types" "^8.43.0"
     comment-parser "1.4.1"
     esquery "^1.6.0"
-    jsdoc-type-pratt-parser "~5.1.0"
+    jsdoc-type-pratt-parser "~5.4.0"
 
 "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.7.0":
   version "4.7.0"
@@ -1949,7 +1949,7 @@
     debug "^4.3.4"
     ts-api-utils "^2.1.0"
 
-"@typescript-eslint/types@8.43.0", "@typescript-eslint/types@^8.42.0", "@typescript-eslint/types@^8.43.0":
+"@typescript-eslint/types@8.43.0", "@typescript-eslint/types@^8.43.0":
   version "8.43.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.43.0.tgz#00d34a5099504eb1b263e022cc17c4243ff2302e"
   integrity sha512-vQ2FZaxJpydjSZJKiSW/LJsabFFvV7KgLC5DiLhkBcykhQj8iK9BOaDmQt74nnKdLvceM5xmhaTF+pLekrxEkw==
@@ -3942,12 +3942,12 @@ eslint-plugin-import@^2.32.0:
     string.prototype.trimend "^1.0.9"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsdoc@^55.0.2:
-  version "55.0.2"
-  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-55.0.2.tgz#99738c42a6b78c2bb180ba85c7bcea18daee554b"
-  integrity sha512-0ydpGUvxEhMNEKofmlBRgo2VFA4oBMF5TDOwG/LocQOW+dyOLuM/Hzvd3QAHVzTiK0KO4Dq/PLt3XXWiGXar+Q==
+eslint-plugin-jsdoc@^56.0.2:
+  version "56.0.2"
+  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-56.0.2.tgz#3e0f977b8f36ad1b3f0cd2e7fe0931245aed4532"
+  integrity sha512-goHsCOyedhtAE43FJoD/1sOrU17ono0mwfSFhVZtfVFAKT5Tnuq5TqaODl+hnNut7caJ+Wk5SQS9vi/L20I0BQ==
   dependencies:
-    "@es-joy/jsdoccomment" "~0.56.0"
+    "@es-joy/jsdoccomment" "~0.58.0"
     are-docs-informative "^0.0.2"
     comment-parser "1.4.1"
     debug "^4.4.1"
@@ -5937,10 +5937,10 @@ jsbn@1.1.0:
   resolved "https://registry.npmjs.org/jsbn/-/jsbn-1.1.0.tgz#b01307cb29b618a1ed26ec79e911f803c4da0040"
   integrity sha512-4bYVV3aAMtDTTu4+xsDYa6sy9GyJ69/amsu9sYF2zqjiEoZA5xJi3BrfX3uY+/IekIu7MwdObdbDWpoZdBv3/A==
 
-jsdoc-type-pratt-parser@~5.1.0:
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/jsdoc-type-pratt-parser/-/jsdoc-type-pratt-parser-5.1.1.tgz#2657625f071daa822e51b6aa6fdc8eb667c1ff64"
-  integrity sha512-DYYlVP1fe4QBMh2xTIs20/YeTz2GYVbWAEZweHSZD+qQ/Cx2d5RShuhhsdk64eTjNq0FeVnteP/qVOgaywSRbg==
+jsdoc-type-pratt-parser@~5.4.0:
+  version "5.4.0"
+  resolved "https://registry.npmjs.org/jsdoc-type-pratt-parser/-/jsdoc-type-pratt-parser-5.4.0.tgz#8f14a44286a8f50205e1bb67ee6626d2c4652903"
+  integrity sha512-F9GQ+F1ZU6qvSrZV8fNFpjDNf614YzR2eF6S0+XbDjAcUI28FSoXnYZFjQmb1kFx3rrJb5PnxUH3/Yti6fcM+g==
 
 jsep@^1.4.0:
   version "1.4.0"

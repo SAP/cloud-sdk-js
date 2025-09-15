@@ -39,7 +39,7 @@
     "@sap-cloud-sdk/resilience": "^4.1.1",
     "@sap-cloud-sdk/util": "^4.1.1",
     "@sap/xsenv": "^6.0.0",
-    "@sap/xssec": "^4.9.1",
+    "@sap/xssec": "^4.9.2",
     "async-retry": "^1.3.3",
     "axios": "^1.12.0",
     "jsonwebtoken": "^9.0.2"

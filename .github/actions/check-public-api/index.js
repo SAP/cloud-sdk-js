@@ -72963,6 +72963,7 @@ const { mkdirs } = __nccwpck_require__(19249)
 const { pathExists } = __nccwpck_require__(35825)
 const { utimesMillis } = __nccwpck_require__(45798)
 const stat = __nccwpck_require__(38887)
+const { asyncIteratorConcurrentProcess } = __nccwpck_require__(1361)
 
 async function copy (src, dest, opts = {}) {
   if (typeof opts === 'function') {
@@ -73070,28 +73071,20 @@ async function onDir (srcStat, destStat, src, dest, opts) {
     await fs.mkdir(dest)
   }
 
-  const promises = []
-
-  // loop through the files in the current directory to copy everything
-  for await (const item of await fs.opendir(src)) {
+  // iterate through the files in the current directory to copy everything
+  await asyncIteratorConcurrentProcess(await fs.opendir(src), async (item) => {
     const srcItem = path.join(src, item.name)
     const destItem = path.join(dest, item.name)
 
-    promises.push(
-      runFilter(srcItem, destItem, opts).then(include => {
-        if (include) {
-          // only copy the item if it matches the filter function
-          return stat.checkPaths(srcItem, destItem, 'copy', opts).then(({ destStat }) => {
-            // If the item is a copyable file, `getStatsAndPerformCopy` will copy it
-            // If the item is a directory, `getStatsAndPerformCopy` will call `onDir` recursively
-            return getStatsAndPerformCopy(destStat, srcItem, destItem, opts)
-          })
-        }
-      })
-    )
-  }
-
-  await Promise.all(promises)
+    const include = await runFilter(srcItem, destItem, opts)
+    // only copy the item if it matches the filter function
+    if (include) {
+      const { destStat } = await stat.checkPaths(srcItem, destItem, 'copy', opts)
+      // If the item is a copyable file, `getStatsAndPerformCopy` will copy it
+      // If the item is a directory, `getStatsAndPerformCopy` will call `onDir` recursively
+      await getStatsAndPerformCopy(destStat, srcItem, destItem, opts)
+    }
+  })
 
   if (!destStat) {
     await fs.chmod(dest, srcStat.mode)
@@ -74177,6 +74170,43 @@ function removeSync (path) {
 module.exports = {
   remove: u(remove),
   removeSync
+}
+
+
+/***/ }),
+
+/***/ 1361:
+/***/ ((module) => {
+
+"use strict";
+
+
+// https://github.com/jprichardson/node-fs-extra/issues/1056
+// Performing parallel operations on each item of an async iterator is
+// surprisingly hard; you need to have handlers in place to avoid getting an
+// UnhandledPromiseRejectionWarning.
+// NOTE: This function does not presently handle return values, only errors
+async function asyncIteratorConcurrentProcess (iterator, fn) {
+  const promises = []
+  for await (const item of iterator) {
+    promises.push(
+      fn(item).then(
+        () => null,
+        (err) => err ?? new Error('unknown error')
+      )
+    )
+  }
+  await Promise.all(
+    promises.map((promise) =>
+      promise.then((possibleErr) => {
+        if (possibleErr !== null) throw possibleErr
+      })
+    )
+  )
+}
+
+module.exports = {
+  asyncIteratorConcurrentProcess
 }
 
 

@@ -35,7 +35,7 @@ import { complexTypeSourceFile } from './complex-type';
 import { entitySourceFile } from './entity';
 import { enumTypeSourceFile } from './enum-type';
 import { sourceFile } from './file-generator';
-import { cliOptions } from './options';
+import { cliOptions, tsconfigJson } from './options';
 import { hasEntities } from './generator-utils';
 import {
   entityApiFile,
@@ -45,9 +45,9 @@ import {
 import { operationsSourceFile } from './operations';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
-import { indexFile, packageJson, readme } from './service';
+import { indexFile, packageJson, PackageJsonOptions, readme } from './service';
 import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
-import type { ProjectOptions } from 'ts-morph';
+import type { Directory, ProjectOptions } from 'ts-morph';
 import type {
   CreateFileOptions,
   OptionsPerService
@@ -181,10 +181,11 @@ export async function generateProject(
     emptyDirSync(options.outputDir.toString());
   }
 
-  const project = new Project(projectOptions());
+  const tsConfig = await tsconfigJson(options);
+  const project = new Project(projectOptions(options.generateESM ? 'esm' : 'commonjs'));
 
   const promises = services.map(service =>
-    generateSourcesForService(service, project, options)
+    generateSourcesForService(service, project, options, tsConfig)
   );
 
   if (options.optionsPerService) {
@@ -241,7 +242,8 @@ async function getFileCreationOptions(
     prettierOptions: await readPrettierConfig(
       options.prettierConfig?.toString()
     ),
-    overwrite: options.overwrite
+    overwrite: options.overwrite,
+    generateESM: options.generateESM
   };
 }
 
@@ -298,7 +300,8 @@ async function generateEntityApis(
 export async function generateSourcesForService(
   service: VdmServiceMetadata,
   project: Project,
-  options: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions,
+  tsConfig: string | undefined
 ): Promise<void> {
   const serviceDirPath = join(
     options.outputDir,
@@ -310,37 +313,49 @@ export async function generateSourcesForService(
   if (!existsSync(serviceDirPath)) {
     await mkdir(serviceDirPath, { recursive: true });
   }
-  const filePromises: Promise<any>[] = [];
-  logger.verbose(`[${service.originalFileName}] Generating entities ...`);
+
+  await generateMandatorySources(serviceDir, service, options, createFileOptions);
+
+  if (options.metadata) {
+    await generateMetadata(service, options);
+  }
 
   if (options.packageJson) {
-    filePromises.push(
-      createFile(
-        serviceDirPath,
-        'package.json',
-        await packageJson({
-          npmPackageName: service.serviceOptions.packageName,
-          sdkVersion: await getSdkVersion(),
-          description: packageDescription(service.speakingModuleName),
-          oDataVersion: service.oDataVersion
-        }),
-        createFileOptions
-      )
-    );
+    await generatePackageJson(serviceDirPath, service, options);
   }
 
-  if (options.transpile || options.tsconfig) {
-    filePromises.push(
-      createFile(
-        serviceDirPath,
-        'tsconfig.json',
-        options.tsconfig
-          ? await readCustomTsConfig(options.tsconfig)
-          : formatTsConfig(),
-        createFileOptions
-      )
-    );
+  if (options.include) {
+    await copyFiles(options.include, serviceDirPath, options.overwrite);
   }
+
+  if (tsConfig) {
+    await createFile(
+      serviceDirPath,
+      'tsconfig.json',
+      tsConfig,
+      createFileOptions
+    );
+    const transpileOptions = {
+      compilerOptions: await readCompilerOptions(serviceDirPath),
+      createFileOptions
+    };
+    await transpileDirectory(serviceDirPath, transpileOptions);
+  }
+
+  if (options.readme) {
+    await generateReadme(serviceDirPath, service, options);
+  }
+}
+
+async function generateMandatorySources(
+  serviceDir: Directory,
+  service: VdmServiceMetadata,
+  options: ParsedGeneratorOptions,
+  createFileOptions: CreateFileOptions
+): Promise<void> {
+  const filePromises: Promise<any>[] = [];
+
+  logger.verbose(`[${service.originalFileName}] Generating entities ...`);
 
   if (hasEntities(service)) {
     logger.verbose(
@@ -404,7 +419,6 @@ export async function generateSourcesForService(
     );
   });
 
-  // Merge generated function-imports.ts and action-imports.ts into one operations.ts.
   if (service.operations.length) {
     logger.verbose(`[${service.originalFileName}] Generating operations ...`);
     filePromises.push(
@@ -421,42 +435,73 @@ export async function generateSourcesForService(
     sourceFile(serviceDir, 'index', indexFile(service), createFileOptions)
   );
 
-  if (options.readme) {
-    logger.verbose(`[${service.originalFileName}] Generating readme ...`);
-    filePromises.push(
-      createFile(
-        serviceDirPath,
-        'README.md',
-        readme(service),
-        createFileOptions
-      )
-    );
-  }
-
-  if (options.metadata) {
-    const { clientFileName } = getSdkMetadataFileNames(
-      service.originalFileName
-    );
-    logger.verbose(`Generating sdk client metadata ${clientFileName}...`);
-
-    const path = resolve(dirname(service.edmxPath.toString()), 'sdk-metadata');
-    if (!existsSync(path)) {
-      await mkdir(path);
-    }
-
-    filePromises.push(
-      createFile(
-        path,
-        clientFileName,
-        JSON.stringify(await sdkMetadata(service), null, 2),
-        createFileOptions
-      )
-    );
-  }
   await Promise.all(filePromises);
 }
 
-function projectOptions(): ProjectOptions {
+async function generateMetadata(
+  service: VdmServiceMetadata,
+  options: ParsedGeneratorOptions
+): Promise<void> {
+  const { clientFileName } = getSdkMetadataFileNames(
+    service.originalFileName
+  );
+  logger.verbose(`Generating sdk client metadata ${clientFileName}...`);
+
+  const path = resolve(dirname(service.edmxPath.toString()), 'sdk-metadata');
+  if (!existsSync(path)) {
+    await mkdir(path);
+  }
+
+  const createFileOptions = await getFileCreationOptions(options);
+  await createFile(
+    path,
+    clientFileName,
+    JSON.stringify(await sdkMetadata(service), null, 2),
+    createFileOptions
+  );
+}
+
+async function generatePackageJson(
+  serviceDirPath: string,
+  service: VdmServiceMetadata,
+  options: ParsedGeneratorOptions
+): Promise<void> {
+  logger.verbose(`Generating package.json in ${serviceDirPath}.`);
+  const createFileOptions = await getFileCreationOptions(options);
+
+  const packageJsonOptions: PackageJsonOptions = {
+    npmPackageName: service.serviceOptions.packageName,
+    sdkVersion: await getSdkVersion(),
+    description: packageDescription(service.speakingModuleName),
+    oDataVersion: service.oDataVersion,
+    moduleType: options.generateESM ? 'esm' : 'commonjs'
+  };
+
+  await createFile(
+    serviceDirPath,
+    'package.json',
+    await packageJson(packageJsonOptions),
+    createFileOptions
+  );
+}
+
+async function generateReadme(
+  serviceDirPath: string,
+  service: VdmServiceMetadata,
+  options: ParsedGeneratorOptions
+): Promise<void> {
+  logger.verbose(`Generating readme in ${serviceDirPath}.`);
+  const createFileOptions = await getFileCreationOptions(options);
+
+  await createFile(
+    serviceDirPath,
+    'README.md',
+    readme(service),
+    createFileOptions
+  );
+}
+
+function projectOptions(moduleType: 'commonjs' | 'esm' = 'commonjs'): ProjectOptions {
   return {
     skipAddingFilesFromTsConfig: true,
     manipulationSettings: {
@@ -466,12 +511,12 @@ function projectOptions(): ProjectOptions {
     },
     compilerOptions: {
       target: ScriptTarget.ES2021,
-      module: ModuleKind.CommonJS,
+      module: moduleType === 'esm' ? ModuleKind.ESNext : ModuleKind.CommonJS,
       declaration: true,
       declarationMap: true,
       sourceMap: true,
       diagnostics: true,
-      moduleResolution: ModuleResolutionKind.NodeJs,
+      moduleResolution: moduleType === 'esm' ? ModuleResolutionKind.NodeNext : ModuleResolutionKind.NodeJs,
       esModuleInterop: true,
       inlineSources: false,
       noImplicitAny: true

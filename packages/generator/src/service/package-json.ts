@@ -11,6 +11,10 @@ export interface PackageJsonOptions extends PackageJsonOptionsBase {
    * @internal
    */
   oDataVersion: ODataVersion;
+  /**
+   * @internal
+   */
+  moduleType: 'commonjs' | 'esm';
 }
 
 /**

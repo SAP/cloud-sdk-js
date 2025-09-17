@@ -4,7 +4,17 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
-    "composite": true
+    "composite": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "sourceMap": true
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],

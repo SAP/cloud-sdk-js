@@ -3954,10 +3954,10 @@ eslint-plugin-import@^2.32.0:
     string.prototype.trimend "^1.0.9"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsdoc@^60.1.0:
-  version "60.1.0"
-  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-60.1.0.tgz#4ee640a00012c4b4c43b62ae2f11bb6320f9e58d"
-  integrity sha512-PHxY3rvQFo5Q04k9+UwbXOMw9N7XfnGtrh4bHK8TIxgVB7GD0Xo9lHK3RkQCi8xY9Ty5O2FBMz/4xww0KthubQ==
+eslint-plugin-jsdoc@^60.1.1:
+  version "60.1.1"
+  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-60.1.1.tgz#3e6bf59cb094a8930c481548ba7415a52cd70aae"
+  integrity sha512-eEyINuG4pZtVFplyCPTeUif/+C14zh4fmm5IrDE5YY2Zc3IYKpdGjeaWahJcxWDDwjTVjWCw1zL9XbX3Fb0Wjg==
   dependencies:
     "@es-joy/jsdoccomment" "~0.58.0"
     are-docs-informative "^0.0.2"
@@ -6559,7 +6559,7 @@ minizlib@^2.0.0:
     minipass "^3.0.0"
     yallist "^4.0.0"
 
-minizlib@^3.0.1:
+minizlib@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/minizlib/-/minizlib-3.1.0.tgz#6ad76c3a8f10227c9b51d1c9ac8e30b27f5a251c"
   integrity sha512-KZxYo1BUkWD2TVFLr0MQoM8vUUigWD3LlD83a/75BqC+4qE0Hb1Vo5v1FgcfaNXvfXzr+5EhQ6ing/CaBijTlw==
@@ -6587,11 +6587,6 @@ mkdirp@^0.5.1:
   integrity sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==
   dependencies:
     minimist "^1.2.6"
-
-mkdirp@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-3.0.1.tgz#e44e4c5607fb279c168241713cc6e0fea9adcb50"
-  integrity sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==
 
 mock-fs@^5.5.0:
   version "5.5.0"
@@ -8757,15 +8752,14 @@ tar-stream@^3.1.5:
     streamx "^2.15.0"
 
 tar@>=6.1.2, tar@^6.0.2, tar@^6.1.11, tar@^6.1.2:
-  version "7.4.3"
-  resolved "https://registry.npmjs.org/tar/-/tar-7.4.3.tgz#88bbe9286a3fcd900e94592cda7a22b192e80571"
-  integrity sha512-5S7Va8hKfV7W5U6g3aYxXmlPoZVAwUMy9AOKyF2fVuZa2UD3qZjg578OrLRt8PcNN1PleVaL/5/yYATNL0ICUw==
+  version "7.4.4"
+  resolved "https://registry.npmjs.org/tar/-/tar-7.4.4.tgz#6a4bcb5cb53d63a16e3a59822d48d89506e8ecc9"
+  integrity sha512-O1z7ajPkjTgEgmTGz0v9X4eqeEXTDREPTO77pVC1Nbs86feBU1Zhdg+edzavPmYW1olxkwsqA2v4uOw6E8LeDg==
   dependencies:
     "@isaacs/fs-minipass" "^4.0.0"
     chownr "^3.0.0"
     minipass "^7.1.2"
-    minizlib "^3.0.1"
-    mkdirp "^3.0.1"
+    minizlib "^3.1.0"
     yallist "^5.0.0"
 
 term-size@^2.1.0:

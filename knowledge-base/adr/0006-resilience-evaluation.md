@@ -37,8 +37,6 @@ Nevertheless, even if the killer argument of cascading failures disappears, some
 
 I love the JS universe, you can evaluate more frameworks then line of codes are required to solve the problem in question, even good ol' Haskell Monads are not sacred anymore:
 
-- https://github.com/robey/profuse
-- https://github.com/jike-engineering/circuit-breaker-ts
 - https://www.npmjs.com/package/circuit-breaker-monad
 - https://github.com/julekgwa/simplified-hystrixjs (based on Opossum)
 

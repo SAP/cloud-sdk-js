@@ -650,13 +650,13 @@
   resolved "https://registry.npmjs.org/@epic-web/invariant/-/invariant-1.0.0.tgz#1073e5dee6dd540410784990eb73e4acd25c9813"
   integrity sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==
 
-"@es-joy/jsdoccomment@~0.58.0":
-  version "0.58.0"
-  resolved "https://registry.npmjs.org/@es-joy/jsdoccomment/-/jsdoccomment-0.58.0.tgz#2f8771754369bfa02688cd593a0d688e15fb3449"
-  integrity sha512-smMc5pDht/UVsCD3hhw/a/e/p8m0RdRYiluXToVfd+d4yaQQh7nn9bACjkk6nXJvat7EWPAxuFkMEFfrxeGa3Q==
+"@es-joy/jsdoccomment@~0.60.0":
+  version "0.60.0"
+  resolved "https://registry.npmjs.org/@es-joy/jsdoccomment/-/jsdoccomment-0.60.0.tgz#fa4545d98ac56ab1482a9d9d6ee49f2ad469ce1d"
+  integrity sha512-nZIXk63VbpIooJVXRWEhLIbVScE8rtbcPWr+zQ0ZQsnflvomq31DvB5hR0T1IoikvrNaF4pNoDOi5se5tmIZIg==
   dependencies:
     "@types/estree" "^1.0.8"
-    "@typescript-eslint/types" "^8.43.0"
+    "@typescript-eslint/types" "^8.44.1"
     comment-parser "1.4.1"
     esquery "^1.6.0"
     jsdoc-type-pratt-parser "~5.4.0"
@@ -1958,11 +1958,6 @@
   version "8.44.1"
   resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.44.1.tgz#85d1cad1290a003ff60420388797e85d1c3f76ff"
   integrity sha512-Lk7uj7y9uQUOEguiDIDLYLJOrYHQa7oBiURYVFqIpGxclAFQ78f6VUOM8lI2XEuNOKNB7XuvM2+2cMXAoq4ALQ==
-
-"@typescript-eslint/types@^8.43.0":
-  version "8.43.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.43.0.tgz#00d34a5099504eb1b263e022cc17c4243ff2302e"
-  integrity sha512-vQ2FZaxJpydjSZJKiSW/LJsabFFvV7KgLC5DiLhkBcykhQj8iK9BOaDmQt74nnKdLvceM5xmhaTF+pLekrxEkw==
 
 "@typescript-eslint/typescript-estree@8.44.1", "@typescript-eslint/typescript-estree@^8.23.0":
   version "8.44.1"
@@ -3954,18 +3949,19 @@ eslint-plugin-import@^2.32.0:
     string.prototype.trimend "^1.0.9"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsdoc@^60.2.0:
-  version "60.2.0"
-  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-60.2.0.tgz#b6ff5f16d3c1cb8470d80d2f674465edf4fc7105"
-  integrity sha512-VQNycH0EbjIvgdX6llnLidv7X/yQTJMoQl/L5bXAPasAlPZQFJQi7r5OLc29ushbeQJ7+BFf8UFt9JAQNBZhXg==
+eslint-plugin-jsdoc@^60.3.1:
+  version "60.3.1"
+  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-60.3.1.tgz#7313e31ea9ff3c91c4b5c366fde6cee618bd33b2"
+  integrity sha512-AEJRW4EgERmAGnMraZXu85r5xgtI9XqKlgKfaWkkFmHbMVMii2oz1dmz1b3GISJOkhfHNi4JsVC0RA+IPTrkBg==
   dependencies:
-    "@es-joy/jsdoccomment" "~0.58.0"
+    "@es-joy/jsdoccomment" "~0.60.0"
     are-docs-informative "^0.0.2"
     comment-parser "1.4.1"
     debug "^4.4.3"
     escape-string-regexp "^4.0.0"
     espree "^10.4.0"
     esquery "^1.6.0"
+    html-entities "^2.6.0"
     object-deep-merge "^1.0.5"
     parse-imports-exports "^0.2.4"
     semver "^7.7.2"
@@ -4903,6 +4899,11 @@ hosted-git-info@^4.0.1:
   integrity sha512-kyCuEOWjJqZuDbRHzL8V93NzQhwIB71oFWSyzVo+KPZI+pnQPPxucdkrOZvkLRnrf5URsQM+IJ09Dw29cRALIA==
   dependencies:
     lru-cache "^6.0.0"
+
+html-entities@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.npmjs.org/html-entities/-/html-entities-2.6.0.tgz#7c64f1ea3b36818ccae3d3fb48b6974208e984f8"
+  integrity sha512-kig+rMn/QOVRvr7c86gQ8lWXq+Hkv6CbAH1hLu+RG338StTpE8Z0b44SDVaqVu7HGKf27frdmUYEs9hTUX/cLQ==
 
 html-escaper@^2.0.0:
   version "2.0.2"

@@ -35,6 +35,6 @@
     "jsonwebtoken": "^9.0.2",
     "mock-fs": "^5.5.0",
     "nock": "^14.0.10",
-    "winston": "^3.17.0"
+    "winston": "^3.18.2"
   }
 }

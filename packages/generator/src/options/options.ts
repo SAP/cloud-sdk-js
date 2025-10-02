@@ -1,4 +1,4 @@
-import { getCommonCliOptions } from '@sap-cloud-sdk/generator-common/internal';
+import { getCommonCliOptions, formatTsConfig, readCustomTsConfig } from '@sap-cloud-sdk/generator-common/internal';
 import type {
   Options,
   ParsedOptions,
@@ -17,6 +17,10 @@ export interface GeneratorOptions extends CommonGeneratorOptions {
    * Number of node processes used for transpilation of JavaScript files.
    */
   transpilationProcesses?: number;
+  /**
+   * Whether to generate ECMAScript modules instead of CommonJS modules.
+   */
+  generateESM?: boolean;
 }
 
 /**
@@ -44,5 +48,27 @@ export const cliOptions = {
     hidden: true,
     replacedBy: 'processesJsGeneration'
   },
+  generateESM: {
+    describe:
+      'When enabled, all generated files follow the ECMAScript module syntax.',
+    type: 'boolean',
+    default: false
+  },
   ...getCommonCliOptions('OData')
 } as const satisfies Options<GeneratorOptions>;
+
+/**
+ * Build a tsconfig.json file as string.
+ * If the given options include a tsConfig setting, this config is read and returned.
+ * @param options - Options passed to the generator.
+ * @returns The serialized tsconfig.json contents.
+ * @internal
+ */
+export async function tsconfigJson({
+  transpile,
+  tsconfig: tsConfig
+}: ParsedGeneratorOptions): Promise<string | undefined> {
+  if (transpile || tsConfig) {
+    return tsConfig ? readCustomTsConfig(tsConfig) : formatTsConfig();
+  }
+}

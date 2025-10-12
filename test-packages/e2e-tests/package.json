@@ -31,7 +31,7 @@
     "@sap-cloud-sdk/test-services-e2e": "^4.1.2",
     "@sap-cloud-sdk/test-services-openapi": "^4.1.2",
     "@sap-cloud-sdk/util": "^4.1.2",
-    "@sap/cds": "^9.2.1",
+    "@sap/cds": "^9.4.3",
     "@sap/cds-dk": "9.4.1",
     "axios": "^1.12.2",
     "execa": "^5.0.0",

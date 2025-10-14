@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/openapi
 
+## 4.1.2
+
+### Patch Changes
+
+- 011b841: [Fixed Issue] Update `axios` to `1.12.2` to fix vulnerability to DoS attack. Refer [here](https://github.com/advisories/GHSA-4hjh-wcwx-xvwj) for more details.
+- Updated dependencies [011b841]
+  - @sap-cloud-sdk/connectivity@4.1.2
+  - @sap-cloud-sdk/http-client@4.1.2
+  - @sap-cloud-sdk/resilience@4.1.2
+  - @sap-cloud-sdk/util@4.1.2
+
 ## 4.1.1
 
 ### Patch Changes

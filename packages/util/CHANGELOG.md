@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/util
 
+## 4.1.2
+
+### Patch Changes
+
+- 011b841: [Fixed Issue] Update `axios` to `1.12.2` to fix vulnerability to DoS attack. Refer [here](https://github.com/advisories/GHSA-4hjh-wcwx-xvwj) for more details.
+
 ## 4.1.1
 
 ### Patch Changes

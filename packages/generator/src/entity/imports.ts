@@ -9,6 +9,7 @@ import { operationDeclarations } from '../operations';
 import type { ImportDeclarationStructure } from 'ts-morph';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { VdmEntity, VdmServiceMetadata } from '../vdm-types';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
@@ -16,7 +17,8 @@ import type { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 export function entityImportDeclarations(
   entity: VdmEntity,
   service: VdmServiceMetadata,
-  oDataVersion: ODataVersion
+  oDataVersion: ODataVersion,
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   if (oDataVersion === 'v4') {
     return mergeImportDeclarations([
@@ -24,15 +26,17 @@ export function entityImportDeclarations(
         ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],
         oDataVersion
       ),
-      ...complexTypeImportDeclarations(entity.properties),
+      ...complexTypeImportDeclarations(entity.properties, options),
       {
         namedImports: [`${entity.className}Api`],
-        moduleSpecifier: `./${entity.className}Api`,
+        moduleSpecifier: options?.generateESM
+          ? `./${entity.className}Api.js`
+          : `./${entity.className}Api`,
         kind: StructureKind.ImportDeclaration,
         isTypeOnly: true
       },
       ...operationDeclarations(service, entity.operations),
-      ...enumTypeImportDeclarations(entity.properties)
+      ...enumTypeImportDeclarations(entity.properties, options)
     ]);
   }
 
@@ -41,14 +45,16 @@ export function entityImportDeclarations(
       ['Entity', 'DefaultDeSerializers', 'DeSerializers', 'DeserializedType'],
       oDataVersion
     ),
-    ...complexTypeImportDeclarations(entity.properties),
+    ...complexTypeImportDeclarations(entity.properties, options),
     {
       namedImports: [`${entity.className}Api`],
-      moduleSpecifier: `./${entity.className}Api`,
+      moduleSpecifier: options?.generateESM
+        ? `./${entity.className}Api.js`
+        : `./${entity.className}Api`,
       kind: StructureKind.ImportDeclaration,
       isTypeOnly: true
     },
-    ...enumTypeImportDeclarations(entity.properties)
+    ...enumTypeImportDeclarations(entity.properties, options)
   ];
 }
 /**
@@ -56,7 +62,8 @@ export function entityImportDeclarations(
  */
 export function otherEntityImports(
   entity: VdmEntity,
-  service: VdmServiceMetadata
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   return Array.from(new Set(entity.navigationProperties.map(n => n.to)))
     .map(to => {
@@ -71,13 +78,15 @@ export function otherEntityImports(
       return matchedEntity.className;
     })
     .filter(name => name !== entity.className)
-    .map(name => otherEntityImport(name));
+    .map(name => otherEntityImport(name, options));
 }
 
-function otherEntityImport(name: string): ImportDeclarationStructure {
+function otherEntityImport(name: string, options?: CreateFileOptions): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
     namedImports: [name, `${name}Type`],
-    moduleSpecifier: `./${name}`
+    moduleSpecifier: options?.generateESM
+      ? `./${name}.js`
+      : `./${name}`
   };
 }

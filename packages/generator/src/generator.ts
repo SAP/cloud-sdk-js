@@ -377,7 +377,7 @@ async function generateMandatorySources(
       sourceFile(
         serviceDir,
         entity.className,
-        entitySourceFile(entity, service),
+        entitySourceFile(entity, service, createFileOptions),
         createFileOptions
       )
     );
@@ -413,7 +413,7 @@ async function generateMandatorySources(
       sourceFile(
         serviceDir,
         complexType.typeName,
-        complexTypeSourceFile(complexType, service.oDataVersion),
+        complexTypeSourceFile(complexType, service.oDataVersion, createFileOptions),
         createFileOptions
       )
     );

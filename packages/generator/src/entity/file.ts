@@ -18,7 +18,12 @@ export function entitySourceFile(
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...entityImportDeclarations(entity, service, service.oDataVersion, options),
+      ...entityImportDeclarations(
+        entity,
+        service,
+        service.oDataVersion,
+        options
+      ),
       ...otherEntityImports(entity, service, options),
       entityClass(entity, service),
       entityTypeInterface(entity, service),

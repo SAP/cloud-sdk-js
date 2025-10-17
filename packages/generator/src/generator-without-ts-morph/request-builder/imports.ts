@@ -1,10 +1,12 @@
 import { unique } from '@sap-cloud-sdk/util';
-import { propertyTypeImportNames } from '../../imports';
-import { externalImportDeclarations, odataImportDeclaration } from '../imports';
-import type { CreateFileOptions, Import } from '@sap-cloud-sdk/generator-common/internal';
+import { StructureKind } from 'ts-morph';
+import type {
+  CreateFileOptions,
+  Import
+} from '@sap-cloud-sdk/generator-common/internal';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { VdmEntity, VdmProperty } from '../../vdm-types';
-import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import type { ImportDeclarationStructure } from 'ts-morph';
 
 /**
  * @internal
@@ -17,7 +19,9 @@ export function requestBuilderImportDeclarations(
   return [
     {
       kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: options?.generateESM ? `./${entity.className}.js` : `./${entity.className}`,
+      moduleSpecifier: options?.generateESM
+        ? `./${entity.className}.js`
+        : `./${entity.className}`,
       namedImports: [entity.className]
     },
     {
@@ -28,12 +32,15 @@ export function requestBuilderImportDeclarations(
   ];
 }
 
-
-
-function entityImportDeclaration(entity: VdmEntity, options?: CreateFileOptions): Import {
+function entityImportDeclaration(
+  entity: VdmEntity,
+  options?: CreateFileOptions
+): Import {
   return {
     names: [entity.className],
-    moduleIdentifier: options?.generateESM ? `./${entity.className}.js` : `./${entity.className}`
+    moduleIdentifier: options?.generateESM
+      ? `./${entity.className}.js`
+      : `./${entity.className}`
   };
 }
 
@@ -87,7 +94,10 @@ function requestBuilderClassImports(entity: VdmEntity): string[] {
   return imports;
 }
 
-function entityKeyImportDeclaration(properties: VdmProperty[], options?: CreateFileOptions): Import[] {
+function entityKeyImportDeclaration(
+  properties: VdmProperty[],
+  options?: CreateFileOptions
+): Import[] {
   return unique(
     properties
       .filter(property => property.isEnum)

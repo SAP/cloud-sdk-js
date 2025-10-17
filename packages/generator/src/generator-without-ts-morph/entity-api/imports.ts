@@ -1,7 +1,10 @@
 import { unique } from '@sap-cloud-sdk/util';
 import { potentialExternalImportDeclarations } from '../../imports';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
-import type { Import, CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type {
+  Import,
+  CreateFileOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 import type { VdmMappedEdmType, VdmProperty } from '../../vdm-types';
 
 /**
@@ -24,7 +27,10 @@ export function odataImport(
 /**
  * @internal
  */
-export function complexTypeImports(properties: VdmProperty[], options?: CreateFileOptions): Import[] {
+export function complexTypeImports(
+  properties: VdmProperty[],
+  options?: CreateFileOptions
+): Import[] {
   return mergeImports(
     properties
       .filter(prop => prop.isComplex)
@@ -32,10 +38,15 @@ export function complexTypeImports(properties: VdmProperty[], options?: CreateFi
   );
 }
 
-function complexTypeImport(prop: VdmProperty, options?: CreateFileOptions): Import {
+function complexTypeImport(
+  prop: VdmProperty,
+  options?: CreateFileOptions
+): Import {
   return {
     names: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])],
-    moduleIdentifier: options?.generateESM ? `./${prop.jsType}.js` : `./${prop.jsType}`,
+    moduleIdentifier: options?.generateESM
+      ? `./${prop.jsType}.js`
+      : `./${prop.jsType}`,
     typeOnly: false
   };
 }
@@ -67,15 +78,25 @@ function externalImport(
 /**
  * @internal
  */
-export function enumTypeImports(properties: VdmProperty[], options?: CreateFileOptions): Import[] {
+export function enumTypeImports(
+  properties: VdmProperty[],
+  options?: CreateFileOptions
+): Import[] {
   return mergeImports(
-    properties.filter(prop => prop.isEnum).map(prop => enumTypeImport(prop, options))
+    properties
+      .filter(prop => prop.isEnum)
+      .map(prop => enumTypeImport(prop, options))
   );
 }
 
-function enumTypeImport(prop: VdmProperty, options?: CreateFileOptions): Import {
+function enumTypeImport(
+  prop: VdmProperty,
+  options?: CreateFileOptions
+): Import {
   return {
-    moduleIdentifier: options?.generateESM ? `./${prop.jsType}.js` : `./${prop.jsType}`,
+    moduleIdentifier: options?.generateESM
+      ? `./${prop.jsType}.js`
+      : `./${prop.jsType}`,
     names: [prop.jsType],
     typeOnly: false
   };

@@ -106,18 +106,28 @@ describe('complex type imports', () => {
     } as CreateFileOptions;
 
     it('importDeclarations with CommonJS', () => {
-      const actual = importDeclarations(complexMealWithDesert, 'v2', commonjsOptions);
+      const actual = importDeclarations(
+        complexMealWithDesert,
+        'v2',
+        commonjsOptions
+      );
 
       expect(
-        actual.find(imp => imp.moduleSpecifier === './ComplexDesert')?.moduleSpecifier
+        actual.find(imp => imp.moduleSpecifier === './ComplexDesert')
+          ?.moduleSpecifier
       ).toBe('./ComplexDesert');
     });
 
     it('importDeclarations with ESM', () => {
-      const actual = importDeclarations(complexMealWithDesert, 'v2', esmOptions);
+      const actual = importDeclarations(
+        complexMealWithDesert,
+        'v2',
+        esmOptions
+      );
 
       expect(
-        actual.find(imp => imp.moduleSpecifier === './ComplexDesert.js')?.moduleSpecifier
+        actual.find(imp => imp.moduleSpecifier === './ComplexDesert.js')
+          ?.moduleSpecifier
       ).toBe('./ComplexDesert.js');
     });
 
@@ -125,7 +135,8 @@ describe('complex type imports', () => {
       const actual = importDeclarations(complexMealWithDesert, 'v2');
 
       expect(
-        actual.find(imp => imp.moduleSpecifier === './ComplexDesert')?.moduleSpecifier
+        actual.find(imp => imp.moduleSpecifier === './ComplexDesert')
+          ?.moduleSpecifier
       ).toBe('./ComplexDesert');
     });
   });

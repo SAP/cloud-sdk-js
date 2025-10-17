@@ -8,7 +8,10 @@ import {
 import { odataImport, complexTypeImports, enumTypeImports } from './imports';
 import { classContent } from './class';
 import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
-import type { Import, CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type {
+  Import,
+  CreateFileOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
@@ -33,16 +36,24 @@ export function entityApiFile(
 //   ].join(unixEOL);
 // }
 
-function getImports(entity: VdmEntity, service: VdmServiceMetadata, options?: CreateFileOptions): Import[] {
+function getImports(
+  entity: VdmEntity,
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
+): Import[] {
   return [
     {
       names: [`${entity.className}`],
-      moduleIdentifier: options?.generateESM ? `./${entity.className}.js` : `./${entity.className}`,
+      moduleIdentifier: options?.generateESM
+        ? `./${entity.className}.js`
+        : `./${entity.className}`,
       typeOnly: false
     },
     {
       names: [`${entity.className}RequestBuilder`],
-      moduleIdentifier: options?.generateESM ? `./${entity.className}RequestBuilder.js` : `./${entity.className}RequestBuilder`,
+      moduleIdentifier: options?.generateESM
+        ? `./${entity.className}RequestBuilder.js`
+        : `./${entity.className}RequestBuilder`,
       typeOnly: false
     },
     ...otherEntityApiImports(entity, service, options),
@@ -92,11 +103,16 @@ function otherEntityApiImports(
     .flatMap(name => otherEntityImports(name, options));
 }
 
-function otherEntityImports(name: string, options?: CreateFileOptions): Import[] {
+function otherEntityImports(
+  name: string,
+  options?: CreateFileOptions
+): Import[] {
   return [
     {
       names: [`${name}Api`],
-      moduleIdentifier: options?.generateESM ? `./${name}Api.js` : `./${name}Api`
+      moduleIdentifier: options?.generateESM
+        ? `./${name}Api.js`
+        : `./${name}Api`
     }
   ];
 }

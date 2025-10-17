@@ -3,12 +3,10 @@ import { dirname, join, resolve } from 'path';
 import {
   copyFiles,
   createFile,
-  formatTsConfig,
   getSdkMetadataFileNames,
   getSdkVersion,
   packageDescription,
   readCompilerOptions,
-  readCustomTsConfig,
   readPrettierConfig,
   transpileDirectory,
   parseOptions,
@@ -45,7 +43,8 @@ import {
 import { operationsSourceFile } from './operations';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
-import { indexFile, packageJson, PackageJsonOptions, readme } from './service';
+import { indexFile, packageJson, readme } from './service';
+import type { PackageJsonOptions } from './service';
 import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
 import type { Directory, ProjectOptions } from 'ts-morph';
 import type {
@@ -182,7 +181,9 @@ export async function generateProject(
   }
 
   const tsConfig = await tsconfigJson(options);
-  const project = new Project(projectOptions(options.generateESM ? 'esm' : 'commonjs'));
+  const project = new Project(
+    projectOptions(options.generateESM ? 'esm' : 'commonjs')
+  );
 
   const promises = services.map(service =>
     generateSourcesForService(service, project, options, tsConfig)
@@ -314,7 +315,12 @@ export async function generateSourcesForService(
     await mkdir(serviceDirPath, { recursive: true });
   }
 
-  await generateMandatorySources(serviceDir, service, options, createFileOptions);
+  await generateMandatorySources(
+    serviceDir,
+    service,
+    options,
+    createFileOptions
+  );
 
   if (options.metadata) {
     await generateMetadata(service, options);
@@ -385,7 +391,11 @@ async function generateMandatorySources(
       sourceFile(
         serviceDir,
         `${entity.className}RequestBuilder`,
-        requestBuilderSourceFile(entity, service.oDataVersion, createFileOptions),
+        requestBuilderSourceFile(
+          entity,
+          service.oDataVersion,
+          createFileOptions
+        ),
         createFileOptions
       )
     );
@@ -413,7 +423,11 @@ async function generateMandatorySources(
       sourceFile(
         serviceDir,
         complexType.typeName,
-        complexTypeSourceFile(complexType, service.oDataVersion, createFileOptions),
+        complexTypeSourceFile(
+          complexType,
+          service.oDataVersion,
+          createFileOptions
+        ),
         createFileOptions
       )
     );
@@ -432,7 +446,12 @@ async function generateMandatorySources(
   }
 
   filePromises.push(
-    sourceFile(serviceDir, 'index', indexFile(service, createFileOptions), createFileOptions)
+    sourceFile(
+      serviceDir,
+      'index',
+      indexFile(service, createFileOptions),
+      createFileOptions
+    )
   );
 
   await Promise.all(filePromises);
@@ -442,9 +461,7 @@ async function generateMetadata(
   service: VdmServiceMetadata,
   options: ParsedGeneratorOptions
 ): Promise<void> {
-  const { clientFileName } = getSdkMetadataFileNames(
-    service.originalFileName
-  );
+  const { clientFileName } = getSdkMetadataFileNames(service.originalFileName);
   logger.verbose(`Generating sdk client metadata ${clientFileName}...`);
 
   const path = resolve(dirname(service.edmxPath.toString()), 'sdk-metadata');
@@ -501,7 +518,9 @@ async function generateReadme(
   );
 }
 
-function projectOptions(moduleType: 'commonjs' | 'esm' = 'commonjs'): ProjectOptions {
+function projectOptions(
+  moduleType: 'commonjs' | 'esm' = 'commonjs'
+): ProjectOptions {
   return {
     skipAddingFilesFromTsConfig: true,
     manipulationSettings: {
@@ -516,7 +535,10 @@ function projectOptions(moduleType: 'commonjs' | 'esm' = 'commonjs'): ProjectOpt
       declarationMap: true,
       sourceMap: true,
       diagnostics: true,
-      moduleResolution: moduleType === 'esm' ? ModuleResolutionKind.NodeNext : ModuleResolutionKind.NodeJs,
+      moduleResolution:
+        moduleType === 'esm'
+          ? ModuleResolutionKind.NodeNext
+          : ModuleResolutionKind.NodeJs,
       esModuleInterop: true,
       inlineSources: false,
       noImplicitAny: true

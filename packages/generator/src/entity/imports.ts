@@ -81,12 +81,13 @@ export function otherEntityImports(
     .map(name => otherEntityImport(name, options));
 }
 
-function otherEntityImport(name: string, options?: CreateFileOptions): ImportDeclarationStructure {
+function otherEntityImport(
+  name: string,
+  options?: CreateFileOptions
+): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
     namedImports: [name, `${name}Type`],
-    moduleSpecifier: options?.generateESM
-      ? `./${name}.js`
-      : `./${name}`
+    moduleSpecifier: options?.generateESM ? `./${name}.js` : `./${name}`
   };
 }

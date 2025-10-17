@@ -3,19 +3,28 @@ import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
 import { hasEntities } from '../../generator-utils';
 import { serviceBuilder, serviceClass } from './class';
 import type { VdmServiceMetadata } from '../../vdm-types';
-import type { Import, CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type {
+  Import,
+  CreateFileOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
  */
-export function serviceFile(service: VdmServiceMetadata, options?: CreateFileOptions): string {
+export function serviceFile(
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
+): string {
   return codeBlock`${serializeImports(imports(service, options))}
   
 ${serviceBuilder(service.className, service.oDataVersion)} 
 ${serviceClass(service)}`;
 }
 
-function getImports(service: VdmServiceMetadata, options?: CreateFileOptions): Import[] {
+function getImports(
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
+): Import[] {
   const operations = service.operations;
   if (!operations.length) {
     return [];
@@ -29,7 +38,9 @@ function getImports(service: VdmServiceMetadata, options?: CreateFileOptions): I
   return [
     {
       names: [...names, ...parameterNames],
-      moduleIdentifier: options?.generateESM ? './operations.js' : './operations'
+      moduleIdentifier: options?.generateESM
+        ? './operations.js'
+        : './operations'
     }
   ];
 }
@@ -37,13 +48,18 @@ function getImports(service: VdmServiceMetadata, options?: CreateFileOptions): I
 /**
  * @internal
  */
-export function imports(service: VdmServiceMetadata, options?: CreateFileOptions): Import[] {
+export function imports(
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
+): Import[] {
   const operations = getImports(service, options);
 
   const serviceImports = [
     ...service.entities.map(entity => ({
       names: [`${entity.className}Api`],
-      moduleIdentifier: options?.generateESM ? `./${entity.className}Api.js` : `./${entity.className}Api`
+      moduleIdentifier: options?.generateESM
+        ? `./${entity.className}Api.js`
+        : `./${entity.className}Api`
     })),
     ...operations,
     {
@@ -70,7 +86,9 @@ export function imports(service: VdmServiceMetadata, options?: CreateFileOptions
   if (hasEntities(service)) {
     serviceImports.push({
       names: ['batch', 'changeset'],
-      moduleIdentifier: options?.generateESM ? './BatchRequest.js' : './BatchRequest'
+      moduleIdentifier: options?.generateESM
+        ? './BatchRequest.js'
+        : './BatchRequest'
     });
   }
 

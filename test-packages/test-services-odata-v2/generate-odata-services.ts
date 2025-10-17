@@ -12,8 +12,7 @@ const generatorConfigOData : Partial<GeneratorOptions> = {
   clearOutputDir: false,
   packageJson: false,
   skipValidation: true,
-  verbose: false,
-  generateESM: true
+  verbose: false
 };
 
 async function generateOdata(): Promise<void> {

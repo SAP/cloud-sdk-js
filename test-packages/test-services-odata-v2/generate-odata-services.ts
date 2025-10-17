@@ -4,7 +4,7 @@ import { generate, GeneratorOptions } from '@sap-cloud-sdk/generator';
 
 const logger = createLogger('generate-odata-services');
 
-const generatorConfigOData : Partial<GeneratorOptions> = {
+const generatorConfigOData: Partial<GeneratorOptions> = {
   overwrite: true,
   transpile: true,
   useSwagger: false,

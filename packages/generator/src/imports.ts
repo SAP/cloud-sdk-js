@@ -229,7 +229,10 @@ export function getImportsWithESM(
         moduleSpecifier: options?.generateESM
           ? `./${prop.jsType}.js`
           : `./${prop.jsType}`,
-        namedImports: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])]
+        namedImports: [
+          prop.jsType,
+          ...(prop.isCollection ? [] : [prop.fieldType])
+        ]
       }))
   );
 }

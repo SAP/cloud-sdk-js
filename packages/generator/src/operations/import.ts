@@ -53,7 +53,10 @@ function returnTypeImports(
           returnType.returnTypeCategory !== 'never'
       )
       .reduce(
-        (imports, returnType) => [...imports, ...returnTypeImport(returnType, options)],
+        (imports, returnType) => [
+          ...imports,
+          ...returnTypeImport(returnType, options)
+        ],
         []
       )
   );

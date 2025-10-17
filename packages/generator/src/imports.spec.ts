@@ -242,7 +242,12 @@ describe('imports', () => {
       ]);
 
       expect(
-        getImportsWithESM('TestSchema', 'test-file', [complexTypeProperty], commonjsOptions)
+        getImportsWithESM(
+          'TestSchema',
+          'test-file',
+          [complexTypeProperty],
+          commonjsOptions
+        )
       ).toEqual([
         {
           kind: StructureKind.ImportDeclaration,
@@ -264,7 +269,12 @@ describe('imports', () => {
       ]);
 
       expect(
-        getImportsWithESM('TestSchema', 'test-file', [complexTypeProperty], esmOptions)
+        getImportsWithESM(
+          'TestSchema',
+          'test-file',
+          [complexTypeProperty],
+          esmOptions
+        )
       ).toEqual([
         {
           kind: StructureKind.ImportDeclaration,
@@ -277,7 +287,12 @@ describe('imports', () => {
     it('handles mixed complex and enum types with ESM', () => {
       const mixedProperties = [complexTypeProperty, enumTypeProperty];
 
-      const esmResult = getImportsWithESM('TestSchema', 'test-file', mixedProperties, esmOptions);
+      const esmResult = getImportsWithESM(
+        'TestSchema',
+        'test-file',
+        mixedProperties,
+        esmOptions
+      );
 
       expect(esmResult).toEqual([
         {
@@ -302,7 +317,12 @@ describe('imports', () => {
         isEnum: false
       } as VdmProperty;
 
-      const esmResult = getImportsWithESM('TestSchema', 'test-file', [primitiveProperty], esmOptions);
+      const esmResult = getImportsWithESM(
+        'TestSchema',
+        'test-file',
+        [primitiveProperty],
+        esmOptions
+      );
 
       expect(esmResult).toEqual([]);
     });
@@ -316,7 +336,12 @@ describe('imports', () => {
         isCollection: true
       } as VdmProperty;
 
-      const esmResult = getImportsWithESM('TestSchema', 'test-file', [collectionProperty], esmOptions);
+      const esmResult = getImportsWithESM(
+        'TestSchema',
+        'test-file',
+        [collectionProperty],
+        esmOptions
+      );
 
       expect(esmResult).toEqual([
         {
@@ -339,7 +364,12 @@ describe('imports', () => {
       ]);
 
       expect(
-        getImportsWithESM('TestSchema', 'test-file', [complexTypeProperty], undefined)
+        getImportsWithESM(
+          'TestSchema',
+          'test-file',
+          [complexTypeProperty],
+          undefined
+        )
       ).toEqual([
         {
           kind: StructureKind.ImportDeclaration,

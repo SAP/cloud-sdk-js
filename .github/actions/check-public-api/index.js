@@ -71775,7 +71775,7 @@ exports.packageJsonBase = packageJsonBase;
  * @internal
  */
 function packageJsonBase(options) {
-    return {
+    const basePackageJson = {
         name: options.npmPackageName,
         version: '1.0.0',
         description: options.description,
@@ -71791,6 +71791,17 @@ function packageJsonBase(options) {
             url: ''
         }
     };
+    if (options.moduleType === 'esm') {
+        basePackageJson.type = 'module';
+        basePackageJson.main = './index.mjs';
+        basePackageJson.exports = {
+            '.': {
+                import: './index.mjs',
+                require: './index.js'
+            }
+        };
+    }
+    return basePackageJson;
 }
 //# sourceMappingURL=package-json.js.map
 

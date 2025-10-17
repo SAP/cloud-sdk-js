@@ -272,7 +272,7 @@ async function generateServiceFile(
   await createFile(
     serviceDir,
     'service.ts',
-    serviceFile(service),
+    serviceFile(service, createFileOptions),
     createFileOptions
   );
 }
@@ -287,7 +287,7 @@ async function generateEntityApis(
       createFile(
         join(options.outputDir, service.serviceOptions.directoryName),
         `${entity.className}Api.ts`,
-        entityApiFile(entity, service),
+        entityApiFile(entity, service, createFileOptions),
         createFileOptions
       )
     )
@@ -365,7 +365,7 @@ async function generateMandatorySources(
       sourceFile(
         serviceDir,
         'BatchRequest',
-        batchSourceFile(service),
+        batchSourceFile(service, createFileOptions),
         createFileOptions
       )
     );
@@ -385,7 +385,7 @@ async function generateMandatorySources(
       sourceFile(
         serviceDir,
         `${entity.className}RequestBuilder`,
-        requestBuilderSourceFile(entity, service.oDataVersion),
+        requestBuilderSourceFile(entity, service.oDataVersion, createFileOptions),
         createFileOptions
       )
     );
@@ -425,14 +425,14 @@ async function generateMandatorySources(
       sourceFile(
         serviceDir,
         'operations',
-        operationsSourceFile(service),
+        operationsSourceFile(service, createFileOptions),
         createFileOptions
       )
     );
   }
 
   filePromises.push(
-    sourceFile(serviceDir, 'index', indexFile(service), createFileOptions)
+    sourceFile(serviceDir, 'index', indexFile(service, createFileOptions), createFileOptions)
   );
 
   await Promise.all(filePromises);

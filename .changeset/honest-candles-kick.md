@@ -1,5 +1,6 @@
 ---
 '@sap-cloud-sdk/generator': minor
+'@sap-cloud-sdk/generator-common': minor
 ---
 
-Added ESM support for generator package
+[New Feature] Added ESM support for generator package

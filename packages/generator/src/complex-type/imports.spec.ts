@@ -5,6 +5,7 @@ import {
 } from '../../test/test-util/data-model';
 import { importDeclarations } from './imports';
 import type { VdmComplexType } from '../vdm-types';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 describe('complex type imports', () => {
   it('importDeclarations', () => {
@@ -93,5 +94,39 @@ describe('complex type imports', () => {
         ]
       }
     ]);
+  });
+
+  describe('ESM support', () => {
+    const commonjsOptions = {
+      generateESM: false
+    } as CreateFileOptions;
+
+    const esmOptions = {
+      generateESM: true
+    } as CreateFileOptions;
+
+    it('importDeclarations with CommonJS', () => {
+      const actual = importDeclarations(complexMealWithDesert, 'v2', commonjsOptions);
+
+      expect(
+        actual.find(imp => imp.moduleSpecifier === './ComplexDesert')?.moduleSpecifier
+      ).toBe('./ComplexDesert');
+    });
+
+    it('importDeclarations with ESM', () => {
+      const actual = importDeclarations(complexMealWithDesert, 'v2', esmOptions);
+
+      expect(
+        actual.find(imp => imp.moduleSpecifier === './ComplexDesert.js')?.moduleSpecifier
+      ).toBe('./ComplexDesert.js');
+    });
+
+    it('maintains backward compatibility when options is undefined', () => {
+      const actual = importDeclarations(complexMealWithDesert, 'v2');
+
+      expect(
+        actual.find(imp => imp.moduleSpecifier === './ComplexDesert')?.moduleSpecifier
+      ).toBe('./ComplexDesert');
+    });
   });
 });

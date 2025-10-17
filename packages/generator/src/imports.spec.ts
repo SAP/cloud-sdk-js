@@ -9,10 +9,12 @@ import {
   propertyFieldTypeImportNames,
   propertyTypeImportNames,
   externalImportDeclarationsTsMorph,
-  mergeImportDeclarations
+  mergeImportDeclarations,
+  getImportsWithESM
 } from './imports';
-import type { VdmNavigationProperty, VdmProperty } from './vdm-types';
 import type { ImportDeclarationStructure } from 'ts-morph';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type { VdmNavigationProperty, VdmProperty } from './vdm-types';
 
 const momentProperty = {
   jsType: 'Moment',
@@ -202,6 +204,149 @@ describe('imports', () => {
       ];
 
       expect(mergeImportDeclarations(declarations)).toEqual(declarations);
+    });
+  });
+
+  describe('ESM import declarations', () => {
+    const complexTypeProperty = {
+      edmType: 'ComplexType',
+      jsType: 'ComplexType',
+      fieldType: 'ComplexTypeField',
+      isComplex: true
+    } as VdmProperty;
+
+    const enumTypeProperty = {
+      edmType: 'EnumType',
+      jsType: 'EnumType',
+      fieldType: 'EnumField',
+      isEnum: true
+    } as VdmProperty;
+
+    const commonjsOptions = {
+      generateESM: false
+    } as CreateFileOptions;
+
+    const esmOptions = {
+      generateESM: true
+    } as CreateFileOptions;
+
+    it('generates CommonJS imports when generateESM is false', () => {
+      expect(
+        complexTypeImportDeclarations([complexTypeProperty], commonjsOptions)
+      ).toEqual([
+        {
+          kind: StructureKind.ImportDeclaration,
+          moduleSpecifier: './ComplexType',
+          namedImports: ['ComplexType', 'ComplexTypeField']
+        }
+      ]);
+
+      expect(
+        getImportsWithESM('TestSchema', 'test-file', [complexTypeProperty], commonjsOptions)
+      ).toEqual([
+        {
+          kind: StructureKind.ImportDeclaration,
+          moduleSpecifier: './ComplexType',
+          namedImports: ['ComplexType', 'ComplexTypeField']
+        }
+      ]);
+    });
+
+    it('generates ESM imports when generateESM is true', () => {
+      expect(
+        complexTypeImportDeclarations([complexTypeProperty], esmOptions)
+      ).toEqual([
+        {
+          kind: StructureKind.ImportDeclaration,
+          moduleSpecifier: './ComplexType.js',
+          namedImports: ['ComplexType', 'ComplexTypeField']
+        }
+      ]);
+
+      expect(
+        getImportsWithESM('TestSchema', 'test-file', [complexTypeProperty], esmOptions)
+      ).toEqual([
+        {
+          kind: StructureKind.ImportDeclaration,
+          moduleSpecifier: './ComplexType.js',
+          namedImports: ['ComplexType', 'ComplexTypeField']
+        }
+      ]);
+    });
+
+    it('handles mixed complex and enum types with ESM', () => {
+      const mixedProperties = [complexTypeProperty, enumTypeProperty];
+
+      const esmResult = getImportsWithESM('TestSchema', 'test-file', mixedProperties, esmOptions);
+
+      expect(esmResult).toEqual([
+        {
+          kind: StructureKind.ImportDeclaration,
+          moduleSpecifier: './ComplexType.js',
+          namedImports: ['ComplexType', 'ComplexTypeField']
+        },
+        {
+          kind: StructureKind.ImportDeclaration,
+          moduleSpecifier: './EnumType.js',
+          namedImports: ['EnumType']
+        }
+      ]);
+    });
+
+    it('filters out non-complex and non-enum properties', () => {
+      const primitiveProperty = {
+        edmType: 'Edm.String',
+        jsType: 'string',
+        fieldType: 'EdmTypeField',
+        isComplex: false,
+        isEnum: false
+      } as VdmProperty;
+
+      const esmResult = getImportsWithESM('TestSchema', 'test-file', [primitiveProperty], esmOptions);
+
+      expect(esmResult).toEqual([]);
+    });
+
+    it('handles collection properties correctly', () => {
+      const collectionProperty = {
+        edmType: 'ComplexType',
+        jsType: 'ComplexType',
+        fieldType: 'ComplexTypeField',
+        isComplex: true,
+        isCollection: true
+      } as VdmProperty;
+
+      const esmResult = getImportsWithESM('TestSchema', 'test-file', [collectionProperty], esmOptions);
+
+      expect(esmResult).toEqual([
+        {
+          kind: StructureKind.ImportDeclaration,
+          moduleSpecifier: './ComplexType.js',
+          namedImports: ['ComplexType'] // No fieldType for collections
+        }
+      ]);
+    });
+
+    it('maintains backward compatibility when options is undefined', () => {
+      expect(
+        complexTypeImportDeclarations([complexTypeProperty], undefined)
+      ).toEqual([
+        {
+          kind: StructureKind.ImportDeclaration,
+          moduleSpecifier: './ComplexType',
+          namedImports: ['ComplexType', 'ComplexTypeField']
+        }
+      ]);
+
+      expect(
+        getImportsWithESM('TestSchema', 'test-file', [complexTypeProperty], undefined)
+      ).toEqual([
+        {
+          kind: StructureKind.ImportDeclaration,
+          moduleSpecifier: './ComplexType',
+          namedImports: ['ComplexType', 'ComplexTypeField']
+        }
+      ]);
     });
   });
 });

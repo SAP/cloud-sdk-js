@@ -25,7 +25,7 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@eslint/js": "^9.37.0",
+    "@eslint/js": "^9.38.0",
     "@stylistic/eslint-plugin": "^3.1.0",
     "@typescript-eslint/parser": "^8.46.2",
     "eslint-config-prettier": "^10.1.8",

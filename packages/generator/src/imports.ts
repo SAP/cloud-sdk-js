@@ -211,28 +211,3 @@ function enumTypeImportDeclaration(
     namedImports: [prop.jsType]
   };
 }
-
-/**
- * @internal
- */
-export function getImportsWithESM(
-  schemaName: string,
-  fileName: string,
-  properties: VdmProperty[],
-  options?: CreateFileOptions
-): ImportDeclarationStructure[] {
-  return mergeImportDeclarations(
-    properties
-      .filter(prop => prop.isComplex || prop.isEnum)
-      .map(prop => ({
-        kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: options?.generateESM
-          ? `./${prop.jsType}.js`
-          : `./${prop.jsType}`,
-        namedImports: [
-          prop.jsType,
-          ...(prop.isCollection ? [] : [prop.fieldType])
-        ]
-      }))
-  );
-}

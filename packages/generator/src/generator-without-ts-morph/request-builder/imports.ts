@@ -1,12 +1,9 @@
 import { unique } from '@sap-cloud-sdk/util';
-import { StructureKind } from 'ts-morph';
-import type {
-  CreateFileOptions,
-  Import
-} from '@sap-cloud-sdk/generator-common/internal';
+import { propertyTypeImportNames } from '../../imports';
+import { externalImportDeclarations, odataImportDeclaration } from '../imports';
+import type { Import } from '@sap-cloud-sdk/generator-common/internal';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { VdmEntity, VdmProperty } from '../../vdm-types';
-import type { ImportDeclarationStructure } from 'ts-morph';
 
 /**
  * @internal
@@ -14,61 +11,25 @@ import type { ImportDeclarationStructure } from 'ts-morph';
 export function requestBuilderImportDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion,
-  options?: CreateFileOptions
-): ImportDeclarationStructure[] {
-  return [
-    {
-      kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: options?.generateESM
-        ? `./${entity.className}.js`
-        : `./${entity.className}`,
-      namedImports: [entity.className]
-    },
-    {
-      kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: `@sap-cloud-sdk/odata-${oDataVersion}`,
-      namedImports: ['RequestBuilder']
-    }
-  ];
-}
-
-function entityImportDeclaration(
-  entity: VdmEntity,
-  options?: CreateFileOptions
-): Import {
-  return {
-    names: [entity.className],
-    moduleIdentifier: options?.generateESM
-      ? `./${entity.className}.js`
-      : `./${entity.className}`
-  };
-}
-
-/**
- * @internal
- */
-export function requestBuilderImports(
-  entity: VdmEntity,
-  oDataVersion: ODataVersion,
-  options?: CreateFileOptions
+  generateESM?: boolean
 ): Import[] {
-  const imports = [
-    entityImportDeclaration(entity, options),
-    {
-      names: ['RequestBuilder'],
-      moduleIdentifier: `@sap-cloud-sdk/odata-${oDataVersion}`
-    },
-    {
-      names: requestBuilderClassImports(entity),
-      moduleIdentifier: `@sap-cloud-sdk/odata-${oDataVersion}`
-    }
+  return [
+    ...externalImportDeclarations(entity.keys),
+    odataImportDeclaration(
+      [
+        ...requestBuilderImports(entity),
+        'DeserializedType',
+        'RequestBuilder',
+        ...propertyTypeImportNames(entity.keys)
+      ].sort(),
+      oDataVersion
+    ),
+    entityImportDeclaration(entity, generateESM),
+    ...entityKeyImportDeclaration(entity.keys, generateESM)
   ];
-
-  const enumImports = entityKeyImportDeclaration(entity.keys, options);
-  return [...imports, ...enumImports];
 }
 
-function requestBuilderClassImports(entity: VdmEntity): string[] {
+export function requestBuilderImports(entity: VdmEntity): string[] {
   const imports = [
     'DefaultDeSerializers',
     'DeSerializers',
@@ -80,7 +41,7 @@ function requestBuilderClassImports(entity: VdmEntity): string[] {
   }
 
   if (entity.keys.length) {
-    imports.push('GetByKeyRequestBuilder', 'DeserializedType');
+    imports.push('GetByKeyRequestBuilder');
 
     if (entity.updatable) {
       imports.push('UpdateRequestBuilder');
@@ -94,16 +55,20 @@ function requestBuilderClassImports(entity: VdmEntity): string[] {
   return imports;
 }
 
-function entityKeyImportDeclaration(
-  properties: VdmProperty[],
-  options?: CreateFileOptions
-): Import[] {
+function entityImportDeclaration(entity: VdmEntity, generateESM?: boolean): Import {
+  return {
+    names: [entity.className],
+    moduleIdentifier: generateESM ? `./${entity.className}.js` : `./${entity.className}`
+  };
+}
+
+function entityKeyImportDeclaration(properties: VdmProperty[], generateESM?: boolean): Import[] {
   return unique(
     properties
       .filter(property => property.isEnum)
       .map(property => property.jsType)
   ).map(type => ({
     names: [type],
-    moduleIdentifier: options?.generateESM ? `./${type}.js` : `./${type}`
+    moduleIdentifier: generateESM ? `./${type}.js` : `./${type}`
   }));
 }

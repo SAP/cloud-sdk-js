@@ -1,7 +1,7 @@
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { requestBuilderClass } from './class';
-import { requestBuilderImports } from './imports';
+import { requestBuilderImportDeclarations } from './imports';
 import type { VdmEntity } from '../../vdm-types';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
@@ -15,7 +15,7 @@ export function requestBuilderSourceFile(
   options?: CreateFileOptions
 ): string {
   const imports = serializeImports(
-    requestBuilderImports(entity, oDataVersion, options)
+    requestBuilderImportDeclarations(entity, oDataVersion, options?.generateESM)
   );
   const content = requestBuilderClass(entity);
   return [imports, content].join(unixEOL);

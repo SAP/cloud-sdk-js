@@ -6,6 +6,8 @@ import {
   resolveRequiredPath
 } from './options-parser';
 import type { ServiceType } from './options-parser';
+import type { ParsedOptions } from './options-parser';
+import { formatTsConfig, readCustomTsConfig } from './ts-config';
 
 function getReadmeText(serviceType: ServiceType): string {
   return serviceType === 'OData'
@@ -193,4 +195,24 @@ export interface CommonGeneratorOptions {
    * Generate default `README.md` files in the client directories.
    */
   readme?: boolean;
+  /**
+   * Generate ECMAScript modules instead of CommonJS modules.
+   */
+  generateESM?: boolean;
+}
+
+/**
+ * Build a tsconfig.json file as string.
+ * If the given options include a tsConfig setting, this config is read and returned.
+ * @param options - Options passed to the generator.
+ * @returns The serialized tsconfig.json contents.
+ * @internal
+ */
+export async function tsconfigJson({
+  transpile,
+  tsconfig: tsConfig
+}: { transpile?: boolean; tsconfig?: string }): Promise<string | undefined> {
+  if (transpile || tsConfig) {
+    return tsConfig ? readCustomTsConfig(tsConfig) : formatTsConfig();
+  }
 }

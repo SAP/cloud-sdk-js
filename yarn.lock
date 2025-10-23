@@ -7775,10 +7775,10 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-puppeteer-core@24.26.0:
-  version "24.26.0"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.26.0.tgz#aba3eac2f3a54c94581d40d1f2ff6b5fcfb3f179"
-  integrity sha512-l3aMYhTdSzazZ14rfpNAPGhnYHsd8mwduqybhu5aO/OR+d24P/V/eo8XTB3GB2yX2ZWf9GLAVcx8nnVPFZpP/A==
+puppeteer-core@24.26.1:
+  version "24.26.1"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.26.1.tgz#a2914fd7f4e72b661556d9c2a5e733c8a83383a6"
+  integrity sha512-YHZdo3chJ5b9pTYVnuDuoI3UX/tWJFJyRZvkLbThGy6XeHWC+0KI8iN0UMCkvde5l/YOk3huiVZ/PvwgSbwdrA==
   dependencies:
     "@puppeteer/browsers" "2.10.12"
     chromium-bidi "10.5.1"
@@ -7788,16 +7788,16 @@ puppeteer-core@24.26.0:
     webdriver-bidi-protocol "0.3.8"
     ws "^8.18.3"
 
-puppeteer@^24.26.0:
-  version "24.26.0"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.26.0.tgz#f2ac677314d450070610e9ea740c99e207c81ec6"
-  integrity sha512-5F4A3dGeuw0jJOR3hGV969TO8oi+JG2TzqxAFvH+gxzxh0ILZmiFskWPlhcWQh5s9HAtgZyktOBDqs6zOi7IKA==
+puppeteer@^24.26.1:
+  version "24.26.1"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.26.1.tgz#804801469d07b3408700d7859082a6feffcd0832"
+  integrity sha512-3RG2UqclzMFolM2fS4bN8t5/EjZ0VwEoAGVxG8PMGeprjLzj+x0U4auH7MQ4B6ftW+u1JUnTTN8ab4ABPdl4mA==
   dependencies:
     "@puppeteer/browsers" "2.10.12"
     chromium-bidi "10.5.1"
     cosmiconfig "^9.0.0"
     devtools-protocol "0.0.1508733"
-    puppeteer-core "24.26.0"
+    puppeteer-core "24.26.1"
     typed-query-selector "^2.12.0"
 
 pure-rand@^7.0.0:

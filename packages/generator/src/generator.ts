@@ -3,15 +3,18 @@ import { dirname, join, resolve } from 'path';
 import {
   copyFiles,
   createFile,
+  formatTsConfig,
   getSdkMetadataFileNames,
   getSdkVersion,
   packageDescription,
   readCompilerOptions,
+  readCustomTsConfig,
   readPrettierConfig,
   transpileDirectory,
   parseOptions,
   getRelPathWithPosixSeparator,
-  writeOptionsPerService
+  writeOptionsPerService,
+  tsconfigJson
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   createLogger,
@@ -33,7 +36,7 @@ import { complexTypeSourceFile } from './complex-type';
 import { entitySourceFile } from './entity';
 import { enumTypeSourceFile } from './enum-type';
 import { sourceFile } from './file-generator';
-import { cliOptions, tsconfigJson } from './options';
+import { cliOptions } from './options';
 import { hasEntities } from './generator-utils';
 import {
   entityApiFile,
@@ -44,9 +47,8 @@ import { operationsSourceFile } from './operations';
 import { sdkMetadata } from './sdk-metadata';
 import { parseAllServices } from './service-generator';
 import { indexFile, packageJson, readme } from './service';
-import type { PackageJsonOptions } from './service';
 import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
-import type { Directory, ProjectOptions } from 'ts-morph';
+import type { ProjectOptions } from 'ts-morph';
 import type {
   CreateFileOptions,
   OptionsPerService
@@ -180,13 +182,10 @@ export async function generateProject(
     emptyDirSync(options.outputDir.toString());
   }
 
-  const tsConfig = await tsconfigJson(options);
-  const project = new Project(
-    projectOptions(options.generateESM ? 'esm' : 'commonjs')
-  );
+  const project = new Project(projectOptions(options.generateESM ? 'esm' : 'commonjs'));
 
   const promises = services.map(service =>
-    generateSourcesForService(service, project, options, tsConfig)
+    generateSourcesForService(service, project, options)
   );
 
   if (options.optionsPerService) {
@@ -301,8 +300,7 @@ async function generateEntityApis(
 export async function generateSourcesForService(
   service: VdmServiceMetadata,
   project: Project,
-  options: ParsedGeneratorOptions,
-  tsConfig: string | undefined
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   const serviceDirPath = join(
     options.outputDir,
@@ -314,54 +312,41 @@ export async function generateSourcesForService(
   if (!existsSync(serviceDirPath)) {
     await mkdir(serviceDirPath, { recursive: true });
   }
-
-  await generateMandatorySources(
-    serviceDir,
-    service,
-    options,
-    createFileOptions
-  );
-
-  if (options.metadata) {
-    await generateMetadata(service, options);
-  }
+  const filePromises: Promise<any>[] = [];
+  logger.verbose(`[${service.originalFileName}] Generating entities ...`);
 
   if (options.packageJson) {
-    await generatePackageJson(serviceDirPath, service, options);
-  }
-
-  if (options.include) {
-    await copyFiles(options.include, serviceDirPath, options.overwrite);
-  }
-
-  if (tsConfig) {
-    await createFile(
-      serviceDirPath,
-      'tsconfig.json',
-      tsConfig,
-      createFileOptions
+    filePromises.push(
+      createFile(
+        serviceDirPath,
+        'package.json',
+        await packageJson({
+          npmPackageName: service.serviceOptions.packageName,
+          sdkVersion: await getSdkVersion(),
+          description: packageDescription(service.speakingModuleName),
+          oDataVersion: service.oDataVersion
+        }),
+        createFileOptions
+      )
     );
-    const transpileOptions = {
-      compilerOptions: await readCompilerOptions(serviceDirPath),
-      createFileOptions
-    };
-    await transpileDirectory(serviceDirPath, transpileOptions);
   }
 
-  if (options.readme) {
-    await generateReadme(serviceDirPath, service, options);
+  if (options.transpile || options.tsconfig) {
+    const tsConfig = await tsconfigJson({
+      transpile: options.transpile,
+      tsconfig: options.tsconfig
+    });
+    if(tsConfig) {
+      filePromises.push(
+        createFile(
+          serviceDirPath,
+          'tsconfig.json',
+          tsConfig,
+          createFileOptions
+        )
+      );
+    }
   }
-}
-
-async function generateMandatorySources(
-  serviceDir: Directory,
-  service: VdmServiceMetadata,
-  options: ParsedGeneratorOptions,
-  createFileOptions: CreateFileOptions
-): Promise<void> {
-  const filePromises: Promise<any>[] = [];
-
-  logger.verbose(`[${service.originalFileName}] Generating entities ...`);
 
   if (hasEntities(service)) {
     logger.verbose(
@@ -391,11 +376,7 @@ async function generateMandatorySources(
       sourceFile(
         serviceDir,
         `${entity.className}RequestBuilder`,
-        requestBuilderSourceFile(
-          entity,
-          service.oDataVersion,
-          createFileOptions
-        ),
+        requestBuilderSourceFile(entity, service.oDataVersion, createFileOptions),
         createFileOptions
       )
     );
@@ -423,16 +404,13 @@ async function generateMandatorySources(
       sourceFile(
         serviceDir,
         complexType.typeName,
-        complexTypeSourceFile(
-          complexType,
-          service.oDataVersion,
-          createFileOptions
-        ),
+        complexTypeSourceFile(complexType, service.oDataVersion, createFileOptions),
         createFileOptions
       )
     );
   });
 
+  // Merge generated function-imports.ts and action-imports.ts into one operations.ts.
   if (service.operations.length) {
     logger.verbose(`[${service.originalFileName}] Generating operations ...`);
     filePromises.push(
@@ -446,76 +424,42 @@ async function generateMandatorySources(
   }
 
   filePromises.push(
-    sourceFile(
-      serviceDir,
-      'index',
-      indexFile(service, createFileOptions),
-      createFileOptions
-    )
+    sourceFile(serviceDir, 'index', indexFile(service, createFileOptions), createFileOptions)
   );
 
-  await Promise.all(filePromises);
-}
-
-async function generateMetadata(
-  service: VdmServiceMetadata,
-  options: ParsedGeneratorOptions
-): Promise<void> {
-  const { clientFileName } = getSdkMetadataFileNames(service.originalFileName);
-  logger.verbose(`Generating sdk client metadata ${clientFileName}...`);
-
-  const path = resolve(dirname(service.edmxPath.toString()), 'sdk-metadata');
-  if (!existsSync(path)) {
-    await mkdir(path);
+  if (options.readme) {
+    logger.verbose(`[${service.originalFileName}] Generating readme ...`);
+    filePromises.push(
+      createFile(
+        serviceDirPath,
+        'README.md',
+        readme(service),
+        createFileOptions
+      )
+    );
   }
 
-  const createFileOptions = await getFileCreationOptions(options);
-  await createFile(
-    path,
-    clientFileName,
-    JSON.stringify(await sdkMetadata(service), null, 2),
-    createFileOptions
-  );
-}
+  if (options.metadata) {
+    const { clientFileName } = getSdkMetadataFileNames(
+      service.originalFileName
+    );
+    logger.verbose(`Generating sdk client metadata ${clientFileName}...`);
 
-async function generatePackageJson(
-  serviceDirPath: string,
-  service: VdmServiceMetadata,
-  options: ParsedGeneratorOptions
-): Promise<void> {
-  logger.verbose(`Generating package.json in ${serviceDirPath}.`);
-  const createFileOptions = await getFileCreationOptions(options);
+    const path = resolve(dirname(service.edmxPath.toString()), 'sdk-metadata');
+    if (!existsSync(path)) {
+      await mkdir(path);
+    }
 
-  const packageJsonOptions: PackageJsonOptions = {
-    npmPackageName: service.serviceOptions.packageName,
-    sdkVersion: await getSdkVersion(),
-    description: packageDescription(service.speakingModuleName),
-    oDataVersion: service.oDataVersion,
-    moduleType: options.generateESM ? 'esm' : 'commonjs'
-  };
-
-  await createFile(
-    serviceDirPath,
-    'package.json',
-    await packageJson(packageJsonOptions),
-    createFileOptions
-  );
-}
-
-async function generateReadme(
-  serviceDirPath: string,
-  service: VdmServiceMetadata,
-  options: ParsedGeneratorOptions
-): Promise<void> {
-  logger.verbose(`Generating readme in ${serviceDirPath}.`);
-  const createFileOptions = await getFileCreationOptions(options);
-
-  await createFile(
-    serviceDirPath,
-    'README.md',
-    readme(service),
-    createFileOptions
-  );
+    filePromises.push(
+      createFile(
+        path,
+        clientFileName,
+        JSON.stringify(await sdkMetadata(service), null, 2),
+        createFileOptions
+      )
+    );
+  }
+  await Promise.all(filePromises);
 }
 
 function projectOptions(
@@ -530,7 +474,7 @@ function projectOptions(
     },
     compilerOptions: {
       target: ScriptTarget.ES2021,
-      module: moduleType === 'esm' ? ModuleKind.ESNext : ModuleKind.CommonJS,
+       module: moduleType === 'esm' ? ModuleKind.NodeNext : ModuleKind.CommonJS,
       declaration: true,
       declarationMap: true,
       sourceMap: true,
@@ -538,7 +482,7 @@ function projectOptions(
       moduleResolution:
         moduleType === 'esm'
           ? ModuleResolutionKind.NodeNext
-          : ModuleResolutionKind.NodeJs,
+          : ModuleResolutionKind.Node10,
       esModuleInterop: true,
       inlineSources: false,
       noImplicitAny: true

@@ -19,7 +19,8 @@ import {
   parseOptions,
   writeOptionsPerService,
   getOptionsPerService,
-  getRelPathWithPosixSeparator
+  getRelPathWithPosixSeparator,
+  tsconfigJson
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   apiFile,
@@ -32,7 +33,7 @@ import {
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { sdkMetadata } from './sdk-metadata';
-import { cliOptions, tsconfigJson } from './options';
+import { cliOptions } from './options';
 import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
 import type { OpenApiDocument } from './openapi-types';
 import type {
@@ -85,7 +86,10 @@ export async function generateWithParsedOptions(
   const inputFilePaths = options.input;
 
   const optionsPerService = await getOptionsPerService(inputFilePaths, options);
-  const tsConfig = await tsconfigJson(options);
+  const tsConfig = await tsconfigJson({
+    transpile: options.transpile,
+    tsconfig: options.tsconfig
+  });
 
   const promises = inputFilePaths.map(inputFilePath =>
     generateService(
@@ -149,7 +153,6 @@ async function generateSources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
-  tsConfig: string | undefined,
   options: ParsedGeneratorOptions
 ): Promise<void> {
   await mkdir(serviceDir, { recursive: true });
@@ -168,6 +171,10 @@ async function generateSources(
     await copyFiles(options.include, serviceDir, options.overwrite);
   }
 
+  const tsConfig = await tsconfigJson({
+    transpile: options.transpile,
+    tsconfig: options.tsconfig
+  });
   if (tsConfig) {
     await createFile(
       serviceDir,
@@ -282,7 +289,6 @@ async function generateService(
     serviceDir,
     parsedOpenApiDocument,
     inputFilePath,
-    tsConfig,
     options
   );
   logger.info(`Successfully generated client for '${inputFilePath}'`);

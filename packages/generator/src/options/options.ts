@@ -1,4 +1,8 @@
-import { getCommonCliOptions } from '@sap-cloud-sdk/generator-common/internal';
+import {
+  getCommonCliOptions,
+  formatTsConfig,
+  readCustomTsConfig
+} from '@sap-cloud-sdk/generator-common/internal';
 import type {
   Options,
   ParsedOptions,
@@ -43,6 +47,12 @@ export const cliOptions = {
     default: 16,
     hidden: true,
     replacedBy: 'processesJsGeneration'
+  },
+  generateESM: {
+    describe:
+      'When enabled, all generated files follow the ECMAScript module syntax.',
+    type: 'boolean',
+    default: false
   },
   ...getCommonCliOptions('OData')
 } as const satisfies Options<GeneratorOptions>;

@@ -10,7 +10,8 @@ import type { VdmEntity, VdmProperty } from '../../vdm-types';
  */
 export function requestBuilderImportDeclarations(
   entity: VdmEntity,
-  oDataVersion: ODataVersion
+  oDataVersion: ODataVersion,
+  generateESM?: boolean
 ): Import[] {
   return [
     ...externalImportDeclarations(entity.keys),
@@ -23,12 +24,12 @@ export function requestBuilderImportDeclarations(
       ].sort(),
       oDataVersion
     ),
-    entityImportDeclaration(entity),
-    ...entityKeyImportDeclaration(entity.keys)
+    entityImportDeclaration(entity, generateESM),
+    ...entityKeyImportDeclaration(entity.keys, generateESM)
   ];
 }
 
-function requestBuilderImports(entity: VdmEntity) {
+export function requestBuilderImports(entity: VdmEntity): string[] {
   const imports = [
     'DefaultDeSerializers',
     'DeSerializers',
@@ -54,20 +55,20 @@ function requestBuilderImports(entity: VdmEntity) {
   return imports;
 }
 
-function entityImportDeclaration(entity: VdmEntity): Import {
+function entityImportDeclaration(entity: VdmEntity, generateESM?: boolean): Import {
   return {
     names: [entity.className],
-    moduleIdentifier: `./${entity.className}`
+    moduleIdentifier: generateESM ? `./${entity.className}.js` : `./${entity.className}`
   };
 }
 
-function entityKeyImportDeclaration(properties: VdmProperty[]): Import[] {
+function entityKeyImportDeclaration(properties: VdmProperty[], generateESM?: boolean): Import[] {
   return unique(
     properties
       .filter(property => property.isEnum)
       .map(property => property.jsType)
   ).map(type => ({
     names: [type],
-    moduleIdentifier: `./${type}`
+    moduleIdentifier: generateESM ? `./${type}.js` : `./${type}`
   }));
 }

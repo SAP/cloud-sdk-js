@@ -7,7 +7,6 @@ import {
 } from './options-parser';
 import type { ServiceType, ParsedOptions } from './options-parser';
 import type { ParsedOptions } from './options-parser';
-import { formatTsConfig, readCustomTsConfig } from './ts-config';
 
 function getReadmeText(serviceType: ServiceType): string {
   return serviceType === 'OData'

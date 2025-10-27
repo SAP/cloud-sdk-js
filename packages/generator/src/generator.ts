@@ -332,10 +332,7 @@ export async function generateSourcesForService(
   }
 
   if (options.transpile || options.tsconfig) {
-    const tsConfig = await tsconfigJson({
-      transpile: options.transpile,
-      tsconfig: options.tsconfig
-    });
+    const tsConfig = await tsconfigJson(options.transpile, options.tsconfig);
     if(tsConfig) {
       filePromises.push(
         createFile(

@@ -47,12 +47,6 @@ export function packageJsonBase(
   if (options.moduleType === 'esm') {
     basePackageJson.type = 'module';
     basePackageJson.main = './index.mjs';
-    basePackageJson.exports = {
-      '.': {
-        import: './index.mjs',
-        require: './index.js'
-      }
-    };
   }
 
   return basePackageJson;

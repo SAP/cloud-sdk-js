@@ -86,10 +86,7 @@ export async function generateWithParsedOptions(
   const inputFilePaths = options.input;
 
   const optionsPerService = await getOptionsPerService(inputFilePaths, options);
-  const tsConfig = await tsconfigJson({
-    transpile: options.transpile,
-    tsconfig: options.tsconfig
-  });
+  const tsConfig = await tsconfigJson(options.transpile, options.tsconfig);
 
   const promises = inputFilePaths.map(inputFilePath =>
     generateService(
@@ -153,6 +150,7 @@ async function generateSources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
+  tsConfig: string | undefined,
   options: ParsedGeneratorOptions
 ): Promise<void> {
   await mkdir(serviceDir, { recursive: true });
@@ -171,10 +169,6 @@ async function generateSources(
     await copyFiles(options.include, serviceDir, options.overwrite);
   }
 
-  const tsConfig = await tsconfigJson({
-    transpile: options.transpile,
-    tsconfig: options.tsconfig
-  });
   if (tsConfig) {
     await createFile(
       serviceDir,
@@ -289,6 +283,7 @@ async function generateService(
     serviceDir,
     parsedOpenApiDocument,
     inputFilePath,
+    tsConfig,
     options
   );
   logger.info(`Successfully generated client for '${inputFilePath}'`);
@@ -345,8 +340,7 @@ async function generatePackageJson(
     packageJson({
       npmPackageName: openApiDocument.serviceOptions.packageName,
       description: packageDescription(openApiDocument.serviceName),
-      sdkVersion: await getSdkVersion(),
-      generateESM: options.generateESM
+      sdkVersion: await getSdkVersion()
     }),
     createFileOptions
   );

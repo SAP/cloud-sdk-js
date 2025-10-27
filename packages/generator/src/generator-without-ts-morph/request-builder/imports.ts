@@ -29,6 +29,9 @@ export function requestBuilderImportDeclarations(
   ];
 }
 
+/**
+ * @internal
+ */
 export function requestBuilderImports(entity: VdmEntity): string[] {
   const imports = [
     'DefaultDeSerializers',
@@ -55,14 +58,28 @@ export function requestBuilderImports(entity: VdmEntity): string[] {
   return imports;
 }
 
-function entityImportDeclaration(entity: VdmEntity, generateESM?: boolean): Import {
+/**
+ * @internal
+ */
+function entityImportDeclaration(
+  entity: VdmEntity,
+  generateESM?: boolean
+): Import {
   return {
     names: [entity.className],
-    moduleIdentifier: generateESM ? `./${entity.className}.js` : `./${entity.className}`
+    moduleIdentifier: generateESM
+      ? `./${entity.className}.js`
+      : `./${entity.className}`
   };
 }
 
-function entityKeyImportDeclaration(properties: VdmProperty[], generateESM?: boolean): Import[] {
+/**
+ * @internal
+ */
+function entityKeyImportDeclaration(
+  properties: VdmProperty[],
+  generateESM?: boolean
+): Import[] {
   return unique(
     properties
       .filter(property => property.isEnum)

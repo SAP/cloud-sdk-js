@@ -1,8 +1,4 @@
-import {
-  getCommonCliOptions,
-  formatTsConfig,
-  readCustomTsConfig
-} from '@sap-cloud-sdk/generator-common/internal';
+import { getCommonCliOptions } from '@sap-cloud-sdk/generator-common/internal';
 import type {
   Options,
   ParsedOptions,

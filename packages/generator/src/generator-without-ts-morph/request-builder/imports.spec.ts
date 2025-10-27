@@ -27,7 +27,11 @@ describe('imports', () => {
   });
 
   it('importDeclarations with ESM', () => {
-    const actual = requestBuilderImportDeclarations(breakfastEntity, 'v2', true);
+    const actual = requestBuilderImportDeclarations(
+      breakfastEntity,
+      'v2',
+      true
+    );
     expect(actual[1].moduleIdentifier).toBe('./Breakfast.js');
   });
 });

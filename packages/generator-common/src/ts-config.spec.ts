@@ -1,5 +1,5 @@
-import mock from "mock-fs";
-import { defaultTsConfig, tsconfigJson } from "./ts-config";
+import mock from 'mock-fs';
+import { defaultTsConfig, tsconfigJson } from './ts-config';
 
 describe('tsconfigJson', () => {
   afterEach(() => {
@@ -40,8 +40,8 @@ describe('tsconfigJson', () => {
 
   it('returns custom config content if custom file or directory does not exist', async () => {
     mock({});
-    await expect(() =>
-      tsconfigJson(false, './path')
-    ).rejects.toThrow('Could not read tsconfig.json at ./path.');
+    await expect(() => tsconfigJson(false, './path')).rejects.toThrow(
+      'Could not read tsconfig.json at ./path.'
+    );
   });
 });

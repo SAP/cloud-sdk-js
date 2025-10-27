@@ -3,12 +3,10 @@ import { dirname, join, resolve } from 'path';
 import {
   copyFiles,
   createFile,
-  formatTsConfig,
   getSdkMetadataFileNames,
   getSdkVersion,
   packageDescription,
   readCompilerOptions,
-  readCustomTsConfig,
   readPrettierConfig,
   transpileDirectory,
   parseOptions,
@@ -182,7 +180,9 @@ export async function generateProject(
     emptyDirSync(options.outputDir.toString());
   }
 
-  const project = new Project(projectOptions(options.generateESM ? 'esm' : 'commonjs'));
+  const project = new Project(
+    projectOptions(options.generateESM ? 'esm' : 'commonjs')
+  );
 
   const promises = services.map(service =>
     generateSourcesForService(service, project, options)
@@ -333,14 +333,9 @@ export async function generateSourcesForService(
 
   if (options.transpile || options.tsconfig) {
     const tsConfig = await tsconfigJson(options.transpile, options.tsconfig);
-    if(tsConfig) {
+    if (tsConfig) {
       filePromises.push(
-        createFile(
-          serviceDirPath,
-          'tsconfig.json',
-          tsConfig,
-          createFileOptions
-        )
+        createFile(serviceDirPath, 'tsconfig.json', tsConfig, createFileOptions)
       );
     }
   }
@@ -373,7 +368,11 @@ export async function generateSourcesForService(
       sourceFile(
         serviceDir,
         `${entity.className}RequestBuilder`,
-        requestBuilderSourceFile(entity, service.oDataVersion, createFileOptions),
+        requestBuilderSourceFile(
+          entity,
+          service.oDataVersion,
+          createFileOptions
+        ),
         createFileOptions
       )
     );
@@ -401,7 +400,11 @@ export async function generateSourcesForService(
       sourceFile(
         serviceDir,
         complexType.typeName,
-        complexTypeSourceFile(complexType, service.oDataVersion, createFileOptions),
+        complexTypeSourceFile(
+          complexType,
+          service.oDataVersion,
+          createFileOptions
+        ),
         createFileOptions
       )
     );
@@ -421,7 +424,12 @@ export async function generateSourcesForService(
   }
 
   filePromises.push(
-    sourceFile(serviceDir, 'index', indexFile(service, createFileOptions), createFileOptions)
+    sourceFile(
+      serviceDir,
+      'index',
+      indexFile(service, createFileOptions),
+      createFileOptions
+    )
   );
 
   if (options.readme) {
@@ -471,7 +479,7 @@ function projectOptions(
     },
     compilerOptions: {
       target: ScriptTarget.ES2021,
-       module: moduleType === 'esm' ? ModuleKind.NodeNext : ModuleKind.CommonJS,
+      module: moduleType === 'esm' ? ModuleKind.NodeNext : ModuleKind.CommonJS,
       declaration: true,
       declarationMap: true,
       sourceMap: true,

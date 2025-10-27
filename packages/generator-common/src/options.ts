@@ -5,8 +5,7 @@ import {
   resolvePath,
   resolveRequiredPath
 } from './options-parser';
-import type { ServiceType, ParsedOptions } from './options-parser';
-import type { ParsedOptions } from './options-parser';
+import type { ServiceType } from './options-parser';
 
 function getReadmeText(serviceType: ServiceType): string {
   return serviceType === 'OData'

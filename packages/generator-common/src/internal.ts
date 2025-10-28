@@ -1,3 +1,5 @@
+export type ModuleType = 'commonjs' | 'esm';
+
 export * from './sdk-metadata';
 export * from './compiler';
 export * from './readme';

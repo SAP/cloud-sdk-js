@@ -44,11 +44,5 @@ export const cliOptions = {
     hidden: true,
     replacedBy: 'processesJsGeneration'
   },
-  generateESM: {
-    describe:
-      'When enabled, all generated files follow the ECMAScript module syntax.',
-    type: 'boolean',
-    default: false
-  },
   ...getCommonCliOptions('OData')
 } as const satisfies Options<GeneratorOptions>;

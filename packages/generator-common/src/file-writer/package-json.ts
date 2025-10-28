@@ -1,3 +1,5 @@
+import type { ModuleType } from '../internal';
+
 /**
  * @internal
  */
@@ -17,7 +19,7 @@ export interface PackageJsonOptions {
   /**
    * @internal
    */
-  moduleType?: 'commonjs' | 'esm';
+  moduleType?: ModuleType;
 }
 
 /* eslint-disable valid-jsdoc */
@@ -46,7 +48,6 @@ export function packageJsonBase(
 
   if (options.moduleType === 'esm') {
     basePackageJson.type = 'module';
-    basePackageJson.main = './index.mjs';
   }
 
   return basePackageJson;

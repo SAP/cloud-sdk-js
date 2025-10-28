@@ -15,7 +15,7 @@ export function requestBuilderSourceFile(
   options?: CreateFileOptions
 ): string {
   const imports = serializeImports(
-    requestBuilderImportDeclarations(entity, oDataVersion, options?.generateESM)
+    requestBuilderImportDeclarations(entity, oDataVersion, options)
   );
   const content = requestBuilderClass(entity);
   return [imports, content].join(unixEOL);

@@ -49,6 +49,7 @@ import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
 import type { ProjectOptions } from 'ts-morph';
 import type {
   CreateFileOptions,
+  ModuleType,
   OptionsPerService
 } from '@sap-cloud-sdk/generator-common/internal';
 import type { VdmServiceMetadata } from './vdm-types';
@@ -468,7 +469,7 @@ export async function generateSourcesForService(
 }
 
 function projectOptions(
-  moduleType: 'commonjs' | 'esm' = 'commonjs'
+  moduleType: ModuleType = 'commonjs'
 ): ProjectOptions {
   return {
     skipAddingFilesFromTsConfig: true,

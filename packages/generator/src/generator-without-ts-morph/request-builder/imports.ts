@@ -1,7 +1,7 @@
 import { unique } from '@sap-cloud-sdk/util';
 import { propertyTypeImportNames } from '../../imports';
 import { externalImportDeclarations, odataImportDeclaration } from '../imports';
-import type { Import } from '@sap-cloud-sdk/generator-common/internal';
+import type { Import, CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { VdmEntity, VdmProperty } from '../../vdm-types';
 
@@ -11,7 +11,7 @@ import type { VdmEntity, VdmProperty } from '../../vdm-types';
 export function requestBuilderImportDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion,
-  generateESM?: boolean
+  options?: CreateFileOptions
 ): Import[] {
   return [
     ...externalImportDeclarations(entity.keys),
@@ -24,8 +24,8 @@ export function requestBuilderImportDeclarations(
       ].sort(),
       oDataVersion
     ),
-    entityImportDeclaration(entity, generateESM),
-    ...entityKeyImportDeclaration(entity.keys, generateESM)
+    entityImportDeclaration(entity, options),
+    ...entityKeyImportDeclaration(entity.keys, options)
   ];
 }
 
@@ -63,8 +63,9 @@ export function requestBuilderImports(entity: VdmEntity): string[] {
  */
 function entityImportDeclaration(
   entity: VdmEntity,
-  generateESM?: boolean
+  options?: CreateFileOptions
 ): Import {
+  const generateESM = options?.generateESM;
   return {
     names: [entity.className],
     moduleIdentifier: generateESM
@@ -78,8 +79,9 @@ function entityImportDeclaration(
  */
 function entityKeyImportDeclaration(
   properties: VdmProperty[],
-  generateESM?: boolean
+  options?: CreateFileOptions
 ): Import[] {
+  const generateESM = options?.generateESM;
   return unique(
     properties
       .filter(property => property.isEnum)

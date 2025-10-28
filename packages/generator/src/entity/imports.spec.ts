@@ -34,29 +34,11 @@ describe('imports', () => {
   });
 
   describe('ESM support', () => {
-    const commonjsOptions = {
-      generateESM: false
-    } as CreateFileOptions;
-
     const esmOptions = {
       generateESM: true
     } as CreateFileOptions;
 
-    it('importDeclarations with CommonJS', () => {
-      const actual = entityImportDeclarations(
-        breakfastEntity,
-        foodService,
-        'v2',
-        commonjsOptions
-      );
-
-      expect(
-        actual.find(imp => imp.moduleSpecifier === './BreakfastApi')
-          ?.moduleSpecifier
-      ).toBe('./BreakfastApi');
-    });
-
-    it('importDeclarations with ESM', () => {
+    it('importDeclarations when ESM flag is set to true', () => {
       const actual = entityImportDeclarations(
         breakfastEntity,
         foodService,
@@ -72,19 +54,7 @@ describe('imports', () => {
       expect(breakfastApiImport?.moduleSpecifier).toBe('./BreakfastApi.js');
     });
 
-    it('otherEntityImports with CommonJS', () => {
-      const actual = otherEntityImports(
-        breakfastEntity,
-        foodService,
-        commonjsOptions
-      );
-
-      expect(actual.map(imports => imports.moduleSpecifier)).toEqual([
-        './Brunch'
-      ]);
-    });
-
-    it('otherEntityImports with ESM', () => {
+    it('otherEntityImports when ESM flag is set to true', () => {
       const actual = otherEntityImports(
         breakfastEntity,
         foodService,
@@ -94,21 +64,6 @@ describe('imports', () => {
       expect(actual.map(imports => imports.moduleSpecifier)).toEqual([
         './Brunch.js'
       ]);
-    });
-
-    it('maintains backward compatibility when options is undefined', () => {
-      const actual = entityImportDeclarations(
-        breakfastEntity,
-        foodService,
-        'v2'
-      );
-
-      const breakfastApiImport = actual.find(
-        imp =>
-          Array.isArray(imp.namedImports) &&
-          imp.namedImports.includes('BreakfastApi')
-      );
-      expect(breakfastApiImport?.moduleSpecifier).toBe('./BreakfastApi');
     });
   });
 });

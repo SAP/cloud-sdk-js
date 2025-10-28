@@ -55,8 +55,8 @@ export async function readCustomTsConfig(configPath: string): Promise<string> {
  * @internal
  */
 export async function tsconfigJson(
-  transpile: boolean,
-  tsconfig: string | undefined
+  transpile: boolean = false,
+  tsconfig?: string
 ): Promise<string | undefined> {
   if (transpile || tsconfig) {
     return tsconfig ? readCustomTsConfig(tsconfig) : formatTsConfig();

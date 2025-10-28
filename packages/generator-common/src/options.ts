@@ -117,7 +117,12 @@ export function getCommonCliOptions(serviceType: ServiceType) {
       describe: getReadmeText(serviceType),
       default: false,
       hidden: true
-    }
+    },
+    generateESM: {
+      describe: 'When enabled, all generated files follow the ECMAScript module syntax.',
+      type: 'boolean',
+     default: false
+    },
   } as const;
 }
 

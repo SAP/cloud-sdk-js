@@ -5,4 +5,3 @@
  */
 
 export type { CommonGeneratorOptions } from './options';
-export type { ModuleType } from './internal';

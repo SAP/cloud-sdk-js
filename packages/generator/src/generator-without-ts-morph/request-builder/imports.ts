@@ -1,7 +1,10 @@
 import { unique } from '@sap-cloud-sdk/util';
 import { propertyTypeImportNames } from '../../imports';
 import { externalImportDeclarations, odataImportDeclaration } from '../imports';
-import type { Import, CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type {
+  Import,
+  CreateFileOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { VdmEntity, VdmProperty } from '../../vdm-types';
 

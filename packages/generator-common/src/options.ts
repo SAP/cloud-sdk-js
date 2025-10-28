@@ -119,10 +119,11 @@ export function getCommonCliOptions(serviceType: ServiceType) {
       hidden: true
     },
     generateESM: {
-      describe: 'When enabled, all generated files follow the ECMAScript module syntax.',
+      describe:
+        'When enabled, all generated files follow the ECMAScript module syntax.',
       type: 'boolean',
-     default: false
-    },
+      default: false
+    }
   } as const;
 }
 

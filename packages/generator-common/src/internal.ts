@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export type ModuleType = 'commonjs' | 'esm';
 
 export * from './sdk-metadata';

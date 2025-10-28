@@ -468,9 +468,7 @@ export async function generateSourcesForService(
   await Promise.all(filePromises);
 }
 
-function projectOptions(
-  moduleType: ModuleType = 'commonjs'
-): ProjectOptions {
+function projectOptions(moduleType: ModuleType = 'commonjs'): ProjectOptions {
   return {
     skipAddingFilesFromTsConfig: true,
     manipulationSettings: {

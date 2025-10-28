@@ -71793,7 +71793,6 @@ function packageJsonBase(options) {
     };
     if (options.moduleType === 'esm') {
         basePackageJson.type = 'module';
-        basePackageJson.main = './index.mjs';
     }
     return basePackageJson;
 }
@@ -72343,6 +72342,11 @@ function getCommonCliOptions(serviceType) {
             describe: getReadmeText(serviceType),
             default: false,
             hidden: true
+        },
+        generateESM: {
+            describe: 'When enabled, all generated files follow the ECMAScript module syntax.',
+            type: 'boolean',
+            default: false
         }
     };
 }
@@ -72669,7 +72673,7 @@ async function readCustomTsConfig(configPath) {
  * @returns The serialized tsconfig.json contents.
  * @internal
  */
-async function tsconfigJson(transpile, tsconfig) {
+async function tsconfigJson(transpile = false, tsconfig) {
     if (transpile || tsconfig) {
         return tsconfig ? readCustomTsConfig(tsconfig) : formatTsConfig();
     }

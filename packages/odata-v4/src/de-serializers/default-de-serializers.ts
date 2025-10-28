@@ -80,8 +80,7 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
   'Edm.Decimal': {
     deserialize: defaultDeSerializersCommon['Edm.Decimal'].deserialize,
     serialize: value => {
-      const primitiveNumber =
-        typeof value === 'number' ? value : Number(value);
+      const primitiveNumber = typeof value === 'number' ? value : Number(value);
       if (
         primitiveNumber <= Number.MAX_SAFE_INTEGER &&
         primitiveNumber >= Number.MIN_SAFE_INTEGER

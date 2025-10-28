@@ -71794,12 +71794,6 @@ function packageJsonBase(options) {
     if (options.moduleType === 'esm') {
         basePackageJson.type = 'module';
         basePackageJson.main = './index.mjs';
-        basePackageJson.exports = {
-            '.': {
-                import: './index.mjs',
-                require: './index.js'
-            }
-        };
     }
     return basePackageJson;
 }
@@ -72622,6 +72616,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.defaultTsConfig = void 0;
 exports.formatTsConfig = formatTsConfig;
 exports.readCustomTsConfig = readCustomTsConfig;
+exports.tsconfigJson = tsconfigJson;
 const fs_1 = __nccwpck_require__(79896);
 const path_1 = __nccwpck_require__(16928);
 const util_1 = __nccwpck_require__(11238);
@@ -72664,6 +72659,19 @@ async function readCustomTsConfig(configPath) {
     }
     catch (err) {
         throw new util_1.ErrorWithCause(`Could not read tsconfig.json at ${configPath}.`, err);
+    }
+}
+/**
+ * Build a tsconfig.json file as string.
+ * If transpile is true or tsconfig is provided, return the appropriate config.
+ * @param transpile - Whether to transpile.
+ * @param tsconfig - Path to custom tsconfig file.
+ * @returns The serialized tsconfig.json contents.
+ * @internal
+ */
+async function tsconfigJson(transpile, tsconfig) {
+    if (transpile || tsconfig) {
+        return tsconfig ? readCustomTsConfig(tsconfig) : formatTsConfig();
     }
 }
 //# sourceMappingURL=ts-config.js.map

@@ -1,5 +1,6 @@
 import { breakfastEntity, foodService } from '../../test/test-util/data-model';
 import { entityImportDeclarations, otherEntityImports } from './imports';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 describe('imports', () => {
   it('importDeclarations', () => {
@@ -30,6 +31,40 @@ describe('imports', () => {
         namedImports: imports.namedImports
       }))
     ).toEqual(expectedOtherEntityImports);
+  });
+
+  describe('ESM support', () => {
+    const esmOptions = {
+      generateESM: true
+    } as CreateFileOptions;
+
+    it('importDeclarations when ESM flag is set to true', () => {
+      const actual = entityImportDeclarations(
+        breakfastEntity,
+        foodService,
+        'v2',
+        esmOptions
+      );
+
+      const breakfastApiImport = actual.find(
+        imp =>
+          Array.isArray(imp.namedImports) &&
+          imp.namedImports.includes('BreakfastApi')
+      );
+      expect(breakfastApiImport?.moduleSpecifier).toBe('./BreakfastApi.js');
+    });
+
+    it('otherEntityImports when ESM flag is set to true', () => {
+      const actual = otherEntityImports(
+        breakfastEntity,
+        foodService,
+        esmOptions
+      );
+
+      expect(actual.map(imports => imports.moduleSpecifier)).toEqual([
+        './Brunch.js'
+      ]);
+    });
   });
 });
 

@@ -35,7 +35,8 @@ describe('package-json', () => {
       npmPackageName: `my-${oDataVersion}-package`,
       description: `my ${oDataVersion} package description`,
       oDataVersion,
-      sdkVersion: '1.2.3'
+      sdkVersion: '1.2.3',
+      moduleType: 'commonjs'
     };
   }
 

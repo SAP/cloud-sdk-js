@@ -71775,7 +71775,7 @@ exports.packageJsonBase = packageJsonBase;
  * @internal
  */
 function packageJsonBase(options) {
-    return {
+    const basePackageJson = {
         name: options.npmPackageName,
         version: '1.0.0',
         description: options.description,
@@ -71791,6 +71791,10 @@ function packageJsonBase(options) {
             url: ''
         }
     };
+    if (options.moduleType === 'esm') {
+        basePackageJson.type = 'module';
+    }
+    return basePackageJson;
 }
 //# sourceMappingURL=package-json.js.map
 
@@ -71816,6 +71820,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getCommonCliOptions = void 0;
+var options_1 = __nccwpck_require__(83891);
+Object.defineProperty(exports, "getCommonCliOptions", ({ enumerable: true, get: function () { return options_1.getCommonCliOptions; } }));
 __exportStar(__nccwpck_require__(95992), exports);
 __exportStar(__nccwpck_require__(22776), exports);
 __exportStar(__nccwpck_require__(24039), exports);
@@ -71826,7 +71833,6 @@ __exportStar(__nccwpck_require__(86706), exports);
 __exportStar(__nccwpck_require__(62811), exports);
 __exportStar(__nccwpck_require__(42011), exports);
 __exportStar(__nccwpck_require__(5235), exports);
-__exportStar(__nccwpck_require__(83891), exports);
 __exportStar(__nccwpck_require__(51443), exports);
 //# sourceMappingURL=internal.js.map
 
@@ -72338,6 +72344,11 @@ function getCommonCliOptions(serviceType) {
             describe: getReadmeText(serviceType),
             default: false,
             hidden: true
+        },
+        generateESM: {
+            describe: 'When enabled, all generated files follow the ECMAScript module syntax.',
+            type: 'boolean',
+            default: false
         }
     };
 }
@@ -72611,6 +72622,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.defaultTsConfig = void 0;
 exports.formatTsConfig = formatTsConfig;
 exports.readCustomTsConfig = readCustomTsConfig;
+exports.tsconfigJson = tsconfigJson;
 const fs_1 = __nccwpck_require__(79896);
 const path_1 = __nccwpck_require__(16928);
 const util_1 = __nccwpck_require__(11238);
@@ -72653,6 +72665,19 @@ async function readCustomTsConfig(configPath) {
     }
     catch (err) {
         throw new util_1.ErrorWithCause(`Could not read tsconfig.json at ${configPath}.`, err);
+    }
+}
+/**
+ * Build a tsconfig.json file as string.
+ * If transpile is true or tsconfig is provided, return the appropriate config.
+ * @param transpile - Whether to transpile.
+ * @param tsconfig - Path to custom tsconfig file.
+ * @returns The serialized tsconfig.json contents.
+ * @internal
+ */
+async function tsconfigJson(transpile = false, tsconfig) {
+    if (transpile || tsconfig) {
+        return tsconfig ? readCustomTsConfig(tsconfig) : formatTsConfig();
     }
 }
 //# sourceMappingURL=ts-config.js.map

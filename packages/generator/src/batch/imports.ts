@@ -3,12 +3,14 @@ import { unique } from '@sap-cloud-sdk/util';
 import { odataImportDeclarationTsMorph } from '../imports';
 import type { ImportDeclarationStructure } from 'ts-morph';
 import type { VdmServiceMetadata } from '../vdm-types';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
  */
 export function importBatchDeclarations(
-  service: VdmServiceMetadata
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   return [
     odataImportDeclarationTsMorph(
@@ -32,7 +34,7 @@ export function importBatchDeclarations(
     },
     {
       kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: './index',
+      moduleSpecifier: options?.generateESM ? './index.js' : './index',
       namedImports: getNamedImports(service)
     }
   ];

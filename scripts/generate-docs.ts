@@ -35,8 +35,8 @@ const isNavigationJs = fileName => basename(fileName) === 'navigation.js';
 
 const pipe =
   (...fns) =>
-    start =>
-      fns.reduce((state, fn) => fn(state), start);
+  start =>
+    fns.reduce((state, fn) => fn(state), start);
 
 async function adjustForGitHubPages() {
   const documentationFilePaths = flatten(readDir(resolve(docPath)));
@@ -64,11 +64,11 @@ async function adjustForGitHubPages() {
  * @returns A promise that resolves to the parsed JSON object.
  */
 export async function decompressJson(base64: string) {
-  const binaryData = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+  const binaryData = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
   const blob = new Blob([binaryData]);
   const decompressedStream = blob
     .stream()
-    .pipeThrough(new DecompressionStream("deflate"));
+    .pipeThrough(new DecompressionStream('deflate'));
   const decompressedText = await new Response(decompressedStream).text();
   return JSON.parse(decompressedText);
 }
@@ -81,7 +81,7 @@ export async function decompressJson(base64: string) {
  */
 export async function compressJson(data: any) {
   const gz = await deflateP(Buffer.from(JSON.stringify(data)));
-  return gz.toString("base64");
+  return gz.toString('base64');
 }
 
 async function adjustSearchJs(paths) {
@@ -91,10 +91,7 @@ async function adjustSearchJs(paths) {
   }
 
   await transformFile(filtered[0], async file => {
-    const dataRegexResult =
-      /window.searchData = "(.*)";/.exec(
-        file
-      );
+    const dataRegexResult = /window.searchData = "(.*)";/.exec(file);
     if (!dataRegexResult) {
       throw Error(
         `Cannot adjust links in 'search.js'. File content did not match expected pattern.`
@@ -118,10 +115,7 @@ async function adjustNavigationJs(paths) {
   }
 
   await transformFile(filtered[0], async file => {
-    const dataRegexResult =
-      /window.navigationData = "(.*)"/.exec(
-        file
-      );
+    const dataRegexResult = /window.navigationData = "(.*)"/.exec(file);
     if (!dataRegexResult) {
       throw Error(
         `Cannot adjust links in 'navigation.js'. File content did not match expected pattern.`

@@ -1,4 +1,7 @@
-import type { ModuleType } from '../internal';
+/**
+ * @internal
+ */
+export type ModuleType = 'commonjs' | 'esm';
 
 /**
  * @internal

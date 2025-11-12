@@ -1,9 +1,4 @@
-/**
- * @internal
- */
-export type ModuleType = 'commonjs' | 'esm';
-
-export { getCommonCliOptions } from './options';
+export * from './options';
 export type { Options, ParsedOptions } from './options-parser';
 
 export * from './sdk-metadata';

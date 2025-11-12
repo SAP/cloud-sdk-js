@@ -7,12 +7,12 @@ describe('tsconfigJson', () => {
   });
 
   it('returns the default tsconfig if transpilation is enabled', async () => {
-    const tsConfig = await tsconfigJson(true, undefined);
+    const tsConfig = await tsconfigJson(true);
     expect(JSON.parse(tsConfig!)).toEqual(defaultTsConfig);
   });
 
   it('returns undefined if transpilation is disabled', async () => {
-    const tsConfig = await tsconfigJson(false, undefined);
+    const tsConfig = await tsconfigJson();
     expect(tsConfig).toBeUndefined();
   });
 

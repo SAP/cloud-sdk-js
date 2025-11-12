@@ -96,22 +96,15 @@ describe('complex type imports', () => {
     ]);
   });
 
-  describe('ESM support', () => {
-    const esmOptions = {
-      generateESM: true
-    } as CreateFileOptions;
+  const esmOptions = {
+    generateESM: true
+  } as CreateFileOptions;
+  it('adds .js in import declarations when ESM flag is true', () => {
+    const actual = importDeclarations(complexMealWithDesert, 'v2', esmOptions);
 
-    it('importDeclarations when ESM flag is set to true', () => {
-      const actual = importDeclarations(
-        complexMealWithDesert,
-        'v2',
-        esmOptions
-      );
-
-      expect(
-        actual.find(imp => imp.moduleSpecifier === './ComplexDesert.js')
-          ?.moduleSpecifier
-      ).toBe('./ComplexDesert.js');
-    });
+    expect(
+      actual.find(imp => imp.moduleSpecifier === './ComplexDesert.js')
+        ?.moduleSpecifier
+    ).toBe('./ComplexDesert.js');
   });
 });

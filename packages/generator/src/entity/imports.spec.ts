@@ -33,38 +33,32 @@ describe('imports', () => {
     ).toEqual(expectedOtherEntityImports);
   });
 
-  describe('ESM support', () => {
-    const esmOptions = {
-      generateESM: true
-    } as CreateFileOptions;
+  const esmOptions = {
+    generateESM: true
+  } as CreateFileOptions;
 
-    it('importDeclarations when ESM flag is set to true', () => {
-      const actual = entityImportDeclarations(
-        breakfastEntity,
-        foodService,
-        'v2',
-        esmOptions
-      );
+  it('adds .js in import declarations when ESM flag is true', () => {
+    const actual = entityImportDeclarations(
+      breakfastEntity,
+      foodService,
+      'v2',
+      esmOptions
+    );
 
-      const breakfastApiImport = actual.find(
-        imp =>
-          Array.isArray(imp.namedImports) &&
-          imp.namedImports.includes('BreakfastApi')
-      );
-      expect(breakfastApiImport?.moduleSpecifier).toBe('./BreakfastApi.js');
-    });
+    const breakfastApiImport = actual.find(
+      imp =>
+        Array.isArray(imp.namedImports) &&
+        imp.namedImports.includes('BreakfastApi')
+    );
+    expect(breakfastApiImport?.moduleSpecifier).toBe('./BreakfastApi.js');
+  });
 
-    it('otherEntityImports when ESM flag is set to true', () => {
-      const actual = otherEntityImports(
-        breakfastEntity,
-        foodService,
-        esmOptions
-      );
+  it('add .js in other entity imports when ESM flag is true', () => {
+    const actual = otherEntityImports(breakfastEntity, foodService, esmOptions);
 
-      expect(actual.map(imports => imports.moduleSpecifier)).toEqual([
-        './Brunch.js'
-      ]);
-    });
+    expect(actual.map(imports => imports.moduleSpecifier)).toEqual([
+      './Brunch.js'
+    ]);
   });
 });
 

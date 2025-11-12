@@ -1,6 +1,7 @@
 import { readFile } from 'fs/promises';
 import http from 'http';
 import https from 'https';
+import * as jks from 'jks-js';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 // eslint-disable-next-line import/no-internal-modules
@@ -132,6 +133,25 @@ function getKeyStoreOptions(destination: Destination):
 
     const certBuffer = Buffer.from(certificate.content, 'base64');
 
+    if (getFormat(certificate) === 'jks') {
+      if (!destination.keyStorePassword) {
+        throw Error('Keystore password is required for JKS format');
+      }
+      const pemKeystore = jks.toPem(certBuffer, destination.keyStorePassword);
+      const aliases = Object.keys(pemKeystore);
+      if (aliases.length === 0) {
+        throw Error('No entries found in JKS keystore');
+      }
+      const alias = aliases[0]; // Use first alias
+      const entry = pemKeystore[alias];
+      if (!entry.cert || !entry.key) {
+        throw Error('Invalid JKS entry: missing cert or key');
+      }
+      return {
+        cert: Buffer.from(entry.cert, 'utf8'),
+        key: Buffer.from(entry.key, 'utf8')
+      };
+    }
     // if the format is pem, the key and certificate needs to be passed separately
     // it could be required to separate the string into two parts, but this seems to work as well
     if (getFormat(certificate) === 'pem') {
@@ -207,7 +227,7 @@ function mtlsIsEnabled(destination: Destination) {
 /*
  The node client supports only these store formats https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions.
  */
-const supportedCertificateFormats = ['p12', 'pfx', 'pem'];
+const supportedCertificateFormats = ['p12', 'pfx', 'pem', 'jks'];
 
 function isSupportedFormat(format: string | undefined): boolean {
   return !!format && supportedCertificateFormats.includes(format);

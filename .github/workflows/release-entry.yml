@@ -1,0 +1,29 @@
+# This workflow delegates to the appropriate release workflow based on the event that triggered it.
+
+on:
+  # Triggers for official releases
+  release:
+    types: [published]
+  # Triggers for canary releases
+  schedule:
+    - cron: '0 1 * * *'
+
+  workflow_dispatch:
+    inputs:
+      canary-release:
+        description: 'Release canary version (skips tests and checks)'
+        type: boolean
+        required: false
+        default: false
+jobs:
+  delegate_to_release_job:
+    if: ${{ github.event_name == 'release' }}
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+
+  delegate_to_canary_job:
+    if: ${{ github.event_name != 'release' }}
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+    with:
+      canary-release: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release || github.event_name != 'schedule' }}

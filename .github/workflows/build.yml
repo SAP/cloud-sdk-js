@@ -7,9 +7,7 @@ on:
     tags: ['v*']
     paths-ignore:
       - 'docs/**'
-  schedule:
-    - cron: '0 1 * * *'
-  workflow_dispatch:
+  workflow_call:
     inputs:
       canary-release:
         description: 'Release canary version (skips tests and checks)'
@@ -136,7 +134,7 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   canary-release-pre-check:
-    if: github.event_name == 'schedule'
+    if: github.event_name == 'workflow_call' && inputs.canary-release == false
     runs-on: ubuntu-latest
     outputs:
       skip-release: ${{ steps.date-check.outputs.skip-release }}
@@ -169,6 +167,8 @@ jobs:
     if: always() && (needs.canary-release-pre-check.outputs.skip-release == 'false' || inputs.canary-release == true)
     runs-on: ubuntu-latest
     needs: [canary-release-pre-check]
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v5
       - run: git fetch --depth=1
@@ -187,8 +187,6 @@ jobs:
           yarn changeset version
           yarn changeset pre exit
           yarn changeset publish --tag canary
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
   draft-github-release:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest

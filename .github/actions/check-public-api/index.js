@@ -71820,9 +71820,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getCommonCliOptions = void 0;
-var options_1 = __nccwpck_require__(83891);
-Object.defineProperty(exports, "getCommonCliOptions", ({ enumerable: true, get: function () { return options_1.getCommonCliOptions; } }));
+__exportStar(__nccwpck_require__(83891), exports);
 __exportStar(__nccwpck_require__(95992), exports);
 __exportStar(__nccwpck_require__(22776), exports);
 __exportStar(__nccwpck_require__(24039), exports);

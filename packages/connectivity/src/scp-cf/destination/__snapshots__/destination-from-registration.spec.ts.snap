@@ -1,3 +1,3 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`register-destination without XSUAA binding throws an error if there is a JWT, but no tenant ID could be identified 1`] = `"Could not determine tenant from JWT nor XSUAA, identity or destination service binding. Destination is registered without tenant information."`;

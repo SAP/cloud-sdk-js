@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`generation-and-usage creates api specific usage for entity 1`] = `
 "import { DummyApi } from './generated/dummy-package';

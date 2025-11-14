@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`api-file creates an api file following the esm pattern 1`] = `
 "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';

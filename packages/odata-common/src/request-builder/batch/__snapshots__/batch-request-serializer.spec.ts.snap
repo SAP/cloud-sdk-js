@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`batch request serializer serializeBatchRequest serializes payload for batch subrequests 1`] = `
 "--batch_fixed_boundary_for_testing

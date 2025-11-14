@@ -174,7 +174,7 @@ jobs:
       - run: git fetch --depth=1
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24 # Will install npm 11 needed for trusted publishing
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
       - run: yarn install --frozen-lockfile --ignore-engines

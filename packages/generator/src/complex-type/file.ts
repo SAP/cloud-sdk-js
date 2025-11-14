@@ -6,18 +6,20 @@ import { complexTypeNamespace } from './namespace';
 import type { VdmComplexType } from '../vdm-types';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { SourceFileStructure } from 'ts-morph';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
  */
 export function complexTypeSourceFile(
   complexType: VdmComplexType,
-  oDataVersion: ODataVersion
+  oDataVersion: ODataVersion,
+  options?: CreateFileOptions
 ): SourceFileStructure {
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...importDeclarations(complexType, oDataVersion),
+      ...importDeclarations(complexType, oDataVersion, options),
       complexTypeInterface(complexType),
       fieldTypeClass(complexType),
       complexTypeNamespace(complexType)

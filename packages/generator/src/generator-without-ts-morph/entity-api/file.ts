@@ -8,16 +8,20 @@ import {
 import { odataImport, complexTypeImports, enumTypeImports } from './imports';
 import { classContent } from './class';
 import type { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
-import type { Import } from '@sap-cloud-sdk/generator-common/internal';
+import type {
+  Import,
+  CreateFileOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
  */
 export function entityApiFile(
   entity: VdmEntity,
-  service: VdmServiceMetadata
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
 ): string {
-  const imports = serializeImports(getImports(entity, service));
+  const imports = serializeImports(getImports(entity, service, options));
   const content = classContent(entity, service);
   return [imports, content].join(unixEOL);
 }
@@ -32,21 +36,29 @@ export function entityApiFile(
 //   ].join(unixEOL);
 // }
 
-function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
+function getImports(
+  entity: VdmEntity,
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
+): Import[] {
   return [
     {
       names: [`${entity.className}`],
-      moduleIdentifier: `./${entity.className}`,
+      moduleIdentifier: options?.generateESM
+        ? `./${entity.className}.js`
+        : `./${entity.className}`,
       typeOnly: false
     },
     {
       names: [`${entity.className}RequestBuilder`],
-      moduleIdentifier: `./${entity.className}RequestBuilder`,
+      moduleIdentifier: options?.generateESM
+        ? `./${entity.className}RequestBuilder.js`
+        : `./${entity.className}RequestBuilder`,
       typeOnly: false
     },
-    ...otherEntityApiImports(entity, service),
-    ...complexTypeImports(entity.properties),
-    ...enumTypeImports(entity.properties),
+    ...otherEntityApiImports(entity, service, options),
+    ...complexTypeImports(entity.properties, options),
+    ...enumTypeImports(entity.properties, options),
     odataImport(
       [
         'CustomField',
@@ -72,7 +84,8 @@ function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
 
 function otherEntityApiImports(
   entity: VdmEntity,
-  service: VdmServiceMetadata
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
 ): Import[] {
   return Array.from(new Set(entity.navigationProperties.map(n => n.to)))
     .map(to => {
@@ -87,14 +100,19 @@ function otherEntityApiImports(
       return matchedEntity.className;
     })
     .filter(name => name !== entity.className)
-    .flatMap(name => otherEntityImports(name));
+    .flatMap(name => otherEntityImports(name, options));
 }
 
-function otherEntityImports(name: string): Import[] {
+function otherEntityImports(
+  name: string,
+  options?: CreateFileOptions
+): Import[] {
   return [
     {
       names: [`${name}Api`],
-      moduleIdentifier: `./${name}Api`
+      moduleIdentifier: options?.generateESM
+        ? `./${name}Api.js`
+        : `./${name}Api`
     }
   ];
 }

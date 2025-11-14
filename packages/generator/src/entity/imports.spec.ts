@@ -2,6 +2,10 @@ import { breakfastEntity, foodService } from '../../test/test-util/data-model';
 import { entityImportDeclarations, otherEntityImports } from './imports';
 import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
+const esmOptions = {
+  generateESM: true
+} as CreateFileOptions;
+
 describe('imports', () => {
   it('importDeclarations', () => {
     const actual = entityImportDeclarations(breakfastEntity, foodService, 'v2');
@@ -33,10 +37,6 @@ describe('imports', () => {
     ).toEqual(expectedOtherEntityImports);
   });
 
-  const esmOptions = {
-    generateESM: true
-  } as CreateFileOptions;
-
   it('adds .js in import declarations when ESM flag is true', () => {
     const actual = entityImportDeclarations(
       breakfastEntity,
@@ -53,7 +53,7 @@ describe('imports', () => {
     expect(breakfastApiImport?.moduleSpecifier).toBe('./BreakfastApi.js');
   });
 
-  it('add .js in other entity imports when ESM flag is true', () => {
+  it('adds .js in other entity imports when ESM flag is true', () => {
     const actual = otherEntityImports(breakfastEntity, foodService, esmOptions);
 
     expect(actual.map(imports => imports.moduleSpecifier)).toEqual([

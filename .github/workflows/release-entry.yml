@@ -1,4 +1,5 @@
 # This workflow delegates to the appropriate release workflow based on the event that triggered it.
+name: release-entry
 
 on:
   # Triggers for official releases

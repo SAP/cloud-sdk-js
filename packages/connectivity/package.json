@@ -42,6 +42,7 @@
     "@sap/xssec": "^4.11.0",
     "async-retry": "^1.3.3",
     "axios": "^1.12.2",
+    "jks-js": "^1.1.4",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {

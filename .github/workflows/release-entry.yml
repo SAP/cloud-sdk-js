@@ -23,7 +23,7 @@ jobs:
     secrets: inherit
 
   delegate_to_canary_job:
-    if: ${{ github.event_name != 'release' }}
+    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     uses: ./.github/workflows/build.yml
     secrets: inherit
     with:

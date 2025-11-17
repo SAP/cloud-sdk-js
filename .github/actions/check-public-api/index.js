@@ -72617,7 +72617,7 @@ async function getSdkVersion() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.defaultTsConfig = void 0;
+exports.defaultTsConfig = defaultTsConfig;
 exports.formatTsConfig = formatTsConfig;
 exports.readCustomTsConfig = readCustomTsConfig;
 exports.tsconfigJson = tsconfigJson;
@@ -72628,28 +72628,30 @@ const { readFile, lstat } = fs_1.promises;
 /**
  * @internal
  */
-exports.defaultTsConfig = {
-    compilerOptions: {
-        target: 'es2021',
-        module: 'commonjs',
-        lib: ['esnext'],
-        declaration: true,
-        declarationMap: false,
-        sourceMap: true,
-        diagnostics: true,
-        moduleResolution: 'node',
-        esModuleInterop: true,
-        inlineSources: false,
-        strict: true
-    },
-    include: ['**/*.ts'],
-    exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
-};
+function defaultTsConfig(generateESM = false) {
+    return {
+        compilerOptions: {
+            target: 'es2021',
+            module: generateESM ? 'esnext' : 'commonjs',
+            lib: ['esnext'],
+            declaration: true,
+            declarationMap: false,
+            sourceMap: true,
+            diagnostics: true,
+            moduleResolution: generateESM ? 'bundler' : 'node',
+            esModuleInterop: true,
+            inlineSources: false,
+            strict: true
+        },
+        include: ['**/*.ts'],
+        exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
+    };
+}
 /**
  * @internal
  */
-function formatTsConfig() {
-    return JSON.stringify(exports.defaultTsConfig, null, 2) + util_1.unixEOL;
+function formatTsConfig(generateESM = false) {
+    return JSON.stringify(defaultTsConfig(generateESM), null, 2) + util_1.unixEOL;
 }
 /**
  * @internal
@@ -72670,12 +72672,15 @@ async function readCustomTsConfig(configPath) {
  * If transpile is true or tsconfig is provided, return the appropriate config.
  * @param transpile - Whether to transpile.
  * @param tsconfig - Path to custom tsconfig file.
+ * @param generateESM - Whether to generate ES modules instead of CommonJS.
  * @returns The serialized tsconfig.json contents.
  * @internal
  */
-async function tsconfigJson(transpile = false, tsconfig) {
+async function tsconfigJson(transpile = false, tsconfig, generateESM = false) {
     if (transpile || tsconfig) {
-        return tsconfig ? readCustomTsConfig(tsconfig) : formatTsConfig();
+        return tsconfig
+            ? readCustomTsConfig(tsconfig)
+            : formatTsConfig(generateESM);
     }
 }
 //# sourceMappingURL=ts-config.js.map

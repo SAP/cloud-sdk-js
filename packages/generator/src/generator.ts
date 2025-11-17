@@ -325,7 +325,8 @@ export async function generateSourcesForService(
           npmPackageName: service.serviceOptions.packageName,
           sdkVersion: await getSdkVersion(),
           description: packageDescription(service.speakingModuleName),
-          oDataVersion: service.oDataVersion
+          oDataVersion: service.oDataVersion,
+          generateESM: options.generateESM
         }),
         createFileOptions
       )
@@ -333,7 +334,11 @@ export async function generateSourcesForService(
   }
 
   if (options.transpile || options.tsconfig) {
-    const tsConfig = await tsconfigJson(options.transpile, options.tsconfig);
+    const tsConfig = await tsconfigJson(
+      options.transpile,
+      options.tsconfig,
+      options.generateESM
+    );
     if (tsConfig) {
       filePromises.push(
         createFile(serviceDirPath, 'tsconfig.json', tsConfig, createFileOptions)

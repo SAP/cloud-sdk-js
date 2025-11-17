@@ -8,7 +8,12 @@ describe('tsconfigJson', () => {
 
   it('returns the default tsconfig if transpilation is enabled', async () => {
     const tsConfig = await tsconfigJson(true);
-    expect(JSON.parse(tsConfig!)).toEqual(defaultTsConfig);
+    expect(JSON.parse(tsConfig!)).toEqual(defaultTsConfig(false));
+  });
+
+  it('returns the default tsconfig with ESM config when generateESM is true', async () => {
+    const tsConfig = await tsconfigJson(true, undefined, true);
+    expect(JSON.parse(tsConfig!)).toEqual(defaultTsConfig(true));
   });
 
   it('returns undefined if transpilation is disabled', async () => {

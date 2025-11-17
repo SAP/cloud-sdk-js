@@ -86,7 +86,11 @@ export async function generateWithParsedOptions(
   const inputFilePaths = options.input;
 
   const optionsPerService = await getOptionsPerService(inputFilePaths, options);
-  const tsConfig = await tsconfigJson(options.transpile, options.tsconfig);
+  const tsConfig = await tsconfigJson(
+    options.transpile,
+    options.tsconfig,
+    options.generateESM
+  );
 
   const promises = inputFilePaths.map(inputFilePath =>
     generateService(

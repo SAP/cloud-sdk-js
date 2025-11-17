@@ -5,28 +5,32 @@ const { readFile, lstat } = promises;
 /**
  * @internal
  */
-export const defaultTsConfig = {
-  compilerOptions: {
-    target: 'es2021',
-    module: 'commonjs',
-    lib: ['esnext'],
-    declaration: true,
-    declarationMap: false,
-    sourceMap: true,
-    diagnostics: true,
-    moduleResolution: 'node',
-    esModuleInterop: true,
-    inlineSources: false,
-    strict: true
-  },
-  include: ['**/*.ts'],
-  exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
-};
+export function defaultTsConfig(
+  generateESM: boolean = false
+): Record<string, any> {
+  return {
+    compilerOptions: {
+      target: 'es2021',
+      module: generateESM ? 'esnext' : 'commonjs',
+      lib: ['esnext'],
+      declaration: true,
+      declarationMap: false,
+      sourceMap: true,
+      diagnostics: true,
+      moduleResolution: generateESM ? 'bundler' : 'node',
+      esModuleInterop: true,
+      inlineSources: false,
+      strict: true
+    },
+    include: ['**/*.ts'],
+    exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
+  };
+}
 /**
  * @internal
  */
-export function formatTsConfig(): string {
-  return JSON.stringify(defaultTsConfig, null, 2) + unixEOL;
+export function formatTsConfig(generateESM: boolean = false): string {
+  return JSON.stringify(defaultTsConfig(generateESM), null, 2) + unixEOL;
 }
 
 /**
@@ -51,14 +55,18 @@ export async function readCustomTsConfig(configPath: string): Promise<string> {
  * If transpile is true or tsconfig is provided, return the appropriate config.
  * @param transpile - Whether to transpile.
  * @param tsconfig - Path to custom tsconfig file.
+ * @param generateESM - Whether to generate ES modules instead of CommonJS.
  * @returns The serialized tsconfig.json contents.
  * @internal
  */
 export async function tsconfigJson(
   transpile: boolean = false,
-  tsconfig?: string
+  tsconfig?: string,
+  generateESM: boolean = false
 ): Promise<string | undefined> {
   if (transpile || tsconfig) {
-    return tsconfig ? readCustomTsConfig(tsconfig) : formatTsConfig();
+    return tsconfig
+      ? readCustomTsConfig(tsconfig)
+      : formatTsConfig(generateESM);
   }
 }

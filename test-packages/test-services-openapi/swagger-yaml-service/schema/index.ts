@@ -6,3 +6,4 @@
 export * from './test-entity';
 export * from './entity-x-of-inheritance';
 export * from './entity-x-of-normalized-with-object';
+export * from './array-of-enum-entity';

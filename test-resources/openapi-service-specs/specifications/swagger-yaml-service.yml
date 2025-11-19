@@ -77,3 +77,20 @@ definitions:
         type: boolean
     required:
       - booleanProperty
+  ArrayOfEnumEntity:
+    type: object
+    description: Entity containing arrays with enum values
+    properties:
+      stringArrayEnum:
+        type: array
+        items:
+          type: string
+          enum:
+            - EnumVariantOne
+            - EnumVariantTwo
+      singleValueArrayEnum:
+        type: array
+        items:
+          type: number
+          enum: [3]
+

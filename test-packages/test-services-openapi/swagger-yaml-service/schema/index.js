@@ -22,4 +22,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./test-entity"), exports);
 __exportStar(require("./entity-x-of-inheritance"), exports);
 __exportStar(require("./entity-x-of-normalized-with-object"), exports);
+__exportStar(require("./array-of-enum-entity"), exports);
 //# sourceMappingURL=index.js.map

@@ -303,6 +303,18 @@ describe('serializeSchema for xOf schemas', () => {
   });
 });
 
+  it('serializes array schemas for enum', () => {
+    expect(
+      serializeSchema({
+        type: 'array',
+        items: {
+          type: 'string',
+          enum: ["'One'", "'Two'"]
+        }
+      })
+    ).toEqual("('One' | 'Two')[]");
+  });
+
 it('serializeSchema serializes not schema', () => {
   expect(
     serializeSchema({

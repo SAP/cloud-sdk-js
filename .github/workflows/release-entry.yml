@@ -30,5 +30,5 @@ jobs:
     uses: ./.github/workflows/build.yml
     secrets: inherit
     with:
-      canary-release-skip-checks: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'Skip Tests and Checks (Force Release)' || github.event_name != 'schedule' }}
+      canary-release-skip-checks: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'Skip Tests and Checks (Force Release)' }}
       is-workflow-call: true

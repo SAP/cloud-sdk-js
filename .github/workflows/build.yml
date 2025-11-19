@@ -9,8 +9,8 @@ on:
       - 'docs/**'
   workflow_call:
     inputs:
-      canary-release:
-        description: 'Release canary version (skips tests and checks)'
+      canary-release-skip-checks:
+        description: 'Release canary version (true skips tests and checks)'
         type: boolean
         required: false
         default: false
@@ -23,7 +23,7 @@ on:
 
 jobs:
   tests:
-    if: inputs.canary-release == false
+    if: inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -59,7 +59,7 @@ jobs:
           SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
 
   checks:
-    if: inputs.canary-release == false
+    if: inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -104,7 +104,7 @@ jobs:
           SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
 
   e2e-tests:
-    if: inputs.canary-release == false
+    if: inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -140,7 +140,7 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   canary-release-pre-check:
-    if: inputs.is-workflow-call && inputs.canary-release == false
+    if: inputs.is-workflow-call && inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest
     outputs:
       skip-release: ${{ steps.date-check.outputs.skip-release }}
@@ -170,7 +170,7 @@ jobs:
     # execute canary release if:
     # either the canary-release was scheduled and the canary-pre-check step resulted in skip-release=false
     # or the canary-release input is true
-    if: always() && (needs.canary-release-pre-check.outputs.skip-release == 'false' || inputs.canary-release == true)
+    if: always() && inputs.is-workflow-call && (needs.canary-release-pre-check.outputs.skip-release == 'false' || inputs.canary-release-skip-checks == true)
     runs-on: ubuntu-latest
     needs: [canary-release-pre-check]
     permissions:

@@ -12,10 +12,13 @@ on:
   workflow_dispatch:
     inputs:
       canary-release:
-        description: 'Release canary version (skips tests and checks)'
-        type: boolean
+        description: 'Canary release'
+        type: choice
         required: false
-        default: false
+        default: 'With Tests and Checks'
+        options:
+          - 'With Tests and Checks'
+          - 'Skip Tests and Checks (Force Release)'
 jobs:
   delegate_to_release_job:
     if: ${{ github.event_name == 'release' }}
@@ -27,5 +30,5 @@ jobs:
     uses: ./.github/workflows/build.yml
     secrets: inherit
     with:
-      canary-release: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name != 'schedule' }}
+      canary-release-skip-checks: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'Skip Tests and Checks (Force Release)' || github.event_name != 'schedule' }}
       is-workflow-call: true

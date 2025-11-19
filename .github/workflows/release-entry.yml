@@ -28,3 +28,4 @@ jobs:
     secrets: inherit
     with:
       canary-release: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'true' || github.event_name != 'schedule' }}
+      is-workflow-call: true

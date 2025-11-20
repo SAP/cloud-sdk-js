@@ -72632,13 +72632,13 @@ function defaultTsConfig(generateESM = false) {
     return {
         compilerOptions: {
             target: 'es2021',
-            module: generateESM ? 'esnext' : 'commonjs',
+            module: generateESM ? 'nodenext' : 'commonjs',
             lib: ['esnext'],
             declaration: true,
             declarationMap: false,
             sourceMap: true,
             diagnostics: true,
-            moduleResolution: generateESM ? 'bundler' : 'node',
+            moduleResolution: generateESM ? 'nodenext' : 'node',
             esModuleInterop: true,
             inlineSources: false,
             strict: true

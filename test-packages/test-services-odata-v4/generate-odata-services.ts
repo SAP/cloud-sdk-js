@@ -11,7 +11,7 @@ const generatorConfigOData = {
   readme: false,
   clearOutputDir: false,
   packageJson: false,
-  skipValidation: true,
+  skipValidation: true
 };
 
 async function generateOdata(): Promise<void> {

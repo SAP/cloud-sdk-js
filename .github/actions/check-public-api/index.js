@@ -72634,25 +72634,23 @@ const { readFile, lstat } = fs_1.promises;
 /**
  * @internal
  */
-const defaultTsConfig = (generateESM) => {
-    return {
-        compilerOptions: {
-            target: 'es2021',
-            module: generateESM ? 'nodenext' : 'commonjs',
-            lib: ['esnext'],
-            declaration: true,
-            declarationMap: false,
-            sourceMap: true,
-            diagnostics: true,
-            moduleResolution: generateESM ? 'nodenext' : 'node',
-            esModuleInterop: true,
-            inlineSources: false,
-            strict: true
-        },
-        include: ['**/*.ts'],
-        exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
-    };
-};
+const defaultTsConfig = (generateESM) => ({
+    compilerOptions: {
+        target: 'es2021',
+        module: generateESM ? 'nodenext' : 'commonjs',
+        lib: ['esnext'],
+        declaration: true,
+        declarationMap: false,
+        sourceMap: true,
+        diagnostics: true,
+        moduleResolution: generateESM ? 'nodenext' : 'node',
+        esModuleInterop: true,
+        inlineSources: false,
+        strict: true
+    },
+    include: ['**/*.ts'],
+    exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
+});
 exports.defaultTsConfig = defaultTsConfig;
 /**
  * @internal

@@ -54,6 +54,14 @@ definitions:
         type: integer
         description: An integer property
         required: false
+      stringArrayEnum:
+        description: An array of enum property
+        type: array
+        items:
+          type: string
+          enum:
+            - EnumVariantOne
+            - EnumVariantTwo
   EntityXOfInheritance:
     type: object
     description: Composition of extended properties (inheritance) and schema-specific properties together with required attribute.
@@ -77,20 +85,4 @@ definitions:
         type: boolean
     required:
       - booleanProperty
-  ArrayOfEnumEntity:
-    type: object
-    description: Entity containing arrays with enum values
-    properties:
-      stringArrayEnum:
-        type: array
-        items:
-          type: string
-          enum:
-            - EnumVariantOne
-            - EnumVariantTwo
-      singleValueArrayEnum:
-        type: array
-        items:
-          type: number
-          enum: [3]
 

@@ -11,10 +11,7 @@ const generatorConfigOData = {
   readme: false,
   clearOutputDir: false,
   packageJson: false,
-  generateSdkMetadata: false,
   skipValidation: true,
-  // Unnecessary options
-  s4hanaCloud: false
 };
 
 async function generateOdata(): Promise<void> {

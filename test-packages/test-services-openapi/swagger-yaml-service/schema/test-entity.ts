@@ -16,4 +16,8 @@ export type TestEntity = {
    * An integer property
    */
   integerProperty?: number;
+  /**
+   * An array of enum property
+   */
+  stringArrayEnum?: ('EnumVariantOne' | 'EnumVariantTwo')[];
 } & Record<string, any>;

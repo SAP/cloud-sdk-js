@@ -2,32 +2,33 @@ import { promises } from 'fs';
 import { resolve } from 'path';
 import { unixEOL, ErrorWithCause } from '@sap-cloud-sdk/util';
 const { readFile, lstat } = promises;
-
 /**
  * @internal
  */
-export const defaultTsConfig = {
+export const defaultTsConfig = (
+  generateESM?: boolean
+): Record<string, any> => ({
   compilerOptions: {
     target: 'es2021',
-    module: 'commonjs',
+    module: generateESM ? 'nodenext' : 'commonjs',
     lib: ['esnext'],
     declaration: true,
     declarationMap: false,
     sourceMap: true,
     diagnostics: true,
-    moduleResolution: 'node',
+    moduleResolution: generateESM ? 'nodenext' : 'node',
     esModuleInterop: true,
     inlineSources: false,
     strict: true
   },
   include: ['**/*.ts'],
   exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
-};
+});
 /**
  * @internal
  */
-export function formatTsConfig(): string {
-  return JSON.stringify(defaultTsConfig, null, 2) + unixEOL;
+export function formatTsConfig(generateESM?: boolean): string {
+  return JSON.stringify(defaultTsConfig(generateESM), null, 2) + unixEOL;
 }
 
 /**
@@ -44,5 +45,26 @@ export async function readCustomTsConfig(configPath: string): Promise<string> {
       `Could not read tsconfig.json at ${configPath}.`,
       err
     );
+  }
+}
+
+/**
+ * Build a tsconfig.json file as string.
+ * If transpile is true or tsconfig is provided, return the appropriate config.
+ * @param transpile - Whether to transpile.
+ * @param tsconfig - Path to custom tsconfig file.
+ * @param generateESM - Whether to generate ES modules instead of CommonJS.
+ * @returns The serialized tsconfig.json contents.
+ * @internal
+ */
+export async function tsconfigJson(
+  transpile?: boolean,
+  tsconfig?: string,
+  generateESM?: boolean
+): Promise<string | undefined> {
+  if (transpile || tsconfig) {
+    return tsconfig
+      ? readCustomTsConfig(tsconfig)
+      : formatTsConfig(generateESM);
   }
 }

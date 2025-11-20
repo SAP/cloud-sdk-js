@@ -1,6 +1,11 @@
 /**
  * @internal
  */
+export type ModuleType = 'commonjs' | 'esm';
+
+/**
+ * @internal
+ */
 export interface PackageJsonOptions {
   /**
    * @internal
@@ -14,6 +19,10 @@ export interface PackageJsonOptions {
    * @internal
    */
   description: string;
+  /**
+   * @internal
+   */
+  moduleType?: ModuleType;
 }
 
 /* eslint-disable valid-jsdoc */
@@ -23,7 +32,7 @@ export interface PackageJsonOptions {
 export function packageJsonBase(
   options: PackageJsonOptions
 ): Record<string, any> {
-  return {
+  const basePackageJson: Record<string, any> = {
     name: options.npmPackageName,
     version: '1.0.0',
     description: options.description,
@@ -39,4 +48,10 @@ export function packageJsonBase(
       url: ''
     }
   };
+
+  if (options.moduleType === 'esm') {
+    basePackageJson.type = 'module';
+  }
+
+  return basePackageJson;
 }

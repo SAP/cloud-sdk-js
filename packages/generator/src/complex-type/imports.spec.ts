@@ -5,6 +5,7 @@ import {
 } from '../../test/test-util/data-model';
 import { importDeclarations } from './imports';
 import type { VdmComplexType } from '../vdm-types';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 describe('complex type imports', () => {
   it('importDeclarations', () => {
@@ -93,5 +94,17 @@ describe('complex type imports', () => {
         ]
       }
     ]);
+  });
+
+  const esmOptions = {
+    generateESM: true
+  } as CreateFileOptions;
+  it('adds .js in import declarations when ESM flag is true', () => {
+    const actual = importDeclarations(complexMealWithDesert, 'v2', esmOptions);
+
+    expect(
+      actual.find(imp => imp.moduleSpecifier === './ComplexDesert.js')
+        ?.moduleSpecifier
+    ).toBe('./ComplexDesert.js');
   });
 });

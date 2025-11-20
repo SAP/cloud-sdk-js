@@ -3,17 +3,16 @@ import { dirname, join, resolve } from 'path';
 import {
   copyFiles,
   createFile,
-  formatTsConfig,
   getSdkMetadataFileNames,
   getSdkVersion,
   packageDescription,
   readCompilerOptions,
-  readCustomTsConfig,
   readPrettierConfig,
   transpileDirectory,
   parseOptions,
   getRelPathWithPosixSeparator,
-  writeOptionsPerService
+  writeOptionsPerService,
+  tsconfigJson
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   createLogger,
@@ -50,6 +49,7 @@ import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
 import type { ProjectOptions } from 'ts-morph';
 import type {
   CreateFileOptions,
+  ModuleType,
   OptionsPerService
 } from '@sap-cloud-sdk/generator-common/internal';
 import type { VdmServiceMetadata } from './vdm-types';
@@ -181,7 +181,9 @@ export async function generateProject(
     emptyDirSync(options.outputDir.toString());
   }
 
-  const project = new Project(projectOptions());
+  const project = new Project(
+    projectOptions(options.generateESM ? 'esm' : 'commonjs')
+  );
 
   const promises = services.map(service =>
     generateSourcesForService(service, project, options)
@@ -241,7 +243,8 @@ async function getFileCreationOptions(
     prettierOptions: await readPrettierConfig(
       options.prettierConfig?.toString()
     ),
-    overwrite: options.overwrite
+    overwrite: options.overwrite,
+    generateESM: options.generateESM
   };
 }
 
@@ -270,7 +273,7 @@ async function generateServiceFile(
   await createFile(
     serviceDir,
     'service.ts',
-    serviceFile(service),
+    serviceFile(service, createFileOptions),
     createFileOptions
   );
 }
@@ -285,7 +288,7 @@ async function generateEntityApis(
       createFile(
         join(options.outputDir, service.serviceOptions.directoryName),
         `${entity.className}Api.ts`,
-        entityApiFile(entity, service),
+        entityApiFile(entity, service, createFileOptions),
         createFileOptions
       )
     )
@@ -322,7 +325,8 @@ export async function generateSourcesForService(
           npmPackageName: service.serviceOptions.packageName,
           sdkVersion: await getSdkVersion(),
           description: packageDescription(service.speakingModuleName),
-          oDataVersion: service.oDataVersion
+          oDataVersion: service.oDataVersion,
+          generateESM: options.generateESM
         }),
         createFileOptions
       )
@@ -330,16 +334,16 @@ export async function generateSourcesForService(
   }
 
   if (options.transpile || options.tsconfig) {
-    filePromises.push(
-      createFile(
-        serviceDirPath,
-        'tsconfig.json',
-        options.tsconfig
-          ? await readCustomTsConfig(options.tsconfig)
-          : formatTsConfig(),
-        createFileOptions
-      )
+    const tsConfig = await tsconfigJson(
+      options.transpile,
+      options.tsconfig,
+      options.generateESM
     );
+    if (tsConfig) {
+      filePromises.push(
+        createFile(serviceDirPath, 'tsconfig.json', tsConfig, createFileOptions)
+      );
+    }
   }
 
   if (hasEntities(service)) {
@@ -350,7 +354,7 @@ export async function generateSourcesForService(
       sourceFile(
         serviceDir,
         'BatchRequest',
-        batchSourceFile(service),
+        batchSourceFile(service, createFileOptions),
         createFileOptions
       )
     );
@@ -362,7 +366,7 @@ export async function generateSourcesForService(
       sourceFile(
         serviceDir,
         entity.className,
-        entitySourceFile(entity, service),
+        entitySourceFile(entity, service, createFileOptions),
         createFileOptions
       )
     );
@@ -370,7 +374,11 @@ export async function generateSourcesForService(
       sourceFile(
         serviceDir,
         `${entity.className}RequestBuilder`,
-        requestBuilderSourceFile(entity, service.oDataVersion),
+        requestBuilderSourceFile(
+          entity,
+          service.oDataVersion,
+          createFileOptions
+        ),
         createFileOptions
       )
     );
@@ -398,7 +406,11 @@ export async function generateSourcesForService(
       sourceFile(
         serviceDir,
         complexType.typeName,
-        complexTypeSourceFile(complexType, service.oDataVersion),
+        complexTypeSourceFile(
+          complexType,
+          service.oDataVersion,
+          createFileOptions
+        ),
         createFileOptions
       )
     );
@@ -411,14 +423,19 @@ export async function generateSourcesForService(
       sourceFile(
         serviceDir,
         'operations',
-        operationsSourceFile(service),
+        operationsSourceFile(service, createFileOptions),
         createFileOptions
       )
     );
   }
 
   filePromises.push(
-    sourceFile(serviceDir, 'index', indexFile(service), createFileOptions)
+    sourceFile(
+      serviceDir,
+      'index',
+      indexFile(service, createFileOptions),
+      createFileOptions
+    )
   );
 
   if (options.readme) {
@@ -456,7 +473,7 @@ export async function generateSourcesForService(
   await Promise.all(filePromises);
 }
 
-function projectOptions(): ProjectOptions {
+function projectOptions(moduleType: ModuleType = 'commonjs'): ProjectOptions {
   return {
     skipAddingFilesFromTsConfig: true,
     manipulationSettings: {
@@ -466,12 +483,15 @@ function projectOptions(): ProjectOptions {
     },
     compilerOptions: {
       target: ScriptTarget.ES2021,
-      module: ModuleKind.CommonJS,
+      module: moduleType === 'esm' ? ModuleKind.NodeNext : ModuleKind.CommonJS,
       declaration: true,
       declarationMap: true,
       sourceMap: true,
       diagnostics: true,
-      moduleResolution: ModuleResolutionKind.NodeJs,
+      moduleResolution:
+        moduleType === 'esm'
+          ? ModuleResolutionKind.NodeNext
+          : ModuleResolutionKind.Node10,
       esModuleInterop: true,
       inlineSources: false,
       noImplicitAny: true

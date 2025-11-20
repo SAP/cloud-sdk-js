@@ -71781,7 +71781,7 @@ exports.packageJsonBase = packageJsonBase;
  * @internal
  */
 function packageJsonBase(options) {
-    return {
+    const basePackageJson = {
         name: options.npmPackageName,
         version: '1.0.0',
         description: options.description,
@@ -71797,6 +71797,10 @@ function packageJsonBase(options) {
             url: ''
         }
     };
+    if (options.moduleType === 'esm') {
+        basePackageJson.type = 'module';
+    }
+    return basePackageJson;
 }
 //# sourceMappingURL=package-json.js.map
 
@@ -71822,6 +71826,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+__exportStar(__nccwpck_require__(83891), exports);
 __exportStar(__nccwpck_require__(95992), exports);
 __exportStar(__nccwpck_require__(22776), exports);
 __exportStar(__nccwpck_require__(24039), exports);
@@ -71832,7 +71837,6 @@ __exportStar(__nccwpck_require__(86706), exports);
 __exportStar(__nccwpck_require__(62811), exports);
 __exportStar(__nccwpck_require__(42011), exports);
 __exportStar(__nccwpck_require__(5235), exports);
-__exportStar(__nccwpck_require__(83891), exports);
 __exportStar(__nccwpck_require__(51443), exports);
 //# sourceMappingURL=internal.js.map
 
@@ -72344,6 +72348,11 @@ function getCommonCliOptions(serviceType) {
             describe: getReadmeText(serviceType),
             default: false,
             hidden: true
+        },
+        generateESM: {
+            describe: 'When enabled, all generated files follow the ECMAScript module syntax.',
+            type: 'boolean',
+            default: false
         }
     };
 }
@@ -72617,6 +72626,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.defaultTsConfig = void 0;
 exports.formatTsConfig = formatTsConfig;
 exports.readCustomTsConfig = readCustomTsConfig;
+exports.tsconfigJson = tsconfigJson;
 const fs_1 = __nccwpck_require__(79896);
 const path_1 = __nccwpck_require__(16928);
 const util_1 = __nccwpck_require__(11238);
@@ -72624,28 +72634,29 @@ const { readFile, lstat } = fs_1.promises;
 /**
  * @internal
  */
-exports.defaultTsConfig = {
+const defaultTsConfig = (generateESM) => ({
     compilerOptions: {
         target: 'es2021',
-        module: 'commonjs',
+        module: generateESM ? 'nodenext' : 'commonjs',
         lib: ['esnext'],
         declaration: true,
         declarationMap: false,
         sourceMap: true,
         diagnostics: true,
-        moduleResolution: 'node',
+        moduleResolution: generateESM ? 'nodenext' : 'node',
         esModuleInterop: true,
         inlineSources: false,
         strict: true
     },
     include: ['**/*.ts'],
     exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
-};
+});
+exports.defaultTsConfig = defaultTsConfig;
 /**
  * @internal
  */
-function formatTsConfig() {
-    return JSON.stringify(exports.defaultTsConfig, null, 2) + util_1.unixEOL;
+function formatTsConfig(generateESM) {
+    return JSON.stringify((0, exports.defaultTsConfig)(generateESM), null, 2) + util_1.unixEOL;
 }
 /**
  * @internal
@@ -72659,6 +72670,22 @@ async function readCustomTsConfig(configPath) {
     }
     catch (err) {
         throw new util_1.ErrorWithCause(`Could not read tsconfig.json at ${configPath}.`, err);
+    }
+}
+/**
+ * Build a tsconfig.json file as string.
+ * If transpile is true or tsconfig is provided, return the appropriate config.
+ * @param transpile - Whether to transpile.
+ * @param tsconfig - Path to custom tsconfig file.
+ * @param generateESM - Whether to generate ES modules instead of CommonJS.
+ * @returns The serialized tsconfig.json contents.
+ * @internal
+ */
+async function tsconfigJson(transpile, tsconfig, generateESM) {
+    if (transpile || tsconfig) {
+        return tsconfig
+            ? readCustomTsConfig(tsconfig)
+            : formatTsConfig(generateESM);
     }
 }
 //# sourceMappingURL=ts-config.js.map

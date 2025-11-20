@@ -8,6 +8,7 @@ import type {
   VdmNavigationProperty,
   VdmProperty
 } from './vdm-types';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
@@ -107,12 +108,13 @@ export function navPropertyFieldTypeImportNames(
  * @internal
  */
 export function complexTypeImportDeclarations(
-  properties: VdmProperty[]
+  properties: VdmProperty[],
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   return mergeImportDeclarations(
     properties
       .filter(prop => prop.isComplex)
-      .map(prop => complexTypeImportDeclaration(prop))
+      .map(prop => complexTypeImportDeclaration(prop, options))
   );
 }
 
@@ -120,12 +122,13 @@ export function complexTypeImportDeclarations(
  * @internal
  */
 export function enumTypeImportDeclarations(
-  properties: VdmProperty[]
+  properties: VdmProperty[],
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   return mergeImportDeclarations(
     properties
       .filter(prop => prop.isEnum)
-      .map(prop => enumTypeImportDeclaration(prop))
+      .map(prop => enumTypeImportDeclaration(prop, options))
   );
 }
 
@@ -184,21 +187,27 @@ export function mergeImportDeclarations(
 }
 
 function complexTypeImportDeclaration(
-  prop: VdmProperty
+  prop: VdmProperty,
+  options?: CreateFileOptions
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: `./${prop.jsType}`,
+    moduleSpecifier: options?.generateESM
+      ? `./${prop.jsType}.js`
+      : `./${prop.jsType}`,
     namedImports: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])]
   };
 }
 
 function enumTypeImportDeclaration(
-  prop: VdmProperty
+  prop: VdmProperty,
+  options?: CreateFileOptions
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: `./${prop.jsType}`,
+    moduleSpecifier: options?.generateESM
+      ? `./${prop.jsType}.js`
+      : `./${prop.jsType}`,
     namedImports: [prop.jsType]
   };
 }

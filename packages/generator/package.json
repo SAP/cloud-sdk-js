@@ -26,7 +26,11 @@
     "internal.d.ts",
     "internal.js"
   ],
-  "repository": "github:SAP/cloud-sdk-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/cloud-sdk-js.git",
+    "directory": "packages/generator"
+  },
   "scripts": {
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
@@ -45,12 +49,12 @@
     "@sap-cloud-sdk/odata-v4": "^4.1.2",
     "@sap-cloud-sdk/util": "^4.1.2",
     "@types/fs-extra": "^11.0.4",
-    "fast-xml-parser": "^5.3.0",
+    "fast-xml-parser": "^5.3.2",
     "fs-extra": "^11.3.2",
     "ts-morph": "^27.0.2",
     "typescript": "~5.9.3",
     "voca": "^1.4.1",
-    "winston": "^3.18.2"
+    "winston": "^3.18.3"
   },
   "devDependencies": {
     "execa": "^5.0.0",

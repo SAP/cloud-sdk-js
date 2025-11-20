@@ -20,7 +20,7 @@
     "@sap-cloud-sdk/util": "^4.0.0",
     "@sap-cloud-sdk/generator-common": "^4.0.0",
     "@types/mock-fs": "^4.13.4",
-    "glob": "^11.0.3",
+    "glob": "^11.1.0",
     "mock-fs": "^5.5.0"
   },
   "devDependencies": {

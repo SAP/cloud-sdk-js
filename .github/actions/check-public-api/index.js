@@ -24711,6 +24711,22 @@ function charFromCodepoint(c) {
   );
 }
 
+// set a property of a literal object, while protecting against prototype pollution,
+// see https://github.com/nodeca/js-yaml/issues/164 for more details
+function setProperty(object, key, value) {
+  // used for this specific key only because Object.defineProperty is slow
+  if (key === '__proto__') {
+    Object.defineProperty(object, key, {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: value
+    });
+  } else {
+    object[key] = value;
+  }
+}
+
 var simpleEscapeCheck = new Array(256); // integer, for fast access
 var simpleEscapeMap = new Array(256);
 for (var i = 0; i < 256; i++) {
@@ -24889,7 +24905,7 @@ function mergeMappings(state, destination, source, overridableKeys) {
     key = sourceKeys[index];
 
     if (!_hasOwnProperty.call(destination, key)) {
-      destination[key] = source[key];
+      setProperty(destination, key, source[key]);
       overridableKeys[key] = true;
     }
   }
@@ -24949,17 +24965,7 @@ function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valu
       throwError(state, 'duplicated mapping key');
     }
 
-    // used for this specific key only because Object.defineProperty is slow
-    if (keyNode === '__proto__') {
-      Object.defineProperty(_result, keyNode, {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: valueNode
-      });
-    } else {
-      _result[keyNode] = valueNode;
-    }
+    setProperty(_result, keyNode, valueNode);
     delete overridableKeys[keyNode];
   }
 
@@ -80302,7 +80308,9 @@ class AST {
         if (this.#root === this)
             this.#fillNegs();
         if (!this.type) {
-            const noEmpty = this.isStart() && this.isEnd();
+            const noEmpty = this.isStart() &&
+                this.isEnd() &&
+                !this.#parts.some(s => typeof s !== 'string');
             const src = this.#parts
                 .map(p => {
                 const [re, _, hasMagic, uflag] = typeof p === 'string'
@@ -80458,10 +80466,7 @@ class AST {
                 }
             }
             if (c === '*') {
-                if (noEmpty && glob === '*')
-                    re += starNoEmpty;
-                else
-                    re += star;
+                re += noEmpty && glob === '*' ? starNoEmpty : star;
                 hasMagic = true;
                 continue;
             }
@@ -80649,16 +80654,24 @@ exports.escape = void 0;
 /**
  * Escape all magic characters in a glob pattern.
  *
- * If the {@link windowsPathsNoEscape | GlobOptions.windowsPathsNoEscape}
+ * If the {@link MinimatchOptions.windowsPathsNoEscape}
  * option is used, then characters are escaped by wrapping in `[]`, because
  * a magic character wrapped in a character class can only be satisfied by
  * that exact character.  In this mode, `\` is _not_ escaped, because it is
  * not interpreted as a magic character, but instead as a path separator.
+ *
+ * If the {@link MinimatchOptions.magicalBraces} option is used,
+ * then braces (`{` and `}`) will be escaped.
  */
-const escape = (s, { windowsPathsNoEscape = false, } = {}) => {
+const escape = (s, { windowsPathsNoEscape = false, magicalBraces = false, } = {}) => {
     // don't need to escape +@! because we escape the parens
     // that make those magic, and escaping ! as [!] isn't valid,
     // because [!]] is a valid glob class meaning not ']'.
+    if (magicalBraces) {
+        return windowsPathsNoEscape
+            ? s.replace(/[?*()[\]{}]/g, '[$&]')
+            : s.replace(/[?*()[\]\\{}]/g, '\\$&');
+    }
     return windowsPathsNoEscape
         ? s.replace(/[?*()[\]]/g, '[$&]')
         : s.replace(/[?*()[\]\\]/g, '\\$&');
@@ -81314,7 +81327,7 @@ class Minimatch {
             }
         }
         // resolve and reduce . and .. portions in the file as well.
-        // dont' need to do the second phase, because it's only one string[]
+        // don't need to do the second phase, because it's only one string[]
         const { optimizationLevel = 1 } = this.options;
         if (optimizationLevel >= 2) {
             file = this.levelTwoFileOptimize(file);
@@ -81567,14 +81580,25 @@ class Minimatch {
                     }
                 }
                 else if (next === undefined) {
-                    pp[i - 1] = prev + '(?:\\/|' + twoStar + ')?';
+                    pp[i - 1] = prev + '(?:\\/|\\/' + twoStar + ')?';
                 }
                 else if (next !== exports.GLOBSTAR) {
                     pp[i - 1] = prev + '(?:\\/|\\/' + twoStar + '\\/)' + next;
                     pp[i + 1] = exports.GLOBSTAR;
                 }
             });
-            return pp.filter(p => p !== exports.GLOBSTAR).join('/');
+            const filtered = pp.filter(p => p !== exports.GLOBSTAR);
+            // For partial matches, we need to make the pattern match
+            // any prefix of the full path. We do this by generating
+            // alternative patterns that match progressively longer prefixes.
+            if (this.partial && filtered.length >= 1) {
+                const prefixes = [];
+                for (let i = 1; i <= filtered.length; i++) {
+                    prefixes.push(filtered.slice(0, i).join('/'));
+                }
+                return '(?:' + prefixes.join('|') + ')';
+            }
+            return filtered.join('/');
         })
             .join('|');
         // need to wrap in parens if we had more than one thing with |,
@@ -81583,6 +81607,10 @@ class Minimatch {
         // must match entire pattern
         // ending in a * or ** will make it less strict.
         re = '^' + open + re + close + '$';
+        // In partial mode, '/' should always match as it's a valid prefix for any pattern
+        if (this.partial) {
+            re = '^(?:\\/|' + open + re.slice(1, -1) + close + ')$';
+        }
         // can match anything, as long as it's not this.
         if (this.negate)
             re = '^(?!' + re + ').+$';
@@ -81699,21 +81727,35 @@ exports.unescape = void 0;
 /**
  * Un-escape a string that has been escaped with {@link escape}.
  *
- * If the {@link windowsPathsNoEscape} option is used, then square-brace
- * escapes are removed, but not backslash escapes.  For example, it will turn
- * the string `'[*]'` into `*`, but it will not turn `'\\*'` into `'*'`,
- * becuase `\` is a path separator in `windowsPathsNoEscape` mode.
+ * If the {@link MinimatchOptions.windowsPathsNoEscape} option is used, then
+ * square-bracket escapes are removed, but not backslash escapes.
  *
- * When `windowsPathsNoEscape` is not set, then both brace escapes and
+ * For example, it will turn the string `'[*]'` into `*`, but it will not
+ * turn `'\\*'` into `'*'`, because `\` is a path separator in
+ * `windowsPathsNoEscape` mode.
+ *
+ * When `windowsPathsNoEscape` is not set, then both square-bracket escapes and
  * backslash escapes are removed.
  *
  * Slashes (and backslashes in `windowsPathsNoEscape` mode) cannot be escaped
  * or unescaped.
+ *
+ * When `magicalBraces` is not set, escapes of braces (`{` and `}`) will not be
+ * unescaped.
  */
-const unescape = (s, { windowsPathsNoEscape = false, } = {}) => {
+const unescape = (s, { windowsPathsNoEscape = false, magicalBraces = true, } = {}) => {
+    if (magicalBraces) {
+        return windowsPathsNoEscape
+            ? s.replace(/\[([^\/\\])\]/g, '$1')
+            : s
+                .replace(/((?!\\).|^)\[([^\/\\])\]/g, '$1$2')
+                .replace(/\\([^\/])/g, '$1');
+    }
     return windowsPathsNoEscape
-        ? s.replace(/\[([^\/\\])\]/g, '$1')
-        : s.replace(/((?!\\).|^)\[([^\/\\])\]/g, '$1$2').replace(/\\([^\/])/g, '$1');
+        ? s.replace(/\[([^\/\\{}])\]/g, '$1')
+        : s
+            .replace(/((?!\\).|^)\[([^\/\\{}])\]/g, '$1$2')
+            .replace(/\\([^\/{}])/g, '$1');
 };
 exports.unescape = unescape;
 //# sourceMappingURL=unescape.js.map
@@ -94036,7 +94078,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"application/1d-interleaved-parityfec
 /***/ ((module) => {
 
 "use strict";
-module.exports = {"version":"3.18.2"};
+module.exports = {"version":"3.18.3"};
 
 /***/ })
 

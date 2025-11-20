@@ -72617,7 +72617,7 @@ async function getSdkVersion() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.defaultTsConfig = defaultTsConfig;
+exports.defaultTsConfig = void 0;
 exports.formatTsConfig = formatTsConfig;
 exports.readCustomTsConfig = readCustomTsConfig;
 exports.tsconfigJson = tsconfigJson;
@@ -72628,7 +72628,7 @@ const { readFile, lstat } = fs_1.promises;
 /**
  * @internal
  */
-function defaultTsConfig(generateESM = false) {
+const defaultTsConfig = (generateESM) => {
     return {
         compilerOptions: {
             target: 'es2021',
@@ -72646,12 +72646,13 @@ function defaultTsConfig(generateESM = false) {
         include: ['**/*.ts'],
         exclude: ['dist/**/*', 'test/**/*', '**/*.spec.ts', 'node_modules/**/*']
     };
-}
+};
+exports.defaultTsConfig = defaultTsConfig;
 /**
  * @internal
  */
-function formatTsConfig(generateESM = false) {
-    return JSON.stringify(defaultTsConfig(generateESM), null, 2) + util_1.unixEOL;
+function formatTsConfig(generateESM) {
+    return JSON.stringify((0, exports.defaultTsConfig)(generateESM), null, 2) + util_1.unixEOL;
 }
 /**
  * @internal
@@ -72676,7 +72677,7 @@ async function readCustomTsConfig(configPath) {
  * @returns The serialized tsconfig.json contents.
  * @internal
  */
-async function tsconfigJson(transpile = false, tsconfig, generateESM = false) {
+async function tsconfigJson(transpile, tsconfig, generateESM) {
     if (transpile || tsconfig) {
         return tsconfig
             ? readCustomTsConfig(tsconfig)

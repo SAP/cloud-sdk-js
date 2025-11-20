@@ -5,9 +5,9 @@ const { readFile, lstat } = promises;
 /**
  * @internal
  */
-export function defaultTsConfig(
-  generateESM: boolean = false
-): Record<string, any> {
+export const defaultTsConfig = (
+  generateESM?: boolean
+): Record<string, any> => {
   return {
     compilerOptions: {
       target: 'es2021',
@@ -29,7 +29,7 @@ export function defaultTsConfig(
 /**
  * @internal
  */
-export function formatTsConfig(generateESM: boolean = false): string {
+export function formatTsConfig(generateESM?: boolean): string {
   return JSON.stringify(defaultTsConfig(generateESM), null, 2) + unixEOL;
 }
 
@@ -60,9 +60,9 @@ export async function readCustomTsConfig(configPath: string): Promise<string> {
  * @internal
  */
 export async function tsconfigJson(
-  transpile: boolean = false,
+  transpile?: boolean,
   tsconfig?: string,
-  generateESM: boolean = false
+  generateESM?: boolean
 ): Promise<string | undefined> {
   if (transpile || tsconfig) {
     return tsconfig

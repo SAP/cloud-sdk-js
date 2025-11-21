@@ -1,7 +1,12 @@
 import { X509Certificate } from 'node:crypto';
 import mock from 'mock-fs';
-import * as jks from 'jks-js';
 import { createLogger } from '@sap-cloud-sdk/util';
+
+// Mock jks-js module
+jest.mock('jks-js', () => ({
+  toPem: jest.fn()
+}));
+import * as jks from 'jks-js';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
 import { getAgentConfig } from './http-agent';
@@ -174,6 +179,15 @@ describe('createAgent', () => {
   });
 
   it('does not throw an error for supported JKS format', async () => {
+    // Mock jks.toPem to return valid PEM data
+    const mockPemKeystore = {
+      'alias1': {
+        cert: '-----BEGIN CERTIFICATE-----\nMII...\n-----END CERTIFICATE-----',
+        key: '-----BEGIN PRIVATE KEY-----\nMII...\n-----END PRIVATE KEY-----'
+      }
+    };
+    (jks.toPem as jest.MockedFunction<typeof jks.toPem>).mockReturnValue(mockPemKeystore);
+
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
@@ -182,22 +196,21 @@ describe('createAgent', () => {
       certificates: [
         {
           name: 'cert.jks',
-          content: 'base64string',
+          content: 'base64string', // Can remain dummy since we're mocking
           type: 'CERTIFICATE'
         }
       ]
     };
 
-    // Mock the jks.toPem to avoid actual JKS parsing
-    const mockPem = {
-      alias: {
-        cert: 'mock-cert',
-        key: 'mock-key'
-      }
+    const expectedOptions = {
+      rejectUnauthorized: true,
+      cert: Buffer.from(mockPemKeystore['alias1'].cert, 'utf8'),
+      key: Buffer.from(mockPemKeystore['alias1'].key, 'utf8')
     };
-    jest.spyOn(jks, 'toPem').mockReturnValue(mockPem);
 
-    await expect(getAgentConfig(destination)).resolves.toBeDefined();
+    expect(
+      (await getAgentConfig(destination))['httpsAgent']['options']
+    ).toMatchObject(expectedOptions);
   });
 
   it('throws an error if the format is not supported', async () => {

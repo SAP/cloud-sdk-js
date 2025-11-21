@@ -172,7 +172,7 @@ describe('createAgent', () => {
     ).toMatchObject(expectedOptions);
   });
 
-  it('throws an error if the format is not supported', async () => {
+  it('does not throw an error for supported JKS format', async () => {
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
@@ -187,8 +187,35 @@ describe('createAgent', () => {
       ]
     };
 
+    // Mock the jks.toPem to avoid actual JKS parsing
+    const mockPem = {
+      alias: {
+        cert: 'mock-cert',
+        key: 'mock-key'
+      }
+    };
+    jest.spyOn(require('jks-js'), 'toPem').mockReturnValue(mockPem);
+
+    await expect(getAgentConfig(destination)).resolves.toBeDefined();
+  });
+
+  it('throws an error if the format is not supported', async () => {
+    const destination: HttpDestination = {
+      url: 'https://destination.example.com',
+      authentication: 'ClientCertificateAuthentication',
+      keyStoreName: 'cert.unknown',
+      keyStorePassword: 'password',
+      certificates: [
+        {
+          name: 'cert.unknown',
+          content: 'base64string',
+          type: 'CERTIFICATE'
+        }
+      ]
+    };
+
     expect(async () => getAgentConfig(destination)).rejects.toThrow(
-      "The format of the provided certificate 'cert.jks' is not supported. Supported formats are: p12, pfx, pem. You can convert Java Keystores (.jks, .keystore) into PKCS#12 keystores using the JVM's keytool CLI: keytool -importkeystore -srckeystore your-keystore.jks -destkeystore your-keystore.p12 -deststoretype pkcs12"
+      "The format of the provided certificate 'cert.unknown' is not supported. Supported formats are: p12, pfx, pem, jks."
     );
   });
 

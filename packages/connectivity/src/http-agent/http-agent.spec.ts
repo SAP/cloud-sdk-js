@@ -181,12 +181,14 @@ describe('createAgent', () => {
   it('does not throw an error for supported JKS format', async () => {
     // Mock jks.toPem to return valid PEM data
     const mockPemKeystore = {
-      'alias1': {
+      alias1: {
         cert: '-----BEGIN CERTIFICATE-----\nMII...\n-----END CERTIFICATE-----',
         key: '-----BEGIN PRIVATE KEY-----\nMII...\n-----END PRIVATE KEY-----'
       }
     };
-    (jks.toPem as jest.MockedFunction<typeof jks.toPem>).mockReturnValue(mockPemKeystore);
+    (jks.toPem as jest.MockedFunction<typeof jks.toPem>).mockReturnValue(
+      mockPemKeystore
+    );
 
     const destination: HttpDestination = {
       url: 'https://destination.example.com',

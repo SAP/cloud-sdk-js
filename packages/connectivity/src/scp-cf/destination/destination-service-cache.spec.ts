@@ -68,9 +68,8 @@ describe('DestinationServiceCache', () => {
     );
     expect(directCallSubscriber.length).toEqual(2);
 
-    const directCallProvider = await populateCacheDestinations(
-      providerServiceToken
-    );
+    const directCallProvider =
+      await populateCacheDestinations(providerServiceToken);
 
     const cacheSubscriber = getDestinationsFromCache(subscriberServiceToken);
     expect(cacheSubscriber).toEqual(directCallSubscriber);

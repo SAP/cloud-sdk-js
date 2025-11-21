@@ -294,7 +294,7 @@ describe('generic http client', () => {
     it('passes the context properties to the middleware', async () => {
       const showContextMiddleware: HttpMiddleware =
         (opt: HttpMiddlewareOptions) => () =>
-          ({ data: opt.context } as any);
+          ({ data: opt.context }) as any;
 
       mockServiceBindings();
       // Inside connectivity package we can use jest to mock jwtVerify and tokenAccessor

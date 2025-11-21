@@ -37,8 +37,8 @@ export type FilterOperator =
 export type FilterOperatorByType<FieldT> = FieldT extends string
   ? FilterOperatorString
   : FieldT extends number
-  ? FilterOperatorNumber
-  : FilterOperatorBoolean;
+    ? FilterOperatorNumber
+    : FilterOperatorBoolean;
 
 /**
  * Represents a filter expression to narrow the data on a {@link GetAllRequestBuilderBase | GetAllRequestBuilder} request for multiple entities that match the specified criteria.

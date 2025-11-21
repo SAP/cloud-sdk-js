@@ -65,9 +65,8 @@ describe('proxy-util', () => {
       }
     });
 
-    process.env[
-      'no_proxy'
-    ] = `http://some.otherURL.com,${httpsDestination.url}`;
+    process.env['no_proxy'] =
+      `http://some.otherURL.com,${httpsDestination.url}`;
     expect(proxyStrategy(httpsDestination)).toBe('no-proxy');
   });
 

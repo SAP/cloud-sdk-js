@@ -16,7 +16,10 @@ export class ErrorWithCause extends Error {
    * @param message - Error message.
    * @param cause - Original error, causing this error.
    */
-  constructor(message: string, public readonly cause: Error) {
+  constructor(
+    message: string,
+    public readonly cause: Error
+  ) {
     // There is an issue with the prototype chain when extending from Error: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html#support-for-newtarget
     super(message); // 'Error' breaks prototype chain here
     Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain

@@ -21,7 +21,11 @@
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map"
   ],
-  "repository": "github:SAP/cloud-sdk-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/cloud-sdk-js.git",
+    "directory": "packages/util"
+  },
   "scripts": {
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
@@ -38,7 +42,7 @@
     "chalk": "^4.1.0",
     "logform": "^2.7.0",
     "voca": "^1.4.1",
-    "winston": "^3.18.2",
+    "winston": "^3.18.3",
     "winston-transport": "^4.9.0"
   },
   "devDependencies": {

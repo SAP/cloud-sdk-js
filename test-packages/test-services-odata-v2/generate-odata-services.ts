@@ -1,17 +1,16 @@
 import { resolve, join } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { generate } from '@sap-cloud-sdk/generator';
+import { generate, GeneratorOptions } from '@sap-cloud-sdk/generator';
 
 const logger = createLogger('generate-odata-services');
 
-const generatorConfigOData = {
+const generatorConfigOData: Partial<GeneratorOptions> = {
   overwrite: true,
   transpile: true,
   useSwagger: false,
   readme: false,
   clearOutputDir: false,
   packageJson: false,
-  generateSdkMetadata: false,
   skipValidation: true,
   verbose: false
 };

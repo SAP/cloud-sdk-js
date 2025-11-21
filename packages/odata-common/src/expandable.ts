@@ -14,10 +14,9 @@ export type Expandable<
     EntityBase,
     DeSerializersT
   >
-> =
-  ODataVersionOf<EntityT> extends 'v2'
-    ? never
-    :
-        | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>
-        | OneToOneLink<EntityT, DeSerializersT, LinkedEntityApiT>
-        | AllFields<EntityT>;
+> = ODataVersionOf<EntityT> extends 'v2'
+  ? never
+  :
+      | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>
+      | OneToOneLink<EntityT, DeSerializersT, LinkedEntityApiT>
+      | AllFields<EntityT>;

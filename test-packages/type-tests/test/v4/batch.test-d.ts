@@ -18,7 +18,7 @@ import type {
 const { testEntityApi } = testService();
 
 expectType<() => ReadResponse<DefaultDeSerializersV4>>(
-  (): ReadResponse => ({}) as any
+  (): ReadResponse => ({} as any)
 );
 
 async () => {

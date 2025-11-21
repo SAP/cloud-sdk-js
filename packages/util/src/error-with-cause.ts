@@ -16,10 +16,7 @@ export class ErrorWithCause extends Error {
    * @param message - Error message.
    * @param cause - Original error, causing this error.
    */
-  constructor(
-    message: string,
-    public readonly cause: Error
-  ) {
+  constructor(message: string, public readonly cause: Error) {
     // There is an issue with the prototype chain when extending from Error: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html#support-for-newtarget
     super(message); // 'Error' breaks prototype chain here
     Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
@@ -38,7 +35,11 @@ export class ErrorWithCause extends Error {
       let response = '';
       if (cause.response?.data) {
         try {
-          response = `${unixEOL}${JSON.stringify(cause.response?.data, null, 2)}`;
+          response = `${unixEOL}${JSON.stringify(
+            cause.response?.data,
+            null,
+            2
+          )}`;
         } catch (error) {
           logger.warn(`Failed to stringify response data: ${error.message}`);
           response = `${unixEOL}${cause.response?.data}`;

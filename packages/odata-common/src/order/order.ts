@@ -25,8 +25,5 @@ export class Order<EntityT extends EntityBase>
    * @param _fieldName - Field to order by.
    * @param orderType - Type of ordering, can be 'asc' for ascending or 'desc' for descending.
    */
-  constructor(
-    public _fieldName: string,
-    public orderType: OrderType = 'asc'
-  ) {}
+  constructor(public _fieldName: string, public orderType: OrderType = 'asc') {}
 }

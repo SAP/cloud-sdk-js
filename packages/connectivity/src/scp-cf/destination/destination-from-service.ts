@@ -127,8 +127,9 @@ export class DestinationFromServiceRetriever {
         (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
           !da.usesSystemUser(destination))
       ) {
-        destination =
-          await da.fetchDestinationWithUserExchangeFlows(destinationResult);
+        destination = await da.fetchDestinationWithUserExchangeFlows(
+          destinationResult
+        );
       }
 
       if (destination.authentication === 'PrincipalPropagation') {
@@ -143,13 +144,15 @@ export class DestinationFromServiceRetriever {
         destination.authentication === 'OAuth2ClientCredentials' ||
         da.usesSystemUser(destination)
       ) {
-        destination =
-          await da.fetchDestinationWithNonUserExchangeFlows(destinationResult);
+        destination = await da.fetchDestinationWithNonUserExchangeFlows(
+          destinationResult
+        );
       }
 
       if (destination.authentication === 'OAuth2RefreshToken') {
-        destination =
-          await da.fetchDestinationWithRefreshTokenFlow(destinationResult);
+        destination = await da.fetchDestinationWithRefreshTokenFlow(
+          destinationResult
+        );
       }
     }
 
@@ -367,8 +370,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async fetchDestinationWithNonUserExchangeFlows(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token =
-      await this.getAuthTokenForOAuth2ClientCredentials(destinationResult);
+    const token = await this.getAuthTokenForOAuth2ClientCredentials(
+      destinationResult
+    );
 
     return fetchDestinationWithTokenRetrieval(
       getDestinationServiceCredentials().uri,
@@ -380,10 +384,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async fetchDestinationWithUserExchangeFlows(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token =
-      await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
-        destinationResult
-      );
+    const token = await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
+      destinationResult
+    );
 
     return fetchDestinationWithTokenRetrieval(
       getDestinationServiceCredentials().uri,
@@ -395,8 +398,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   private async fetchDestinationWithRefreshTokenFlow(
     destinationResult: DestinationSearchResult
   ): Promise<Destination> {
-    const token =
-      await this.getAuthTokenForOAuth2RefreshToken(destinationResult);
+    const token = await this.getAuthTokenForOAuth2RefreshToken(
+      destinationResult
+    );
 
     return fetchDestinationWithTokenRetrieval(
       getDestinationServiceCredentials().uri,

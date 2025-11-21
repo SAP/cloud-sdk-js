@@ -8,8 +8,9 @@ describe('orderable', () => {
     const datetimeoffsetFieldName = 'DateTimeOffSetProperty';
 
     it('should create filter for type DateTimeOffset by passing moment() ', () => {
-      const filter =
-        testEntityApi.schema.DATE_TIME_OFF_SET_PROPERTY.equals(moment());
+      const filter = testEntityApi.schema.DATE_TIME_OFF_SET_PROPERTY.equals(
+        moment()
+      );
       expect(moment.isMoment(filter.value)).toBe(true);
     });
 

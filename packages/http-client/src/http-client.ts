@@ -87,8 +87,9 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
     const resolvedDestination = await resolveDestination(destination);
     assertHttpDestination(resolvedDestination);
 
-    const destinationRequestConfig =
-      await buildHttpRequest(resolvedDestination);
+    const destinationRequestConfig = await buildHttpRequest(
+      resolvedDestination
+    );
 
     logCustomHeadersWarning(requestConfig.headers);
     const request = await buildRequestWithMergedHeadersAndQueryParameters(

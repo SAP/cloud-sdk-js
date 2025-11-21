@@ -1,5 +1,6 @@
 import { X509Certificate } from 'node:crypto';
 import mock from 'mock-fs';
+import * as jks from 'jks-js';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
@@ -194,7 +195,7 @@ describe('createAgent', () => {
         key: 'mock-key'
       }
     };
-    jest.spyOn(require('jks-js'), 'toPem').mockReturnValue(mockPem);
+    jest.spyOn(jks, 'toPem').mockReturnValue(mockPem);
 
     await expect(getAgentConfig(destination)).resolves.toBeDefined();
   });

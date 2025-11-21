@@ -43,5 +43,9 @@ export interface EntityApi<
 /**
  * Helper type to extract the type of an entity from an API so EntityType<MyPetApi<Dog>> is `Dog`.
  */
-export type EntityType<forExtraction> =
-  forExtraction extends EntityApi<infer EntityT, any> ? EntityT : never;
+export type EntityType<forExtraction> = forExtraction extends EntityApi<
+  infer EntityT,
+  any
+>
+  ? EntityT
+  : never;

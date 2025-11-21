@@ -94,10 +94,9 @@ describe('operation request builder', () => {
       )
       .reply(200, httpResponse);
 
-    const result =
-      await testActionImportMultipleParameterComplexReturnType(tsBody).execute(
-        destination
-      );
+    const result = await testActionImportMultipleParameterComplexReturnType(
+      tsBody
+    ).execute(destination);
     expect(result).toEqual(tsResponse);
   });
 

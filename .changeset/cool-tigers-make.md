@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/openapi': patch
 ---
 
-Added generateESM to packageJson options
+[Fixed Issue] Added generateESM to packageJson options

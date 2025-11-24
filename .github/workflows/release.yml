@@ -10,7 +10,7 @@ jobs:
       id-token: write
       
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: 'main'
       - uses: actions/setup-node@v6
@@ -27,7 +27,7 @@ jobs:
         run: |
           yarn changeset publish
       - name: Checkout Docs
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: SAP/cloud-sdk
           token: ${{ secrets.GH_DOCS_TOKEN }}

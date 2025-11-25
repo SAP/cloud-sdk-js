@@ -33,4 +33,15 @@ describe('packageJson', () => {
     );
     expect(parsed.type).toBe('module');
   });
+
+  it('includes type module when generateESM is undefined', () => {
+    const parsed = JSON.parse(
+      packageJson({
+        npmPackageName: 'workflow-service',
+        description: 'description',
+        sdkVersion: '1.35.0'
+      })
+    );
+    expect(parsed.type).toBeUndefined();
+  });
 });

@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/openapi': minor
 ---
 
-[Fixed Issue] Added generateESM to packageJson options
+[Fixed Issue] Fix missing `type: module` in generated `package.json` when `--generateESM` option is enabled.

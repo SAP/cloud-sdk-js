@@ -11,7 +11,7 @@ jobs:
   check-pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Collect changed files
         uses: step-security/changed-files@v46.0.5
         id: changed-files

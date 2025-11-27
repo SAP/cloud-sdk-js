@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 4.2.0
+
+### Patch Changes
+
+- f17ca59: [Fixed Issue] Improve the handling of arrays of enums
+- Updated dependencies [e09754a]
+- Updated dependencies [c73c7fa]
+  - @sap-cloud-sdk/openapi@4.2.0
+  - @sap-cloud-sdk/generator-common@4.2.0
+  - @sap-cloud-sdk/util@4.2.0
+
 ## 4.1.2
 
 ### Patch Changes

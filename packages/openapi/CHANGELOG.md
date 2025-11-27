@@ -1,5 +1,18 @@
 # @sap-cloud-sdk/openapi
 
+## 4.2.0
+
+### Minor Changes
+
+- e09754a: [Fixed Issue] Fix missing `type: module` in generated `package.json` when `--generateESM` option is enabled.
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@4.2.0
+- @sap-cloud-sdk/http-client@4.2.0
+- @sap-cloud-sdk/resilience@4.2.0
+- @sap-cloud-sdk/util@4.2.0
+
 ## 4.1.2
 
 ### Patch Changes

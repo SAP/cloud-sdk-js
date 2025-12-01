@@ -27,12 +27,18 @@ function makeArray(val: string | string[] | undefined): string[] {
 /**
  * @internal
  * Get the user ID from the JWT payload.
+ * For XSUAA tokens, this is `user_id`.
+ * For IAS tokens, this is `user_uuid`.
  * @param jwtPayload - Token payload to read the user ID from.
  * @returns The user ID, if available.
  */
-export function userId({ user_id }: JwtPayload): string {
-  logger.debug(`JWT user_id is: ${user_id}.`);
-  return user_id;
+export function userId(jwtPayload: JwtPayload): string {
+  // IAS tokens use user_uuid, XSUAA tokens use user_id
+  const id = jwtPayload.user_uuid || jwtPayload.user_id;
+  logger.debug(
+    `JWT user identifier is: ${id} (from ${jwtPayload.user_uuid ? 'user_uuid (IAS)' : 'user_id (XSUAA)'}).`
+  );
+  return id;
 }
 
 /**

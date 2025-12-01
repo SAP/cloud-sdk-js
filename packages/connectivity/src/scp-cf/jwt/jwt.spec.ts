@@ -4,9 +4,35 @@ import {
   mockServiceBindings,
   signedJwtForVerification
 } from '../../../../../test-resources/test/test-util';
-import { audiences, retrieveJwt, isXsuaaToken, decodeJwt } from './jwt';
+import {
+  audiences,
+  decodeJwt,
+  isXsuaaToken,
+  retrieveJwt,
+  userId
+} from './jwt';
 
 describe('jwt', () => {
+  describe('userId', () => {
+    it('extracts user_id from XSUAA tokens', () => {
+      const xsuaaPayload = { user_id: 'xsuaa-user-123' };
+      expect(userId(xsuaaPayload)).toBe('xsuaa-user-123');
+    });
+
+    it('extracts user_uuid from IAS tokens', () => {
+      const iasPayload = { user_uuid: 'ias-user-uuid-456' };
+      expect(userId(iasPayload)).toBe('ias-user-uuid-456');
+    });
+
+    it('prefers user_uuid over user_id when both are present', () => {
+      const mixedPayload = {
+        user_uuid: 'ias-user-uuid-456',
+        user_id: 'xsuaa-user-123'
+      };
+      expect(userId(mixedPayload)).toBe('ias-user-uuid-456');
+    });
+  });
+
   describe('isXsuaaToken()', () => {
     it('returns true if the token was issued by XSUAA', () => {
       const jwt = decodeJwt(

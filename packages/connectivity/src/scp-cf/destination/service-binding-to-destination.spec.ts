@@ -1,12 +1,38 @@
-import { serviceToken } from '../token-accessor';
 import { resolveServiceBinding } from '../environment-accessor/service-bindings';
+import { getIasClientCredentialsToken } from '../identity-service';
 import { decodeJwt } from '../jwt';
+import { serviceToken } from '../token-accessor';
 import {
   transformServiceBindingToClientCredentialsDestination,
   transformServiceBindingToDestination
 } from './service-binding-to-destination';
 
+jest.mock('../identity-service', () => ({
+  getIasClientCredentialsToken: jest.fn()
+}));
+
+jest.mock('../token-accessor', () => ({
+  serviceToken: jest.fn()
+}));
+
+jest.mock('../jwt', () => ({
+  decodeJwt: jest.fn()
+}));
+
 const services = {
+  identity: [
+    {
+      name: 'my-identity-service',
+      label: 'identity',
+      tags: ['identity'],
+      credentials: {
+        url: 'https://tenant.accounts.ondemand.com',
+        clientid: 'identity-clientid',
+        certificate: '-----BEGIN CERTIFICATE-----\ntest\n-----END CERTIFICATE-----',
+        key: '-----BEGIN RSA PRIVATE KEY-----\ntest\n-----END RSA PRIVATE KEY-----'
+      }
+    }
+  ],
   destination: [
     {
       name: 'my-destination-service1',
@@ -97,17 +123,16 @@ const services = {
   ]
 };
 
-jest.mock('../token-accessor', () => ({
-  serviceToken: jest.fn()
-}));
-
-jest.mock('../jwt', () => ({
-  decodeJwt: jest.fn()
-}));
-
 describe('service binding to destination', () => {
   beforeAll(() => {
     (serviceToken as jest.Mock).mockResolvedValue('access-token');
+    (getIasClientCredentialsToken as jest.Mock).mockResolvedValue({
+      access_token: 'ias-access-token',
+      token_type: 'Bearer',
+      expires_in: 3600,
+      scope: 'openid',
+      jti: 'mock-jti'
+    });
     (decodeJwt as jest.Mock).mockReturnValue({ exp: 1596549600 });
     process.env.VCAP_SERVICES = JSON.stringify(services);
   });
@@ -252,6 +277,54 @@ describe('service binding to destination', () => {
             type: 'bearer'
           })
         ])
+      })
+    );
+  });
+
+  it('transforms identity (IAS) service binding', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('identity')
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'https://tenant.accounts.ondemand.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2ClientCredentials',
+        authTokens: expect.arrayContaining([
+          expect.objectContaining({
+            value: 'ias-access-token',
+            type: 'bearer'
+          })
+        ])
+      })
+    );
+    expect(getIasClientCredentialsToken).toHaveBeenCalledWith(
+      expect.objectContaining({
+        label: 'identity',
+        name: 'my-identity-service'
+      }),
+      expect.objectContaining({})
+    );
+  });
+
+  it('transforms identity (IAS) service binding with resource parameter', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('identity'),
+      { resource: 'my-app' } as Parameters<typeof transformServiceBindingToDestination>[1]
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'https://tenant.accounts.ondemand.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2ClientCredentials'
+      })
+    );
+    expect(getIasClientCredentialsToken).toHaveBeenCalledWith(
+      expect.objectContaining({
+        label: 'identity'
+      }),
+      expect.objectContaining({
+        resource: 'my-app'
       })
     );
   });

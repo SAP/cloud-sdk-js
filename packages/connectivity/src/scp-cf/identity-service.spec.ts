@@ -161,6 +161,28 @@ describe('getIasClientCredentialsToken', () => {
     );
   });
 
+  it('includes extraParams for additional OAuth2 parameters', async () => {
+    mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+    await getIasClientCredentialsToken(mockIasService, {
+      extraParams: {
+        custom_param: 'custom_value',
+        another_param: 'another_value'
+      }
+    });
+
+    expect(mockedAxios.request).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.stringContaining('custom_param=custom_value')
+      })
+    );
+    expect(mockedAxios.request).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.stringContaining('another_param=another_value')
+      })
+    );
+  });
+
   it('throws error when url is missing', async () => {
     const invalidService: Service = {
       ...mockIasService,

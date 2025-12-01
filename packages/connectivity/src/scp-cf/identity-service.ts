@@ -35,26 +35,32 @@ interface IasParameters {
   serviceCredentials: ServiceCredentials;
   resource?: string;
   appTenantId?: string;
+  extraParams?: Record<string, string>;
 }
 
 /**
  * Make a client credentials request against the IAS OAuth2 endpoint.
  * Supports both certificate-based (mTLS) and client secret authentication.
  * @param service - Service as it is defined in the environment variable.
- * @param options - Options for token fetching.
+ * @param options - Options for token fetching, including optional resource parameter for app2app, appTenantId for multi-tenant scenarios, and extraParams for additional OAuth2 parameters.
  * @returns Client credentials token response.
  * @internal
  */
 export async function getIasClientCredentialsToken(
   service: string | Service,
-  options?: { resource?: string; appTenantId?: string }
+  options?: {
+    resource?: string;
+    appTenantId?: string;
+    extraParams?: Record<string, string>;
+  }
 ): Promise<ClientCredentialsResponse> {
   const resolvedService = resolveServiceBinding(service);
 
   const fnArgument: IasParameters = {
     serviceCredentials: resolvedService.credentials,
     resource: options?.resource,
-    appTenantId: options?.appTenantId
+    appTenantId: options?.appTenantId,
+    extraParams: options?.extraParams
   };
 
   const iasPromise = async function (
@@ -88,6 +94,10 @@ export async function getIasClientCredentialsToken(
       logger.debug(
         `Fetching IAS token with app_tid parameter: ${arg.appTenantId}`
       );
+    }
+
+    for (const [paramKey, paramValue] of Object.entries(arg.extraParams || {})) {
+      params.append(paramKey, paramValue);
     }
 
     const tokenUrl = `${url}/oauth2/token`;

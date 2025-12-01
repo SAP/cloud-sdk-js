@@ -184,11 +184,16 @@ async function xfS4hanaCloudBindingToDestination(
 
 async function iasBindingToDestination(
   service: Service,
-  options?: ServiceBindingTransformOptions & { resource?: string; appTenantId?: string }
+  options?: ServiceBindingTransformOptions & {
+    resource?: string;
+    appTenantId?: string;
+    extraParams?: Record<string, string>;
+  }
 ): Promise<Destination> {
   const { access_token } = await getIasClientCredentialsToken(service, {
     resource: options?.resource,
-    appTenantId: options?.appTenantId
+    appTenantId: options?.appTenantId,
+    extraParams: options?.extraParams
   });
   return buildClientCredentialsDestination(
     access_token,

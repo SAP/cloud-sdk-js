@@ -35,7 +35,7 @@
     "@sap/cds-dk": "9.4.3",
     "axios": "^1.13.2",
     "execa": "^5.0.0",
-    "express": "^4.21.2",
+    "express": "^4.22.1",
     "fs-extra": "^11.3.2",
     "http-proxy-middleware": "^3.0.5",
     "json-schema-faker": "^0.5.9",

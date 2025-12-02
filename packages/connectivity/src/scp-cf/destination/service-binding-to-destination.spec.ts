@@ -28,7 +28,8 @@ const services = {
       credentials: {
         url: 'https://tenant.accounts.ondemand.com',
         clientid: 'identity-clientid',
-        certificate: '-----BEGIN CERTIFICATE-----\ntest\n-----END CERTIFICATE-----',
+        certificate:
+          '-----BEGIN CERTIFICATE-----\ntest\n-----END CERTIFICATE-----',
         key: '-----BEGIN RSA PRIVATE KEY-----\ntest\n-----END RSA PRIVATE KEY-----'
       }
     }
@@ -310,7 +311,9 @@ describe('service binding to destination', () => {
   it('transforms identity (IAS) service binding with resource parameter', async () => {
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('identity'),
-      { resource: 'my-app' } as Parameters<typeof transformServiceBindingToDestination>[1]
+      { resource: 'my-app' } as Parameters<
+        typeof transformServiceBindingToDestination
+      >[1]
     );
     expect(destination).toEqual(
       expect.objectContaining({

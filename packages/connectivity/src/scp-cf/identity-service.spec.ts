@@ -54,7 +54,8 @@ describe('getIasClientCredentialsToken', () => {
     credentials: {
       url: 'https://tenant.accounts.ondemand.com',
       clientid: 'test-client-id',
-      certificate: '-----BEGIN CERTIFICATE-----\ntest-cert\n-----END CERTIFICATE-----',
+      certificate:
+        '-----BEGIN CERTIFICATE-----\ntest-cert\n-----END CERTIFICATE-----',
       key: '-----BEGIN RSA PRIVATE KEY-----\ntest-key\n-----END RSA PRIVATE KEY-----'
     }
   };
@@ -193,9 +194,9 @@ describe('getIasClientCredentialsToken', () => {
       } as any
     };
 
-    await expect(
-      getIasClientCredentialsToken(invalidService)
-    ).rejects.toThrow('IAS credentials must contain "url" and "clientid"');
+    await expect(getIasClientCredentialsToken(invalidService)).rejects.toThrow(
+      'IAS credentials must contain "url" and "clientid"'
+    );
   });
 
   it('throws error when clientid is missing', async () => {
@@ -208,9 +209,9 @@ describe('getIasClientCredentialsToken', () => {
       } as any
     };
 
-    await expect(
-      getIasClientCredentialsToken(invalidService)
-    ).rejects.toThrow('IAS credentials must contain "url" and "clientid"');
+    await expect(getIasClientCredentialsToken(invalidService)).rejects.toThrow(
+      'IAS credentials must contain "url" and "clientid"'
+    );
   });
 
   it('throws error when neither certificate/key nor clientsecret is provided', async () => {
@@ -222,9 +223,7 @@ describe('getIasClientCredentialsToken', () => {
       } as any
     };
 
-    await expect(
-      getIasClientCredentialsToken(invalidService)
-    ).rejects.toThrow(
+    await expect(getIasClientCredentialsToken(invalidService)).rejects.toThrow(
       'IAS credentials must contain either "certificate" and "key" for mTLS, or "clientsecret" for client secret authentication'
     );
   });
@@ -232,9 +231,7 @@ describe('getIasClientCredentialsToken', () => {
   it('handles token fetch errors gracefully', async () => {
     mockedAxios.request.mockRejectedValue(new Error('Network error'));
 
-    await expect(
-      getIasClientCredentialsToken(mockIasService)
-    ).rejects.toThrow(
+    await expect(getIasClientCredentialsToken(mockIasService)).rejects.toThrow(
       'Could not fetch IAS client credentials token for service of type identity'
     );
   });

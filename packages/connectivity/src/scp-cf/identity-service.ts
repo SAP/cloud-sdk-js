@@ -96,7 +96,9 @@ export async function getIasClientCredentialsToken(
       );
     }
 
-    for (const [paramKey, paramValue] of Object.entries(arg.extraParams || {})) {
+    for (const [paramKey, paramValue] of Object.entries(
+      arg.extraParams || {}
+    )) {
       params.append(paramKey, paramValue);
     }
 
@@ -133,7 +135,8 @@ export async function getIasClientCredentialsToken(
       );
     }
 
-    const response = await axios.request<ClientCredentialsResponse>(requestConfig);
+    const response =
+      await axios.request<ClientCredentialsResponse>(requestConfig);
     return response.data;
   };
 

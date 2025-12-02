@@ -4,13 +4,7 @@ import {
   mockServiceBindings,
   signedJwtForVerification
 } from '../../../../../test-resources/test/test-util';
-import {
-  audiences,
-  decodeJwt,
-  isXsuaaToken,
-  retrieveJwt,
-  userId
-} from './jwt';
+import { audiences, decodeJwt, isXsuaaToken, retrieveJwt, userId } from './jwt';
 
 describe('jwt', () => {
   describe('userId', () => {

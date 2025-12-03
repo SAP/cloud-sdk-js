@@ -179,7 +179,6 @@ describe('createAgent', () => {
   });
 
   it('does not throw an error for supported JKS format', async () => {
-    // Mock jks.toPem to return valid PEM data
     const mockPemKeystore = {
       alias1: {
         cert: '-----BEGIN CERTIFICATE-----\nMII...\n-----END CERTIFICATE-----',
@@ -198,7 +197,7 @@ describe('createAgent', () => {
       certificates: [
         {
           name: 'cert.jks',
-          content: 'base64string', // Can remain dummy since we're mocking
+          content: 'base64string', 
           type: 'CERTIFICATE'
         }
       ]

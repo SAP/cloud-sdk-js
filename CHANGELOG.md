@@ -28,6 +28,16 @@
 
 -
  
+# 4.2.0
+## New Features
+
+- [generator, generator-common] Introduce option `generateESM` in OData generator to generate ESM compatible code. (c73c7fa)
+
+## Fixed Issues
+
+- [openapi] Fix missing `type: module` in generated `package.json` when `--generateESM` option is enabled. (e09754a)
+- [openapi-generator] Improve the handling of arrays of enums (f17ca59)
+
 # 4.1.2
 ## Fixed Issues
 

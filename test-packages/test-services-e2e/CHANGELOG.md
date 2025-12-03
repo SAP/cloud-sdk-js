@@ -1,5 +1,7 @@
 # @sap-cloud-sdk/test-services-e2e
 
+## 4.2.0
+
 ## 4.1.2
 
 ## 4.1.1

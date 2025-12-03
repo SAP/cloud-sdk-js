@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "4.1.2",
+  "version": "4.2.0",
   "private": true,
   "sideEffects": false,
   "packageManager": "yarn@1.22.18",
@@ -96,7 +96,7 @@
     "@types/node": "^22.19.1",
     "@types/uuid": "^10.0.0",
     "@types/voca": "^1.4.6",
-    "axios": "^1.12.2",
+    "axios": "^1.13.2",
     "cross-env": "10.1.0",
     "depcheck": "^1.4.7",
     "eslint": "^8.57.1",
@@ -109,10 +109,10 @@
     "prettier": "^3.6.2",
     "puppeteer": "^24.31.0",
     "semver": "^7.7.2",
-    "ts-jest": "^29.4.5",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "turbo": "^2.6.1",
-    "typedoc": "^0.28.14",
+    "typedoc": "^0.28.15",
     "typescript": "~5.9.3"
   },
   "resolutions": {

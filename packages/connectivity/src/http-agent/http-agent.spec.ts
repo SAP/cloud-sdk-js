@@ -197,7 +197,7 @@ describe('createAgent', () => {
       certificates: [
         {
           name: 'cert.jks',
-          content: 'base64string', 
+          content: 'base64string',
           type: 'CERTIFICATE'
         }
       ]

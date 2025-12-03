@@ -1415,10 +1415,10 @@
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.1.0.tgz#6e010591111e3c45b39b8035ae0e360532ecb6f5"
   integrity sha512-s71fsxDZKqHn2xvoqoNst54K/BkBzCpiU+8xc0t3nMDXmsLzSC3VfygZGwGAZD8fkxUnXh8oL2XLHWKWcvcdNg==
 
-"@sap/cds-dk@9.4.3":
-  version "9.4.3"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.4.3.tgz#a610b099e92ae5637d0d91793a35c027769087fd"
-  integrity sha512-kVz08dhBF7Zms1disoXUoEIrR/ctJkZd7gky1I/sww4fwl832elW6ZxTs85HLn+LeF0Gr3/HX+jJoqRy+3GYNg==
+"@sap/cds-dk@9.5.0":
+  version "9.5.0"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.5.0.tgz#6b44da5b56b8abc9c154b614a64ec24c7115aa4e"
+  integrity sha512-QbBi9dV7+Ep3JcpohzVcmRjtIajpbja36Is8GGIvFs2s9DEVsrj2Y0MRnQ7f5eYuGKpod5Xxe5B/bjPtGFAxYQ==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"
@@ -1427,7 +1427,7 @@
     "@sap/hdi-deploy" "^5"
     axios "^1"
     express "^4.17.3"
-    hdb "^0"
+    hdb "^2.0.0"
     livereload-js "^4.0.1"
     mustache "^4.0.1"
     node-watch ">=0.7"
@@ -4890,12 +4890,14 @@ hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
-hdb@^0:
-  version "0.19.12"
-  resolved "https://registry.npmjs.org/hdb/-/hdb-0.19.12.tgz#f7f5cbdaa0e617cc826d2ef4d061c54af9b773a1"
-  integrity sha512-vv+cjmvr6fNH/s0Q2zOZc4sEjMpSC0KuacFn8dp3L38qM3RA2LLeX70wWhZLESpwvwUf1pQkRfUhZeooFSmv3A==
+hdb@^2.0.0:
+  version "2.26.2"
+  resolved "https://registry.npmjs.org/hdb/-/hdb-2.26.2.tgz#962104ef4e8fac9c0a99547ad076dee079b48415"
+  integrity sha512-XMUhfpsH99+I0WXRDnpNUYQx00ZiSceCusCF9Eo9+zgnOIdWYl5NP54hebYobe5CDEzQtSQXpud7+KoX3qTzMQ==
   dependencies:
-    iconv-lite "^0.4.18"
+    iconv-lite "0.7.0"
+  optionalDependencies:
+    lz4-wasm-nodejs "0.9.2"
 
 homedir-polyfill@^1.0.1:
   version "1.0.3"
@@ -5029,7 +5031,14 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
-iconv-lite@^0.4.18, iconv-lite@^0.4.4, iconv-lite@~0.4.24:
+iconv-lite@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.7.0.tgz#c50cd80e6746ca8115eb98743afa81aa0e147a3e"
+  integrity sha512-cf6L2Ds3h57VVmkZe+Pn+5APsT7FpqJtEhhieDCvrE2MK5Qk9MyffgQyuxQTm6BChfeZNtcOLHp9IcWRVcIcBQ==
+  dependencies:
+    safer-buffer ">= 2.1.2 < 3.0.0"
+
+iconv-lite@^0.4.4, iconv-lite@~0.4.24:
   version "0.4.24"
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
@@ -6297,6 +6306,11 @@ lunr@^2.3.9:
   version "2.3.9"
   resolved "https://registry.npmjs.org/lunr/-/lunr-2.3.9.tgz#18b123142832337dd6e964df1a5a7707b25d35e1"
   integrity sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==
+
+lz4-wasm-nodejs@0.9.2:
+  version "0.9.2"
+  resolved "https://registry.npmjs.org/lz4-wasm-nodejs/-/lz4-wasm-nodejs-0.9.2.tgz#eaa3184ac048e1af9bd0ec82f89de8e8f158c6c7"
+  integrity sha512-hSwgJPS98q/Oe/89Y1OxzeA/UdnASG8GvldRyKa7aZyoAFCC8VPRtViBSava7wWC66WocjUwBpWau2rEmyFPsw==
 
 madge@^8.0.0:
   version "8.0.0"

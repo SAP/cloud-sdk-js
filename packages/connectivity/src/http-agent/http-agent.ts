@@ -133,7 +133,7 @@ function getKeyStoreOptions(destination: Destination):
 
     const certBuffer = Buffer.from(certificate.content, 'base64');
 
-    if (getFormat(certificate) === 'jks') {
+    if (getFormat(certificate) === 'jks' || getFormat(certificate) === 'keystore') {
       if (!destination.keyStorePassword) {
         throw Error('Keystore password is required for JKS format');
       }

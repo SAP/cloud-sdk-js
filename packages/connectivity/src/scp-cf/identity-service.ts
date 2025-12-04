@@ -96,6 +96,11 @@ export async function getIasClientCredentialsToken(
       );
     }
 
+    // Workaround for IAS issue
+    // if( onBehalfOf == OnBehalfOf.NAMED_USER_CURRENT_TENANT ) {
+    params.append('refresh_token', '0');
+    // };
+
     for (const [paramKey, paramValue] of Object.entries(
       arg.extraParams || {}
     )) {

@@ -48,8 +48,8 @@ interface IasParameters {
  */
 export async function getIasClientCredentialsToken(
   service: string | Service,
-  options?: {
-    resource?: string;
+  options: {
+    resource: string;
     appTenantId?: string;
     extraParams?: Record<string, string>;
   }
@@ -81,13 +81,9 @@ export async function getIasClientCredentialsToken(
       client_id: clientid
     });
 
-    if (arg.resource) {
-      const fullResource = `urn:sap:identity:application:provider:name:${arg.resource}`;
-      params.append('resource', fullResource);
-      logger.debug(
-        `Fetching IAS token with resource parameter: ${fullResource}`
-      );
-    }
+    const fullResource = `urn:sap:identity:application:provider:name:${arg.resource}`;
+    params.append('resource', fullResource);
+    logger.debug(`Fetching IAS token with resource parameter: ${fullResource}`);
 
     if (arg.appTenantId) {
       params.append('app_tid', arg.appTenantId);

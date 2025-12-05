@@ -230,7 +230,7 @@ describe('createAgent', () => {
     };
 
     expect(async () => getAgentConfig(destination)).rejects.toThrow(
-      "The format of the provided certificate 'cert.unknown' is not supported. Supported formats are: p12, pfx, pem, jks."
+      "The format of the provided certificate 'cert.unknown' is not supported. Supported formats are: p12, pfx, pem, jks, keystore."
     );
   });
 

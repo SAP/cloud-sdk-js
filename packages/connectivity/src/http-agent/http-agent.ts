@@ -235,7 +235,7 @@ function mtlsIsEnabled(destination: Destination) {
 /*
  The node client supports only these store formats https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions.
  */
-const supportedCertificateFormats = ['p12', 'pfx', 'pem', 'jks'];
+const supportedCertificateFormats = ['p12', 'pfx', 'pem', 'jks', 'keystore'];
 
 function isSupportedFormat(format: string | undefined): boolean {
   return !!format && supportedCertificateFormats.includes(format);

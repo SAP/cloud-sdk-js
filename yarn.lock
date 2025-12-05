@@ -1410,10 +1410,10 @@
   resolved "https://registry.npmjs.org/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@sap/cds-compiler@^6":
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.1.0.tgz#6e010591111e3c45b39b8035ae0e360532ecb6f5"
-  integrity sha512-s71fsxDZKqHn2xvoqoNst54K/BkBzCpiU+8xc0t3nMDXmsLzSC3VfygZGwGAZD8fkxUnXh8oL2XLHWKWcvcdNg==
+"@sap/cds-compiler@^6.3":
+  version "6.5.0"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.5.0.tgz#0a6eae8134bd4508015c08d74966f12dbc4784da"
+  integrity sha512-shm2jUI7uSrDfz3aMD9JHTByypv4+jvlDBXcqPak/kX9OxIBsnpskln1MDFZ094IAWae9fJemu5jgfbIP06lVg==
 
 "@sap/cds-dk@9.5.0":
   version "9.5.0"
@@ -1449,12 +1449,12 @@
   dependencies:
     "@sap/hdi-deploy" "^5"
 
-"@sap/cds@>=8.3", "@sap/cds@^9.2.1":
-  version "9.2.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-9.2.1.tgz#c3d830663394f2d0226486e33389c87636b864f4"
-  integrity sha512-0zjjZGlBvcJMyVj48hTs6Q22/w9hNnJR6O88rGoEj4R87uaP4uM5gFLf3PDnPDUwkAeveVHgJRnWPqDGqIMgvA==
+"@sap/cds@>=8.3", "@sap/cds@^9.5.1":
+  version "9.5.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-9.5.1.tgz#0d2b550ec46e08c5b0da62f97db48495a27d2935"
+  integrity sha512-rMvDSRytjqYQolB0pg8tiBlpS9kKGcleRhpZmBGUmSncbbwnotKYTKoDyMCWkflS8P9/Jq9YfY1qhK+fduHCVA==
   dependencies:
-    "@sap/cds-compiler" "^6"
+    "@sap/cds-compiler" "^6.3"
     "@sap/cds-fiori" "^2"
     js-yaml "^4.1.0"
 

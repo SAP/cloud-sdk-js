@@ -124,12 +124,8 @@ export async function getIasClientCredentialsToken(
         key
       });
     } else if (clientsecret) {
-      // Client secret authentication
       logger.debug('Using client secret authentication for IAS token.');
-      const credentials = Buffer.from(`${clientid}:${clientsecret}`).toString(
-        'base64'
-      );
-      headers['Authorization'] = `Basic ${credentials}`;
+      params.append('client_secret', clientsecret);
     } else {
       throw new Error(
         'IAS credentials must contain either "certificate" and "key" for mTLS, or "clientsecret" for client secret authentication.'

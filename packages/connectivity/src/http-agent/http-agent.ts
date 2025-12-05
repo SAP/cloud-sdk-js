@@ -137,10 +137,10 @@ function getKeyStoreOptions(destination: Destination):
       getFormat(certificate) === 'jks' ||
       getFormat(certificate) === 'keystore'
     ) {
-      if (!destination.keyStorePassword) {
-        throw Error('Keystore password is required for JKS format');
-      }
-      const pemKeystore = jks.toPem(certBuffer, destination.keyStorePassword);
+      const pemKeystore = jks.toPem(
+        certBuffer,
+        destination.keyStorePassword || ''
+      );
       const aliases = Object.keys(pemKeystore);
       if (aliases.length === 0) {
         throw Error('No entries found in JKS keystore');

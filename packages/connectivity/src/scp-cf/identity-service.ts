@@ -16,6 +16,21 @@ const logger = createLogger({
   messageContext: 'identity-service'
 });
 
+// export type OnBehalfOf =
+//     /**
+//      * A technical user for the provider account.
+//      */
+//     | 'TECHNICAL_USER_PROVIDER'
+//     // TECHNICAL_USER_SUBSCRIBER,
+//     /**
+//      * A technical user based on tenant set in the current context.
+//      */
+//     | 'TECHNICAL_USER_CURRENT_TENANT'
+//     /**
+//      * A named user based on the auth token set in the current context.
+//      */
+//     | 'NAMED_USER_CURRENT_TENANT'
+
 /**
  * @internal
  * Checks whether the IAS token to XSUAA token exchange should be applied.
@@ -33,7 +48,7 @@ export function shouldExchangeToken(options: DestinationOptions): boolean {
 
 interface IasParameters {
   serviceCredentials: ServiceCredentials;
-  resource?: string;
+  appName?: string;
   appTenantId?: string;
   extraParams?: Record<string, string>;
 }
@@ -49,7 +64,7 @@ interface IasParameters {
 export async function getIasClientCredentialsToken(
   service: string | Service,
   options: {
-    resource: string;
+    appName?: string;
     appTenantId?: string;
     extraParams?: Record<string, string>;
   }
@@ -58,7 +73,7 @@ export async function getIasClientCredentialsToken(
 
   const fnArgument: IasParameters = {
     serviceCredentials: resolvedService.credentials,
-    resource: options?.resource,
+    appName: options?.appName,
     appTenantId: options?.appTenantId,
     extraParams: options?.extraParams
   };
@@ -81,9 +96,13 @@ export async function getIasClientCredentialsToken(
       client_id: clientid
     });
 
-    const fullResource = `urn:sap:identity:application:provider:name:${arg.resource}`;
-    params.append('resource', fullResource);
-    logger.debug(`Fetching IAS token with resource parameter: ${fullResource}`);
+    if (arg.appName) {
+      const fullResource = `urn:sap:identity:application:provider:name:${arg.appName}`;
+      params.append('resource', fullResource);
+      logger.debug(
+        `Fetching IAS token with resource parameter: ${fullResource}`
+      );
+    }
 
     if (arg.appTenantId) {
       params.append('app_tid', arg.appTenantId);
@@ -111,8 +130,7 @@ export async function getIasClientCredentialsToken(
     const requestConfig: RawAxiosRequestConfig = {
       method: 'post',
       url: tokenUrl,
-      headers,
-      data: params.toString()
+      headers
     };
 
     // Determine authentication method
@@ -131,6 +149,10 @@ export async function getIasClientCredentialsToken(
         'IAS credentials must contain either "certificate" and "key" for mTLS, or "clientsecret" for client secret authentication.'
       );
     }
+
+    requestConfig.data = params.toString();
+
+    logger.info(params.toString());
 
     const response =
       await axios.request<ClientCredentialsResponse>(requestConfig);

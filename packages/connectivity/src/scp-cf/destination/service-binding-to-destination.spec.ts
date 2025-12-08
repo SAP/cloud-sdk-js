@@ -308,10 +308,10 @@ describe('service binding to destination', () => {
     );
   });
 
-  it('transforms identity (IAS) service binding with resource parameter', async () => {
+  it('transforms identity (IAS) service binding with appName parameter', async () => {
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('identity'),
-      { resource: 'my-app' } as Parameters<
+      { appName: 'my-app' } as Parameters<
         typeof transformServiceBindingToDestination
       >[1]
     );
@@ -327,7 +327,30 @@ describe('service binding to destination', () => {
         label: 'identity'
       }),
       expect.objectContaining({
-        resource: 'my-app'
+        appName: 'my-app'
+      })
+    );
+  });
+
+  it('transforms identity (IAS) service binding and includes mTLS cert/key in destination', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('identity')
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'https://tenant.accounts.ondemand.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2ClientCredentials',
+        mtlsKeyPair: {
+          cert: '-----BEGIN CERTIFICATE-----\ntest\n-----END CERTIFICATE-----',
+          key: '-----BEGIN RSA PRIVATE KEY-----\ntest\n-----END RSA PRIVATE KEY-----'
+        },
+        authTokens: expect.arrayContaining([
+          expect.objectContaining({
+            value: 'ias-access-token',
+            type: 'bearer'
+          })
+        ])
       })
     );
   });

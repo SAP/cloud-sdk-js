@@ -85,7 +85,7 @@ describe('getIasClientCredentialsToken', () => {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        data: 'grant_type=client_credentials&client_id=test-client-id',
+        data: 'grant_type=client_credentials&client_id=test-client-id&refresh_token=0',
         httpsAgent: expect.any(Object)
       })
     );
@@ -111,10 +111,9 @@ describe('getIasClientCredentialsToken', () => {
         method: 'post',
         url: 'https://tenant.accounts.ondemand.com/oauth2/token',
         headers: expect.objectContaining({
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: expect.stringContaining('Basic ')
+          'Content-Type': 'application/x-www-form-urlencoded'
         }),
-        data: 'grant_type=client_credentials&client_id=test-client-id'
+        data: 'grant_type=client_credentials&client_id=test-client-id&refresh_token=0&client_secret=test-client-secret'
       })
     );
   });
@@ -123,12 +122,12 @@ describe('getIasClientCredentialsToken', () => {
     mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
     await getIasClientCredentialsToken(mockIasService, {
-      resource: 'my-app'
+      appName: 'my-app'
     });
 
     expect(mockedAxios.request).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app'
+        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app&refresh_token=0'
       })
     );
   });
@@ -142,22 +141,22 @@ describe('getIasClientCredentialsToken', () => {
 
     expect(mockedAxios.request).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: 'grant_type=client_credentials&client_id=test-client-id&app_tid=tenant-123'
+        data: 'grant_type=client_credentials&client_id=test-client-id&app_tid=tenant-123&refresh_token=0'
       })
     );
   });
 
-  it('includes both resource and appTenantId parameters', async () => {
+  it('includes both appName and appTenantId parameters', async () => {
     mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
     await getIasClientCredentialsToken(mockIasService, {
-      resource: 'my-app',
+      appName: 'my-app',
       appTenantId: 'tenant-123'
     });
 
     expect(mockedAxios.request).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app&app_tid=tenant-123'
+        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app&app_tid=tenant-123&refresh_token=0'
       })
     );
   });

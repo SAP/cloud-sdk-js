@@ -182,6 +182,10 @@ async function getMtlsOptions(
     );
   }
   if (mtlsIsEnabled(destination)) {
+    if (destination.mtlsKeyPair) {
+      return destination.mtlsKeyPair;
+    }
+
     if (registerDestinationCache.mtls.useMtlsCache) {
       return registerDestinationCache.mtls.getMtlsOptions();
     }
@@ -198,9 +202,10 @@ async function getMtlsOptions(
 
 function mtlsIsEnabled(destination: Destination) {
   return (
-    destination.mtls &&
-    process.env.CF_INSTANCE_CERT &&
-    process.env.CF_INSTANCE_KEY
+    (destination.mtls &&
+      process.env.CF_INSTANCE_CERT &&
+      process.env.CF_INSTANCE_KEY) ||
+    destination.mtlsKeyPair
   );
 }
 

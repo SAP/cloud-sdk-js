@@ -89,7 +89,7 @@
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
-    "@changesets/cli": "^2.29.7",
+    "@changesets/cli": "^2.29.8",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/license-checker": "^25.0.6",
     "@types/mock-fs": "^4.13.4",

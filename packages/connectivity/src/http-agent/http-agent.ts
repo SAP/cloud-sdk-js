@@ -145,7 +145,7 @@ function getKeyStoreOptions(destination: Destination):
       if (aliases.length === 0) {
         throw Error('No entries found in JKS keystore');
       }
-      const alias = aliases[0]; 
+      const alias = aliases[0];
       const entry = pemKeystore[alias];
       if (!entry.cert || !entry.key) {
         throw Error('Invalid JKS entry: missing cert or key');

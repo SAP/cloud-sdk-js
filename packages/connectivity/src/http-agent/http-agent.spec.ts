@@ -316,6 +316,35 @@ describe('getAgentConfig', () => {
         expect(actual.passphrase).not.toBeDefined();
         expect(cacheSpy).toHaveBeenCalledTimes(1);
       });
+
+      it('logs a warning when both mtls is enabled and mtlsKeyPair is provided', async () => {
+        process.env.CF_INSTANCE_CERT = 'cf-crypto/cf-cert';
+        process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
+
+        const destination: HttpDestination = {
+          url: 'https://example.com',
+          name: 'test-destination',
+          mtls: true,
+          mtlsKeyPair: {
+            cert: 'ias-cert',
+            key: 'ias-key'
+          }
+        };
+
+        const logger = createLogger('http-agent');
+        const warnSpy = jest.spyOn(logger, 'warn');
+
+        const actual = (await getAgentConfig(destination))['httpsAgent']
+          .options;
+
+        expect(warnSpy).toHaveBeenCalledWith(
+          "Destination test-destination has both 'mtlsKeyPair' (used by IAS) and 'mtls' (to use certs from cf) enabled. The 'mtlsKeyPair' will be used."
+        );
+        expect(actual.cert).toEqual('ias-cert');
+        expect(actual.key).toEqual('ias-key');
+
+        warnSpy.mockRestore();
+      });
     });
 
     it('returns an object with key "httpsAgent" which is missing mTLS options when mtls is set to true but env variables do not include cert & key', async () => {

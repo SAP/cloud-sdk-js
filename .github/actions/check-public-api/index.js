@@ -68625,6 +68625,7 @@ class Logger extends Transform {
           if (info instanceof Error) {
             infoClone.stack = info.stack;
             infoClone.message = info.message;
+            infoClone.cause = info.cause;
           }
 
           logger.write(infoClone);
@@ -69318,7 +69319,7 @@ class Profiler {
 
     return this.logger.write(info);
   }
-};
+}
 
 module.exports = Profiler;
 
@@ -70022,6 +70023,38 @@ module.exports = class File extends TransportStream {
         setImmediate(() => this._stream.end());
       }
     }
+  }
+
+  /**
+   * Called by Node.js Writable stream before emitting 'finish'.
+   * Ensures all buffered data is flushed to the underlying file stream
+   * before the transport signals completion.
+   * @param {Function} callback - Callback to signal completion.
+   * @private
+   */
+  _final(callback) {
+    // If still opening, wait for the file to be opened first
+    if (this._opening) {
+      this.once('open', () => this._final(callback));
+      return;
+    }
+
+    // End the PassThrough stream
+    this._stream.end();
+
+    // No destination stream, call callback immediately
+    if (!this._dest) {
+      return callback();
+    }
+
+    // Destination is already finished
+    if (this._dest.writableFinished) {
+      return callback();
+    }
+
+    // Wait for destination stream to finish writing
+    this._dest.once('finish', callback);
+    this._dest.once('error', callback);
   }
 
   /**
@@ -94330,7 +94363,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"application/1d-interleaved-parityfec
 /***/ ((module) => {
 
 "use strict";
-module.exports = {"version":"3.18.3"};
+module.exports = {"version":"3.19.0"};
 
 /***/ })
 

@@ -5,7 +5,10 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { decodeJwt, isXsuaaToken } from './jwt';
 import { resolveServiceBinding } from './environment-accessor';
-import type { DestinationOptions } from './destination';
+import type {
+  DestinationOptions,
+  ServiceBindingTransformOptions
+} from './destination';
 import type { MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import type { Service, ServiceCredentials } from './environment-accessor';
 import type { RawAxiosRequestConfig } from 'axios';
@@ -63,11 +66,7 @@ interface IasParameters {
  */
 export async function getIasClientCredentialsToken(
   service: string | Service,
-  options: {
-    appName?: string;
-    appTenantId?: string;
-    extraParams?: Record<string, string>;
-  }
+  options: ServiceBindingTransformOptions['iasOptions'] = {}
 ): Promise<ClientCredentialsResponse> {
   const resolvedService = resolveServiceBinding(service);
 
@@ -116,11 +115,8 @@ export async function getIasClientCredentialsToken(
     params.append('refresh_token', '0');
     // };
 
-    for (const [paramKey, paramValue] of Object.entries(
-      arg.extraParams || {}
-    )) {
-      params.append(paramKey, paramValue);
-    }
+    // Ensure JWT token format
+    params.append('token_format', 'jwt');
 
     const tokenUrl = `${url}/oauth2/token`;
     const headers: Record<string, string> = {
@@ -148,6 +144,12 @@ export async function getIasClientCredentialsToken(
       throw new Error(
         'IAS credentials must contain either "certificate" and "key" for mTLS, or "clientsecret" for client secret authentication.'
       );
+    }
+
+    for (const [paramKey, paramValue] of Object.entries(
+      arg.extraParams || {}
+    )) {
+      params.append(paramKey, paramValue);
     }
 
     requestConfig.data = params.toString();

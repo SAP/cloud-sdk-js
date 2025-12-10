@@ -85,7 +85,7 @@ describe('getIasClientCredentialsToken', () => {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        data: 'grant_type=client_credentials&client_id=test-client-id&refresh_token=0',
+        data: 'grant_type=client_credentials&client_id=test-client-id&refresh_token=0&token_format=jwt',
         httpsAgent: expect.any(Object)
       })
     );
@@ -113,7 +113,7 @@ describe('getIasClientCredentialsToken', () => {
         headers: expect.objectContaining({
           'Content-Type': 'application/x-www-form-urlencoded'
         }),
-        data: 'grant_type=client_credentials&client_id=test-client-id&refresh_token=0&client_secret=test-client-secret'
+        data: 'grant_type=client_credentials&client_id=test-client-id&refresh_token=0&token_format=jwt&client_secret=test-client-secret'
       })
     );
   });
@@ -127,7 +127,7 @@ describe('getIasClientCredentialsToken', () => {
 
     expect(mockedAxios.request).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app&refresh_token=0'
+        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app&refresh_token=0&token_format=jwt'
       })
     );
   });
@@ -141,7 +141,7 @@ describe('getIasClientCredentialsToken', () => {
 
     expect(mockedAxios.request).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: 'grant_type=client_credentials&client_id=test-client-id&app_tid=tenant-123&refresh_token=0'
+        data: 'grant_type=client_credentials&client_id=test-client-id&app_tid=tenant-123&refresh_token=0&token_format=jwt'
       })
     );
   });
@@ -156,7 +156,7 @@ describe('getIasClientCredentialsToken', () => {
 
     expect(mockedAxios.request).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app&app_tid=tenant-123&refresh_token=0'
+        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app&app_tid=tenant-123&refresh_token=0&token_format=jwt'
       })
     );
   });

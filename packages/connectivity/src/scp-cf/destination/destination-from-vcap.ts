@@ -91,6 +91,29 @@ export type ServiceBindingTransformOptions = {
    * The JWT payload used to fetch destinations.
    */
   jwt?: JwtPayload;
+  /**
+   * The options for IAS token retrieval.
+   */
+  iasOptions?: {
+    /**
+     * The target URL of the destination that the IAS token is requested for.
+     */
+    targetUrl?: string;
+    /**
+     * The application name registered in IAS for App-to-App communication.
+     * The token will only be usable to call the requested application.
+     */
+    appName?: string;
+    /**
+     * The BTP tenant ID the token should be requested for.
+     * Required for cross-tenant communication.
+     */
+    appTenantId?: string;
+    /**
+     * Additional parameters to be sent along with the token request.
+     */
+    extraParams?: Record<string, string>;
+  };
 } & CachingOptions;
 
 /**

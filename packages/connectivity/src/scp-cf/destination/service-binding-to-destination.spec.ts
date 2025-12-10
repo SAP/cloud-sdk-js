@@ -311,9 +311,7 @@ describe('service binding to destination', () => {
   it('transforms identity (IAS) service binding with appName parameter', async () => {
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('identity'),
-      { appName: 'my-app' } as Parameters<
-        typeof transformServiceBindingToDestination
-      >[1]
+      { iasOptions: { appName: 'my-app' } }
     );
     expect(destination).toEqual(
       expect.objectContaining({
@@ -328,6 +326,20 @@ describe('service binding to destination', () => {
       }),
       expect.objectContaining({
         appName: 'my-app'
+      })
+    );
+  });
+
+  it('transforms identity (IAS) service binding with custom targetUrl', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('identity'),
+      { iasOptions: { targetUrl: 'https://custom-target.example.com' } }
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'https://custom-target.example.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2ClientCredentials'
       })
     );
   });

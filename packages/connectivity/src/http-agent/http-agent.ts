@@ -258,15 +258,7 @@ function validateFormat(certificate: DestinationCertificate) {
   const format = getFormat(certificate);
   if (!isSupportedFormat(format)) {
     throw Error(
-      `The format of the provided certificate '${
-        certificate.name
-      }' is not supported. Supported formats are: ${supportedCertificateFormats.join(
-        ', '
-      )}. ${
-        format && ['jks', 'keystore'].includes(format)
-          ? "You can convert Java Keystores (.jks, .keystore) into PKCS#12 keystores using the JVM's keytool CLI: keytool -importkeystore -srckeystore your-keystore.jks -destkeystore your-keystore.p12 -deststoretype pkcs12"
-          : ''
-      }`
+      `The format of the provided certificate '${certificate.name}' is not supported. Supported formats are: ${supportedCertificateFormats.join(', ')}.`
     );
   }
 }

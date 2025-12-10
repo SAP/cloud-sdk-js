@@ -311,7 +311,7 @@ describe('service binding to destination', () => {
   it('transforms identity (IAS) service binding with appName parameter', async () => {
     const destination = await transformServiceBindingToDestination(
       resolveServiceBinding('identity'),
-      { iasOptions: { appName: 'my-app' } }
+      { iasOptions: { resource: { name: 'my-app' } } }
     );
     expect(destination).toEqual(
       expect.objectContaining({
@@ -325,7 +325,7 @@ describe('service binding to destination', () => {
         label: 'identity'
       }),
       expect.objectContaining({
-        appName: 'my-app'
+        resource: { name: 'my-app' }
       })
     );
   });

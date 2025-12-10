@@ -122,7 +122,7 @@ describe('getIasClientCredentialsToken', () => {
     mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
     await getIasClientCredentialsToken(mockIasService, {
-      appName: 'my-app'
+      resource: { name: 'my-app' }
     });
 
     expect(mockedAxios.request).toHaveBeenCalledWith(
@@ -150,7 +150,7 @@ describe('getIasClientCredentialsToken', () => {
     mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
     await getIasClientCredentialsToken(mockIasService, {
-      appName: 'my-app',
+      resource: { name: 'my-app' },
       appTenantId: 'tenant-123'
     });
 

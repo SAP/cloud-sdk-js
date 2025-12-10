@@ -8,6 +8,7 @@ import {
 import { isHttpDestination } from './destination-service-types';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import type { Destination } from './destination-service-types';
 import type { CachingOptions } from '../cache';
@@ -97,16 +98,27 @@ export type ServiceBindingTransformOptions = {
   iasOptions?: {
     /**
      * The target URL of the destination that the IAS token is requested for.
+     * @defaults to the (identity service) URL from the service binding.
      */
     targetUrl?: string;
     /**
-     * The application name registered in IAS for App-to-App communication.
+     * The application resource for which the token is requested.
      * The token will only be usable to call the requested application.
+     * Either provide the app name (common case) or the provider client ID
+     * and tenant ID (optional).
      */
-    appName?: string;
+    resource?: Xor<
+      {
+        name: string;
+      },
+      {
+        clientId: string;
+        tenantId?: string;
+      }
+    >;
     /**
-     * The BTP tenant ID the token should be requested for.
-     * Required for cross-tenant communication.
+     * The source (BTP)tenant ID of the application.
+     * May be required for cross-tenant communication.
      */
     appTenantId?: string;
     /**

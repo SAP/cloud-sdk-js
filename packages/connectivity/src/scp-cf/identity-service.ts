@@ -49,12 +49,9 @@ export function shouldExchangeToken(options: DestinationOptions): boolean {
   );
 }
 
-interface IasParameters {
+type IasParameters = {
   serviceCredentials: ServiceCredentials;
-  appName?: string;
-  appTenantId?: string;
-  extraParams?: Record<string, string>;
-}
+} & ServiceBindingTransformOptions['iasOptions'];
 
 /**
  * Make a client credentials request against the IAS OAuth2 endpoint.
@@ -72,9 +69,7 @@ export async function getIasClientCredentialsToken(
 
   const fnArgument: IasParameters = {
     serviceCredentials: resolvedService.credentials,
-    appName: options?.appName,
-    appTenantId: options?.appTenantId,
-    extraParams: options?.extraParams
+    ...options
   };
 
   const iasPromise = async function (
@@ -95,8 +90,16 @@ export async function getIasClientCredentialsToken(
       client_id: clientid
     });
 
-    if (arg.appName) {
-      const fullResource = `urn:sap:identity:application:provider:name:${arg.appName}`;
+    if (arg.resource) {
+      let fullResource = '';
+      if ('name' in arg.resource) {
+        fullResource = `urn:sap:identity:application:provider:name:${arg.resource.name}`;
+      } else if (arg.resource.clientId && arg.resource.tenantId) {
+        fullResource = `urn:sap:identity:application:provider:clientid:${arg.resource.clientId}:tenantid:${arg.resource.tenantId}`;
+      } else if (arg.resource.clientId) {
+        fullResource = `urn:sap:identity:application:provider:clientid:${arg.resource.clientId}`;
+      }
+
       params.append('resource', fullResource);
       logger.debug(
         `Fetching IAS token with resource parameter: ${fullResource}`

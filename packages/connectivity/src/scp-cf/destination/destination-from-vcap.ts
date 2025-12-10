@@ -98,7 +98,7 @@ export type ServiceBindingTransformOptions = {
   iasOptions?: {
     /**
      * The target URL of the destination that the IAS token is requested for.
-     * @defaults to the (identity service) URL from the service binding.
+     * @default to the (identity service) URL from the service binding.
      */
     targetUrl?: string;
     /**

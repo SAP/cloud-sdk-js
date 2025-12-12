@@ -4,6 +4,7 @@ import {
   getIasClientCredentialsToken,
   shouldExchangeToken
 } from './identity-service';
+import { iasTokenCache } from './ias-token-cache';
 import type { Service } from './environment-accessor';
 
 jest.mock('axios');
@@ -70,6 +71,10 @@ describe('getIasClientCredentialsToken', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    iasTokenCache.clear();
   });
 
   it('fetches IAS token with mTLS authentication', async () => {
@@ -276,16 +281,23 @@ describe('getIasClientCredentialsToken', () => {
     it('uses JWT bearer grant for business-user with assertion', async () => {
       mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
+      const userAssertion = signedJwt({
+        user_uuid: 'test-user',
+        app_tid: 'test-tenant'
+      });
+
       await getIasClientCredentialsToken(mockIasService, {
         actAs: 'business-user',
-        assertion: 'user-jwt-token'
+        assertion: userAssertion
       });
 
       const callData = mockedAxios.request.mock.calls[0][0].data;
       expect(callData).toContain(
         'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer'
       );
-      expect(callData).toContain('assertion=user-jwt-token');
+      expect(callData).toContain(
+        `assertion=${encodeURIComponent(userAssertion)}`
+      );
       expect(callData).toContain('refresh_token=0'); // Workaround applied for business users
     });
 
@@ -308,11 +320,16 @@ describe('getIasClientCredentialsToken', () => {
       expect(callData).not.toContain('refresh_token=0');
 
       jest.clearAllMocks();
+      iasTokenCache.clear();
 
       // Business user - has refresh_token
+      const userAssertion = signedJwt({
+        user_uuid: 'test-user',
+        app_tid: 'test-tenant'
+      });
       await getIasClientCredentialsToken(mockIasService, {
         actAs: 'business-user',
-        assertion: 'user-jwt'
+        assertion: userAssertion
       });
       callData = mockedAxios.request.mock.calls[0][0].data;
       expect(callData).toContain('refresh_token=0');
@@ -321,9 +338,14 @@ describe('getIasClientCredentialsToken', () => {
     it('supports business-user with resource and appTenantId', async () => {
       mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
+      const userAssertion = signedJwt({
+        user_uuid: 'test-user',
+        app_tid: 'test-tenant'
+      });
+
       await getIasClientCredentialsToken(mockIasService, {
         actAs: 'business-user',
-        assertion: 'user-jwt-token',
+        assertion: userAssertion,
         resource: { name: 'my-app' },
         appTenantId: 'tenant-123'
       });
@@ -332,12 +354,109 @@ describe('getIasClientCredentialsToken', () => {
       expect(callData).toContain(
         'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer'
       );
-      expect(callData).toContain('assertion=user-jwt-token');
+      expect(callData).toContain(
+        `assertion=${encodeURIComponent(userAssertion)}`
+      );
       expect(callData).toContain(
         'resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app'
       );
       expect(callData).toContain('app_tid=tenant-123');
       expect(callData).toContain('refresh_token=0');
+    });
+  });
+
+  describe('token caching', () => {
+    it('caches technical-user tokens and returns from cache on second call', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      const first = await getIasClientCredentialsToken(mockIasService, {});
+      const second = await getIasClientCredentialsToken(mockIasService, {});
+
+      expect(first).toEqual(mockTokenResponse);
+      expect(second).toEqual(mockTokenResponse);
+      expect(mockedAxios.request).toHaveBeenCalledTimes(1);
+    });
+
+    it('caches business-user tokens per user', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      const assertion1 = signedJwt({
+        user_uuid: 'user-1',
+        app_tid: 'tenant-1'
+      });
+      const assertion2 = signedJwt({
+        user_uuid: 'user-2',
+        app_tid: 'tenant-1'
+      });
+
+      await getIasClientCredentialsToken(mockIasService, {
+        actAs: 'business-user',
+        assertion: assertion1
+      });
+      await getIasClientCredentialsToken(mockIasService, {
+        actAs: 'business-user',
+        assertion: assertion2
+      });
+
+      // Different users should result in 2 network calls
+      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
+    });
+
+    it('isolates cache by tenant for technical-user', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      await getIasClientCredentialsToken(mockIasService, {
+        appTenantId: 'tenant-1'
+      });
+      await getIasClientCredentialsToken(mockIasService, {
+        appTenantId: 'tenant-2'
+      });
+
+      // Different tenants should result in 2 network calls
+      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
+    });
+
+    it('isolates cache by resource parameter', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      await getIasClientCredentialsToken(mockIasService, {
+        resource: { name: 'app-1' }
+      });
+      await getIasClientCredentialsToken(mockIasService, {
+        resource: { name: 'app-2' }
+      });
+
+      // Different resources should result in 2 network calls
+      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
+    });
+
+    it('reuses cache for same resource across calls', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      const first = await getIasClientCredentialsToken(mockIasService, {
+        resource: { name: 'my-app' }
+      });
+      const second = await getIasClientCredentialsToken(mockIasService, {
+        resource: { name: 'my-app' }
+      });
+
+      expect(first).toEqual(mockTokenResponse);
+      expect(second).toEqual(mockTokenResponse);
+      expect(mockedAxios.request).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not cache if token fetch fails', async () => {
+      mockedAxios.request.mockRejectedValue(new Error('Network error'));
+
+      await expect(
+        getIasClientCredentialsToken(mockIasService, {})
+      ).rejects.toThrow();
+
+      // Second call should also make a network request
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+      await getIasClientCredentialsToken(mockIasService, {});
+
+      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
     });
   });
 });

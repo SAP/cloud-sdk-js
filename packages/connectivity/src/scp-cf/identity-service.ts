@@ -5,6 +5,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { decodeJwt, isXsuaaToken } from './jwt';
 import { resolveServiceBinding } from './environment-accessor';
+import { iasTokenCache } from './ias-token-cache';
 import type {
   DestinationOptions,
   ServiceBindingTransformOptions
@@ -65,128 +66,24 @@ export async function getIasClientCredentialsToken(
   options: ServiceBindingTransformOptions['iasOptions'] = {}
 ): Promise<ClientCredentialsResponse> {
   const resolvedService = resolveServiceBinding(service);
+  const { clientid } = resolvedService.credentials;
+
+  const cachedToken = iasTokenCache.getToken(clientid, options);
+  if (cachedToken) {
+    return cachedToken;
+  }
 
   const fnArgument: IasParameters = {
     serviceCredentials: resolvedService.credentials,
     ...options
   };
 
-  const iasPromise = async function (
-    arg: IasParameters
-  ): Promise<ClientCredentialsResponse> {
-    const { url, clientid, certificate, key, clientsecret } =
-      arg.serviceCredentials;
-
-    if (!url || !clientid) {
-      throw new Error(
-        'IAS credentials must contain "url" and "clientid" properties.'
-      );
-    }
-
-    // Build form data
-    const params = new URLSearchParams({
-      client_id: clientid
-    });
-
-    // Determine grant type based on actAs parameter
-    const actAs = arg.actAs || 'technical-user';
-
-    if (actAs === 'business-user') {
-      // JWT bearer grant for business user propagation
-      if (!arg.assertion) {
-        throw new Error(
-          'JWT assertion required for actAs: "business-user". Provide iasOptions.assertion.'
-        );
-      }
-      params.append('assertion', arg.assertion);
-      params.append(
-        'grant_type',
-        'urn:ietf:params:oauth:grant-type:jwt-bearer'
-      );
-      // Workaround for an IAS issue
-      params.append('refresh_token', '0');
-    } else {
-      // Client credentials for technical users
-      params.append('grant_type', 'client_credentials');
-    }
-
-    if (arg.resource) {
-      let fullResource = '';
-      if ('name' in arg.resource) {
-        fullResource = `urn:sap:identity:application:provider:name:${arg.resource.name}`;
-      } else {
-        fullResource = `urn:sap:identity:application:provider:clientid:${arg.resource.clientId}`;
-        if (arg.resource.tenantId) {
-          fullResource += `:tenantid:${arg.resource.tenantId}`;
-        }
-      }
-
-      params.append('resource', fullResource);
-      logger.debug(
-        `Fetching IAS token with resource parameter: ${fullResource}`
-      );
-    }
-
-    if (arg.appTenantId) {
-      params.append('app_tid', arg.appTenantId);
-      logger.debug(
-        `Fetching IAS token with app_tid parameter: ${arg.appTenantId}`
-      );
-    }
-
-    // Ensure JWT token format, not mandatory but we expect JWTs
-    // and the docs mention in some cases we may get opaque tokens otherwise
-    params.append('token_format', 'jwt');
-
-    const tokenUrl = `${url}/oauth2/token`;
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    };
-
-    const requestConfig: RawAxiosRequestConfig = {
-      method: 'post',
-      url: tokenUrl,
-      headers
-    };
-
-    // Determine authentication method
-    if (certificate && key) {
-      // mTLS authentication
-      logger.debug('Using certificate-based authentication for IAS token.');
-      requestConfig.httpsAgent = new https.Agent({
-        cert: certificate,
-        key
-      });
-    } else if (clientsecret) {
-      logger.debug('Using client secret authentication for IAS token.');
-      params.append('client_secret', clientsecret);
-    } else {
-      throw new Error(
-        'IAS credentials must contain either "certificate" and "key" for mTLS, or "clientsecret" for client secret authentication.'
-      );
-    }
-
-    if (arg.extraParams) {
-      for (const [paramKey, paramValue] of Object.entries(arg.extraParams)) {
-        params.append(paramKey, paramValue);
-      }
-    }
-
-    requestConfig.data = params.toString();
-
-    logger.info(params.toString());
-
-    const response =
-      await axios.request<ClientCredentialsResponse>(requestConfig);
-    return response.data;
-  };
-
-  return executeWithMiddleware<
+  const token = await executeWithMiddleware<
     IasParameters,
     ClientCredentialsResponse,
     MiddlewareContext<IasParameters>
   >(resilience(), {
-    fn: iasPromise,
+    fn: getIasClientCredentialsTokenImpl,
     fnArgument,
     context: {
       uri: fnArgument.serviceCredentials.url,
@@ -197,4 +94,118 @@ export async function getIasClientCredentialsToken(
       `Could not fetch IAS client credentials token for service of type ${resolvedService.label}: ${err.message}`
     );
   });
+
+  // Cache the token
+  iasTokenCache.cacheToken(clientid, options, token);
+
+  return token;
+}
+
+/**
+ * Implementation of the IAS client credentials token retrieval.
+ * @param arg - The parameters for IAS token retrieval.
+ * @returns A promise resolving to the client credentials response.
+ * @internal
+ */
+async function getIasClientCredentialsTokenImpl(
+  arg: IasParameters
+): Promise<ClientCredentialsResponse> {
+  const { url, clientid, certificate, key, clientsecret } =
+    arg.serviceCredentials;
+
+  if (!url || !clientid) {
+    throw new Error(
+      'IAS credentials must contain "url" and "clientid" properties.'
+    );
+  }
+
+  // Build form data
+  const params = new URLSearchParams({
+    client_id: clientid
+  });
+
+  // Determine grant type based on actAs parameter
+  const actAs = arg.actAs || 'technical-user';
+
+  if (actAs === 'business-user') {
+    // JWT bearer grant for business user propagation
+    if (!arg.assertion) {
+      throw new Error(
+        'JWT assertion required for actAs: "business-user". Provide iasOptions.assertion.'
+      );
+    }
+    params.append('assertion', arg.assertion);
+    params.append('grant_type', 'urn:ietf:params:oauth:grant-type:jwt-bearer');
+    // Workaround for an IAS issue
+    params.append('refresh_token', '0');
+  } else {
+    // Client credentials for technical users
+    params.append('grant_type', 'client_credentials');
+  }
+
+  if (arg.resource) {
+    let fullResource = '';
+    if ('name' in arg.resource) {
+      fullResource = `urn:sap:identity:application:provider:name:${arg.resource.name}`;
+    } else {
+      fullResource = `urn:sap:identity:application:provider:clientid:${arg.resource.clientId}`;
+      if (arg.resource.tenantId) {
+        fullResource += `:tenantid:${arg.resource.tenantId}`;
+      }
+    }
+
+    params.append('resource', fullResource);
+    logger.debug(`Fetching IAS token with resource parameter: ${fullResource}`);
+  }
+
+  if (arg.appTenantId) {
+    params.append('app_tid', arg.appTenantId);
+    logger.debug(
+      `Fetching IAS token with app_tid parameter: ${arg.appTenantId}`
+    );
+  }
+
+  // Ensure JWT token format, not mandatory but we expect JWTs
+  // and the docs mention in some cases we may get opaque tokens otherwise
+  params.append('token_format', 'jwt');
+
+  const tokenUrl = `${url}/oauth2/token`;
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  };
+
+  const requestConfig: RawAxiosRequestConfig = {
+    method: 'post',
+    url: tokenUrl,
+    headers
+  };
+
+  // Determine authentication method
+  if (certificate && key) {
+    // mTLS authentication
+    logger.debug('Using certificate-based authentication for IAS token.');
+    requestConfig.httpsAgent = new https.Agent({
+      cert: certificate,
+      key
+    });
+  } else if (clientsecret) {
+    logger.debug('Using client secret authentication for IAS token.');
+    params.append('client_secret', clientsecret);
+  } else {
+    throw new Error(
+      'IAS credentials must contain either "certificate" and "key" for mTLS, or "clientsecret" for client secret authentication.'
+    );
+  }
+
+  if (arg.extraParams) {
+    for (const [paramKey, paramValue] of Object.entries(arg.extraParams)) {
+      params.append(paramKey, paramValue);
+    }
+  }
+
+  requestConfig.data = params.toString();
+
+  const response =
+    await axios.request<ClientCredentialsResponse>(requestConfig);
+  return response.data;
 }

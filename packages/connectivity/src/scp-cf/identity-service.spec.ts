@@ -85,10 +85,15 @@ describe('getIasClientCredentialsToken', () => {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        data: 'grant_type=client_credentials&client_id=test-client-id&refresh_token=0&token_format=jwt',
         httpsAgent: expect.any(Object)
       })
     );
+    // Verify the data contains required parameters (order may vary)
+    const callData = mockedAxios.request.mock.calls[0][0].data;
+    expect(callData).toContain('grant_type=client_credentials');
+    expect(callData).toContain('client_id=test-client-id');
+    expect(callData).toContain('token_format=jwt');
+    expect(callData).not.toContain('refresh_token=0'); // Should not appear for technical users
   });
 
   it('fetches IAS token with client secret authentication', async () => {
@@ -112,10 +117,16 @@ describe('getIasClientCredentialsToken', () => {
         url: 'https://tenant.accounts.ondemand.com/oauth2/token',
         headers: expect.objectContaining({
           'Content-Type': 'application/x-www-form-urlencoded'
-        }),
-        data: 'grant_type=client_credentials&client_id=test-client-id&refresh_token=0&token_format=jwt&client_secret=test-client-secret'
+        })
       })
     );
+    // Verify the data contains required parameters (order may vary)
+    const callData = mockedAxios.request.mock.calls[0][0].data;
+    expect(callData).toContain('grant_type=client_credentials');
+    expect(callData).toContain('client_id=test-client-id');
+    expect(callData).toContain('token_format=jwt');
+    expect(callData).toContain('client_secret=test-client-secret');
+    expect(callData).not.toContain('refresh_token=0'); // Should not appear for technical users
   });
 
   it('includes resource parameter for app2app flow', async () => {
@@ -125,11 +136,12 @@ describe('getIasClientCredentialsToken', () => {
       resource: { name: 'my-app' }
     });
 
-    expect(mockedAxios.request).toHaveBeenCalledWith(
-      expect.objectContaining({
-        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app&refresh_token=0&token_format=jwt'
-      })
+    const callData = mockedAxios.request.mock.calls[0][0].data;
+    expect(callData).toContain('grant_type=client_credentials');
+    expect(callData).toContain(
+      'resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app'
     );
+    expect(callData).not.toContain('refresh_token=0');
   });
 
   it('includes appTenantId parameter for multi-tenant scenarios', async () => {
@@ -139,11 +151,10 @@ describe('getIasClientCredentialsToken', () => {
       appTenantId: 'tenant-123'
     });
 
-    expect(mockedAxios.request).toHaveBeenCalledWith(
-      expect.objectContaining({
-        data: 'grant_type=client_credentials&client_id=test-client-id&app_tid=tenant-123&refresh_token=0&token_format=jwt'
-      })
-    );
+    const callData = mockedAxios.request.mock.calls[0][0].data;
+    expect(callData).toContain('grant_type=client_credentials');
+    expect(callData).toContain('app_tid=tenant-123');
+    expect(callData).not.toContain('refresh_token=0');
   });
 
   it('includes both appName and appTenantId parameters', async () => {
@@ -154,11 +165,13 @@ describe('getIasClientCredentialsToken', () => {
       appTenantId: 'tenant-123'
     });
 
-    expect(mockedAxios.request).toHaveBeenCalledWith(
-      expect.objectContaining({
-        data: 'grant_type=client_credentials&client_id=test-client-id&resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app&app_tid=tenant-123&refresh_token=0&token_format=jwt'
-      })
+    const callData = mockedAxios.request.mock.calls[0][0].data;
+    expect(callData).toContain('grant_type=client_credentials');
+    expect(callData).toContain(
+      'resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app'
     );
+    expect(callData).toContain('app_tid=tenant-123');
+    expect(callData).not.toContain('refresh_token=0');
   });
 
   it('includes extraParams for additional OAuth2 parameters', async () => {
@@ -233,5 +246,98 @@ describe('getIasClientCredentialsToken', () => {
     await expect(getIasClientCredentialsToken(mockIasService)).rejects.toThrow(
       'Could not fetch IAS client credentials token for service of type identity'
     );
+  });
+
+  describe('actAs parameter', () => {
+    it('uses technical-user by default', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      await getIasClientCredentialsToken(mockIasService, {});
+
+      const callData = mockedAxios.request.mock.calls[0][0].data;
+      expect(callData).toContain('grant_type=client_credentials');
+      expect(callData).not.toContain('assertion=');
+      expect(callData).not.toContain('refresh_token=0');
+    });
+
+    it('uses client credentials for technical-user', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      await getIasClientCredentialsToken(mockIasService, {
+        actAs: 'technical-user'
+      });
+
+      const callData = mockedAxios.request.mock.calls[0][0].data;
+      expect(callData).toContain('grant_type=client_credentials');
+      expect(callData).not.toContain('assertion=');
+      expect(callData).not.toContain('refresh_token=0');
+    });
+
+    it('uses JWT bearer grant for business-user with assertion', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      await getIasClientCredentialsToken(mockIasService, {
+        actAs: 'business-user',
+        assertion: 'user-jwt-token'
+      });
+
+      const callData = mockedAxios.request.mock.calls[0][0].data;
+      expect(callData).toContain(
+        'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer'
+      );
+      expect(callData).toContain('assertion=user-jwt-token');
+      expect(callData).toContain('refresh_token=0'); // Workaround applied for business users
+    });
+
+    it('throws error for business-user without assertion', async () => {
+      await expect(
+        getIasClientCredentialsToken(mockIasService, {
+          actAs: 'business-user'
+        } as any)
+      ).rejects.toThrow('JWT assertion required for actAs: "business-user"');
+    });
+
+    it('includes refresh_token workaround only for business-user', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      // Technical user - no refresh_token
+      await getIasClientCredentialsToken(mockIasService, {
+        actAs: 'technical-user'
+      });
+      let callData = mockedAxios.request.mock.calls[0][0].data;
+      expect(callData).not.toContain('refresh_token=0');
+
+      jest.clearAllMocks();
+
+      // Business user - has refresh_token
+      await getIasClientCredentialsToken(mockIasService, {
+        actAs: 'business-user',
+        assertion: 'user-jwt'
+      });
+      callData = mockedAxios.request.mock.calls[0][0].data;
+      expect(callData).toContain('refresh_token=0');
+    });
+
+    it('supports business-user with resource and appTenantId', async () => {
+      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
+
+      await getIasClientCredentialsToken(mockIasService, {
+        actAs: 'business-user',
+        assertion: 'user-jwt-token',
+        resource: { name: 'my-app' },
+        appTenantId: 'tenant-123'
+      });
+
+      const callData = mockedAxios.request.mock.calls[0][0].data;
+      expect(callData).toContain(
+        'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer'
+      );
+      expect(callData).toContain('assertion=user-jwt-token');
+      expect(callData).toContain(
+        'resource=urn%3Asap%3Aidentity%3Aapplication%3Aprovider%3Aname%3Amy-app'
+      );
+      expect(callData).toContain('app_tid=tenant-123');
+      expect(callData).toContain('refresh_token=0');
+    });
   });
 });

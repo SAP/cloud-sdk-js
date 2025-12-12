@@ -40,7 +40,17 @@ export async function getDestinationFromServiceBinding(
       ? decodeJwt(options.jwt)
       : undefined;
 
-  const retrievalOptions = { ...options, jwt: decodedJwt };
+  // If using business user authentication with IAS and no assertion provided, use the JWT from options
+  let iasOptions = options.iasOptions;
+  if (
+    iasOptions?.actAs === 'business-user' &&
+    options.jwt &&
+    !iasOptions.assertion
+  ) {
+    iasOptions = { ...iasOptions, assertion: options.jwt };
+  }
+
+  const retrievalOptions = { ...options, jwt: decodedJwt, iasOptions };
   const destination = await retrieveDestination(retrievalOptions);
 
   const destWithProxy =
@@ -82,7 +92,76 @@ export interface DestinationFromServiceBindingOptions {
    * Custom transformation function to control how a {@link Destination} is built from the given {@link Service}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
+  /**
+   * Options for IAS token retrieval.
+   */
+  iasOptions?: IasOptions;
 }
+
+/**
+ * Base options shared by all IAS authentication modes.
+ */
+interface IasOptionsBase {
+  /**
+   * The target URL of the destination that the IAS token is requested for.
+   * @default to the (identity service) URL from the service binding.
+   */
+  targetUrl?: string;
+  /**
+   * The application resource for which the token is requested.
+   * The token will only be usable to call the requested application.
+   * Either provide the app name (common case) or the provider client ID
+   * and tenant ID (optional).
+   */
+  resource?: Xor<
+    {
+      name: string;
+    },
+    {
+      clientId: string;
+      tenantId?: string;
+    }
+  >;
+  /**
+   * The consumer (BTP) tenant ID of the application.
+   * May be required for multi-tenant communication.
+   */
+  appTenantId?: string;
+  /**
+   * Additional parameters to be sent along with the token request.
+   */
+  extraParams?: Record<string, string>;
+}
+
+/**
+ * IAS options for technical user authentication.
+ */
+type IasOptionsTechnical = IasOptionsBase & {
+  actAs?: 'technical-user';
+  /**
+   * Assertion not used for technical user authentication.
+   */
+  assertion?: never;
+};
+
+/**
+ * IAS options for business user authentication.
+ */
+type IasOptionsBusinessUser = IasOptionsBase & {
+  /**
+   * Specifies business user authentication.
+   */
+  actAs: 'business-user';
+  /**
+   * The JWT assertion string to use for business user authentication (required).
+   */
+  assertion: string;
+};
+
+/**
+ * Options for IAS token retrieval with type-safe actAs/jwt relationship.
+ */
+export type IasOptions = IasOptionsTechnical | IasOptionsBusinessUser;
 
 /**
  * Represents options passed to the service binding transform function.
@@ -95,37 +174,7 @@ export type ServiceBindingTransformOptions = {
   /**
    * The options for IAS token retrieval.
    */
-  iasOptions?: {
-    /**
-     * The target URL of the destination that the IAS token is requested for.
-     * @default to the (identity service) URL from the service binding.
-     */
-    targetUrl?: string;
-    /**
-     * The application resource for which the token is requested.
-     * The token will only be usable to call the requested application.
-     * Either provide the app name (common case) or the provider client ID
-     * and tenant ID (optional).
-     */
-    resource?: Xor<
-      {
-        name: string;
-      },
-      {
-        clientId: string;
-        tenantId?: string;
-      }
-    >;
-    /**
-     * The source (BTP)tenant ID of the application.
-     * May be required for cross-tenant communication.
-     */
-    appTenantId?: string;
-    /**
-     * Additional parameters to be sent along with the token request.
-     */
-    extraParams?: Record<string, string>;
-  };
+  iasOptions?: IasOptions;
 } & CachingOptions;
 
 /**

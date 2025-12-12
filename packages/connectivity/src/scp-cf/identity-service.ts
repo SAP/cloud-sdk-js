@@ -19,20 +19,19 @@ const logger = createLogger({
   messageContext: 'identity-service'
 });
 
-// export type OnBehalfOf =
-//     /**
-//      * A technical user for the provider account.
-//      */
-//     | 'TECHNICAL_USER_PROVIDER'
-//     // TECHNICAL_USER_SUBSCRIBER,
-//     /**
-//      * A technical user based on tenant set in the current context.
-//      */
-//     | 'TECHNICAL_USER_CURRENT_TENANT'
-//     /**
-//      * A named user based on the auth token set in the current context.
-//      */
-//     | 'NAMED_USER_CURRENT_TENANT'
+/**
+ * Specifies which user identity should be used for authentication.
+ * Determines whether to use technical client credentials or propagate a business user's identity.
+ */
+export type ActAs =
+  /**
+   * Technical user from the service binding (default).
+   */
+  | 'technical-user'
+  /**
+   * Business user from the current request context (requires JWT).
+   */
+  | 'business-user';
 
 /**
  * @internal
@@ -57,7 +56,7 @@ type IasParameters = {
  * Make a client credentials request against the IAS OAuth2 endpoint.
  * Supports both certificate-based (mTLS) and client secret authentication.
  * @param service - Service as it is defined in the environment variable.
- * @param options - Options for token fetching, including optional resource parameter for app2app, appTenantId for multi-tenant scenarios, and extraParams for additional OAuth2 parameters.
+ * @param options - Options for token fetching, including actAs to specify authentication mode, optional resource parameter for app2app, appTenantId for multi-tenant scenarios, and extraParams for additional OAuth2 parameters.
  * @returns Client credentials token response.
  * @internal
  */
@@ -86,18 +85,40 @@ export async function getIasClientCredentialsToken(
 
     // Build form data
     const params = new URLSearchParams({
-      grant_type: 'client_credentials',
       client_id: clientid
     });
+
+    // Determine grant type based on actAs parameter
+    const actAs = arg.actAs || 'technical-user';
+
+    if (actAs === 'business-user') {
+      // JWT bearer grant for business user propagation
+      if (!arg.assertion) {
+        throw new Error(
+          'JWT assertion required for actAs: "business-user". Provide iasOptions.assertion.'
+        );
+      }
+      params.append('assertion', arg.assertion);
+      params.append(
+        'grant_type',
+        'urn:ietf:params:oauth:grant-type:jwt-bearer'
+      );
+      // Workaround for an IAS issue
+      params.append('refresh_token', '0');
+    } else {
+      // Client credentials for technical users
+      params.append('grant_type', 'client_credentials');
+    }
 
     if (arg.resource) {
       let fullResource = '';
       if ('name' in arg.resource) {
         fullResource = `urn:sap:identity:application:provider:name:${arg.resource.name}`;
-      } else if (arg.resource.clientId && arg.resource.tenantId) {
-        fullResource = `urn:sap:identity:application:provider:clientid:${arg.resource.clientId}:tenantid:${arg.resource.tenantId}`;
-      } else if (arg.resource.clientId) {
+      } else {
         fullResource = `urn:sap:identity:application:provider:clientid:${arg.resource.clientId}`;
+        if (arg.resource.tenantId) {
+          fullResource += `:tenantid:${arg.resource.tenantId}`;
+        }
       }
 
       params.append('resource', fullResource);
@@ -113,12 +134,8 @@ export async function getIasClientCredentialsToken(
       );
     }
 
-    // Workaround for IAS issue
-    // if( onBehalfOf == OnBehalfOf.NAMED_USER_CURRENT_TENANT ) {
-    params.append('refresh_token', '0');
-    // };
-
-    // Ensure JWT token format
+    // Ensure JWT token format, not mandatory but we expect JWTs
+    // and the docs mention in some cases we may get opaque tokens otherwise
     params.append('token_format', 'jwt');
 
     const tokenUrl = `${url}/oauth2/token`;
@@ -149,10 +166,10 @@ export async function getIasClientCredentialsToken(
       );
     }
 
-    for (const [paramKey, paramValue] of Object.entries(
-      arg.extraParams || {}
-    )) {
-      params.append(paramKey, paramValue);
+    if (arg.extraParams) {
+      for (const [paramKey, paramValue] of Object.entries(arg.extraParams)) {
+        params.append(paramKey, paramValue);
+      }
     }
 
     requestConfig.data = params.toString();

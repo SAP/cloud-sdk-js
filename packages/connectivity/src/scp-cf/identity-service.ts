@@ -21,20 +21,6 @@ const logger = createLogger({
 });
 
 /**
- * Specifies which user identity should be used for authentication.
- * Determines whether to use technical client credentials or propagate a business user's identity.
- */
-export type ActAs =
-  /**
-   * Technical user from the service binding (default).
-   */
-  | 'technical-user'
-  /**
-   * Business user from the current request context (requires JWT).
-   */
-  | 'business-user';
-
-/**
  * @internal
  * Checks whether the IAS token to XSUAA token exchange should be applied.
  * @param options - Configuration for how to retrieve destinations from the destination service.
@@ -57,7 +43,7 @@ type IasParameters = {
  * Make a client credentials request against the IAS OAuth2 endpoint.
  * Supports both certificate-based (mTLS) and client secret authentication.
  * @param service - Service as it is defined in the environment variable.
- * @param options - Options for token fetching, including actAs to specify authentication mode, optional resource parameter for app2app, appTenantId for multi-tenant scenarios, and extraParams for additional OAuth2 parameters.
+ * @param options - Options for token fetching, including authenticationType to specify authentication mode, optional resource parameter for app2app, appTenantId for multi-tenant scenarios, and extraParams for additional OAuth2 parameters.
  * @returns Client credentials token response.
  * @internal
  */
@@ -67,10 +53,13 @@ export async function getIasClientCredentialsToken(
 ): Promise<ClientCredentialsResponse> {
   const resolvedService = resolveServiceBinding(service);
   const { clientid } = resolvedService.credentials;
+  const useCache = options.useCache ?? true;
 
-  const cachedToken = iasTokenCache.getToken(clientid, options);
-  if (cachedToken) {
-    return cachedToken;
+  if (useCache) {
+    const cachedToken = iasTokenCache.getToken(clientid, options);
+    if (cachedToken) {
+      return cachedToken;
+    }
   }
 
   const fnArgument: IasParameters = {
@@ -95,8 +84,10 @@ export async function getIasClientCredentialsToken(
     );
   });
 
-  // Cache the token
-  iasTokenCache.cacheToken(clientid, options, token);
+  // Cache the token if caching is enabled
+  if (useCache) {
+    iasTokenCache.cacheToken(clientid, options, token);
+  }
 
   return token;
 }
@@ -124,14 +115,15 @@ async function getIasClientCredentialsTokenImpl(
     client_id: clientid
   });
 
-  // Determine grant type based on actAs parameter
-  const actAs = arg.actAs || 'technical-user';
+  // Determine grant type based on authenticationType parameter
+  const authenticationType =
+    arg.authenticationType || 'OAuth2ClientCredentials';
 
-  if (actAs === 'business-user') {
+  if (authenticationType === 'OAuth2JWTBearer') {
     // JWT bearer grant for business user propagation
     if (!arg.assertion) {
       throw new Error(
-        'JWT assertion required for actAs: "business-user". Provide iasOptions.assertion.'
+        'JWT assertion required for authenticationType: "OAuth2JWTBearer". Provide iasOptions.assertion.'
       );
     }
     params.append('assertion', arg.assertion);

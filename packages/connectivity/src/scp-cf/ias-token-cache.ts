@@ -70,9 +70,9 @@ function normalizeResource(resource?: IasOptions['resource']): string {
 }
 
 /**
- * Generates a cache key for IAS tokens based on actAs mode, user/tenant context, and resource.
+ * Generates a cache key for IAS tokens based on authenticationType, user/tenant context, and resource.
  * @param clientId - The client ID from service credentials.
- * @param options - IAS options containing actAs, assertion, resource, and appTenantId.
+ * @param options - IAS options containing authenticationType, assertion, resource, and appTenantId.
  * @returns Cache key string or undefined if required components are missing.
  * @internal
  */
@@ -80,7 +80,8 @@ export function getCacheKey(
   clientId: string,
   options: ServiceBindingTransformOptions['iasOptions'] = {}
 ): string | undefined {
-  const actAs = options.actAs || 'technical-user';
+  const authenticationType =
+    options.authenticationType || 'OAuth2ClientCredentials';
   const resourceStr = normalizeResource(options.resource);
 
   if (!clientId) {
@@ -90,10 +91,10 @@ export function getCacheKey(
     return undefined;
   }
 
-  if (actAs === 'business-user') {
+  if (authenticationType === 'OAuth2JWTBearer') {
     if (!options.assertion) {
       logger.warn(
-        'Cannot create cache key for IAS token cache. Business-user flow requires assertion JWT.'
+        'Cannot create cache key for IAS token cache. OAuth2JWTBearer flow requires assertion JWT.'
       );
       return undefined;
     }

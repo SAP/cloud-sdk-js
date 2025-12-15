@@ -10,7 +10,10 @@ import { serviceToDestinationTransformers } from './service-binding-to-destinati
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
 import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
-import type { Destination } from './destination-service-types';
+import type {
+  AuthenticationType,
+  Destination
+} from './destination-service-types';
 import type { CachingOptions } from '../cache';
 import type { Service } from '../environment-accessor';
 import type { JwtPayload } from '../jsonwebtoken-type';
@@ -43,7 +46,7 @@ export async function getDestinationFromServiceBinding(
   // If using business user authentication with IAS and no assertion provided, use the JWT from options
   let iasOptions = options.iasOptions;
   if (
-    iasOptions?.actAs === 'business-user' &&
+    iasOptions?.authenticationType === 'OAuth2JWTBearer' &&
     options.jwt &&
     !iasOptions.assertion
   ) {
@@ -131,13 +134,21 @@ interface IasOptionsBase {
    * Additional parameters to be sent along with the token request.
    */
   extraParams?: Record<string, string>;
+  /**
+   * Whether to use the cache for IAS tokens.
+   * @default true
+   */
+  useCache?: boolean;
 }
 
 /**
- * IAS options for technical user authentication.
+ * IAS options for technical user authentication (client credentials).
  */
 type IasOptionsTechnical = IasOptionsBase & {
-  actAs?: 'technical-user';
+  /**
+   * Authentication type. Use 'OAuth2ClientCredentials' for technical user (default).
+   */
+  authenticationType?: Extract<AuthenticationType, 'OAuth2ClientCredentials'>;
   /**
    * Assertion not used for technical user authentication.
    */
@@ -145,13 +156,13 @@ type IasOptionsTechnical = IasOptionsBase & {
 };
 
 /**
- * IAS options for business user authentication.
+ * IAS options for business user authentication (JWT bearer).
  */
 type IasOptionsBusinessUser = IasOptionsBase & {
   /**
-   * Specifies business user authentication.
+   * Authentication type. Use 'OAuth2JWTBearer' for business user authentication.
    */
-  actAs: 'business-user';
+  authenticationType: Extract<AuthenticationType, 'OAuth2JWTBearer'>;
   /**
    * The JWT assertion string to use for business user authentication (required).
    */
@@ -159,7 +170,7 @@ type IasOptionsBusinessUser = IasOptionsBase & {
 };
 
 /**
- * Options for IAS token retrieval with type-safe actAs/jwt relationship.
+ * Options for IAS token retrieval with type-safe authenticationType/assertion relationship.
  */
 export type IasOptions = IasOptionsTechnical | IasOptionsBusinessUser;
 

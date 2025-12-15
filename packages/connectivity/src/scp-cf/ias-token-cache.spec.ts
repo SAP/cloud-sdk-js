@@ -135,7 +135,7 @@ describe('ias-token-cache', () => {
         });
 
         const cacheKey = getCacheKey('test-client-id', {
-          actAs: 'business-user',
+          authenticationType: 'OAuth2JWTBearer',
           assertion
         });
         expect(cacheKey).toBe('user-123:tenant-456:test-client-id:');
@@ -148,7 +148,7 @@ describe('ias-token-cache', () => {
         });
 
         const cacheKey = getCacheKey('test-client-id', {
-          actAs: 'business-user',
+          authenticationType: 'OAuth2JWTBearer',
           assertion,
           resource: { name: 'my-app' }
         });
@@ -159,11 +159,11 @@ describe('ias-token-cache', () => {
         jest.spyOn(logger, 'warn');
 
         const cacheKey = getCacheKey('test-client-id', {
-          actAs: 'business-user'
+          authenticationType: 'OAuth2JWTBearer'
         } as any);
         expect(cacheKey).toBeUndefined();
         expect(logger.warn).toHaveBeenCalledWith(
-          'Cannot create cache key for IAS token cache. Business-user flow requires assertion JWT.'
+          'Cannot create cache key for IAS token cache. OAuth2JWTBearer flow requires assertion JWT.'
         );
       });
 
@@ -175,7 +175,7 @@ describe('ias-token-cache', () => {
         });
 
         const cacheKey = getCacheKey('test-client-id', {
-          actAs: 'business-user',
+          authenticationType: 'OAuth2JWTBearer',
           assertion
         });
         expect(cacheKey).toBeUndefined();
@@ -192,7 +192,7 @@ describe('ias-token-cache', () => {
         });
 
         const cacheKey = getCacheKey('test-client-id', {
-          actAs: 'business-user',
+          authenticationType: 'OAuth2JWTBearer',
           assertion
         });
         expect(cacheKey).toBeUndefined();
@@ -238,11 +238,11 @@ describe('ias-token-cache', () => {
         });
 
         const key1 = getCacheKey('test-client-id', {
-          actAs: 'business-user',
+          authenticationType: 'OAuth2JWTBearer',
           assertion: assertion1
         });
         const key2 = getCacheKey('test-client-id', {
-          actAs: 'business-user',
+          authenticationType: 'OAuth2JWTBearer',
           assertion: assertion2
         });
 

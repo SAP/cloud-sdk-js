@@ -8,9 +8,11 @@ import {
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
+import { getIasClientCredentialsToken } from './identity-service';
 import type { Service } from './environment-accessor';
 import type { CachingOptions } from './cache';
 import type { JwtPayload } from './jsonwebtoken-type';
+import type { IasOptions } from './destination';
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -40,11 +42,13 @@ export async function serviceToken(
   const tenantForCaching = options?.jwt
     ? getTenantId(options.jwt) || getSubdomain(options.jwt)
     : getTenantIdFromBinding() || getDefaultTenantId();
+  const resourceForCaching = serviceBinding?.iasResource;
 
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getToken(
       tenantForCaching,
-      serviceCredentials.clientid
+      serviceCredentials.clientid,
+      resourceForCaching
     );
     if (cachedToken) {
       return cachedToken.access_token;
@@ -52,12 +56,19 @@ export async function serviceToken(
   }
 
   try {
-    const token = await getClientCredentialsToken(serviceBinding, options?.jwt);
+    const token =
+      serviceBinding.label === 'identity'
+        ? await getIasClientCredentialsToken(serviceBinding, {
+            resource: resourceForCaching,
+            ...options
+          })
+        : await getClientCredentialsToken(serviceBinding, options?.jwt);
 
     if (opts.useCache) {
       clientCredentialsTokenCache.cacheToken(
         tenantForCaching,
         serviceCredentials.clientid,
+        resourceForCaching,
         token
       );
     }
@@ -75,15 +86,37 @@ export async function serviceToken(
  * Returns a JWT bearer token that can be used to call the given service.
  * The token is fetched via a JWT bearer token grant using the user token + client credentials.
  *
+ * This function automatically detects the service type (XSUAA or IAS) based on the label
+ * and uses the appropriate authentication flow.
+ * For IAS services, you can pass IAS-specific options like `resource` and `appTenantId`.
+ *
  * Throws an error if there is no instance of the given service type.
  * @param jwt - The JWT of the user for whom the access token should be fetched.
  * @param service - The type of the service or an instance of {@link Service}.
+ * @param options - Optional IAS-specific options like resource, appTenantId, and caching behavior. Only used for IAS services.
  * @returns A JWT bearer token.
  */
 export async function jwtBearerToken(
   jwt: string,
-  service: string | Service
+  service: string | Service,
+  options?: Omit<
+    IasOptions,
+    'authenticationType' | 'assertion' | 'destinationUrl'
+  >
 ): Promise<string> {
   const resolvedService = resolveServiceBinding(service);
+
+  // Detect if this is an IAS service
+  if (resolvedService.label === 'identity') {
+    return (
+      await getIasClientCredentialsToken(resolvedService, {
+        ...options,
+        authenticationType: 'OAuth2JWTBearer',
+        assertion: jwt
+      })
+    ).access_token;
+  }
+
+  // XSUAA flow
   return getUserToken(resolvedService, jwt);
 }

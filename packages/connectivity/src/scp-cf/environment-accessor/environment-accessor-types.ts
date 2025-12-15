@@ -1,3 +1,5 @@
+import type { IasResource } from '../destination';
+
 /**
  * Unspecific representation of a service as read from VCAP_SERVICES (for Cloud Foundry) or mounted secrets (for K8S).
  */
@@ -19,6 +21,10 @@ export interface Service {
    * The service credentials.
    */
   credentials: ServiceCredentials;
+  /**
+   * IAS Resource to request for App-to-App communication.
+   */
+  iasResource?: IasResource;
 }
 
 /**

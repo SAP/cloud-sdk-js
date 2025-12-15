@@ -4,7 +4,6 @@ import {
   getIasClientCredentialsToken,
   shouldExchangeToken
 } from './identity-service';
-import { iasTokenCache } from './ias-token-cache';
 import type { Service } from './environment-accessor';
 
 jest.mock('axios');
@@ -71,10 +70,6 @@ describe('getIasClientCredentialsToken', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  afterEach(() => {
-    iasTokenCache.clear();
   });
 
   it('fetches IAS token with mTLS authentication', async () => {
@@ -253,8 +248,8 @@ describe('getIasClientCredentialsToken', () => {
     );
   });
 
-  describe('actAs parameter', () => {
-    it('uses technical-user by default', async () => {
+  describe('authenticationType parameter', () => {
+    it('uses OAuth2ClientCredentials (technical-user) by default', async () => {
       mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
       await getIasClientCredentialsToken(mockIasService, {});
@@ -265,7 +260,7 @@ describe('getIasClientCredentialsToken', () => {
       expect(callData).not.toContain('refresh_token=0');
     });
 
-    it('uses client credentials for technical-user', async () => {
+    it('uses client credentials for OAuth2ClientCredentials', async () => {
       mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
       await getIasClientCredentialsToken(mockIasService, {
@@ -278,7 +273,7 @@ describe('getIasClientCredentialsToken', () => {
       expect(callData).not.toContain('refresh_token=0');
     });
 
-    it('uses JWT bearer grant for business-user with assertion', async () => {
+    it('uses JWT bearer grant for OAuth2JWTBearer (business-user) with assertion', async () => {
       mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
       const userAssertion = signedJwt({
@@ -301,7 +296,7 @@ describe('getIasClientCredentialsToken', () => {
       expect(callData).toContain('refresh_token=0'); // Workaround applied for business users
     });
 
-    it('throws error for business-user without assertion', async () => {
+    it('throws error for OAuth2JWTBearer (business-user) without assertion', async () => {
       await expect(
         getIasClientCredentialsToken(mockIasService, {
           authenticationType: 'OAuth2JWTBearer'
@@ -311,7 +306,7 @@ describe('getIasClientCredentialsToken', () => {
       );
     });
 
-    it('includes refresh_token workaround only for business-user', async () => {
+    it('includes refresh_token workaround only for OAuth2ClientCredentials (technical-user)', async () => {
       mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
       // Technical user - no refresh_token
@@ -322,7 +317,6 @@ describe('getIasClientCredentialsToken', () => {
       expect(callData).not.toContain('refresh_token=0');
 
       jest.clearAllMocks();
-      iasTokenCache.clear();
 
       // Business user - has refresh_token
       const userAssertion = signedJwt({
@@ -337,7 +331,7 @@ describe('getIasClientCredentialsToken', () => {
       expect(callData).toContain('refresh_token=0');
     });
 
-    it('supports business-user with resource and appTenantId', async () => {
+    it('supports OAuth2JWTBearer (business-user) with resource and appTenantId', async () => {
       mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
 
       const userAssertion = signedJwt({
@@ -364,144 +358,6 @@ describe('getIasClientCredentialsToken', () => {
       );
       expect(callData).toContain('app_tid=tenant-123');
       expect(callData).toContain('refresh_token=0');
-    });
-  });
-
-  describe('token caching', () => {
-    it('caches technical-user tokens and returns from cache on second call', async () => {
-      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
-
-      const first = await getIasClientCredentialsToken(mockIasService, {});
-      const second = await getIasClientCredentialsToken(mockIasService, {});
-
-      expect(first).toEqual(mockTokenResponse);
-      expect(second).toEqual(mockTokenResponse);
-      expect(mockedAxios.request).toHaveBeenCalledTimes(1);
-    });
-
-    it('caches business-user tokens per user', async () => {
-      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
-
-      const assertion1 = signedJwt({
-        user_uuid: 'user-1',
-        app_tid: 'tenant-1'
-      });
-      const assertion2 = signedJwt({
-        user_uuid: 'user-2',
-        app_tid: 'tenant-1'
-      });
-
-      await getIasClientCredentialsToken(mockIasService, {
-        authenticationType: 'OAuth2JWTBearer',
-        assertion: assertion1
-      });
-      await getIasClientCredentialsToken(mockIasService, {
-        authenticationType: 'OAuth2JWTBearer',
-        assertion: assertion2
-      });
-
-      // Different users should result in 2 network calls
-      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
-    });
-
-    it('isolates cache by tenant for technical-user', async () => {
-      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
-
-      await getIasClientCredentialsToken(mockIasService, {
-        appTenantId: 'tenant-1'
-      });
-      await getIasClientCredentialsToken(mockIasService, {
-        appTenantId: 'tenant-2'
-      });
-
-      // Different tenants should result in 2 network calls
-      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
-    });
-
-    it('isolates cache by resource parameter', async () => {
-      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
-
-      await getIasClientCredentialsToken(mockIasService, {
-        resource: { name: 'app-1' }
-      });
-      await getIasClientCredentialsToken(mockIasService, {
-        resource: { name: 'app-2' }
-      });
-
-      // Different resources should result in 2 network calls
-      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
-    });
-
-    it('reuses cache for same resource across calls', async () => {
-      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
-
-      const first = await getIasClientCredentialsToken(mockIasService, {
-        resource: { name: 'my-app' }
-      });
-      const second = await getIasClientCredentialsToken(mockIasService, {
-        resource: { name: 'my-app' }
-      });
-
-      expect(first).toEqual(mockTokenResponse);
-      expect(second).toEqual(mockTokenResponse);
-      expect(mockedAxios.request).toHaveBeenCalledTimes(1);
-    });
-
-    it('does not cache if token fetch fails', async () => {
-      mockedAxios.request.mockRejectedValue(new Error('Network error'));
-
-      await expect(
-        getIasClientCredentialsToken(mockIasService, {})
-      ).rejects.toThrow();
-
-      // Second call should also make a network request
-      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
-      await getIasClientCredentialsToken(mockIasService, {});
-
-      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
-    });
-
-    it('does not use cache when useCache is false', async () => {
-      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
-
-      const first = await getIasClientCredentialsToken(mockIasService, {
-        useCache: false
-      });
-      const second = await getIasClientCredentialsToken(mockIasService, {
-        useCache: false
-      });
-
-      expect(first).toEqual(mockTokenResponse);
-      expect(second).toEqual(mockTokenResponse);
-      // Should make 2 network calls since caching is disabled
-      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
-    });
-
-    it('does not cache token when useCache is false', async () => {
-      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
-
-      // First call with useCache=false
-      await getIasClientCredentialsToken(mockIasService, {
-        useCache: false
-      });
-
-      // Second call with useCache=true (default) should still make a network call
-      await getIasClientCredentialsToken(mockIasService);
-
-      // Should make 2 network calls: first didn't cache, second had no cached value
-      expect(mockedAxios.request).toHaveBeenCalledTimes(2);
-    });
-
-    it('uses cache by default when useCache is not specified', async () => {
-      mockedAxios.request.mockResolvedValue({ data: mockTokenResponse });
-
-      const first = await getIasClientCredentialsToken(mockIasService);
-      const second = await getIasClientCredentialsToken(mockIasService);
-
-      expect(first).toEqual(mockTokenResponse);
-      expect(second).toEqual(mockTokenResponse);
-      // Should make only 1 network call since caching is enabled by default
-      expect(mockedAxios.request).toHaveBeenCalledTimes(1);
     });
   });
 });

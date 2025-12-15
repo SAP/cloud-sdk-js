@@ -102,6 +102,32 @@ export interface DestinationFromServiceBindingOptions {
 }
 
 /**
+ * The application resource for which the token is requested for App-to-App communication.
+ * The token will only be usable to call the requested application.
+ * Either provide the app name (common case) or the provider client ID
+ * and tenant ID (optional).
+ */
+export type IasResource =
+  Xor<
+    {
+      /**
+       * The name of the application resource.
+       */
+      name: string;
+    },
+    {
+      /**
+       * The client ID of the application resource.
+       */
+      clientId: string;
+      /**
+       * The tenant ID of the application resource. (Optional)
+       */
+      tenantId?: string;
+    }
+    >;
+
+/**
  * Base options shared by all IAS authentication modes.
  */
 interface IasOptionsBase {
@@ -116,15 +142,7 @@ interface IasOptionsBase {
    * Either provide the app name (common case) or the provider client ID
    * and tenant ID (optional).
    */
-  resource?: Xor<
-    {
-      name: string;
-    },
-    {
-      clientId: string;
-      tenantId?: string;
-    }
-  >;
+  resource?: IasResource;
   /**
    * The consumer (BTP) tenant ID of the application.
    * May be required for multi-tenant communication.
@@ -134,11 +152,6 @@ interface IasOptionsBase {
    * Additional parameters to be sent along with the token request.
    */
   extraParams?: Record<string, string>;
-  /**
-   * Whether to use the cache for IAS tokens.
-   * @default true
-   */
-  useCache?: boolean;
 }
 
 /**

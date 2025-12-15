@@ -5,7 +5,6 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { decodeJwt, isXsuaaToken } from './jwt';
 import { resolveServiceBinding } from './environment-accessor';
-import { iasTokenCache } from './ias-token-cache';
 import type {
   DestinationOptions,
   ServiceBindingTransformOptions
@@ -53,14 +52,6 @@ export async function getIasClientCredentialsToken(
 ): Promise<ClientCredentialsResponse> {
   const resolvedService = resolveServiceBinding(service);
   const { clientid } = resolvedService.credentials;
-  const useCache = options.useCache ?? true;
-
-  if (useCache) {
-    const cachedToken = iasTokenCache.getToken(clientid, options);
-    if (cachedToken) {
-      return cachedToken;
-    }
-  }
 
   const fnArgument: IasParameters = {
     serviceCredentials: resolvedService.credentials,
@@ -83,12 +74,6 @@ export async function getIasClientCredentialsToken(
       `Could not fetch IAS client credentials token for service of type ${resolvedService.label}: ${err.message}`
     );
   });
-
-  // Cache the token if caching is enabled
-  if (useCache) {
-    iasTokenCache.cacheToken(clientid, options, token);
-  }
-
   return token;
 }
 

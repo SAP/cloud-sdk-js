@@ -1495,10 +1495,10 @@
     node-cache "^5.1.2"
     verror "1.10.1"
 
-"@sap/xssec@^4.12.0":
-  version "4.12.0"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.12.0.tgz#6cb46d04f3578cd89d7e28c6086668cb7cfeffaa"
-  integrity sha512-GIIVSETS4vsih47CfEZ5VWQNwQMZvsUsVovX9Cm6EYyEzEBhOwN9/DPdubHoQ13jDCubJ0uHv4xeAj55IGhMCQ==
+"@sap/xssec@^4.12.1":
+  version "4.12.1"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-4.12.1.tgz#107ba8ea6ff57fd81e6ed10b70485a665b6da285"
+  integrity sha512-LcCnFuoNKosXJ9H71Yd9vRNknB+LHsghro1eHgQ8jUmacSt/C2USL7BsJ4TDb4DxeeZB4wieUEy5HBPZM9T+Jw==
   dependencies:
     debug "^4.4.3"
     jwt-decode "^4"

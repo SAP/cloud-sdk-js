@@ -24,7 +24,7 @@ export interface Service {
   /**
    * IAS Resource to request for App-to-App communication.
    */
-  iasResource?: IasResource;
+  iasResource?: IasResource | IasResource[];
 }
 
 /**

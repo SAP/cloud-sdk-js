@@ -14,14 +14,14 @@ const ClientCredentialsTokenCache = (
   getToken: (
     tenantId: string | undefined,
     clientId: string,
-    resource?: IasResource
+    resource?: IasResource | IasResource[]
   ): ClientCredentialsResponse | undefined =>
     cache.get(getCacheKey(tenantId, clientId, resource)),
 
   cacheToken: (
     tenantId: string | undefined,
     clientId: string,
-    resource: IasResource | undefined,
+    resource: IasResource | IasResource[] | undefined,
     token: ClientCredentialsResponse
   ): void => {
     cache.set(getCacheKey(tenantId, clientId, resource), {
@@ -43,20 +43,29 @@ const ClientCredentialsTokenCache = (
  * @returns Normalized resource string or empty string if not provided.
  * @internal
  */
-function normalizeResource(resource?: IasResource): string | undefined {
+function normalizeResource(
+  resource?: IasResource | IasResource[]
+): string | undefined {
   if (!resource) {
     return undefined;
   }
 
-  if ('name' in resource) {
-    return `name=${resource.name}`;
-  }
+  const resources = Array.isArray(resource) ? resource : [resource];
 
-  let normalized = `clientid=${resource.clientId}`;
-  if (resource.tenantId) {
-    normalized += `:tenantid=${resource.tenantId}`;
-  }
-  return normalized;
+  return resources
+    .map(r => {
+      if ('name' in r) {
+        return `name=${r.name}`;
+      }
+
+      let normalized = `clientid=${r.clientId}`;
+      if (r.tenantId) {
+        normalized += `:tenantid=${r.tenantId}`;
+      }
+      return normalized;
+    })
+    .sort()
+    .join('::');
 }
 
 /** *
@@ -69,7 +78,7 @@ function normalizeResource(resource?: IasResource): string | undefined {
 export function getCacheKey(
   tenantId: string | undefined,
   clientId: string,
-  resource?: IasResource
+  resource?: IasResource | IasResource[]
 ): string | undefined {
   if (!tenantId) {
     logger.warn(

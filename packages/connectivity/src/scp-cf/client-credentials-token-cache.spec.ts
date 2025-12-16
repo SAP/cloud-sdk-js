@@ -249,4 +249,149 @@ describe('ClientCredentialsTokenCache', () => {
       expect(key).toBe('tenant-123:client-id');
     });
   });
+
+  describe('Multiple resources (array) support', () => {
+    const validToken = {
+      access_token: 'multi-resource-token',
+      token_type: 'Bearer',
+      expires_in: oneHourInSeconds * 3,
+      jti: '',
+      scope: ''
+    };
+
+    beforeEach(() => {
+      clientCredentialsTokenCache.clear();
+    });
+
+    it('should cache and retrieve token with array of resource clientIds', () => {
+      const resources = [
+        { clientId: 'client-1', tenantId: 'tenant-1' },
+        { clientId: 'client-2' },
+        { name: 'app3' }
+      ];
+
+      clientCredentialsTokenCache.cacheToken(
+        'subscriber-tenant',
+        'clientid',
+        resources,
+        validToken
+      );
+
+      const cached = clientCredentialsTokenCache.getToken(
+        'subscriber-tenant',
+        'clientid',
+        resources
+      );
+
+      expect(cached).toEqual(validToken);
+    });
+    it('should treat resource array as a set (order-independent)', () => {
+      const resources1 = [{ name: 'app-1' }, { name: 'app-2' }];
+      const resources2 = [{ name: 'app-2' }, { name: 'app-1' }];
+
+      clientCredentialsTokenCache.cacheToken(
+        'subscriber-tenant',
+        'clientid',
+        resources1,
+        validToken
+      );
+
+      const cached1 = clientCredentialsTokenCache.getToken(
+        'subscriber-tenant',
+        'clientid',
+        resources1
+      );
+      const cached2 = clientCredentialsTokenCache.getToken(
+        'subscriber-tenant',
+        'clientid',
+        resources2
+      );
+
+      expect(cached1).toEqual(validToken);
+      expect(cached2).toEqual(validToken);
+    });
+
+    it('should isolate cache by number of resources in array', () => {
+      const resources1 = [{ name: 'app-1' }];
+      const resources2 = [{ name: 'app-1' }, { name: 'app-2' }];
+
+      clientCredentialsTokenCache.cacheToken(
+        'subscriber-tenant',
+        'clientid',
+        resources1,
+        validToken
+      );
+
+      const cached1 = clientCredentialsTokenCache.getToken(
+        'subscriber-tenant',
+        'clientid',
+        resources1
+      );
+      const cached2 = clientCredentialsTokenCache.getToken(
+        'subscriber-tenant',
+        'clientid',
+        resources2
+      );
+
+      expect(cached1).toEqual(validToken);
+      expect(cached2).toBeUndefined();
+    });
+
+    it('should not treat single resource and single-element array differently', () => {
+      const singleResource = { name: 'app-1' };
+      const arrayResource = [{ name: 'app-1' }];
+
+      clientCredentialsTokenCache.cacheToken(
+        'subscriber-tenant',
+        'clientid',
+        singleResource,
+        validToken
+      );
+
+      const cachedSingle = clientCredentialsTokenCache.getToken(
+        'subscriber-tenant',
+        'clientid',
+        singleResource
+      );
+      const cachedArray = clientCredentialsTokenCache.getToken(
+        'subscriber-tenant',
+        'clientid',
+        arrayResource
+      );
+
+      expect(cachedSingle).toEqual(validToken);
+      expect(cachedArray).toEqual(validToken);
+    });
+
+    it('should generate correct cache key with array of resource names', () => {
+      const key = getCacheKey('tenant-123', 'client-id', [
+        { name: 'app-1' },
+        { name: 'app-2' }
+      ]);
+      expect(key).toBe('tenant-123:client-id:name=app-1::name=app-2');
+    });
+
+    it('should generate correct cache key with array of resource clientIds', () => {
+      const key = getCacheKey('tenant-123', 'client-id', [
+        { clientId: 'client-1' },
+        { clientId: 'client-2', tenantId: 'tenant-2' }
+      ]);
+      expect(key).toBe(
+        'tenant-123:client-id:clientid=client-1::clientid=client-2:tenantid=tenant-2'
+      );
+    });
+
+    it('should generate correct cache key with array of mixed resource types', () => {
+      const key = getCacheKey('tenant-123', 'client-id', [
+        { name: 'app-1' },
+        { clientId: 'client-2' }
+      ]);
+      expect(key).toBe('tenant-123:client-id:clientid=client-2::name=app-1');
+    });
+
+    it('should handle empty resource array', () => {
+      const key = getCacheKey('tenant-123', 'client-id', []);
+      expect(key).toBe('tenant-123:client-id');
+    });
+  });
 });

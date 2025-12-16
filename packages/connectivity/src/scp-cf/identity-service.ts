@@ -1,23 +1,38 @@
-import https from 'https';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience } from '@sap-cloud-sdk/resilience';
-import { createLogger } from '@sap-cloud-sdk/util';
-import axios from 'axios';
-import { decodeJwt, isXsuaaToken } from './jwt';
-import { resolveServiceBinding } from './environment-accessor';
+import { decodeJwt, isIasToken } from './jwt';
+import {
+  resolveServiceBinding,
+  getIdentityServiceInstanceFromCredentials
+} from './environment-accessor';
+import type { IdentityService } from '@sap/xssec';
 import type {
   DestinationOptions,
-  ServiceBindingTransformOptions
+  IasOptions,
+  IasResource
 } from './destination';
 import type { MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import type { Service, ServiceCredentials } from './environment-accessor';
-import type { RawAxiosRequestConfig } from 'axios';
 import type { ClientCredentialsResponse } from './xsuaa-service-types';
 
-const logger = createLogger({
-  package: 'connectivity',
-  messageContext: 'identity-service'
-});
+export { clearIdentityServices } from './environment-accessor';
+
+/**
+ * @internal
+ * Represents the response to an IAS client credentials request.
+ * Extends the XSUAA response with IAS-specific fields.
+ */
+export interface IasClientCredentialsResponse
+  extends ClientCredentialsResponse {
+  /**
+   * Audience claim from the JWT token.
+   */
+  aud?: string | string[];
+  /**
+   * IAS API resources. Present when resource parameter is specified in the token request.
+   */
+  ias_apis?: string[];
+}
 
 /**
  * @internal
@@ -30,28 +45,40 @@ export function shouldExchangeToken(options: DestinationOptions): boolean {
   return (
     options.iasToXsuaaTokenExchange === true &&
     !!options.jwt &&
-    !isXsuaaToken(decodeJwt(options.jwt))
+    isIasToken(decodeJwt(options.jwt))
   );
 }
 
 type IasParameters = {
   serviceCredentials: ServiceCredentials;
-} & ServiceBindingTransformOptions['iasOptions'];
+} & IasOptions;
+
+type FirstArg<T> = T extends (arg1: infer U, ...args: any[]) => any ? U : never;
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
+
+// xssec does not properly export these
+type IdTokenFetchOptions = FirstArg<
+  InstanceType<typeof IdentityService>['fetchClientCredentialsToken']
+>;
+type TokenFetchResponse = UnwrapPromise<
+  ReturnType<
+    InstanceType<typeof IdentityService>['fetchClientCredentialsToken']
+  >
+>;
 
 /**
  * Make a client credentials request against the IAS OAuth2 endpoint.
  * Supports both certificate-based (mTLS) and client secret authentication.
  * @param service - Service as it is defined in the environment variable.
- * @param options - Options for token fetching, including authenticationType to specify authentication mode, optional resource parameter for app2app, appTenantId for multi-tenant scenarios, and extraParams for additional OAuth2 parameters.
+ * @param options - Options for token fetching, including authenticationType to specify authentication mode, optional resource parameter for app2app, appTid for multi-tenant scenarios, and extraParams for additional OAuth2 parameters.
  * @returns Client credentials token response.
  * @internal
  */
 export async function getIasClientCredentialsToken(
   service: string | Service,
-  options: ServiceBindingTransformOptions['iasOptions'] = {}
-): Promise<ClientCredentialsResponse> {
+  options: IasOptions = {}
+): Promise<IasClientCredentialsResponse> {
   const resolvedService = resolveServiceBinding(service);
-  const { clientid } = resolvedService.credentials;
 
   const fnArgument: IasParameters = {
     serviceCredentials: resolvedService.credentials,
@@ -60,7 +87,7 @@ export async function getIasClientCredentialsToken(
 
   const token = await executeWithMiddleware<
     IasParameters,
-    ClientCredentialsResponse,
+    IasClientCredentialsResponse,
     MiddlewareContext<IasParameters>
   >(resilience(), {
     fn: getIasClientCredentialsTokenImpl,
@@ -78,31 +105,62 @@ export async function getIasClientCredentialsToken(
 }
 
 /**
- * Implementation of the IAS client credentials token retrieval.
+ * Converts an IasResource to the URN format expected by @sap/xssec.
+ * @param resource - The IAS resource to convert.
+ * @returns The resource in URN format.
+ * @internal
+ */
+function convertResourceToUrn(resource: IasResource): string {
+  if (!resource) {
+    throw new Error('Resource parameter is required');
+  }
+
+  if ('name' in resource) {
+    return `urn:sap:identity:application:provider:name:${resource.name}`;
+  }
+
+  let urn = `urn:sap:identity:application:provider:clientid:${resource.clientId}`;
+  if (resource.tenantId) {
+    urn += `:tenantid:${resource.tenantId}`;
+  }
+  return urn;
+}
+
+/**
+ * Implementation of the IAS client credentials token retrieval using @sap/xssec.
  * @param arg - The parameters for IAS token retrieval.
  * @returns A promise resolving to the client credentials response.
  * @internal
  */
 async function getIasClientCredentialsTokenImpl(
   arg: IasParameters
-): Promise<ClientCredentialsResponse> {
-  const { url, clientid, certificate, key, clientsecret } =
-    arg.serviceCredentials;
+): Promise<IasClientCredentialsResponse> {
+  const identityService = getIdentityServiceInstanceFromCredentials(
+    arg.serviceCredentials
+  );
 
-  if (!url || !clientid) {
-    throw new Error(
-      'IAS credentials must contain "url" and "clientid" properties.'
-    );
-  }
-
-  // Build form data
-  const params = new URLSearchParams({
-    client_id: clientid
-  });
-
-  // Determine grant type based on authenticationType parameter
   const authenticationType =
     arg.authenticationType || 'OAuth2ClientCredentials';
+
+  const tokenOptions: IdTokenFetchOptions = {};
+
+  // Stringify resource(s)
+  if (arg.resource) {
+    tokenOptions.resource = Array.isArray(arg.resource)
+      ? arg.resource.map(convertResourceToUrn)
+      : convertResourceToUrn(arg.resource);
+  }
+
+  if (arg.appTid) {
+    tokenOptions.app_tid = arg.appTid;
+  }
+
+  // Add any extra parameters
+  if (arg.extraParams) {
+    Object.assign(tokenOptions, arg.extraParams);
+  }
+
+  let response: undefined | TokenFetchResponse;
 
   if (authenticationType === 'OAuth2JWTBearer') {
     // JWT bearer grant for business user propagation
@@ -111,78 +169,33 @@ async function getIasClientCredentialsTokenImpl(
         'JWT assertion required for authenticationType: "OAuth2JWTBearer". Provide iasOptions.assertion.'
       );
     }
-    params.append('assertion', arg.assertion);
-    params.append('grant_type', 'urn:ietf:params:oauth:grant-type:jwt-bearer');
-    // Workaround for an IAS issue
-    params.append('refresh_token', '0');
+
+    // Workaround for IAS bug
+    // https://github.com/SAP/cloud-sdk-java/blob/61903347b607a8397f7930709cd52526f05269b1/cloudplatform/connectivity-oauth/src/main/java/com/sap/cloud/sdk/cloudplatform/connectivity/OAuth2Service.java#L225-L236
+    if (arg.appTid) {
+      (tokenOptions as any).refresh_token = '0';
+    }
+
+    response = await identityService.fetchJwtBearerToken(
+      arg.assertion,
+      tokenOptions
+    );
   } else {
     // Client credentials for technical users
-    params.append('grant_type', 'client_credentials');
+    response = await identityService.fetchClientCredentialsToken(tokenOptions);
   }
 
-  if (arg.resource) {
-    let fullResource = '';
-    if ('name' in arg.resource) {
-      fullResource = `urn:sap:identity:application:provider:name:${arg.resource.name}`;
-    } else {
-      fullResource = `urn:sap:identity:application:provider:clientid:${arg.resource.clientId}`;
-      if (arg.resource.tenantId) {
-        fullResource += `:tenantid:${arg.resource.tenantId}`;
-      }
-    }
+  const decodedJwt = decodeJwt(response.access_token);
 
-    params.append('resource', fullResource);
-    logger.debug(`Fetching IAS token with resource parameter: ${fullResource}`);
-  }
-
-  if (arg.appTenantId) {
-    params.append('app_tid', arg.appTenantId);
-    logger.debug(
-      `Fetching IAS token with app_tid parameter: ${arg.appTenantId}`
-    );
-  }
-
-  // Ensure JWT token format, not mandatory but we expect JWTs
-  // and the docs mention in some cases we may get opaque tokens otherwise
-  params.append('token_format', 'jwt');
-
-  const tokenUrl = `${url}/oauth2/token`;
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/x-www-form-urlencoded'
+  return {
+    access_token: response.access_token,
+    token_type: response.token_type,
+    expires_in: response.expires_in,
+    // IAS tokens don't have scope property
+    scope: '',
+    jti: decodedJwt.jti ?? '',
+    aud: decodedJwt.aud,
+    // Added if resource parameter was specified
+    ias_apis: decodedJwt?.ias_apis
   };
-
-  const requestConfig: RawAxiosRequestConfig = {
-    method: 'post',
-    url: tokenUrl,
-    headers
-  };
-
-  // Determine authentication method
-  if (certificate && key) {
-    // mTLS authentication
-    logger.debug('Using certificate-based authentication for IAS token.');
-    requestConfig.httpsAgent = new https.Agent({
-      cert: certificate,
-      key
-    });
-  } else if (clientsecret) {
-    logger.debug('Using client secret authentication for IAS token.');
-    params.append('client_secret', clientsecret);
-  } else {
-    throw new Error(
-      'IAS credentials must contain either "certificate" and "key" for mTLS, or "clientsecret" for client secret authentication.'
-    );
-  }
-
-  if (arg.extraParams) {
-    for (const [paramKey, paramValue] of Object.entries(arg.extraParams)) {
-      params.append(paramKey, paramValue);
-    }
-  }
-
-  requestConfig.data = params.toString();
-
-  const response =
-    await axios.request<ClientCredentialsResponse>(requestConfig);
-  return response.data;
 }

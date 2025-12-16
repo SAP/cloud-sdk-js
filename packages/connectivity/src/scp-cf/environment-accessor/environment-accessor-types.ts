@@ -73,3 +73,15 @@ export type XsuaaServiceCredentials = ServiceCredentials & {
   verificationkey: string;
   xsappname: string;
 };
+
+/**
+ * Credentials for the Identity Authentication Service (IAS).
+ * Matches the type definition from @sap/xssec.
+ * @internal
+ */
+export type IdentityServiceCredentials = ServiceCredentials & {
+  /**
+   * Application tenant ID. Can be used to override the tenant context.
+   */
+  app_tid?: string;
+};

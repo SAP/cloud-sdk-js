@@ -69,17 +69,29 @@ export function getTenantId(
 }
 
 /**
+ * Check if the given JWT is an IAS token.
+ * Currently, there are only two domains for IAS tokens:
+ * `accounts.ondemand.com` and `accounts400.ondemand.com`.
+ * @param decodedJwt - The decoded JWT to check.
+ * @returns Whether the given JWT is an IAS token.
+ * @internal
+ */
+export function isIasToken(decodedJwt: JwtPayload): boolean {
+  return !!(
+    decodedJwt.iss?.includes('accounts.ondemand.com') ||
+    decodedJwt.iss?.includes('accounts400.ondemand.com')
+  );
+}
+
+/**
  * Check if the given JWT is not an IAS token.
  * Currently, there are only two domains for IAS tokens:
- * `accounts.ondemand.com` and `accounts400.onemand.com`.
+ * `accounts.ondemand.com` and `accounts400.ondemand.com`.
  * @param decodedJwt - The decoded JWT to check.
  * @returns Whether the given JWT is not an IAS token.
  */
 function isNotIasToken(decodedJwt: JwtPayload): boolean {
-  return (
-    !decodedJwt.iss?.includes('accounts.ondemand.com') &&
-    !decodedJwt.iss?.includes('accounts400.ondemand.com')
-  );
+  return !isIasToken(decodedJwt);
 }
 
 /**

@@ -88,12 +88,12 @@ export async function serviceToken(
  *
  * This function automatically detects the service type (XSUAA or IAS) based on the label
  * and uses the appropriate authentication flow.
- * For IAS services, you can pass IAS-specific options like `resource` and `appTenantId`.
+ * For IAS services, you can pass IAS-specific options like `resource` and `appTid`.
  *
  * Throws an error if there is no instance of the given service type.
  * @param jwt - The JWT of the user for whom the access token should be fetched.
  * @param service - The type of the service or an instance of {@link Service}.
- * @param options - Optional IAS-specific options like resource, appTenantId, and caching behavior. Only used for IAS services.
+ * @param options - Optional IAS-specific options like resource, appTid, and caching behavior. Only used for IAS services.
  * @returns A JWT bearer token.
  */
 export async function jwtBearerToken(

@@ -77,10 +77,19 @@ export function getTenantId(
  * @internal
  */
 export function isIasToken(decodedJwt: JwtPayload): boolean {
-  return !!(
-    decodedJwt.iss?.includes('accounts.ondemand.com') ||
-    decodedJwt.iss?.includes('accounts400.ondemand.com')
-  );
+  if (!decodedJwt.iss) {
+    return false;
+  }
+  try {
+    const issUrl = new URL(decodedJwt.iss);
+    const hostname = issUrl.hostname.toLowerCase();
+    return (
+      hostname.endsWith('.accounts.ondemand.com') ||
+      hostname.endsWith('.accounts400.ondemand.com')
+    );
+  } catch {
+    return false;
+  }
 }
 
 /**

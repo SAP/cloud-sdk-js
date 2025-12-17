@@ -23,6 +23,7 @@ import type { IasOptions } from './destination';
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
  * @param service - The type of the service or an instance of {@link Service}.
  * @param options - Options to influence caching behavior (see {@link CachingOptions}) and a JWT. By default, caching and usage of a circuit breaker are enabled.
+ * @param options.iasOptions - Options to change IAS token fetching (see {@link IasOptions}).
  * @returns Access token.
  */
 export async function serviceToken(
@@ -92,7 +93,7 @@ export async function serviceToken(
  *
  * This function automatically detects the service type (XSUAA or IAS) based on the label
  * and uses the appropriate authentication flow.
- * For IAS services, you can pass IAS-specific options like `resource` and `appTid`.
+ * For IAS services, you can pass IAS-specific options like `resource` and `appTid` in `options.iasOptions`.
  *
  * Throws an error if there is no instance of the given service type.
  * @param jwt - The JWT of the user for whom the access token should be fetched.

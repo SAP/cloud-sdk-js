@@ -64,8 +64,8 @@ export async function serviceToken(
     const token =
       serviceBinding.label === 'identity'
         ? await getIasClientCredentialsToken(serviceBinding, {
-            resource: resourceForCaching,
-            ...options
+            ...(options?.iasOptions ?? {}),
+            authenticationType: 'OAuth2ClientCredentials'
           })
         : await getClientCredentialsToken(serviceBinding, options?.jwt);
 
@@ -118,7 +118,7 @@ export async function jwtBearerToken(
   if (resolvedService.label === 'identity') {
     return (
       await getIasClientCredentialsToken(resolvedService, {
-        ...options,
+        ...(options?.iasOptions ?? {}),
         authenticationType: 'OAuth2JWTBearer',
         assertion: jwt
       })

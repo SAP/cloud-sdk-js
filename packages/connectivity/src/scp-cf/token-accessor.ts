@@ -32,7 +32,7 @@ export async function serviceToken(
     jwt?: string | JwtPayload;
     iasOptions?: Omit<
       IasOptions,
-      'authenticationType' | 'assertion' | 'destinationUrl'
+      'authenticationType' | 'assertion' | 'destinationUrl' | 'appTid'
     >;
   }
 ): Promise<string> {
@@ -65,7 +65,8 @@ export async function serviceToken(
       serviceBinding.label === 'identity'
         ? await getIasClientCredentialsToken(serviceBinding, {
             ...(options?.iasOptions ?? {}),
-            authenticationType: 'OAuth2ClientCredentials'
+            authenticationType: 'OAuth2ClientCredentials',
+            appTid: tenantForCaching
           })
         : await getClientCredentialsToken(serviceBinding, options?.jwt);
 

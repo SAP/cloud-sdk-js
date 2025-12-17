@@ -27,9 +27,10 @@ import type { IasOptions } from './destination';
  */
 export async function serviceToken(
   service: string | Service,
-  options?: CachingOptions & {
-    jwt?: string | JwtPayload;
-  }
+  options?: CachingOptions &
+    Omit<IasOptions, 'authenticationType' | 'assertion' | 'destinationUrl'> & {
+      jwt?: string | JwtPayload;
+    }
 ): Promise<string> {
   const opts = {
     useCache: true,
@@ -42,7 +43,7 @@ export async function serviceToken(
   const tenantForCaching = options?.jwt
     ? getTenantId(options.jwt) || getSubdomain(options.jwt)
     : getTenantIdFromBinding() || getDefaultTenantId();
-  const resourceForCaching = serviceBinding?.iasResource;
+  const resourceForCaching = options?.resource;
 
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getToken(

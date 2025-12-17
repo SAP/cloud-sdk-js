@@ -41,7 +41,7 @@ export function getIdentityServiceInstanceFromCredentials(
   if (!identityServices[cacheKey]) {
     identityServices[cacheKey] = new IdentityService(
       credentials as IdentityServiceCredentials,
-      serviceConfig as any
+      serviceConfig
     );
   }
   return identityServices[cacheKey];

@@ -27,10 +27,13 @@ import type { IasOptions } from './destination';
  */
 export async function serviceToken(
   service: string | Service,
-  options?: CachingOptions &
-    Omit<IasOptions, 'authenticationType' | 'assertion' | 'destinationUrl'> & {
-      jwt?: string | JwtPayload;
-    }
+  options?: CachingOptions & {
+    jwt?: string | JwtPayload;
+    iasOptions?: Omit<
+      IasOptions,
+      'authenticationType' | 'assertion' | 'destinationUrl'
+    >;
+  }
 ): Promise<string> {
   const opts = {
     useCache: true,
@@ -43,7 +46,7 @@ export async function serviceToken(
   const tenantForCaching = options?.jwt
     ? getTenantId(options.jwt) || getSubdomain(options.jwt)
     : getTenantIdFromBinding() || getDefaultTenantId();
-  const resourceForCaching = options?.resource;
+  const resourceForCaching = options?.iasOptions?.resource;
 
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getToken(
@@ -94,16 +97,19 @@ export async function serviceToken(
  * Throws an error if there is no instance of the given service type.
  * @param jwt - The JWT of the user for whom the access token should be fetched.
  * @param service - The type of the service or an instance of {@link Service}.
- * @param options - Optional IAS-specific options like resource, appTid, and caching behavior. Only used for IAS services.
+ * @param options - Optional options to modify token fetching behaviour.
+ * @param options.iasOptions - Options to change IAS token fetching (see {@link IasOptions}).
  * @returns A JWT bearer token.
  */
 export async function jwtBearerToken(
   jwt: string,
   service: string | Service,
-  options?: Omit<
-    IasOptions,
-    'authenticationType' | 'assertion' | 'destinationUrl'
-  >
+  options?: {
+    iasOptions?: Omit<
+      IasOptions,
+      'authenticationType' | 'assertion' | 'destinationUrl'
+    >;
+  }
 ): Promise<string> {
   const resolvedService = resolveServiceBinding(service);
 

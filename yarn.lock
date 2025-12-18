@@ -1423,10 +1423,10 @@
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.1.0.tgz#6e010591111e3c45b39b8035ae0e360532ecb6f5"
   integrity sha512-s71fsxDZKqHn2xvoqoNst54K/BkBzCpiU+8xc0t3nMDXmsLzSC3VfygZGwGAZD8fkxUnXh8oL2XLHWKWcvcdNg==
 
-"@sap/cds-dk@9.5.0":
-  version "9.5.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.5.0.tgz#6b44da5b56b8abc9c154b614a64ec24c7115aa4e"
-  integrity sha512-QbBi9dV7+Ep3JcpohzVcmRjtIajpbja36Is8GGIvFs2s9DEVsrj2Y0MRnQ7f5eYuGKpod5Xxe5B/bjPtGFAxYQ==
+"@sap/cds-dk@9.6.0":
+  version "9.6.0"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.6.0.tgz#ae296a1e38ab0c5c7e4bd4c8d2fb9aaecd829c0a"
+  integrity sha512-JaX0vSOflkhmiZJUEuO3rbN+5MRk9oVJs8TkOIOOZJ4EOxttjL1hz/lAgbepsHaTJC2bt8gc6JxUtB4W56P23A==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"

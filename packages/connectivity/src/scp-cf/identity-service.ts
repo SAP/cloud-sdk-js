@@ -142,7 +142,9 @@ async function getIasClientCredentialsTokenImpl(
   const authenticationType =
     arg.authenticationType || 'OAuth2ClientCredentials';
 
-  const tokenOptions: IdTokenFetchOptions = {};
+  const tokenOptions: IdTokenFetchOptions = {
+    token_format: 'jwt'
+  };
 
   // Stringify resource(s)
   if (arg.resource) {

@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import nock from 'nock';
-import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 import {
   defaultDestination,
@@ -9,7 +9,7 @@ import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { DeleteRequestBuilder } from './delete-request-builder';
 
 describe('DeleteRequestBuilder', () => {
-  const keyPropGuid = uuid();
+  const keyPropGuid = randomUUID();
   const keyPropString = 'TEST_ID';
   const keyPropDate = moment(0);
 
@@ -19,9 +19,7 @@ describe('DeleteRequestBuilder', () => {
 
   it('should resolve if only the key is given.', async () => {
     mockDeleteRequest(
-      {
-        path: testEntityResourcePath(keyPropGuid, keyPropString, keyPropDate)
-      },
+      { path: testEntityResourcePath(keyPropGuid, keyPropString, keyPropDate) },
       testEntityApi
     );
 
@@ -47,9 +45,7 @@ describe('DeleteRequestBuilder', () => {
     mockDeleteRequest(
       {
         path: testEntityResourcePath(keyPropGuid, keyPropString, keyPropDate),
-        additionalHeaders: {
-          'if-match': versionId
-        }
+        additionalHeaders: { 'if-match': versionId }
       },
       testEntityApi
     );

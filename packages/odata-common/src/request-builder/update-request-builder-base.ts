@@ -1,8 +1,8 @@
+import { randomUUID } from 'node:crypto';
 import {
   ErrorWithCause,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import { v4 as uuid } from 'uuid';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { ODataUpdateRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
@@ -81,7 +81,7 @@ export abstract class UpdateRequestBuilderBase<
    */
   getBatchReference(): BatchReference {
     if (!this._batchReference) {
-      this.setBatchId(uuid());
+      this.setBatchId(randomUUID());
     }
     return this._batchReference;
   }

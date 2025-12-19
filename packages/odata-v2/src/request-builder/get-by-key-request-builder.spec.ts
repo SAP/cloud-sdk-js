@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import nock from 'nock';
-import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
   mockGetRequest,
@@ -17,7 +17,7 @@ describe('GetByKeyRequestBuilder', () => {
   describe('url', () => {
     it('returns correct url with URI encoding', async () => {
       const entity = createTestEntity({
-        KeyPropertyGuid: uuid(),
+        KeyPropertyGuid: randomUUID(),
         KeyPropertyString: 'DEV?TEST06'
       });
       const expected =
@@ -196,7 +196,7 @@ describe('GetByKeyRequestBuilder', () => {
     nock(defaultDestination.url).get(/.*/).reply(500);
 
     const getByKeyRequest = new GetByKeyRequestBuilder(testEntityApi, {
-      KeyPropertyGuid: uuid(),
+      KeyPropertyGuid: randomUUID(),
       KeyPropertyString: 'test'
     }).execute(defaultDestination);
     await expect(getByKeyRequest).rejects.toThrow(

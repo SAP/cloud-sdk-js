@@ -1423,10 +1423,10 @@
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.1.0.tgz#6e010591111e3c45b39b8035ae0e360532ecb6f5"
   integrity sha512-s71fsxDZKqHn2xvoqoNst54K/BkBzCpiU+8xc0t3nMDXmsLzSC3VfygZGwGAZD8fkxUnXh8oL2XLHWKWcvcdNg==
 
-"@sap/cds-dk@9.5.0":
-  version "9.5.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.5.0.tgz#6b44da5b56b8abc9c154b614a64ec24c7115aa4e"
-  integrity sha512-QbBi9dV7+Ep3JcpohzVcmRjtIajpbja36Is8GGIvFs2s9DEVsrj2Y0MRnQ7f5eYuGKpod5Xxe5B/bjPtGFAxYQ==
+"@sap/cds-dk@9.6.0":
+  version "9.6.0"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.6.0.tgz#ae296a1e38ab0c5c7e4bd4c8d2fb9aaecd829c0a"
+  integrity sha512-JaX0vSOflkhmiZJUEuO3rbN+5MRk9oVJs8TkOIOOZJ4EOxttjL1hz/lAgbepsHaTJC2bt8gc6JxUtB4W56P23A==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"
@@ -2956,10 +2956,10 @@ chownr@^3.0.0:
   resolved "https://registry.npmjs.org/chownr/-/chownr-3.0.0.tgz#9855e64ecd240a9cc4267ce8a4aa5d24a1da15e4"
   integrity sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==
 
-chromium-bidi@11.0.0:
-  version "11.0.0"
-  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-11.0.0.tgz#193433d0722095abca0cada2fa0c5111b447bea3"
-  integrity sha512-cM3DI+OOb89T3wO8cpPSro80Q9eKYJ7hGVXoGS3GkDPxnYSqiv+6xwpIf6XERyJ9Tdsl09hmNmY94BkgZdVekw==
+chromium-bidi@12.0.1:
+  version "12.0.1"
+  resolved "https://registry.npmjs.org/chromium-bidi/-/chromium-bidi-12.0.1.tgz#3edb1420ab5a52004c10c223b928622c128b4f27"
+  integrity sha512-fGg+6jr0xjQhzpy5N4ErZxQ4wF7KLEvhGZXD6EgvZKDhu7iOhZXnZhcDxPJDcwTcrD48NPzOCo84RP2lv3Z+Cg==
   dependencies:
     mitt "^3.0.1"
     zod "^3.24.1"
@@ -7691,29 +7691,29 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-puppeteer-core@24.33.0:
-  version "24.33.0"
-  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.33.0.tgz#c3e6adee5fd5dd77895d4cc14e0d17461048917a"
-  integrity sha512-tPTxVg+Qdj/8av4cy6szv3GlhxeOoNhiiMZ955fjxQyvPQE/6DjCa6ZyF/x0WJrlgBZtaLSP8TQgJb7FdLDXXA==
+puppeteer-core@24.33.1:
+  version "24.33.1"
+  resolved "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.33.1.tgz#80b9d79dd0597fd2b1de265aae4dd0d95df81c66"
+  integrity sha512-MZjFLeGMBFbSkc1xKfcv6hjFlfNi1bmQly++HyqxGPYzLIMY0mSYyjqkAzT1PtomTYHq7SEonciIKkeyHExA1g==
   dependencies:
     "@puppeteer/browsers" "2.11.0"
-    chromium-bidi "11.0.0"
+    chromium-bidi "12.0.1"
     debug "^4.4.3"
     devtools-protocol "0.0.1534754"
     typed-query-selector "^2.12.0"
-    webdriver-bidi-protocol "0.3.9"
+    webdriver-bidi-protocol "0.3.10"
     ws "^8.18.3"
 
-puppeteer@^24.33.0:
-  version "24.33.0"
-  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.33.0.tgz#5d0aba25f0038db2a3a996deb8c157d1842e8a21"
-  integrity sha512-nl3wsAztq5F8zybn4Tk41OCnYIzFIzGC6AN0WcF2KCUnWenajvRRPgBmS6LvNUV2HEeIzT2zRZHH0TgVxLDKew==
+puppeteer@^24.33.1:
+  version "24.33.1"
+  resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-24.33.1.tgz#c84c9545633bc731b92caead463e77928dcf183e"
+  integrity sha512-2KiSIXk+zFzmYsScv+hx/I3TODFGPcNpyJsWMQk1EQ2y8KZ2X6225/NingyqYxekzceSUnq5qX39dUezVDZ9EQ==
   dependencies:
     "@puppeteer/browsers" "2.11.0"
-    chromium-bidi "11.0.0"
+    chromium-bidi "12.0.1"
     cosmiconfig "^9.0.0"
     devtools-protocol "0.0.1534754"
-    puppeteer-core "24.33.0"
+    puppeteer-core "24.33.1"
     typed-query-selector "^2.12.0"
 
 pure-rand@^7.0.0:
@@ -9419,10 +9419,10 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webdriver-bidi-protocol@0.3.9:
-  version "0.3.9"
-  resolved "https://registry.npmjs.org/webdriver-bidi-protocol/-/webdriver-bidi-protocol-0.3.9.tgz#89abf021f2a557a2dd81772f9ce7172b01f8a0f0"
-  integrity sha512-uIYvlRQ0PwtZR1EzHlTMol1G0lAlmOe6wPykF9a77AK3bkpvZHzIVxRE2ThOx5vjy2zISe0zhwf5rzuUfbo1PQ==
+webdriver-bidi-protocol@0.3.10:
+  version "0.3.10"
+  resolved "https://registry.npmjs.org/webdriver-bidi-protocol/-/webdriver-bidi-protocol-0.3.10.tgz#437405564ff7e200371468f4f1eba1ff5537e119"
+  integrity sha512-5LAE43jAVLOhB/QqX4bwSiv0Hg1HBfMmOuwBSXHdvg4GMGu9Y0lIq7p4R/yySu6w74WmaR4GM4H9t2IwLW7hgw==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

@@ -22,8 +22,7 @@ export { clearIdentityServices } from './environment-accessor';
  * Represents the response to an IAS client credentials request.
  * Extends the XSUAA response with IAS-specific fields.
  */
-export interface IasClientCredentialsResponse
-  extends ClientCredentialsResponse {
+export interface IasClientCredentialsResponse extends ClientCredentialsResponse {
   /**
    * Audience claim from the JWT token.
    */

@@ -24,9 +24,9 @@ import type { EntityApi } from '../entity-api';
  * @typeParam EntityT - Type of the entity to be updated
  */
 export abstract class UpdateRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends MethodRequestBuilder<
     ODataUpdateRequestConfig<EntityT, DeSerializersT>
   >

@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/generator-common
 
+## 4.2.0
+
+### Minor Changes
+
+- c73c7fa: [New Functionality] Introduce option `generateESM` in OData generator to generate ESM compatible code.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@4.2.0
+
 ## 4.1.2
 
 ### Patch Changes

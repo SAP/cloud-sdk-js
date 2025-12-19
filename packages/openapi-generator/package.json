@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/openapi-generator",
-  "version": "4.1.2",
+  "version": "4.2.0",
   "description": "SAP Cloud SDK for JavaScript OpenAPI client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -23,7 +23,11 @@
     "internal.d.ts",
     "internal.js"
   ],
-  "repository": "github:SAP/cloud-sdk-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/cloud-sdk-js.git",
+    "directory": "packages/openapi-generator"
+  },
   "scripts": {
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
@@ -37,10 +41,10 @@
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^12.1.0",
-    "@sap-cloud-sdk/generator-common": "^4.1.2",
-    "@sap-cloud-sdk/openapi": "^4.1.2",
-    "@sap-cloud-sdk/util": "^4.1.2",
-    "js-yaml": "^4.0.0",
+    "@sap-cloud-sdk/generator-common": "^4.2.0",
+    "@sap-cloud-sdk/openapi": "^4.2.0",
+    "@sap-cloud-sdk/util": "^4.2.0",
+    "js-yaml": "^4.1.1",
     "openapi-types": "^12.1.3",
     "swagger2openapi": "^7.0.4"
   },
@@ -48,7 +52,7 @@
     "@apidevtools/json-schema-ref-parser": "^14.1.1",
     "@types/js-yaml": "^4.0.9",
     "mock-fs": "^5.5.0",
-    "prettier": "^3.6.2",
+    "prettier": "^3.7.4",
     "typescript": "~5.9.3"
   }
 }

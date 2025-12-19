@@ -1,8 +1,8 @@
 import { getCommonCliOptions } from '@sap-cloud-sdk/generator-common/internal';
+import type { CommonGeneratorOptions } from '@sap-cloud-sdk/generator-common';
 import type {
   Options,
-  ParsedOptions,
-  CommonGeneratorOptions
+  ParsedOptions
 } from '@sap-cloud-sdk/generator-common/internal';
 
 /**

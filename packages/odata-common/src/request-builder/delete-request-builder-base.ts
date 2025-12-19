@@ -15,9 +15,9 @@ import type { BatchReference, WithBatchReference } from '../request';
  * @typeParam EntityT - Type of the entity to be deleted
  */
 export abstract class DeleteRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends MethodRequestBuilder<
     ODataDeleteRequestConfig<EntityT, DeSerializersT>
   >

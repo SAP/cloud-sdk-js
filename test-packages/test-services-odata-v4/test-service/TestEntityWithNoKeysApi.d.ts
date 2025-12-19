@@ -17,8 +17,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityWithNoKeysApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntityWithNoKeys<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<TestEntityWithNoKeys<DeSerializersT>, DeSerializersT> {
   deSerializers: DeSerializersT;
   private constructor();
   /**

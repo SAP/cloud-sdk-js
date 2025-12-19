@@ -19,9 +19,10 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityCircularLinkChildApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements
-    EntityApi<TestEntityCircularLinkChild<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<
+  TestEntityCircularLinkChild<DeSerializersT>,
+  DeSerializersT
+> {
   deSerializers: DeSerializersT;
   private constructor();
   /**

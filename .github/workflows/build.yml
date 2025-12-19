@@ -7,19 +7,23 @@ on:
     tags: ['v*']
     paths-ignore:
       - 'docs/**'
-  schedule:
-    - cron: '0 1 * * *'
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      canary-release:
-        description: 'Release canary version (skips tests and checks)'
+      canary-release-skip-checks:
+        description: 'Release canary version (true skips tests and checks)'
+        type: boolean
+        required: false
+        default: false
+      # This allows cleanly separating this workflow_call from other event triggers
+      is-workflow-call:
+        description: 'Indicates that the workflow was triggered via workflow_call'
         type: boolean
         required: false
         default: false
 
 jobs:
   tests:
-    if: inputs.canary-release == false
+    if: inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -27,7 +31,7 @@ jobs:
       matrix:
         node-version: [20, 22]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: git fetch --depth=1
       - uses: actions/setup-node@v6
         with:
@@ -55,10 +59,10 @@ jobs:
           SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
 
   checks:
-    if: inputs.canary-release == false
+    if: inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: git fetch --depth=1
       - uses: actions/setup-node@v6
         with:
@@ -100,10 +104,10 @@ jobs:
           SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
 
   e2e-tests:
-    if: inputs.canary-release == false
+    if: inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: git fetch --depth=1
       - uses: actions/setup-node@v6
         with:
@@ -126,17 +130,19 @@ jobs:
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
       - name: Approve a PR
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Enable auto-merge for Dependabot PRs
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   canary-release-pre-check:
-    if: github.event_name == 'schedule'
+    if: inputs.is-workflow-call && inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest
     outputs:
       skip-release: ${{ steps.date-check.outputs.skip-release }}
@@ -145,7 +151,7 @@ jobs:
       REF_NAME: ${{ github.ref_name }}
       REF: ${{ github.ref }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: git fetch --depth=1
       - id: date-check
         name: Check if latest commit is within 24 hrs
@@ -166,15 +172,17 @@ jobs:
     # execute canary release if:
     # either the canary-release was scheduled and the canary-pre-check step resulted in skip-release=false
     # or the canary-release input is true
-    if: always() && (needs.canary-release-pre-check.outputs.skip-release == 'false' || inputs.canary-release == true)
+    if: always() && inputs.is-workflow-call && (needs.canary-release-pre-check.outputs.skip-release == 'false' || inputs.canary-release-skip-checks == true)
     runs-on: ubuntu-latest
     needs: [canary-release-pre-check]
+    permissions:
+      id-token: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: git fetch --depth=1
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24 # Will install npm 11 needed for trusted publishing
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
       - run: yarn install --frozen-lockfile --ignore-engines
@@ -187,14 +195,12 @@ jobs:
           yarn changeset version
           yarn changeset pre exit
           yarn changeset publish --tag canary
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
   draft-github-release:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     needs: [tests, checks]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: git fetch --depth=1
       - uses: actions/setup-node@v6
         with:

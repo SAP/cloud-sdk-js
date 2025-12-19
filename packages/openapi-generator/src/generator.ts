@@ -19,7 +19,8 @@ import {
   parseOptions,
   writeOptionsPerService,
   getOptionsPerService,
-  getRelPathWithPosixSeparator
+  getRelPathWithPosixSeparator,
+  tsconfigJson
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   apiFile,
@@ -32,7 +33,7 @@ import {
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { sdkMetadata } from './sdk-metadata';
-import { cliOptions, tsconfigJson } from './options';
+import { cliOptions } from './options';
 import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
 import type { OpenApiDocument } from './openapi-types';
 import type {
@@ -85,7 +86,11 @@ export async function generateWithParsedOptions(
   const inputFilePaths = options.input;
 
   const optionsPerService = await getOptionsPerService(inputFilePaths, options);
-  const tsConfig = await tsconfigJson(options);
+  const tsConfig = await tsconfigJson(
+    options.transpile,
+    options.tsconfig,
+    options.generateESM
+  );
 
   const promises = inputFilePaths.map(inputFilePath =>
     generateService(
@@ -339,7 +344,8 @@ async function generatePackageJson(
     packageJson({
       npmPackageName: openApiDocument.serviceOptions.packageName,
       description: packageDescription(openApiDocument.serviceName),
-      sdkVersion: await getSdkVersion()
+      sdkVersion: await getSdkVersion(),
+      generateESM: options.generateESM
     }),
     createFileOptions
   );

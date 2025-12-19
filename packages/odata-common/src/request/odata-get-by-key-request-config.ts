@@ -12,9 +12,9 @@ import type { WithKeys, WithSelection } from './odata-request-traits';
  * @typeParam EntityT - Type of the entity to setup a request for
  */
 export class ODataGetByKeyRequestConfig<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends ODataRequestConfig
   implements WithKeys, WithSelection<EntityT, DeSerializersT>
 {

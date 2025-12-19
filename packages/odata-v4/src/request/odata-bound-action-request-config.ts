@@ -15,10 +15,10 @@ import type { DeSerializers } from '../de-serializers';
  * @typeParam ParametersT - Type of the parameter to setup a request with
  */
 export class ODataBoundActionRequestConfig<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    ParametersT
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  ParametersT
+>
   extends ODataActionRequestConfig<DeSerializersT, ParametersT>
   implements WithKeys
 {

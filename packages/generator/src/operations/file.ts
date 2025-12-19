@@ -10,19 +10,21 @@ import type {
   InterfaceDeclarationStructure,
   SourceFileStructure
 } from 'ts-morph';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
  */
 export function operationsSourceFile(
-  service: VdmServiceMetadata
+  service: VdmServiceMetadata,
+  options?: CreateFileOptions
 ): SourceFileStructure {
   const operations = service.operations;
 
   return {
     kind: StructureKind.SourceFile,
     statements: [
-      ...operationDeclarations(service, operations),
+      ...operationDeclarations(service, operations, options),
       ...flat(
         operations.map(operation => operationStatements(operation, service))
       ),

@@ -23,8 +23,9 @@ interface BatchResponseTypeGuards<DeSerializersT extends DeSerializers> {
  * Represents the list of responses for a change set in a batch request.
  * @typeParam DeSerializersT - Type of the (de-)serializers.
  */
-export interface WriteResponses<DeSerializersT extends DeSerializers>
-  extends BatchResponseTypeGuards<DeSerializersT> {
+export interface WriteResponses<
+  DeSerializersT extends DeSerializers
+> extends BatchResponseTypeGuards<DeSerializersT> {
   /**
    * List of responses for a change set in a batch request.
    */
@@ -53,8 +54,9 @@ export interface ErrorResponse extends BatchResponseTypeGuards<any> {
  * Represents a response to a retrieve request within a batch request.
  * @typeParam DeSerializersT - Type of the (de-)serializers.
  */
-export interface ReadResponse<DeSerializersT extends DeSerializers>
-  extends BatchResponseTypeGuards<DeSerializersT> {
+export interface ReadResponse<
+  DeSerializersT extends DeSerializers
+> extends BatchResponseTypeGuards<DeSerializersT> {
   /**
    * Tag for identifying the type of a batch response.
    */

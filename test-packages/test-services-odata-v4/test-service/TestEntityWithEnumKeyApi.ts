@@ -20,8 +20,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 export class TestEntityWithEnumKeyApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntityWithEnumKey<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<TestEntityWithEnumKey<DeSerializersT>, DeSerializersT> {
   public deSerializers: DeSerializersT;
 
   private constructor(

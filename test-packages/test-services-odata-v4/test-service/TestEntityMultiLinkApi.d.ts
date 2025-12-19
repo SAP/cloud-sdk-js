@@ -21,8 +21,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityMultiLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntityMultiLink<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<TestEntityMultiLink<DeSerializersT>, DeSerializersT> {
   deSerializers: DeSerializersT;
   private constructor();
   /**

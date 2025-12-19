@@ -10,17 +10,16 @@
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",
-    
     "all": "yarn && yarn run lint && yarn run compile"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^2.0.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.38.4",
     "depcheck": "^1.4.7",
     "eslint": "^8.57.1",
-    "prettier": "^3.6.2",
+    "prettier": "^3.7.4",
     "typescript": "~5.9.3"
   }
 }

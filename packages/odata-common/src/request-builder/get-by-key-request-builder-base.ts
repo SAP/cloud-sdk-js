@@ -19,9 +19,9 @@ import type { BatchReference, WithBatchReference } from '../request';
  * @typeParam EntityT - Type of the entity to be requested
  */
 export abstract class GetByKeyRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends GetRequestBuilderBase<
     EntityT,
     DeSerializersT,

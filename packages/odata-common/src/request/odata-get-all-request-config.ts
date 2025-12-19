@@ -14,9 +14,9 @@ import type { WithGetAllRestrictions } from './odata-request-traits';
  * @typeParam EntityT - Type of the entity to setup a request for
  */
 export class ODataGetAllRequestConfig<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends ODataRequestConfig
   implements WithGetAllRestrictions<EntityT, DeSerializersT>
 {

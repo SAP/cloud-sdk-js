@@ -19,8 +19,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 export class PhotosApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<Photos<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<Photos<DeSerializersT>, DeSerializersT> {
   public deSerializers: DeSerializersT;
 
   private constructor(

@@ -17,9 +17,9 @@ import type {
  * @typeParam EntityT - Type of the entity to be created.
  */
 export class CreateRequestBuilder<
-    EntityT extends Entity,
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>
   extends CreateRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {

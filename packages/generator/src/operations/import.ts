@@ -14,6 +14,7 @@ import type {
   VdmServiceMetadata
 } from '../vdm-types';
 import type { ImportDeclarationStructure } from 'ts-morph';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 function complexTypeRelatedImports(returnTypes: VdmOperationReturnType[]) {
   return returnTypes.some(
@@ -40,7 +41,8 @@ function responseTransformerImports(returnTypes: VdmOperationReturnType[]) {
 }
 
 function returnTypeImports(
-  returnTypes: VdmOperationReturnType[]
+  returnTypes: VdmOperationReturnType[],
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   return mergeImportDeclarations(
     returnTypes
@@ -51,20 +53,25 @@ function returnTypeImports(
           returnType.returnTypeCategory !== 'never'
       )
       .reduce(
-        (imports, returnType) => [...imports, ...returnTypeImport(returnType)],
+        (imports, returnType) => [
+          ...imports,
+          ...returnTypeImport(returnType, options)
+        ],
         []
       )
   );
 }
 
 function returnTypeImport(
-  returnType: VdmOperationReturnType
+  returnType: VdmOperationReturnType,
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
+  const extension = options?.generateESM ? '.js' : '';
   const typeImports: ImportDeclarationStructure[] = [
     {
       kind: StructureKind.ImportDeclaration,
       namedImports: [returnType.returnType],
-      moduleSpecifier: `./${returnType.returnType}`
+      moduleSpecifier: `./${returnType.returnType}${extension}`
     }
   ];
   if (returnType.returnTypeCategory === 'entity') {
@@ -73,7 +80,7 @@ function returnTypeImport(
       {
         kind: StructureKind.ImportDeclaration,
         namedImports: [`${returnType.returnType}Api`],
-        moduleSpecifier: `./${returnType.returnType}Api`
+        moduleSpecifier: `./${returnType.returnType}Api${extension}`
       }
     ];
   }
@@ -85,7 +92,8 @@ function returnTypeImport(
  */
 export function operationDeclarations(
   { oDataVersion, className }: VdmServiceMetadata,
-  operations: VdmOperation[] = []
+  operations: VdmOperation[] = [],
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   if (!operations.length) {
     return [];
@@ -107,13 +115,14 @@ export function operationDeclarations(
       'Bound and unbound operations found in generation - this should not happen.'
     );
   }
+  const extension = options?.generateESM ? '.js' : '';
   const serviceImport: ImportDeclarationStructure[] = includesBound
     ? []
     : [
         {
           kind: StructureKind.ImportDeclaration,
           namedImports: [voca.decapitalize(className)],
-          moduleSpecifier: './service'
+          moduleSpecifier: `./service${extension}`
         }
       ];
 
@@ -135,6 +144,6 @@ export function operationDeclarations(
       oDataVersion
     ),
     ...serviceImport,
-    ...returnTypeImports(returnTypes)
+    ...returnTypeImports(returnTypes, options)
   ];
 }

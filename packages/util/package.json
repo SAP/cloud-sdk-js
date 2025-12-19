@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/util",
-  "version": "4.1.2",
+  "version": "4.2.0",
   "description": "SAP Cloud SDK for JavaScript general utilities",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -21,7 +21,11 @@
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map"
   ],
-  "repository": "github:SAP/cloud-sdk-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/cloud-sdk-js.git",
+    "directory": "packages/util"
+  },
   "scripts": {
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
@@ -34,11 +38,11 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "axios": "^1.12.2",
+    "axios": "^1.13.2",
     "chalk": "^4.1.0",
     "logform": "^2.7.0",
     "voca": "^1.4.1",
-    "winston": "^3.18.3",
+    "winston": "^3.19.0",
     "winston-transport": "^4.9.0"
   },
   "devDependencies": {

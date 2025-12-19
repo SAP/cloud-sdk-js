@@ -16,9 +16,9 @@ import type {
  * @typeParam EntityT - Type of the entity to be requested.
  */
 export class GetByKeyRequestBuilder<
-    EntityT extends Entity,
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>
   extends GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {

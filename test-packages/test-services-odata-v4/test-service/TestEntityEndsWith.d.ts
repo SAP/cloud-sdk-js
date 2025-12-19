@@ -14,8 +14,8 @@ import type { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
  * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityEndsWith<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityEndsWithType<T>
 {

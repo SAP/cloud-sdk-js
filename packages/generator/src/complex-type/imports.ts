@@ -6,17 +6,19 @@ import {
 import type { ImportDeclarationStructure } from 'ts-morph';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { VdmComplexType } from '../vdm-types';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
  */
 export function importDeclarations(
   complexType: VdmComplexType,
-  oDataVersion: ODataVersion
+  oDataVersion: ODataVersion,
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   return [
-    ...complexTypeImportDeclarations(complexType.properties),
-    ...enumTypeImportDeclarations(complexType.properties),
+    ...complexTypeImportDeclarations(complexType.properties, options),
+    ...enumTypeImportDeclarations(complexType.properties, options),
     odataImportDeclarationTsMorph(
       [
         'DefaultDeSerializers',

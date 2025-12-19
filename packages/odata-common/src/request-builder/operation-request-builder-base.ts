@@ -16,10 +16,10 @@ import type { DeSerializers } from '../de-serializers';
  * @typeParam RequestConfigT - Type of the request config.
  */
 export abstract class OperationRequestBuilderBase<
-    DeSerializersT extends DeSerializers,
-    ReturnT,
-    RequestConfigT extends ODataRequestConfig
-  >
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  RequestConfigT extends ODataRequestConfig
+>
   extends MethodRequestBuilder<RequestConfigT>
   implements WithBatchReference
 {

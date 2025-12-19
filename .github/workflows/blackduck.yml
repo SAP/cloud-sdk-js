@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: git fetch --depth=1
       - uses: actions/setup-node@v6
         with:
@@ -20,7 +20,7 @@ jobs:
       - run: sudo apt-get install jq
       - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
       - name: Blackduck Scan
-        uses: SAP/project-piper-action@143ff7e5a8cbcf9eb50eb83185031d00be6bc4e8
+        uses: SAP/project-piper-action@f5707cddbf1ed8a72adbfad43a677bbfb7fd6ac9
         with:
           command: detectExecuteScan
           flags: \

@@ -1,25 +1,25 @@
 {
-    "name": "check-license",
-    "version": "1.0.0",
-    "description": "Checks if the licenses of the dependencies are allowed.",
-    "license": "Apache-2.0",
-    "private": true,
-    "scripts": {
-      "compile": "tsc -p tsconfig.json",
-      "postcompile": "ncc build lib/build-packages/check-license/index.js --out ../../.github/actions/check-license/",
-      "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
-      "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
-      "check:dependencies": "depcheck --skip-missing=true .",
-      "all": "yarn && yarn run lint && yarn run compile"
-    },
-    "dependencies": {
-      "@actions/core": "^1.10.1"
-    },
-    "devDependencies": {
-      "@vercel/ncc": "^0.38.4",
-      "depcheck": "^1.4.7",
-      "eslint": "^8.57.0",
-      "prettier": "^3.6.2",
-      "typescript": "~5.9.3"
-    }
+  "name": "check-license",
+  "version": "1.0.0",
+  "description": "Checks if the licenses of the dependencies are allowed.",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "postcompile": "ncc build lib/build-packages/check-license/index.js --out ../../.github/actions/check-license/",
+    "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
+    "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
+    "check:dependencies": "depcheck --skip-missing=true .",
+    "all": "yarn && yarn run lint && yarn run compile"
+  },
+  "dependencies": {
+    "@actions/core": "^2.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.4",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.57.0",
+    "prettier": "^3.7.4",
+    "typescript": "~5.9.3"
   }
+}

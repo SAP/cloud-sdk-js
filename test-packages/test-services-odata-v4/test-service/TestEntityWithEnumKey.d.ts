@@ -14,8 +14,8 @@ import { TestEnumType } from './TestEnumType';
  * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityWithEnumKey<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityWithEnumKeyType<T>
 {

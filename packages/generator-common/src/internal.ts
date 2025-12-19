@@ -1,3 +1,6 @@
+export * from './options';
+export type { Options, ParsedOptions } from './options-parser';
+
 export * from './sdk-metadata';
 export * from './compiler';
 export * from './readme';
@@ -8,5 +11,4 @@ export * from './package-description';
 export * from './ts-config';
 export * from './options-parser';
 export * from './cli-parser';
-export * from './options';
 export * from './options-per-service';

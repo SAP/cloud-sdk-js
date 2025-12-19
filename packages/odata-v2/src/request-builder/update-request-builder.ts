@@ -25,7 +25,7 @@ const logger = createLogger({
 
 /**
  * Create OData query to update an entity.
- * @typeParam EntityT - Type of the entity to be updated.
+ * @template EntityT - Type of the entity to be updated.
  */
 export class UpdateRequestBuilder<
   EntityT extends Entity,

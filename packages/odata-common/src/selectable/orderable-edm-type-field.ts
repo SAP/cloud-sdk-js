@@ -7,10 +7,10 @@ import type { FieldTypeByEdmType } from './edm-type-field';
 
 /**
  * {@link EdmTypeField}, that represents a property with an EDM type, that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.
- * @typeParam EntityT - Type of the entity the field belongs to.
- * @typeParam EdmT - EDM type of the field.
- * @typeParam NullableT - Boolean type that represents whether the field is nullable.
- * @typeParam SelectableT - Boolean type that represents whether the field is selectable.
+ * @template EntityT - Type of the entity the field belongs to.
+ * @template EdmT - EDM type of the field.
+ * @template NullableT - Boolean type that represents whether the field is nullable.
+ * @template SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class OrderableEdmTypeField<
   EntityT extends EntityBase,

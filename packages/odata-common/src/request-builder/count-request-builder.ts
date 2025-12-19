@@ -10,7 +10,7 @@ import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
  * Create an OData request to count entities based on the configuration of the request.
  * A `CountRequestBuilder` allows only for execution of the request.
  * If you want to apply query parameters like filter, skip or top do it on the {@link GetAllRequestBuilderBase | GetAllRequestBuilder} the count is created from.
- * @typeParam EntityT - Type of the entity to be requested
+ * @template EntityT - Type of the entity to be requested.
  */
 export class CountRequestBuilder<
   EntityT extends EntityBase,

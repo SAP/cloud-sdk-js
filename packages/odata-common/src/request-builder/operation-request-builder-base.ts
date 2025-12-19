@@ -11,9 +11,9 @@ import type { DeSerializers } from '../de-serializers';
 
 /**
  * Create OData request to execute an action or function.
- * @typeParam DeSerializersT - Type of the (de-)serializers.
- * @typeParam ReturnT - Type of the function return value.
- * @typeParam RequestConfigT - Type of the request config.
+ * @template DeSerializersT - Type of the (de-)serializers.
+ * @template ReturnT - Type of the function return value.
+ * @template RequestConfigT - Type of the request config.
  */
 export abstract class OperationRequestBuilderBase<
   DeSerializersT extends DeSerializers,

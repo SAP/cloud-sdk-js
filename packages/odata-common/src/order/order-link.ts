@@ -5,8 +5,8 @@ import type { Orderable } from './orderable';
 
 /**
  * Link to represent an order by on a linked entity.
- * @typeParam EntityT - Type of the entity to link from.
- * @typeParam LinkedEntityT - Type of the entity to link to.
+ * @template EntityT - Type of the entity to link from.
+ * @template LinkedEntityT - Type of the entity to link to.
  */
 export class OrderLink<
   EntityT extends EntityBase,

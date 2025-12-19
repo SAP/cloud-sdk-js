@@ -6,7 +6,7 @@ import type { Filterable } from './filterable';
 
 /**
  * Data structure to combine {@link Filterable}s conjunctively and / or disjunctively. A FilterList matches when all filterables within the `andFilters` match and when at least one filterable within the `orFilters` matches. Should not be used directly.
- * @typeParam EntityT -
+ * @template EntityT -.
  */
 export class FilterList<
   EntityT extends EntityBase,

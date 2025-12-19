@@ -146,11 +146,9 @@ async function getIasClientCredentialsTokenImpl(
     token_format: 'jwt'
   };
 
-  // Stringify resource(s)
+  // Stringify resource
   if (arg.resource) {
-    tokenOptions.resource = Array.isArray(arg.resource)
-      ? arg.resource.map(convertResourceToUrn)
-      : convertResourceToUrn(arg.resource);
+    tokenOptions.resource = convertResourceToUrn(arg.resource);
   }
 
   if (arg.appTid) {

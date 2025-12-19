@@ -99,7 +99,9 @@ describe('getIasClientCredentialsToken', () => {
       aud: 'test-audience',
       ias_apis: ['dummy']
     });
-    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({});
+    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
+      token_format: 'jwt'
+    });
   });
 
   it('fetches IAS token with client secret authentication', async () => {
@@ -125,7 +127,9 @@ describe('getIasClientCredentialsToken', () => {
       aud: 'test-audience',
       ias_apis: ['dummy']
     });
-    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({});
+    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
+      token_format: 'jwt'
+    });
   });
 
   it('includes resource parameter for app2app flow', async () => {
@@ -136,7 +140,8 @@ describe('getIasClientCredentialsToken', () => {
     });
 
     expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
-      resource: 'urn:sap:identity:application:provider:name:my-app'
+      resource: 'urn:sap:identity:application:provider:name:my-app',
+      token_format: 'jwt'
     });
   });
 
@@ -162,7 +167,8 @@ describe('getIasClientCredentialsToken', () => {
 
     expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
       resource: 'urn:sap:identity:application:provider:name:my-app',
-      app_tid: 'tenant-123'
+      app_tid: 'tenant-123',
+      token_format: 'jwt'
     });
   });
 
@@ -174,6 +180,7 @@ describe('getIasClientCredentialsToken', () => {
     });
 
     expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
+      token_format: 'jwt',
       custom_param: 'custom_value'
     });
   });
@@ -222,7 +229,9 @@ describe('getIasClientCredentialsToken', () => {
         assertion: userAssertion
       });
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(userAssertion, {});
+      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(userAssertion, {
+        token_format: 'jwt'
+      });
       expect(mockFetchClientCredentialsToken).not.toHaveBeenCalled();
     });
 
@@ -254,7 +263,8 @@ describe('getIasClientCredentialsToken', () => {
       expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(userAssertion, {
         resource: 'urn:sap:identity:application:provider:name:my-app',
         app_tid: 'tenant-123',
-        refresh_token: '0'
+        refresh_token: '0',
+        token_format: 'jwt'
       });
     });
   });

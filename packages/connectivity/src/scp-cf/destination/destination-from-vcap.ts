@@ -141,7 +141,7 @@ interface IasOptionsBase {
    * Either provide the app name (common case) or the provider client ID
    * and tenant ID (optional).
    */
-  resource?: IasResource | IasResource[];
+  resource?: IasResource;
   /**
    * The consumer (BTP) tenant ID of the application.
    * May be required for multi-tenant communication.

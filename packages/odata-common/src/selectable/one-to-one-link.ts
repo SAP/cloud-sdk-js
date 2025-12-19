@@ -9,8 +9,8 @@ import type { EntityApi, EntityType } from '../entity-api';
 
 /**
  * Represents a link from one entity to one other linked entity (as opposed to a list of linked entities). In OData v2 a `OneToOneLink` can be used to filter and order a selection on an entity based on filters and orders on a linked entity.
- * @typeParam EntityT - Type of the entity to be linked from
- * @typeParam LinkedEntityT - Type of the entity to be linked to.
+ * @template EntityT - Type of the entity to be linked from.
+ * @template LinkedEntityT - Type of the entity to be linked to.
  */
 export class OneToOneLink<
   EntityT extends EntityBase,

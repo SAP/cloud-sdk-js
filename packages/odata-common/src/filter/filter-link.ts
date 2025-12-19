@@ -12,15 +12,14 @@ import type { Filterable } from './filterable';
  * `Entity.to_NavProperty.filter(LinkedEntity.property.equals(value))` is a `FilterLink`.
  *
  * In OData v4 filtering is also possible on one-to-many links. See {@link OneToManyLink}.
- * @typeParam EntityT - Type of the entity to be filtered.
- * @typeParam LinkedEntityT - Type of the linked entity which is used in the filter.
+ * @template EntityT - Type of the entity to be filtered.
+ * @template LinkedEntityT - Type of the linked entity which is used in the filter.
  */
 export class FilterLink<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
-> implements EntityIdentifiable<EntityT, DeSerializersT>
-{
+> implements EntityIdentifiable<EntityT, DeSerializersT> {
   /**
    * Entity type of the entity tp be filtered.
    */

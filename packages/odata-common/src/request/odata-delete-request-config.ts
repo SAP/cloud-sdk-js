@@ -7,12 +7,12 @@ import type { WithKeys, WithETag } from './odata-request-traits';
 
 /**
  * OData delete request configuration for an entity type.
- * @typeParam EntityT - Type of the entity to setup a request for
+ * @template EntityT - Type of the entity to setup a request for.
  */
 export class ODataDeleteRequestConfig<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends ODataRequestConfig
   implements WithKeys, WithETag
 {

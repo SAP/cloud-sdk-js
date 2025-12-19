@@ -23,8 +23,7 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 export class TestEntitySingleLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntitySingleLink<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<TestEntitySingleLink<DeSerializersT>, DeSerializersT> {
   public deSerializers: DeSerializersT;
 
   private constructor(

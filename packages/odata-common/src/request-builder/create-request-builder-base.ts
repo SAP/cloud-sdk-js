@@ -16,12 +16,12 @@ import type { BatchReference, WithBatchReference } from '../request';
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.
- * @typeParam EntityT - Type of the entity to be created
+ * @template EntityT - Type of the entity to be created.
  */
 export abstract class CreateRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends MethodRequestBuilder<
     ODataCreateRequestConfig<EntityT, DeSerializersT>
   >

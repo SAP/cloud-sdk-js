@@ -6,7 +6,7 @@ import type { Entity } from '../entity';
 
 /**
  * Create OData query to delete an entity.
- * @typeParam EntityT - Type of the entity to be deleted.
+ * @template EntityT - Type of the entity to be deleted.
  */
 export class DeleteRequestBuilder<
   EntityT extends Entity,

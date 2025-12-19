@@ -139,8 +139,7 @@ export interface EdmxKey {
  * @internal
  */
 export interface EdmxEntityTypeBase<NavigationT>
-  extends EdmxNamed,
-    EdmxNamespaced {
+  extends EdmxNamed, EdmxNamespaced {
   /**
    * @internal
    */

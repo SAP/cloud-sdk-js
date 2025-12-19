@@ -10,8 +10,8 @@ import type {
 /**
  * Create OData request to execute an operation.
  * For v2, only function, but not action, is supported.
- * @typeParam ParametersT - Type of the function import parameters.
- * @typeParam ReturnT - Type of the function import return value.
+ * @template ParametersT - Type of the function import parameters.
+ * @template ReturnT - Type of the function import return value.
  */
 export class OperationRequestBuilder<
   DeSerializersT extends DeSerializers,

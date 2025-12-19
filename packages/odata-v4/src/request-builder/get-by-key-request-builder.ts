@@ -17,12 +17,12 @@ import type {
  * The properties available in the response can be restricted by creating a {@link GetByKeyRequestBuilder.select | selection}, where no selection is equal to selecting all fields of the entity.
  * Navigational properties need to be expanded explicitly by {@link GetAllRequestBuilder.expand}.
  * Where no selection is equal to selecting all fields.
- * @typeParam EntityT - Type of the entity to be requested.
+ * @template EntityT - Type of the entity to be requested.
  */
 export class GetByKeyRequestBuilder<
-    EntityT extends Entity,
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>
   extends GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {

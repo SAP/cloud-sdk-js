@@ -14,8 +14,8 @@ import type { TestEntityWithSharedEntityType2Api } from './TestEntityWithSharedE
  * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityWithSharedEntityType2<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityWithSharedEntityType2Type<T>
 {

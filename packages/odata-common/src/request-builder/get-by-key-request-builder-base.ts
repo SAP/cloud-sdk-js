@@ -16,12 +16,12 @@ import type { EntityApi } from '../entity-api';
 import type { BatchReference, WithBatchReference } from '../request';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
- * @typeParam EntityT - Type of the entity to be requested
+ * @template EntityT - Type of the entity to be requested.
  */
 export abstract class GetByKeyRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends GetRequestBuilderBase<
     EntityT,
     DeSerializersT,

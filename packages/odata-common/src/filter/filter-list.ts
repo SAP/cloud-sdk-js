@@ -11,8 +11,7 @@ import type { Filterable } from './filterable';
 export class FilterList<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
-> implements EntityIdentifiable<EntityT, DeSerializersT>
-{
+> implements EntityIdentifiable<EntityT, DeSerializersT> {
   /**
    * Entity type of the entity tp be filtered.
    */

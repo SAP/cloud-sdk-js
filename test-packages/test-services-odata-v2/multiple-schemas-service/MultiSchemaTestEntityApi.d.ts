@@ -17,8 +17,7 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 export declare class MultiSchemaTestEntityApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT> {
   deSerializers: DeSerializersT;
   private constructor();
   /**

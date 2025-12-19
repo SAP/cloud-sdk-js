@@ -9,8 +9,7 @@ import type { BasicProxyConfiguration } from '@sap-cloud-sdk/connectivity';
 /**
  * Context for HttpRequests of the middleware.
  */
-export interface HttpMiddlewareContext
-  extends MiddlewareContext<HttpRequestConfig> {
+export interface HttpMiddlewareContext extends MiddlewareContext<HttpRequestConfig> {
   /**
    * JWT used in the request.
    */

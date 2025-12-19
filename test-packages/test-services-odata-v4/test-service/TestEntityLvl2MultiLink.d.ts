@@ -18,8 +18,8 @@ import {
  * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityLvl2MultiLink<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityLvl2MultiLinkType<T>
 {

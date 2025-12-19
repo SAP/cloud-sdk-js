@@ -15,8 +15,8 @@ import type { TestEntityOtherMultiLinkApi } from './TestEntityOtherMultiLinkApi'
  * See https://api.sap.com/api/path for more information.
  */
 export class TestEntityOtherMultiLink<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityOtherMultiLinkType<T>
 {

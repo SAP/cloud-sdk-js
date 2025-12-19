@@ -14,8 +14,8 @@ import type { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi'
  * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityLvl2SingleLink<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityLvl2SingleLinkType<T>
 {

@@ -15,8 +15,8 @@ import type { MultiSchemaTestEntityApi } from './MultiSchemaTestEntityApi';
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
 export class MultiSchemaTestEntity<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements MultiSchemaTestEntityType<T>
 {

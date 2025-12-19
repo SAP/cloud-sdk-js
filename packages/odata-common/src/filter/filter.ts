@@ -53,8 +53,7 @@ export class Filter<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
   FieldT
-> implements EntityIdentifiable<EntityT, DeSerializersT>
-{
+> implements EntityIdentifiable<EntityT, DeSerializersT> {
   /**
    * Entity type of the entity tp be filtered.
    */

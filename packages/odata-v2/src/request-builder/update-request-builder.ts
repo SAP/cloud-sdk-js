@@ -28,9 +28,9 @@ const logger = createLogger({
  * @typeParam EntityT - Type of the entity to be updated.
  */
 export class UpdateRequestBuilder<
-    EntityT extends Entity,
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>
   extends UpdateRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {

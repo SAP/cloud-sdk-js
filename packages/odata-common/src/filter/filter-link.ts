@@ -19,8 +19,7 @@ export class FilterLink<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
-> implements EntityIdentifiable<EntityT, DeSerializersT>
-{
+> implements EntityIdentifiable<EntityT, DeSerializersT> {
   /**
    * Entity type of the entity tp be filtered.
    */

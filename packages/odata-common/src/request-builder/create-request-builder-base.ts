@@ -19,9 +19,9 @@ import type { BatchReference, WithBatchReference } from '../request';
  * @typeParam EntityT - Type of the entity to be created
  */
 export abstract class CreateRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends MethodRequestBuilder<
     ODataCreateRequestConfig<EntityT, DeSerializersT>
   >

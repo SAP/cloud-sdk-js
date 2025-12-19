@@ -19,8 +19,7 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 export class CaseTestApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<CaseTest<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<CaseTest<DeSerializersT>, DeSerializersT> {
   public deSerializers: DeSerializersT;
 
   private constructor(

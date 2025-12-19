@@ -52,8 +52,10 @@ export interface OpenApiApi {
  * Representation of an operation.
  * @internal
  */
-export interface OpenApiOperation
-  extends Omit<OpenAPIV3.OperationObject, 'requestBody'> {
+export interface OpenApiOperation extends Omit<
+  OpenAPIV3.OperationObject,
+  'requestBody'
+> {
   /**
    * List of tags on an operation. Used for documentation.
    */
@@ -129,8 +131,7 @@ export const methods: Method[] = Object.values(supportedMethods);
  * @internal
  */
 export interface OpenApiParameter
-  extends Omit<OpenAPIV3.ParameterObject, 'schema'>,
-    OpenApiNamedSchema {
+  extends Omit<OpenAPIV3.ParameterObject, 'schema'>, OpenApiNamedSchema {
   /**
    * Name as in the specification.
    */

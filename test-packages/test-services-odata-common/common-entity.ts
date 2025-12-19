@@ -205,8 +205,8 @@ export namespace NestedComplexType {
  */
 
 export class CommonEntitySingleLink<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements CommonEntitySingleLinkType<T>
 {
@@ -239,8 +239,7 @@ export interface CommonEntitySingleLinkType<
 
 export class CommonEntitySingleLinkApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<CommonEntitySingleLink<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<CommonEntitySingleLink<DeSerializersT>, DeSerializersT> {
   public deSerializers: DeSerializersT;
 
   private constructor(
@@ -400,8 +399,7 @@ export interface CommonEntityType<
 
 export class CommonEntityApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<CommonEntity<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<CommonEntity<DeSerializersT>, DeSerializersT> {
   public deSerializers: DeSerializersT;
 
   private constructor(

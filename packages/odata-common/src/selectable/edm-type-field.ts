@@ -45,12 +45,12 @@ export type FieldTypeByEdmType<
  * @typeParam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class EdmTypeField<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    EdmT extends EdmTypeShared<'any'>,
-    NullableT extends boolean = false,
-    SelectableT extends boolean = false
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  EdmT extends EdmTypeShared<'any'>,
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+>
   extends Field<EntityT, NullableT, SelectableT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {

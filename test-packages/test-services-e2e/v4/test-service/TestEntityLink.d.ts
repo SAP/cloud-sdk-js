@@ -14,8 +14,8 @@ import type { TestEntityLinkApi } from './TestEntityLinkApi';
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
 export declare class TestEntityLink<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityLinkType<T>
 {

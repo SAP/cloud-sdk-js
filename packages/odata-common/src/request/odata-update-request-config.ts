@@ -10,9 +10,9 @@ import type { WithKeys, WithETag } from './odata-request-traits';
  * @typeParam EntityT - Type of the entity to setup a request for
  */
 export class ODataUpdateRequestConfig<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends ODataRequestConfig
   implements WithKeys, WithETag
 {

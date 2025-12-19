@@ -14,8 +14,8 @@ import type { TestEntityWithNoKeysApi } from './TestEntityWithNoKeysApi';
  * See https://api.sap.com/api/path for more information.
  */
 export declare class TestEntityWithNoKeys<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityWithNoKeysType<T>
 {

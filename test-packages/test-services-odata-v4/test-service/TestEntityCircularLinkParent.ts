@@ -19,8 +19,8 @@ import {
  * See https://api.sap.com/api/path for more information.
  */
 export class TestEntityCircularLinkParent<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityCircularLinkParentType<T>
 {

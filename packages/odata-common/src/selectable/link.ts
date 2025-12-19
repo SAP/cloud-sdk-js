@@ -25,8 +25,7 @@ export class Link<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
-> implements EntityIdentifiable<EntityT, DeSerializersT>
-{
+> implements EntityIdentifiable<EntityT, DeSerializersT> {
   readonly _entity: EntityT;
   readonly _deSerializers: DeSerializersT;
 

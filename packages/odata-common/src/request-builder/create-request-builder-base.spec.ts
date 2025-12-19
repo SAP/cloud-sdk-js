@@ -2,9 +2,7 @@ import { CommonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/commo
 import { createRequestBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import type { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 const mockBatchId = '<content-id>';
-jest.mock('uuid', () => ({
-  v4: jest.fn(() => mockBatchId)
-}));
+jest.mock('node:crypto', () => ({ randomUUID: jest.fn(() => mockBatchId) }));
 describe('CreateRequestBuilder', () => {
   function commonEntity(): CommonEntity {
     return CommonEntityApi._privateFactory().entityBuilder().build();

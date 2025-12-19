@@ -50,7 +50,7 @@
     "@sap-cloud-sdk/util": "^4.2.0",
     "@types/fs-extra": "^11.0.4",
     "fast-xml-parser": "^5.3.3",
-    "fs-extra": "^11.3.2",
+    "fs-extra": "^11.3.3",
     "ts-morph": "^27.0.2",
     "typescript": "~5.9.3",
     "voca": "^1.4.1",

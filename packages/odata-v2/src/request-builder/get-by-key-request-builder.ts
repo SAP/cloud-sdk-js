@@ -13,7 +13,7 @@ import type {
  * Create an OData request to get a single entity based on its key properties.
  * The properties available in the response can be restricted by creating a {@link GetAllRequestBuilder.select selection}, where no selection is equal to selecting all fields.
  * Note that navigational properties are automatically expanded if they included in a  select.
- * @typeParam EntityT - Type of the entity to be requested.
+ * @template EntityT - Type of the entity to be requested.
  */
 export class GetByKeyRequestBuilder<
   EntityT extends Entity,

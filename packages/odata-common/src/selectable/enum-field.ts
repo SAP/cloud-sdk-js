@@ -9,10 +9,10 @@ import type { ConstructorOrField } from './constructor-or-field';
 
 /**
  * Represents a property with an enum value.
- * @typeParam EntityT - Type of the entity the field belongs to.
- * @typeParam EnumT - Enum type that contains all valid enum entries for this field.
- * @typeParam NullableT - Boolean type that represents whether the field is nullable.
- * @typeParam SelectableT - Boolean type that represents whether the field is selectable.
+ * @template EntityT - Type of the entity the field belongs to.
+ * @template EnumT - Enum type that contains all valid enum entries for this field.
+ * @template NullableT - Boolean type that represents whether the field is nullable.
+ * @template SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class EnumField<
   EntityT extends EntityBase,

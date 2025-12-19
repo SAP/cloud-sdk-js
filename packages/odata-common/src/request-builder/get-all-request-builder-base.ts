@@ -14,7 +14,7 @@ import type { EntityApi } from '../entity-api';
 
 /**
  * Base class for the get all request builders {@link @sap-cloud-sdk/odata-v2!GetAllRequestBuilder | GetAllRequestBuilderV2} and {@link @sap-cloud-sdk/odata-v4!GetAllRequestBuilder | GetAllRequestBuilderV4}.
- * @typeParam EntityT - Type of the entity to be requested
+ * @template EntityT - Type of the entity to be requested.
  */
 export abstract class GetAllRequestBuilderBase<
   EntityT extends EntityBase,

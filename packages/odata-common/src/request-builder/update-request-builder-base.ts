@@ -21,7 +21,7 @@ import type { EntityApi } from '../entity-api';
 
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.
- * @typeParam EntityT - Type of the entity to be updated
+ * @template EntityT - Type of the entity to be updated.
  */
 export abstract class UpdateRequestBuilderBase<
   EntityT extends EntityBase,

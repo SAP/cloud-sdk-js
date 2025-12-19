@@ -14,7 +14,7 @@ import type {
 
 /**
  * Create OData request to create an entity.
- * @typeParam EntityT - Type of the entity to be created.
+ * @template EntityT - Type of the entity to be created.
  */
 export class CreateRequestBuilder<
   EntityT extends Entity,

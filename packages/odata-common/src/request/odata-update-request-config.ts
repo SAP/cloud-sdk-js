@@ -7,7 +7,7 @@ import type { WithKeys, WithETag } from './odata-request-traits';
 
 /**
  * OData update request configuration for an entity type.
- * @typeParam EntityT - Type of the entity to setup a request for
+ * @template EntityT - Type of the entity to setup a request for.
  */
 export class ODataUpdateRequestConfig<
   EntityT extends EntityBase,

@@ -27,7 +27,7 @@ import type { AxiosResponse } from 'axios';
 
 /**
  * Request builder for OpenAPI requests.
- * @typeParam ResponseT - Type of the response for the request.
+ * @template ResponseT - Type of the response for the request.
  */
 export class OpenApiRequestBuilder<ResponseT = any> {
   private _fetchCsrfToken = true;

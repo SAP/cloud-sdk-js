@@ -153,7 +153,8 @@ describe('getIasClientCredentialsToken', () => {
     });
 
     expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
-      app_tid: 'tenant-123'
+      app_tid: 'tenant-123',
+      token_format: 'jwt'
     });
   });
 

@@ -36,7 +36,7 @@
     "axios": "^1.13.2",
     "execa": "^5.0.0",
     "express": "^4.22.1",
-    "fs-extra": "^11.3.2",
+    "fs-extra": "^11.3.3",
     "http-proxy-middleware": "^3.0.5",
     "json-schema-faker": "^0.5.9",
     "mock-fs": "^5.5.0",

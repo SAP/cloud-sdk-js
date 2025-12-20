@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { ODataRequestConfig } from './odata-request-config';
 import type { BatchSubRequestPathType } from '../request-builder';
 
@@ -15,7 +15,7 @@ export class ODataBatchRequestConfig extends ODataRequestConfig {
    */
   constructor(
     readonly defaultBasePath: string,
-    readonly boundary = `batch_${uuid()}`
+    readonly boundary = `batch_${randomUUID()}`
   ) {
     super('post', defaultBasePath, {
       'content-type': `multipart/mixed; boundary=${boundary}`,

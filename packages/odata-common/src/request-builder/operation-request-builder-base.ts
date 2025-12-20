@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { MethodRequestBuilder } from './request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { HttpResponse } from '@sap-cloud-sdk/http-client';
@@ -72,7 +72,7 @@ export abstract class OperationRequestBuilderBase<
    */
   getBatchReference(): BatchReference {
     if (!this._batchReference) {
-      this.setBatchId(uuid());
+      this.setBatchId(randomUUID());
     }
     return this._batchReference;
   }

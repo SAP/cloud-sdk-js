@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { v4 as uuid } from 'uuid';
 import { EntityBase } from '../entity-base';
 import { ODataDeleteRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
@@ -56,7 +56,7 @@ export abstract class DeleteRequestBuilderBase<
    */
   getBatchReference(): BatchReference {
     if (!this._batchReference) {
-      this.setBatchId(uuid());
+      this.setBatchId(randomUUID());
     }
     return this._batchReference;
   }

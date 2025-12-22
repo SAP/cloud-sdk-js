@@ -45,8 +45,7 @@
     "@sap-cloud-sdk/odata-common": "^4.2.0",
     "@sap-cloud-sdk/util": "^4.2.0",
     "bignumber.js": "^9.3.1",
-    "moment": "^2.30.1",
-    "uuid": "^11.1.0"
+    "moment": "^2.30.1"
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-services-odata-v4": "^4.2.0",

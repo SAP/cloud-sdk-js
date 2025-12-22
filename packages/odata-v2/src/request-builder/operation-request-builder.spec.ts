@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import nock from 'nock';
-import { v4 as uuid } from 'uuid';
 import {
   testFunctionImportComplexReturnType,
   testFunctionImportEdmReturnType,
@@ -28,10 +28,7 @@ const mockedBuildHeaderResponse = {
 
 describe('OperationRequestBuilder', () => {
   it('builds correct url for multiple parameters', async () => {
-    const params = {
-      stringParam: 'someString',
-      booleanParam: false
-    };
+    const params = { stringParam: 'someString', booleanParam: false };
     const requestBuilder = testFunctionImportMultipleParams(params);
 
     const url = await requestBuilder.url(defaultDestination);
@@ -203,11 +200,7 @@ describe('OperationRequestBuilder', () => {
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportComplexReturnType`)
       .query({})
-      .reply(200, {
-        d: {
-          Foo: getTestComplexTypeData(expected)
-        }
-      });
+      .reply(200, { d: { Foo: getTestComplexTypeData(expected) } });
 
     const returnValue = await requestBuilder.execute(
       defaultDestination,
@@ -233,7 +226,7 @@ describe('OperationRequestBuilder', () => {
 function createTestEntity() {
   return testEntityApi
     .entityBuilder()
-    .keyPropertyGuid(uuid())
+    .keyPropertyGuid(randomUUID())
     .keyPropertyString('id')
     .build();
 }
@@ -246,13 +239,9 @@ function getTestEntityData(entity) {
 }
 
 function createTestComplexType() {
-  return {
-    guidProperty: uuid()
-  };
+  return { guidProperty: randomUUID() };
 }
 
 function getTestComplexTypeData(t) {
-  return {
-    GuidProperty: t.guidProperty
-  };
+  return { GuidProperty: t.guidProperty };
 }

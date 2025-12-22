@@ -123,7 +123,7 @@ function convertResourceToUrn(resource: IasResource): string {
 
   let urn = `urn:sap:identity:application:provider:clientid:${resource.providerClientId}`;
   if (resource.providerTenantId) {
-    urn += `:tenantid:${resource.providerTenantId}`;
+    urn += `:apptid:${resource.providerTenantId}`;
   }
   return urn;
 }

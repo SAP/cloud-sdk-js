@@ -1,11 +1,11 @@
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience } from '@sap-cloud-sdk/resilience';
-import { decodeJwt, isIasToken } from './jwt';
+import { IdentityServiceToken, type IdentityService } from '@sap/xssec';
+import { decodeJwt, isXsuaaToken } from './jwt';
 import {
   resolveServiceBinding,
   getIdentityServiceInstanceFromCredentials
 } from './environment-accessor';
-import type { IdentityService } from '@sap/xssec';
 import type {
   DestinationOptions,
   IasOptions,
@@ -26,11 +26,27 @@ export interface IasClientCredentialsResponse extends ClientCredentialsResponse 
   /**
    * Audience claim from the JWT token.
    */
-  aud?: string | string[];
+  aud: string | string[];
   /**
-   * IAS API resources. Present when resource parameter is specified in the token request.
+   * IAS API resources. Empty when no resource parameter is specified in the token request.
    */
-  ias_apis?: string[];
+  ias_apis: string[];
+  /**
+   * The SCIM ID of the user (not present for technical user tokens).
+   */
+  scimId?: string;
+  /**
+   * Custom issuer claim from the JWT token.
+   */
+  custom_iss?: string;
+  /**
+   * Application tenant ID claim from the JWT token.
+   */
+  app_tid?: string;
+  /**
+   * IAS tokens don't have scope property.
+   */
+  scope: '';
 }
 
 /**
@@ -44,26 +60,13 @@ export function shouldExchangeToken(options: DestinationOptions): boolean {
   return (
     options.iasToXsuaaTokenExchange === true &&
     !!options.jwt &&
-    isIasToken(decodeJwt(options.jwt))
+    !isXsuaaToken(decodeJwt(options.jwt))
   );
 }
 
 type IasParameters = {
   serviceCredentials: ServiceCredentials;
 } & IasOptions;
-
-type FirstArg<T> = T extends (arg1: infer U, ...args: any[]) => any ? U : never;
-type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
-
-// xssec does not properly export these
-type IdTokenFetchOptions = FirstArg<
-  InstanceType<typeof IdentityService>['fetchClientCredentialsToken']
->;
-type TokenFetchResponse = UnwrapPromise<
-  ReturnType<
-    InstanceType<typeof IdentityService>['fetchClientCredentialsToken']
-  >
->;
 
 /**
  * Make a client credentials request against the IAS OAuth2 endpoint.
@@ -118,9 +121,9 @@ function convertResourceToUrn(resource: IasResource): string {
     return `urn:sap:identity:application:provider:name:${resource.name}`;
   }
 
-  let urn = `urn:sap:identity:application:provider:clientid:${resource.clientId}`;
-  if (resource.tenantId) {
-    urn += `:tenantid:${resource.tenantId}`;
+  let urn = `urn:sap:identity:application:provider:clientid:${resource.providerClientId}`;
+  if (resource.providerTenantId) {
+    urn += `:tenantid:${resource.providerTenantId}`;
   }
   return urn;
 }
@@ -141,7 +144,8 @@ async function getIasClientCredentialsTokenImpl(
   const authenticationType =
     arg.authenticationType || 'OAuth2ClientCredentials';
 
-  const tokenOptions: IdTokenFetchOptions = {
+  const tokenOptions: IdentityService.TokenFetchOptions &
+    IdentityService.IdentityServiceTokenFetchOptions = {
     token_format: 'jwt'
   };
 
@@ -159,7 +163,7 @@ async function getIasClientCredentialsTokenImpl(
     Object.assign(tokenOptions, arg.extraParams);
   }
 
-  let response: undefined | TokenFetchResponse;
+  let response: undefined | IdentityService.TokenFetchResponse;
 
   if (authenticationType === 'OAuth2JWTBearer') {
     // JWT bearer grant for business user propagation
@@ -184,7 +188,7 @@ async function getIasClientCredentialsTokenImpl(
     response = await identityService.fetchClientCredentialsToken(tokenOptions);
   }
 
-  const decodedJwt = decodeJwt(response.access_token);
+  const decodedJwt = new IdentityServiceToken(response.access_token);
 
   return {
     access_token: response.access_token,
@@ -192,9 +196,13 @@ async function getIasClientCredentialsTokenImpl(
     expires_in: response.expires_in,
     // IAS tokens don't have scope property
     scope: '',
-    jti: decodedJwt.jti ?? '',
-    aud: decodedJwt.aud,
+    jti: decodedJwt.getPayload()?.jti ?? '',
+    // `decodedJwt.audiences` always returns an array, preserve original type
+    aud: decodedJwt.getPayload()?.aud ?? [],
+    app_tid: decodedJwt.appTid,
+    scimId: decodedJwt.scimId,
     // Added if resource parameter was specified
-    ias_apis: decodedJwt?.ias_apis
+    ias_apis: decodedJwt?.consumedApis,
+    custom_iss: decodedJwt.customIssuer ?? undefined
   };
 }

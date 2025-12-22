@@ -130,7 +130,7 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should cache and retrieve token with resource clientId', () => {
-      const resource = { clientId: 'resource-client-123' };
+      const resource = { providerClientId: 'resource-client-123' };
 
       clientCredentialsTokenCache.cacheToken(
         'subscriber-tenant',
@@ -150,8 +150,8 @@ describe('ClientCredentialsTokenCache', () => {
 
     it('should cache and retrieve token with resource clientId and tenantId', () => {
       const resource = {
-        clientId: 'resource-client-123',
-        tenantId: 'tenant-456'
+        providerClientId: 'resource-client-123',
+        providerTenantId: 'tenant-456'
       };
 
       clientCredentialsTokenCache.cacheToken(
@@ -197,8 +197,8 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should isolate cache by resource clientId', () => {
-      const resource1 = { clientId: 'client-1' };
-      const resource2 = { clientId: 'client-2' };
+      const resource1 = { providerClientId: 'client-1' };
+      const resource2 = { providerClientId: 'client-2' };
 
       clientCredentialsTokenCache.cacheToken(
         'subscriber-tenant',
@@ -229,18 +229,20 @@ describe('ClientCredentialsTokenCache', () => {
 
     it('should generate correct cache key with resource clientId only', () => {
       const key = getCacheKey('tenant-123', 'client-id', {
-        clientId: 'resource-client-123'
+        providerClientId: 'resource-client-123'
       });
-      expect(key).toBe('tenant-123:client-id:clientid=resource-client-123');
+      expect(key).toBe(
+        'tenant-123:client-id:provider-clientId=resource-client-123'
+      );
     });
 
     it('should generate correct cache key with resource clientId and tenantId', () => {
       const key = getCacheKey('tenant-123', 'client-id', {
-        clientId: 'resource-client-123',
-        tenantId: 'tenant-456'
+        providerClientId: 'resource-client-123',
+        providerTenantId: 'tenant-456'
       });
       expect(key).toBe(
-        'tenant-123:client-id:clientid=resource-client-123:tenantid=tenant-456'
+        'tenant-123:client-id:provider-clientId=resource-client-123:provider-tenantId=tenant-456'
       );
     });
 

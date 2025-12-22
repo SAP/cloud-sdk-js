@@ -92,40 +92,15 @@ export async function serviceToken(
  * Returns a JWT bearer token that can be used to call the given service.
  * The token is fetched via a JWT bearer token grant using the user token + client credentials.
  *
- * This function automatically detects the service type (XSUAA or IAS) based on the label
- * and uses the appropriate authentication flow.
- * For IAS services, you can pass IAS-specific options like `resource` and `appTid` in `options.iasOptions`.
- *
  * Throws an error if there is no instance of the given service type.
  * @param jwt - The JWT of the user for whom the access token should be fetched.
  * @param service - The type of the service or an instance of {@link Service}.
- * @param options - Optional options to modify token fetching behaviour.
- * @param options.iasOptions - Options to change IAS token fetching (see {@link IasOptions}).
  * @returns A JWT bearer token.
  */
 export async function jwtBearerToken(
   jwt: string,
-  service: string | Service,
-  options?: {
-    iasOptions?: Omit<
-      IasOptions,
-      'authenticationType' | 'assertion' | 'destinationUrl'
-    >;
-  }
+  service: string | Service
 ): Promise<string> {
   const resolvedService = resolveServiceBinding(service);
-
-  // Detect if this is an IAS service
-  if (resolvedService.label === 'identity') {
-    return (
-      await getIasClientCredentialsToken(resolvedService, {
-        ...(options?.iasOptions ?? {}),
-        authenticationType: 'OAuth2JWTBearer',
-        assertion: jwt
-      })
-    ).access_token;
-  }
-
-  // XSUAA flow
   return getUserToken(resolvedService, jwt);
 }

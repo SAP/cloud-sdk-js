@@ -10,6 +10,7 @@ const mockFetchClientCredentialsToken = jest.fn();
 const mockFetchJwtBearerToken = jest.fn();
 
 jest.mock('@sap/xssec', () => ({
+  ...jest.requireActual<object>('@sap/xssec'),
   IdentityService: jest.fn().mockImplementation(() => ({
     fetchClientCredentialsToken: mockFetchClientCredentialsToken,
     fetchJwtBearerToken: mockFetchJwtBearerToken
@@ -74,7 +75,11 @@ describe('getIasClientCredentialsToken', () => {
     access_token: signedJwt({
       jti: 'mock-jti',
       aud: 'test-audience',
-      ias_apis: ['dummy']
+      ias_apis: ['dummy'],
+      // Fallback value if app_tid missing (legacy)
+      zone_uuid: 'custom-tenant-id',
+      iss: 'https://tenant.accounts.ondemand.com',
+      ias_iss: 'https://ias-tenant.accounts.ondemand.com'
     }),
     token_type: 'Bearer',
     expires_in: 3600
@@ -97,7 +102,10 @@ describe('getIasClientCredentialsToken', () => {
       scope: '',
       jti: 'mock-jti',
       aud: 'test-audience',
-      ias_apis: ['dummy']
+      app_tid: 'custom-tenant-id',
+      custom_iss: 'https://tenant.accounts.ondemand.com',
+      ias_apis: ['dummy'],
+      scimId: undefined
     });
     expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
       token_format: 'jwt'
@@ -125,7 +133,10 @@ describe('getIasClientCredentialsToken', () => {
       scope: '',
       jti: 'mock-jti',
       aud: 'test-audience',
-      ias_apis: ['dummy']
+      app_tid: 'custom-tenant-id',
+      custom_iss: 'https://tenant.accounts.ondemand.com',
+      ias_apis: ['dummy'],
+      scimId: undefined
     });
     expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
       token_format: 'jwt'

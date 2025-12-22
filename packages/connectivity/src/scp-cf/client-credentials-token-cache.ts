@@ -51,9 +51,9 @@ function normalizeResource(resource?: IasResource): string | undefined {
     return `name=${resource.name}`;
   }
 
-  let normalized = `clientid=${resource.clientId}`;
-  if (resource.tenantId) {
-    normalized += `:tenantid=${resource.tenantId}`;
+  let normalized = `provider-clientId=${resource.providerClientId}`;
+  if (resource.providerTenantId) {
+    normalized += `:provider-tenantId=${resource.providerTenantId}`;
   }
   return normalized;
 }

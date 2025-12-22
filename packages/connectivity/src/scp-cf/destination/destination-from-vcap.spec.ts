@@ -267,6 +267,26 @@ describe('vcap-service-destination', () => {
 
     expect(destination?.authTokens?.[0]).toMatchObject({ value: jwt });
   });
+
+  it('forwards iasOptions to the transform function', async () => {
+    const iasOptions = {
+      resource: { providerClientId: 'test-client-id' }
+    };
+    const serviceBindingTransformFn = jest.fn(async (service: Service) => ({
+      url: service.credentials.sys
+    }));
+
+    await getDestinationFromServiceBinding({
+      destinationName: 'my-custom-service',
+      serviceBindingTransformFn,
+      iasOptions
+    });
+
+    expect(serviceBindingTransformFn).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ iasOptions })
+    );
+  });
 });
 
 function mockServiceBindings() {

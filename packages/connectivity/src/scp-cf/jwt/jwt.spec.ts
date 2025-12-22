@@ -18,12 +18,12 @@ describe('jwt', () => {
       expect(userId(iasPayload)).toBe('ias-user-uuid-456');
     });
 
-    it('prefers user_uuid over user_id when both are present', () => {
+    it('prefers user_id over user_uuid when both are present', () => {
       const mixedPayload = {
         user_uuid: 'ias-user-uuid-456',
         user_id: 'xsuaa-user-123'
       };
-      expect(userId(mixedPayload)).toBe('ias-user-uuid-456');
+      expect(userId(mixedPayload)).toBe('xsuaa-user-123');
     });
   });
 

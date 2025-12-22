@@ -28,6 +28,7 @@ const logger = createLogger({
  * Throws an error if no services are bound at all, no service with the given name can be found, or the service type is not supported.
  * The last error can be circumvent by using the second parameter to provide a custom function that transforms a service binding to a destination.
  * @param options - Options to customize the behavior of this function.
+ * @param options.iasOptions - Options for IAS token retrieval in case of IAS authentication.
  * @returns A destination.
  */
 export async function getDestinationFromServiceBinding(
@@ -35,7 +36,7 @@ export async function getDestinationFromServiceBinding(
     DestinationFetchOptions,
     'jwt' | 'iss' | 'useCache' | 'destinationName'
   > &
-    DestinationFromServiceBindingOptions
+    DestinationFromServiceBindingOptions & { iasOptions?: IasOptions }
 ): Promise<Destination> {
   const decodedJwt = options.iss
     ? { iss: options.iss }
@@ -74,14 +75,17 @@ async function retrieveDestination({
   useCache,
   jwt,
   destinationName,
+  iasOptions,
   serviceBindingTransformFn
 }: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
   jwt?: JwtPayload;
+  iasOptions?: IasOptions;
 } & DestinationFromServiceBindingOptions) {
   const service = getServiceBindingByInstanceName(destinationName);
   const destination = await (serviceBindingTransformFn || transform)(service, {
     useCache,
-    jwt
+    jwt,
+    ...(iasOptions ? { iasOptions } : {})
   });
 
   return { name: destinationName, ...destination };
@@ -95,10 +99,6 @@ export interface DestinationFromServiceBindingOptions {
    * Custom transformation function to control how a {@link Destination} is built from the given {@link Service}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
-  /**
-   * Options for IAS token retrieval.
-   */
-  iasOptions?: IasOptions;
 }
 
 /**
@@ -118,11 +118,11 @@ export type IasResource = Xor<
     /**
      * The client ID of the application resource.
      */
-    clientId: string;
+    providerClientId: string;
     /**
      * The tenant ID of the application resource (Optional).
      */
-    tenantId?: string;
+    providerTenantId?: string;
   }
 >;
 
@@ -132,7 +132,11 @@ export type IasResource = Xor<
 interface IasOptionsBase {
   /**
    * The target URL of the destination that the IAS token is requested for.
-   * @default to the (identity service) URL from the service binding.
+   * It is recommended to provide this for App-to-App communication (when resource parameter is used),
+   * otherwise the destination will point to the identity service URL from the service binding,
+   * instead of the actual target application. This function is not able to to infer
+   * the target application from the information available.
+   * @default The (identity service) URL from the service binding.
    */
   targetUrl?: string;
   /**
@@ -140,6 +144,11 @@ interface IasOptionsBase {
    * The token will only be usable to call the requested application(s).
    * Either provide the app name (common case) or the provider client ID
    * and tenant ID (optional).
+   *
+   * It is recommended to also provide the targetUrl parameter, otherwise
+   * the destination will point to the identity service URL from the service bindingm,
+   * instead of the actual target application. This function is not able to to infer
+   * the target application from the information available.
    */
   resource?: IasResource;
   /**

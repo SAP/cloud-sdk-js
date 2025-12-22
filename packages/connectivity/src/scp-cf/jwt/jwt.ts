@@ -34,9 +34,9 @@ function makeArray(val: string | string[] | undefined): string[] {
  */
 export function userId(jwtPayload: JwtPayload): string {
   // IAS tokens use user_uuid, XSUAA tokens use user_id
-  const id = jwtPayload.user_uuid || jwtPayload.user_id;
+  const id = jwtPayload.user_id || jwtPayload.user_uuid;
   logger.debug(
-    `JWT user identifier is: ${id} (from ${jwtPayload.user_uuid ? 'user_uuid (IAS)' : 'user_id (XSUAA)'}).`
+    `JWT user identifier is: ${id} (from ${jwtPayload.user_id ? 'user_id (XSUAA)' : 'user_uuid (IAS)'}).`
   );
   return id;
 }
@@ -54,7 +54,7 @@ export function getDefaultTenantId(): string {
 }
 
 /**
- * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` property.
+ * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` or `zone_uuid` (legacy) property.
  * @param jwt - Token to read the tenant ID from.
  * @returns The tenant ID, if available.
  */
@@ -63,9 +63,11 @@ export function getTenantId(
 ): string | undefined {
   const decodedJwt = jwt ? decodeJwt(jwt) : {};
   logger.debug(
-    `JWT zid is: ${decodedJwt.zid}, app_tid is: ${decodedJwt.app_tid}.`
+    `JWT zid is: ${decodedJwt.zid}, app_tid is: ${decodedJwt.app_tid}, zone_uuid is: ${decodedJwt.zone_uuid}.`
   );
-  return decodedJwt.zid || decodedJwt.app_tid || undefined;
+  return (
+    decodedJwt.zid || decodedJwt.app_tid || decodedJwt.zone_uuid || undefined
+  );
 }
 
 /**
@@ -93,17 +95,6 @@ export function isIasToken(decodedJwt: JwtPayload): boolean {
 }
 
 /**
- * Check if the given JWT is not an IAS token.
- * Currently, there are only two domains for IAS tokens:
- * `accounts.ondemand.com` and `accounts400.ondemand.com`.
- * @param decodedJwt - The decoded JWT to check.
- * @returns Whether the given JWT is not an IAS token.
- */
-function isNotIasToken(decodedJwt: JwtPayload): boolean {
-  return !isIasToken(decodedJwt);
-}
-
-/**
  * @internal
  * Retrieve the subdomain from the decoded XSUAA JWT or ISS object.
  * If it is an IAS JWT, or the passed object doesn't contain an ISS propety,
@@ -117,7 +108,7 @@ export function getSubdomain(
   const decodedJwt = jwt ? decodeJwt(jwt) : {};
   return (
     decodedJwt?.ext_attr?.zdn ||
-    (isNotIasToken(decodedJwt) ? getIssuerSubdomain(decodedJwt) : undefined)
+    (isIasToken(decodedJwt) ? undefined : getIssuerSubdomain(decodedJwt))
   );
 }
 

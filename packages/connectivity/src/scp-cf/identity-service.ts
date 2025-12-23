@@ -1,6 +1,7 @@
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience } from '@sap-cloud-sdk/resilience';
 import { IdentityServiceToken, type IdentityService } from '@sap/xssec';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { decodeJwt, isXsuaaToken } from './jwt';
 import {
   resolveServiceBinding,
@@ -99,8 +100,19 @@ export async function getIasClientCredentialsToken(
       tenantId: fnArgument.serviceCredentials.tenantid
     }
   }).catch(err => {
-    throw new Error(
-      `Could not fetch IAS client credentials token for service of type ${resolvedService.label}: ${err.message}`
+    const serviceName =
+      typeof service === 'string' ? service : service.name || 'unknown';
+    let message = `Could not fetch IAS client credentials token for service "${serviceName}" of type ${resolvedService.label}`;
+
+    // Add contextual hints based on error status code (similar to Java SDK)
+    if (err.response?.status === 401) {
+      message +=
+        '. In case you are accessing a multi-tenant BTP service on behalf of a subscriber tenant, ensure that the service instance is declared as dependency to SaaS Provisioning Service or Subscription Manager (SMS) and subscribed for the current tenant';
+    }
+
+    throw new ErrorWithCause(
+      message + (err.message ? `: ${err.message}` : '.'),
+      err
     );
   });
   return token;
@@ -138,7 +150,8 @@ async function getIasClientCredentialsTokenImpl(
   arg: IasParameters
 ): Promise<IasClientCredentialsResponse> {
   const identityService = getIdentityServiceInstanceFromCredentials(
-    arg.serviceCredentials
+    arg.serviceCredentials,
+    arg.assertion
   );
 
   const authenticationType =

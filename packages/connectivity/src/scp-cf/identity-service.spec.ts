@@ -9,13 +9,32 @@ import type { Service } from './environment-accessor';
 const mockFetchClientCredentialsToken = jest.fn();
 const mockFetchJwtBearerToken = jest.fn();
 
-jest.mock('@sap/xssec', () => ({
-  ...jest.requireActual<object>('@sap/xssec'),
-  IdentityService: jest.fn().mockImplementation(() => ({
+jest.mock('@sap/xssec', () => {
+  const mockGetSafeUrlFromTokenIssuer = jest.fn();
+  const mockIdentityService: any = jest.fn().mockImplementation(() => ({
     fetchClientCredentialsToken: mockFetchClientCredentialsToken,
     fetchJwtBearerToken: mockFetchJwtBearerToken
-  }))
-}));
+  }));
+  mockIdentityService.getSafeUrlFromTokenIssuer = mockGetSafeUrlFromTokenIssuer;
+
+  return {
+    ...jest.requireActual<object>('@sap/xssec'),
+    IdentityService: mockIdentityService,
+    IdentityServiceToken: jest.fn().mockImplementation((jwt: string) => {
+      const payload = JSON.parse(
+        Buffer.from(jwt.split('.')[1], 'base64').toString()
+      );
+      return {
+        getPayload: () => payload,
+        appTid: payload.app_tid ?? payload.zone_uuid,
+        scimId: payload.scim_id,
+        consumedApis: payload.ias_apis,
+        customIssuer: payload.iss,
+        issuer: payload.iss
+      };
+    })
+  };
+});
 
 describe('shouldExchangeToken', () => {
   it('should not exchange token from XSUAA', async () => {
@@ -203,7 +222,17 @@ describe('getIasClientCredentialsToken', () => {
     );
 
     await expect(getIasClientCredentialsToken(mockIasService)).rejects.toThrow(
-      'Could not fetch IAS client credentials token for service of type identity'
+      'Could not fetch IAS client credentials token for service "my-identity-service" of type identity: Network error'
+    );
+  });
+
+  it('adds multi-tenant hint for 401 errors', async () => {
+    const error: any = new Error('Unauthorized');
+    error.response = { status: 401 };
+    mockFetchClientCredentialsToken.mockRejectedValue(error);
+
+    await expect(getIasClientCredentialsToken(mockIasService)).rejects.toThrow(
+      /ensure that the service instance is declared as dependency to SaaS Provisioning Service or Subscription Manager/
     );
   });
 
@@ -232,6 +261,7 @@ describe('getIasClientCredentialsToken', () => {
       mockFetchJwtBearerToken.mockResolvedValue(mockTokenResponse);
 
       const userAssertion = signedJwt({
+        iss: 'https://tenant.accounts.ondemand.com',
         user_uuid: 'user-123',
         app_tid: 'tenant-456'
       });
@@ -261,6 +291,7 @@ describe('getIasClientCredentialsToken', () => {
       mockFetchJwtBearerToken.mockResolvedValue(mockTokenResponse);
 
       const userAssertion = signedJwt({
+        iss: 'https://tenant.accounts.ondemand.com',
         user_uuid: 'user-123',
         app_tid: 'tenant-456'
       });
@@ -278,6 +309,175 @@ describe('getIasClientCredentialsToken', () => {
         refresh_token: '0',
         token_format: 'jwt'
       });
+    });
+  });
+
+  describe('multi-tenant subscriber routing', () => {
+    const providerUrl = 'https://provider.accounts.ondemand.com';
+    const subscriberUrl = 'https://subscriber.accounts.ondemand.com';
+
+    const providerService: Service = {
+      name: 'provider-ias',
+      label: 'identity',
+      tags: ['identity'],
+      credentials: {
+        url: providerUrl,
+        clientid: 'test-client-id',
+        clientsecret: 'test-secret'
+      }
+    };
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      clearIdentityServices();
+      mockFetchJwtBearerToken.mockResolvedValue(mockTokenResponse);
+    });
+
+    it('uses provider IdentityService when JWT issuer matches provider URL', async () => {
+      const assertion = signedJwt({
+        iss: providerUrl,
+        user_uuid: 'user-123'
+      });
+
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion
+      });
+
+      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+        token_format: 'jwt'
+      });
+    });
+
+    it('creates subscriber IdentityService when JWT issuer differs from provider', async () => {
+      const assertion = signedJwt({
+        iss: subscriberUrl,
+        user_uuid: 'user-123'
+      });
+
+      const { IdentityService } = jest.requireMock('@sap/xssec');
+
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion
+      });
+
+      // Verify subscriber instance created with subscriber URL
+      expect(IdentityService).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: subscriberUrl
+        }),
+        undefined
+      );
+
+      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+        token_format: 'jwt'
+      });
+    });
+
+    it('does not route for client credentials flow', async () => {
+      const { IdentityService } = jest.requireMock('@sap/xssec');
+
+      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2ClientCredentials'
+      });
+
+      // Should only create provider instance
+      expect(IdentityService).toHaveBeenCalledTimes(1);
+      expect(IdentityService).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: providerUrl
+        }),
+        undefined
+      );
+    });
+
+    it('throws error when JWT issuer extraction fails', async () => {
+      const assertion = signedJwt({
+        // Missing issuer field to trigger error
+        user_uuid: 'user-123'
+      });
+
+      await expect(
+        getIasClientCredentialsToken(providerService, {
+          authenticationType: 'OAuth2JWTBearer',
+          assertion
+        })
+      ).rejects.toThrow('Could not parse JWT assertion issuer URL: undefined');
+    });
+
+    it('caches subscriber instances per URL', async () => {
+      const subscriber1Url = 'https://subscriber1.accounts.ondemand.com';
+      const subscriber2Url = 'https://subscriber2.accounts.ondemand.com';
+
+      const assertion1 = signedJwt({
+        iss: subscriber1Url,
+        user_uuid: 'user-123'
+      });
+
+      const assertion2 = signedJwt({
+        iss: subscriber2Url,
+        user_uuid: 'user-456'
+      });
+
+      const { IdentityService } = jest.requireMock('@sap/xssec');
+
+      // First call with subscriber1
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion: assertion1
+      });
+
+      const callsAfterFirst = IdentityService.mock.calls.length;
+
+      // Second call with same subscriber1 - should use cached instance
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion: assertion1
+      });
+
+      // Should not create new instance (cached)
+      expect(IdentityService.mock.calls.length).toBe(callsAfterFirst);
+
+      // Third call with different subscriber2 - should create new instance
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion: assertion2
+      });
+
+      // Should create new instance for subscriber2
+      expect(IdentityService.mock.calls.length).toBeGreaterThan(
+        callsAfterFirst
+      );
+    });
+
+    it('handles URLs with trailing slashes correctly', async () => {
+      const providerWithSlash = 'https://provider.accounts.ondemand.com/';
+
+      const serviceWithSlash: Service = {
+        ...providerService,
+        credentials: {
+          ...providerService.credentials,
+          url: providerWithSlash
+        }
+      };
+
+      const assertion = signedJwt({
+        iss: 'https://provider.accounts.ondemand.com',
+        user_uuid: 'user-123'
+      });
+
+      const { IdentityService } = jest.requireMock('@sap/xssec');
+
+      await getIasClientCredentialsToken(serviceWithSlash, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion
+      });
+
+      // Should handle URLs with and without trailing slashes
+      expect(IdentityService).toHaveBeenCalled();
     });
   });
 });

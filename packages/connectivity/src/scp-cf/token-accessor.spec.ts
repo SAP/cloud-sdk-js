@@ -1,5 +1,6 @@
 import nock from 'nock';
 import * as resilience from '@sap-cloud-sdk/resilience';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   destinationBindingClientSecretMock,
   destinationBindingCertMock,
@@ -463,6 +464,56 @@ describe('token accessor', () => {
           mockIasService,
           expect.objectContaining({
             appTid: 'subscriber-tenant-id'
+          })
+        );
+      });
+
+      it('logs warning when using IAS service with XSUAA JWT', async () => {
+        const logger = createLogger({
+          package: 'connectivity',
+          messageContext: 'token-accessor'
+        });
+        const warnSpy = jest.spyOn(logger, 'warn');
+
+        jest
+          .spyOn(identityService, 'getIasClientCredentialsToken')
+          .mockResolvedValue(mockIasToken);
+
+        const xsuaaJwt = signedXsuaaJwt({
+          zid: 'unique-subscriber-tenant-id',
+          ext_attr: { enhancer: 'XSUAA' }
+        });
+
+        await serviceToken('identity', { jwt: xsuaaJwt, useCache: false });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+          expect.stringContaining(
+            'Requesting token for IAS service with a XSUAA JWT'
+          )
+        );
+
+        warnSpy.mockRestore();
+      });
+
+      it('uses explicitly provided appTid over automatically determined tenant', async () => {
+        const getIasTokenSpy = jest
+          .spyOn(identityService, 'getIasClientCredentialsToken')
+          .mockResolvedValue(mockIasToken);
+
+        const explicitAppTid = 'explicit-tenant-id';
+        const jwt = signedXsuaaJwt({
+          zid: 'jwt-tenant-id'
+        });
+
+        await serviceToken('identity', {
+          jwt,
+          iasOptions: { appTid: explicitAppTid }
+        });
+
+        expect(getIasTokenSpy).toHaveBeenCalledWith(
+          mockIasService,
+          expect.objectContaining({
+            appTid: explicitAppTid // Should use explicit value, not jwt-tenant-id
           })
         );
       });

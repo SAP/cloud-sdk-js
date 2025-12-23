@@ -40,6 +40,7 @@ describe('ias', () => {
       ).not.toBe(
         getIdentityServiceInstanceFromCredentials(
           createServiceCredentials(),
+          undefined,
           true
         )
       );

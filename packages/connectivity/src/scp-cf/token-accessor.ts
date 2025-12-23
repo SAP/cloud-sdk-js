@@ -1,9 +1,11 @@
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
+  decodeJwt,
   getDefaultTenantId,
   getSubdomain,
   getTenantId,
-  getTenantIdFromBinding
+  getTenantIdFromBinding,
+  isXsuaaToken
 } from './jwt';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
@@ -13,6 +15,11 @@ import type { Service } from './environment-accessor';
 import type { CachingOptions } from './cache';
 import type { JwtPayload } from './jsonwebtoken-type';
 import type { IasOptions } from './destination';
+
+const logger = createLogger({
+  package: 'connectivity',
+  messageContext: 'token-accessor'
+});
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -32,7 +39,7 @@ export async function serviceToken(
     jwt?: string | JwtPayload;
     iasOptions?: Omit<
       IasOptions,
-      'authenticationType' | 'assertion' | 'destinationUrl' | 'appTid'
+      'authenticationType' | 'assertion' | 'destinationUrl'
     >;
   }
 ): Promise<string> {
@@ -44,9 +51,13 @@ export async function serviceToken(
 
   const serviceBinding = resolveServiceBinding(service);
   const serviceCredentials = serviceBinding.credentials;
-  const tenantForCaching = options?.jwt
-    ? getTenantId(options.jwt) || getSubdomain(options.jwt)
-    : getTenantIdFromBinding() || getDefaultTenantId();
+  // User-provided appTid takes precedence over automatically determined tenant for IAS
+  const tenantForCaching =
+    serviceBinding.label === 'identity' && options?.iasOptions?.appTid
+      ? options.iasOptions.appTid
+      : options?.jwt
+        ? getTenantId(options.jwt) || getSubdomain(options.jwt)
+        : getTenantIdFromBinding() || getDefaultTenantId();
   const resourceForCaching = options?.iasOptions?.resource;
 
   if (opts.useCache) {
@@ -61,6 +72,18 @@ export async function serviceToken(
   }
 
   try {
+    // Warn if using IAS service with XSUAA jwt (should be more reliable than the IAS check)
+    if (serviceBinding.label === 'identity' && options?.jwt) {
+      const decodedJwt = decodeJwt(options.jwt);
+      if (isXsuaaToken(decodedJwt)) {
+        logger.warn(
+          'Requesting token for IAS service with a XSUAA JWT. ' +
+            'The tenant information from the XSUAA token may not be compatible with IAS. ' +
+            'Consider using an IAS JWT or omitting the JWT to use the provider tenant.'
+        );
+      }
+    }
+
     const token =
       serviceBinding.label === 'identity'
         ? await getIasClientCredentialsToken(serviceBinding, {

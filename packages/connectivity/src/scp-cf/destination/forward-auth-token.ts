@@ -42,21 +42,26 @@ function validateToken(token: string | undefined): token is string {
 
 /**
  * @internal
- * Set forwarded auth token, if needed.
- * @param destination - Destination to set the token on, if needed.
+ * Add forwarded auth token, if needed.
+ * @param destination - Destination to add the token on, if needed.
  * @param token - Token to forward, if needed.
  */
-export function setForwardedAuthTokenIfNeeded(
+export function addForwardedAuthTokenIfNeeded(
   destination: Destination,
   token?: string
 ): Destination {
   if (destination.forwardAuthToken) {
+    let authTokens: [DestinationAuthToken] | undefined;
     if (validateToken(token)) {
       logger.debug(
         "Option 'forwardAuthToken' enabled on destination. Using the given token for the destination."
       );
-      destination.authTokens = buildDestinationAuthToken(token);
+      authTokens = buildDestinationAuthToken(token);
     }
+    return {
+      ...destination,
+      authTokens
+    };
   }
   return destination;
 }

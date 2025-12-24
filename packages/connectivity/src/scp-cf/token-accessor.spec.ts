@@ -1,5 +1,6 @@
 import nock from 'nock';
 import * as resilience from '@sap-cloud-sdk/resilience';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   destinationBindingClientSecretMock,
   destinationBindingCertMock,
@@ -30,6 +31,7 @@ import {
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { jwtBearerToken, serviceToken } from './token-accessor';
 import { clearXsuaaServices } from './environment-accessor';
+import * as identityService from './identity-service';
 import type { ClientCredentialsResponse } from './xsuaa-service-types';
 
 describe('token accessor', () => {
@@ -205,11 +207,13 @@ describe('token accessor', () => {
 
       const providerTokenFromCache = clientCredentialsTokenCache.getToken(
         providerUserPayload.zid,
-        destinationBindingClientSecretMock.credentials.clientid
+        destinationBindingClientSecretMock.credentials.clientid,
+        undefined
       );
       const subscriberTokenFromCache = clientCredentialsTokenCache.getToken(
         subscriberUserPayload.zid,
-        destinationBindingClientSecretMock.credentials.clientid
+        destinationBindingClientSecretMock.credentials.clientid,
+        undefined
       );
 
       expect(providerTokenFromCache?.access_token).toEqual(providerToken);
@@ -218,23 +222,33 @@ describe('token accessor', () => {
       expect(
         clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
-          destinationBindingClientSecretMock.credentials.clientid
+          destinationBindingClientSecretMock.credentials.clientid,
+          undefined
         )
       ).toBeUndefined();
 
       expect(
         clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
-          'schmusername'
+          'schmusername',
+          undefined
         )
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getToken(providerXsuaaUrl, 'schmusername')
+        clientCredentialsTokenCache.getToken(
+          providerXsuaaUrl,
+          'schmusername',
+          undefined
+        )
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getToken(subscriberXsuaaUrl, 'schmusername')
+        clientCredentialsTokenCache.getToken(
+          subscriberXsuaaUrl,
+          'schmusername',
+          undefined
+        )
       ).toBeUndefined();
     });
 
@@ -320,6 +334,7 @@ describe('token accessor', () => {
       clientCredentialsTokenCache.cacheToken(
         destinationBindingClientSecretMock.credentials.tenantid,
         destinationBindingClientSecretMock.credentials.clientid,
+        undefined,
         { access_token: token } as ClientCredentialsResponse
       );
 
@@ -348,7 +363,8 @@ describe('token accessor', () => {
       expect(
         clientCredentialsTokenCache.getToken(
           destinationBindingClientSecretMock.credentials.tenantid,
-          destinationBindingClientSecretMock.credentials.clientid
+          destinationBindingClientSecretMock.credentials.clientid,
+          undefined
         )
       ).toEqual(token);
     });
@@ -361,6 +377,195 @@ describe('token accessor', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Could not find service binding of type \'destination\'."'
       );
+    });
+
+    describe('IAS/identity service handling', () => {
+      const mockIasService = {
+        name: 'my-identity',
+        label: 'identity',
+        tags: ['identity'],
+        credentials: {
+          url: 'https://tenant.accounts.ondemand.com',
+          clientid: 'ias-client-id',
+          clientsecret: 'ias-secret',
+          app_tid: 'ias-tenant-id'
+        }
+      };
+
+      const mockIasToken = {
+        access_token: signedJwt({ jti: 'ias-jti', ias_apis: ['test'] }),
+        token_type: 'Bearer',
+        expires_in: 3600,
+        scope: '' as const,
+        jti: 'ias-jti',
+        aud: [],
+        ias_apis: ['test']
+      };
+
+      beforeEach(() => {
+        process.env.VCAP_SERVICES = JSON.stringify({
+          identity: [mockIasService]
+        });
+      });
+
+      afterEach(() => {
+        jest.restoreAllMocks();
+      });
+
+      it('uses getIasClientCredentialsToken for identity service', async () => {
+        const getIasTokenSpy = jest
+          .spyOn(identityService, 'getIasClientCredentialsToken')
+          .mockResolvedValue(mockIasToken);
+
+        const token = await serviceToken('identity');
+
+        expect(token).toBe(mockIasToken.access_token);
+        expect(getIasTokenSpy).toHaveBeenCalledWith(mockIasService, {
+          authenticationType: 'OAuth2ClientCredentials',
+          appTid: mockIasService.credentials.app_tid
+        });
+      });
+
+      it('forwards iasOptions (resource and extraParams) to getIasClientCredentialsToken', async () => {
+        const getIasTokenSpy = jest
+          .spyOn(identityService, 'getIasClientCredentialsToken')
+          .mockResolvedValue(mockIasToken);
+
+        const iasOptions = {
+          resource: { providerClientId: 'target-app-client-id' },
+          extraParams: { custom_param: 'custom_value' }
+        };
+
+        await serviceToken('identity', { iasOptions });
+
+        expect(getIasTokenSpy).toHaveBeenCalledWith(
+          mockIasService,
+          expect.objectContaining({
+            resource: iasOptions.resource,
+            extraParams: iasOptions.extraParams,
+            authenticationType: 'OAuth2ClientCredentials',
+            appTid: mockIasService.credentials.app_tid
+          })
+        );
+      });
+
+      it('uses tenant from JWT as appTid when JWT is provided', async () => {
+        const getIasTokenSpy = jest
+          .spyOn(identityService, 'getIasClientCredentialsToken')
+          .mockResolvedValue(mockIasToken);
+
+        const jwt = signedXsuaaJwt({
+          zid: 'subscriber-tenant-id'
+        });
+
+        await serviceToken('identity', { jwt });
+
+        expect(getIasTokenSpy).toHaveBeenCalledWith(
+          mockIasService,
+          expect.objectContaining({
+            appTid: 'subscriber-tenant-id'
+          })
+        );
+      });
+
+      it('logs warning when using IAS service with XSUAA JWT', async () => {
+        const logger = createLogger({
+          package: 'connectivity',
+          messageContext: 'token-accessor'
+        });
+        const warnSpy = jest.spyOn(logger, 'warn');
+
+        jest
+          .spyOn(identityService, 'getIasClientCredentialsToken')
+          .mockResolvedValue(mockIasToken);
+
+        const xsuaaJwt = signedXsuaaJwt({
+          zid: 'unique-subscriber-tenant-id',
+          ext_attr: { enhancer: 'XSUAA' }
+        });
+
+        await serviceToken('identity', { jwt: xsuaaJwt, useCache: false });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+          expect.stringContaining(
+            'Requesting token for IAS service with a XSUAA JWT'
+          )
+        );
+
+        warnSpy.mockRestore();
+      });
+
+      it('uses explicitly provided appTid over automatically determined tenant', async () => {
+        const getIasTokenSpy = jest
+          .spyOn(identityService, 'getIasClientCredentialsToken')
+          .mockResolvedValue(mockIasToken);
+
+        const explicitAppTid = 'explicit-tenant-id';
+        const jwt = signedXsuaaJwt({
+          zid: 'jwt-tenant-id'
+        });
+
+        await serviceToken('identity', {
+          jwt,
+          iasOptions: { appTid: explicitAppTid }
+        });
+
+        expect(getIasTokenSpy).toHaveBeenCalledWith(
+          mockIasService,
+          expect.objectContaining({
+            appTid: explicitAppTid // Should use explicit value, not jwt-tenant-id
+          })
+        );
+      });
+
+      it('caches IAS tokens with resource parameter', async () => {
+        jest
+          .spyOn(identityService, 'getIasClientCredentialsToken')
+          .mockResolvedValue(mockIasToken);
+
+        const iasOptions = {
+          resource: { providerClientId: 'target-app-client-id' }
+        };
+
+        const first = await serviceToken('identity', { iasOptions });
+        const second = await serviceToken('identity', { iasOptions });
+
+        expect(first).toBe(mockIasToken.access_token);
+        expect(second).toBe(mockIasToken.access_token);
+
+        const cached = clientCredentialsTokenCache.getToken(
+          mockIasService.credentials.app_tid,
+          mockIasService.credentials.clientid,
+          iasOptions.resource
+        );
+
+        expect(cached?.access_token).toBe(mockIasToken.access_token);
+      });
+
+      it('isolates cache by IAS resource parameter', async () => {
+        jest
+          .spyOn(identityService, 'getIasClientCredentialsToken')
+          .mockResolvedValue(mockIasToken);
+
+        const resource1 = { providerClientId: 'app-1' };
+        const resource2 = { providerClientId: 'app-2' };
+
+        await serviceToken('identity', { iasOptions: { resource: resource1 } });
+
+        const cached1 = clientCredentialsTokenCache.getToken(
+          mockIasService.credentials.app_tid,
+          mockIasService.credentials.clientid,
+          resource1
+        );
+        const cached2 = clientCredentialsTokenCache.getToken(
+          mockIasService.credentials.app_tid,
+          mockIasService.credentials.clientid,
+          resource2
+        );
+
+        expect(cached1).toBeDefined();
+        expect(cached2).toBeUndefined();
+      });
     });
   });
 });

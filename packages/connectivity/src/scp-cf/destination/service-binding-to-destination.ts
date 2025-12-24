@@ -1,5 +1,6 @@
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
+import { getIasClientCredentialsToken } from '../identity-service';
 import type { Service } from '../environment-accessor';
 import type {
   ServiceBindingTransformFunction,
@@ -21,7 +22,8 @@ export const serviceToDestinationTransformers: Record<
   workflow: workflowBindingToDestination,
   'service-manager': serviceManagerBindingToDestination,
   xsuaa: xsuaaToDestination,
-  aicore: aicoreToDestination
+  aicore: aicoreToDestination,
+  identity: iasBindingToDestination
 };
 
 /**
@@ -36,6 +38,7 @@ export const serviceToDestinationTransformers: Record<
  * - service-manager (OAuth2ClientCredentials)
  * - xsuaa (OAuth2ClientCredentials)
  * - aicore (OAuth2ClientCredentials)
+ * - identity (OAuth2ClientCredentials with mTLS or client secret)
  * Throws an error if the provided service binding is not supported.
  * @param serviceBinding - The service binding to transform.
  * @param options - Options used for fetching the destination.
@@ -177,6 +180,31 @@ async function xfS4hanaCloudBindingToDestination(
     username: service.credentials.User,
     password: service.credentials.Password
   };
+}
+
+async function iasBindingToDestination(
+  service: Service,
+  options?: ServiceBindingTransformOptions
+): Promise<Destination> {
+  const { access_token } = await getIasClientCredentialsToken(
+    service,
+    options?.iasOptions ?? {}
+  );
+  const destination = buildClientCredentialsDestination(
+    access_token,
+    options?.iasOptions?.targetUrl ?? service.credentials.url,
+    service.name
+  );
+
+  // Add mTLS key pair if available
+  if (service.credentials.certificate && service.credentials.key) {
+    destination.mtlsKeyPair = {
+      cert: service.credentials.certificate,
+      key: service.credentials.key
+    };
+  }
+
+  return destination;
 }
 
 function buildClientCredentialsDestination(

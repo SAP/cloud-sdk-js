@@ -53,9 +53,9 @@ const defaultFieldOptions: Required<FieldOptions> = {
  * Fields are used to represent the domain of values that can be used in select, filter and order by functions.
  *
  * See also: {@link Selectable}, {@link EdmTypeField}, {@link ComplexTypeField}.
- * @typeParam EntityT - Type of the entity the field belongs to.
- * @typeParam NullableT - Boolean type that represents whether the field is nullable.
- * @typeParam SelectableT - Boolean type that represents whether the field is selectable.
+ * @template EntityT - Type of the entity the field belongs to.
+ * @template NullableT - Boolean type that represents whether the field is nullable.
+ * @template SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class Field<
   EntityT extends EntityBase,

@@ -24,8 +24,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 export declare class PeopleApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<People<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<People<DeSerializersT>, DeSerializersT> {
   deSerializers: DeSerializersT;
   private constructor();
   /**

@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { MethodRequestBuilder } from './request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { HttpResponse } from '@sap-cloud-sdk/http-client';
@@ -11,15 +11,15 @@ import type { DeSerializers } from '../de-serializers';
 
 /**
  * Create OData request to execute an action or function.
- * @typeParam DeSerializersT - Type of the (de-)serializers.
- * @typeParam ReturnT - Type of the function return value.
- * @typeParam RequestConfigT - Type of the request config.
+ * @template DeSerializersT - Type of the (de-)serializers.
+ * @template ReturnT - Type of the function return value.
+ * @template RequestConfigT - Type of the request config.
  */
 export abstract class OperationRequestBuilderBase<
-    DeSerializersT extends DeSerializers,
-    ReturnT,
-    RequestConfigT extends ODataRequestConfig
-  >
+  DeSerializersT extends DeSerializers,
+  ReturnT,
+  RequestConfigT extends ODataRequestConfig
+>
   extends MethodRequestBuilder<RequestConfigT>
   implements WithBatchReference
 {
@@ -72,7 +72,7 @@ export abstract class OperationRequestBuilderBase<
    */
   getBatchReference(): BatchReference {
     if (!this._batchReference) {
-      this.setBatchId(uuid());
+      this.setBatchId(randomUUID());
     }
     return this._batchReference;
   }

@@ -1,8 +1,8 @@
+import { randomUUID } from 'node:crypto';
 import {
   ErrorWithCause,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import { v4 as uuid } from 'uuid';
 import { ODataGetByKeyRequestConfig } from '../request';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
@@ -16,12 +16,12 @@ import type { EntityApi } from '../entity-api';
 import type { BatchReference, WithBatchReference } from '../request';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
- * @typeParam EntityT - Type of the entity to be requested
+ * @template EntityT - Type of the entity to be requested.
  */
 export abstract class GetByKeyRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends GetRequestBuilderBase<
     EntityT,
     DeSerializersT,
@@ -56,7 +56,7 @@ export abstract class GetByKeyRequestBuilderBase<
    */
   getBatchReference(): BatchReference {
     if (!this._batchReference) {
-      this.setBatchId(uuid());
+      this.setBatchId(randomUUID());
     }
     return this._batchReference;
   }

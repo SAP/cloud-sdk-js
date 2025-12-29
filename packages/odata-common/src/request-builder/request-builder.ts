@@ -8,8 +8,7 @@ import type { EntityApi } from '../entity-api';
 export abstract class RequestBuilder<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
-> implements EntityIdentifiable<EntityT, DeSerializersT>
-{
+> implements EntityIdentifiable<EntityT, DeSerializersT> {
   _deSerializers: DeSerializersT;
   _entity: EntityT;
 

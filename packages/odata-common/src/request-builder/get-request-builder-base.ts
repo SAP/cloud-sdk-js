@@ -19,12 +19,12 @@ import type { EntityApi } from '../entity-api';
  * @internal
  */
 export abstract class GetRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    RequestConfigT extends
-      | ODataGetAllRequestConfig<EntityT, DeSerializersT>
-      | ODataGetByKeyRequestConfig<EntityT, DeSerializersT>
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  RequestConfigT extends
+    | ODataGetAllRequestConfig<EntityT, DeSerializersT>
+    | ODataGetByKeyRequestConfig<EntityT, DeSerializersT>
+>
   extends MethodRequestBuilder<RequestConfigT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {

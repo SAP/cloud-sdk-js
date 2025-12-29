@@ -28,7 +28,7 @@ import type { ODataRequestConfig } from './odata-request-config';
 
 /**
  * OData request configuration for an entity type.
- * @typeParam EntityT - Type of the entity to setup a request for.
+ * @template EntityT - Type of the entity to setup a request for.
  */
 export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**

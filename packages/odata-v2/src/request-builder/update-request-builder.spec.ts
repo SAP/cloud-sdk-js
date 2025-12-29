@@ -1,6 +1,6 @@
+import { randomUUID } from 'node:crypto';
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
   mockUpdateRequest
@@ -13,7 +13,7 @@ import {
 import { UpdateRequestBuilder } from './update-request-builder';
 
 function createTestEntity() {
-  const keyPropGuid = uuid();
+  const keyPropGuid = randomUUID();
   const keyPropString = 'stringId';
   const int32Prop = 125;
   const stringProp = undefined;
@@ -30,7 +30,7 @@ function createTestEntity() {
 }
 
 function createTestEntityWithStringProperty() {
-  const keyPropGuid = uuid();
+  const keyPropGuid = randomUUID();
   const keyPropString = 'stringId';
   const stringProp = 'some value';
 
@@ -61,7 +61,7 @@ describe('UpdateRequestBuilder', () => {
   it('no request is executed when only keys have been modified', async () => {
     const scope = nock(/.*/).get(/.*/).reply(500);
     const entity = createTestEntity().setOrInitializeRemoteState();
-    entity.keyPropertyGuid = uuid();
+    entity.keyPropertyGuid = randomUUID();
     entity.keyPropertyString = 'UPDATED!';
     const actual = await new UpdateRequestBuilder(
       testEntityApi,
@@ -272,7 +272,7 @@ describe('UpdateRequestBuilder', () => {
   });
 
   it('update request excludes ignored properties', async () => {
-    const keyPropGuid = uuid();
+    const keyPropGuid = randomUUID();
     const keyPropString = 'stringId';
 
     const entity = testEntityApi
@@ -462,7 +462,7 @@ describe('UpdateRequestBuilder', () => {
   describe('executeRaw', () => {
     it('returns undefined when only keys have been modified', async () => {
       const entity = createTestEntity().setOrInitializeRemoteState();
-      entity.keyPropertyGuid = uuid();
+      entity.keyPropertyGuid = randomUUID();
       entity.keyPropertyString = 'UPDATED!';
       const actual = await new UpdateRequestBuilder(
         testEntityApi,

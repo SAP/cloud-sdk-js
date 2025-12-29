@@ -14,8 +14,8 @@ import type { TestEntity50PropApi } from './TestEntity50PropApi';
  * This class represents the entity "TestEntity50Prop" of service "TestService".
  */
 export declare class TestEntity50Prop<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntity50PropType<T>
 {

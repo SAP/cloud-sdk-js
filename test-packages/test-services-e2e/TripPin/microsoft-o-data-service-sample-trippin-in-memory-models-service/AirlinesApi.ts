@@ -19,8 +19,7 @@ import {
 } from '@sap-cloud-sdk/odata-v4';
 export class AirlinesApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<Airlines<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<Airlines<DeSerializersT>, DeSerializersT> {
   public deSerializers: DeSerializersT;
 
   private constructor(

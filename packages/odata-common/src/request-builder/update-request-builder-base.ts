@@ -1,8 +1,8 @@
+import { randomUUID } from 'node:crypto';
 import {
   ErrorWithCause,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
-import { v4 as uuid } from 'uuid';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { ODataUpdateRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
@@ -21,12 +21,12 @@ import type { EntityApi } from '../entity-api';
 
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.
- * @typeParam EntityT - Type of the entity to be updated
+ * @template EntityT - Type of the entity to be updated.
  */
 export abstract class UpdateRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends MethodRequestBuilder<
     ODataUpdateRequestConfig<EntityT, DeSerializersT>
   >
@@ -81,7 +81,7 @@ export abstract class UpdateRequestBuilderBase<
    */
   getBatchReference(): BatchReference {
     if (!this._batchReference) {
-      this.setBatchId(uuid());
+      this.setBatchId(randomUUID());
     }
     return this._batchReference;
   }

@@ -13,12 +13,12 @@ import type {
 } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Create OData request to create an entity.
- * @typeParam EntityT - Type of the entity to be created.
+ * @template EntityT - Type of the entity to be created.
  */
 export class CreateRequestBuilder<
-    EntityT extends Entity,
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>
   extends CreateRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {

@@ -110,7 +110,7 @@ export class TestEntityWithMultipleKeysRequestBuilder<
     return new DeleteRequestBuilder<TestEntityWithMultipleKeys<T>, T>(
       this.entityApi,
       keyTestEntityWithMultipleKeysOrEntity instanceof
-      TestEntityWithMultipleKeys
+        TestEntityWithMultipleKeys
         ? keyTestEntityWithMultipleKeysOrEntity
         : {
             KeyTestEntityWithMultipleKeys:

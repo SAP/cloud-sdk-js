@@ -38,7 +38,7 @@ export type ComplexTypeFieldConstructor<
 
 /**
  * Convenience type to determine whether a field should be selectable. If the given `FieldOfT` is the type of an entity, it is selectable.
- * @typeParam FieldOfT - Type of the entity or complex type field this field belongs to.
+ * @template FieldOfT - Type of the entity or complex type field this field belongs to.
  */
 export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
   FieldOfT extends Constructable<any> ? true : false;
@@ -58,8 +58,8 @@ export type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
 
 /**
  * Field builder to orchestrate the creation of the different kinds of fields.
- * @typeParam FieldOfT - Type of the entity or complex type field this field belongs to.
- * @typeParam DeSerializersT - Type of the (de-)serializers.
+ * @template FieldOfT - Type of the entity or complex type field this field belongs to.
+ * @template DeSerializersT - Type of the (de-)serializers.
  */
 export class FieldBuilder<
   FieldOfT extends ConstructorOrField<any>,

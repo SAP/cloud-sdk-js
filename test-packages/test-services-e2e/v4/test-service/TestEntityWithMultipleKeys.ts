@@ -20,8 +20,8 @@ import type { TestEntityWithMultipleKeysApi } from './TestEntityWithMultipleKeys
  * This class represents the entity "TestEntityWithMultipleKeys" of service "TestService".
  */
 export class TestEntityWithMultipleKeys<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityWithMultipleKeysType<T>
 {

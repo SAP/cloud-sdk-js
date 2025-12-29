@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { v4 as uuid } from 'uuid';
 import { ODataCreateRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
@@ -16,12 +16,12 @@ import type { BatchReference, WithBatchReference } from '../request';
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.
- * @typeParam EntityT - Type of the entity to be created
+ * @template EntityT - Type of the entity to be created.
  */
 export abstract class CreateRequestBuilderBase<
-    EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers
-  >
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>
   extends MethodRequestBuilder<
     ODataCreateRequestConfig<EntityT, DeSerializersT>
   >
@@ -64,7 +64,7 @@ export abstract class CreateRequestBuilderBase<
    */
   getBatchReference(): BatchReference {
     if (!this._batchReference) {
-      this.setBatchId(uuid());
+      this.setBatchId(randomUUID());
     }
     return this._batchReference;
   }

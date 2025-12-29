@@ -1,6 +1,12 @@
 import { X509Certificate } from 'node:crypto';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
+
+// Mock jks-js module
+jest.mock('jks-js', () => ({
+  toPem: jest.fn()
+}));
+import * as jks from 'jks-js';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
 import { getAgentConfig } from './http-agent';
@@ -172,7 +178,17 @@ describe('createAgent', () => {
     ).toMatchObject(expectedOptions);
   });
 
-  it('throws an error if the format is not supported', async () => {
+  it('does not throw an error for supported JKS format', async () => {
+    const mockPemKeystore = {
+      alias1: {
+        cert: '-----BEGIN CERTIFICATE-----\nMII...\n-----END CERTIFICATE-----',
+        key: '-----BEGIN PRIVATE KEY-----\nMII...\n-----END PRIVATE KEY-----'
+      }
+    };
+    (jks.toPem as jest.MockedFunction<typeof jks.toPem>).mockReturnValue(
+      mockPemKeystore
+    );
+
     const destination: HttpDestination = {
       url: 'https://destination.example.com',
       authentication: 'ClientCertificateAuthentication',
@@ -187,8 +203,34 @@ describe('createAgent', () => {
       ]
     };
 
+    const expectedOptions = {
+      rejectUnauthorized: true,
+      cert: Buffer.from(mockPemKeystore['alias1'].cert, 'utf8'),
+      key: Buffer.from(mockPemKeystore['alias1'].key, 'utf8')
+    };
+
+    expect(
+      (await getAgentConfig(destination))['httpsAgent']['options']
+    ).toMatchObject(expectedOptions);
+  });
+
+  it('throws an error if the format is not supported', async () => {
+    const destination: HttpDestination = {
+      url: 'https://destination.example.com',
+      authentication: 'ClientCertificateAuthentication',
+      keyStoreName: 'cert.unknown',
+      keyStorePassword: 'password',
+      certificates: [
+        {
+          name: 'cert.unknown',
+          content: 'base64string',
+          type: 'CERTIFICATE'
+        }
+      ]
+    };
+
     expect(async () => getAgentConfig(destination)).rejects.toThrow(
-      "The format of the provided certificate 'cert.jks' is not supported. Supported formats are: p12, pfx, pem. You can convert Java Keystores (.jks, .keystore) into PKCS#12 keystores using the JVM's keytool CLI: keytool -importkeystore -srckeystore your-keystore.jks -destkeystore your-keystore.p12 -deststoretype pkcs12"
+      "The format of the provided certificate 'cert.unknown' is not supported. Supported formats are: p12, pfx, pem, jks, keystore."
     );
   });
 

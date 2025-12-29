@@ -146,6 +146,15 @@ function getKeyStoreOptions(destination: Destination):
         throw Error('No entries found in JKS keystore');
       }
       const alias = aliases[0];
+
+      if (aliases.length > 1) {
+        logger.debug(
+          `JKS keystore contains ${aliases.length} aliases. ` +
+            'Using the first one. ' +
+            'If this is not the correct certificate, please use a JKS file with only one entry.'
+        );
+      }
+
       const entry = pemKeystore[alias];
       if (!entry.cert || !entry.key) {
         throw Error('Invalid JKS entry: missing cert or key');

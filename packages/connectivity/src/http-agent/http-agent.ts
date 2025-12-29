@@ -1,6 +1,7 @@
 import { readFile } from 'fs/promises';
 import http from 'http';
 import https from 'https';
+import * as jks from 'jks-js';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 // eslint-disable-next-line import/no-internal-modules
@@ -132,6 +133,37 @@ function getKeyStoreOptions(destination: Destination):
 
     const certBuffer = Buffer.from(certificate.content, 'base64');
 
+    if (
+      getFormat(certificate) === 'jks' ||
+      getFormat(certificate) === 'keystore'
+    ) {
+      const pemKeystore = jks.toPem(
+        certBuffer,
+        destination.keyStorePassword || ''
+      );
+      const aliases = Object.keys(pemKeystore);
+      if (aliases.length === 0) {
+        throw Error('No entries found in JKS keystore');
+      }
+      const alias = aliases[0];
+
+      if (aliases.length > 1) {
+        logger.debug(
+          `JKS keystore contains ${aliases.length} aliases. ` +
+            'Using the first one. ' +
+            'If this is not the correct certificate, please use a JKS file with only one entry.'
+        );
+      }
+
+      const entry = pemKeystore[alias];
+      if (!entry.cert || !entry.key) {
+        throw Error('Invalid JKS entry: missing cert or key');
+      }
+      return {
+        cert: Buffer.from(entry.cert, 'utf8'),
+        key: Buffer.from(entry.key, 'utf8')
+      };
+    }
     // if the format is pem, the key and certificate needs to be passed separately
     // it could be required to separate the string into two parts, but this seems to work as well
     if (getFormat(certificate) === 'pem') {
@@ -207,7 +239,7 @@ function mtlsIsEnabled(destination: Destination) {
 /*
  The node client supports only these store formats https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions.
  */
-const supportedCertificateFormats = ['p12', 'pfx', 'pem'];
+const supportedCertificateFormats = ['p12', 'pfx', 'pem', 'jks', 'keystore'];
 
 function isSupportedFormat(format: string | undefined): boolean {
   return !!format && supportedCertificateFormats.includes(format);
@@ -235,15 +267,7 @@ function validateFormat(certificate: DestinationCertificate) {
   const format = getFormat(certificate);
   if (!isSupportedFormat(format)) {
     throw Error(
-      `The format of the provided certificate '${
-        certificate.name
-      }' is not supported. Supported formats are: ${supportedCertificateFormats.join(
-        ', '
-      )}. ${
-        format && ['jks', 'keystore'].includes(format)
-          ? "You can convert Java Keystores (.jks, .keystore) into PKCS#12 keystores using the JVM's keytool CLI: keytool -importkeystore -srckeystore your-keystore.jks -destkeystore your-keystore.p12 -deststoretype pkcs12"
-          : ''
-      }`
+      `The format of the provided certificate '${certificate.name}' is not supported. Supported formats are: ${supportedCertificateFormats.join(', ')}.`
     );
   }
 }

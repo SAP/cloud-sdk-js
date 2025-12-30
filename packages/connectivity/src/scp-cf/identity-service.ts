@@ -15,6 +15,7 @@ import type {
 import type { MiddlewareContext } from '@sap-cloud-sdk/resilience';
 import type { Service, ServiceCredentials } from './environment-accessor';
 import type { ClientCredentialsResponse } from './xsuaa-service-types';
+import type { JwtPayload } from './jsonwebtoken-type';
 
 export { clearIdentityServices } from './environment-accessor';
 
@@ -66,6 +67,7 @@ export function shouldExchangeToken(options: DestinationOptions): boolean {
 }
 
 type IasParameters = {
+  jwt?: JwtPayload;
   serviceCredentials: ServiceCredentials;
 } & IasOptions;
 
@@ -80,7 +82,7 @@ type IasParameters = {
  */
 export async function getIasClientCredentialsToken(
   service: string | Service,
-  options: IasOptions = {}
+  options: IasOptions & { jwt?: JwtPayload } = {}
 ): Promise<IasClientCredentialsResponse> {
   const resolvedService = resolveServiceBinding(service);
 
@@ -198,6 +200,15 @@ async function getIasClientCredentialsTokenImpl(
       tokenOptions
     );
   } else {
+    if (!arg.appTid) {
+      const requestAs = arg?.requestAs ?? 'current-tenant';
+      if (requestAs === 'provider-tenant') {
+        tokenOptions.app_tid = arg.serviceCredentials.tenantid;
+      } else if (requestAs === 'current-tenant') {
+        tokenOptions.app_tid = arg.jwt?.app_tid;
+      }
+    }
+
     // Client credentials for technical users
     response = await identityService.fetchClientCredentialsToken(tokenOptions);
   }

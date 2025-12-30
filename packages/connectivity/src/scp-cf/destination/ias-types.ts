@@ -54,6 +54,11 @@ interface IasOptionsBase {
    */
   appTid?: string;
   /**
+   * Specifies whether the token request is made in the context of the current tenant or the provider tenant.
+   * @default 'current-tenant'
+   */
+  requestAs?: 'current-tenant' | 'provider-tenant';
+  /**
    * Additional parameters to be sent along with the token request.
    */
   extraParams?: Record<string, string>;

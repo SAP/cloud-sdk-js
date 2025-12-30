@@ -186,10 +186,10 @@ async function iasBindingToDestination(
   service: Service,
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
-  const { access_token } = await getIasClientCredentialsToken(
-    service,
-    options?.iasOptions ?? {}
-  );
+  const { access_token } = await getIasClientCredentialsToken(service, {
+    jwt: options?.jwt,
+    ...(options?.iasOptions || {})
+  });
   const destination = buildClientCredentialsDestination(
     access_token,
     options?.iasOptions?.targetUrl ?? service.credentials.url,

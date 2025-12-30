@@ -1,7 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Cache } from './cache';
 import type { ClientCredentialsResponse } from './xsuaa-service-types';
-import type { IasResource } from './destination';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -13,18 +12,16 @@ const ClientCredentialsTokenCache = (
 ) => ({
   getToken: (
     tenantId: string | undefined,
-    clientId: string,
-    resource?: IasResource
+    clientId: string
   ): ClientCredentialsResponse | undefined =>
-    cache.get(getCacheKey(tenantId, clientId, resource)),
+    cache.get(getCacheKey(tenantId, clientId)),
 
   cacheToken: (
     tenantId: string | undefined,
     clientId: string,
-    resource: IasResource | undefined,
     token: ClientCredentialsResponse
   ): void => {
-    cache.set(getCacheKey(tenantId, clientId, resource), {
+    cache.set(getCacheKey(tenantId, clientId), {
       entry: token,
       expires: token.expires_in
         ? Date.now() + token.expires_in * 1000
@@ -37,27 +34,6 @@ const ClientCredentialsTokenCache = (
   getCacheInstance: () => cache
 });
 
-/**
- * Normalizes the IAS resource parameter to a consistent string format for cache key.
- * @param resource - The resource parameter from iasOptions.
- * @returns Normalized resource string or empty string if not provided.
- * @internal
- */
-function normalizeResource(resource?: IasResource): string | undefined {
-  if (!resource) {
-    return undefined;
-  }
-  if ('name' in resource) {
-    return `name=${resource.name}`;
-  }
-
-  let normalized = `provider-clientId=${resource.providerClientId}`;
-  if (resource.providerTenantId) {
-    normalized += `:provider-tenantId=${resource.providerTenantId}`;
-  }
-  return normalized;
-}
-
 /** *
  * @internal
  * @param tenantId - The ID of the tenant to cache the token for.
@@ -67,8 +43,7 @@ function normalizeResource(resource?: IasResource): string | undefined {
  */
 export function getCacheKey(
   tenantId: string | undefined,
-  clientId: string,
-  resource?: IasResource
+  clientId: string
 ): string | undefined {
   if (!tenantId) {
     logger.warn(
@@ -83,10 +58,6 @@ export function getCacheKey(
     return;
   }
   const parts = [tenantId, clientId];
-  const resourceStr = normalizeResource(resource);
-  if (resourceStr) {
-    parts.push(resourceStr);
-  }
   return parts.join(':');
 }
 

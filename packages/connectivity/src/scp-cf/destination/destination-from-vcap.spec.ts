@@ -4,6 +4,7 @@ import {
   signedJwt
 } from '../../../../../test-resources/test/test-util';
 import * as xsuaaService from '../xsuaa-service';
+import * as identityService from '../identity-service';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { getDestination } from './destination-accessor';
 import { getDestinationFromServiceBinding } from './destination-from-vcap';
@@ -287,6 +288,111 @@ describe('vcap-service-destination', () => {
       expect.objectContaining({ iasOptions })
     );
   });
+
+  describe('IAS service binding', () => {
+    function mockIasClientCredentialsToken(aud: string) {
+      const token = signedJwt({ jti: 'some-jti', ias_apis: [], aud });
+      const spy = jest
+        .spyOn(identityService, 'getIasClientCredentialsToken')
+        .mockResolvedValue({
+          access_token: token,
+          expires_in: 3600,
+          token_type: 'bearer',
+          aud,
+          scope: '' as const,
+          ias_apis: [],
+          jti: 'some-jti'
+        });
+      return { token, spy };
+    }
+
+    it('creates a destination for IAS service with App2App authentication using resource name', async () => {
+      const { token: mockToken, spy: getIasTokenSpy } =
+        mockIasClientCredentialsToken('target-app-name');
+
+      const destination = await getDestinationFromServiceBinding({
+        destinationName: 'my-identity-service',
+        iasOptions: {
+          resource: { name: 'target-app-name' },
+          targetUrl: 'https://target-app.example.com'
+        }
+      });
+
+      expect(destination).toMatchObject({
+        url: 'https://target-app.example.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2ClientCredentials',
+        authTokens: [
+          expect.objectContaining({
+            value: mockToken,
+            type: 'bearer'
+          })
+        ]
+      });
+
+      expect(getIasTokenSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: 'my-identity-service',
+          label: 'identity'
+        }),
+        expect.objectContaining({
+          resource: { name: 'target-app-name' }
+        })
+      );
+    });
+
+    it('creates a destination for IAS service with App2App authentication using providerClientId', async () => {
+      const { token: mockToken, spy: getIasTokenSpy } =
+        mockIasClientCredentialsToken('target-app-name');
+
+      const destination = await getDestinationFromServiceBinding({
+        destinationName: 'my-identity-service',
+        iasOptions: {
+          resource: {
+            providerClientId: 'provider-client-id',
+            providerTenantId: 'provider-tenant-id'
+          },
+          targetUrl: 'https://target-app.example.com'
+        }
+      });
+
+      expect(destination).toMatchObject({
+        url: 'https://target-app.example.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2ClientCredentials',
+        authTokens: [
+          expect.objectContaining({
+            value: mockToken
+          })
+        ]
+      });
+
+      expect(getIasTokenSpy).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          resource: {
+            providerClientId: 'provider-client-id',
+            providerTenantId: 'provider-tenant-id'
+          }
+        })
+      );
+    });
+
+    it('uses IAS service URL when targetUrl is not provided', async () => {
+      mockIasClientCredentialsToken('my-identity-service');
+
+      const destination = await getDestinationFromServiceBinding({
+        destinationName: 'my-identity-service',
+        iasOptions: {
+          resource: { name: 'target-app-name' }
+        }
+      });
+
+      expect(destination.url).toBe(
+        'https://my-identity-service.accounts.ondemand.com'
+      );
+    });
+  });
 });
 
 function mockServiceBindings() {
@@ -409,6 +515,18 @@ const serviceBindings = {
         clientid: 'clientIdXsUaa',
         clientsecret: 'PASSWORD',
         apiurl: 'https://api.authentication.sap.hana.ondemand.com'
+      }
+    }
+  ],
+  identity: [
+    {
+      label: 'identity',
+      name: 'my-identity-service',
+      tags: ['identity'],
+      credentials: {
+        clientid: 'clientIdIdentity',
+        clientsecret: 'PASSWORD',
+        url: 'https://my-identity-service.accounts.ondemand.com'
       }
     }
   ]

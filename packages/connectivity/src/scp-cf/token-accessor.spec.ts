@@ -29,7 +29,11 @@ import {
   mockUserTokenGrantCall
 } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
-import { jwtBearerToken, serviceToken } from './token-accessor';
+import {
+  jwtBearerToken,
+  serviceToken,
+  serviceTokenIas
+} from './token-accessor';
 import { clearXsuaaServices } from './environment-accessor';
 import * as identityService from './identity-service';
 import type { ClientCredentialsResponse } from './xsuaa-service-types';
@@ -412,20 +416,6 @@ describe('token accessor', () => {
         jest.restoreAllMocks();
       });
 
-      it('uses getIasClientCredentialsToken for identity service', async () => {
-        const getIasTokenSpy = jest
-          .spyOn(identityService, 'getIasClientCredentialsToken')
-          .mockResolvedValue(mockIasToken);
-
-        const token = await serviceToken('identity');
-
-        expect(token).toBe(mockIasToken.access_token);
-        expect(getIasTokenSpy).toHaveBeenCalledWith(mockIasService, {
-          authenticationType: 'OAuth2ClientCredentials',
-          appTid: mockIasService.credentials.app_tid
-        });
-      });
-
       it('forwards iasOptions (resource and extraParams) to getIasClientCredentialsToken', async () => {
         const getIasTokenSpy = jest
           .spyOn(identityService, 'getIasClientCredentialsToken')
@@ -436,7 +426,7 @@ describe('token accessor', () => {
           extraParams: { custom_param: 'custom_value' }
         };
 
-        await serviceToken('identity', { iasOptions });
+        await serviceTokenIas('identity', { iasOptions });
 
         expect(getIasTokenSpy).toHaveBeenCalledWith(
           mockIasService,
@@ -458,7 +448,7 @@ describe('token accessor', () => {
           zid: 'subscriber-tenant-id'
         });
 
-        await serviceToken('identity', { jwt });
+        await serviceTokenIas('identity', { jwt });
 
         expect(getIasTokenSpy).toHaveBeenCalledWith(
           mockIasService,
@@ -484,7 +474,7 @@ describe('token accessor', () => {
           ext_attr: { enhancer: 'XSUAA' }
         });
 
-        await serviceToken('identity', { jwt: xsuaaJwt, useCache: false });
+        await serviceTokenIas('identity', { jwt: xsuaaJwt, useCache: false });
 
         expect(warnSpy).toHaveBeenCalledWith(
           expect.stringContaining(
@@ -505,7 +495,7 @@ describe('token accessor', () => {
           zid: 'jwt-tenant-id'
         });
 
-        await serviceToken('identity', {
+        await serviceTokenIas('identity', {
           jwt,
           iasOptions: { appTid: explicitAppTid }
         });
@@ -527,8 +517,8 @@ describe('token accessor', () => {
           resource: { providerClientId: 'target-app-client-id' }
         };
 
-        const first = await serviceToken('identity', { iasOptions });
-        const second = await serviceToken('identity', { iasOptions });
+        const first = await serviceTokenIas('identity', { iasOptions });
+        const second = await serviceTokenIas('identity', { iasOptions });
 
         expect(first).toBe(mockIasToken.access_token);
         expect(second).toBe(mockIasToken.access_token);
@@ -550,7 +540,9 @@ describe('token accessor', () => {
         const resource1 = { providerClientId: 'app-1' };
         const resource2 = { providerClientId: 'app-2' };
 
-        await serviceToken('identity', { iasOptions: { resource: resource1 } });
+        await serviceTokenIas('identity', {
+          iasOptions: { resource: resource1 }
+        });
 
         const cached1 = clientCredentialsTokenCache.getToken(
           mockIasService.credentials.app_tid,

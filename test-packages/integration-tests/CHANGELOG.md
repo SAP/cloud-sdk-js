@@ -1,5 +1,17 @@
 # @sap-cloud-sdk/integration-tests
 
+## 4.3.0
+
+### Patch Changes
+
+- Updated dependencies [ab96aff]
+  - @sap-cloud-sdk/connectivity@4.3.0
+  - @sap-cloud-sdk/http-client@4.3.0
+  - @sap-cloud-sdk/test-util@4.3.0
+  - @sap-cloud-sdk/util@4.3.0
+  - @sap-cloud-sdk/test-services-odata-v2@4.3.0
+  - @sap-cloud-sdk/test-services-odata-v4@4.3.0
+
 ## 4.2.0
 
 ### Patch Changes

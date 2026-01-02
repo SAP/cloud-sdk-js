@@ -28,6 +28,11 @@
 
 -
  
+# 4.3.0
+## New Features
+
+- [connectivity] Support certificates in JKS format for `ClientCertificateAuthentication`. (ab96aff)
+
 # 4.2.0
 ## New Features
 

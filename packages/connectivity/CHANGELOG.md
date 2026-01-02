@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.3.0
+
+### Minor Changes
+
+- ab96aff: [New Functionality] Support certificates in JKS format for `ClientCertificateAuthentication`.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.3.0
+- @sap-cloud-sdk/util@4.3.0
+
 ## 4.2.0
 
 ### Patch Changes

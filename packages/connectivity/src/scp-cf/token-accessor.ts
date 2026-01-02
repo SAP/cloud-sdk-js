@@ -11,6 +11,7 @@ import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 import type { Service } from './environment-accessor';
 import type { CachingOptions } from './cache';
 import type { JwtPayload } from './jsonwebtoken-type';
+import type { IasOptions } from './destination';
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -21,12 +22,17 @@ import type { JwtPayload } from './jsonwebtoken-type';
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
  * @param service - The type of the service or an instance of {@link Service}.
  * @param options - Options to influence caching behavior (see {@link CachingOptions}) and a JWT. By default, caching and usage of a circuit breaker are enabled.
+ * @param options.iasOptions - Options to change IAS token fetching (see {@link IasOptions}).
  * @returns Access token.
  */
 export async function serviceToken(
   service: string | Service,
   options?: CachingOptions & {
     jwt?: string | JwtPayload;
+    iasOptions?: Omit<
+      IasOptions,
+      'authenticationType' | 'assertion' | 'targetUrl'
+    >;
   }
 ): Promise<string> {
   const opts = {
@@ -36,6 +42,7 @@ export async function serviceToken(
   };
 
   const serviceBinding = resolveServiceBinding(service);
+
   const serviceCredentials = serviceBinding.credentials;
   const tenantForCaching = options?.jwt
     ? getTenantId(options.jwt) || getSubdomain(options.jwt)

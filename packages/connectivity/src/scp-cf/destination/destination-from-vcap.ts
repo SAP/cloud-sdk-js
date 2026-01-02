@@ -13,6 +13,7 @@ import type { Destination } from './destination-service-types';
 import type { CachingOptions } from '../cache';
 import type { Service } from '../environment-accessor';
 import type { JwtPayload } from '../jsonwebtoken-type';
+import type { IasOptions } from './ias-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -24,6 +25,7 @@ const logger = createLogger({
  * Throws an error if no services are bound at all, no service with the given name can be found, or the service type is not supported.
  * The last error can be circumvent by using the second parameter to provide a custom function that transforms a service binding to a destination.
  * @param options - Options to customize the behavior of this function.
+ * @param options.iasOptions - Options for IAS token retrieval in case of IAS authentication.
  * @returns A destination.
  */
 export async function getDestinationFromServiceBinding(
@@ -31,7 +33,7 @@ export async function getDestinationFromServiceBinding(
     DestinationFetchOptions,
     'jwt' | 'iss' | 'useCache' | 'destinationName'
   > &
-    DestinationFromServiceBindingOptions
+    DestinationFromServiceBindingOptions & { iasOptions?: IasOptions }
 ): Promise<Destination> {
   const decodedJwt = options.iss
     ? { iss: options.iss }
@@ -39,7 +41,17 @@ export async function getDestinationFromServiceBinding(
       ? decodeJwt(options.jwt)
       : undefined;
 
-  const retrievalOptions = { ...options, jwt: decodedJwt };
+  // If using business user authentication with IAS and no assertion provided, use the JWT from options
+  let iasOptions = options.iasOptions;
+  if (
+    iasOptions?.authenticationType === 'OAuth2JWTBearer' &&
+    options.jwt &&
+    !iasOptions.assertion
+  ) {
+    iasOptions = { ...iasOptions, assertion: options.jwt };
+  }
+
+  const retrievalOptions = { ...options, jwt: decodedJwt, iasOptions };
   const destination = await retrieveDestination(retrievalOptions);
 
   const destWithProxy =
@@ -60,14 +72,17 @@ async function retrieveDestination({
   useCache,
   jwt,
   destinationName,
+  iasOptions,
   serviceBindingTransformFn
 }: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
   jwt?: JwtPayload;
+  iasOptions?: IasOptions;
 } & DestinationFromServiceBindingOptions) {
   const service = getServiceBindingByInstanceName(destinationName);
   const destination = await (serviceBindingTransformFn || transform)(service, {
     useCache,
-    jwt
+    jwt,
+    ...(iasOptions ? { iasOptions } : {})
   });
 
   return { name: destinationName, ...destination };
@@ -91,6 +106,10 @@ export type ServiceBindingTransformOptions = {
    * The JWT payload used to fetch destinations.
    */
   jwt?: JwtPayload;
+  /**
+   * The options for IAS token retrieval.
+   */
+  iasOptions?: IasOptions;
 } & CachingOptions;
 
 /**

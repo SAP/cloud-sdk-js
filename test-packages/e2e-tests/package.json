@@ -13,7 +13,7 @@
     "stop:service-server": "pm2 stop server.js",
     "start:proxy-server": "pm2 start test/proxy/proxy-server.js || pm2 restart test/proxy/proxy-server.js",
     "stop:proxy-server": "pm2 stop test/proxy/proxy-server.js",
-    "deploy": "cds deploy --to sqlite --no-save",
+    "deploy": "cds deploy --to sqlite",
     "test": "yarn test:e2e",
     "test:e2e": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",

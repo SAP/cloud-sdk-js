@@ -6,7 +6,7 @@ const identityServices: Record<string, IdentityService> = {};
 
 /**
  * @internal
- * Clears the cache of Identity services.
+ * Clears the cache of identity services.
  * Should only be used for testing purposes.
  */
 export function clearIdentityServices(): void {
@@ -23,9 +23,9 @@ function tryParseUrl(url: string, name: string): URL {
 
 /**
  * @internal
- * @param credentials - Identity service credentials extracted from a service binding or re-use service. Required to create the xssec IdentityService instance.
+ * @param credentials - Identity service credentials extracted from a service binding or re-use service. Required to create the xssec `IdentityService` instance.
  * @param assertion - Optional JWT assertion to extract the issuer URL for bearer assertion flows.
- * @param disableCache - Value to enable or disable JWKS cache in xssec library. Defaults to false.
+ * @param disableCache - Value to enable or disable JWKS cache in the xssec library. Defaults to false.
  * @returns An instance of {@code @sap/xssec/IdentityService} for the provided credentials.
  */
 export function getIdentityServiceInstanceFromCredentials(

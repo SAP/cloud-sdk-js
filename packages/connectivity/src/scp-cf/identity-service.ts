@@ -122,7 +122,7 @@ export async function getIasClientCredentialsToken(
 }
 
 /**
- * Converts an IasResource to the URN format expected by @sap/xssec.
+ * Converts an IAS resource to the URN format expected by @sap/xssec.
  * @param resource - The IAS resource to convert.
  * @returns The resource in URN format.
  * @internal

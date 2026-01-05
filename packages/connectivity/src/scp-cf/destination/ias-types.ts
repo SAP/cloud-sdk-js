@@ -5,7 +5,7 @@ import type { AuthenticationType } from './destination-service-types';
  * The application resource for which the token is requested for App-to-App communication.
  * The token will only be usable to call the requested application.
  * Either provide the app name (common case) or the provider client ID
- * and tenant ID (optional).
+ * and tenant ID.
  */
 export type IasResource = Xor<
   {
@@ -20,7 +20,7 @@ export type IasResource = Xor<
      */
     providerClientId: string;
     /**
-     * The tenant ID of the application resource (Optional).
+     * The tenant ID of the application resource.
      */
     providerTenantId?: string;
   }
@@ -41,9 +41,9 @@ interface IasOptionsBase {
    * The application resource(s) for which the token is requested.
    * The token will only be usable to call the requested application(s).
    * Either provide the app name (common case) or the provider client ID
-   * and tenant ID (optional).
+   * and tenant ID.
    *
-   * It is recommended to also provide the targetUrl parameter, otherwise
+   * It is recommended to also provide the `targetUrl` parameter, otherwise
    * the destination will point to the identity service URL from the service binding,
    * instead of the actual target application.
    */
@@ -55,7 +55,7 @@ interface IasOptionsBase {
   appTid?: string;
   /**
    * Specifies whether the token request is made in the context of the current tenant or the provider tenant.
-   * @default 'current-tenant'
+   * @defaultValue 'current-tenant'
    */
   requestAs?: 'current-tenant' | 'provider-tenant';
   /**
@@ -87,12 +87,12 @@ type IasOptionsBusinessUser = IasOptionsBase & {
    */
   authenticationType: Extract<AuthenticationType, 'OAuth2JWTBearer'>;
   /**
-   * The JWT assertion string to use for business user authentication (required).
+   * The JWT assertion string to use for business user authentication.
    */
   assertion: string;
 };
 
 /**
- * Options for IAS token retrieval with type-safe authenticationType/assertion relationship.
+ * Options for IAS token retrieval with type-safe authentication type/assertion relationship.
  */
 export type IasOptions = IasOptionsTechnical | IasOptionsBusinessUser;

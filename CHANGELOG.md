@@ -28,6 +28,11 @@
 
 -
  
+# 4.3.1
+## Improvements
+
+- [eslint-config] Open the peer dependency range of the `eslint` module to include version 8 and 9. Version 9 can now be used without the potentially unsafe npm flag `--legacy-peer-deps`. (6431463)
+
 # 4.3.0
 ## New Features
 

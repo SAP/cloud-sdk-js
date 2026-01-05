@@ -17,7 +17,7 @@ import type { Service, ServiceCredentials } from './environment-accessor';
 import type { ClientCredentialsResponse } from './xsuaa-service-types';
 import type { JwtPayload } from './jsonwebtoken-type';
 
-export { clearIdentityServices } from './environment-accessor';
+export { identityServicesCache } from './environment-accessor';
 
 /**
  * @internal
@@ -221,9 +221,9 @@ async function getIasClientCredentialsTokenImpl(
     expires_in: response.expires_in,
     // IAS tokens don't have scope property
     scope: '',
-    jti: decodedJwt.getPayload()?.jti ?? '',
+    jti: decodedJwt.payload?.jti ?? '',
     // `decodedJwt.audiences` always returns an array, preserve original type
-    aud: decodedJwt.getPayload()?.aud ?? [],
+    aud: decodedJwt.payload?.aud ?? [],
     app_tid: decodedJwt.appTid,
     scimId: decodedJwt.scimId,
     // Added if resource parameter was specified

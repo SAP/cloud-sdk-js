@@ -1,5 +1,5 @@
 import {
-  clearIdentityServices,
+  identityServicesCache,
   getIdentityServiceInstanceFromCredentials
 } from './ias';
 import type { ServiceCredentials } from './environment-accessor-types';
@@ -7,7 +7,7 @@ import type { ServiceCredentials } from './environment-accessor-types';
 describe('ias', () => {
   describe('getIdentityServiceInstanceFromCredentials()', () => {
     afterEach(() => {
-      clearIdentityServices();
+      identityServicesCache.clear();
     });
 
     it('creates a new service instance', () => {

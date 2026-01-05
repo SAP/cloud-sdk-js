@@ -29,7 +29,7 @@ export type IasResource = Xor<
 /**
  * Base options shared by all IAS authentication modes.
  */
-interface IasOptionsBase {
+export interface IasOptionsBase {
   /**
    * The target URL of the destination that the IAS token is requested for.
    * It is recommended to provide this for App-to-App communication (when resource parameter is used),
@@ -67,21 +67,22 @@ interface IasOptionsBase {
 /**
  * IAS options for technical user authentication (client credentials).
  */
-type IasOptionsTechnical = IasOptionsBase & {
+export interface IasOptionsTechnicalUser extends IasOptionsBase {
   /**
-   * Authentication type. Use 'OAuth2ClientCredentials' for technical user (default).
+   * Authentication type. Use 'OAuth2ClientCredentials' for technical users.
+   * @defaultValue 'OAuth2ClientCredentials'
    */
   authenticationType?: Extract<AuthenticationType, 'OAuth2ClientCredentials'>;
   /**
    * Assertion not used for technical user authentication.
    */
   assertion?: never;
-};
+}
 
 /**
  * IAS options for business user authentication (JWT bearer).
  */
-type IasOptionsBusinessUser = IasOptionsBase & {
+export interface IasOptionsBusinessUser extends IasOptionsBase {
   /**
    * Authentication type. Use 'OAuth2JWTBearer' for business user authentication.
    */
@@ -90,9 +91,9 @@ type IasOptionsBusinessUser = IasOptionsBase & {
    * The JWT assertion string to use for business user authentication.
    */
   assertion: string;
-};
+}
 
 /**
  * Options for IAS token retrieval with type-safe authentication type/assertion relationship.
  */
-export type IasOptions = IasOptionsTechnical | IasOptionsBusinessUser;
+export type IasOptions = IasOptionsTechnicalUser | IasOptionsBusinessUser;

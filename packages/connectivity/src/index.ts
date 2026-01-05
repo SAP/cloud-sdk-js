@@ -60,6 +60,9 @@ export type {
   DestinationFromServiceBindingOptions,
   ServiceBindingTransformOptions,
   IasOptions,
+  IasOptionsBase,
+  IasOptionsBusinessUser,
+  IasOptionsTechnicalUser,
   IasResource
 } from './scp-cf';
 

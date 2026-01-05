@@ -37,8 +37,7 @@ const ClientCredentialsTokenCache = (
 /** *
  * @internal
  * @param tenantId - The ID of the tenant to cache the token for.
- * @param clientId - ClientId to fetch the token.
- * @param resource - Optional resource parameter (for IAS app2app scenarios).
+ * @param clientId - Client ID to fetch the token.
  * @returns The cache key.
  */
 export function getCacheKey(

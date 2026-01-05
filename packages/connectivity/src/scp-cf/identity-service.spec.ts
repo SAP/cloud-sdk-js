@@ -2,7 +2,7 @@ import { signedJwt } from '../../../../test-resources/test/test-util';
 import {
   getIasClientCredentialsToken,
   shouldExchangeToken,
-  clearIdentityServices
+  identityServicesCache
 } from './identity-service';
 import type { Service } from './environment-accessor';
 
@@ -25,7 +25,7 @@ jest.mock('@sap/xssec', () => {
         Buffer.from(jwt.split('.')[1], 'base64').toString()
       );
       return {
-        getPayload: () => payload,
+        payload,
         appTid: payload.app_tid ?? payload.zone_uuid,
         scimId: payload.scim_id,
         consumedApis: payload.ias_apis,
@@ -106,7 +106,7 @@ describe('getIasClientCredentialsToken', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    clearIdentityServices();
+    identityServicesCache.clear();
   });
 
   it('fetches IAS token with mTLS authentication', async () => {
@@ -329,7 +329,7 @@ describe('getIasClientCredentialsToken', () => {
 
     beforeEach(() => {
       jest.clearAllMocks();
-      clearIdentityServices();
+      identityServicesCache.clear();
       mockFetchJwtBearerToken.mockResolvedValue(mockTokenResponse);
     });
 
@@ -394,18 +394,20 @@ describe('getIasClientCredentialsToken', () => {
       );
     });
 
-    it('throws error when JWT issuer extraction fails', async () => {
+    it('handles JWT without issuer gracefully with fallback', async () => {
       const assertion = signedJwt({
-        // Missing issuer field to trigger error
+        // Missing issuer field - should fall back to provider URL
         user_uuid: 'user-123'
       });
 
-      await expect(
-        getIasClientCredentialsToken(providerService, {
-          authenticationType: 'OAuth2JWTBearer',
-          assertion
-        })
-      ).rejects.toThrow('Could not parse JWT assertion issuer URL: undefined');
+      const result = await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion
+      });
+
+      // Should succeed with fallback to provider credentials
+      expect(result.access_token).toBeDefined();
+      expect(mockFetchJwtBearerToken).toHaveBeenCalled();
     });
 
     it('caches subscriber instances per URL', async () => {

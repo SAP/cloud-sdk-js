@@ -5,14 +5,18 @@ import type { JwtPayload } from './jsonwebtoken-type';
  * @internal
  */
 export function getIssuerSubdomain(
-  decodedJwt: JwtPayload | undefined
+  decodedJwt: JwtPayload | undefined,
+  isIasToken: boolean = false
 ): string | undefined {
-  const iss = decodedJwt?.iss;
-  if (iss) {
-    if (!isValidUrl(iss)) {
-      throw new Error(`Issuer URL in JWT is not a valid URL: "${iss}".`);
+  // For IAS tokens, prefer ias_iss claim over standard iss claim
+  const issuer =
+    isIasToken && decodedJwt?.ias_iss ? decodedJwt.ias_iss : decodedJwt?.iss;
+
+  if (issuer) {
+    if (!isValidUrl(issuer)) {
+      throw new Error(`Issuer URL in JWT is not a valid URL: "${issuer}".`);
     }
-    return getHost(new URL(iss)).split('.')[0];
+    return getHost(new URL(issuer)).split('.')[0];
   }
 }
 
@@ -33,4 +37,32 @@ function isValidUrl(url: string): boolean {
   } catch {
     return false;
   }
+}
+
+/**
+ * @internal
+ * Replaces the first part of the hostname (subdomain) in a URL.
+ * @param baseUrl - The URL whose subdomain should be replaced.
+ * @param newSubdomain - The new subdomain to use.
+ * @returns The URL with replaced subdomain, with trailing slash removed if present.
+ */
+export function replaceSubdomain(
+  baseUrl: string,
+  newSubdomain: string
+): string {
+  if (!isValidUrl(baseUrl)) {
+    throw new Error(`Base URL is not a valid URL: "${baseUrl}".`);
+  }
+
+  const url = new URL(baseUrl);
+  const hostParts = getHost(url).split('.');
+  url.hostname = [newSubdomain, ...hostParts.slice(1)].join('.');
+
+  let result = url.toString();
+  // Remove trailing slash for consistency
+  if (result.endsWith('/')) {
+    result = result.slice(0, -1);
+  }
+
+  return result;
 }

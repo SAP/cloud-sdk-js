@@ -51,7 +51,7 @@ export interface DestinationAccessorOptions {
    * ATTENTION: The property is mandatory in the following cases:
    * - User-dependent authentication flow is used, e.g., `OAuth2UserTokenExchange`, `OAuth2JWTBearer`, `OAuth2SAMLBearerAssertion`, `SAMLAssertion` or `PrincipalPropagation`.
    * - Multi-tenant scenarios with destinations maintained in the subscriber account. This case is implied if the `selectionStrategy` is set to `alwaysSubscriber`.
-      * - IAS business user authentication (OAuth2JWTBearer). In this case, the JWT is used as the assertion for the IAS token exchange. The authentication type is set via the `iasOptions` parameter when used with {@link getDestinationFromServiceBinding}.
+   * - IAS business user authentication (OAuth2JWTBearer). In this case, the JWT is used as the assertion for the IAS token exchange. The authentication type is set via the `iasOptions` parameter when used with {@link getDestinationFromServiceBinding}.
    */
   jwt?: string;
 

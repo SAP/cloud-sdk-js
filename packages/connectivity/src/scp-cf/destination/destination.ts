@@ -399,7 +399,7 @@ export interface DestinationConfiguration {
    */
   Type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
 }
-/* eslint-disable-next-line valid-jsdoc */
+
 /**
  * @internal
  */
@@ -409,7 +409,6 @@ export function isDestinationConfiguration(
   return destination.URL !== undefined;
 }
 
-/* eslint-disable-next-line valid-jsdoc */
 /**
  * @internal
  */

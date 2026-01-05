@@ -44,6 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var core_1 = __nccwpck_require__(7184);
+// eslint-disable-next-line import/no-internal-modules
 var get_changelog_1 = __nccwpck_require__(731);
 (function () { return __awaiter(void 0, void 0, void 0, function () {
     var _a, _b, error_1;

@@ -3,6 +3,7 @@
 import { info } from 'node:console';
 import getReleasePlan from '@changesets/get-release-plan';
 import { inc } from 'semver';
+// eslint-disable-next-line import/no-internal-modules
 import { getPackageVersion } from '../../scripts/get-package-version';
 
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'] as const;
@@ -18,7 +19,7 @@ export async function getNextVersion(): Promise<{
   info(`Bump type: ${bumpType}`);
 
   if (bumpType === 'none' || !bumpType) {
-    throw new Error(`No changesets to release`);
+    throw new Error('No changesets to release');
   }
 
   const version = inc(currentVersion, bumpType);

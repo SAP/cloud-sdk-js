@@ -72050,7 +72050,6 @@ __exportStar(__nccwpck_require__(83314), exports);
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.packageJsonBase = packageJsonBase;
-/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

@@ -16,6 +16,7 @@ exports.formatJson = formatJson;
 const node_console_1 = __nccwpck_require__(37540);
 const get_release_plan_1 = __importDefault(__nccwpck_require__(57651));
 const semver_1 = __nccwpck_require__(90084);
+// eslint-disable-next-line import/no-internal-modules
 const get_package_version_1 = __nccwpck_require__(38980);
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
@@ -24,7 +25,7 @@ async function getNextVersion() {
     const bumpType = await getBumpType();
     (0, node_console_1.info)(`Bump type: ${bumpType}`);
     if (bumpType === 'none' || !bumpType) {
-        throw new Error(`No changesets to release`);
+        throw new Error('No changesets to release');
     }
     const version = (0, semver_1.inc)(currentVersion, bumpType);
     if (!version) {

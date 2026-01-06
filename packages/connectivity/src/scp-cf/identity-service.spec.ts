@@ -124,7 +124,7 @@ describe('getIasClientCredentialsToken', () => {
       app_tid: 'custom-tenant-id',
       custom_iss: 'https://tenant.accounts.ondemand.com',
       ias_apis: ['dummy'],
-      scimId: undefined
+      scim_id: undefined
     });
     expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
       token_format: 'jwt'
@@ -312,6 +312,96 @@ describe('getIasClientCredentialsToken', () => {
     });
   });
 
+  describe('requestAs behavior', () => {
+    const providerTenantId = 'provider-tenant-id-123';
+
+    const serviceWithProviderTenant: Service = {
+      ...mockIasService,
+      credentials: {
+        ...mockIasService.credentials,
+        app_tid: providerTenantId
+      }
+    };
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      identityServicesCache.clear();
+      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+    });
+
+    it('defaults to current tenant and forwards jwt.app_tid when provided', async () => {
+      await getIasClientCredentialsToken(serviceWithProviderTenant, {
+        jwt: { app_tid: 'current-tenant-app-tid' }
+      });
+
+      expect(mockFetchClientCredentialsToken).toHaveBeenCalled();
+      const callArg = mockFetchClientCredentialsToken.mock.calls[0][0];
+      expect(callArg).toEqual(
+        expect.objectContaining({
+          token_format: 'jwt',
+          app_tid: 'current-tenant-app-tid'
+        })
+      );
+    });
+
+    it("uses provider tenant when requestAs is 'provider-tenant'", async () => {
+      await getIasClientCredentialsToken(serviceWithProviderTenant, {
+        requestAs: 'provider-tenant'
+      });
+
+      expect(mockFetchClientCredentialsToken).toHaveBeenCalled();
+      const callArg = mockFetchClientCredentialsToken.mock.calls[0][0];
+      expect(callArg).toEqual(
+        expect.objectContaining({
+          token_format: 'jwt',
+          app_tid: providerTenantId
+        })
+      );
+    });
+
+    it('prioritizes explicit appTid over requestAs', async () => {
+      await getIasClientCredentialsToken(serviceWithProviderTenant, {
+        requestAs: 'provider-tenant',
+        appTid: 'explicit-tenant-789'
+      });
+
+      const callArg = mockFetchClientCredentialsToken.mock.calls[0][0];
+      expect(callArg).toEqual(
+        expect.objectContaining({
+          token_format: 'jwt',
+          app_tid: 'explicit-tenant-789'
+        })
+      );
+    });
+
+    it('ignores requestAs for JWT bearer flow', async () => {
+      mockFetchJwtBearerToken.mockResolvedValue(mockTokenResponse);
+
+      const userAssertion = signedJwt({
+        iss: 'https://tenant.accounts.ondemand.com',
+        user_uuid: 'user-123'
+      });
+
+      await getIasClientCredentialsToken(mockIasService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion: userAssertion,
+        requestAs: 'provider-tenant'
+      });
+
+      expect(mockFetchJwtBearerToken).toHaveBeenCalled();
+      const [, tokenOptions] = mockFetchJwtBearerToken.mock.calls[0];
+      expect(tokenOptions).toEqual({ token_format: 'jwt' });
+    });
+
+    it("does not set app_tid when requestAs is 'current-tenant' and jwt is missing", async () => {
+      await getIasClientCredentialsToken(serviceWithProviderTenant, {
+        requestAs: 'current-tenant'
+      });
+
+      const callArg = mockFetchClientCredentialsToken.mock.calls[0][0];
+      expect(callArg).toEqual({ token_format: 'jwt' });
+    });
+  });
   describe('multi-tenant subscriber routing', () => {
     const providerUrl = 'https://provider.accounts.ondemand.com';
     const subscriberUrl = 'https://subscriber.accounts.ondemand.com';

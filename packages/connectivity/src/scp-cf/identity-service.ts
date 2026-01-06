@@ -36,7 +36,7 @@ export interface IasClientCredentialsResponse extends ClientCredentialsResponse 
   /**
    * The SCIM ID of the user (not present for technical user tokens).
    */
-  scimId?: string;
+  scim_id?: string;
   /**
    * Custom issuer claim from the JWT token.
    */
@@ -100,7 +100,7 @@ export async function getIasClientCredentialsToken(
     fnArgument,
     context: {
       uri: fnArgument.serviceCredentials.url,
-      tenantId: fnArgument.serviceCredentials.tenantid
+      tenantId: fnArgument.serviceCredentials.app_tid
     }
   }).catch(err => {
     const serviceName =
@@ -203,7 +203,7 @@ async function getIasClientCredentialsTokenImpl(
     if (!arg.appTid) {
       const requestAs = arg?.requestAs ?? 'current-tenant';
       if (requestAs === 'provider-tenant') {
-        tokenOptions.app_tid = arg.serviceCredentials.tenantid;
+        tokenOptions.app_tid = arg.serviceCredentials.app_tid;
       } else if (requestAs === 'current-tenant') {
         tokenOptions.app_tid = arg.jwt?.app_tid;
       }
@@ -225,7 +225,7 @@ async function getIasClientCredentialsTokenImpl(
     // `decodedJwt.audiences` always returns an array, preserve original type
     aud: decodedJwt.payload?.aud ?? [],
     app_tid: decodedJwt.appTid,
-    scimId: decodedJwt.scimId,
+    scim_id: decodedJwt.scimId,
     // Added if resource parameter was specified
     ias_apis: decodedJwt?.consumedApis,
     custom_iss: decodedJwt.customIssuer ?? undefined

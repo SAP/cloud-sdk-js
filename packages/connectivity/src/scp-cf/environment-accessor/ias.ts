@@ -11,8 +11,8 @@ const logger = createLogger({
 
 /**
  * @internal
- * A cache for IdentityService instances.
- * Should only be used for testing purposes.
+ * A cache for `IdentityService` instances.
+ * Direct access from outside this module outside tests is discouraged.
  */
 export const identityServicesCache: Map<string, IdentityService> = new Map();
 

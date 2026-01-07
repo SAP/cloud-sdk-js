@@ -25,7 +25,6 @@ export interface PackageJsonOptions {
   moduleType?: ModuleType;
 }
 
-/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

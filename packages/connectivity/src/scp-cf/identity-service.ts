@@ -157,9 +157,6 @@ async function getIasClientCredentialsTokenImpl(
     arg.assertion
   );
 
-  const authenticationType =
-    arg.authenticationType || 'OAuth2ClientCredentials';
-
   const tokenOptions: IdentityService.TokenFetchOptions &
     IdentityService.IdentityServiceTokenFetchOptions = {
     token_format: 'jwt'
@@ -181,7 +178,7 @@ async function getIasClientCredentialsTokenImpl(
 
   let response: undefined | IdentityService.TokenFetchResponse;
 
-  if (authenticationType === 'OAuth2JWTBearer') {
+  if (arg.authenticationType === 'OAuth2JWTBearer') {
     // JWT bearer grant for business user propagation
     if (!arg.assertion) {
       throw new Error(
@@ -201,7 +198,7 @@ async function getIasClientCredentialsTokenImpl(
     );
   } else {
     if (!arg.appTid) {
-      const requestAs = arg?.requestAs ?? 'current-tenant';
+      const requestAs = arg.requestAs ?? 'current-tenant';
       if (requestAs === 'provider-tenant') {
         tokenOptions.app_tid = arg.serviceCredentials.app_tid;
       } else if (requestAs === 'current-tenant') {

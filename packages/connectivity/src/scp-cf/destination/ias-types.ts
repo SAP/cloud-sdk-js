@@ -1,5 +1,6 @@
 import type { Xor } from '@sap-cloud-sdk/util';
 import type { AuthenticationType } from './destination-service-types';
+import type { IdentityService } from '@sap/xssec';
 
 /**
  * The application resource for which the token is requested for App-to-App communication.
@@ -54,9 +55,14 @@ export interface IasOptionsBase {
    */
   appTid?: string;
   /**
-   * Additional parameters to be sent along with the token request.
+   * Additional parameters for the token request to be forwarded to the token fetching function
+   * of `@sap/xssec`.
    */
-  extraParams?: Record<string, string>;
+  extraParams?: Omit<
+    IdentityService.TokenFetchOptions &
+      IdentityService.IdentityServiceTokenFetchOptions,
+    'token_format' | 'resource' | 'app_tid'
+  >;
 }
 
 /**

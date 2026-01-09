@@ -207,7 +207,7 @@ describe('getIasClientCredentialsToken', () => {
     mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
     await getIasClientCredentialsToken(mockIasService, {
-      extraParams: { custom_param: 'custom_value' }
+      extraParams: { custom_param: 'custom_value' } as any
     });
 
     expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({

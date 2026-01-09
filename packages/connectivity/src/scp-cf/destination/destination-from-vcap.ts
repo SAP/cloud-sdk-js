@@ -13,6 +13,7 @@ import type { Destination } from './destination-service-types';
 import type { CachingOptions } from '../cache';
 import type { Service } from '../environment-accessor';
 import type { JwtPayload } from '../jsonwebtoken-type';
+import type { IasOptions } from './ias-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -31,7 +32,7 @@ export async function getDestinationFromServiceBinding(
     DestinationFetchOptions,
     'jwt' | 'iss' | 'useCache' | 'destinationName'
   > &
-    DestinationFromServiceBindingOptions
+    DestinationFromServiceBindingOptions & { iasOptions?: IasOptions }
 ): Promise<Destination> {
   const decodedJwt = options.iss
     ? { iss: options.iss }
@@ -39,7 +40,17 @@ export async function getDestinationFromServiceBinding(
       ? decodeJwt(options.jwt)
       : undefined;
 
-  const retrievalOptions = { ...options, jwt: decodedJwt };
+  // If using business user authentication with IAS and no assertion provided, use the JWT from options
+  let iasOptions = options.iasOptions;
+  if (
+    iasOptions?.authenticationType === 'OAuth2JWTBearer' &&
+    options.jwt &&
+    !iasOptions.assertion
+  ) {
+    iasOptions = { ...iasOptions, assertion: options.jwt };
+  }
+
+  const retrievalOptions = { ...options, jwt: decodedJwt, iasOptions };
   const destination = await retrieveDestination(retrievalOptions);
 
   const destWithProxy =
@@ -60,14 +71,17 @@ async function retrieveDestination({
   useCache,
   jwt,
   destinationName,
+  iasOptions,
   serviceBindingTransformFn
 }: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
   jwt?: JwtPayload;
+  iasOptions?: IasOptions;
 } & DestinationFromServiceBindingOptions) {
   const service = getServiceBindingByInstanceName(destinationName);
   const destination = await (serviceBindingTransformFn || transform)(service, {
     useCache,
-    jwt
+    jwt,
+    ...(iasOptions ? { iasOptions } : {})
   });
 
   return { name: destinationName, ...destination };
@@ -91,6 +105,10 @@ export type ServiceBindingTransformOptions = {
    * The JWT payload used to fetch destinations.
    */
   jwt?: JwtPayload;
+  /**
+   * The options for IAS token retrieval.
+   */
+  iasOptions?: IasOptions;
 } & CachingOptions;
 
 /**

@@ -117,7 +117,7 @@ function getKeyStoreOptions(destination: Destination):
   if (
     // Only add certificates, when using ClientCertificateAuthentication (https://github.com/SAP/cloud-sdk-js/issues/3544)
     destination.authentication === 'ClientCertificateAuthentication' &&
-    !mtlsIsEnabled(destination) &&
+    !(mtlsIsEnabled(destination) || destination.mtlsKeyPair) &&
     destination.keyStoreName
   ) {
     const certificate = selectCertificate(destination);
@@ -212,6 +212,17 @@ async function getMtlsOptions(
         destination.name ? destination.name : ''
       } has mTLS enabled, but the required Cloud Foundry environment variables (CF_INSTANCE_CERT and CF_INSTANCE_KEY) are not defined. Note that 'inferMtls' only works on Cloud Foundry.`
     );
+  }
+  if (destination.mtlsKeyPair) {
+    if (mtlsIsEnabled(destination)) {
+      logger.warn(
+        `Destination ${
+          destination.name ? destination.name : ''
+        } has both 'mtlsKeyPair' (used by IAS) and 'mtls' (to use certs from cf) enabled. The 'mtlsKeyPair' will be used.`
+      );
+    }
+
+    return destination.mtlsKeyPair;
   }
   if (mtlsIsEnabled(destination)) {
     if (registerDestinationCache.mtls.useMtlsCache) {

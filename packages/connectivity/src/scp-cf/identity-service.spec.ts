@@ -155,7 +155,7 @@ describe('getIasClientCredentialsToken', () => {
       app_tid: 'custom-tenant-id',
       custom_iss: 'https://tenant.accounts.ondemand.com',
       ias_apis: ['dummy'],
-      scimId: undefined
+      scim_id: undefined
     });
     expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
       token_format: 'jwt'
@@ -306,7 +306,7 @@ describe('getIasClientCredentialsToken', () => {
       expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(userAssertion, {
         resource: 'urn:sap:identity:application:provider:name:my-app',
         app_tid: 'tenant-123',
-        refresh_token: '0',
+        refresh_expiry: 0,
         token_format: 'jwt'
       });
     });
@@ -386,7 +386,7 @@ describe('getIasClientCredentialsToken', () => {
         authenticationType: 'OAuth2JWTBearer',
         assertion: userAssertion,
         requestAs: 'provider-tenant'
-      });
+      } as any);
 
       expect(mockFetchJwtBearerToken).toHaveBeenCalled();
       const [, tokenOptions] = mockFetchJwtBearerToken.mock.calls[0];
@@ -498,6 +498,44 @@ describe('getIasClientCredentialsToken', () => {
       // Should succeed with fallback to provider credentials
       expect(result.access_token).toBeDefined();
       expect(mockFetchJwtBearerToken).toHaveBeenCalled();
+    });
+
+    it('disables refresh tokens for JWT bearer exchanges with APP-to-APP flow', async () => {
+      const assertion = signedJwt({
+        iss: subscriberUrl,
+        user_uuid: 'user-123'
+      });
+
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion,
+        resource: { name: 'my-app' }
+      });
+
+      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+        resource: 'urn:sap:identity:application:provider:name:my-app',
+        refresh_expiry: 0,
+        token_format: 'jwt'
+      });
+    });
+
+    it('disables refresh tokens for JWT bearer exchanges if app_tid is set', async () => {
+      const assertion = signedJwt({
+        iss: subscriberUrl,
+        user_uuid: 'user-123'
+      });
+
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion,
+        appTid: 'some-tenant-id'
+      });
+
+      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+        app_tid: 'some-tenant-id',
+        refresh_expiry: 0,
+        token_format: 'jwt'
+      });
     });
 
     it('caches subscriber instances per URL', async () => {

@@ -186,10 +186,17 @@ async function getIasClientCredentialsTokenImpl(
       );
     }
 
+    // Disable refresh token for App-To-App JWT bearer token exchange (recommended for better performance)
+    if (arg.resource && tokenOptions.refresh_expiry === undefined) {
+      tokenOptions.refresh_expiry = 0;
+    }
+
     // Workaround for IAS bug
     // https://github.com/SAP/cloud-sdk-java/blob/61903347b607a8397f7930709cd52526f05269b1/cloudplatform/connectivity-oauth/src/main/java/com/sap/cloud/sdk/cloudplatform/connectivity/OAuth2Service.java#L225-L236
-    if (arg.appTid) {
-      (tokenOptions as any).refresh_token = '0';
+    if (tokenOptions.app_tid) {
+      // TODO: Use `refresh_token` instead to match the Java SDK (currently not forwarded by @sap/xssec)
+      // Workaround: Use `refresh_expiry` instead for now to disable refresh tokens
+      tokenOptions.refresh_expiry = 0;
     }
 
     response = await identityService.fetchJwtBearerToken(
@@ -197,6 +204,7 @@ async function getIasClientCredentialsTokenImpl(
       tokenOptions
     );
   } else {
+    // Technical user client credentials grant
     if (!arg.appTid) {
       const requestAs = arg.requestAs ?? 'current-tenant';
       if (requestAs === 'provider-tenant') {

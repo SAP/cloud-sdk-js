@@ -1463,10 +1463,10 @@
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.6.0.tgz#84cc9ec3ef2434f249a2b504da903a8392ad3b14"
   integrity sha512-cttVQhuzobLsnaGjmCz6gOXdUdHRawTbUK8UsUPnOIOboAOJRvLbrX4RF/iY6VxewpupDcx+FhfDCbAupO3EwQ==
 
-"@sap/cds-dk@9.6.0":
-  version "9.6.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.6.0.tgz#ae296a1e38ab0c5c7e4bd4c8d2fb9aaecd829c0a"
-  integrity sha512-JaX0vSOflkhmiZJUEuO3rbN+5MRk9oVJs8TkOIOOZJ4EOxttjL1hz/lAgbepsHaTJC2bt8gc6JxUtB4W56P23A==
+"@sap/cds-dk@9.6.1":
+  version "9.6.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.6.1.tgz#df83c5e9be633fea1e3f9e6034205f4c45693a70"
+  integrity sha512-JMuGxOqymXkJXkRHhU7nrUyu5iSjdWD1UbMMo/PhrAQAyVnmcb4SKu/Pxb45q1Ikk05EocCRMChu1PPMmbqF9w==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"
@@ -1474,11 +1474,10 @@
     "@sap/cds-mtxs" ">=2"
     "@sap/hdi-deploy" "^5"
     axios "^1"
-    express "^4.17.3"
+    express "^4.22.1"
     hdb "^2.0.0"
     livereload-js "^4.0.1"
     mustache "^4.0.1"
-    node-watch ">=0.7"
     ws "^8.4.2"
     xml-js "^1.6.11"
     yaml "^2"
@@ -1850,9 +1849,9 @@
   integrity sha512-ju/75+YPkNE5vX1iPer+qtI1eI/LqJVYZgOsmSHI1iiEM1bQL5Gh1lEvyjR9T7ZXVE1FwJa2doWJEEmPNwbZkw==
 
 "@types/lodash@>=4.14.200":
-  version "4.17.21"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.21.tgz#b806831543d696b14f8112db600ea9d3a1df6ea4"
-  integrity sha512-FOvQ0YPD5NOfPgMzJihoT+Za5pdkDJWcbpuj1DjaKZIr/gxodQjY/uWEFlTNqW2ugXHUiL8lRQgw63dzKHZdeQ==
+  version "4.17.23"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.23.tgz#c1bb06db218acc8fc232da0447473fc2fb9d9841"
+  integrity sha512-RDvF6wTulMPjrNdCoYRC8gNR880JNGT8uB+REUpC2Ns4pRqQJhGz90wh7rgdXDPpCczF3VGktDuFGVnz8zP7HA==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -4244,7 +4243,7 @@ expect@^30.0.0:
     jest-mock "30.0.2"
     jest-util "30.0.2"
 
-express@^4.17.3, express@^4.22.1:
+express@^4.22.1:
   version "4.22.1"
   resolved "https://registry.npmjs.org/express/-/express-4.22.1.tgz#1de23a09745a4fffdb39247b344bb5eaff382069"
   integrity sha512-F2X8g9P1X7uCPZMA3MVf9wcTqlyNp7IhH5qPCI0izhaOIYXaW9L535tGA3qmjRzpH+bZczqq7hVKxTR4NWnu+g==
@@ -6892,11 +6891,6 @@ node-source-walk@^7.0.1:
   integrity sha512-3VW/8JpPqPvnJvseXowjZcirPisssnBuDikk6JIZ8jQzF7KJQX52iPFX4RYYxLycYH7IbMRSPUOga/esVjy5Yg==
   dependencies:
     "@babel/parser" "^7.26.7"
-
-node-watch@>=0.7:
-  version "0.7.4"
-  resolved "https://registry.npmjs.org/node-watch/-/node-watch-0.7.4.tgz#34557106948cd4b8ddff9aa3d284774004548824"
-  integrity sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==
 
 nopt@^4.0.1:
   version "4.0.3"

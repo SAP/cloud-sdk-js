@@ -192,10 +192,9 @@ async function getIasClientCredentialsTokenImpl(
     }
 
     // Workaround for IAS bug
-    // https://github.com/SAP/cloud-sdk-java/blob/61903347b607a8397f7930709cd52526f05269b1/cloudplatform/connectivity-oauth/src/main/java/com/sap/cloud/sdk/cloudplatform/connectivity/OAuth2Service.java#L225-L236
+    // JAVA SDK: https://github.com/SAP/cloud-sdk-java/blob/61903347b607a8397f7930709cd52526f05269b1/cloudplatform/connectivity-oauth/src/main/java/com/sap/cloud/sdk/cloudplatform/connectivity/OAuth2Service.java#L225-L236
+    // Issue: https://jira.tools.sap/browse/SECREQ-5220
     if (tokenOptions.app_tid) {
-      // TODO: Use `refresh_token` instead to match the Java SDK (currently not forwarded by @sap/xssec)
-      // Workaround: Use `refresh_expiry` instead for now to disable refresh tokens
       tokenOptions.refresh_expiry = 0;
     }
 

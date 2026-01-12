@@ -1463,10 +1463,10 @@
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.6.0.tgz#84cc9ec3ef2434f249a2b504da903a8392ad3b14"
   integrity sha512-cttVQhuzobLsnaGjmCz6gOXdUdHRawTbUK8UsUPnOIOboAOJRvLbrX4RF/iY6VxewpupDcx+FhfDCbAupO3EwQ==
 
-"@sap/cds-dk@9.6.0":
-  version "9.6.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.6.0.tgz#ae296a1e38ab0c5c7e4bd4c8d2fb9aaecd829c0a"
-  integrity sha512-JaX0vSOflkhmiZJUEuO3rbN+5MRk9oVJs8TkOIOOZJ4EOxttjL1hz/lAgbepsHaTJC2bt8gc6JxUtB4W56P23A==
+"@sap/cds-dk@9.6.1":
+  version "9.6.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.6.1.tgz#df83c5e9be633fea1e3f9e6034205f4c45693a70"
+  integrity sha512-JMuGxOqymXkJXkRHhU7nrUyu5iSjdWD1UbMMo/PhrAQAyVnmcb4SKu/Pxb45q1Ikk05EocCRMChu1PPMmbqF9w==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"
@@ -1474,11 +1474,10 @@
     "@sap/cds-mtxs" ">=2"
     "@sap/hdi-deploy" "^5"
     axios "^1"
-    express "^4.17.3"
+    express "^4.22.1"
     hdb "^2.0.0"
     livereload-js "^4.0.1"
     mustache "^4.0.1"
-    node-watch ">=0.7"
     ws "^8.4.2"
     xml-js "^1.6.11"
     yaml "^2"
@@ -1850,9 +1849,9 @@
   integrity sha512-ju/75+YPkNE5vX1iPer+qtI1eI/LqJVYZgOsmSHI1iiEM1bQL5Gh1lEvyjR9T7ZXVE1FwJa2doWJEEmPNwbZkw==
 
 "@types/lodash@>=4.14.200":
-  version "4.17.21"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.21.tgz#b806831543d696b14f8112db600ea9d3a1df6ea4"
-  integrity sha512-FOvQ0YPD5NOfPgMzJihoT+Za5pdkDJWcbpuj1DjaKZIr/gxodQjY/uWEFlTNqW2ugXHUiL8lRQgw63dzKHZdeQ==
+  version "4.17.23"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.23.tgz#c1bb06db218acc8fc232da0447473fc2fb9d9841"
+  integrity sha512-RDvF6wTulMPjrNdCoYRC8gNR880JNGT8uB+REUpC2Ns4pRqQJhGz90wh7rgdXDPpCczF3VGktDuFGVnz8zP7HA==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -1888,10 +1887,10 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-12.20.55.tgz#c329cbd434c42164f846b909bd6f85b5537f6240"
   integrity sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==
 
-"@types/node@^22.19.3":
-  version "22.19.3"
-  resolved "https://registry.npmjs.org/@types/node/-/node-22.19.3.tgz#8dfde7630d7a8528dc9b34db23d34f764467c02c"
-  integrity sha512-1N9SBnWYOJTrNZCdh/yJE+t910Y128BoyY+zBLWhL3r0TYzlTmFdXrPwHL9DyFZmlEXNQQolTZh3KHV31QDhyA==
+"@types/node@^22.19.5":
+  version "22.19.5"
+  resolved "https://registry.npmjs.org/@types/node/-/node-22.19.5.tgz#82e8c3da99667246efc63a634114ab34fb34e08e"
+  integrity sha512-HfF8+mYcHPcPypui3w3mvzuIErlNOh2OAG+BCeBZCEwyiD5ls2SiCwEyT47OELtf7M3nHxBdu0FsmzdKxkN52Q==
   dependencies:
     undici-types "~6.21.0"
 
@@ -4244,7 +4243,7 @@ expect@^30.0.0:
     jest-mock "30.0.2"
     jest-util "30.0.2"
 
-express@^4.17.3, express@^4.22.1:
+express@^4.22.1:
   version "4.22.1"
   resolved "https://registry.npmjs.org/express/-/express-4.22.1.tgz#1de23a09745a4fffdb39247b344bb5eaff382069"
   integrity sha512-F2X8g9P1X7uCPZMA3MVf9wcTqlyNp7IhH5qPCI0izhaOIYXaW9L535tGA3qmjRzpH+bZczqq7hVKxTR4NWnu+g==
@@ -6893,11 +6892,6 @@ node-source-walk@^7.0.1:
   dependencies:
     "@babel/parser" "^7.26.7"
 
-node-watch@>=0.7:
-  version "0.7.4"
-  resolved "https://registry.npmjs.org/node-watch/-/node-watch-0.7.4.tgz#34557106948cd4b8ddff9aa3d284774004548824"
-  integrity sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==
-
 nopt@^4.0.1:
   version "4.0.3"
   resolved "https://registry.npmjs.org/nopt/-/nopt-4.0.3.tgz#a375cad9d02fd921278d954c2254d5aa57e15e48"
@@ -9088,47 +9082,47 @@ tunnel@^0.0.6:
   resolved "https://registry.npmjs.org/tunnel/-/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
   integrity sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==
 
-turbo-darwin-64@2.7.3:
-  version "2.7.3"
-  resolved "https://registry.npmjs.org/turbo-darwin-64/-/turbo-darwin-64-2.7.3.tgz#155712a34adf51ab87d45a40f0bb91aa4ae4f71f"
-  integrity sha512-aZHhvRiRHXbJw1EcEAq4aws1hsVVUZ9DPuSFaq9VVFAKCup7niIEwc22glxb7240yYEr1vLafdQ2U294Vcwz+w==
+turbo-darwin-64@2.7.4:
+  version "2.7.4"
+  resolved "https://registry.npmjs.org/turbo-darwin-64/-/turbo-darwin-64-2.7.4.tgz#ea3f00f7f02474c253e59275d26078053c3eec99"
+  integrity sha512-xDR30ltfkSsRfGzABBckvl1nz1cZ3ssTujvdj+TPwOweeDRvZ0e06t5DS0rmRBvyKpgGs42K/EK6Mn2qLlFY9A==
 
-turbo-darwin-arm64@2.7.3:
-  version "2.7.3"
-  resolved "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-2.7.3.tgz#15bd1369a08aba017dce5e04cea92b4118f9d2cf"
-  integrity sha512-CkVrHSq+Bnhl9sX2LQgqQYVfLTWC2gvI74C4758OmU0djfrssDKU9d4YQF0AYXXhIIRZipSXfxClQziIMD+EAg==
+turbo-darwin-arm64@2.7.4:
+  version "2.7.4"
+  resolved "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-2.7.4.tgz#b35acee0f009648e1205efb4c37b6f97e38a78cb"
+  integrity sha512-P7sjqXtOL/+nYWPvcDGWhi8wf8M8mZHHB8XEzw2VX7VJrS8IGHyJHGD1AYfDvhAEcr7pnk3gGifz3/xyhI655w==
 
-turbo-linux-64@2.7.3:
-  version "2.7.3"
-  resolved "https://registry.npmjs.org/turbo-linux-64/-/turbo-linux-64-2.7.3.tgz#32ca1e0560470fd8f1b8732e8083f0e92d36113f"
-  integrity sha512-GqDsCNnzzr89kMaLGpRALyigUklzgxIrSy2pHZVXyifgczvYPnLglex78Aj3T2gu+T3trPPH2iJ+pWucVOCC2Q==
+turbo-linux-64@2.7.4:
+  version "2.7.4"
+  resolved "https://registry.npmjs.org/turbo-linux-64/-/turbo-linux-64-2.7.4.tgz#e649cbd50b5c7e5fd0a303a2c6fb9686bd0e44d0"
+  integrity sha512-GofFOxRO/IhG8BcPyMSSB3Y2+oKQotsaYbHxL9yD6JPb20/o35eo+zUSyazOtilAwDHnak5dorAJFoFU8MIg2A==
 
-turbo-linux-arm64@2.7.3:
-  version "2.7.3"
-  resolved "https://registry.npmjs.org/turbo-linux-arm64/-/turbo-linux-arm64-2.7.3.tgz#a6246cacbbfee7b37fd15a458803cf41ec60b4c8"
-  integrity sha512-NdCDTfIcIo3dWjsiaAHlxu5gW61Ed/8maah1IAF/9E3EtX0aAHNiBMbuYLZaR4vRJ7BeVkYB6xKWRtdFLZ0y3g==
+turbo-linux-arm64@2.7.4:
+  version "2.7.4"
+  resolved "https://registry.npmjs.org/turbo-linux-arm64/-/turbo-linux-arm64-2.7.4.tgz#3a72cfb73c09cc417ff8cfb30103334d3597568e"
+  integrity sha512-+RQKgNjksVPxYAyAgmDV7w/1qj++qca+nSNTAOKGOfJiDtSvRKoci89oftJ6anGs00uamLKVEQ712TI/tfNAIw==
 
-turbo-windows-64@2.7.3:
-  version "2.7.3"
-  resolved "https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-2.7.3.tgz#40d7103f50d4e50144ae6b7e7573b3b8fdbdd520"
-  integrity sha512-7bVvO987daXGSJVYBoG8R4Q+csT1pKIgLJYZevXRQ0Hqw0Vv4mKme/TOjYXs9Qb1xMKh51Tb3bXKDbd8/4G08g==
+turbo-windows-64@2.7.4:
+  version "2.7.4"
+  resolved "https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-2.7.4.tgz#da0957806407567501bbf48ee707bccff42e3af4"
+  integrity sha512-rfak1+g+ON3czs1mDYsCS4X74ZmK6gOgRQTXjDICtzvR4o61paqtgAYtNPofcVsMWeF4wvCajSeoAkkeAnQ1kg==
 
-turbo-windows-arm64@2.7.3:
-  version "2.7.3"
-  resolved "https://registry.npmjs.org/turbo-windows-arm64/-/turbo-windows-arm64-2.7.3.tgz#4e35b03371f55a162600ddf5c160e83c42c15af7"
-  integrity sha512-nTodweTbPmkvwMu/a55XvjMsPtuyUSC+sV7f/SR57K36rB2I0YG21qNETN+00LOTUW9B3omd8XkiXJkt4kx/cw==
+turbo-windows-arm64@2.7.4:
+  version "2.7.4"
+  resolved "https://registry.npmjs.org/turbo-windows-arm64/-/turbo-windows-arm64-2.7.4.tgz#6bad15321282af636fb5a81eb22e17a777e882dc"
+  integrity sha512-1ZgBNjNRbDu/fPeqXuX9i26x3CJ/Y1gcwUpQ+Vp7kN9Un6RZ9kzs164f/knrjcu5E+szCRexVjRSJay1k5jApA==
 
-turbo@^2.7.3:
-  version "2.7.3"
-  resolved "https://registry.npmjs.org/turbo/-/turbo-2.7.3.tgz#1a651a02988a0a00ec6d6a302fe0af1b3c7d23dd"
-  integrity sha512-+HjKlP4OfYk+qzvWNETA3cUO5UuK6b5MSc2UJOKyvBceKucQoQGb2g7HlC2H1GHdkfKrk4YF1VPvROkhVZDDLQ==
+turbo@^2.7.4:
+  version "2.7.4"
+  resolved "https://registry.npmjs.org/turbo/-/turbo-2.7.4.tgz#9088187ff36bc212cea8cb68e2b48a0691a042c4"
+  integrity sha512-bkO4AddmDishzJB2ze7aYYPaejMoJVfS0XnaR6RCdXFOY8JGJfQE+l9fKiV7uDPa5Ut44gmOWJL3894CIMeH9g==
   optionalDependencies:
-    turbo-darwin-64 "2.7.3"
-    turbo-darwin-arm64 "2.7.3"
-    turbo-linux-64 "2.7.3"
-    turbo-linux-arm64 "2.7.3"
-    turbo-windows-64 "2.7.3"
-    turbo-windows-arm64 "2.7.3"
+    turbo-darwin-64 "2.7.4"
+    turbo-darwin-arm64 "2.7.4"
+    turbo-linux-64 "2.7.4"
+    turbo-linux-arm64 "2.7.4"
+    turbo-windows-64 "2.7.4"
+    turbo-windows-arm64 "2.7.4"
 
 tv4@^1.3.0:
   version "1.3.0"

@@ -1887,10 +1887,10 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-12.20.55.tgz#c329cbd434c42164f846b909bd6f85b5537f6240"
   integrity sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==
 
-"@types/node@^22.19.5":
-  version "22.19.5"
-  resolved "https://registry.npmjs.org/@types/node/-/node-22.19.5.tgz#82e8c3da99667246efc63a634114ab34fb34e08e"
-  integrity sha512-HfF8+mYcHPcPypui3w3mvzuIErlNOh2OAG+BCeBZCEwyiD5ls2SiCwEyT47OELtf7M3nHxBdu0FsmzdKxkN52Q==
+"@types/node@^22.19.6":
+  version "22.19.6"
+  resolved "https://registry.npmjs.org/@types/node/-/node-22.19.6.tgz#0e9d80ebcd2dfce03265768c17a1212d4eb07e82"
+  integrity sha512-qm+G8HuG6hOHQigsi7VGuLjUVu6TtBo/F05zvX04Mw2uCg9Dv0Qxy3Qw7j41SidlTcl5D/5yg0SEZqOB+EqZnQ==
   dependencies:
     undici-types "~6.21.0"
 

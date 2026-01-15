@@ -52,7 +52,7 @@
     "@apidevtools/json-schema-ref-parser": "^14.1.1",
     "@types/js-yaml": "^4.0.9",
     "mock-fs": "^5.5.0",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.0",
     "typescript": "~5.9.3"
   }
 }

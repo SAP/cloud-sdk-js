@@ -45,7 +45,8 @@ export async function serviceToken(
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getToken(
       tenantForCaching,
-      serviceCredentials.clientid
+      serviceCredentials.clientid,
+      undefined
     );
     if (cachedToken) {
       return cachedToken.access_token;
@@ -59,6 +60,7 @@ export async function serviceToken(
       clientCredentialsTokenCache.cacheToken(
         tenantForCaching,
         serviceCredentials.clientid,
+        undefined,
         token
       );
     }

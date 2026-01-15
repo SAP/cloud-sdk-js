@@ -1,12 +1,16 @@
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
 import { getIasClientCredentialsToken } from '../identity-service';
+import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import type { Service } from '../environment-accessor';
 import type {
   ServiceBindingTransformFunction,
   ServiceBindingTransformOptions
 } from './destination-from-vcap';
 import type { Destination } from './destination-service-types';
+import type { IasOptions } from './ias-types';
+import type { IasClientCredentialsResponse } from '../identity-service';
+import type { CachingOptions } from '../cache';
 
 /**
  * @internal
@@ -186,12 +190,61 @@ async function iasBindingToDestination(
   service: Service,
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
-  const { access_token } = await getIasClientCredentialsToken(service, {
-    jwt: options?.jwt,
+  const iasOptions = {
+    authenticationType: 'OAuth2ClientCredentials' as const,
+    useCache: options?.useCache !== false,
     ...(options?.iasOptions || {})
-  });
+  } as IasOptions & CachingOptions;
+
+  let accessToken: string | undefined;
+
+  if (iasOptions.authenticationType === 'OAuth2ClientCredentials') {
+    // Technical user client credentials grant
+    if (!iasOptions.appTid) {
+      const requestAs = iasOptions.requestAs ?? 'current-tenant';
+      if (requestAs === 'provider-tenant') {
+        iasOptions.appTid = service.app_tid;
+      } else if (requestAs === 'current-tenant') {
+        iasOptions.appTid = options?.jwt?.app_tid;
+      }
+
+      if (iasOptions.useCache) {
+        const cached = clientCredentialsTokenCache.getToken(
+          iasOptions.appTid,
+          service.credentials.clientid,
+          iasOptions.resource
+        );
+        if (cached) {
+          accessToken = cached.access_token;
+        }
+      }
+    }
+  }
+
+  let response: IasClientCredentialsResponse | undefined;
+  if (!accessToken) {
+    response = await getIasClientCredentialsToken(service, {
+      jwt: options?.jwt,
+      ...(options?.iasOptions || {})
+    });
+    accessToken = response.access_token;
+
+    if (
+      iasOptions.authenticationType === 'OAuth2ClientCredentials' &&
+      iasOptions.useCache &&
+      response
+    ) {
+      clientCredentialsTokenCache.cacheToken(
+        iasOptions.appTid,
+        service.credentials.clientid,
+        iasOptions.resource,
+        response
+      );
+    }
+  }
+
   const destination = buildClientCredentialsDestination(
-    access_token,
+    accessToken,
     options?.iasOptions?.targetUrl ?? service.credentials.url,
     service.name
   );

@@ -204,16 +204,6 @@ async function getIasClientCredentialsTokenImpl(
     );
   } else {
     // Technical user client credentials grant
-    if (!arg.appTid) {
-      const requestAs = arg.requestAs ?? 'current-tenant';
-      if (requestAs === 'provider-tenant') {
-        tokenOptions.app_tid = arg.serviceCredentials.app_tid;
-      } else if (requestAs === 'current-tenant') {
-        tokenOptions.app_tid = arg.jwt?.app_tid;
-      }
-    }
-
-    // Client credentials for technical users
     response = await identityService.fetchClientCredentialsToken(tokenOptions);
   }
 

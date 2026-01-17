@@ -17,12 +17,12 @@
   dependencies:
     "@actions/io" "^2.0.0"
 
-"@actions/github@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.npmjs.org/@actions/github/-/github-6.0.1.tgz#76e5f96df062c90635a7181ef45ff1c4ac21306e"
-  integrity sha512-xbZVcaqD4XnQAe35qSQqskb3SqIAfRyLBrHMd/8TuL7hJSz2QtbDwnNM8zWx4zO5l2fnGtseNE3MbEvD7BxVMw==
+"@actions/github@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/@actions/github/-/github-7.0.0.tgz#04366e4fcf76d5a357ef98c51902a34c2b671494"
+  integrity sha512-PyGODO938aoBTZd/IfN/+e+Pd5hUcVpyf+thm4CPESLeqhdSkq5QwMTGX9v84XHE1ifmHWBQ60KB8kIgm96opw==
   dependencies:
-    "@actions/http-client" "^2.2.0"
+    "@actions/http-client" "^3.0.1"
     "@octokit/core" "^5.0.1"
     "@octokit/plugin-paginate-rest" "^9.2.2"
     "@octokit/plugin-rest-endpoint-methods" "^10.4.0"
@@ -30,18 +30,10 @@
     "@octokit/request-error" "^5.1.1"
     undici "^5.28.5"
 
-"@actions/http-client@^2.2.0":
-  version "2.2.3"
-  resolved "https://registry.npmjs.org/@actions/http-client/-/http-client-2.2.3.tgz#31fc0b25c0e665754ed39a9f19a8611fc6dab674"
-  integrity sha512-mx8hyJi/hjFvbPokCg4uRd4ZX78t+YyRPtnKWwIl+RzNaVuFpQHfmlGVfsKEJN8LwTCvL+DfVgAM04XaHkm6bA==
-  dependencies:
-    tunnel "^0.0.6"
-    undici "^5.25.4"
-
-"@actions/http-client@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/@actions/http-client/-/http-client-3.0.0.tgz#6c6058bef29c0580d6683a08c5bf0362c90c2e6e"
-  integrity sha512-1s3tXAfVMSz9a4ZEBkXXRQD4QhY3+GAsWSbaYpeknPOKEeyRiU3lH+bHiLMZdo2x/fIeQ/hscL1wCkDLVM2DZQ==
+"@actions/http-client@^3.0.0", "@actions/http-client@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/@actions/http-client/-/http-client-3.0.1.tgz#0ac91c3abf179a401e23d40abf0d7caa92324268"
+  integrity sha512-SbGS8c/vySbNO3kjFgSW77n83C4MQx/Yoe+b1hAdpuvfHxnkHzDq2pWljUpAA56Si1Gae/7zjeZsV0CYjmLo/w==
   dependencies:
     tunnel "^0.0.6"
     undici "^5.28.5"
@@ -9287,7 +9279,7 @@ undici-types@~7.8.0:
   resolved "https://registry.npmjs.org/undici-types/-/undici-types-7.8.0.tgz#de00b85b710c54122e44fbfd911f8d70174cd294"
   integrity sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==
 
-undici@^5.25.4, undici@^5.28.5:
+undici@^5.28.5:
   version "5.29.0"
   resolved "https://registry.npmjs.org/undici/-/undici-5.29.0.tgz#419595449ae3f2cdcba3580a2e8903399bd1f5a3"
   integrity sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==

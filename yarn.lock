@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"@actions/core@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/@actions/core/-/core-2.0.1.tgz#fc4961acb04f6253bcdf83ad356e013ba29fc218"
-  integrity sha512-oBfqT3GwkvLlo1fjvhQLQxuwZCGTarTE5OuZ2Wg10hvhBj7LRIlF611WT4aZS6fDhO5ZKlY7lCAZTlpmyaHaeg==
+"@actions/core@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/@actions/core/-/core-2.0.2.tgz#81c59e1f3437660d2148a064c1ba8e99931f2cf7"
+  integrity sha512-Ast1V7yHbGAhplAsuVlnb/5J8Mtr/Zl6byPPL+Qjq3lmfIgWF1ak1iYfF/079cRERiuTALTXkSuEUdZeDCfGtA==
   dependencies:
     "@actions/exec" "^2.0.0"
-    "@actions/http-client" "^3.0.0"
+    "@actions/http-client" "^3.0.1"
 
 "@actions/exec@^2.0.0":
   version "2.0.0"
@@ -38,10 +38,10 @@
     tunnel "^0.0.6"
     undici "^5.25.4"
 
-"@actions/http-client@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/@actions/http-client/-/http-client-3.0.0.tgz#6c6058bef29c0580d6683a08c5bf0362c90c2e6e"
-  integrity sha512-1s3tXAfVMSz9a4ZEBkXXRQD4QhY3+GAsWSbaYpeknPOKEeyRiU3lH+bHiLMZdo2x/fIeQ/hscL1wCkDLVM2DZQ==
+"@actions/http-client@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/@actions/http-client/-/http-client-3.0.1.tgz#0ac91c3abf179a401e23d40abf0d7caa92324268"
+  integrity sha512-SbGS8c/vySbNO3kjFgSW77n83C4MQx/Yoe+b1hAdpuvfHxnkHzDq2pWljUpAA56Si1Gae/7zjeZsV0CYjmLo/w==
   dependencies:
     tunnel "^0.0.6"
     undici "^5.28.5"

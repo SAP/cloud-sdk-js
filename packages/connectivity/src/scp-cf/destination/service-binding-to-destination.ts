@@ -1,11 +1,17 @@
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
+import { getIasClientCredentialsToken } from '../identity-service';
+import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
+import { parseUrlAndGetHost } from '../subdomain-replacer';
 import type { Service } from '../environment-accessor';
 import type {
   ServiceBindingTransformFunction,
   ServiceBindingTransformOptions
 } from './destination-from-vcap';
 import type { Destination } from './destination-service-types';
+import type { IasOptions } from './ias-types';
+import type { IasClientCredentialsResponse } from '../identity-service';
+import type { CachingOptions } from '../cache';
 
 /**
  * @internal
@@ -21,7 +27,8 @@ export const serviceToDestinationTransformers: Record<
   workflow: workflowBindingToDestination,
   'service-manager': serviceManagerBindingToDestination,
   xsuaa: xsuaaToDestination,
-  aicore: aicoreToDestination
+  aicore: aicoreToDestination,
+  identity: iasBindingToDestination
 };
 
 /**
@@ -36,6 +43,7 @@ export const serviceToDestinationTransformers: Record<
  * - service-manager (OAuth2ClientCredentials)
  * - xsuaa (OAuth2ClientCredentials)
  * - aicore (OAuth2ClientCredentials)
+ * - identity (OAuth2ClientCredentials with mTLS or client secret)
  * Throws an error if the provided service binding is not supported.
  * @param serviceBinding - The service binding to transform.
  * @param options - Options used for fetching the destination.
@@ -177,6 +185,88 @@ async function xfS4hanaCloudBindingToDestination(
     username: service.credentials.User,
     password: service.credentials.Password
   };
+}
+
+async function iasBindingToDestination(
+  service: Service,
+  options?: ServiceBindingTransformOptions
+): Promise<Destination> {
+  const iasOptions = {
+    authenticationType: 'OAuth2ClientCredentials' as const,
+    useCache: options?.useCache !== false,
+    ...(options?.iasOptions || {})
+  } as IasOptions & CachingOptions;
+
+  let accessToken: string | undefined;
+  let iasTenant: string | undefined;
+  let tenantCacheKey: string | undefined;
+
+  // Technical user client credentials grant preperation
+  if (iasOptions.authenticationType === 'OAuth2ClientCredentials') {
+    if (!iasOptions.appTid) {
+      const requestAs = iasOptions.requestAs ?? 'current-tenant';
+      if (requestAs === 'provider-tenant') {
+        iasOptions.appTid = service.app_tid;
+      } else if (requestAs === 'current-tenant') {
+        iasOptions.appTid = options?.jwt?.app_tid;
+      }
+    }
+
+    if (iasOptions.useCache) {
+      iasTenant = parseUrlAndGetHost(service.credentials.url);
+      tenantCacheKey = new URLSearchParams({
+        iasTenant,
+        ...(iasOptions.appTid && { appTid: iasOptions.appTid })
+      }).toString();
+
+      const cached = clientCredentialsTokenCache.getToken(
+        tenantCacheKey,
+        service.credentials.clientid,
+        iasOptions.resource
+      );
+      if (cached) {
+        accessToken = cached.access_token;
+      }
+    }
+  }
+
+  let response: IasClientCredentialsResponse | undefined;
+  if (!accessToken) {
+    response = await getIasClientCredentialsToken(service, {
+      jwt: options?.jwt,
+      ...(options?.iasOptions || {})
+    });
+    accessToken = response.access_token;
+
+    if (
+      iasOptions.authenticationType === 'OAuth2ClientCredentials' &&
+      iasOptions.useCache &&
+      response
+    ) {
+      clientCredentialsTokenCache.cacheToken(
+        tenantCacheKey,
+        service.credentials.clientid,
+        iasOptions.resource,
+        response
+      );
+    }
+  }
+
+  const destination = buildClientCredentialsDestination(
+    accessToken,
+    options?.iasOptions?.targetUrl ?? service.credentials.url,
+    service.name
+  );
+
+  // Add mTLS key pair if available
+  if (service.credentials.certificate && service.credentials.key) {
+    destination.mtlsKeyPair = {
+      cert: service.credentials.certificate,
+      key: service.credentials.key
+    };
+  }
+
+  return destination;
 }
 
 function buildClientCredentialsDestination(

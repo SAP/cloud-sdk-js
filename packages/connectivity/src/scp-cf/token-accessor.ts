@@ -36,6 +36,7 @@ export async function serviceToken(
   };
 
   const serviceBinding = resolveServiceBinding(service);
+
   const serviceCredentials = serviceBinding.credentials;
   const tenantForCaching = options?.jwt
     ? getTenantId(options.jwt) || getSubdomain(options.jwt)
@@ -44,7 +45,8 @@ export async function serviceToken(
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getToken(
       tenantForCaching,
-      serviceCredentials.clientid
+      serviceCredentials.clientid,
+      undefined
     );
     if (cachedToken) {
       return cachedToken.access_token;
@@ -58,6 +60,7 @@ export async function serviceToken(
       clientCredentialsTokenCache.cacheToken(
         tenantForCaching,
         serviceCredentials.clientid,
+        undefined,
         token
       );
     }

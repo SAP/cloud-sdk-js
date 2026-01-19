@@ -220,7 +220,16 @@ module.exports = {
     'jsdoc/check-param-names': 'error',
     'jsdoc/check-tag-names': [
       'error',
-      { definedTags: ['packageDocumentation', 'typeParam', 'experimental'] }
+      {
+        definedTags: [
+          'packageDocumentation',
+          'typeParam',
+          'experimental',
+          'defaultValue'
+        ],
+        // The other default-allowed tags are not supported by tsdoc
+        inlineTags: ['link']
+      }
     ],
     'jsdoc/check-syntax': 'error',
     'jsdoc/multiline-blocks': 'error',

@@ -1,4 +1,5 @@
 import { URL } from 'url';
+import { removeTrailingSlashes } from '@sap-cloud-sdk/util';
 import type { JwtPayload } from './jsonwebtoken-type';
 
 /**
@@ -73,9 +74,7 @@ export function replaceSubdomain(
 
   let result = url.toString();
   // Remove trailing slash for consistency
-  if (result.endsWith('/')) {
-    result = result.slice(0, -1);
-  }
+  result = removeTrailingSlashes(result);
 
   return result;
 }

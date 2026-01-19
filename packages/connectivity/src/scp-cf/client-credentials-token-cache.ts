@@ -13,24 +13,39 @@ const ClientCredentialsTokenCache = (
 ) => ({
   getToken: (
     tenantId: string | undefined,
-    clientId: string,
-    resource?: IasResource
+    clientId: string
   ): ClientCredentialsResponse | undefined =>
-    cache.get(getCacheKey(tenantId, clientId, resource)),
+    cache.get(getCacheKey(tenantId, clientId)),
 
   cacheToken: (
     tenantId: string | undefined,
     clientId: string,
-    resource: IasResource | undefined,
     token: ClientCredentialsResponse
   ): void => {
-    cache.set(getCacheKey(tenantId, clientId, resource), {
+    cache.set(getCacheKey(tenantId, clientId), {
       entry: token,
       expires: token.expires_in
         ? Date.now() + token.expires_in * 1000
         : undefined
     });
   },
+
+  getTokenIas: (
+    data: IasClientCredentialsCacheKeyData
+  ): ClientCredentialsResponse | undefined => cache.get(getCacheKeyIas(data)),
+
+  cacheTokenIas: (
+    data: IasClientCredentialsCacheKeyData,
+    tokenResponse: ClientCredentialsResponse
+  ): void => {
+    cache.set(getCacheKeyIas(data), {
+      entry: tokenResponse,
+      expires: tokenResponse.expires_in
+        ? Date.now() + tokenResponse.expires_in * 1000
+        : undefined
+    });
+  },
+
   clear: (): void => {
     cache.clear();
   },
@@ -43,17 +58,21 @@ const ClientCredentialsTokenCache = (
  * @returns Normalized resource string or empty string if not provided.
  * @internal
  */
-function normalizeResource(resource?: IasResource): string | undefined {
+function normalizeResource(
+  resource?: IasResource
+): [] | [string] | [string, string] {
   if (!resource) {
-    return undefined;
+    return [];
   }
   if ('name' in resource) {
-    return `name=${resource.name}`;
+    return [`name=${resource.name}`];
   }
 
-  let normalized = `provider-clientId=${resource.providerClientId}`;
+  const normalized: [string] | [string, string] = [
+    `provider-clientId=${resource.providerClientId}`
+  ];
   if (resource.providerTenantId) {
-    normalized += `:provider-tenantId=${resource.providerTenantId}`;
+    normalized.push(`provider-tenantId=${resource.providerTenantId}`);
   }
   return normalized;
 }
@@ -62,13 +81,11 @@ function normalizeResource(resource?: IasResource): string | undefined {
  * @internal
  * @param tenantId - The ID of the tenant to cache the token for.
  * @param clientId - ClientId to fetch the token.
- * @param resource - Optional resource parameter (for IAS app2app scenarios).
  * @returns The cache key.
  */
 export function getCacheKey(
   tenantId: string | undefined,
-  clientId: string,
-  resource?: IasResource
+  clientId: string
 ): string | undefined {
   if (!tenantId) {
     logger.warn(
@@ -82,12 +99,61 @@ export function getCacheKey(
     );
     return;
   }
-  const parts = [tenantId, clientId];
-  const resourceStr = normalizeResource(resource);
-  if (resourceStr) {
-    parts.push(resourceStr);
+  return [tenantId, clientId].join(':');
+}
+
+/**
+ * An interface for data the is used for IAS client credentials cache keys
+ * @internal
+ */
+interface IasClientCredentialsCacheKeyData {
+  /**
+   * The hostname of the IAS instance.
+   * @example tenant.accounts400.ondemand.com
+   */
+  iasInstance: string;
+  /**
+   * The client credentials client ID.
+   */
+  clientId: string;
+  /**
+   * The BTP instanced ID supplied with the token request.
+   */
+  appTid?: string | undefined;
+  resource?: IasResource | undefined;
+}
+
+/** *
+ * @internal
+ * @param data.iasInstance - The IAS instance (tenant) hostname the token is fetched from.
+ * @param data.appTid - The BTP instance (tenant) id (App-Tid)
+ * @param data.clientId - ClientId to fetch the token.
+ * @param data.resource - The App-To-App resource the token is scoped for.
+ * @returns The cache key.
+ */
+export function getCacheKeyIas(
+  data: IasClientCredentialsCacheKeyData
+): string | undefined {
+  const { iasInstance, appTid, clientId, resource } = data;
+  if (!iasInstance) {
+    logger.warn(
+      'Cannot create cache key for client credentials token cache. The given IAS instance hostname is undefined.'
+    );
+    return;
   }
-  return parts.join(':');
+
+  if (!clientId) {
+    logger.warn(
+      'Cannot create cache key for client credentials token cache. The given client ID is undefined.'
+    );
+    return;
+  }
+
+  const output = [iasInstance, appTid || '', clientId];
+  const normalizedResource = normalizeResource(resource);
+  output.push(...normalizedResource);
+
+  return output.join(':');
 }
 
 /**

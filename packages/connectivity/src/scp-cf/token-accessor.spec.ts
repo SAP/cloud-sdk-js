@@ -205,13 +205,11 @@ describe('token accessor', () => {
 
       const providerTokenFromCache = clientCredentialsTokenCache.getToken(
         providerUserPayload.zid,
-        destinationBindingClientSecretMock.credentials.clientid,
-        undefined
+        destinationBindingClientSecretMock.credentials.clientid
       );
       const subscriberTokenFromCache = clientCredentialsTokenCache.getToken(
         subscriberUserPayload.zid,
-        destinationBindingClientSecretMock.credentials.clientid,
-        undefined
+        destinationBindingClientSecretMock.credentials.clientid
       );
 
       expect(providerTokenFromCache?.access_token).toEqual(providerToken);
@@ -220,33 +218,23 @@ describe('token accessor', () => {
       expect(
         clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
-          destinationBindingClientSecretMock.credentials.clientid,
-          undefined
+          destinationBindingClientSecretMock.credentials.clientid
         )
       ).toBeUndefined();
 
       expect(
         clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
-          'schmusername',
-          undefined
+          'schmusername'
         )
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getToken(
-          providerXsuaaUrl,
-          'schmusername',
-          undefined
-        )
+        clientCredentialsTokenCache.getToken(providerXsuaaUrl, 'schmusername')
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getToken(
-          subscriberXsuaaUrl,
-          'schmusername',
-          undefined
-        )
+        clientCredentialsTokenCache.getToken(subscriberXsuaaUrl, 'schmusername')
       ).toBeUndefined();
     });
 
@@ -332,7 +320,6 @@ describe('token accessor', () => {
       clientCredentialsTokenCache.cacheToken(
         destinationBindingClientSecretMock.credentials.tenantid,
         destinationBindingClientSecretMock.credentials.clientid,
-        undefined,
         { access_token: token } as ClientCredentialsResponse
       );
 
@@ -361,8 +348,7 @@ describe('token accessor', () => {
       expect(
         clientCredentialsTokenCache.getToken(
           destinationBindingClientSecretMock.credentials.tenantid,
-          destinationBindingClientSecretMock.credentials.clientid,
-          undefined
+          destinationBindingClientSecretMock.credentials.clientid
         )
       ).toEqual(token);
     });

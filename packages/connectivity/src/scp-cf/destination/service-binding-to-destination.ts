@@ -9,8 +9,7 @@ import type {
   ServiceBindingTransformOptions
 } from './destination-from-vcap';
 import type { Destination } from './destination-service-types';
-import type { IasOptions } from './ias-types';
-import type { IasClientCredentialsResponse } from '../identity-service';
+import type { IasOptions, IasOptionsTechnicalUser } from './ias-types';
 import type { CachingOptions } from '../cache';
 
 /**
@@ -186,72 +185,43 @@ async function xfS4hanaCloudBindingToDestination(
     password: service.credentials.Password
   };
 }
-
-async function iasBindingToDestination(
+/**
+ * Tries to resolve `app_tid` based on supplied IAS options.
+ * @param iasOptions - IAS technical user options.
+ * @param service - Service binding for identity service.
+ * @param options - Service bidning transform options.
+ * @returns The BTP app_tid based on `requestAs` configuration.
+ */
+function iasGetAppTid(
+  iasOptions: IasOptionsTechnicalUser,
   service: Service,
   options?: ServiceBindingTransformOptions
-): Promise<Destination> {
-  const iasOptions = {
-    authenticationType: 'OAuth2ClientCredentials' as const,
-    useCache: options?.useCache !== false,
-    ...(options?.iasOptions || {})
-  } as IasOptions & CachingOptions;
-
-  let accessToken: string | undefined;
-  let iasTenant: string | undefined;
-  let tenantCacheKey: string | undefined;
-
-  // Technical user client credentials grant preperation
-  if (iasOptions.authenticationType === 'OAuth2ClientCredentials') {
-    if (!iasOptions.appTid) {
-      const requestAs = iasOptions.requestAs ?? 'current-tenant';
-      if (requestAs === 'provider-tenant') {
-        iasOptions.appTid = service.app_tid;
-      } else if (requestAs === 'current-tenant') {
-        iasOptions.appTid = options?.jwt?.app_tid;
-      }
-    }
-
-    if (iasOptions.useCache) {
-      iasTenant = parseUrlAndGetHost(service.credentials.url);
-      tenantCacheKey = new URLSearchParams({
-        iasTenant,
-        ...(iasOptions.appTid && { appTid: iasOptions.appTid })
-      }).toString();
-
-      const cached = clientCredentialsTokenCache.getToken(
-        tenantCacheKey,
-        service.credentials.clientid,
-        iasOptions.resource
-      );
-      if (cached) {
-        accessToken = cached.access_token;
-      }
-    }
+): string {
+  const { requestAs } = iasOptions;
+  if (requestAs === 'provider-tenant') {
+    return service.app_tid;
+  }
+  if (requestAs === 'current-tenant' || !requestAs) {
+    return options?.jwt?.app_tid;
   }
 
-  let response: IasClientCredentialsResponse | undefined;
-  if (!accessToken) {
-    response = await getIasClientCredentialsToken(service, {
-      jwt: options?.jwt,
-      ...(options?.iasOptions || {})
-    });
-    accessToken = response.access_token;
+  requestAs satisfies never;
+  throw new Error(`Invalid requestAs value: ${requestAs}`);
+}
 
-    if (
-      iasOptions.authenticationType === 'OAuth2ClientCredentials' &&
-      iasOptions.useCache &&
-      response
-    ) {
-      clientCredentialsTokenCache.cacheToken(
-        tenantCacheKey,
-        service.credentials.clientid,
-        iasOptions.resource,
-        response
-      );
-    }
-  }
-
+/**
+ * Builds destination based on supplied IAS options.
+ * Uses `targetUrl` as the destination URL if supplied and adds `mtlsKeyPair` if available.
+ * @param accessToken - The JWT token to access the service.
+ * @param service - Service binding for identity service.
+ * @param options - Service bidning transform options.
+ * @returns A destination object.
+ */
+function iasBuildDestination(
+  accessToken: string,
+  service: Service,
+  options?: ServiceBindingTransformOptions
+): Destination {
   const destination = buildClientCredentialsDestination(
     accessToken,
     options?.iasOptions?.targetUrl ?? service.credentials.url,
@@ -265,8 +235,62 @@ async function iasBindingToDestination(
       key: service.credentials.key
     };
   }
-
   return destination;
+}
+
+async function iasBindingToDestination(
+  service: Service,
+  options?: ServiceBindingTransformOptions
+): Promise<Destination> {
+  const iasOptions = {
+    authenticationType: 'OAuth2ClientCredentials' as const,
+    useCache: options?.useCache !== false,
+    ...(options?.iasOptions || {})
+  } as IasOptions & CachingOptions;
+
+  const iasInstance = parseUrlAndGetHost(service.credentials.url);
+
+  // Technical user client credentials grant preperation
+  if (iasOptions.authenticationType === 'OAuth2ClientCredentials') {
+    if (!iasOptions.appTid) {
+      iasOptions.appTid = iasGetAppTid(iasOptions, service, options);
+    }
+
+    if (iasOptions.useCache) {
+      const cached = clientCredentialsTokenCache.getTokenIas({
+        iasInstance,
+        appTid: iasOptions.appTid,
+        clientId: service.credentials.clientid,
+        resource: options?.iasOptions?.resource
+      });
+      if (cached) {
+        return iasBuildDestination(cached.access_token, service, options);
+      }
+    }
+  }
+
+  const response = await getIasClientCredentialsToken(service, {
+    jwt: options?.jwt,
+    ...(options?.iasOptions || {})
+  });
+
+  if (
+    iasOptions.authenticationType === 'OAuth2ClientCredentials' &&
+    iasOptions.useCache &&
+    response
+  ) {
+    clientCredentialsTokenCache.cacheTokenIas(
+      {
+        iasInstance,
+        appTid: iasOptions.appTid,
+        clientId: service.credentials.clientid,
+        resource: options?.iasOptions?.resource
+      },
+      response
+    );
+  }
+
+  return iasBuildDestination(response.access_token, service, options);
 }
 
 function buildClientCredentialsDestination(

@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   clientCredentialsTokenCache,
-  getCacheKey
+  getCacheKeyIas
 } from './client-credentials-token-cache';
 
 const oneHourInSeconds = 60 * 60;
@@ -21,7 +21,6 @@ describe('ClientCredentialsTokenCache', () => {
     clientCredentialsTokenCache.cacheToken(
       'subscriber-tenant',
       'clientid',
-      undefined,
       validToken
     );
 
@@ -29,8 +28,7 @@ describe('ClientCredentialsTokenCache', () => {
 
     const valid = clientCredentialsTokenCache.getToken(
       'subscriber-tenant',
-      'clientid',
-      undefined
+      'clientid'
     );
 
     expect(valid).toEqual(validToken);
@@ -50,15 +48,13 @@ describe('ClientCredentialsTokenCache', () => {
     clientCredentialsTokenCache.cacheToken(
       'subscriber-tenant',
       'clientid',
-      undefined,
       expiredToken
     );
     jest.advanceTimersByTime(oneHourInSeconds * 2 * 1000);
 
     const expired = clientCredentialsTokenCache.getToken(
       'subscriber-tenant',
-      'clientid',
-      undefined
+      'clientid'
     );
 
     expect(expired).toBeUndefined();
@@ -79,7 +75,6 @@ describe('ClientCredentialsTokenCache', () => {
     clientCredentialsTokenCache.cacheToken(
       'subscriber-tenant',
       'clientid',
-      undefined,
       validToken
     );
 
@@ -87,8 +82,7 @@ describe('ClientCredentialsTokenCache', () => {
 
     const invalid = clientCredentialsTokenCache.getToken(
       'subscriber-tenant',
-      undefined as any,
-      undefined
+      undefined as any
     );
 
     expect(invalid).toBeUndefined();
@@ -105,26 +99,20 @@ describe('ClientCredentialsTokenCache', () => {
       jti: '',
       scope: ''
     };
+    const iasTokenCacheData = {
+      iasInstance: 'subscriber-tenant',
+      clientId: 'clientid',
+      resource: { name: 'my-app' }
+    };
 
     beforeEach(() => {
       clientCredentialsTokenCache.clear();
     });
 
     it('should cache and retrieve token with resource name', () => {
-      const resource = { name: 'my-app' };
+      clientCredentialsTokenCache.cacheTokenIas(iasTokenCacheData, validToken);
 
-      clientCredentialsTokenCache.cacheToken(
-        'subscriber-tenant',
-        'clientid',
-        resource,
-        validToken
-      );
-
-      const cached = clientCredentialsTokenCache.getToken(
-        'subscriber-tenant',
-        'clientid',
-        resource
-      );
+      const cached = clientCredentialsTokenCache.getTokenIas(iasTokenCacheData);
 
       expect(cached).toEqual(validToken);
     });
@@ -132,18 +120,18 @@ describe('ClientCredentialsTokenCache', () => {
     it('should cache and retrieve token with resource clientId', () => {
       const resource = { providerClientId: 'resource-client-123' };
 
-      clientCredentialsTokenCache.cacheToken(
-        'subscriber-tenant',
-        'clientid',
-        resource,
+      clientCredentialsTokenCache.cacheTokenIas(
+        {
+          ...iasTokenCacheData,
+          resource
+        },
         validToken
       );
 
-      const cached = clientCredentialsTokenCache.getToken(
-        'subscriber-tenant',
-        'clientid',
+      const cached = clientCredentialsTokenCache.getTokenIas({
+        ...iasTokenCacheData,
         resource
-      );
+      });
 
       expect(cached).toEqual(validToken);
     });
@@ -154,18 +142,18 @@ describe('ClientCredentialsTokenCache', () => {
         providerTenantId: 'tenant-456'
       };
 
-      clientCredentialsTokenCache.cacheToken(
-        'subscriber-tenant',
-        'clientid',
-        resource,
+      clientCredentialsTokenCache.cacheTokenIas(
+        {
+          ...iasTokenCacheData,
+          resource
+        },
         validToken
       );
 
-      const cached = clientCredentialsTokenCache.getToken(
-        'subscriber-tenant',
-        'clientid',
+      const cached = clientCredentialsTokenCache.getTokenIas({
+        ...iasTokenCacheData,
         resource
-      );
+      });
 
       expect(cached).toEqual(validToken);
     });
@@ -174,81 +162,145 @@ describe('ClientCredentialsTokenCache', () => {
       const resource1 = { name: 'app-1' };
       const resource2 = { name: 'app-2' };
 
-      clientCredentialsTokenCache.cacheToken(
-        'subscriber-tenant',
-        'clientid',
-        resource1,
+      clientCredentialsTokenCache.cacheTokenIas(
+        {
+          ...iasTokenCacheData,
+          resource: resource1
+        },
         validToken
       );
 
-      const cached1 = clientCredentialsTokenCache.getToken(
-        'subscriber-tenant',
-        'clientid',
-        resource1
-      );
-      const cached2 = clientCredentialsTokenCache.getToken(
-        'subscriber-tenant',
-        'clientid',
-        resource2
-      );
+      const cached1 = clientCredentialsTokenCache.getTokenIas({
+        ...iasTokenCacheData,
+        resource: resource1
+      });
+      const cached2 = clientCredentialsTokenCache.getTokenIas({
+        ...iasTokenCacheData,
+        resource: resource2
+      });
 
       expect(cached1).toEqual(validToken);
       expect(cached2).toBeUndefined();
     });
 
-    it('should isolate cache by resource clientId', () => {
+    it('should isolate cache by resource providerClientId', () => {
       const resource1 = { providerClientId: 'client-1' };
       const resource2 = { providerClientId: 'client-2' };
 
-      clientCredentialsTokenCache.cacheToken(
-        'subscriber-tenant',
-        'clientid',
-        resource1,
+      clientCredentialsTokenCache.cacheTokenIas(
+        {
+          ...iasTokenCacheData,
+          resource: resource1
+        },
         validToken
       );
 
-      const cached1 = clientCredentialsTokenCache.getToken(
-        'subscriber-tenant',
-        'clientid',
-        resource1
-      );
-      const cached2 = clientCredentialsTokenCache.getToken(
-        'subscriber-tenant',
-        'clientid',
-        resource2
-      );
+      const cached1 = clientCredentialsTokenCache.getTokenIas({
+        ...iasTokenCacheData,
+        resource: resource1
+      });
+      const cached2 = clientCredentialsTokenCache.getTokenIas({
+        ...iasTokenCacheData,
+        resource: resource2
+      });
 
       expect(cached1).toEqual(validToken);
       expect(cached2).toBeUndefined();
     });
 
     it('should generate correct cache key with resource name', () => {
-      const key = getCacheKey('tenant-123', 'client-id', { name: 'my-app' });
-      expect(key).toBe('tenant-123:client-id:name=my-app');
+      const key = getCacheKeyIas({
+        iasInstance: 'tenant-123',
+        clientId: 'client-id',
+        resource: { name: 'my-app' }
+      });
+      expect(key).toBe('tenant-123::client-id:name=my-app');
     });
 
     it('should generate correct cache key with resource clientId only', () => {
-      const key = getCacheKey('tenant-123', 'client-id', {
-        providerClientId: 'resource-client-123'
+      const key = getCacheKeyIas({
+        iasInstance: 'tenant-123',
+        clientId: 'client-id',
+        resource: {
+          providerClientId: 'resource-client-123'
+        }
       });
       expect(key).toBe(
-        'tenant-123:client-id:provider-clientId=resource-client-123'
+        'tenant-123::client-id:provider-clientId=resource-client-123'
       );
     });
 
     it('should generate correct cache key with resource clientId and tenantId', () => {
-      const key = getCacheKey('tenant-123', 'client-id', {
-        providerClientId: 'resource-client-123',
-        providerTenantId: 'tenant-456'
+      const key = getCacheKeyIas({
+        iasInstance: 'tenant-123',
+        clientId: 'client-id',
+        resource: {
+          providerClientId: 'resource-client-123',
+          providerTenantId: 'tenant-456'
+        }
       });
       expect(key).toBe(
-        'tenant-123:client-id:provider-clientId=resource-client-123:provider-tenantId=tenant-456'
+        'tenant-123::client-id:provider-clientId=resource-client-123:provider-tenantId=tenant-456'
       );
     });
 
     it('should generate cache key without resource when not provided', () => {
-      const key = getCacheKey('tenant-123', 'client-id');
-      expect(key).toBe('tenant-123:client-id');
+      const key = getCacheKeyIas({
+        iasInstance: 'tenant-123',
+        clientId: 'client-id'
+      });
+      expect(key).toBe('tenant-123::client-id');
+    });
+
+    it('should isolate cache by appTid', () => {
+      clientCredentialsTokenCache.cacheTokenIas(
+        {
+          ...iasTokenCacheData,
+          appTid: 'tenant-123'
+        },
+        validToken
+      );
+
+      const cached1 = clientCredentialsTokenCache.getTokenIas({
+        ...iasTokenCacheData,
+        appTid: 'tenant-123'
+      });
+      const cached2 = clientCredentialsTokenCache.getTokenIas({
+        ...iasTokenCacheData,
+        appTid: 'tenant-456'
+      });
+      const cached3 = clientCredentialsTokenCache.getTokenIas({
+        ...iasTokenCacheData
+        // No appTid
+      });
+
+      expect(cached1).toEqual(validToken);
+      expect(cached2).toBeUndefined();
+      expect(cached3).toBeUndefined();
+    });
+
+    it('should generate correct cache key with appTid', () => {
+      const key = getCacheKeyIas({
+        iasInstance: 'tenant-123',
+        clientId: 'client-id',
+        appTid: 'app-tenant-456'
+      });
+      expect(key).toBe('tenant-123:app-tenant-456:client-id');
+    });
+
+    it('should generate cache key with double colon when appTid is undefined', () => {
+      const key1 = getCacheKeyIas({
+        iasInstance: 'tenant-123',
+        clientId: 'client-id',
+        appTid: undefined
+      });
+      const key2 = getCacheKeyIas({
+        iasInstance: 'tenant-123',
+        clientId: 'client-id'
+      });
+      // Both should produce the same key with double colon
+      expect(key1).toBe('tenant-123::client-id');
+      expect(key2).toBe('tenant-123::client-id');
     });
   });
 });

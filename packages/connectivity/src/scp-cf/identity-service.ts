@@ -157,7 +157,7 @@ async function getIasClientCredentialsTokenImpl(
     arg.assertion
   );
 
-  const tokenOptions: IdentityService.TokenFetchOptions &
+  let tokenOptions: IdentityService.TokenFetchOptions &
     IdentityService.IdentityServiceTokenFetchOptions = {
     token_format: 'jwt'
   };
@@ -173,7 +173,7 @@ async function getIasClientCredentialsTokenImpl(
 
   // Add any extra parameters
   if (arg.extraParams) {
-    Object.assign(tokenOptions, arg.extraParams);
+    tokenOptions = { ...tokenOptions, ...arg.extraParams };
   }
 
   let response: undefined | IdentityService.TokenFetchResponse;

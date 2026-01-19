@@ -417,11 +417,11 @@ describe('service binding to destination', () => {
       );
 
       // Verify cache was populated with provider tenant
-      const cached = clientCredentialsTokenCache.getToken(
-        'iasTenant=tenant.accounts.ondemand.com&appTid=provider-tenant-id',
-        'identity-clientid',
-        undefined
-      );
+      const cached = clientCredentialsTokenCache.getTokenIas({
+        iasInstance: 'tenant.accounts.ondemand.com',
+        appTid: 'provider-tenant-id',
+        clientId: 'identity-clientid'
+      });
       expect(cached?.access_token).toBe('ias-access-token');
 
       // Restore original VCAP_SERVICES
@@ -438,11 +438,11 @@ describe('service binding to destination', () => {
       );
 
       // Verify cache was populated with current tenant
-      const cached = clientCredentialsTokenCache.getToken(
-        'iasTenant=tenant.accounts.ondemand.com&appTid=current-tenant-id',
-        'identity-clientid',
-        undefined
-      );
+      const cached = clientCredentialsTokenCache.getTokenIas({
+        iasInstance: 'tenant.accounts.ondemand.com',
+        appTid: 'current-tenant-id',
+        clientId: 'identity-clientid'
+      });
       expect(cached?.access_token).toBe('ias-access-token');
     });
 
@@ -455,11 +455,11 @@ describe('service binding to destination', () => {
       );
 
       // Verify cache was populated with current tenant (default behavior)
-      const cached = clientCredentialsTokenCache.getToken(
-        'iasTenant=tenant.accounts.ondemand.com&appTid=current-tenant-id',
-        'identity-clientid',
-        undefined
-      );
+      const cached = clientCredentialsTokenCache.getTokenIas({
+        iasInstance: 'tenant.accounts.ondemand.com',
+        appTid: 'current-tenant-id',
+        clientId: 'identity-clientid'
+      });
       expect(cached?.access_token).toBe('ias-access-token');
     });
 
@@ -489,11 +489,11 @@ describe('service binding to destination', () => {
       );
 
       // Verify cache was populated with explicit appTid, not provider tenant
-      const cached = clientCredentialsTokenCache.getToken(
-        'iasTenant=tenant.accounts.ondemand.com&appTid=explicit-tenant-789',
-        'identity-clientid',
-        undefined
-      );
+      const cached = clientCredentialsTokenCache.getTokenIas({
+        iasInstance: 'tenant.accounts.ondemand.com',
+        appTid: 'explicit-tenant-789',
+        clientId: 'identity-clientid'
+      });
       expect(cached?.access_token).toBe('ias-access-token');
 
       // Restore original VCAP_SERVICES
@@ -725,11 +725,10 @@ describe('service binding to destination', () => {
       expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
 
       // Verify cache was populated with just IAS tenant (no app_tid)
-      const cached = clientCredentialsTokenCache.getToken(
-        'iasTenant=tenant.accounts.ondemand.com',
-        'identity-clientid',
-        undefined
-      );
+      const cached = clientCredentialsTokenCache.getTokenIas({
+        iasInstance: 'tenant.accounts.ondemand.com',
+        clientId: 'identity-clientid'
+      });
       expect(cached?.access_token).toBe('ias-access-token');
 
       // Second call without app_tid should use cache

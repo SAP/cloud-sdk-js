@@ -2,6 +2,7 @@ import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
 import { getIasClientCredentialsToken } from '../identity-service';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
+import { parseUrlAndGetHost } from '../subdomain-replacer';
 import type { Service } from '../environment-accessor';
 import type {
   ServiceBindingTransformFunction,
@@ -197,9 +198,11 @@ async function iasBindingToDestination(
   } as IasOptions & CachingOptions;
 
   let accessToken: string | undefined;
+  let iasTenant: string | undefined;
+  let tenantCacheKey: string | undefined;
 
+  // Technical user client credentials grant preperation
   if (iasOptions.authenticationType === 'OAuth2ClientCredentials') {
-    // Technical user client credentials grant
     if (!iasOptions.appTid) {
       const requestAs = iasOptions.requestAs ?? 'current-tenant';
       if (requestAs === 'provider-tenant') {
@@ -207,16 +210,22 @@ async function iasBindingToDestination(
       } else if (requestAs === 'current-tenant') {
         iasOptions.appTid = options?.jwt?.app_tid;
       }
+    }
 
-      if (iasOptions.useCache) {
-        const cached = clientCredentialsTokenCache.getToken(
-          iasOptions.appTid,
-          service.credentials.clientid,
-          iasOptions.resource
-        );
-        if (cached) {
-          accessToken = cached.access_token;
-        }
+    if (iasOptions.useCache) {
+      iasTenant = parseUrlAndGetHost(service.credentials.url);
+      tenantCacheKey = new URLSearchParams({
+        iasTenant,
+        ...(iasOptions.appTid && { appTid: iasOptions.appTid })
+      }).toString();
+
+      const cached = clientCredentialsTokenCache.getToken(
+        tenantCacheKey,
+        service.credentials.clientid,
+        iasOptions.resource
+      );
+      if (cached) {
+        accessToken = cached.access_token;
       }
     }
   }
@@ -235,7 +244,7 @@ async function iasBindingToDestination(
       response
     ) {
       clientCredentialsTokenCache.cacheToken(
-        iasOptions.appTid,
+        tenantCacheKey,
         service.credentials.clientid,
         iasOptions.resource,
         response

@@ -23,11 +23,24 @@ export function getIssuerSubdomain(
 function getHost(url: URL): string {
   const { host } = url;
   if (!host || host.indexOf('.') === -1) {
-    throw new Error(
-      `Failed to determine sub-domain: invalid host in "${url}".`
-    );
+    throw new Error(`Failed to determine hostname: invalid host in "${url}".`);
   }
   return host;
+}
+
+/**
+ * @internal
+ * This functions returns the host part of an URL, with URL validation.
+ * @param url
+ * @returns host
+ */
+export function parseUrlAndGetHost(url: string): string {
+  if (!isValidUrl(url)) {
+    throw new Error(`URL is not a valid URL: "${url}".`);
+  }
+
+  const parsed = new URL(url);
+  return getHost(parsed);
 }
 
 function isValidUrl(url: string): boolean {

@@ -418,7 +418,7 @@ describe('service binding to destination', () => {
 
       // Verify cache was populated with provider tenant
       const cached = clientCredentialsTokenCache.getToken(
-        'provider-tenant-id',
+        'iasTenant=tenant.accounts.ondemand.com&appTid=provider-tenant-id',
         'identity-clientid',
         undefined
       );
@@ -439,7 +439,7 @@ describe('service binding to destination', () => {
 
       // Verify cache was populated with current tenant
       const cached = clientCredentialsTokenCache.getToken(
-        'current-tenant-id',
+        'iasTenant=tenant.accounts.ondemand.com&appTid=current-tenant-id',
         'identity-clientid',
         undefined
       );
@@ -456,7 +456,7 @@ describe('service binding to destination', () => {
 
       // Verify cache was populated with current tenant (default behavior)
       const cached = clientCredentialsTokenCache.getToken(
-        'current-tenant-id',
+        'iasTenant=tenant.accounts.ondemand.com&appTid=current-tenant-id',
         'identity-clientid',
         undefined
       );
@@ -490,7 +490,7 @@ describe('service binding to destination', () => {
 
       // Verify cache was populated with explicit appTid, not provider tenant
       const cached = clientCredentialsTokenCache.getToken(
-        'explicit-tenant-789',
+        'iasTenant=tenant.accounts.ondemand.com&appTid=explicit-tenant-789',
         'identity-clientid',
         undefined
       );
@@ -714,6 +714,73 @@ describe('service binding to destination', () => {
       );
 
       // Should be called twice - no caching for JWT bearer
+      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(2);
+    });
+
+    it('handles missing app_tid (no JWT, no provider tenant)', async () => {
+      await transformServiceBindingToDestination(
+        resolveServiceBinding('identity')
+      );
+
+      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+
+      // Verify cache was populated with just IAS tenant (no app_tid)
+      const cached = clientCredentialsTokenCache.getToken(
+        'iasTenant=tenant.accounts.ondemand.com',
+        'identity-clientid',
+        undefined
+      );
+      expect(cached?.access_token).toBe('ias-access-token');
+
+      // Second call without app_tid should use cache
+      await transformServiceBindingToDestination(
+        resolveServiceBinding('identity')
+      );
+
+      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+    });
+
+    it('isolates cache by IAS tenant (different service URLs)', async () => {
+      const iasService1 = {
+        ...services.identity[0],
+        name: 'ias-service-1',
+        credentials: {
+          ...services.identity[0].credentials,
+          url: 'https://tenant1.accounts.ondemand.com',
+          clientid: 'client-1'
+        }
+      };
+
+      const iasService2 = {
+        ...services.identity[0],
+        name: 'ias-service-2',
+        credentials: {
+          ...services.identity[0].credentials,
+          url: 'https://tenant2.accounts.ondemand.com',
+          clientid: 'client-2'
+        }
+      };
+
+      // First call to IAS service 1
+      await transformServiceBindingToDestination(iasService1, {
+        jwt: { app_tid: 'tenant-123' }
+      });
+
+      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+
+      // Second call to IAS service 2 with same app_tid should NOT use cache
+      // because IAS tenant is different
+      await transformServiceBindingToDestination(iasService2, {
+        jwt: { app_tid: 'tenant-123' }
+      });
+
+      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(2);
+
+      // Third call to IAS service 1 again with same app_tid should use cache
+      await transformServiceBindingToDestination(iasService1, {
+        jwt: { app_tid: 'tenant-123' }
+      });
+
       expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(2);
     });
   });

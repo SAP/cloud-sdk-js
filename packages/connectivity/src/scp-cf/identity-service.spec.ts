@@ -272,7 +272,9 @@ describe('getIasClientCredentialsToken', () => {
       });
 
       expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(userAssertion, {
-        token_format: 'jwt'
+        token_format: 'jwt',
+        app_tid: 'tenant-456',
+        refresh_expiry: 0
       });
       expect(mockFetchClientCredentialsToken).not.toHaveBeenCalled();
     });
@@ -345,7 +347,8 @@ describe('getIasClientCredentialsToken', () => {
       });
 
       expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
-        token_format: 'jwt'
+        token_format: 'jwt',
+        app_tid: null
       });
     });
 
@@ -371,7 +374,8 @@ describe('getIasClientCredentialsToken', () => {
       );
 
       expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
-        token_format: 'jwt'
+        token_format: 'jwt',
+        app_tid: null
       });
     });
 
@@ -425,8 +429,29 @@ describe('getIasClientCredentialsToken', () => {
       expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
         resource: 'urn:sap:identity:application:provider:name:my-app',
         refresh_expiry: 0,
-        token_format: 'jwt'
+        token_format: 'jwt',
+        app_tid: null
       });
+    });
+
+    it('includes refresh_token when returned by fetchJwtBearerToken', async () => {
+      const assertion = signedJwt({
+        iss: subscriberUrl,
+        user_uuid: 'user-123'
+      });
+
+      const responseWithRefreshToken = {
+        ...mockTokenResponse,
+        refresh_token: 'test-refresh-token'
+      };
+      mockFetchJwtBearerToken.mockResolvedValue(responseWithRefreshToken);
+
+      const result = await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion
+      });
+
+      expect(result.refresh_token).toBe('test-refresh-token');
     });
 
     it('disables refresh tokens for JWT bearer exchanges if app_tid is set', async () => {
@@ -443,6 +468,63 @@ describe('getIasClientCredentialsToken', () => {
 
       expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
         app_tid: 'some-tenant-id',
+        refresh_expiry: 0,
+        token_format: 'jwt'
+      });
+    });
+
+    it('extracts app_tid from assertion when not explicitly provided', async () => {
+      const assertion = signedJwt({
+        iss: subscriberUrl,
+        user_uuid: 'user-123',
+        app_tid: 'extracted-tenant-id'
+      });
+
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion
+      });
+
+      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+        app_tid: 'extracted-tenant-id',
+        refresh_expiry: 0,
+        token_format: 'jwt'
+      });
+    });
+
+    it('sets app_tid to null when neither app_tid nor zone_uuid exist in assertion', async () => {
+      const assertion = signedJwt({
+        iss: subscriberUrl,
+        user_uuid: 'user-123'
+        // No app_tid or zone_uuid
+      });
+
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion
+      });
+
+      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+        app_tid: null,
+        token_format: 'jwt'
+      });
+    });
+
+    it('does not override explicit app_tid with value from assertion', async () => {
+      const assertion = signedJwt({
+        iss: subscriberUrl,
+        user_uuid: 'user-123',
+        app_tid: 'assertion-tenant-id'
+      });
+
+      await getIasClientCredentialsToken(providerService, {
+        authenticationType: 'OAuth2JWTBearer',
+        assertion,
+        appTid: 'explicit-tenant-id'
+      });
+
+      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+        app_tid: 'explicit-tenant-id',
         refresh_expiry: 0,
         token_format: 'jwt'
       });

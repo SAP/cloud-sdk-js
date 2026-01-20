@@ -49,6 +49,10 @@ export interface IasClientCredentialsResponse extends ClientCredentialsResponse 
    * IAS tokens don't have scope property.
    */
   scope: '';
+  /**
+   * @internal
+   */
+  refresh_token?: string;
 }
 
 /**
@@ -191,6 +195,13 @@ async function getIasClientCredentialsTokenImpl(
       tokenOptions.refresh_expiry = 0;
     }
 
+    // Extract appTid from assertion if not provided
+    const token = new IdentityServiceToken(arg.assertion);
+    if (!tokenOptions.app_tid) {
+      // Set to `null` if not prevent xssec from also trying to extract it internally
+      tokenOptions.app_tid = token.appTid ?? null;
+    }
+
     // Workaround for IAS bug
     // JAVA SDK: https://github.com/SAP/cloud-sdk-java/blob/61903347b607a8397f7930709cd52526f05269b1/cloudplatform/connectivity-oauth/src/main/java/com/sap/cloud/sdk/cloudplatform/connectivity/OAuth2Service.java#L225-L236
     // Issue: https://jira.tools.sap/browse/SECREQ-5220
@@ -222,6 +233,10 @@ async function getIasClientCredentialsTokenImpl(
     scim_id: decodedJwt.scimId,
     // Added if resource parameter was specified
     ias_apis: decodedJwt?.consumedApis,
-    custom_iss: decodedJwt.customIssuer ?? undefined
+    custom_iss: decodedJwt.customIssuer ?? undefined,
+    // fetchJwtBearerToken may return a refresh token
+    refresh_token: (
+      response as unknown as IdentityService.RefreshableTokenFetchResponse
+    )?.refresh_token
   };
 }

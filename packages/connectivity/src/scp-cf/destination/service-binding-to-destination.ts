@@ -189,14 +189,14 @@ async function xfS4hanaCloudBindingToDestination(
  * Tries to resolve `app_tid` based on supplied IAS options.
  * @param iasOptions - IAS technical user options.
  * @param service - Service binding for identity service.
- * @param options - Service bidning transform options.
+ * @param options - Service binding transform options.
  * @returns The BTP app_tid based on `requestAs` configuration.
  */
 function getIasAppTid(
   iasOptions: IasOptionsTechnicalUser,
   service: Service,
   options?: ServiceBindingTransformOptions
-): string {
+): string | undefined {
   const { requestAs } = iasOptions;
   if (requestAs === 'provider-tenant') {
     return service.app_tid;
@@ -296,7 +296,7 @@ async function transformIasBindingToDestination(
 function buildClientCredentialsDestination(
   token: string,
   url: string,
-  name
+  name: string
 ): Destination {
   const expirationTime = decodeJwt(token).exp;
   const expiresIn = expirationTime

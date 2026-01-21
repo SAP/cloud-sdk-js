@@ -1496,10 +1496,10 @@
   dependencies:
     "@sap/hdi-deploy" "^5"
 
-"@sap/cds@>=8.3", "@sap/cds@^9.6.3":
-  version "9.6.3"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-9.6.3.tgz#1c247c0a1087a5493c937b8d9136ddf68c859864"
-  integrity sha512-VZ5fDJt6ZAI6UzQnOzOgjgVjRRbI9Z1T1eVVCZ7FJkVTPSC05LVcKJ4nhjKgecE6sGkn7QyphIhu/933oYPccw==
+"@sap/cds@>=8.3", "@sap/cds@^9.6.4":
+  version "9.6.4"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-9.6.4.tgz#21356ded53d1c7c099a00e5a23103c5df7b7ead5"
+  integrity sha512-GPVuMxfQsuSs4q27gdFoof4rJhugXwhn7CSsP25XIRbyxZF4Us6pJrDgHUCip0IV9xUn/2CY/BxXPlhE0+Y+FA==
   dependencies:
     "@sap/cds-compiler" "^6.3"
     "@sap/cds-fiori" "^2"
@@ -8879,9 +8879,9 @@ tar-stream@^3.1.5:
     streamx "^2.15.0"
 
 tar@>=6.1.2, tar@^6.0.2, tar@^6.1.11, tar@^6.1.2:
-  version "7.5.4"
-  resolved "https://registry.npmjs.org/tar/-/tar-7.5.4.tgz#18b53b44f939a7e03ed874f1fafe17d29e306c81"
-  integrity sha512-AN04xbWGrSTDmVwlI4/GTlIIwMFk/XEv7uL8aa57zuvRy6s4hdBed+lVq2fAZ89XDa7Us3ANXcE3Tvqvja1kTA==
+  version "7.5.5"
+  resolved "https://registry.npmjs.org/tar/-/tar-7.5.5.tgz#d9b0a7ad90b1f20fb468480295f85e4e9b7813e9"
+  integrity sha512-ocjwSUBo2V8ExKxy9FH6iROIsK60OCW//h14MFYpivNSYIj7ntgm35ijGT82Jl//xwbxBhIYXkfAovjtVm9nrA==
   dependencies:
     "@isaacs/fs-minipass" "^4.0.0"
     chownr "^3.0.0"

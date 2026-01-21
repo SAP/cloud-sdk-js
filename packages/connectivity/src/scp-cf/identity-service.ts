@@ -140,47 +140,32 @@ function convertResourceToUrn(resource: IasResource): string {
     return `urn:sap:identity:application:provider:name:${resource.name}`;
   }
 
-  let urn = `urn:sap:identity:application:provider:clientid:${resource.providerClientId}`;
+  const segments = [
+    `urn:sap:identity:application:provider:clientid:${resource.providerClientId}`
+  ];
   if (resource.providerTenantId) {
-    urn += `:apptid:${resource.providerTenantId}`;
+    segments.push(`apptid:${resource.providerTenantId}`);
   }
-  return urn;
+  return segments.join(':');
 }
 
 /**
- * Implementation of the IAS client credentials token retrieval using @sap/xssec.
- * @param arg - The parameters for IAS token retrieval.
- * @returns A promise resolving to the client credentials response.
+ * Transforms IAS options to the format expected by @sap/xssec.
+ * @param arg - The IAS parameters including options.
+ * @returns The transformed token fetch options.
  * @internal
  */
-async function getIasClientCredentialsTokenImpl(
+function transformIasOptionsToXssecArgs(
   arg: IasParameters
-): Promise<IasClientCredentialsResponse> {
-  const identityService = getIdentityServiceInstanceFromCredentials(
-    arg.serviceCredentials,
-    arg.assertion
-  );
-
-  let tokenOptions: IdentityService.TokenFetchOptions &
-    IdentityService.IdentityServiceTokenFetchOptions = {
-    token_format: 'jwt'
-  };
-
-  // Stringify resource
-  if (arg.resource) {
-    tokenOptions.resource = convertResourceToUrn(arg.resource);
-  }
-
-  if (arg.appTid) {
-    tokenOptions.app_tid = arg.appTid;
-  }
-
-  // Add any extra parameters
-  if (arg.extraParams) {
-    tokenOptions = { ...tokenOptions, ...arg.extraParams };
-  }
-
-  let response: undefined | IdentityService.TokenFetchResponse;
+): IdentityService.TokenFetchOptions &
+  IdentityService.IdentityServiceTokenFetchOptions {
+  const tokenOptions = {
+    token_format: 'jwt',
+    ...(arg.resource && { resource: convertResourceToUrn(arg.resource) }),
+    ...(arg.appTid && { app_tid: arg.appTid }),
+    ...(arg.extraParams || {})
+  } satisfies IdentityService.TokenFetchOptions &
+    IdentityService.IdentityServiceTokenFetchOptions;
 
   if (arg.authenticationType === 'OAuth2JWTBearer') {
     // JWT bearer grant for business user propagation
@@ -198,8 +183,8 @@ async function getIasClientCredentialsTokenImpl(
     // Extract appTid from assertion if not provided
     const token = new IdentityServiceToken(arg.assertion);
     if (!tokenOptions.app_tid) {
-      // Set to `null` if not prevent xssec from also trying to extract it internally
-      tokenOptions.app_tid = token.appTid ?? null;
+      // Set to `null` if not set to prevent xssec from also trying to extract it internally
+      tokenOptions.app_tid = token?.appTid || (null as unknown as undefined);
     }
 
     // Workaround for IAS bug
@@ -208,15 +193,33 @@ async function getIasClientCredentialsTokenImpl(
     if (tokenOptions.app_tid) {
       tokenOptions.refresh_expiry = 0;
     }
-
-    response = await identityService.fetchJwtBearerToken(
-      arg.assertion,
-      tokenOptions
-    );
-  } else {
-    // Technical user client credentials grant
-    response = await identityService.fetchClientCredentialsToken(tokenOptions);
   }
+
+  return tokenOptions;
+}
+
+/**
+ * Implementation of the IAS client credentials token retrieval using @sap/xssec.
+ * @param arg - The parameters for IAS token retrieval.
+ * @returns A promise resolving to the client credentials response.
+ * @internal
+ */
+async function getIasClientCredentialsTokenImpl(
+  arg: IasParameters
+): Promise<IasClientCredentialsResponse> {
+  const identityService = getIdentityServiceInstanceFromCredentials(
+    arg.serviceCredentials,
+    arg.assertion
+  );
+
+  const tokenOptions = transformIasOptionsToXssecArgs(arg);
+
+  const response: IdentityService.TokenFetchResponse =
+    arg.authenticationType === 'OAuth2JWTBearer'
+      ? // JWT bearer grant for business user access
+        await identityService.fetchJwtBearerToken(arg.assertion, tokenOptions)
+      : // Technical user client credentials grant
+        await identityService.fetchClientCredentialsToken(tokenOptions);
 
   const decodedJwt = new IdentityServiceToken(response.access_token);
 

@@ -373,7 +373,7 @@ describe('service binding to destination', () => {
     );
   });
 
-  describe('iasBindingToDestination requestAs handling', () => {
+  describe('transformIasBindingToDestination requestAs handling', () => {
     beforeEach(() => {
       jest.clearAllMocks();
       clientCredentialsTokenCache.clear();
@@ -501,7 +501,7 @@ describe('service binding to destination', () => {
     });
   });
 
-  describe('iasBindingToDestination cache functionality', () => {
+  describe('transformIasBindingToDestination cache functionality', () => {
     beforeEach(() => {
       jest.clearAllMocks();
       clientCredentialsTokenCache.clear();

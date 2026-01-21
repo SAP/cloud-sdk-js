@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   clientCredentialsTokenCache,
-  getCacheKeyIas
+  getIasCacheKey
 } from './client-credentials-token-cache';
 
 const oneHourInSeconds = 60 * 60;
@@ -110,7 +110,7 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should cache and retrieve token with resource name', () => {
-      clientCredentialsTokenCache.cacheTokenIas(iasTokenCacheData, validToken);
+      clientCredentialsTokenCache.cacheIasToken(iasTokenCacheData, validToken);
 
       const cached = clientCredentialsTokenCache.getTokenIas(iasTokenCacheData);
 
@@ -120,7 +120,7 @@ describe('ClientCredentialsTokenCache', () => {
     it('should cache and retrieve token with resource clientId', () => {
       const resource = { providerClientId: 'resource-client-123' };
 
-      clientCredentialsTokenCache.cacheTokenIas(
+      clientCredentialsTokenCache.cacheIasToken(
         {
           ...iasTokenCacheData,
           resource
@@ -142,7 +142,7 @@ describe('ClientCredentialsTokenCache', () => {
         providerTenantId: 'tenant-456'
       };
 
-      clientCredentialsTokenCache.cacheTokenIas(
+      clientCredentialsTokenCache.cacheIasToken(
         {
           ...iasTokenCacheData,
           resource
@@ -162,7 +162,7 @@ describe('ClientCredentialsTokenCache', () => {
       const resource1 = { name: 'app-1' };
       const resource2 = { name: 'app-2' };
 
-      clientCredentialsTokenCache.cacheTokenIas(
+      clientCredentialsTokenCache.cacheIasToken(
         {
           ...iasTokenCacheData,
           resource: resource1
@@ -187,7 +187,7 @@ describe('ClientCredentialsTokenCache', () => {
       const resource1 = { providerClientId: 'client-1' };
       const resource2 = { providerClientId: 'client-2' };
 
-      clientCredentialsTokenCache.cacheTokenIas(
+      clientCredentialsTokenCache.cacheIasToken(
         {
           ...iasTokenCacheData,
           resource: resource1
@@ -209,7 +209,7 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should generate correct cache key with resource name', () => {
-      const key = getCacheKeyIas({
+      const key = getIasCacheKey({
         iasInstance: 'tenant-123',
         clientId: 'client-id',
         resource: { name: 'my-app' }
@@ -218,7 +218,7 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should generate correct cache key with resource clientId only', () => {
-      const key = getCacheKeyIas({
+      const key = getIasCacheKey({
         iasInstance: 'tenant-123',
         clientId: 'client-id',
         resource: {
@@ -231,7 +231,7 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should generate correct cache key with resource clientId and tenantId', () => {
-      const key = getCacheKeyIas({
+      const key = getIasCacheKey({
         iasInstance: 'tenant-123',
         clientId: 'client-id',
         resource: {
@@ -245,7 +245,7 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should generate cache key without resource when not provided', () => {
-      const key = getCacheKeyIas({
+      const key = getIasCacheKey({
         iasInstance: 'tenant-123',
         clientId: 'client-id'
       });
@@ -253,7 +253,7 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should isolate cache by appTid', () => {
-      clientCredentialsTokenCache.cacheTokenIas(
+      clientCredentialsTokenCache.cacheIasToken(
         {
           ...iasTokenCacheData,
           appTid: 'tenant-123'
@@ -280,7 +280,7 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should generate correct cache key with appTid', () => {
-      const key = getCacheKeyIas({
+      const key = getIasCacheKey({
         iasInstance: 'tenant-123',
         clientId: 'client-id',
         appTid: 'app-tenant-456'
@@ -289,12 +289,12 @@ describe('ClientCredentialsTokenCache', () => {
     });
 
     it('should generate cache key with double colon when appTid is undefined', () => {
-      const key1 = getCacheKeyIas({
+      const key1 = getIasCacheKey({
         iasInstance: 'tenant-123',
         clientId: 'client-id',
         appTid: undefined
       });
-      const key2 = getCacheKeyIas({
+      const key2 = getIasCacheKey({
         iasInstance: 'tenant-123',
         clientId: 'client-id'
       });

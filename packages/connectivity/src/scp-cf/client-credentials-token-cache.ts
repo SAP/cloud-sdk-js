@@ -32,13 +32,13 @@ const ClientCredentialsTokenCache = (
 
   getTokenIas: (
     data: IasClientCredentialsCacheKeyData
-  ): ClientCredentialsResponse | undefined => cache.get(getCacheKeyIas(data)),
+  ): ClientCredentialsResponse | undefined => cache.get(getIasCacheKey(data)),
 
-  cacheTokenIas: (
+  cacheIasToken: (
     data: IasClientCredentialsCacheKeyData,
     tokenResponse: ClientCredentialsResponse
   ): void => {
-    cache.set(getCacheKeyIas(data), {
+    cache.set(getIasCacheKey(data), {
       entry: tokenResponse,
       expires: tokenResponse.expires_in
         ? Date.now() + tokenResponse.expires_in * 1000
@@ -131,7 +131,7 @@ interface IasClientCredentialsCacheKeyData {
  * @param data.resource - The App-To-App resource the token is scoped for.
  * @returns The cache key.
  */
-export function getCacheKeyIas(
+export function getIasCacheKey(
   data: IasClientCredentialsCacheKeyData
 ): string | undefined {
   const { iasInstance, appTid, clientId, resource } = data;
@@ -149,9 +149,12 @@ export function getCacheKeyIas(
     return;
   }
 
-  const output = [iasInstance, appTid || '', clientId];
-  const normalizedResource = normalizeResource(resource);
-  output.push(...normalizedResource);
+  const output = [
+    iasInstance,
+    appTid || '',
+    clientId,
+    ...normalizeResource(resource)
+  ];
 
   return output.join(':');
 }

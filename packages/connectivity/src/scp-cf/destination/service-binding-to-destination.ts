@@ -27,7 +27,7 @@ export const serviceToDestinationTransformers: Record<
   'service-manager': serviceManagerBindingToDestination,
   xsuaa: xsuaaToDestination,
   aicore: aicoreToDestination,
-  identity: iasBindingToDestination
+  identity: transformIasBindingToDestination
 };
 
 /**
@@ -192,7 +192,7 @@ async function xfS4hanaCloudBindingToDestination(
  * @param options - Service bidning transform options.
  * @returns The BTP app_tid based on `requestAs` configuration.
  */
-function iasGetAppTid(
+function getIasAppTid(
   iasOptions: IasOptionsTechnicalUser,
   service: Service,
   options?: ServiceBindingTransformOptions
@@ -217,7 +217,7 @@ function iasGetAppTid(
  * @param options - Service bidning transform options.
  * @returns A destination object.
  */
-function iasBuildDestination(
+function buildIasDestination(
   accessToken: string,
   service: Service,
   options?: ServiceBindingTransformOptions
@@ -238,7 +238,7 @@ function iasBuildDestination(
   return destination;
 }
 
-async function iasBindingToDestination(
+async function transformIasBindingToDestination(
   service: Service,
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
@@ -246,14 +246,14 @@ async function iasBindingToDestination(
     authenticationType: 'OAuth2ClientCredentials' as const,
     useCache: options?.useCache !== false,
     ...(options?.iasOptions || {})
-  } as IasOptions & CachingOptions;
+  } satisfies IasOptions & CachingOptions;
 
   const iasInstance = parseUrlAndGetHost(service.credentials.url);
 
   // Technical user client credentials grant preperation
   if (iasOptions.authenticationType === 'OAuth2ClientCredentials') {
     if (!iasOptions.appTid) {
-      iasOptions.appTid = iasGetAppTid(iasOptions, service, options);
+      iasOptions.appTid = getIasAppTid(iasOptions, service, options);
     }
 
     if (iasOptions.useCache) {
@@ -264,14 +264,14 @@ async function iasBindingToDestination(
         resource: options?.iasOptions?.resource
       });
       if (cached) {
-        return iasBuildDestination(cached.access_token, service, options);
+        return buildIasDestination(cached.access_token, service, options);
       }
     }
   }
 
   const response = await getIasClientCredentialsToken(service, {
     jwt: options?.jwt,
-    ...(options?.iasOptions || {})
+    ...iasOptions
   });
 
   if (
@@ -279,18 +279,18 @@ async function iasBindingToDestination(
     iasOptions.useCache &&
     response
   ) {
-    clientCredentialsTokenCache.cacheTokenIas(
+    clientCredentialsTokenCache.cacheIasToken(
       {
         iasInstance,
         appTid: iasOptions.appTid,
         clientId: service.credentials.clientid,
-        resource: options?.iasOptions?.resource
+        resource: iasOptions?.resource
       },
       response
     );
   }
 
-  return iasBuildDestination(response.access_token, service, options);
+  return buildIasDestination(response.access_token, service, options);
 }
 
 function buildClientCredentialsDestination(

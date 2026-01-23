@@ -407,6 +407,121 @@ describe('service binding to destination', () => {
     );
   });
 
+  it('transforms identity (IAS) service binding for JWT bearer with mTLS cert/key', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('identity'),
+      {
+        iasOptions: {
+          authenticationType: 'OAuth2JWTBearer',
+          assertion: 'user-jwt-token'
+        }
+      }
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'https://tenant.accounts.ondemand.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2JWTBearer',
+        mtlsKeyPair: {
+          cert: '-----BEGIN CERTIFICATE-----\ntest\n-----END CERTIFICATE-----',
+          key: '-----BEGIN RSA PRIVATE KEY-----\ntest\n-----END RSA PRIVATE KEY-----'
+        },
+        authTokens: expect.arrayContaining([
+          expect.objectContaining({
+            value: 'ias-access-token',
+            type: 'bearer'
+          })
+        ])
+      })
+    );
+  });
+
+  it('transforms identity (IAS) service binding for JWT bearer with custom targetUrl', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('identity'),
+      {
+        iasOptions: {
+          authenticationType: 'OAuth2JWTBearer',
+          assertion: 'user-jwt-token',
+          targetUrl: 'https://custom-target.example.com'
+        }
+      }
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'https://custom-target.example.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2JWTBearer'
+      })
+    );
+  });
+
+  it('transforms identity (IAS) service binding for JWT bearer with resource parameter', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('identity'),
+      {
+        iasOptions: {
+          authenticationType: 'OAuth2JWTBearer',
+          assertion: 'user-jwt-token',
+          resource: { name: 'my-target-app' }
+        }
+      }
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'https://tenant.accounts.ondemand.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2JWTBearer'
+      })
+    );
+    expect(getIasToken).toHaveBeenCalledWith(
+      expect.objectContaining({
+        label: 'identity'
+      }),
+      expect.objectContaining({
+        authenticationType: 'OAuth2JWTBearer',
+        assertion: 'user-jwt-token',
+        resource: { name: 'my-target-app' }
+      })
+    );
+  });
+
+  it('transforms identity (IAS) service binding for JWT bearer with resource providerClientId', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('identity'),
+      {
+        iasOptions: {
+          authenticationType: 'OAuth2JWTBearer',
+          assertion: 'user-jwt-token',
+          resource: {
+            providerClientId: 'target-client-id',
+            providerTenantId: 'target-tenant-id'
+          }
+        }
+      }
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'https://tenant.accounts.ondemand.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2JWTBearer'
+      })
+    );
+    expect(getIasToken).toHaveBeenCalledWith(
+      expect.objectContaining({
+        label: 'identity'
+      }),
+      expect.objectContaining({
+        authenticationType: 'OAuth2JWTBearer',
+        assertion: 'user-jwt-token',
+        resource: {
+          providerClientId: 'target-client-id',
+          providerTenantId: 'target-tenant-id'
+        }
+      })
+    );
+  });
+
   describe('transformIasBindingToDestination requestAs handling', () => {
     beforeEach(() => {
       jest.clearAllMocks();

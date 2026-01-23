@@ -21,10 +21,10 @@ export { identityServicesCache } from './environment-accessor';
 
 /**
  * @internal
- * Represents the response to an IAS client credentials request.
- * Extends the XSUAA response with IAS-specific fields.
+ * Represents the response to an IAS token request using client credentials or JWT bearer grant.
+ * This interface extends the XSUAA `ClientCredentialsResponse` response with IAS-specific fields.
  */
-export interface IasClientCredentialsResponse extends ClientCredentialsResponse {
+export interface IasTokenResponse extends ClientCredentialsResponse {
   /**
    * Audience claim from the JWT token.
    */
@@ -87,7 +87,7 @@ type IasParameters = {
 export async function getIasToken(
   service: string | Service,
   options: IasOptions & { jwt?: JwtPayload } = {}
-): Promise<IasClientCredentialsResponse> {
+): Promise<IasTokenResponse> {
   const resolvedService = resolveServiceBinding(service);
 
   const fnArgument: IasParameters = {
@@ -97,7 +97,7 @@ export async function getIasToken(
 
   const token = await executeWithMiddleware<
     IasParameters,
-    IasClientCredentialsResponse,
+    IasTokenResponse,
     MiddlewareContext<IasParameters>
   >(resilience(), {
     fn: getIasTokenImpl,
@@ -109,7 +109,7 @@ export async function getIasToken(
   }).catch(err => {
     const serviceName =
       typeof service === 'string' ? service : service.name || 'unknown';
-    let message = `Could not fetch IAS client credentials token for service "${serviceName}" of type ${resolvedService.label}`;
+    let message = `Could not fetch IAS client for service "${serviceName}" of type ${resolvedService.label}`;
 
     // Add contextual hints based on error status code (similar to Java SDK)
     if (err.response?.status === 401) {
@@ -204,9 +204,7 @@ function transformIasOptionsToXssecArgs(
  * @returns A promise resolving to the client credentials response.
  * @internal
  */
-async function getIasTokenImpl(
-  arg: IasParameters
-): Promise<IasClientCredentialsResponse> {
+async function getIasTokenImpl(arg: IasParameters): Promise<IasTokenResponse> {
   const identityService = getIdentityServiceInstanceFromCredentials(
     arg.serviceCredentials,
     arg.assertion

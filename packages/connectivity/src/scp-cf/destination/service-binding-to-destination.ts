@@ -291,7 +291,10 @@ function buildDestination(
   token: string,
   url: string,
   name: string,
-  authentication: AuthenticationType = 'OAuth2ClientCredentials'
+  authentication: Extract<
+    AuthenticationType,
+    'OAuth2ClientCredentials' | 'OAuth2JWTBearer'
+  > = 'OAuth2ClientCredentials'
 ): Destination {
   const expirationTime = decodeJwt(token).exp;
   const expiresIn = expirationTime

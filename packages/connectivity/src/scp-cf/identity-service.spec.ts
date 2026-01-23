@@ -222,7 +222,7 @@ describe('getIasToken', () => {
     );
 
     await expect(getIasToken(mockIasService)).rejects.toThrow(
-      'Could not fetch IAS client credentials token for service "my-identity-service" of type identity: Network error'
+      'Could not fetch IAS client for service "my-identity-service" of type identity: Network error'
     );
   });
 

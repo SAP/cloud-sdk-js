@@ -82,7 +82,6 @@ type IasParameters = {
  * @param options - Options for token fetching, including authenticationType to specify authentication mode, optional resource parameter for app2app, appTid for multi-tenant scenarios, and extraParams for additional OAuth2 parameters.
  * @returns Client credentials token response.
  * @internal
- * @experimental
  */
 export async function getIasToken(
   service: string | Service,

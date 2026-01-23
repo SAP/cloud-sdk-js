@@ -1,5 +1,5 @@
 import { resolveServiceBinding } from '../environment-accessor/service-bindings';
-import { getIasClientCredentialsToken } from '../identity-service';
+import { getIasToken } from '../identity-service';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { decodeJwt } from '../jwt';
 import { serviceToken } from '../token-accessor';
@@ -9,7 +9,7 @@ import {
 } from './service-binding-to-destination';
 
 jest.mock('../identity-service', () => ({
-  getIasClientCredentialsToken: jest.fn()
+  getIasToken: jest.fn()
 }));
 
 jest.mock('../token-accessor', () => ({
@@ -128,7 +128,7 @@ const services = {
 describe('service binding to destination', () => {
   beforeAll(() => {
     (serviceToken as jest.Mock).mockResolvedValue('access-token');
-    (getIasClientCredentialsToken as jest.Mock).mockResolvedValue({
+    (getIasToken as jest.Mock).mockResolvedValue({
       access_token: 'ias-access-token',
       token_type: 'Bearer',
       expires_in: 3600,
@@ -305,12 +305,46 @@ describe('service binding to destination', () => {
         ])
       })
     );
-    expect(getIasClientCredentialsToken).toHaveBeenCalledWith(
+    expect(getIasToken).toHaveBeenCalledWith(
       expect.objectContaining({
         label: 'identity',
         name: 'my-identity-service'
       }),
       expect.objectContaining({})
+    );
+  });
+
+  it('transforms identity (IAS) service binding for JWT bearer authentication', async () => {
+    const destination = await transformServiceBindingToDestination(
+      resolveServiceBinding('identity'),
+      {
+        iasOptions: {
+          authenticationType: 'OAuth2JWTBearer',
+          assertion: 'user-jwt-token'
+        }
+      }
+    );
+    expect(destination).toEqual(
+      expect.objectContaining({
+        url: 'https://tenant.accounts.ondemand.com',
+        name: 'my-identity-service',
+        authentication: 'OAuth2JWTBearer',
+        authTokens: expect.arrayContaining([
+          expect.objectContaining({
+            value: 'ias-access-token',
+            type: 'bearer'
+          })
+        ])
+      })
+    );
+    expect(getIasToken).toHaveBeenCalledWith(
+      expect.objectContaining({
+        label: 'identity'
+      }),
+      expect.objectContaining({
+        authenticationType: 'OAuth2JWTBearer',
+        assertion: 'user-jwt-token'
+      })
     );
   });
 
@@ -326,7 +360,7 @@ describe('service binding to destination', () => {
         authentication: 'OAuth2ClientCredentials'
       })
     );
-    expect(getIasClientCredentialsToken).toHaveBeenCalledWith(
+    expect(getIasToken).toHaveBeenCalledWith(
       expect.objectContaining({
         label: 'identity'
       }),
@@ -378,7 +412,7 @@ describe('service binding to destination', () => {
       jest.clearAllMocks();
       clientCredentialsTokenCache.clear();
       // Re-apply mock after clearAllMocks
-      (getIasClientCredentialsToken as jest.Mock).mockResolvedValue({
+      (getIasToken as jest.Mock).mockResolvedValue({
         access_token: 'ias-access-token',
         token_type: 'Bearer',
         expires_in: 3600,
@@ -409,7 +443,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({
           label: 'identity'
         }),
@@ -506,7 +540,7 @@ describe('service binding to destination', () => {
       jest.clearAllMocks();
       clientCredentialsTokenCache.clear();
       // Re-apply mock after clearAllMocks
-      (getIasClientCredentialsToken as jest.Mock).mockResolvedValue({
+      (getIasToken as jest.Mock).mockResolvedValue({
         access_token: 'ias-access-token',
         token_type: 'Bearer',
         expires_in: 3600,
@@ -521,7 +555,7 @@ describe('service binding to destination', () => {
         { jwt: { app_tid: 'tenant-123' } }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Second call should use cached token
       await transformServiceBindingToDestination(
@@ -530,7 +564,7 @@ describe('service binding to destination', () => {
       );
 
       // Should still only be called once due to cache hit
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
     it('does not cache IAS token if useCache is false', async () => {
@@ -539,7 +573,7 @@ describe('service binding to destination', () => {
         { jwt: { app_tid: 'tenant-123' }, useCache: false }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Second call should use cached token
       await transformServiceBindingToDestination(
@@ -548,7 +582,7 @@ describe('service binding to destination', () => {
       );
 
       // Should be called twice - no caching
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenCalledTimes(2);
     });
 
     it('does cache IAS token if useCache is true', async () => {
@@ -557,7 +591,7 @@ describe('service binding to destination', () => {
         { jwt: { app_tid: 'tenant-123' }, useCache: true }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Second call should use cached token
       await transformServiceBindingToDestination(
@@ -566,7 +600,7 @@ describe('service binding to destination', () => {
       );
 
       // Should still only be called once due to cache hit
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
     it('uses cache key with resource parameter', async () => {
@@ -580,7 +614,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Second call with same resource should use cache
       await transformServiceBindingToDestination(
@@ -591,7 +625,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
     it('does not use cache for different resource parameters', async () => {
@@ -603,7 +637,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Second call with different resource should NOT use cache
       await transformServiceBindingToDestination(
@@ -614,7 +648,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenCalledTimes(2);
     });
 
     it('isolates cache by tenant (appTid)', async () => {
@@ -623,7 +657,7 @@ describe('service binding to destination', () => {
         { jwt: { app_tid: 'tenant-123' } }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Different tenant should not use cache
       await transformServiceBindingToDestination(
@@ -631,7 +665,7 @@ describe('service binding to destination', () => {
         { jwt: { app_tid: 'tenant-456' } }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenCalledTimes(2);
     });
 
     it('supports resource with providerClientId', async () => {
@@ -645,7 +679,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Second call with same resource should use cache
       await transformServiceBindingToDestination(
@@ -656,7 +690,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
     it('supports resource with providerClientId and providerTenantId', async () => {
@@ -673,7 +707,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Second call with same resource should use cache
       await transformServiceBindingToDestination(
@@ -684,7 +718,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
     it('does not cache JWT bearer tokens (OAuth2JWTBearer)', async () => {
@@ -699,7 +733,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Second call should NOT use cache for JWT bearer tokens
       await transformServiceBindingToDestination(
@@ -714,7 +748,7 @@ describe('service binding to destination', () => {
       );
 
       // Should be called twice - no caching for JWT bearer
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenCalledTimes(2);
     });
 
     it('handles missing app_tid (no JWT, no provider tenant)', async () => {
@@ -722,7 +756,7 @@ describe('service binding to destination', () => {
         resolveServiceBinding('identity')
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Verify cache was populated with just IAS tenant (no app_tid)
       const cached = clientCredentialsTokenCache.getTokenIas({
@@ -736,7 +770,7 @@ describe('service binding to destination', () => {
         resolveServiceBinding('identity')
       );
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
     it('isolates cache by IAS tenant (different service URLs)', async () => {
@@ -765,7 +799,7 @@ describe('service binding to destination', () => {
         jwt: { app_tid: 'tenant-123' }
       });
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledTimes(1);
 
       // Second call to IAS service 2 with same app_tid should NOT use cache
       // because IAS tenant is different
@@ -773,14 +807,14 @@ describe('service binding to destination', () => {
         jwt: { app_tid: 'tenant-123' }
       });
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenCalledTimes(2);
 
       // Third call to IAS service 1 again with same app_tid should use cache
       await transformServiceBindingToDestination(iasService1, {
         jwt: { app_tid: 'tenant-123' }
       });
 
-      expect(getIasClientCredentialsToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenCalledTimes(2);
     });
   });
 });

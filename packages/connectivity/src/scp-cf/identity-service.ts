@@ -84,7 +84,7 @@ type IasParameters = {
  * @internal
  * @experimental
  */
-export async function getIasClientCredentialsToken(
+export async function getIasToken(
   service: string | Service,
   options: IasOptions & { jwt?: JwtPayload } = {}
 ): Promise<IasClientCredentialsResponse> {
@@ -100,7 +100,7 @@ export async function getIasClientCredentialsToken(
     IasClientCredentialsResponse,
     MiddlewareContext<IasParameters>
   >(resilience(), {
-    fn: getIasClientCredentialsTokenImpl,
+    fn: getIasTokenImpl,
     fnArgument,
     context: {
       uri: fnArgument.serviceCredentials.url,
@@ -204,7 +204,7 @@ function transformIasOptionsToXssecArgs(
  * @returns A promise resolving to the client credentials response.
  * @internal
  */
-async function getIasClientCredentialsTokenImpl(
+async function getIasTokenImpl(
   arg: IasParameters
 ): Promise<IasClientCredentialsResponse> {
   const identityService = getIdentityServiceInstanceFromCredentials(

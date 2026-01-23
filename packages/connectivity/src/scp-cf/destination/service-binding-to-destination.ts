@@ -1,6 +1,6 @@
 import { serviceToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
-import { getIasClientCredentialsToken } from '../identity-service';
+import { getIasToken } from '../identity-service';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { parseUrlAndGetHost } from '../subdomain-replacer';
 import type { Service } from '../environment-accessor';
@@ -8,7 +8,10 @@ import type {
   ServiceBindingTransformFunction,
   ServiceBindingTransformOptions
 } from './destination-from-vcap';
-import type { Destination } from './destination-service-types';
+import type {
+  AuthenticationType,
+  Destination
+} from './destination-service-types';
 import type { IasOptions, IasOptionsTechnicalUser } from './ias-types';
 import type { CachingOptions } from '../cache';
 
@@ -76,11 +79,7 @@ export async function transformServiceBindingToClientCredentialsDestination(
   options?: ServiceBindingTransformOptions & { url?: string }
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
-  return buildClientCredentialsDestination(
-    token,
-    options?.url ?? service.url,
-    service.name
-  );
+  return buildDestination(token, options?.url ?? service.url, service.name);
 }
 
 async function aicoreToDestination(
@@ -88,7 +87,7 @@ async function aicoreToDestination(
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
-  return buildClientCredentialsDestination(
+  return buildDestination(
     token,
     service.credentials.serviceurls.AI_API_URL,
     service.name
@@ -100,11 +99,7 @@ async function xsuaaToDestination(
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
-  return buildClientCredentialsDestination(
-    token,
-    service.credentials.apiurl,
-    service.name
-  );
+  return buildDestination(token, service.credentials.apiurl, service.name);
 }
 
 async function serviceManagerBindingToDestination(
@@ -112,11 +107,7 @@ async function serviceManagerBindingToDestination(
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
-  return buildClientCredentialsDestination(
-    token,
-    service.credentials.sm_url,
-    service.name
-  );
+  return buildDestination(token, service.credentials.sm_url, service.name);
 }
 
 async function destinationBindingToDestination(
@@ -124,11 +115,7 @@ async function destinationBindingToDestination(
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
-  return buildClientCredentialsDestination(
-    token,
-    service.credentials.uri,
-    service.name
-  );
+  return buildDestination(token, service.credentials.uri, service.name);
 }
 
 async function saasRegistryBindingToDestination(
@@ -136,7 +123,7 @@ async function saasRegistryBindingToDestination(
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
   const token = await serviceToken(service, options);
-  return buildClientCredentialsDestination(
+  return buildDestination(
     token,
     service.credentials['saas_registry_url'],
     service.name
@@ -152,11 +139,7 @@ async function businessLoggingBindingToDestination(
     credentials: { ...service.credentials.uaa }
   };
   const token = await serviceToken(transformedService, options);
-  return buildClientCredentialsDestination(
-    token,
-    service.credentials.writeUrl,
-    service.name
-  );
+  return buildDestination(token, service.credentials.writeUrl, service.name);
 }
 
 async function workflowBindingToDestination(
@@ -168,7 +151,7 @@ async function workflowBindingToDestination(
     credentials: { ...service.credentials.uaa }
   };
   const token = await serviceToken(transformedService, options);
-  return buildClientCredentialsDestination(
+  return buildDestination(
     token,
     service.credentials.endpoints.workflow_odata_url,
     service.name
@@ -214,18 +197,19 @@ function getIasAppTid(
  * Uses `targetUrl` as the destination URL if supplied and adds `mtlsKeyPair` if available.
  * @param accessToken - The JWT token to access the service.
  * @param service - Service binding for identity service.
- * @param options - Service bidning transform options.
+ * @param iasOptions - IAS options to build the destination.
  * @returns A destination object.
  */
 function buildIasDestination(
   accessToken: string,
   service: Service,
-  options?: ServiceBindingTransformOptions
+  iasOptions: IasOptions
 ): Destination {
-  const destination = buildClientCredentialsDestination(
+  const destination = buildDestination(
     accessToken,
-    options?.iasOptions?.targetUrl ?? service.credentials.url,
-    service.name
+    iasOptions?.targetUrl ?? service.credentials.url,
+    service.name,
+    iasOptions.authenticationType || 'OAuth2ClientCredentials'
   );
 
   // Add mTLS key pair if available
@@ -264,12 +248,12 @@ async function transformIasBindingToDestination(
         resource: options?.iasOptions?.resource
       });
       if (cached) {
-        return buildIasDestination(cached.access_token, service, options);
+        return buildIasDestination(cached.access_token, service, iasOptions);
       }
     }
   }
 
-  const response = await getIasClientCredentialsToken(service, {
+  const response = await getIasToken(service, {
     jwt: options?.jwt,
     ...iasOptions
   });
@@ -290,13 +274,24 @@ async function transformIasBindingToDestination(
     );
   }
 
-  return buildIasDestination(response.access_token, service, options);
+  return buildIasDestination(response.access_token, service, iasOptions);
 }
 
-function buildClientCredentialsDestination(
+/**
+ * Builds a destination object with a token, name, and url.
+ * If no authentication type is provided, 'OAuth2ClientCredentials' is used by default.
+ * @internal
+ * @param token - The access token for the destination.
+ * @param url - The URL of the destination.
+ * @param name - The name of the destination.
+ * @param authentication - The authentication type for the destination. Defaults to 'OAuth2ClientCredentials'.
+ * @returns A destination object.
+ */
+function buildDestination(
   token: string,
   url: string,
-  name: string
+  name: string,
+  authentication: AuthenticationType = 'OAuth2ClientCredentials'
 ): Destination {
   const expirationTime = decodeJwt(token).exp;
   const expiresIn = expirationTime
@@ -305,7 +300,7 @@ function buildClientCredentialsDestination(
   return {
     url,
     name,
-    authentication: 'OAuth2ClientCredentials',
+    authentication,
     authTokens: [
       {
         value: token,

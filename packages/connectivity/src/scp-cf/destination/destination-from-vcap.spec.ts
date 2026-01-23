@@ -292,17 +292,15 @@ describe('vcap-service-destination', () => {
   describe('IAS service binding', () => {
     function mockIasClientCredentialsToken(aud: string) {
       const token = signedJwt({ jti: 'some-jti', ias_apis: [], aud });
-      const spy = jest
-        .spyOn(identityService, 'getIasClientCredentialsToken')
-        .mockResolvedValue({
-          access_token: token,
-          expires_in: 3600,
-          token_type: 'bearer',
-          aud,
-          scope: '' as const,
-          ias_apis: [],
-          jti: 'some-jti'
-        });
+      const spy = jest.spyOn(identityService, 'getIasToken').mockResolvedValue({
+        access_token: token,
+        expires_in: 3600,
+        token_type: 'bearer',
+        aud,
+        scope: '' as const,
+        ias_apis: [],
+        jti: 'some-jti'
+      });
       return { token, spy };
     }
 

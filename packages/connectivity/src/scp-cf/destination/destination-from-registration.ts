@@ -12,7 +12,7 @@ import {
   proxyStrategy
 } from './http-proxy-util';
 import { registerDestinationCache } from './register-destination-cache';
-import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import { addForwardedAuthTokenIfNeeded } from './forward-auth-token';
 import type { Destination } from './destination-service-types';
 import type { IsolationStrategy } from './destination-cache';
 import type { DestinationFetchOptions } from './destination-accessor-types';
@@ -90,7 +90,7 @@ export type DestinationWithName = Destination & { name: string };
 export async function searchRegisteredDestination(
   options: DestinationFetchOptions
 ): Promise<Destination | null> {
-  const destination =
+  let destination =
     await registerDestinationCache.destination.retrieveDestinationFromCache(
       getJwtForCaching(options),
       options.destinationName,
@@ -108,7 +108,7 @@ export async function searchRegisteredDestination(
     `Successfully retrieved destination '${options.destinationName}' from registered destinations.`
   );
 
-  setForwardedAuthTokenIfNeeded(destination, options.jwt);
+  destination = addForwardedAuthTokenIfNeeded(destination, options.jwt);
 
   return isHttpDestination(destination) &&
     ['internet', 'private-link'].includes(proxyStrategy(destination))

@@ -1,6 +1,9 @@
 import https from 'node:https';
 import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
+import {
+  basicHeader,
+  removeSubdomain
+} from '@sap-cloud-sdk/connectivity/internal';
 import type { ServiceCredentials } from '@sap-cloud-sdk/connectivity';
 
 export function mockClientCredentialsGrantCall(
@@ -11,7 +14,11 @@ export function mockClientCredentialsGrantCall(
   zoneId?: string,
   delay = 0
 ) {
-  return nock(uri, {
+  // When zoneId is provided, xssec 4.12.2+ uses the base uaadomain without subdomain
+  // to avoid correlation with the provider's tenant on server side
+  const targetUri = zoneId ? removeSubdomain(uri) : uri;
+
+  return nock(targetUri, {
     reqheaders: xsuaaRequestHeaders(zoneId ? { 'x-zid': zoneId } : {}),
     badheaders: zoneId ? [] : ['x-zid']
   })

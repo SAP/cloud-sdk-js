@@ -165,6 +165,26 @@ export declare const TestCaseApi: {
     body: Schema123456 | undefined
   ) => OpenApiRequestBuilder<any>;
   /**
+   * Create a request builder for execution of post requests to the '/test-cases/multipart-body' endpoint.
+   * @param body - Request body.
+   * @returns The request builder, use the `execute()` method to trigger the request.
+   */
+  testCasePostMultipartBody: (
+    body: SimpleTestEntity
+  ) => OpenApiRequestBuilder<any>;
+  /**
+   * Create a request builder for execution of patch requests to the '/test-cases/multipart-body' endpoint.
+   * @param body - Request body.
+   * @param headerParameters - Object containing the following keys: optionalHeaderParam.
+   * @returns The request builder, use the `execute()` method to trigger the request.
+   */
+  testCasePatchMultipartBodyWithHeaders: (
+    body: SimpleTestEntity,
+    headerParameters?: {
+      optionalHeaderParam?: string;
+    }
+  ) => OpenApiRequestBuilder<any>;
+  /**
    * Create a request builder for execution of get requests to the '/test-cases/no-operation-id' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */

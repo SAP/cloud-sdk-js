@@ -27,7 +27,8 @@ exports.EntityApi = {
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     updateEntityWithPut: (body) => new openapi_1.OpenApiRequestBuilder('put', '/entities', {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
     }, exports.EntityApi._defaultBasePath),
     /**
      * Create entity
@@ -35,7 +36,8 @@ exports.EntityApi = {
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     createEntity: (body) => new openapi_1.OpenApiRequestBuilder('post', '/entities', {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
     }, exports.EntityApi._defaultBasePath),
     /**
      * Create a request builder for execution of patch requests to the '/entities' endpoint.
@@ -43,7 +45,8 @@ exports.EntityApi = {
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     updateEntity: (body) => new openapi_1.OpenApiRequestBuilder('patch', '/entities', {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
     }, exports.EntityApi._defaultBasePath),
     /**
      * Create a request builder for execution of delete requests to the '/entities' endpoint.
@@ -51,7 +54,8 @@ exports.EntityApi = {
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     deleteEntity: (body) => new openapi_1.OpenApiRequestBuilder('delete', '/entities', {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
     }, exports.EntityApi._defaultBasePath),
     /**
      * Head request of entities

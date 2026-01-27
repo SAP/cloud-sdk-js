@@ -121,13 +121,19 @@ function serializeParamsForRequestBuilder(
   }
   if (operation.requestBody) {
     params.push('body');
+    const contentTypeStr = `'content-type': '${operation.requestBody.mediaType}'`;
+    if (operation.headerParameters.length) {
+      params.push(`headerParameters: {${contentTypeStr}, ...headerParameters}`);
+    } else {
+      params.push(`headerParameters: {${contentTypeStr}}`);
+    }
+  } else if (operation.headerParameters.length) {
+    params.push('headerParameters');
   }
   if (operation.queryParameters.length) {
     params.push('queryParameters');
   }
-  if (operation.headerParameters.length) {
-    params.push('headerParameters');
-  }
+
   if (params.length) {
     return codeBlock`{
       ${params.join(',\n')}

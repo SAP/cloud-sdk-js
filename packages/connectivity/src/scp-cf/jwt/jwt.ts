@@ -27,12 +27,18 @@ function makeArray(val: string | string[] | undefined): string[] {
 /**
  * @internal
  * Get the user ID from the JWT payload.
+ * For XSUAA tokens, this is `user_id`.
+ * For IAS tokens, this is `user_uuid`.
  * @param jwtPayload - Token payload to read the user ID from.
  * @returns The user ID, if available.
  */
-export function userId({ user_id }: JwtPayload): string {
-  logger.debug(`JWT user_id is: ${user_id}.`);
-  return user_id;
+export function userId(jwtPayload: JwtPayload): string {
+  // IAS tokens use user_uuid, XSUAA tokens use user_id
+  const id = jwtPayload.user_id || jwtPayload.user_uuid;
+  logger.debug(
+    `JWT user identifier is: ${id} (from ${jwtPayload.user_id ? 'user_id (XSUAA)' : 'user_uuid (IAS)'}).`
+  );
+  return id;
 }
 
 /**
@@ -48,7 +54,7 @@ export function getDefaultTenantId(): string {
 }
 
 /**
- * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` property.
+ * Get the tenant ID of a decoded JWT, based on its `zid` or if not available `app_tid` or `zone_uuid` (legacy) property.
  * @param jwt - Token to read the tenant ID from.
  * @returns The tenant ID, if available.
  */
@@ -57,23 +63,35 @@ export function getTenantId(
 ): string | undefined {
   const decodedJwt = jwt ? decodeJwt(jwt) : {};
   logger.debug(
-    `JWT zid is: ${decodedJwt.zid}, app_tid is: ${decodedJwt.app_tid}.`
+    `JWT zid is: ${decodedJwt.zid}, app_tid is: ${decodedJwt.app_tid}, zone_uuid is: ${decodedJwt.zone_uuid}.`
   );
-  return decodedJwt.zid || decodedJwt.app_tid || undefined;
+  return (
+    decodedJwt.zid || decodedJwt.app_tid || decodedJwt.zone_uuid || undefined
+  );
 }
 
 /**
- * Check if the given JWT is not an IAS token.
+ * Check if the given JWT is an IAS token.
  * Currently, there are only two domains for IAS tokens:
- * `accounts.ondemand.com` and `accounts400.onemand.com`.
+ * `accounts.ondemand.com` and `accounts400.ondemand.com`.
  * @param decodedJwt - The decoded JWT to check.
- * @returns Whether the given JWT is not an IAS token.
+ * @returns Whether the given JWT is an IAS token.
+ * @internal
  */
-function isNotIasToken(decodedJwt: JwtPayload): boolean {
-  return (
-    !decodedJwt.iss?.includes('accounts.ondemand.com') &&
-    !decodedJwt.iss?.includes('accounts400.ondemand.com')
-  );
+export function isIasToken(decodedJwt: JwtPayload): boolean {
+  if (!decodedJwt.iss) {
+    return false;
+  }
+  try {
+    const issUrl = new URL(decodedJwt.iss);
+    const hostname = issUrl.hostname.toLowerCase();
+    return (
+      hostname.endsWith('.accounts.ondemand.com') ||
+      hostname.endsWith('.accounts400.ondemand.com')
+    );
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -90,7 +108,7 @@ export function getSubdomain(
   const decodedJwt = jwt ? decodeJwt(jwt) : {};
   return (
     decodedJwt?.ext_attr?.zdn ||
-    (isNotIasToken(decodedJwt) ? getIssuerSubdomain(decodedJwt) : undefined)
+    (isIasToken(decodedJwt) ? undefined : getIssuerSubdomain(decodedJwt))
   );
 }
 

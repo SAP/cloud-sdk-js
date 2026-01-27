@@ -58,7 +58,12 @@ export type {
   DestinationJson,
   DestinationsByType,
   DestinationFromServiceBindingOptions,
-  ServiceBindingTransformOptions
+  ServiceBindingTransformOptions,
+  IasOptions,
+  IasOptionsBase,
+  IasOptionsBusinessUser,
+  IasOptionsTechnicalUser,
+  IasResource
 } from './scp-cf';
 
 export type {

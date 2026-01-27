@@ -1,3 +1,4 @@
+import type { MtlsOptions } from '../../internal';
 import type { CachingOptions } from '../cache';
 import type { ProxyConfiguration } from '../connectivity-service-types';
 import type { IsolationStrategy } from './destination-cache';
@@ -169,6 +170,12 @@ export interface Destination {
    * will be automatically used for TLS secured HTTP requests.
    */
   mtls?: boolean;
+
+  /**
+   * MTLS key pair consisting of certificate and private key in PEM format.
+   * This field is used to authenticate the destination using mTLS.
+   */
+  mtlsKeyPair?: MtlsOptions;
 }
 
 /**

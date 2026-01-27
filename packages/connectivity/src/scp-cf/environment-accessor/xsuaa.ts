@@ -19,7 +19,7 @@ export function clearXsuaaServices(): void {
  * @internal
  * @param credentials - Xsuaa credentials extracted from a re-use service like destination service. Required to create the xssec XSUAA instance.
  * @param disableCache - Value to enable or disable JWKS cache in xssec library. Defaults to false.
- * @returns An instance of {@code @sap/xssec/XsuaaService} for the provided credentials.
+ * @returns An instance of {@link @sap/xssec/XsuaaService} for the provided credentials.
  */
 export function getXsuaaInstanceFromServiceCredentials(
   credentials: ServiceCredentials,

@@ -154,10 +154,23 @@ export interface OpenApiRequestBody {
   schema: OpenApiSchema;
 
   /**
+   * Media type of the body.
+   */
+  mediaType: string;
+
+  /**
    * Description of the body.
    */
   description?: string;
 }
+
+/**
+ * Representation of a media type.
+ * @internal
+ */
+export type OpenApiMediaTypeObject = OpenAPIV3.MediaTypeObject & {
+  mediaType: string;
+};
 
 /**
  * Represents all possible Types of schemas.

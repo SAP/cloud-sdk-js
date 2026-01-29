@@ -204,9 +204,18 @@ function transformIasOptionsToXssecArgs(
  * @internal
  */
 async function getIasTokenImpl(arg: IasParameters): Promise<IasTokenResponse> {
+  const jwtForSubdomain =
+    // For OAuth2JWTBearer authentication, subdomain will be extracted from the assertion
+    arg.authenticationType === 'OAuth2JWTBearer'
+      ? arg.assertion
+      : // For technical user flows, use JWT for subdomain extraction when requesting
+        // current-tenant context
+        arg.requestAs !== 'provider-tenant'
+        ? arg.jwt
+        : undefined;
   const identityService = getIdentityServiceInstanceFromCredentials(
     arg.serviceCredentials,
-    arg.assertion
+    jwtForSubdomain
   );
 
   const tokenOptions = transformIasOptionsToXssecArgs(arg);

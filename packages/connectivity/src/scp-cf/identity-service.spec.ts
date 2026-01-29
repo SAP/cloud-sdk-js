@@ -601,5 +601,79 @@ describe('getIasToken', () => {
       // Should handle URLs with and without trailing slashes
       expect(IdentityService).toHaveBeenCalled();
     });
+
+    it('routes to subscriber tenant for technical user with requestAs="current-tenant"', async () => {
+      const { IdentityService } = jest.requireMock('@sap/xssec');
+
+      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+
+      const jwt = {
+        iss: subscriberUrl,
+        user_uuid: 'user-123'
+      };
+
+      await getIasToken(providerService, {
+        authenticationType: 'OAuth2ClientCredentials',
+        requestAs: 'current-tenant',
+        jwt
+      });
+
+      // Should create subscriber instance with subscriber URL
+      expect(IdentityService).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: subscriberUrl
+        }),
+        undefined
+      );
+    });
+
+    it('routes to subscriber tenant for technical user when requestAs is undefined and jwt is provided', async () => {
+      const { IdentityService } = jest.requireMock('@sap/xssec');
+
+      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+
+      const jwt = {
+        iss: subscriberUrl,
+        user_uuid: 'user-123'
+      };
+
+      await getIasToken(providerService, {
+        authenticationType: 'OAuth2ClientCredentials',
+        jwt
+      });
+
+      // Should create subscriber instance with subscriber URL
+      expect(IdentityService).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: subscriberUrl
+        }),
+        undefined
+      );
+    });
+
+    it('does not route for technical user with requestAs="provider-tenant"', async () => {
+      const { IdentityService } = jest.requireMock('@sap/xssec');
+
+      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+
+      const jwt = {
+        iss: subscriberUrl,
+        user_uuid: 'user-123'
+      };
+
+      await getIasToken(providerService, {
+        authenticationType: 'OAuth2ClientCredentials',
+        requestAs: 'provider-tenant',
+        jwt
+      });
+
+      // Should use provider instance
+      expect(IdentityService).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: providerUrl
+        }),
+        undefined
+      );
+    });
   });
 });

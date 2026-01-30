@@ -78,3 +78,28 @@ export function replaceSubdomain(
 
   return result;
 }
+
+/**
+ * @internal
+ * Removes the first part of the hostname (subdomain) from a URL.
+ * @param baseUrl - The URL whose subdomain should be removed.
+ * @returns The URL without the first subdomain, with trailing slash removed if present.
+ */
+export function removeSubdomain(baseUrl: string): string {
+  if (!isValidUrl(baseUrl)) {
+    throw new Error(`Base URL is not a valid URL: "${baseUrl}".`);
+  }
+
+  const url = new URL(baseUrl);
+  const hostParts = getHost(url).split('.');
+  // Remove first subdomain and keep the rest
+  if (hostParts.length > 2) {
+    url.hostname = hostParts.slice(1).join('.');
+  }
+
+  let result = url.toString();
+  // Remove trailing slash for consistency
+  result = removeTrailingSlashes(result);
+
+  return result;
+}

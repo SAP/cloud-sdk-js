@@ -5,6 +5,11 @@
  */
 export { csrf } from './csrf-token-middleware';
 export type { CsrfMiddlewareOptions } from './csrf-token-middleware';
+export { compressRequest } from './compress-request-middleware';
+export type {
+  RequestCompressionAlgorithm,
+  RequestCompressionMiddlewareOptions
+} from './compress-request-middleware';
 export {
   buildHttpRequest,
   encodeAllParameters,

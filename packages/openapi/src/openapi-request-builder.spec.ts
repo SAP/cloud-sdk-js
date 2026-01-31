@@ -146,6 +146,30 @@ describe('openapi-request-builder', () => {
     );
   });
 
+  it('executes a request with multipart body using executeRaw', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        limit: 100
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' }
+    });
+    await requestBuilder.executeRaw(destination);
+    const data = new FormData();
+    data.append('limit', 100);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      sanitizeDestination(destination),
+      {
+        method: 'post',
+        middleware: [expect.any(Function)], // this is the csrf token middleware
+        url: '/test',
+        headers: { requestConfig: { 'content-type': 'multipart/form-data' } },
+        params: { requestConfig: {} },
+        data
+      },
+      { fetchCsrfToken: true }
+    );
+  });
+
   it('executes a request using the timeout', async () => {
     const delayInResponse = 2000;
     const slowDestination = { url: 'https://example.com' };

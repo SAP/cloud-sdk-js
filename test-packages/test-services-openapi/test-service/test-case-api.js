@@ -23,6 +23,7 @@ exports.TestCaseApi = {
     testCaseGetRequiredParameters: (requiredPathItemPathParam, body, queryParameters) => new openapi_1.OpenApiRequestBuilder('get', '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}', {
         pathParameters: { requiredPathItemPathParam },
         body,
+        headerParameters: { 'content-type': 'application/json' },
         queryParameters
     }, exports.TestCaseApi._defaultBasePath),
     /**
@@ -35,6 +36,7 @@ exports.TestCaseApi = {
     testCasePostRequiredParameters: (requiredPathItemPathParam, body, queryParameters) => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}', {
         pathParameters: { requiredPathItemPathParam },
         body,
+        headerParameters: { 'content-type': 'application/json' },
         queryParameters
     }, exports.TestCaseApi._defaultBasePath),
     /**
@@ -44,8 +46,8 @@ exports.TestCaseApi = {
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     testCaseRequiredQueryOptionalHeader: (queryParameters, headerParameters) => new openapi_1.OpenApiRequestBuilder('get', '/test-cases/parameters', {
-        queryParameters,
-        headerParameters
+        headerParameters,
+        queryParameters
     }, exports.TestCaseApi._defaultBasePath),
     /**
      * Create a request builder for execution of post requests to the '/test-cases/parameters' endpoint.
@@ -56,8 +58,11 @@ exports.TestCaseApi = {
      */
     testCaseOptionalQueryRequiredHeader: (body, queryParameters, headerParameters) => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/parameters', {
         body,
-        queryParameters,
-        headerParameters
+        headerParameters: {
+            'content-type': 'application/json',
+            ...headerParameters
+        },
+        queryParameters
     }, exports.TestCaseApi._defaultBasePath),
     /**
      * Create a request builder for execution of patch requests to the '/test-cases/parameters' endpoint.
@@ -68,8 +73,11 @@ exports.TestCaseApi = {
      */
     testCaseOptionalQueryOptionalHeader: (body, queryParameters, headerParameters) => new openapi_1.OpenApiRequestBuilder('patch', '/test-cases/parameters', {
         body,
-        queryParameters,
-        headerParameters
+        headerParameters: {
+            'content-type': 'application/json',
+            ...headerParameters
+        },
+        queryParameters
     }, exports.TestCaseApi._defaultBasePath),
     /**
      * Create a request builder for execution of get requests to the '/test-cases/parameters/{duplicateParam}' endpoint.
@@ -117,7 +125,8 @@ exports.TestCaseApi = {
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     complexSchemas: (body) => new openapi_1.OpenApiRequestBuilder('get', '/test-cases/complex-schemas', {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
     }, exports.TestCaseApi._defaultBasePath),
     /**
      * Create a request builder for execution of post requests to the '/test-cases/complex-schemas' endpoint.
@@ -125,7 +134,8 @@ exports.TestCaseApi = {
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     useNameWithSymbols: (body) => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/complex-schemas', {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
     }, exports.TestCaseApi._defaultBasePath),
     /**
      * Create a request builder for execution of get requests to the '/test-cases/schema-name-integer' endpoint.
@@ -133,7 +143,30 @@ exports.TestCaseApi = {
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     schemaNameInteger: (body) => new openapi_1.OpenApiRequestBuilder('get', '/test-cases/schema-name-integer', {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
+    }, exports.TestCaseApi._defaultBasePath),
+    /**
+     * Create a request builder for execution of post requests to the '/test-cases/multipart-body' endpoint.
+     * @param body - Request body.
+     * @returns The request builder, use the `execute()` method to trigger the request.
+     */
+    testCasePostMultipartBody: (body) => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/multipart-body', {
+        body,
+        headerParameters: { 'content-type': 'multipart/form-data' }
+    }, exports.TestCaseApi._defaultBasePath),
+    /**
+     * Create a request builder for execution of patch requests to the '/test-cases/multipart-body' endpoint.
+     * @param body - Request body.
+     * @param headerParameters - Object containing the following keys: optionalHeaderParam.
+     * @returns The request builder, use the `execute()` method to trigger the request.
+     */
+    testCasePatchMultipartBodyWithHeaders: (body, headerParameters) => new openapi_1.OpenApiRequestBuilder('patch', '/test-cases/multipart-body', {
+        body,
+        headerParameters: {
+            'content-type': 'multipart/form-data',
+            ...headerParameters
+        }
     }, exports.TestCaseApi._defaultBasePath),
     /**
      * Create a request builder for execution of get requests to the '/test-cases/no-operation-id' endpoint.

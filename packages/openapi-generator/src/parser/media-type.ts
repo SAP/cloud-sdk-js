@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { parseSchema } from './schema';
 import type { OpenAPIV3 } from 'openapi-types';
-import type { OpenApiSchema } from '../openapi-types';
+import type { OpenApiMediaTypeObject, OpenApiSchema } from '../openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
 import type { ParserOptions } from './options';
 
@@ -11,6 +11,7 @@ const allowedMediaTypes = [
   'application/merge-patch+json',
   'application/octet-stream',
   'text/plain',
+  'multipart/form-data',
   '*/*'
 ];
 /**
@@ -28,15 +29,18 @@ export function parseTopLevelMediaType(
     | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
-): OpenApiSchema | undefined {
+): { schema: OpenApiSchema; mediaType: string } | undefined {
   if (bodyOrResponseObject) {
-    const mediaType = getMediaTypeObject(
+    const mediaTypeObject = getMediaTypeObject(
       bodyOrResponseObject,
       allowedMediaTypes
     );
-    const schema = mediaType?.schema;
-    if (schema) {
-      return parseSchema(schema, refs, options);
+
+    if (mediaTypeObject) {
+      return {
+        schema: parseSchema(mediaTypeObject.schema, refs, options),
+        mediaType: mediaTypeObject.mediaType
+      };
     }
   }
 }
@@ -51,32 +55,36 @@ export function parseMediaType(
     | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
-): OpenApiSchema | undefined {
+): { schema: OpenApiSchema; mediaType: string } | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
-    const parsedMediaType = parseTopLevelMediaType(
+    const parsedSchema = parseTopLevelMediaType(
       bodyOrResponseObject,
       refs,
       options
     );
 
-    if (!parsedMediaType) {
+    if (!parsedSchema) {
       logger.warn(
         `Could not parse '${allMediaTypes}', because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime.`
       );
-      return { type: 'any' };
+      return { schema: { type: 'any' }, mediaType: 'application/json ' };
     }
 
     // There is only one media type
     if (allMediaTypes.length === 1) {
-      return parsedMediaType;
+      return parsedSchema;
     }
 
     return allMediaTypes.every(type => allowedMediaTypes.includes(type))
-      ? parsedMediaType
-      : { anyOf: [parsedMediaType, { type: 'any' }] };
+      ? parsedSchema
+      : {
+          schema: { anyOf: [parsedSchema.schema, { type: 'any' }] },
+          mediaType: parsedSchema.mediaType
+        };
   }
 }
+
 /**
  * @internal
  */
@@ -101,11 +109,17 @@ function getMediaTypeObject(
     | OpenAPIV3.ResponseObject
     | undefined,
   contentType: string[]
-): OpenAPIV3.MediaTypeObject | undefined {
+): OpenApiMediaTypeObject | undefined {
   if (bodyOrResponseObject?.content) {
-    return Object.entries(bodyOrResponseObject.content).find(([key]) =>
-      contentType.includes(key.split(';')[0])
-    )?.[1];
+    const mediaTypeEntry = Object.entries(bodyOrResponseObject.content).find(
+      ([key]) => contentType.includes(key.split(';')[0])
+    );
+    if (mediaTypeEntry) {
+      return {
+        ...mediaTypeEntry[1],
+        mediaType: mediaTypeEntry[0].split(';')[0]
+      };
+    }
   }
   return undefined;
 }

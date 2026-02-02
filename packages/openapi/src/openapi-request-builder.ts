@@ -2,6 +2,7 @@
 // eslint-disable-next-line import/named
 import {
   isNullish,
+  pickValueIgnoreCase,
   removeSlashes,
   transformVariadicArgumentToArray
 } from '@sap-cloud-sdk/util';
@@ -152,8 +153,8 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Get http request config.
-   * @returns Promise of http request config with origin.
+   * Get HTTP request config.
+   * @returns Promise of the HTTP request config with origin.
    */
   protected async requestConfig(): Promise<HttpRequestConfigWithOrigin> {
     const defaultConfig = {
@@ -162,7 +163,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
       headers: this.getHeaders(),
       params: this.getParameters(),
       middleware: this._middlewares,
-      data: this.parameters?.body
+      data: this.getBody()
     };
     return {
       ...defaultConfig,
@@ -180,6 +181,22 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   private getParameters(): OriginOptions {
     return { requestConfig: this.parameters?.queryParameters || {} };
+  }
+
+  private getBody(): any {
+    const body = this.parameters?.body;
+    if (
+      pickValueIgnoreCase(this.parameters?.headerParameters, 'content-type') ===
+      'multipart/form-data'
+    ) {
+      const formData = new FormData();
+      for (const key in body) {
+        // TODO: is it enough to just append the body[key] or does it need to be stringified?
+        formData.append(key, body[key]);
+      }
+      return formData;
+    }
+    return body;
   }
 
   private getPath(): string {

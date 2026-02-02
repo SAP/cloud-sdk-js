@@ -3,7 +3,8 @@ import { promisify } from 'node:util';
 import {
   createLogger,
   ErrorWithCause,
-  pickValueIgnoreCase
+  pickValueIgnoreCase,
+  mergeIgnoreCase
 } from '@sap-cloud-sdk/util';
 import type {
   HttpMiddleware,
@@ -32,7 +33,7 @@ const compressors = {
 function getSupportedAlgorithms(): string {
   return Object.entries(compressors)
     .filter(([, fn]) => fn !== undefined)
-    .map(([name]) => name)
+    .map(([name]) => `'${name}'`)
     .join(', ');
 }
 
@@ -108,36 +109,22 @@ function checkIfNeedsCompression<
   }
   if (mode === 'auto') {
     const minSize = options?.autoCompressMinSize ?? 1024;
-    if (
-      typeof payload === 'string' ||
-      Buffer.isBuffer(payload) ||
-      payload instanceof Uint8Array
-    ) {
-      const payloadSize = Buffer.byteLength(payload);
-      const shouldCompress = payloadSize >= minSize;
-      const comparison = shouldCompress ? '>=' : '<';
-      const action = shouldCompress ? 'Compressing' : 'Skipping compression';
-      logger.debug(
-        `Auto compression: payload size ${payloadSize} bytes ${comparison} threshold ${minSize} bytes. ${action}.`
+    let payloadSize: number;
+    try {
+      payloadSize = Buffer.byteLength(payload as any);
+    } catch (e: any) {
+      throw new ErrorWithCause(
+        "Could not determine payload size for 'auto' compression decision.",
+        e
       );
-      return shouldCompress;
     }
-    if (payload && typeof payload === 'object' && 'length' in payload) {
-      const length = (payload as any).length;
-      if (typeof length === 'number') {
-        const shouldCompress = length >= minSize;
-        const comparison = shouldCompress ? '>=' : '<';
-        const action = shouldCompress ? 'Compressing' : 'Skipping compression';
-        logger.debug(
-          `Auto compression: payload length ${length} ${comparison} threshold ${minSize}. ${action}.`
-        );
-        return shouldCompress;
-      }
-      return false;
-    }
-    throw new Error(
-      `Cannot determine payload size for auto compression. Payload type '${typeof payload}' is not supported in auto mode. Use mode: false (disable), mode: true (force compression), or mode: 'passthrough' (if already compressed) instead.`
+    const shouldCompress = payloadSize >= minSize;
+    const comparison = shouldCompress ? '>=' : '<';
+    const action = shouldCompress ? 'Compressing' : 'Skipping compression';
+    logger.debug(
+      `Auto compression: payload size ${payloadSize} bytes ${comparison} threshold ${minSize} bytes. ${action}.`
     );
+    return shouldCompress;
   }
   return Boolean(mode);
 }
@@ -176,39 +163,32 @@ export function compressRequest<C extends RequestCompressionAlgorithm = 'gzip'>(
       options
     );
 
-    // Check existing Content-Encoding header
+    if (needsCompression === false) {
+      return middlewareOptions.fn(requestConfig);
+    }
+
+    // Check existing Content-Encoding header - append to existing if present
     const currentValue = pickValueIgnoreCase(
       requestConfig.headers,
       'content-encoding'
     );
-    const targetValue = getContentEncodingValue(algorithm);
+    const algorithmValue = getContentEncodingValue(algorithm);
+    const targetValue = currentValue
+      ? `${currentValue}, ${algorithmValue}`
+      : algorithmValue;
+    requestConfig.headers = mergeIgnoreCase(requestConfig.headers, {
+      'content-encoding': targetValue
+    });
 
-    if (currentValue && currentValue !== targetValue) {
-      throw new Error(
-        `Content-Encoding header conflict: Request already has 'Content-Encoding: ${currentValue}' but compression middleware is configured for '${targetValue}'. Either remove the existing Content-Encoding header, configure compression middleware to match '${currentValue}', or use mode: 'passthrough' if the payload is already compressed.`
-      );
-    }
-
-    // Add headers if compression not skipped entirely
-    if (needsCompression) {
-      // Set Content-Encoding header
-      requestConfig.headers = {
-        ...requestConfig.headers,
-        'content-encoding': targetValue
-      };
-    }
-
-    // Skip payload compression if not needed
-    if (needsCompression !== true) {
+    if (needsCompression === 'header-only') {
       return middlewareOptions.fn(requestConfig);
     }
 
     const compressor = compressors[algorithm];
-
     if (!compressor) {
       if (algorithm === 'zstd') {
         throw new Error(
-          `Zstandard compression is not supported in this Node.js version. Please use Node.js v22.15.0. Supported algorithms for this version are: ${getSupportedAlgorithms()}.`
+          `'zstd' compression is not supported in this Node.js versions older than v22.15.0 to use 'zstd'. Supported algorithms for this version are: ${getSupportedAlgorithms()}.`
         );
       }
       throw new Error(

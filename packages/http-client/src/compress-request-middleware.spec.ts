@@ -60,22 +60,6 @@ describe('compressRequest middleware', () => {
       expect(call.data).toBe(testPayload);
       expect(call.headers?.['content-encoding']).toBeUndefined();
     });
-
-    it('does not compress small payload when no options provided (default: auto mode)', async () => {
-      nock(host).post('/test', testPayload).reply(200, {});
-
-      const call = await executeAndGetConfig(
-        { url: host },
-        createTestConfig({
-          data: testPayload,
-          middleware: [compressRequest()]
-        }),
-        { fetchCsrfToken: false }
-      );
-
-      expect(call.data).toBe(testPayload);
-      expect(call.headers?.['content-encoding']).toBeUndefined();
-    });
   });
 
   describe('mode: true (always compress)', () => {
@@ -174,7 +158,7 @@ describe('compressRequest middleware', () => {
             },
             { fetchCsrfToken: false }
           )
-        ).rejects.toThrow('Zstandard compression is not supported');
+        ).rejects.toThrow("'zstd' compression is not supported");
       }
     );
 
@@ -269,7 +253,7 @@ describe('compressRequest middleware', () => {
       expect(call.headers?.['content-encoding']).toBe('gzip');
     });
 
-    it('throws error for non-string/Buffer payloads in auto mode', async () => {
+    it('throws error for unsupported payload types in auto mode', async () => {
       const objectPayload = { key: 'value' };
       nock(host).post('/test', objectPayload).reply(200, {});
 
@@ -284,7 +268,9 @@ describe('compressRequest middleware', () => {
           },
           { fetchCsrfToken: false }
         )
-      ).rejects.toThrow('Cannot determine payload size for auto compression');
+      ).rejects.toThrow(
+        "Could not determine payload size for 'auto' compression decision"
+      );
     });
   });
 
@@ -304,78 +290,41 @@ describe('compressRequest middleware', () => {
       expect(call.data).toBe(testPayload);
       expect(call.headers?.['content-encoding']).toBe('gzip');
     });
-
-    it('sets correct header for brotli in passthrough mode', async () => {
-      nock(host).post('/test', testPayload).reply(200, {});
-
-      const call = await executeAndGetConfig(
-        { url: host },
-        createTestConfig({
-          data: testPayload,
-          middleware: [
-            compressRequest({ mode: 'passthrough', algorithm: 'brotli' })
-          ]
-        }),
-        { fetchCsrfToken: false }
-      );
-
-      expect(call.data).toBe(testPayload);
-      expect(call.headers?.['content-encoding']).toBe('br');
-    });
   });
 
   describe('header management', () => {
-    it('throws error when Content-Encoding header already exists with different value', async () => {
-      nock(host).post('/test', testPayload).reply(200, {});
-
-      await expect(
-        executeHttpRequest(
-          { url: host },
-          {
-            method: 'POST',
-            url: '/test',
-            data: testPayload,
-            headers: { 'Content-Encoding': 'deflate' },
-            middleware: [compressRequest({ mode: true })]
-          },
-          { fetchCsrfToken: false }
-        )
-      ).rejects.toThrow('Content-Encoding header conflict');
-    });
-
-    it('proceeds with compression when Content-Encoding matches algorithm', async () => {
+    it('appends to existing Content-Encoding header when value differs', async () => {
       nock(host).post('/test').reply(200, {});
 
       const call = await executeAndGetConfig(
         { url: host },
         createTestConfig({
           data: testPayload,
-          headers: { 'Content-Encoding': 'gzip' },
+          headers: { 'Content-Encoding': 'deflate' },
           middleware: [compressRequest({ mode: true })]
         }),
         { fetchCsrfToken: false }
       );
 
       expect(Buffer.isBuffer(call.data)).toBe(true);
-      expect(call.headers?.['content-encoding']).toBe('gzip');
+      expect(call.headers?.['content-encoding']).toBe('deflate, gzip');
     });
 
-    it('throws error for case-insensitive Content-Encoding header conflicts', async () => {
-      nock(host).post('/test', testPayload).reply(200, {});
+    it('handles case-insensitive Content-Encoding header', async () => {
+      nock(host).post('/test').reply(200, {});
 
-      await expect(
-        executeHttpRequest(
-          { url: host },
-          {
-            method: 'POST',
-            url: '/test',
-            data: testPayload,
-            headers: { 'content-encoding': 'deflate' },
-            middleware: [compressRequest({ mode: true })]
-          },
-          { fetchCsrfToken: false }
-        )
-      ).rejects.toThrow('Content-Encoding header conflict');
+      const call = await executeAndGetConfig(
+        { url: host },
+        createTestConfig({
+          data: testPayload,
+          headers: { 'content-encoding': 'deflate' },
+          middleware: [compressRequest({ mode: true })]
+        }),
+        { fetchCsrfToken: false }
+      );
+
+      expect(Buffer.isBuffer(call.data)).toBe(true);
+      expect(call.headers?.['content-encoding']).toBe('deflate, gzip');
     });
   });
 

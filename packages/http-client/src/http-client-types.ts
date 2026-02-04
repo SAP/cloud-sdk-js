@@ -155,6 +155,10 @@ export interface HttpRequestConfigBase {
    * Encoder for the query parameters key and values. Per default parameters and keys are percent encoded.
    */
   parameterEncoder?: ParameterEncoder;
+  /**
+   * An `AbortSignal` to cancel the request.
+   */
+  signal?: AbortSignal;
 }
 
 /**
@@ -207,6 +211,7 @@ export type CustomRequestConfig = Pick<
   | 'httpAgent'
   | 'httpsAgent'
   | 'parameterEncoder'
+  | 'signal'
 > &
   Record<string, any>;
 

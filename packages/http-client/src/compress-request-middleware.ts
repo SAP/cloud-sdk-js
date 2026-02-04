@@ -52,6 +52,24 @@ export type RequestCompressionAlgorithm =
   | 'zstd';
 
 /**
+ * Options for different request compressors to configure their behavior (e.g., compression level).
+ */
+export interface RequestCompressorOptions {
+  /** Options to control gzip compression. */
+  gzip: zlib.ZlibOptions;
+  /** Options to control brotli compression. */
+  brotli: zlib.BrotliOptions;
+  /** Options to control deflate compression. */
+  deflate: zlib.ZlibOptions;
+  /**
+   * Options to control zstd compression.
+   * @remarks
+   * Zstd options will become available once Node.js v22.15.0 is the minimum supported version.
+   */
+  zstd: Record<string, any>;
+}
+
+/**
  * Configuration for the request compression middleware.
  */
 export interface RequestCompressionMiddlewareOptions<
@@ -66,12 +84,7 @@ export interface RequestCompressionMiddlewareOptions<
   /**
    * Options for the chosen compression algorithm, e.g. to control the compression effort.
    */
-  compressOptions?: C extends 'brotli'
-    ? zlib.BrotliOptions
-    : C extends 'zstd'
-      ? // TODO: Use `zlib.ZstdOptions` when available in `@types/node` for oldest supported Node.js version
-        Record<string, any>
-      : zlib.ZlibOptions;
+  compressOptions?: RequestCompressorOptions[C];
   /**
    * Compression mode. Can be 'auto', 'passthrough' or a boolean.
    * - In 'auto' mode, the payload is compressed based on the `autoCompressMinSize` threshold.

@@ -8,7 +8,8 @@ export type { CsrfMiddlewareOptions } from './csrf-token-middleware';
 export { compressRequest } from './compress-request-middleware';
 export type {
   RequestCompressionAlgorithm,
-  RequestCompressionMiddlewareOptions
+  RequestCompressionMiddlewareOptions,
+  RequestCompressorOptions
 } from './compress-request-middleware';
 export {
   buildHttpRequest,

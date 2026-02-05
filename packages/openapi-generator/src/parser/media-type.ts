@@ -1,4 +1,6 @@
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { parse as parseContentType, type ParsedMediaType } from 'content-type';
+import { parse } from '@apidevtools/swagger-parser';
 import { parseSchema } from './schema';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiMediaTypeObject, OpenApiSchema } from '../openapi-types';
@@ -14,6 +16,150 @@ const allowedMediaTypes = [
   'multipart/form-data',
   '*/*'
 ];
+
+/**
+ * Parse encoding object from a media type, extracting contentType for each property.
+ * Also automatically infers content types for properties with binary format.
+ * @param mediaTypeObject - The media type object containing encoding and schema.
+ * @param refs - Object representing cross references throughout the document.
+ * @returns Encoding configuration mapping property names to contentType, or undefined.
+ * @internal
+ */
+function parseEncoding(
+  mediaTypeObject: OpenAPIV3.MediaTypeObject | undefined,
+  refs: OpenApiDocumentRefs
+): Record<
+  string,
+  {
+    contentType: string;
+    isImplicit: boolean;
+    contentTypeParsed: ParsedMediaType[];
+  }
+> | undefined {
+  const explicitEncoding: Record<
+    string,
+    {
+      contentType: string;
+      isImplicit: boolean;
+      contentTypeParsed: ParsedMediaType[];
+    }
+  > = mediaTypeObject?.encoding
+    ? Object.entries(mediaTypeObject.encoding).reduce(
+        (acc, [propName, encodingObj]) => {
+          if (encodingObj.contentType) {
+            // OpenAPI allows comma-separated content types
+            const contentTypes = encodingObj.contentType.split(',').map(ct => ct.trim());
+            const contentTypeParsed: ParsedMediaType[] = [];
+
+            for (const ct of contentTypes) {
+              try {
+                contentTypeParsed.push(parseContentType(ct));
+              } catch (error) {
+                throw new ErrorWithCause(
+                  `Invalid content-type '${ct}' for property '${propName}' in OpenAPI specification. ` +
+                    'Content types must follow the format \'type/subtype\' (e.g., \'image/png\', \'text/plain\'). ' +
+                    'Please fix your OpenAPI document.',
+                  error
+                );
+              }
+            }
+
+            return {
+              ...acc,
+              [propName]: {
+                contentType: encodingObj.contentType,
+                isImplicit: false,
+                contentTypeParsed
+              }
+            };
+          }
+          return acc;
+        },
+        {}
+      )
+    : {};
+
+  // Auto-infer content types based on schema types
+  const schema = mediaTypeObject?.schema;
+  const autoEncoding: Record<
+    string,
+    {
+      contentType: string;
+      isImplicit: boolean;
+      contentTypeParsed: ParsedMediaType[];
+    }
+  > = {};
+
+  if (!schema) {
+    const joined = { ...autoEncoding, ...explicitEncoding };
+    return Object.keys(joined).length > 0 ? joined : undefined;
+  }
+
+  // Resolve $ref if present
+  const resolvedSchema = refs.resolveObject(schema);
+
+  if ('properties' in resolvedSchema && resolvedSchema.properties) {
+    Object.entries(resolvedSchema.properties).forEach(
+      ([propName, propSchema]) => {
+        // Skip if already has explicit encoding
+        if (explicitEncoding[propName]) {
+          return;
+        }
+
+        if (!propSchema || typeof propSchema !== 'object') {
+          return;
+        }
+
+        // Resolve $ref for property schema
+        const resolvedPropSchema = refs.resolveObject(propSchema);
+
+        const inferContentTypeFromSchema = (
+          s: OpenAPIV3.SchemaObject
+        ): string | undefined => {
+          // Binary format -> application/octet-stream
+          if (s.type === 'string' && s.format === 'binary') {
+            return 'application/octet-stream';
+          }
+          // Primitive types -> text/plain
+          if (
+            s.type === 'string' ||
+            s.type === 'number' ||
+            s.type === 'integer' ||
+            s.type === 'boolean'
+          ) {
+            return 'text/plain';
+          }
+          // Arrays -> check item type
+          if (
+            s.type === 'array' &&
+            s.items &&
+            typeof s.items === 'object' &&
+            !('$ref' in s.items)
+          ) {
+            return inferContentTypeFromSchema(s.items);
+          }
+          // Objects and others -> application/json
+          return 'application/json';
+        };
+
+        if (!('$ref' in resolvedPropSchema)) {
+          const contentType = inferContentTypeFromSchema(resolvedPropSchema);
+          if (contentType) {
+            const contentTypeParsed = parseContentType(contentType);
+            autoEncoding[propName] = {
+              contentType,
+              isImplicit: true,
+              contentTypeParsed: [contentTypeParsed]
+            };
+          }
+        }
+      }
+    );
+  }
+
+  const combined = { ...autoEncoding, ...explicitEncoding };
+  return Object.keys(combined).length > 0 ? combined : undefined;
+}
 /**
  * Parse the type of a resolved request body or response object.
  * @param bodyOrResponseObject - The request body or response object to parse the type from.
@@ -29,7 +175,20 @@ export function parseTopLevelMediaType(
     | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
-): { schema: OpenApiSchema; mediaType: string } | undefined {
+):
+  | {
+      schema: OpenApiSchema;
+      mediaType: string;
+      encoding?: Record<
+        string,
+        {
+          contentType: string;
+          isImplicit: boolean;
+          contentTypeParsed: ParsedMediaType[];
+        }
+      >;
+    }
+  | undefined {
   if (bodyOrResponseObject) {
     const mediaTypeObject = getMediaTypeObject(
       bodyOrResponseObject,
@@ -37,9 +196,19 @@ export function parseTopLevelMediaType(
     );
 
     if (mediaTypeObject) {
+      const encoding = mediaTypeObject.mediaType.startsWith('multipart/')
+        ? parseEncoding(mediaTypeObject, refs)
+        : undefined;
+
       return {
-        schema: parseSchema(mediaTypeObject.schema, refs, options),
-        mediaType: mediaTypeObject.mediaType
+        schema: parseSchema(
+          mediaTypeObject.schema,
+          refs,
+          options,
+          mediaTypeObject.mediaType
+        ),
+        mediaType: mediaTypeObject.mediaType,
+        encoding
       };
     }
   }
@@ -55,7 +224,20 @@ export function parseMediaType(
     | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
-): { schema: OpenApiSchema; mediaType: string } | undefined {
+):
+  | {
+      schema: OpenApiSchema;
+      mediaType: string;
+      encoding?: Record<
+        string,
+        {
+          contentType: string;
+          isImplicit: boolean;
+          contentTypeParsed: ParsedMediaType[];
+        }
+      >;
+    }
+  | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
     const parsedSchema = parseTopLevelMediaType(
@@ -68,7 +250,7 @@ export function parseMediaType(
       logger.warn(
         `Could not parse '${allMediaTypes}', because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime.`
       );
-      return { schema: { type: 'any' }, mediaType: 'application/json ' };
+      return { schema: { type: 'any' }, mediaType: 'application/json' };
     }
 
     // There is only one media type

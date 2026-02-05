@@ -1751,6 +1751,11 @@
   dependencies:
     "@babel/types" "^7.20.7"
 
+"@types/content-type@^1.1.9":
+  version "1.1.9"
+  resolved "https://registry.npmjs.org/@types/content-type/-/content-type-1.1.9.tgz#a0240a8141b33549ac0ca6847f4b801580012bca"
+  integrity sha512-Hq9IMnfekuOCsEmYl4QX2HBrT+XsfXiupfrLLY8Dcf3Puf4BkBOxSbWYTITSOQAhJoYPBez+b4MJRpIYL65z8A==
+
 "@types/eslint@^7.2.13":
   version "7.29.0"
   resolved "https://registry.npmjs.org/@types/eslint/-/eslint-7.29.0.tgz#e56ddc8e542815272720bb0b4ccc2aff9c3e1c78"
@@ -3198,7 +3203,7 @@ content-disposition@~0.5.4:
   dependencies:
     safe-buffer "5.2.1"
 
-content-type@~1.0.4, content-type@~1.0.5:
+content-type@^1.0.5, content-type@~1.0.4, content-type@~1.0.5:
   version "1.0.5"
   resolved "https://registry.npmjs.org/content-type/-/content-type-1.0.5.tgz#8b773162656d1d1086784c8f23a54ce6d73d7918"
   integrity sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==

@@ -1,6 +1,8 @@
 /* eslint-disable max-classes-per-file */
 // eslint-disable-next-line import/named
 import {
+  createLogger,
+  ErrorWithCause,
   isNullish,
   pickValueIgnoreCase,
   removeSlashes,
@@ -25,6 +27,11 @@ import type {
 } from '@sap-cloud-sdk/http-client/internal';
 import type { HttpDestinationOrFetchOptions } from '@sap-cloud-sdk/connectivity';
 import type { AxiosResponse } from 'axios';
+
+const logger = createLogger({
+  package: 'openapi',
+  messageContext: 'openapi-request-builder'
+});
 
 /**
  * Request builder for OpenAPI requests.
@@ -185,18 +192,135 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   private getBody(): any {
     const body = this.parameters?.body;
-    if (
-      pickValueIgnoreCase(this.parameters?.headerParameters, 'content-type') ===
-      'multipart/form-data'
-    ) {
-      const formData = new FormData();
-      for (const key in body) {
-        // TODO: is it enough to just append the body[key] or does it need to be stringified?
-        formData.append(key, body[key]);
-      }
-      return formData;
+    const contentType = pickValueIgnoreCase(
+      this.parameters?.headerParameters,
+      'content-type'
+    );
+
+    // Handle multipart/form-data body unless the body is already a FormData instance
+    if (contentType === 'multipart/form-data' && !(body instanceof FormData)) {
+      return this.buildFormData(body);
     }
+
     return body;
+  }
+
+  private buildFormData(body: Record<string, any>): FormData {
+    const formData = new FormData();
+    const encoding = this.parameters!._encoding;
+
+    for (const [key, value] of Object.entries(body ?? {})) {
+      if (value === undefined || value === null) {
+        continue;
+      }
+
+      if (!encoding || !encoding[key]) {
+        throw new Error(
+          `Missing encoding metadata for property '${key}'. ` +
+            'This indicates a code generation issue. ' +
+            'Please regenerate your API client.'
+        );
+      }
+
+      // Content type is provided by the generator in _encoding based on the schema
+      const {
+        contentType: targetContentType,
+        isImplicit: targetIsImplicit,
+        contentTypeParsed
+      } = encoding[key];
+      // Use the first parsed content type (primary type)
+      const allowedTypes = new Set(
+        // TODO: compcase?
+        contentTypeParsed.map(ct => ct.type.toLowerCase())
+      );
+      if (value instanceof Blob) {
+        const isFlexibleContentType =
+          targetContentType &&
+          (targetContentType.includes('*') ||
+            contentTypeParsed.length > 1 ||
+            allowedTypes.has('any'));
+
+        // If `Blob` has no type, we use value from the specification unless the target content type is complex (multiple choices or wildcards)
+        if (
+          !value.type &&
+          !isFlexibleContentType &&
+          !contentTypeParsed[0].parameters.charset
+        ) {
+          logger.debug(
+            `Adding missing content type '${targetContentType}' to Blob for key '${key}' as per encoding specification.`
+          );
+          const withType = new Blob([value], {
+            type: targetContentType
+          });
+          formData.append(key, withType);
+          continue;
+        }
+
+        // If `Blob` has a type, we do a surface-level check to warn users about potential mismatches with the specification
+        // unless the target content type is complex (multiple choices or wildcards)
+        // or the encoding is implicit (in which case we are more lenient as there was no specific request from the spec)
+        const valueContentTypeBase = value.type.split(';')[0].trim();
+        if (
+          // Don't warn about implicit encodings (less likely to be relevant)
+          !targetIsImplicit &&
+          // We do not handle more complex content types
+          !isFlexibleContentType &&
+          // Do the actual comparison
+          valueContentTypeBase.localeCompare(
+            contentTypeParsed[0].type,
+            undefined,
+            { sensitivity: 'base' }
+          ) !== 0
+        ) {
+          logger.warn(
+            `Content type mismatch for key '${key}': value has type '${value.type}' but encoding specifies '${targetContentType}'.`
+          );
+        }
+        formData.append(key, value);
+        continue;
+      }
+
+      // Handle string data
+      // Only use JSON.stringify for application/json content type - otherwise may unduly escape e.g. stringified XML
+      // To avoid stringifying pre-stringified JSON, users should use `Blob` or raw `FormData`
+      const stringValue = allowedTypes.has('application/json')
+        ? JSON.stringify(value)
+        : String(value);
+      // If a charset is specified in the encoding, we encode the string accordingly (if unambiguous)
+      const targetCharset = new Set(
+        contentTypeParsed.map(ct => ct.parameters.charset)
+      );
+      if (
+        targetCharset.size === 1 &&
+        targetCharset.values().next().value !== undefined
+      ) {
+        const targetCharsetValue = targetCharset.values().next().value;
+
+        // Wrap in try-catch to provide better error message if charset encoding fails (e.g. due to unsupported charset or invalid characters for the charset)
+        let buffer: Buffer | undefined;
+        try {
+          buffer = Buffer.from(
+            stringValue,
+            targetCharsetValue as BufferEncoding
+          );
+        } catch (e: any) {
+          throw new ErrorWithCause(
+            `Failed to encode form data field '${key}' with charset '${targetCharsetValue}'.`,
+            e
+          );
+        }
+
+        const blob = new Blob([buffer], {
+          type: targetContentType
+        });
+        formData.append(key, blob);
+        continue;
+      }
+
+      formData.append(key, stringValue);
+    }
+
+    return formData;
   }
 
   private getPath(): string {
@@ -237,6 +361,21 @@ export interface OpenApiRequestParameters {
    * Request body typically used with "create" and "update" operations (POST, PUT, PATCH).
    */
   body?: any;
+  /**
+   * Encoding metadata for multipart/form-data properties.
+   * @internal
+   */
+  _encoding?: Record<
+    string,
+    {
+      contentType: string;
+      isImplicit: boolean;
+      contentTypeParsed: {
+        type: string;
+        parameters: { [key: string]: string };
+      }[];
+    }
+  >;
 }
 
 function isAxiosResponse(val: any): val is AxiosResponse {

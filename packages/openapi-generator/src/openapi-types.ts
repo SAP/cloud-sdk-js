@@ -162,6 +162,22 @@ export interface OpenApiRequestBody {
    * Description of the body.
    */
   description?: string;
+
+  /**
+   * Encoding options for multipart/form-data properties.
+   * Maps property names to their encoding configuration (e.g., contentType).
+   */
+  encoding?: Record<
+    string,
+    {
+      contentType: string;
+      isImplicit: boolean;
+      contentTypeParsed: {
+        type: string;
+        parameters: { [key: string]: string };
+      }[];
+    }
+  >;
 }
 
 /**

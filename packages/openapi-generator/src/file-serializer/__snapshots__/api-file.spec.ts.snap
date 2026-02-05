@@ -21,8 +21,8 @@ export const TestApi = {
     "/test/{id}",
     {
           pathParameters: { id },
-          queryParameters,
-          headerParameters
+          headerParameters,
+          queryParameters
         },
     TestApi._defaultBasePath
   ),
@@ -91,8 +91,8 @@ export const TestApi = {
     "/test/{id}",
     {
           pathParameters: { id },
-          queryParameters,
-          headerParameters
+          headerParameters,
+          queryParameters
         },
     TestApi._defaultBasePath
   ),
@@ -133,8 +133,8 @@ export const TestApi = {
     "/test/{id}",
     {
           pathParameters: { id },
-          queryParameters,
-          headerParameters
+          headerParameters,
+          queryParameters
         },
     TestApi._defaultBasePath
   ),

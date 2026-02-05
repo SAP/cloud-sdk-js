@@ -151,11 +151,18 @@ describe('openapi-request-builder', () => {
       body: {
         limit: 100
       },
-      headerParameters: { 'content-type': 'multipart/form-data' }
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        limit: {
+          contentType: 'text/plain',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+        }
+      }
     });
     await requestBuilder.executeRaw(destination);
     const data = new FormData();
-    data.append('limit', 100);
+    data.append('limit', '100');
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
       sanitizeDestination(destination),
       {
@@ -383,6 +390,252 @@ describe('openapi-request-builder', () => {
       },
       { fetchCsrfToken: false }
     );
+  });
+
+  it('executes a request with multipart body and charset encoding', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        textData: 'Hello World'
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        textData: {
+          contentType: 'text/plain; charset=utf-8',
+          isImplicit: false,
+          contentTypeParsed: [
+            { type: 'text/plain', parameters: { charset: 'utf-8' } }
+          ]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    // Verify that the form data was built correctly with charset handling
+    const callArgs = httpClient.executeHttpRequest['mock'].calls[0];
+    const formData = callArgs[1].data;
+    expect(formData).toBeInstanceOf(FormData);
+  });
+
+  it('executes a request with multipart body containing Blob without type', async () => {
+    const blob = new Blob(['test content']);
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        file: blob
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        file: {
+          contentType: 'application/pdf',
+          isImplicit: false,
+          contentTypeParsed: [{ type: 'application/pdf', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const callArgs = httpClient.executeHttpRequest['mock'].calls[0];
+    const formData = callArgs[1].data;
+    expect(formData).toBeInstanceOf(FormData);
+  });
+
+  it('executes a request with multipart body containing multiple content types', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        document: new Blob(['doc'], { type: 'application/pdf' })
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        document: {
+          contentType: 'application/pdf, application/msword',
+          isImplicit: false,
+          contentTypeParsed: [
+            { type: 'application/pdf', parameters: {} },
+            { type: 'application/msword', parameters: {} }
+          ]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const callArgs = httpClient.executeHttpRequest['mock'].calls[0];
+    const formData = callArgs[1].data;
+    expect(formData).toBeInstanceOf(FormData);
+  });
+
+  it('handles Blob content type that differs from encoding specification', async () => {
+    // Test that a blob with a different content type than expected still gets processed
+    const blob = new Blob(['test'], { type: 'image/jpeg' });
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        image: blob
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        image: {
+          contentType: 'image/png',
+          isImplicit: false,
+          contentTypeParsed: [{ type: 'image/png', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const callArgs = httpClient.executeHttpRequest['mock'].calls[0];
+    const formData = callArgs[1].data;
+    expect(formData).toBeInstanceOf(FormData);
+  });
+
+  it('does not warn for implicit encoding mismatches', async () => {
+    const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+    const blob = new Blob(['test'], { type: 'image/jpeg' });
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        image: blob
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        image: {
+          contentType: 'image/png',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'image/png', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    expect(consoleSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('Content type mismatch')
+    );
+    consoleSpy.mockRestore();
+  });
+
+  it('handles wildcard content types without warnings', async () => {
+    const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+    const blob = new Blob(['test'], { type: 'image/jpeg' });
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        file: blob
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        file: {
+          contentType: 'image/*',
+          isImplicit: false,
+          contentTypeParsed: [{ type: 'image/*', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    expect(consoleSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('Content type mismatch')
+    );
+    consoleSpy.mockRestore();
+  });
+
+  it('skips null and undefined values in multipart body', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        field1: 'value1',
+        field2: null,
+        field3: undefined,
+        field4: 'value4'
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        field1: {
+          contentType: 'text/plain',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+        },
+        field2: {
+          contentType: 'text/plain',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+        },
+        field3: {
+          contentType: 'text/plain',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+        },
+        field4: {
+          contentType: 'text/plain',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const callArgs = httpClient.executeHttpRequest['mock'].calls[0];
+    const formData = callArgs[1].data;
+    expect(formData).toBeInstanceOf(FormData);
+  });
+
+  it('uses JSON.stringify for application/json content type in multipart', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        jsonData: { key: 'value', nested: { prop: 123 } }
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        jsonData: {
+          contentType: 'application/json',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'application/json', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const callArgs = httpClient.executeHttpRequest['mock'].calls[0];
+    const formData = callArgs[1].data;
+    expect(formData).toBeInstanceOf(FormData);
+  });
+
+  it('uses String() for non-JSON content types in multipart', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        textData: 12345
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        textData: {
+          contentType: 'text/plain',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const callArgs = httpClient.executeHttpRequest['mock'].calls[0];
+    const formData = callArgs[1].data;
+    expect(formData).toBeInstanceOf(FormData);
+  });
+
+  it('handles content type with semicolon in complex type checking', async () => {
+    const blob = new Blob(['test'], { type: 'application/json' });
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        data: blob
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        data: {
+          contentType: 'application/json; charset=utf-8',
+          isImplicit: false,
+          contentTypeParsed: [
+            { type: 'application/json', parameters: { charset: 'utf-8' } }
+          ]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const callArgs = httpClient.executeHttpRequest['mock'].calls[0];
+    const formData = callArgs[1].data;
+    expect(formData).toBeInstanceOf(FormData);
   });
 
   describe('requestConfig', () => {

@@ -121,11 +121,25 @@ function serializeParamsForRequestBuilder(
   }
   if (operation.requestBody) {
     params.push('body');
-    const contentTypeStr = `'content-type': '${operation.requestBody.mediaType}'`;
-    if (operation.headerParameters.length) {
-      params.push(`headerParameters: {${contentTypeStr}, ...headerParameters}`);
-    } else {
-      params.push(`headerParameters: {${contentTypeStr}}`);
+    if (
+      operation.requestBody.encoding &&
+      Object.keys(operation.requestBody.encoding).length > 0
+    ) {
+      params.push(
+        `_encoding: ${JSON.stringify(operation.requestBody.encoding)}`
+      );
+    }
+    if (operation.requestBody.mediaType) {
+      const contentTypeStr = `'content-type': '${operation.requestBody.mediaType}'`;
+      if (operation.headerParameters.length) {
+        params.push(
+          `headerParameters: {${contentTypeStr}, ...headerParameters}`
+        );
+      } else {
+        params.push(`headerParameters: {${contentTypeStr}}`);
+      }
+    } else if (operation.headerParameters.length) {
+      params.push('headerParameters');
     }
   } else if (operation.headerParameters.length) {
     params.push('headerParameters');

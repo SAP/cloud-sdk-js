@@ -30,14 +30,14 @@
   },
   "scripts": {
     "compile": "tsc -b",
-    "prepublishOnly": "yarn compile && yarn readme",
     "test": "yarn test:unit",
     "test:unit": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck .",
-    "readme": "ts-node ../../scripts/replace-common-readme.ts"
+    "readme": "ts-node ../../scripts/replace-common-readme.ts",
+    "prepack": "tsc -b"
   },
   "dependencies": {
     "@sap-cloud-sdk/connectivity": "^4.3.1",

@@ -2,8 +2,12 @@
 const OpenAPIBackend = require('openapi-backend').default;
 const express = require('express');
 const SwaggerParser = require('@apidevtools/swagger-parser');
+const multer = require('multer');
 
 const jsf = require('json-schema-faker');
+
+// Configure multer for multipart/form-data parsing
+const upload = multer({ storage: multer.memoryStorage() });
 
 async function getSchemas() {
   // SchemaObject
@@ -71,6 +75,25 @@ async function createApi() {
       }
       return res.status(400).json({ err: 'Invalid or missing CSRF token.' });
     },
+    testCasePostMultipartBody: (c, req, res) => {
+      // For multipart requests, multer populates req.body with text fields
+      const stringProperty = req.body?.stringProperty;
+      if (!stringProperty) {
+        return res.status(400).json({ err: 'stringProperty is required' });
+      }
+      return res.status(201).json({ received: { stringProperty } });
+    },
+    testCasePatchMultipartBodyWithHeaders: (c, req, res) => {
+      const stringProperty = req.body?.stringProperty;
+      const optionalHeader = c.request.headers['optionalheaderparam'];
+      if (!stringProperty) {
+        return res.status(400).json({ err: 'stringProperty is required' });
+      }
+      return res.status(200).json({
+        received: { stringProperty },
+        header: optionalHeader || null
+      });
+    },
     validationFail: (c, req, res) => {
       res.status(400).json({ err: c.validation.errors });
     },
@@ -87,6 +110,7 @@ module.exports = {
     const api = await createApi();
     const app = express();
     app.use(express.json());
+    app.use(upload.any()); // Parse multipart/form-data
     app.use(async (req, res) => api.handleRequest(req, req, res));
 
     return app;

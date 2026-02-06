@@ -37,7 +37,7 @@
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck .",
     "readme": "ts-node ../../scripts/replace-common-readme.ts",
-    "prepack": "tsc -b"
+    "prepack": "test -f dist/index.js || tsc -p tsconfig.for-prepack.json || true"
   },
   "dependencies": {
     "@sap-cloud-sdk/connectivity": "^4.4.0",

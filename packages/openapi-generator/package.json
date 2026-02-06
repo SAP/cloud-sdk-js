@@ -29,7 +29,7 @@
     "directory": "packages/openapi-generator"
   },
   "scripts": {
-    "compile": "tsc -b",,
+    "compile": "tsc -b",
     "test": "yarn test:unit",
     "test:unit": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "coverage": "jest --coverage",
@@ -37,7 +37,7 @@
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi'",
     "readme": "ts-node ../../scripts/replace-common-readme.ts",
-    "prepack": "tsc -b"
+    "prepack": "test -f dist/index.js || tsc -p tsconfig.for-prepack.json || true"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^12.1.0",

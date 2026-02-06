@@ -153,6 +153,13 @@ exports.TestCaseApi = {
      */
     testCasePostMultipartBody: (body) => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/multipart-body', {
         body,
+        _encoding: {
+            stringProperty: {
+                contentType: 'text/plain',
+                isImplicit: true,
+                contentTypeParsed: [{ parameters: {}, type: 'text/plain' }]
+            }
+        },
         headerParameters: { 'content-type': 'multipart/form-data' }
     }, exports.TestCaseApi._defaultBasePath),
     /**
@@ -163,6 +170,13 @@ exports.TestCaseApi = {
      */
     testCasePatchMultipartBodyWithHeaders: (body, headerParameters) => new openapi_1.OpenApiRequestBuilder('patch', '/test-cases/multipart-body', {
         body,
+        _encoding: {
+            stringProperty: {
+                contentType: 'text/plain',
+                isImplicit: true,
+                contentTypeParsed: [{ parameters: {}, type: 'text/plain' }]
+            }
+        },
         headerParameters: {
             'content-type': 'multipart/form-data',
             ...headerParameters

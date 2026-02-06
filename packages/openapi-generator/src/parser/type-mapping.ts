@@ -27,6 +27,7 @@ const typeMapping = {
   date: 'string',
   DateTime: 'string',
   binary: 'Blob',
+  Blob: 'Blob',
   File: 'Blob',
   file: 'Blob',
   ByteArray: 'string',
@@ -41,20 +42,14 @@ const typeMapping = {
  * Get the mapped TypeScript type for the given original OpenAPI type.
  * @param originalType - Original OpenAPI type, to get a mapping for.
  * @param format - Optional format of the OpenAPI type.
- * @param requestMediaType - Optional media type of the request.
  * @returns The mapped TypeScript type.
  * @internal
  */
 export function getType(
   originalType: string | undefined,
-  format?: string,
-  requestMediaType?: string
+  format?: string
 ): string {
-  if (
-    originalType === 'string' &&
-    format === 'binary' &&
-    requestMediaType === 'multipart/form-data'
-  ) {
+  if (originalType === 'string' && format === 'binary') {
     return 'Blob';
   }
   const type = originalType ? typeMapping[originalType] : 'any';

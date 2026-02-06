@@ -1,6 +1,5 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { parse as parseContentType, type ParsedMediaType } from 'content-type';
-import { parse } from '@apidevtools/swagger-parser';
 import { parseSchema } from './schema';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiMediaTypeObject, OpenApiSchema } from '../openapi-types';
@@ -18,6 +17,33 @@ const allowedMediaTypes = [
 ];
 
 /**
+ * Parse content types from a comma-separated content type string.
+ * @param contentType - Comma-separated content types from encoding object.
+ * @param propName - Property name for error messages.
+ * @returns Array of parsed content types.
+ */
+function parseContentTypes(
+  contentType: string,
+  propName: string
+): ParsedMediaType[] {
+  return contentType
+    .split(',')
+    .map(ct => ct.trim())
+    .map(ct => {
+      try {
+        return parseContentType(ct);
+      } catch (error: any) {
+        throw new ErrorWithCause(
+          `Invalid content-type '${ct}' for property '${propName}' in OpenAPI specification. ` +
+            "Content types must follow the format 'type/subtype' (e.g., 'image/png', 'text/plain'). " +
+            'Please fix your OpenAPI document.',
+          error
+        );
+      }
+    });
+}
+
+/**
  * Parse encoding object from a media type, extracting contentType for each property.
  * Also automatically infers content types for properties with binary format.
  * @param mediaTypeObject - The media type object containing encoding and schema.
@@ -28,14 +54,16 @@ const allowedMediaTypes = [
 function parseEncoding(
   mediaTypeObject: OpenAPIV3.MediaTypeObject | undefined,
   refs: OpenApiDocumentRefs
-): Record<
-  string,
-  {
-    contentType: string;
-    isImplicit: boolean;
-    contentTypeParsed: ParsedMediaType[];
-  }
-> | undefined {
+):
+  | Record<
+      string,
+      {
+        contentType: string;
+        isImplicit: boolean;
+        contentTypeParsed: ParsedMediaType[];
+      }
+    >
+  | undefined {
   const explicitEncoding: Record<
     string,
     {
@@ -44,38 +72,20 @@ function parseEncoding(
       contentTypeParsed: ParsedMediaType[];
     }
   > = mediaTypeObject?.encoding
-    ? Object.entries(mediaTypeObject.encoding).reduce(
-        (acc, [propName, encodingObj]) => {
-          if (encodingObj.contentType) {
-            // OpenAPI allows comma-separated content types
-            const contentTypes = encodingObj.contentType.split(',').map(ct => ct.trim());
-            const contentTypeParsed: ParsedMediaType[] = [];
-
-            for (const ct of contentTypes) {
-              try {
-                contentTypeParsed.push(parseContentType(ct));
-              } catch (error) {
-                throw new ErrorWithCause(
-                  `Invalid content-type '${ct}' for property '${propName}' in OpenAPI specification. ` +
-                    'Content types must follow the format \'type/subtype\' (e.g., \'image/png\', \'text/plain\'). ' +
-                    'Please fix your OpenAPI document.',
-                  error
-                );
-              }
+    ? Object.fromEntries(
+        Object.entries(mediaTypeObject.encoding)
+          .filter(([, encodingObj]) => encodingObj.contentType)
+          .map(([propName, encodingObj]) => [
+            propName,
+            {
+              contentType: encodingObj.contentType!,
+              isImplicit: false,
+              contentTypeParsed: parseContentTypes(
+                encodingObj.contentType!,
+                propName
+              )
             }
-
-            return {
-              ...acc,
-              [propName]: {
-                contentType: encodingObj.contentType,
-                isImplicit: false,
-                contentTypeParsed
-              }
-            };
-          }
-          return acc;
-        },
-        {}
+          ])
       )
     : {};
 

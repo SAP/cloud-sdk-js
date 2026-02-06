@@ -276,6 +276,13 @@ export const TestCaseApi = {
       '/test-cases/multipart-body',
       {
         body,
+        _encoding: {
+          stringProperty: {
+            contentType: 'text/plain',
+            isImplicit: true,
+            contentTypeParsed: [{ parameters: {}, type: 'text/plain' }]
+          }
+        },
         headerParameters: { 'content-type': 'multipart/form-data' }
       },
       TestCaseApi._defaultBasePath
@@ -295,6 +302,13 @@ export const TestCaseApi = {
       '/test-cases/multipart-body',
       {
         body,
+        _encoding: {
+          stringProperty: {
+            contentType: 'text/plain',
+            isImplicit: true,
+            contentTypeParsed: [{ parameters: {}, type: 'text/plain' }]
+          }
+        },
         headerParameters: {
           'content-type': 'multipart/form-data',
           ...headerParameters

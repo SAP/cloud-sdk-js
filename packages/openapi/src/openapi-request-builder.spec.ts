@@ -638,6 +638,123 @@ describe('openapi-request-builder', () => {
     expect(formData).toBeInstanceOf(FormData);
   });
 
+  it('applies content type from encoding to Blob without type', async () => {
+    const blob = new Blob(['file content']);
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        fileField: blob
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        fileField: {
+          contentType: 'image/png',
+          isImplicit: false,
+          contentTypeParsed: [{ type: 'image/png', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const formData = httpSpy.mock.calls[0]![1].data!;
+    const entries = Array.from(formData.entries()) as [string, string | Blob][];
+
+    expect(entries).toHaveLength(1);
+    expect(entries[0][0]).toBe('fileField');
+    expect(entries[0][1]).toBeInstanceOf(Blob);
+    expect((entries[0][1] as Blob).type).toBe('image/png');
+  });
+
+  it('creates Blob for charset-encoded text in FormData', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        textData: 'Hello \u4e2d\u6587'
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        textData: {
+          contentType: 'text/plain; charset=utf-8',
+          isImplicit: false,
+          contentTypeParsed: [
+            { type: 'text/plain', parameters: { charset: 'utf-8' } }
+          ]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const formData = httpSpy.mock.calls[0]![1].data!;
+    const entries = Array.from(formData.entries()) as [string, string | Blob][];
+
+    expect(entries).toHaveLength(1);
+    expect(entries[0][0]).toBe('textData');
+    expect(entries[0][1]).toBeInstanceOf(Blob);
+    expect((entries[0][1] as Blob).type).toBe('text/plain; charset=utf-8');
+  });
+
+  it('stringifies JSON content type in FormData entries', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        jsonData: { key: 'value', nested: { prop: 123 } }
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        jsonData: {
+          contentType: 'application/json',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'application/json', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const formData = httpSpy.mock.calls[0]![1].data!;
+    const entries = Array.from(formData.entries()) as [string, string | Blob][];
+
+    expect(entries).toHaveLength(1);
+    expect(entries[0][0]).toBe('jsonData');
+    expect(entries[0][1]).toBe('{"key":"value","nested":{"prop":123}}');
+  });
+
+  it('handles multiple fields with different types in FormData', async () => {
+    const blob = new Blob(['file'], { type: 'application/pdf' });
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        textField: 'text value',
+        numberField: 42,
+        fileField: blob
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        textField: {
+          contentType: 'text/plain',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+        },
+        numberField: {
+          contentType: 'text/plain',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+        },
+        fileField: {
+          contentType: 'application/pdf',
+          isImplicit: false,
+          contentTypeParsed: [{ type: 'application/pdf', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const formData = httpSpy.mock.calls[0]![1].data!;
+    const entries = Array.from(formData.entries()) as [string, string | Blob][];
+    const entryMap = new Map<string, string | Blob>(entries);
+
+    expect(entries).toHaveLength(3);
+    expect(entryMap.get('textField')).toBe('text value');
+    expect(entryMap.get('numberField')).toBe('42');
+    expect(entryMap.get('fileField')).toBeInstanceOf(Blob);
+    expect((entryMap.get('fileField') as Blob).type).toBe('application/pdf');
+  });
+
   describe('requestConfig', () => {
     it('should overwrite default request config with filtered custom request config', async () => {
       const requestBuilder = new OpenApiRequestBuilder('get', '/test');

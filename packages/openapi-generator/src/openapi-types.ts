@@ -154,10 +154,39 @@ export interface OpenApiRequestBody {
   schema: OpenApiSchema;
 
   /**
+   * Media type of the body.
+   */
+  mediaType: string;
+
+  /**
    * Description of the body.
    */
   description?: string;
+
+  /**
+   * Encoding options for multipart/form-data properties.
+   * Maps property names to their encoding configuration (e.g., contentType).
+   */
+  encoding?: Record<
+    string,
+    {
+      contentType: string;
+      isImplicit: boolean;
+      contentTypeParsed: {
+        type: string;
+        parameters: { [key: string]: string };
+      }[];
+    }
+  >;
 }
+
+/**
+ * Representation of a media type.
+ * @internal
+ */
+export type OpenApiMediaTypeObject = OpenAPIV3.MediaTypeObject & {
+  mediaType: string;
+};
 
 /**
  * Represents all possible Types of schemas.

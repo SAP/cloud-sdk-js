@@ -39,7 +39,8 @@ export const DefaultApi = {
       '/entities/{pathParam}',
       {
         pathParameters: { pathParam },
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
       },
       DefaultApi._defaultBasePath
     )

@@ -19,4 +19,12 @@ describe('getType', () => {
     expect(getType('int')).toEqual('number');
     expect(getType('integer')).toEqual('number');
   });
+
+  it('returns Blob for string with format binary', () => {
+    expect(getType('string', 'binary')).toEqual('Blob');
+  });
+
+  it('returns Blob when type is already Blob', () => {
+    expect(getType('Blob')).toEqual('Blob');
+  });
 });

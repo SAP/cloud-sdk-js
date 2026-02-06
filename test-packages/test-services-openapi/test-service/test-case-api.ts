@@ -39,6 +39,7 @@ export const TestCaseApi = {
       {
         pathParameters: { requiredPathItemPathParam },
         body,
+        headerParameters: { 'content-type': 'application/json' },
         queryParameters
       },
       TestCaseApi._defaultBasePath
@@ -66,6 +67,7 @@ export const TestCaseApi = {
       {
         pathParameters: { requiredPathItemPathParam },
         body,
+        headerParameters: { 'content-type': 'application/json' },
         queryParameters
       },
       TestCaseApi._defaultBasePath
@@ -84,8 +86,8 @@ export const TestCaseApi = {
       'get',
       '/test-cases/parameters',
       {
-        queryParameters,
-        headerParameters
+        headerParameters,
+        queryParameters
       },
       TestCaseApi._defaultBasePath
     ),
@@ -106,8 +108,11 @@ export const TestCaseApi = {
       '/test-cases/parameters',
       {
         body,
-        queryParameters,
-        headerParameters
+        headerParameters: {
+          'content-type': 'application/json',
+          ...headerParameters
+        },
+        queryParameters
       },
       TestCaseApi._defaultBasePath
     ),
@@ -128,8 +133,11 @@ export const TestCaseApi = {
       '/test-cases/parameters',
       {
         body,
-        queryParameters,
-        headerParameters
+        headerParameters: {
+          'content-type': 'application/json',
+          ...headerParameters
+        },
+        queryParameters
       },
       TestCaseApi._defaultBasePath
     ),
@@ -222,7 +230,8 @@ export const TestCaseApi = {
       'get',
       '/test-cases/complex-schemas',
       {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
       },
       TestCaseApi._defaultBasePath
     ),
@@ -236,7 +245,8 @@ export const TestCaseApi = {
       'post',
       '/test-cases/complex-schemas',
       {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
       },
       TestCaseApi._defaultBasePath
     ),
@@ -250,7 +260,59 @@ export const TestCaseApi = {
       'get',
       '/test-cases/schema-name-integer',
       {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
+      },
+      TestCaseApi._defaultBasePath
+    ),
+  /**
+   * Create a request builder for execution of post requests to the '/test-cases/multipart-body' endpoint.
+   * @param body - Request body.
+   * @returns The request builder, use the `execute()` method to trigger the request.
+   */
+  testCasePostMultipartBody: (body: SimpleTestEntity) =>
+    new OpenApiRequestBuilder<any>(
+      'post',
+      '/test-cases/multipart-body',
+      {
+        body,
+        _encoding: {
+          stringProperty: {
+            contentType: 'text/plain',
+            isImplicit: true,
+            contentTypeParsed: [{ parameters: {}, type: 'text/plain' }]
+          }
+        },
+        headerParameters: { 'content-type': 'multipart/form-data' }
+      },
+      TestCaseApi._defaultBasePath
+    ),
+  /**
+   * Create a request builder for execution of patch requests to the '/test-cases/multipart-body' endpoint.
+   * @param body - Request body.
+   * @param headerParameters - Object containing the following keys: optionalHeaderParam.
+   * @returns The request builder, use the `execute()` method to trigger the request.
+   */
+  testCasePatchMultipartBodyWithHeaders: (
+    body: SimpleTestEntity,
+    headerParameters?: { optionalHeaderParam?: string }
+  ) =>
+    new OpenApiRequestBuilder<any>(
+      'patch',
+      '/test-cases/multipart-body',
+      {
+        body,
+        _encoding: {
+          stringProperty: {
+            contentType: 'text/plain',
+            isImplicit: true,
+            contentTypeParsed: [{ parameters: {}, type: 'text/plain' }]
+          }
+        },
+        headerParameters: {
+          'content-type': 'multipart/form-data',
+          ...headerParameters
+        }
       },
       TestCaseApi._defaultBasePath
     ),

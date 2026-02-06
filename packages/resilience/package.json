@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/resilience",
-  "version": "4.3.1",
+  "version": "4.4.0",
   "description": "SAP Cloud SDK for JavaScript resilience",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -41,9 +41,9 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^4.3.1",
+    "@sap-cloud-sdk/util": "^4.4.0",
     "async-retry": "^1.3.3",
-    "axios": "^1.13.2",
+    "axios": "^1.13.4",
     "opossum": "^9.0.0"
   },
   "devDependencies": {

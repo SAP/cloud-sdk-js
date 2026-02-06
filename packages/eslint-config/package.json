@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/eslint-config",
-  "version": "4.3.1",
+  "version": "4.4.0",
   "description": "eslint config for the SAP Cloud SDK",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -35,7 +35,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jsdoc": "^61.7.1",
+    "eslint-plugin-jsdoc": "^62.5.0",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-regex": "^1.10.0",
     "eslint-plugin-unused-imports": "^4.3.0",

@@ -109,7 +109,7 @@
     "license-checker": "^25.0.1",
     "madge": "^8.0.0",
     "prettier": "^3.8.1",
-    "puppeteer": "^24.36.1",
+    "puppeteer": "^24.37.1",
     "semver": "^7.7.2",
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",

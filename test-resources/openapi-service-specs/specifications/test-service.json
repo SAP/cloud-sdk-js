@@ -740,6 +740,56 @@
           }
         }
       }
+    },
+    "/test-cases/multipart-body": {
+      "post": {
+        "tags": ["test case"],
+        "operationId": "testCasePostMultipartBody",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleTestEntity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["test case"],
+        "operationId": "testCasePatchMultipartBodyWithHeaders",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleTestEntity"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "optionalHeaderParam",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
     }
   },
   "components": {

@@ -44,7 +44,8 @@ export const EntityApi = {
       'put',
       '/entities',
       {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
       },
       EntityApi._defaultBasePath
     ),
@@ -58,7 +59,8 @@ export const EntityApi = {
       'post',
       '/entities',
       {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
       },
       EntityApi._defaultBasePath
     ),
@@ -72,7 +74,8 @@ export const EntityApi = {
       'patch',
       '/entities',
       {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
       },
       EntityApi._defaultBasePath
     ),
@@ -86,7 +89,8 @@ export const EntityApi = {
       'delete',
       '/entities',
       {
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
       },
       EntityApi._defaultBasePath
     ),

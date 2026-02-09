@@ -31,7 +31,8 @@ exports.DefaultApi = {
      */
     patchEntity: (pathParam, body) => new openapi_1.OpenApiRequestBuilder('patch', '/entities/{pathParam}', {
         pathParameters: { pathParam },
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
     }, exports.DefaultApi._defaultBasePath)
 };
 //# sourceMappingURL=default-api.js.map

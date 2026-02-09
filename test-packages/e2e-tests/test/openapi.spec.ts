@@ -1,6 +1,12 @@
-import { EntityApi } from '@sap-cloud-sdk/test-services-openapi/test-service';
+import {
+  EntityApi,
+  TestCaseApi
+} from '@sap-cloud-sdk/test-services-openapi/test-service';
 import { destination } from './test-util';
-import type { TestEntity } from '@sap-cloud-sdk/test-services-openapi/test-service';
+import type {
+  TestEntity,
+  SimpleTestEntity
+} from '@sap-cloud-sdk/test-services-openapi/test-service';
 
 // TODO: How do I handle paths in rest requests?
 // TODO: Transpilation needed + tsconfig needs dom typings
@@ -36,6 +42,14 @@ describe('openapi request builder', () => {
       enumStringParameter: "valueWith'Quote"
     }).execute(restDestination);
     expect(response.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it('executes POST request with multipart body', async () => {
+    const body: SimpleTestEntity = { stringProperty: 'test multipart value' };
+    const response = await TestCaseApi.testCasePostMultipartBody(body)
+      .skipCsrfTokenFetching()
+      .execute(restDestination);
+    expect(response.received.stringProperty).toBe('test multipart value');
   });
 });
 

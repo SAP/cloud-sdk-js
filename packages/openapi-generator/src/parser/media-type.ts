@@ -68,7 +68,7 @@ export function parseMediaType(
       logger.warn(
         `Could not parse '${allMediaTypes}', because it is not supported. Generation will continue with 'any'. This might lead to errors at runtime.`
       );
-      return { schema: { type: 'any' }, mediaType: 'application/json ' };
+      return { schema: { type: 'any' }, mediaType: 'application/json' };
     }
 
     // There is only one media type

@@ -28,6 +28,11 @@
 
 -
  
+# 4.4.0
+## New Features
+
+- [connectivity] Support IAS (App-to-App) authentication. Use `transformServiceBindingToDestination()` function or `getDestinationFromServiceBinding()` function to create a destination targeting an IAS application. (d444438)
+
 # 4.3.1
 ## Improvements
 

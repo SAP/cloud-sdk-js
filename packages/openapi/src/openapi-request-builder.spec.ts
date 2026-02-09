@@ -509,6 +509,37 @@ describe('openapi-request-builder', () => {
     consoleSpy.mockRestore();
   });
 
+  it('should preserve null and undefined values in multipart body', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        field1: null,
+        field2: undefined
+      },
+      headerParameters: { 'content-type': 'multipart/form-data' },
+      _encoding: {
+        field1: {
+          contentType: 'text/plain',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+        },
+        field2: {
+          contentType: 'application/json',
+          isImplicit: true,
+          contentTypeParsed: [{ type: 'application/json', parameters: {} }]
+        }
+      }
+    });
+    await requestBuilder.executeRaw(destination);
+
+    const callArgs = httpClient.executeHttpRequest['mock'].calls[0];
+    const formData = callArgs[1].data;
+    expect(formData).toBeInstanceOf(FormData);
+    const entries = Array.from(formData.entries()) as [string, string | Blob][];
+    expect(entries).toContainEqual(['field1', 'null']);
+    expect(entries).toContainEqual(['field2', 'undefined']);
+    expect(entries.length).toBe(2);
+  });
+
   it('handles wildcard content types without warnings', async () => {
     const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
     const blob = new Blob(['test'], { type: 'image/jpeg' });

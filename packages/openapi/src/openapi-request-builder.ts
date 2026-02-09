@@ -210,10 +210,6 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     const encoding = this.parameters!._encoding;
 
     for (const [key, value] of Object.entries(body ?? {})) {
-      if (value === undefined || value === null) {
-        continue;
-      }
-
       if (!encoding || !encoding[key]) {
         throw new Error(
           `Missing encoding metadata for property '${key}'. ` +

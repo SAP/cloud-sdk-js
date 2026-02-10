@@ -97,7 +97,7 @@
     "@types/mock-fs": "^4.13.4",
     "@types/node": "^22.19.9",
     "@types/voca": "^1.4.6",
-    "axios": "^1.13.4",
+    "axios": "^1.13.5",
     "cross-env": "10.1.0",
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",

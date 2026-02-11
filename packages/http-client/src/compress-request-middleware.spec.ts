@@ -2,10 +2,10 @@ import * as zlib from 'node:zlib';
 import { promisify } from 'node:util';
 import nock from 'nock';
 import axios from 'axios';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { compressRequest } from './compress-request-middleware';
 import { executeHttpRequest } from './http-client';
 import type { HttpRequestConfig } from './http-client-types';
-import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 
 const gunzip = promisify(zlib.gunzip);
 const brotliDecompress = promisify(zlib.brotliDecompress);

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { compressRequest } from './compress-request-middleware';
 import { executeHttpRequest } from './http-client';
 import type { HttpRequestConfig } from './http-client-types';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 
 const gunzip = promisify(zlib.gunzip);
 const brotliDecompress = promisify(zlib.brotliDecompress);
@@ -257,23 +258,33 @@ describe('compressRequest middleware', () => {
       expect(call.headers?.['content-encoding']).toBe('gzip');
     });
 
-    it('throws error for unsupported payload types in auto mode', async () => {
-      const objectPayload = { key: 'value' };
+    it('skips compression for unsupported payload types in auto mode', async () => {
+      // Object payload that cannot be sized, but is larger than threshold
+      const objectPayload = { key: 'x'.repeat(2000) };
       nock(host).post('/test', objectPayload).reply(200, {});
 
-      await expect(
-        executeHttpRequest(
-          { url: host },
-          {
-            method: 'POST',
-            url: '/test',
-            data: objectPayload,
-            middleware: [compressRequest({ mode: 'auto' })]
-          },
-          { fetchCsrfToken: false }
-        )
-      ).rejects.toThrow(
-        "Could not determine payload size for 'auto' compression decision"
+      const logger = createLogger({
+        package: 'http-client',
+        messageContext: 'compress-request-middleware'
+      });
+      const errorSpy = jest.spyOn(logger!, 'error');
+
+      const call = await executeAndGetConfig(
+        { url: host },
+        createTestConfig({
+          data: objectPayload,
+          middleware: [compressRequest({ mode: 'auto' })]
+        }),
+        { fetchCsrfToken: false }
+      );
+
+      expect(call.data).toBe(objectPayload);
+      expect(call.headers?.['content-encoding']).toBeUndefined();
+      expect(errorSpy).toHaveBeenCalledTimes(1);
+      const loggedError = errorSpy.mock.calls[0][0] as ErrorWithCause;
+      expect(loggedError).toBeInstanceOf(ErrorWithCause);
+      expect(loggedError.message).toBe(
+        "Could not determine payload size for 'auto' compression decision."
       );
     });
   });

@@ -106,25 +106,25 @@ export interface RequestCompressionMiddlewareOptions<
  * @param payload - The HTTP request payload.
  * @param options - Configuration options for request compression.
  * @returns Returns one of:
- * - `true` if the payload should be compressed and Content-Encoding header should be set.
+ * - `'compress'` if the payload should be compressed and Content-Encoding header should be set.
  * - `'header-only'` if only the Content-Encoding header should be set (header-only mode).
- * - `false` if compression should be skipped entirely (no header, no compression).
+ * - `'skip'` if compression should be skipped entirely (no header, no compression).
  */
 function checkIfNeedsCompression<
   C extends RequestCompressionAlgorithm = 'gzip'
 >(
   payload: unknown,
   options?: RequestCompressionMiddlewareOptions<C>
-): boolean | 'header-only' {
+): 'compress' | 'header-only' | 'skip' {
   const mode = options?.mode ?? 'auto';
   if (mode === 'header-only') {
     return 'header-only';
   }
   if (mode === 'never') {
-    return false;
+    return 'skip';
   }
   if (mode === 'always') {
-    return true;
+    return 'compress';
   }
 
   const minSize = options?.autoCompressMinSize ?? 1024;
@@ -132,10 +132,15 @@ function checkIfNeedsCompression<
   try {
     payloadSize = Buffer.byteLength(payload as any);
   } catch (e: any) {
-    throw new ErrorWithCause(
-      "Could not determine payload size for 'auto' compression decision.",
-      e
+    logger.error(
+      new ErrorWithCause(
+        "Could not determine payload size for 'auto' compression decision.",
+        e
+      )
     );
+    // Skip compression if payload size cannot be determined.
+    // In this case `zlib` will likely fail as well.
+    return 'skip';
   }
   const shouldCompress = payloadSize >= minSize;
   const comparison = shouldCompress ? '>=' : '<';
@@ -143,7 +148,7 @@ function checkIfNeedsCompression<
   logger.debug(
     `Auto compression: payload size ${payloadSize} bytes ${comparison} threshold ${minSize} bytes. ${action}.`
   );
-  return shouldCompress;
+  return shouldCompress ? 'compress' : 'skip';
 }
 
 function getContentEncodingValue(
@@ -180,7 +185,7 @@ export function compressRequest<C extends RequestCompressionAlgorithm = 'gzip'>(
       options
     );
 
-    if (needsCompression === false) {
+    if (needsCompression === 'skip') {
       return middlewareOptions.fn(requestConfig);
     }
 

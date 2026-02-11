@@ -2,20 +2,20 @@
 # yarn lockfile v1
 
 
-"@actions/core@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/@actions/core/-/core-2.0.3.tgz#b05e8cf407ab393e5d10282357a74e1ee2315eee"
-  integrity sha512-Od9Thc3T1mQJYddvVPM4QGiLUewdh+3txmDYHHxoNdkqysR1MbCT+rFOtNUxYAz+7+6RIsqipVahY2GJqGPyxA==
+"@actions/core@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@actions/core/-/core-3.0.0.tgz#89cb07c119e9b46a649ad5f355e77de9b3108cf8"
+  integrity sha512-zYt6cz+ivnTmiT/ksRVriMBOiuoUpDCJJlZ5KPl2/FRdvwU3f7MPh9qftvbkXJThragzUZieit2nyHUyw53Seg==
   dependencies:
-    "@actions/exec" "^2.0.0"
-    "@actions/http-client" "^3.0.2"
+    "@actions/exec" "^3.0.0"
+    "@actions/http-client" "^4.0.0"
 
-"@actions/exec@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@actions/exec/-/exec-2.0.0.tgz#35e829723389f80e362ec2cc415697ec74362ad8"
-  integrity sha512-k8ngrX2voJ/RIN6r9xB82NVqKpnMRtxDoiO+g3olkIUpQNqjArXrCQceduQZCQj3P3xm32pChRLqRrtXTlqhIw==
+"@actions/exec@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@actions/exec/-/exec-3.0.0.tgz#8c3464d20f0aa4068707757021d7e3c01a7ee203"
+  integrity sha512-6xH/puSoNBXb72VPlZVm7vQ+svQpFyA96qdDBvhB8eNZOE8LtPf9L4oAsfzK/crCL8YZ+19fKYVnM63Sl+Xzlw==
   dependencies:
-    "@actions/io" "^2.0.0"
+    "@actions/io" "^3.0.2"
 
 "@actions/github@^6.0.1":
   version "6.0.1"
@@ -38,18 +38,18 @@
     tunnel "^0.0.6"
     undici "^5.25.4"
 
-"@actions/http-client@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/@actions/http-client/-/http-client-3.0.2.tgz#3db9c83af9d29d51ac8c30b45bc17f7014beb1b2"
-  integrity sha512-JP38FYYpyqvUsz+Igqlc/JG6YO9PaKuvqjM3iGvaLqFnJ7TFmcLyy2IDrY0bI0qCQug8E9K+elv5ZNfw62ZJzA==
+"@actions/http-client@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/@actions/http-client/-/http-client-4.0.0.tgz#f9754133c22802466482bf96321d42f2dba1fc82"
+  integrity sha512-QuwPsgVMsD6qaPD57GLZi9sqzAZCtiJT8kVBCDpLtxhL5MydQ4gS+DrejtZZPdIYyB1e95uCK9Luyds7ybHI3g==
   dependencies:
     tunnel "^0.0.6"
     undici "^6.23.0"
 
-"@actions/io@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@actions/io/-/io-2.0.0.tgz#3ad1271ba3cd515324f2215e8d4c1c0c3864d65b"
-  integrity sha512-Jv33IN09XLO+0HS79aaODsvIRyduiF7NY/F6LYeK5oeUmrsz7aFdRphQjFoESF4jS7lMauDOttKALcpapVDIAg==
+"@actions/io@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@actions/io/-/io-3.0.2.tgz#6f89b27a159d109836d983efa283997c23b92284"
+  integrity sha512-nRBchcMM+QK1pdjO7/idu86rbJI5YHUKCvKs0KxnSYbVe3F51UfGxuZX4Qy/fWlp6l7gWFwIkrOzN+oUK03kfw==
 
 "@ampproject/remapping@^2.2.0":
   version "2.3.0"

@@ -123,7 +123,7 @@ function serializeParamsForRequestBuilder(
     params.push('body');
     if (
       operation.requestBody.encoding &&
-      Object.keys(operation.requestBody.encoding).length > 0
+      Object.keys(operation.requestBody.encoding).length
     ) {
       params.push(
         `_encoding: ${JSON.stringify(operation.requestBody.encoding)}`

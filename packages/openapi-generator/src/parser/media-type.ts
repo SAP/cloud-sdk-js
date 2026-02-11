@@ -102,7 +102,7 @@ function parseEncoding(
 
   if (!schema) {
     const joined = { ...autoEncoding, ...explicitEncoding };
-    return Object.keys(joined).length > 0 ? joined : undefined;
+    return Object.keys(joined).length ? joined : undefined;
   }
 
   // Resolve $ref if present
@@ -168,7 +168,7 @@ function parseEncoding(
   }
 
   const combined = { ...autoEncoding, ...explicitEncoding };
-  return Object.keys(combined).length > 0 ? combined : undefined;
+  return Object.keys(combined).length ? combined : undefined;
 }
 /**
  * Parse the type of a resolved request body or response object.

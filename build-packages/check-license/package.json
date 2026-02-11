@@ -13,7 +13,7 @@
     "all": "yarn && yarn run lint && yarn run compile"
   },
   "dependencies": {
-    "@actions/core": "^2.0.2"
+    "@actions/core": "^2.0.3"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.38.4",

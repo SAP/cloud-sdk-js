@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.4.0
+
+### Minor Changes
+
+- d444438: [New Functionality] Support IAS (App-to-App) authentication. Use `transformServiceBindingToDestination()` function or `getDestinationFromServiceBinding()` function to create a destination targeting an IAS application.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.4.0
+- @sap-cloud-sdk/util@4.4.0
+
 ## 4.3.1
 
 ### Patch Changes

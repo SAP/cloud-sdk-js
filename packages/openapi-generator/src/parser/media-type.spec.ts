@@ -21,12 +21,12 @@ function createMultipartContent(schema: any, encoding?: any) {
 function createImplicitEncoding(contentType: string): {
   contentType: string;
   isImplicit: true;
-  contentTypeParsed: any[];
+  parsedContentTypes: any[];
 } {
   return {
     contentType,
     isImplicit: true,
-    contentTypeParsed: [{ type: contentType, parameters: {} }]
+    parsedContentTypes: [{ type: contentType, parameters: {} }]
   };
 }
 
@@ -36,12 +36,12 @@ function createExplicitEncoding(
 ): {
   contentType: string;
   isImplicit: false;
-  contentTypeParsed: any[];
+  parsedContentTypes: any[];
 } {
   return {
     contentType,
     isImplicit: false,
-    contentTypeParsed: [{ type: contentType.split(';')[0].trim(), parameters }]
+    parsedContentTypes: [{ type: contentType.split(';')[0].trim(), parameters }]
   };
 }
 describe('parseTopLevelMediaType', () => {
@@ -156,7 +156,7 @@ describe('parseTopLevelMediaType', () => {
       profileImage: {
         contentType: 'image/png, image/jpeg',
         isImplicit: false,
-        contentTypeParsed: [
+        parsedContentTypes: [
           { type: 'image/png', parameters: {} },
           { type: 'image/jpeg', parameters: {} }
         ]
@@ -373,7 +373,7 @@ describe('parseTopLevelMediaType', () => {
       textData: {
         contentType: 'text/plain; charset=utf-8',
         isImplicit: false,
-        contentTypeParsed: [
+        parsedContentTypes: [
           { type: 'text/plain', parameters: { charset: 'utf-8' } }
         ]
       }
@@ -407,7 +407,7 @@ describe('parseTopLevelMediaType', () => {
       document: {
         contentType: 'application/pdf, application/msword, text/plain',
         isImplicit: false,
-        contentTypeParsed: [
+        parsedContentTypes: [
           { type: 'application/pdf', parameters: {} },
           { type: 'application/msword', parameters: {} },
           { type: 'text/plain', parameters: {} }
@@ -436,7 +436,7 @@ describe('parseTopLevelMediaType', () => {
       xmlData: {
         contentType: 'application/xml; charset=iso-8859-1; boundary=something',
         isImplicit: false,
-        contentTypeParsed: [
+        parsedContentTypes: [
           {
             type: 'application/xml',
             parameters: { charset: 'iso-8859-1', boundary: 'something' }
@@ -467,7 +467,7 @@ describe('parseTopLevelMediaType', () => {
       customText: {
         contentType: 'text/plain; charset=utf-16',
         isImplicit: false,
-        contentTypeParsed: [
+        parsedContentTypes: [
           { type: 'text/plain', parameters: { charset: 'utf-16' } }
         ]
       },

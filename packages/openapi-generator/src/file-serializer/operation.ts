@@ -108,6 +108,18 @@ function serializeParamsForSignature(
   }
 }
 
+function getHeaderParameters(operation: OpenApiOperation): string | undefined {
+  if (operation.requestBody?.mediaType) {
+    const contentTypeStr = `'content-type': '${operation.requestBody.mediaType}'`;
+    return operation.headerParameters.length
+      ? `headerParameters: {${contentTypeStr}, ...headerParameters}`
+      : `headerParameters: {${contentTypeStr}}`;
+  }
+  if (operation.headerParameters.length) {
+    return 'headerParameters';
+  }
+}
+
 function serializeParamsForRequestBuilder(
   operation: OpenApiOperation
 ): string | undefined {
@@ -129,20 +141,11 @@ function serializeParamsForRequestBuilder(
         `_encoding: ${JSON.stringify(operation.requestBody.encoding)}`
       );
     }
-    if (operation.requestBody.mediaType) {
-      const contentTypeStr = `'content-type': '${operation.requestBody.mediaType}'`;
-      if (operation.headerParameters.length) {
-        params.push(
-          `headerParameters: {${contentTypeStr}, ...headerParameters}`
-        );
-      } else {
-        params.push(`headerParameters: {${contentTypeStr}}`);
-      }
-    } else if (operation.headerParameters.length) {
-      params.push('headerParameters');
-    }
-  } else if (operation.headerParameters.length) {
-    params.push('headerParameters');
+  }
+
+  const headerParam = getHeaderParameters(operation);
+  if (headerParam) {
+    params.push(headerParam);
   }
   if (operation.queryParameters.length) {
     params.push('queryParameters');

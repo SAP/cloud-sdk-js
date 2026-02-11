@@ -222,25 +222,25 @@ export class OpenApiRequestBuilder<ResponseT = any> {
       const {
         contentType: targetContentType,
         isImplicit: targetIsImplicit,
-        contentTypeParsed
+        parsedContentTypes
       } = encoding[key];
       // Use the first parsed content type (primary type)
       const allowedTypes = new Set(
         // TODO: compcase?
-        contentTypeParsed.map(ct => ct.type.toLowerCase())
+        parsedContentTypes.map(ct => ct.type.toLowerCase())
       );
       if (value instanceof Blob) {
         const isFlexibleContentType =
           targetContentType &&
           (targetContentType.includes('*') ||
-            contentTypeParsed.length > 1 ||
+            parsedContentTypes.length > 1 ||
             allowedTypes.has('any'));
 
         // If `Blob` has no type, we use value from the specification unless the target content type is complex (multiple choices or wildcards)
         if (
           !value.type &&
           !isFlexibleContentType &&
-          !contentTypeParsed[0].parameters.charset
+          !parsedContentTypes[0].parameters.charset
         ) {
           logger.debug(
             `Adding missing content type '${targetContentType}' to Blob for key '${key}' as per encoding specification.`
@@ -263,7 +263,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
           !isFlexibleContentType &&
           // Do the actual comparison
           valueContentTypeBase.localeCompare(
-            contentTypeParsed[0].type,
+            parsedContentTypes[0].type,
             undefined,
             { sensitivity: 'base' }
           ) !== 0
@@ -284,7 +284,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
         : String(value);
       // If a charset is specified in the encoding, we encode the string accordingly (if unambiguous)
       const targetCharset = new Set(
-        contentTypeParsed.map(ct => ct.parameters.charset)
+        parsedContentTypes.map(ct => ct.parameters.charset)
       );
       if (
         targetCharset.size === 1 &&
@@ -366,7 +366,7 @@ export interface OpenApiRequestParameters {
     {
       contentType: string;
       isImplicit: boolean;
-      contentTypeParsed: {
+      parsedContentTypes: {
         type: string;
         parameters: { [key: string]: string };
       }[];

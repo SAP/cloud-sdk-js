@@ -16,6 +16,14 @@ const allowedMediaTypes = [
   '*/*'
 ];
 
+interface EncodingInfo {
+  contentType: string;
+  isImplicit: boolean;
+  parsedContentTypes: ParsedMediaType[];
+}
+
+type EncodingMap = Record<string, EncodingInfo>;
+
 /**
  * Parse content types from a comma-separated content type string.
  * @param contentType - Comma-separated content types from encoding object.
@@ -44,6 +52,90 @@ function parseContentTypes(
 }
 
 /**
+ * Infer content type based on OpenAPI schema type.
+ * @param s - The schema object to infer content type from.
+ * @returns The inferred content type, or undefined if cannot be determined.
+ */
+function inferContentTypeFromSchema(
+  s: OpenAPIV3.SchemaObject
+): string | undefined {
+  // Binary format -> application/octet-stream
+  if (s.type === 'string' && s.format === 'binary') {
+    return 'application/octet-stream';
+  }
+  // Primitive types -> text/plain
+  if (
+    s.type === 'string' ||
+    s.type === 'number' ||
+    s.type === 'integer' ||
+    s.type === 'boolean'
+  ) {
+    return 'text/plain';
+  }
+  // Arrays -> check item type
+  if (
+    s.type === 'array' &&
+    s.items &&
+    typeof s.items === 'object' &&
+    !('$ref' in s.items)
+  ) {
+    return inferContentTypeFromSchema(s.items);
+  }
+  // Objects and others -> application/json
+  return 'application/json';
+}
+
+/**
+ * Add auto-inferred content types for schema properties.
+ * @param resolvedEncodings - Explicitly defined encodings that have already been resolved.
+ * @param resolvedSchema - The resolved schema object.
+ * @param refs - Object representing cross references throughout the document.
+ * @returns Encoding map with inferred content types added, or undefined if no encodings.
+ * @internal
+ */
+function buildInferredEncodings(
+  resolvedEncodings: string[],
+  resolvedSchema: OpenAPIV3.SchemaObject,
+  refs: OpenApiDocumentRefs
+): EncodingMap | undefined {
+  if (!('properties' in resolvedSchema) || !resolvedSchema.properties) {
+    return;
+  }
+
+  const inferredEncodings = Object.entries(resolvedSchema.properties)
+    .map(([propName, propSchema]) => {
+      if (resolvedEncodings.includes(propName)) {
+        return;
+      }
+      if (!propSchema || typeof propSchema !== 'object') {
+        return;
+      }
+
+      // Resolve $ref for property schema
+      const resolvedPropSchema = refs.resolveObject(propSchema);
+      if (Object.prototype.hasOwnProperty.call(resolvedPropSchema, '$ref')) {
+        return;
+      }
+
+      const contentType = inferContentTypeFromSchema(resolvedPropSchema);
+      if (!contentType) {
+        return;
+      }
+
+      return [
+        propName,
+        {
+          contentType,
+          isImplicit: true,
+          parsedContentTypes: parseContentTypes(contentType, propName)
+        }
+      ];
+    })
+    .filter(Boolean) as [string, EncodingInfo][];
+  return Object.fromEntries(inferredEncodings);
+}
+
+/**
  * Parse encoding object from a media type, extracting contentType for each property.
  * Also automatically infers content types for properties with binary format.
  * @param mediaTypeObject - The media type object containing encoding and schema.
@@ -54,24 +146,8 @@ function parseContentTypes(
 function parseEncoding(
   mediaTypeObject: OpenAPIV3.MediaTypeObject | undefined,
   refs: OpenApiDocumentRefs
-):
-  | Record<
-      string,
-      {
-        contentType: string;
-        isImplicit: boolean;
-        contentTypeParsed: ParsedMediaType[];
-      }
-    >
-  | undefined {
-  const explicitEncoding: Record<
-    string,
-    {
-      contentType: string;
-      isImplicit: boolean;
-      contentTypeParsed: ParsedMediaType[];
-    }
-  > = mediaTypeObject?.encoding
+): EncodingMap | undefined {
+  const explicitEncodings: EncodingMap = mediaTypeObject?.encoding
     ? Object.fromEntries(
         Object.entries(mediaTypeObject.encoding)
           .filter(([, encodingObj]) => encodingObj.contentType)
@@ -80,7 +156,7 @@ function parseEncoding(
             {
               contentType: encodingObj.contentType!,
               isImplicit: false,
-              contentTypeParsed: parseContentTypes(
+              parsedContentTypes: parseContentTypes(
                 encodingObj.contentType!,
                 propName
               )
@@ -91,84 +167,25 @@ function parseEncoding(
 
   // Auto-infer content types based on schema types
   const schema = mediaTypeObject?.schema;
-  const autoEncoding: Record<
-    string,
-    {
-      contentType: string;
-      isImplicit: boolean;
-      contentTypeParsed: ParsedMediaType[];
-    }
-  > = {};
 
   if (!schema) {
-    const joined = { ...autoEncoding, ...explicitEncoding };
-    return Object.keys(joined).length ? joined : undefined;
+    return Object.keys(explicitEncodings).length
+      ? explicitEncodings
+      : undefined;
   }
 
   // Resolve $ref if present
   const resolvedSchema = refs.resolveObject(schema);
 
-  if ('properties' in resolvedSchema && resolvedSchema.properties) {
-    Object.entries(resolvedSchema.properties).forEach(
-      ([propName, propSchema]) => {
-        // Skip if already has explicit encoding
-        if (explicitEncoding[propName]) {
-          return;
-        }
+  const implicitEncodings =
+    buildInferredEncodings(
+      Object.keys(explicitEncodings),
+      resolvedSchema,
+      refs
+    ) || {};
 
-        if (!propSchema || typeof propSchema !== 'object') {
-          return;
-        }
-
-        // Resolve $ref for property schema
-        const resolvedPropSchema = refs.resolveObject(propSchema);
-
-        const inferContentTypeFromSchema = (
-          s: OpenAPIV3.SchemaObject
-        ): string | undefined => {
-          // Binary format -> application/octet-stream
-          if (s.type === 'string' && s.format === 'binary') {
-            return 'application/octet-stream';
-          }
-          // Primitive types -> text/plain
-          if (
-            s.type === 'string' ||
-            s.type === 'number' ||
-            s.type === 'integer' ||
-            s.type === 'boolean'
-          ) {
-            return 'text/plain';
-          }
-          // Arrays -> check item type
-          if (
-            s.type === 'array' &&
-            s.items &&
-            typeof s.items === 'object' &&
-            !('$ref' in s.items)
-          ) {
-            return inferContentTypeFromSchema(s.items);
-          }
-          // Objects and others -> application/json
-          return 'application/json';
-        };
-
-        if (!('$ref' in resolvedPropSchema)) {
-          const contentType = inferContentTypeFromSchema(resolvedPropSchema);
-          if (contentType) {
-            const contentTypeParsed = parseContentType(contentType);
-            autoEncoding[propName] = {
-              contentType,
-              isImplicit: true,
-              contentTypeParsed: [contentTypeParsed]
-            };
-          }
-        }
-      }
-    );
-  }
-
-  const combined = { ...autoEncoding, ...explicitEncoding };
-  return Object.keys(combined).length ? combined : undefined;
+  const allEncodings = { ...implicitEncodings, ...explicitEncodings };
+  return Object.keys(allEncodings).length ? allEncodings : undefined;
 }
 /**
  * Parse the type of a resolved request body or response object.
@@ -189,14 +206,7 @@ export function parseTopLevelMediaType(
   | {
       schema: OpenApiSchema;
       mediaType: string;
-      encoding?: Record<
-        string,
-        {
-          contentType: string;
-          isImplicit: boolean;
-          contentTypeParsed: ParsedMediaType[];
-        }
-      >;
+      encoding?: EncodingMap;
     }
   | undefined {
   if (bodyOrResponseObject) {
@@ -238,14 +248,7 @@ export function parseMediaType(
   | {
       schema: OpenApiSchema;
       mediaType: string;
-      encoding?: Record<
-        string,
-        {
-          contentType: string;
-          isImplicit: boolean;
-          contentTypeParsed: ParsedMediaType[];
-        }
-      >;
+      encoding?: EncodingMap;
     }
   | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);

@@ -172,7 +172,7 @@ export interface OpenApiRequestBody {
     {
       contentType: string;
       isImplicit: boolean;
-      contentTypeParsed: {
+      parsedContentTypes: {
         type: string;
         parameters: { [key: string]: string };
       }[];

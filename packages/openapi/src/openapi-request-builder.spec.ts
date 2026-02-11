@@ -156,7 +156,7 @@ describe('openapi-request-builder', () => {
         limit: {
           contentType: 'text/plain',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+          parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
         }
       }
     });
@@ -402,7 +402,7 @@ describe('openapi-request-builder', () => {
         textData: {
           contentType: 'text/plain; charset=utf-8',
           isImplicit: false,
-          contentTypeParsed: [
+          parsedContentTypes: [
             { type: 'text/plain', parameters: { charset: 'utf-8' } }
           ]
         }
@@ -427,7 +427,7 @@ describe('openapi-request-builder', () => {
         file: {
           contentType: 'application/pdf',
           isImplicit: false,
-          contentTypeParsed: [{ type: 'application/pdf', parameters: {} }]
+          parsedContentTypes: [{ type: 'application/pdf', parameters: {} }]
         }
       }
     });
@@ -448,7 +448,7 @@ describe('openapi-request-builder', () => {
         document: {
           contentType: 'application/pdf, application/msword',
           isImplicit: false,
-          contentTypeParsed: [
+          parsedContentTypes: [
             { type: 'application/pdf', parameters: {} },
             { type: 'application/msword', parameters: {} }
           ]
@@ -474,7 +474,7 @@ describe('openapi-request-builder', () => {
         image: {
           contentType: 'image/png',
           isImplicit: false,
-          contentTypeParsed: [{ type: 'image/png', parameters: {} }]
+          parsedContentTypes: [{ type: 'image/png', parameters: {} }]
         }
       }
     });
@@ -497,7 +497,7 @@ describe('openapi-request-builder', () => {
         image: {
           contentType: 'image/png',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'image/png', parameters: {} }]
+          parsedContentTypes: [{ type: 'image/png', parameters: {} }]
         }
       }
     });
@@ -520,12 +520,12 @@ describe('openapi-request-builder', () => {
         field1: {
           contentType: 'text/plain',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+          parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
         },
         field2: {
           contentType: 'application/json',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'application/json', parameters: {} }]
+          parsedContentTypes: [{ type: 'application/json', parameters: {} }]
         }
       }
     });
@@ -552,7 +552,7 @@ describe('openapi-request-builder', () => {
         file: {
           contentType: 'image/*',
           isImplicit: false,
-          contentTypeParsed: [{ type: 'image/*', parameters: {} }]
+          parsedContentTypes: [{ type: 'image/*', parameters: {} }]
         }
       }
     });
@@ -577,22 +577,22 @@ describe('openapi-request-builder', () => {
         field1: {
           contentType: 'text/plain',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+          parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
         },
         field2: {
           contentType: 'text/plain',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+          parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
         },
         field3: {
           contentType: 'text/plain',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+          parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
         },
         field4: {
           contentType: 'text/plain',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+          parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
         }
       }
     });
@@ -613,7 +613,7 @@ describe('openapi-request-builder', () => {
         jsonData: {
           contentType: 'application/json',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'application/json', parameters: {} }]
+          parsedContentTypes: [{ type: 'application/json', parameters: {} }]
         }
       }
     });
@@ -634,7 +634,7 @@ describe('openapi-request-builder', () => {
         textData: {
           contentType: 'text/plain',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+          parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
         }
       }
     });
@@ -656,7 +656,7 @@ describe('openapi-request-builder', () => {
         data: {
           contentType: 'application/json; charset=utf-8',
           isImplicit: false,
-          contentTypeParsed: [
+          parsedContentTypes: [
             { type: 'application/json', parameters: { charset: 'utf-8' } }
           ]
         }
@@ -680,7 +680,7 @@ describe('openapi-request-builder', () => {
         fileField: {
           contentType: 'image/png',
           isImplicit: false,
-          contentTypeParsed: [{ type: 'image/png', parameters: {} }]
+          parsedContentTypes: [{ type: 'image/png', parameters: {} }]
         }
       }
     });
@@ -705,7 +705,7 @@ describe('openapi-request-builder', () => {
         textData: {
           contentType: 'text/plain; charset=utf-8',
           isImplicit: false,
-          contentTypeParsed: [
+          parsedContentTypes: [
             { type: 'text/plain', parameters: { charset: 'utf-8' } }
           ]
         }
@@ -732,7 +732,7 @@ describe('openapi-request-builder', () => {
         jsonData: {
           contentType: 'application/json',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'application/json', parameters: {} }]
+          parsedContentTypes: [{ type: 'application/json', parameters: {} }]
         }
       }
     });
@@ -759,17 +759,17 @@ describe('openapi-request-builder', () => {
         textField: {
           contentType: 'text/plain',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+          parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
         },
         numberField: {
           contentType: 'text/plain',
           isImplicit: true,
-          contentTypeParsed: [{ type: 'text/plain', parameters: {} }]
+          parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
         },
         fileField: {
           contentType: 'application/pdf',
           isImplicit: false,
-          contentTypeParsed: [{ type: 'application/pdf', parameters: {} }]
+          parsedContentTypes: [{ type: 'application/pdf', parameters: {} }]
         }
       }
     });

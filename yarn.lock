@@ -1463,10 +1463,10 @@
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.7.1.tgz#a3a51dc5a204c8d930660169172e52b172354078"
   integrity sha512-vfPhfLoT5sy73LBo8fGwYJ030tXY/ZY+1PSnVxLsghycg3/eMt06HrnI8Pt6vc7ia57x3/QGcHYXa+06SF3pZA==
 
-"@sap/cds-dk@9.6.1":
-  version "9.6.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.6.1.tgz#df83c5e9be633fea1e3f9e6034205f4c45693a70"
-  integrity sha512-JMuGxOqymXkJXkRHhU7nrUyu5iSjdWD1UbMMo/PhrAQAyVnmcb4SKu/Pxb45q1Ikk05EocCRMChu1PPMmbqF9w==
+"@sap/cds-dk@9.7.1":
+  version "9.7.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.7.1.tgz#d50e37116b3465aea6f40be0b208a6a87ed367aa"
+  integrity sha512-pRaCBjJzLvFoCzeEvqOnJJMyzmd3PHN65YZKuH/5TzMaRSRrB++NQcXnbaDOSlLxZghSpshf7IiUwhAGNnkW7A==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"
@@ -1474,7 +1474,7 @@
     "@sap/cds-mtxs" ">=2"
     "@sap/hdi-deploy" "^5"
     axios "^1"
-    express "^4.22.1"
+    express "^4.22.1 || ^5"
     hdb "^2.0.0"
     livereload-js "^4.0.1"
     mustache "^4.0.1"
@@ -9817,15 +9817,10 @@ ws@^7.0.0, ws@~7.5.10:
   resolved "https://registry.npmjs.org/ws/-/ws-7.5.10.tgz#58b5c20dc281633f6c19113f39b349bd8bd558d9"
   integrity sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==
 
-ws@^8.19.0:
+ws@^8.19.0, ws@^8.4.2:
   version "8.19.0"
   resolved "https://registry.npmjs.org/ws/-/ws-8.19.0.tgz#ddc2bdfa5b9ad860204f5a72a4863a8895fd8c8b"
   integrity sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==
-
-ws@^8.4.2:
-  version "8.18.3"
-  resolved "https://registry.npmjs.org/ws/-/ws-8.18.3.tgz#b56b88abffde62791c639170400c93dcb0c95472"
-  integrity sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==
 
 xml-js@^1.6.11:
   version "1.6.11"

@@ -22,15 +22,13 @@ const logger = createLogger('openapi-generator');
  * @param schema - Originally provided schema or reference object.
  * @param refs - Object representing cross references throughout the document.
  * @param options - Options that were set for service generation.
- * @param mediaType - Optional media type context for proper type mapping (e.g., 'multipart/form-data').
  * @returns The parsed schema.
  * @internal
  */
 export function parseSchema(
   schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined,
   refs: OpenApiDocumentRefs,
-  options: ParserOptions,
-  mediaType?: string
+  options: ParserOptions
 ): OpenApiSchema {
   if (!schema) {
     logger.verbose("No schema provided, continuing with 'any'.");
@@ -42,7 +40,7 @@ export function parseSchema(
   }
 
   if (schema.type === 'array') {
-    return parseArraySchema(schema, refs, options, mediaType);
+    return parseArraySchema(schema, refs, options);
   }
 
   if (schema.enum?.length) {
@@ -50,15 +48,15 @@ export function parseSchema(
   }
 
   if (schema.oneOf?.length || schema.discriminator) {
-    return parseXOfSchema(schema, refs, 'oneOf', options, mediaType);
+    return parseXOfSchema(schema, refs, 'oneOf', options);
   }
 
   if (schema.allOf?.length) {
-    return parseXOfSchema(schema, refs, 'allOf', options, mediaType);
+    return parseXOfSchema(schema, refs, 'allOf', options);
   }
 
   if (schema.anyOf?.length) {
-    return parseXOfSchema(schema, refs, 'anyOf', options, mediaType);
+    return parseXOfSchema(schema, refs, 'anyOf', options);
   }
 
   // An object schema should be parsed after allOf, anyOf, oneOf.
@@ -68,12 +66,12 @@ export function parseSchema(
     schema.properties ||
     schema.additionalProperties
   ) {
-    return parseObjectSchema(schema, refs, options, mediaType);
+    return parseObjectSchema(schema, refs, options);
   }
 
   if (schema.not) {
     return {
-      not: parseSchema(schema.not, refs, options, mediaType)
+      not: parseSchema(schema.not, refs, options)
     };
   }
 
@@ -97,18 +95,16 @@ function parseReferenceSchema(
  * @param schema - Original schema representing an array.
  * @param refs - Object representing cross references throughout the document.
  * @param options - Options that were set for service generation.
- * @param mediaType - Optional media type context for proper type mapping.
  * @returns The recursively parsed array schema.
  */
 function parseArraySchema(
   schema: OpenAPIV3.ArraySchemaObject,
   refs: OpenApiDocumentRefs,
-  options: ParserOptions,
-  mediaType?: string
+  options: ParserOptions
 ): OpenApiArraySchema {
   return {
     uniqueItems: schema.uniqueItems,
-    items: parseSchema(schema.items, refs, options, mediaType)
+    items: parseSchema(schema.items, refs, options)
   };
 }
 
@@ -118,24 +114,17 @@ function parseArraySchema(
  * @param schema - Original schema representing an object.
  * @param refs - Object representing cross references throughout the document.
  * @param options - Options that were set for service generation.
- * @param mediaType - Optional media type context for proper type mapping.
  * @returns The recursively parsed object schema.
  */
 export function parseObjectSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   refs: OpenApiDocumentRefs,
-  options: ParserOptions,
-  mediaType?: string
+  options: ParserOptions
 ): OpenApiObjectSchema {
   if (schema.discriminator) {
-    return parseXOfSchema(schema, refs, 'oneOf', options, mediaType);
+    return parseXOfSchema(schema, refs, 'oneOf', options);
   }
-  const properties = parseObjectSchemaProperties(
-    schema,
-    refs,
-    options,
-    mediaType
-  );
+  const properties = parseObjectSchemaProperties(schema, refs, options);
 
   if (schema.additionalProperties === false) {
     if (!properties.length) {
@@ -150,7 +139,7 @@ export function parseObjectSchema(
   const additionalProperties =
     typeof schema.additionalProperties === 'object' &&
     Object.keys(schema.additionalProperties).length
-      ? parseSchema(schema.additionalProperties, refs, options, mediaType)
+      ? parseSchema(schema.additionalProperties, refs, options)
       : { type: 'any' };
 
   return {
@@ -164,20 +153,18 @@ export function parseObjectSchema(
  * @param schema - Original schema representing an object.
  * @param refs - Object representing cross references throughout the document.
  * @param options - Options that were set for service generation.
- * @param mediaType - Optional media type context for proper type mapping.
  * @returns The list of parsed property schemas.
  */
 function parseObjectSchemaProperties(
   schema: OpenAPIV3.NonArraySchemaObject,
   refs: OpenApiDocumentRefs,
-  options: ParserOptions,
-  mediaType?: string
+  options: ParserOptions
 ): OpenApiObjectSchemaProperty[] {
   return Object.entries(schema.properties || {}).reduce(
     (props, [propName, propSchema]) => [
       ...props,
       {
-        schema: parseSchema(propSchema, refs, options, mediaType),
+        schema: parseSchema(propSchema, refs, options),
         description: isReferenceObject(propSchema)
           ? undefined
           : propSchema.description,
@@ -235,15 +222,13 @@ function getEnumStringValue(input: string): string {
  * @param refs - Object representing cross references throughout the document.
  * @param xOf - Key to identify which schema to parse.
  * @param options - Options that were set for service generation.
- * @param mediaType - Optional media type context for proper type mapping.
  * @returns The parsed schema based on the given key.
  */
 function parseXOfSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   refs: OpenApiDocumentRefs,
   xOf: 'oneOf' | 'allOf' | 'anyOf',
-  options: ParserOptions,
-  mediaType?: string
+  options: ParserOptions
 ): any {
   const normalizedSchema = normalizeSchema(schema, xOf);
 
@@ -260,8 +245,7 @@ function parseXOfSchema(
           ]
         },
         refs,
-        options,
-        mediaType
+        options
       )
     )
   };
@@ -269,7 +253,7 @@ function parseXOfSchema(
   if (schema.discriminator && xOf !== 'allOf') {
     return {
       ...xOfSchema,
-      discriminator: parseDiscriminator(schema, refs, xOf, options, mediaType)
+      discriminator: parseDiscriminator(schema, refs, xOf, options)
     };
   }
 
@@ -280,8 +264,7 @@ function parseDiscriminator(
   schema: OpenAPIV3.NonArraySchemaObject,
   refs: OpenApiDocumentRefs,
   xOf: 'oneOf' | 'anyOf',
-  options: ParserOptions,
-  mediaType?: string
+  options: ParserOptions
 ): OpenApiDiscriminator {
   const { discriminator } = schema;
 
@@ -298,12 +281,7 @@ function parseDiscriminator(
     mapping: Object.entries(discriminatorMapping).reduce(
       (mapping, [propertyValue, schemaMapping]) => ({
         ...mapping,
-        [propertyValue]: parseSchema(
-          { $ref: schemaMapping },
-          refs,
-          options,
-          mediaType
-        )
+        [propertyValue]: parseSchema({ $ref: schemaMapping }, refs, options)
       }),
       {}
     )

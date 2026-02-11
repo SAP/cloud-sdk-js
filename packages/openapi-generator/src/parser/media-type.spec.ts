@@ -489,7 +489,7 @@ describe('parseTopLevelMediaType', () => {
         refs,
         defaultOptions
       )
-    ).toThrow(/invalid content-type.*image\/png;;invalid.*file/i);
+    ).toThrow(/invalid content type.*image\/png;;invalid.*file/i);
   });
 
   it('handles wildcard content types correctly', async () => {
@@ -526,7 +526,7 @@ describe('parseTopLevelMediaType', () => {
         defaultOptions
       )
     ).toThrow(
-      /invalid content-type.*not-a-valid-content-type-at-all.*attachment/i
+      /invalid content type.*not-a-valid-content-type-at-all.*attachment/i
     );
   });
 });

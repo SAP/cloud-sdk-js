@@ -42,7 +42,7 @@ function parseContentTypes(
         return parseContentType(ct);
       } catch (error: any) {
         throw new ErrorWithCause(
-          `Invalid content-type '${ct}' for property '${propName}' in OpenAPI specification. ` +
+          `Invalid content type '${ct}' for property '${propName}' in OpenAPI specification. ` +
             "Content types must follow the format 'type/subtype' (e.g., 'image/png', 'text/plain'). " +
             'Please fix your OpenAPI document.',
           error
@@ -93,12 +93,12 @@ function inferContentTypeFromSchema(
  * @returns Encoding map with inferred content types added, or undefined if no encodings.
  * @internal
  */
-function buildInferredEncodings(
+function buildInferredEncodingsProperties(
   resolvedEncodings: string[],
   resolvedSchema: OpenAPIV3.SchemaObject,
   refs: OpenApiDocumentRefs
 ): EncodingMap | undefined {
-  if (!('properties' in resolvedSchema) || !resolvedSchema.properties) {
+  if (!resolvedSchema.properties) {
     return;
   }
 
@@ -113,7 +113,7 @@ function buildInferredEncodings(
 
       // Resolve $ref for property schema
       const resolvedPropSchema = refs.resolveObject(propSchema);
-      if (Object.prototype.hasOwnProperty.call(resolvedPropSchema, '$ref')) {
+      if ('$ref' in resolvedPropSchema) {
         return;
       }
 
@@ -165,7 +165,6 @@ function parseEncoding(
       )
     : {};
 
-  // Auto-infer content types based on schema types
   const schema = mediaTypeObject?.schema;
 
   if (!schema) {
@@ -177,8 +176,9 @@ function parseEncoding(
   // Resolve $ref if present
   const resolvedSchema = refs.resolveObject(schema);
 
+  // Auto-infer missing content types based on schema types
   const implicitEncodings =
-    buildInferredEncodings(
+    buildInferredEncodingsProperties(
       Object.keys(explicitEncodings),
       resolvedSchema,
       refs
@@ -221,12 +221,7 @@ export function parseTopLevelMediaType(
         : undefined;
 
       return {
-        schema: parseSchema(
-          mediaTypeObject.schema,
-          refs,
-          options,
-          mediaTypeObject.mediaType
-        ),
+        schema: parseSchema(mediaTypeObject.schema, refs, options),
         mediaType: mediaTypeObject.mediaType,
         encoding
       };

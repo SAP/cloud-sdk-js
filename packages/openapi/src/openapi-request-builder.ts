@@ -262,11 +262,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
           // We do not handle more complex content types
           !isFlexibleContentType &&
           // Do the actual comparison
-          valueContentTypeBase.localeCompare(
-            parsedContentTypes[0].type,
-            undefined,
-            { sensitivity: 'base' }
-          ) !== 0
+          valueContentTypeBase.toLowerCase() !== targetContentType.toLowerCase()
         ) {
           logger.warn(
             `Content type mismatch for key '${key}': value has type '${value.type}' but encoding specifies '${targetContentType}'.`

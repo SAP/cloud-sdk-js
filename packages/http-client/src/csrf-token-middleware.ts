@@ -137,11 +137,6 @@ async function makeCsrfRequest(
     });
     return findCsrfHeader(response.headers);
   } catch (error) {
-    // Avoid repeat CSRF attempts if request was cancelled
-    if (error.code === 'ERR_CANCELED') {
-      throw error;
-    }
-
     if (findCsrfHeader(error.response?.headers)) {
       return findCsrfHeader(error.response?.headers);
     }
@@ -175,21 +170,14 @@ async function makeCsrfRequests(
   requestConfig: HttpRequestConfig,
   options: CsrfMiddlewareOptions & { context: HttpMiddlewareContext }
 ): Promise<CsrfHeaderWithCookie | undefined> {
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  const {
-    data,
-    params,
-    parameterEncoder,
-    signal,
-    ...requestConfigWithoutData
-  } = requestConfig;
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { data, params, parameterEncoder, ...requestConfigWithoutData } =
+    requestConfig;
   const axiosConfig: HttpRequestConfigWithOrigin = {
     ...requestConfigWithoutData,
     method: options.method || 'head',
     url: options.url || requestConfig.url,
-    headers: buildCsrfFetchHeaders(requestConfig.headers),
-    signal
+    headers: buildCsrfFetchHeaders(requestConfig.headers)
   };
 
   // If the user set the URL to fetch the token we only do

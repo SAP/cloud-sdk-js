@@ -86,14 +86,14 @@ export interface RequestCompressionMiddlewareOptions<
    */
   compressOptions?: RequestCompressorOptions[C];
   /**
-   * Compression mode. Can be 'auto', 'passthrough' or a boolean.
+   * Compression mode. Can be 'auto', 'header-only' or a boolean.
    * - In 'auto' mode, the payload is compressed based on the `autoCompressMinSize` threshold.
-   * - In 'passthrough' mode, it is assumed that the payload is already compressed.
-   * - If `true` is provided, the payload will always be compressed.
-   * - If `false` is provided, the payload will never be compressed.
+   * - In 'header-only' mode, it is assumed that the payload is already compressed. The middleware will only set the appropriate Content-Encoding header without modifying the payload.
+   * - If 'always' is provided, the payload will always be compressed.
+   * - If 'never' is provided, the payload will never be compressed.
    * @defaultValue 'auto'
    */
-  mode?: 'auto' | 'passthrough' | boolean;
+  mode?: 'auto' | 'header-only' | 'always' | 'never';
   /**
    * Minimum size in bytes a payload must have to be compressed in 'auto' mode.
    * @defaultValue 1024
@@ -107,7 +107,7 @@ export interface RequestCompressionMiddlewareOptions<
  * @param options - Configuration options for request compression.
  * @returns Returns one of:
  * - `true` if the payload should be compressed and Content-Encoding header should be set.
- * - `'header-only'` if only the Content-Encoding header should be set (passthrough mode).
+ * - `'header-only'` if only the Content-Encoding header should be set (header-only mode).
  * - `false` if compression should be skipped entirely (no header, no compression).
  */
 function checkIfNeedsCompression<
@@ -117,29 +117,33 @@ function checkIfNeedsCompression<
   options?: RequestCompressionMiddlewareOptions<C>
 ): boolean | 'header-only' {
   const mode = options?.mode ?? 'auto';
-  if (mode === 'passthrough') {
+  if (mode === 'header-only') {
     return 'header-only';
   }
-  if (mode === 'auto') {
-    const minSize = options?.autoCompressMinSize ?? 1024;
-    let payloadSize: number;
-    try {
-      payloadSize = Buffer.byteLength(payload as any);
-    } catch (e: any) {
-      throw new ErrorWithCause(
-        "Could not determine payload size for 'auto' compression decision.",
-        e
-      );
-    }
-    const shouldCompress = payloadSize >= minSize;
-    const comparison = shouldCompress ? '>=' : '<';
-    const action = shouldCompress ? 'Compressing' : 'Skipping compression';
-    logger.debug(
-      `Auto compression: payload size ${payloadSize} bytes ${comparison} threshold ${minSize} bytes. ${action}.`
-    );
-    return shouldCompress;
+  if (mode === 'never') {
+    return false;
   }
-  return Boolean(mode);
+  if (mode === 'always') {
+    return true;
+  }
+
+  const minSize = options?.autoCompressMinSize ?? 1024;
+  let payloadSize: number;
+  try {
+    payloadSize = Buffer.byteLength(payload as any);
+  } catch (e: any) {
+    throw new ErrorWithCause(
+      "Could not determine payload size for 'auto' compression decision.",
+      e
+    );
+  }
+  const shouldCompress = payloadSize >= minSize;
+  const comparison = shouldCompress ? '>=' : '<';
+  const action = shouldCompress ? 'Compressing' : 'Skipping compression';
+  logger.debug(
+    `Auto compression: payload size ${payloadSize} bytes ${comparison} threshold ${minSize} bytes. ${action}.`
+  );
+  return shouldCompress;
 }
 
 function getContentEncodingValue(

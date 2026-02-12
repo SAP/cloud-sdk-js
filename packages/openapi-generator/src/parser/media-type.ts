@@ -94,7 +94,7 @@ function inferContentTypeFromSchema(
  * @returns Encoding map with inferred content types added, or undefined if no encodings.
  * @internal
  */
-function inferMultipartEncodings(
+function inferMultipartFormEncodings(
   resolvedEncodings: string[],
   resolvedSchema: OpenAPIV3.SchemaObject,
   refs: OpenApiDocumentRefs
@@ -145,7 +145,7 @@ function inferMultipartEncodings(
  * @returns Encoding configuration mapping property names to their content types and metadata, or undefined if no encodings.
  * @internal
  */
-function parseMultipartEncodings(
+function parseMultipartFormEncodings(
   mediaTypeObject: OpenAPIV3.MediaTypeObject | undefined,
   refs: OpenApiDocumentRefs
 ): EncodingMap | undefined {
@@ -180,7 +180,7 @@ function parseMultipartEncodings(
 
   // Auto-infer missing content types based on schema types
   const implicitEncodings =
-    inferMultipartEncodings(
+    inferMultipartFormEncodings(
       Object.keys(explicitEncodings),
       resolvedSchema,
       refs
@@ -219,7 +219,7 @@ export function parseTopLevelMediaType(
 
     if (mediaTypeObject) {
       const encoding = mediaTypeObject.mediaType.startsWith('multipart/')
-        ? parseMultipartEncodings(mediaTypeObject, refs)
+        ? parseMultipartFormEncodings(mediaTypeObject, refs)
         : undefined;
 
       return {

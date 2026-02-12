@@ -7,7 +7,7 @@ const defaultOptions = {
   resolveExternal: true
 };
 
-function createMultipartContent(schema: any, encoding?: any) {
+function createMultipartFormContent(schema: any, encoding?: any) {
   return {
     content: {
       'multipart/form-data': {
@@ -18,7 +18,7 @@ function createMultipartContent(schema: any, encoding?: any) {
   };
 }
 
-function createImplicitEncoding(contentType: string): {
+function createImplicitMultipartFormEncoding(contentType: string): {
   contentType: string;
   isImplicit: true;
   parsedContentTypes: any[];
@@ -30,7 +30,7 @@ function createImplicitEncoding(contentType: string): {
   };
 }
 
-function createExplicitEncoding(
+function createExplicitMultipartFormEncoding(
   contentType: string,
   parameters: Record<string, string> = {}
 ): {
@@ -147,7 +147,7 @@ describe('parseTopLevelMediaType', () => {
     };
     const encoding = { profileImage: { contentType: 'image/png, image/jpeg' } };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema, encoding),
+      createMultipartFormContent(schema, encoding),
       await createTestRefs(),
       defaultOptions
     );
@@ -166,7 +166,7 @@ describe('parseTopLevelMediaType', () => {
 
   it('returns undefined encoding when encoding object is empty', async () => {
     const result = parseTopLevelMediaType(
-      createMultipartContent({ type: 'object' }),
+      createMultipartFormContent({ type: 'object' }),
       await createTestRefs(),
       defaultOptions
     );
@@ -182,7 +182,7 @@ describe('parseTopLevelMediaType', () => {
       }
     };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema),
+      createMultipartFormContent(schema),
       await createTestRefs(),
       defaultOptions
     );
@@ -210,8 +210,8 @@ describe('parseTopLevelMediaType', () => {
     });
     expect(result?.mediaType).toBe('multipart/form-data');
     expect(result?.encoding).toEqual({
-      file: createImplicitEncoding('application/octet-stream'),
-      metadata: createImplicitEncoding('text/plain')
+      file: createImplicitMultipartFormEncoding('application/octet-stream'),
+      metadata: createImplicitMultipartFormEncoding('text/plain')
     });
   });
 
@@ -222,13 +222,13 @@ describe('parseTopLevelMediaType', () => {
     };
     const encoding = { image: { contentType: 'image/png' } };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema, encoding),
+      createMultipartFormContent(schema, encoding),
       await createTestRefs(),
       defaultOptions
     );
 
     expect(result?.encoding).toEqual({
-      image: createExplicitEncoding('image/png')
+      image: createExplicitMultipartFormEncoding('image/png')
     });
   });
 
@@ -243,12 +243,12 @@ describe('parseTopLevelMediaType', () => {
       }
     };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema),
+      createMultipartFormContent(schema),
       await createTestRefs(),
       defaultOptions
     );
 
-    const textPlainEncoding = createImplicitEncoding('text/plain');
+    const textPlainEncoding = createImplicitMultipartFormEncoding('text/plain');
     expect(result?.encoding).toEqual({
       name: textPlainEncoding,
       age: textPlainEncoding,
@@ -266,14 +266,14 @@ describe('parseTopLevelMediaType', () => {
       }
     };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema),
+      createMultipartFormContent(schema),
       await createTestRefs(),
       defaultOptions
     );
 
     expect(result?.encoding).toEqual({
-      tags: createImplicitEncoding('text/plain'),
-      files: createImplicitEncoding('application/octet-stream')
+      tags: createImplicitMultipartFormEncoding('text/plain'),
+      files: createImplicitMultipartFormEncoding('application/octet-stream')
     });
   });
 
@@ -285,13 +285,13 @@ describe('parseTopLevelMediaType', () => {
       }
     };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema),
+      createMultipartFormContent(schema),
       await createTestRefs(),
       defaultOptions
     );
 
     expect(result?.encoding).toEqual({
-      metadata: createImplicitEncoding('application/json')
+      metadata: createImplicitMultipartFormEncoding('application/json')
     });
   });
 
@@ -313,7 +313,7 @@ describe('parseTopLevelMediaType', () => {
       }
     });
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema),
+      createMultipartFormContent(schema),
       refs,
       defaultOptions
     );
@@ -325,9 +325,9 @@ describe('parseTopLevelMediaType', () => {
     });
     expect(result?.mediaType).toBe('multipart/form-data');
     expect(result?.encoding).toEqual({
-      file: createImplicitEncoding('application/octet-stream'),
-      target_columns: createImplicitEncoding('text/plain'),
-      metadata: createImplicitEncoding('application/json')
+      file: createImplicitMultipartFormEncoding('application/octet-stream'),
+      target_columns: createImplicitMultipartFormEncoding('text/plain'),
+      metadata: createImplicitMultipartFormEncoding('application/json')
     });
   });
 
@@ -346,14 +346,14 @@ describe('parseTopLevelMediaType', () => {
       }
     });
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema),
+      createMultipartFormContent(schema),
       refs,
       defaultOptions
     );
 
     expect(result?.encoding).toEqual({
-      image: createImplicitEncoding('application/octet-stream'),
-      description: createImplicitEncoding('text/plain')
+      image: createImplicitMultipartFormEncoding('application/octet-stream'),
+      description: createImplicitMultipartFormEncoding('text/plain')
     });
   });
 
@@ -364,7 +364,7 @@ describe('parseTopLevelMediaType', () => {
     };
     const encoding = { textData: { contentType: 'text/plain; charset=utf-8' } };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema, encoding),
+      createMultipartFormContent(schema, encoding),
       await createTestRefs(),
       defaultOptions
     );
@@ -427,7 +427,7 @@ describe('parseTopLevelMediaType', () => {
       }
     };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema, encoding),
+      createMultipartFormContent(schema, encoding),
       await createTestRefs(),
       defaultOptions
     );
@@ -458,7 +458,7 @@ describe('parseTopLevelMediaType', () => {
       customText: { contentType: 'text/plain; charset=utf-16' }
     };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema, encoding),
+      createMultipartFormContent(schema, encoding),
       await createTestRefs(),
       defaultOptions
     );
@@ -471,7 +471,7 @@ describe('parseTopLevelMediaType', () => {
           { type: 'text/plain', parameters: { charset: 'utf-16' } }
         ]
       },
-      normalField: createImplicitEncoding('text/plain')
+      normalField: createImplicitMultipartFormEncoding('text/plain')
     });
   });
 
@@ -485,7 +485,7 @@ describe('parseTopLevelMediaType', () => {
 
     expect(() =>
       parseTopLevelMediaType(
-        createMultipartContent(schema, encoding),
+        createMultipartFormContent(schema, encoding),
         refs,
         defaultOptions
       )
@@ -499,13 +499,13 @@ describe('parseTopLevelMediaType', () => {
     };
     const encoding = { data: { contentType: 'image/*' } };
     const result = parseTopLevelMediaType(
-      createMultipartContent(schema, encoding),
+      createMultipartFormContent(schema, encoding),
       await createTestRefs(),
       defaultOptions
     );
 
     expect(result?.encoding).toEqual({
-      data: createExplicitEncoding('image/*')
+      data: createExplicitMultipartFormEncoding('image/*')
     });
   });
 
@@ -521,7 +521,7 @@ describe('parseTopLevelMediaType', () => {
 
     expect(() =>
       parseTopLevelMediaType(
-        createMultipartContent(schema, encoding),
+        createMultipartFormContent(schema, encoding),
         refs,
         defaultOptions
       )

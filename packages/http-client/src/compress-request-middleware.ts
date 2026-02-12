@@ -86,7 +86,7 @@ export interface RequestCompressionMiddlewareOptions<
    */
   compressOptions?: RequestCompressorOptions[C];
   /**
-   * Compression mode. Can be 'auto', 'header-only' or a boolean.
+   * Compression mode. 
    * - In 'auto' mode, the payload is compressed based on the `autoCompressMinSize` threshold.
    * - In 'header-only' mode, it is assumed that the payload is already compressed. The middleware will only set the appropriate Content-Encoding header without modifying the payload.
    * - If 'always' is provided, the payload will always be compressed.

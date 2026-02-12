@@ -8,7 +8,8 @@ import {
 } from '@sap-cloud-sdk/util';
 import type {
   HttpMiddleware,
-  HttpMiddlewareOptions
+  HttpMiddlewareOptions,
+  HttpRequestConfig
 } from './http-client-types';
 
 const logger = createLogger({
@@ -177,60 +178,62 @@ function getContentEncodingValue(
 export function compressRequest<C extends RequestCompressionAlgorithm = 'gzip'>(
   options?: RequestCompressionMiddlewareOptions<C>
 ): HttpMiddleware {
-  return (middlewareOptions: HttpMiddlewareOptions) => async requestConfig => {
-    const algorithm: RequestCompressionAlgorithm = options?.algorithm ?? 'gzip';
+  return (middlewareOptions: HttpMiddlewareOptions) =>
+    async (requestConfig: HttpRequestConfig) => {
+      const algorithm: RequestCompressionAlgorithm =
+        options?.algorithm ?? 'gzip';
 
-    const needsCompression = checkIfNeedsCompression(
-      requestConfig.data,
-      options
-    );
+      const needsCompression = checkIfNeedsCompression(
+        requestConfig.data,
+        options
+      );
 
-    if (needsCompression === 'skip') {
-      return middlewareOptions.fn(requestConfig);
-    }
+      if (needsCompression === 'skip') {
+        return middlewareOptions.fn(requestConfig);
+      }
 
-    // Check existing Content-Encoding header - append to existing if present
-    const currentValue = pickValueIgnoreCase(
-      requestConfig.headers,
-      'content-encoding'
-    );
-    const algorithmValue = getContentEncodingValue(algorithm);
-    const targetValue = currentValue
-      ? `${currentValue}, ${algorithmValue}`
-      : algorithmValue;
-    requestConfig.headers = mergeIgnoreCase(requestConfig.headers, {
-      'content-encoding': targetValue
-    });
+      // If the payload already has a Content-Encoding header, we need to preserve it and append our encoding to it.
+      const currentContentEncoding = pickValueIgnoreCase(
+        requestConfig.headers,
+        'content-encoding'
+      );
+      const ourContentEncoding = getContentEncodingValue(algorithm);
+      const targetContentEncoding = currentContentEncoding
+        ? `${currentContentEncoding}, ${ourContentEncoding}`
+        : ourContentEncoding;
+      requestConfig.headers = mergeIgnoreCase(requestConfig.headers, {
+        'content-encoding': targetContentEncoding
+      });
 
-    if (needsCompression === 'header-only') {
-      return middlewareOptions.fn(requestConfig);
-    }
+      if (needsCompression === 'header-only') {
+        return middlewareOptions.fn(requestConfig);
+      }
 
-    const compressor = compressors[algorithm];
-    if (!compressor) {
-      if (algorithm === 'zstd') {
+      const compressor = compressors[algorithm];
+      if (!compressor) {
+        if (algorithm === 'zstd') {
+          throw new Error(
+            `'zstd' compression is not supported in Node.js versions older than v22.15.0. Supported algorithms for this version are: ${getSupportedAlgorithms()}.`
+          );
+        }
         throw new Error(
-          `'zstd' compression is not supported in this Node.js versions older than v22.15.0 to use 'zstd'. Supported algorithms for this version are: ${getSupportedAlgorithms()}.`
+          `Unsupported compression algorithm '${algorithm}'. Supported algorithms are: ${getSupportedAlgorithms()}.`
         );
       }
-      throw new Error(
-        `Unsupported compression algorithm '${algorithm}'. Supported algorithms are: ${getSupportedAlgorithms()}.`
-      );
-    }
 
-    // TODO: (future) Consider streaming compression for large payloads
-    const compressed = await compressor(
-      requestConfig.data,
-      options?.compressOptions as any
-    ).catch((err: Error) => {
-      throw new ErrorWithCause(
-        `Failed to compress request payload using '${algorithm}'.`,
-        err
-      );
-    });
+      // TODO: (future) Consider streaming compression for large payloads
+      const compressed = await compressor(
+        requestConfig.data,
+        options?.compressOptions as any
+      ).catch((err: Error) => {
+        throw new ErrorWithCause(
+          `Failed to compress request payload using '${algorithm}'.`,
+          err
+        );
+      });
 
-    requestConfig.data = compressed;
+      requestConfig.data = compressed;
 
-    return middlewareOptions.fn(requestConfig);
-  };
+      return middlewareOptions.fn(requestConfig);
+    };
 }

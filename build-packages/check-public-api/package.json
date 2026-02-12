@@ -15,12 +15,12 @@
     "all": "yarn && yarn run lint && yarn run compile"
   },
   "dependencies": {
-    "@actions/core": "^2.0.2",
+    "@actions/core": "^2.0.3",
     "@manypkg/get-packages": "^2.2.2",
     "@sap-cloud-sdk/util": "^4.0.0",
     "@sap-cloud-sdk/generator-common": "^4.0.0",
     "@types/mock-fs": "^4.13.4",
-    "glob": "^13.0.0",
+    "glob": "^13.0.2",
     "mock-fs": "^5.5.0"
   },
   "devDependencies": {

@@ -57,12 +57,12 @@ function isValidUrl(url: string): boolean {
  * @internal
  * Replaces the first part of the hostname (subdomain) in a URL.
  * @param baseUrl - The URL whose subdomain should be replaced.
- * @param newSubdomain - The new subdomain to use.
+ * @param newSubdomain - The new subdomain to use or a falsy value to remove the subdomain.
  * @returns The URL with replaced subdomain, with trailing slash removed if present.
  */
 export function replaceSubdomain(
   baseUrl: string,
-  newSubdomain: string
+  newSubdomain: string | undefined
 ): string {
   if (!isValidUrl(baseUrl)) {
     throw new Error(`Base URL is not a valid URL: "${baseUrl}".`);
@@ -70,32 +70,8 @@ export function replaceSubdomain(
 
   const url = new URL(baseUrl);
   const hostParts = getHost(url).split('.');
-  url.hostname = [newSubdomain, ...hostParts.slice(1)].join('.');
-
-  let result = url.toString();
-  // Remove trailing slash for consistency
-  result = removeTrailingSlashes(result);
-
-  return result;
-}
-
-/**
- * @internal
- * Removes the first part of the hostname (subdomain) from a URL.
- * @param baseUrl - The URL whose subdomain should be removed.
- * @returns The URL without the first subdomain, with trailing slash removed if present.
- */
-export function removeSubdomain(baseUrl: string): string {
-  if (!isValidUrl(baseUrl)) {
-    throw new Error(`Base URL is not a valid URL: "${baseUrl}".`);
-  }
-
-  const url = new URL(baseUrl);
-  const hostParts = getHost(url).split('.');
-  // Remove first subdomain and keep the rest
-  if (hostParts.length > 2) {
-    url.hostname = hostParts.slice(1).join('.');
-  }
+  const subdomainReplacment = newSubdomain ? [newSubdomain] : [];
+  url.hostname = [...subdomainReplacment, ...hostParts.slice(1)].join('.');
 
   let result = url.toString();
   // Remove trailing slash for consistency

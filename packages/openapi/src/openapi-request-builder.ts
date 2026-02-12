@@ -192,9 +192,9 @@ class FormDataBuilder {
         );
       }
 
-      const blob = new Blob([buffer], {
-        type: metadata.contentType
-      });
+      // Append as Blob with appropriate content type if unambiguous
+      const maybeContentType = metadata.parsedContentTypes.length === 1 ? { type: metadata.contentType } : undefined;
+      const blob = new Blob([buffer], maybeContentType);
       formData.append(key, blob);
       return;
     }

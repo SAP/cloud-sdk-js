@@ -86,14 +86,15 @@ function inferContentTypeFromSchema(
 }
 
 /**
- * Add auto-inferred content types for schema properties.
+ * Infer content types for multipart form-data properties that don't have explicit encoding metadata.
+ * Content types are inferred based on the OpenAPI schema type of each property.
  * @param resolvedEncodings - Explicitly defined encodings that have already been resolved.
  * @param resolvedSchema - The resolved schema object.
  * @param refs - Object representing cross references throughout the document.
  * @returns Encoding map with inferred content types added, or undefined if no encodings.
  * @internal
  */
-function buildInferredEncodingsProperties(
+function inferMultipartEncodings(
   resolvedEncodings: string[],
   resolvedSchema: OpenAPIV3.SchemaObject,
   refs: OpenApiDocumentRefs
@@ -136,14 +137,15 @@ function buildInferredEncodingsProperties(
 }
 
 /**
- * Parse encoding object from a media type, extracting contentType for each property.
- * Also automatically infers content types for properties with binary format.
+ * Parse encoding metadata for multipart/form-data content type.
+ * Extracts explicit encoding configurations from the OpenAPI encoding object and automatically
+ * infers content types for properties without explicit encoding based on their schema types.
  * @param mediaTypeObject - The media type object containing encoding and schema.
  * @param refs - Object representing cross references throughout the document.
- * @returns Encoding configuration mapping property names to contentType, or undefined.
+ * @returns Encoding configuration mapping property names to their content types and metadata, or undefined if no encodings.
  * @internal
  */
-function parseEncoding(
+function parseMultipartEncodings(
   mediaTypeObject: OpenAPIV3.MediaTypeObject | undefined,
   refs: OpenApiDocumentRefs
 ): EncodingMap | undefined {
@@ -178,7 +180,7 @@ function parseEncoding(
 
   // Auto-infer missing content types based on schema types
   const implicitEncodings =
-    buildInferredEncodingsProperties(
+    inferMultipartEncodings(
       Object.keys(explicitEncodings),
       resolvedSchema,
       refs
@@ -217,7 +219,7 @@ export function parseTopLevelMediaType(
 
     if (mediaTypeObject) {
       const encoding = mediaTypeObject.mediaType.startsWith('multipart/')
-        ? parseEncoding(mediaTypeObject, refs)
+        ? parseMultipartEncodings(mediaTypeObject, refs)
         : undefined;
 
       return {

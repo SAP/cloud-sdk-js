@@ -86,6 +86,14 @@ class FormDataBuilder {
     return formData;
   }
 
+  private checkIsFlexibleContentType(metadata: EncodingMetadata, allowedTypes: Set<string>): boolean {
+    const { contentType: targetContentType, parsedContentTypes } = metadata;
+    return (Boolean(targetContentType) &&
+      (targetContentType.includes('*') ||
+        parsedContentTypes.length > 1 ||
+        allowedTypes.has('any')));
+    }
+
   /**
    * Append a Blob value to the FormData with appropriate content type handling.
    * @param formData - The FormData object to append to.
@@ -104,17 +112,16 @@ class FormDataBuilder {
       parsedContentTypes.map(ct => ct.type.toLowerCase())
     );
 
-    const isFlexibleContentType =
-      targetContentType &&
-      (targetContentType.includes('*') ||
-        parsedContentTypes.length > 1 ||
-        allowedTypes.has('any'));
+    const isFlexibleContentType = this.checkIsFlexibleContentType(metadata, allowedTypes);
 
     // If `Blob` has no type, we use value from the specification unless the target content type is complex (multiple choices or wildcards)
     if (
       !value.type &&
       !isFlexibleContentType &&
-      !parsedContentTypes[0].parameters.charset
+      // If the encoding has additional requirements regarding parameters (e.g. charset)
+      // we don't want to add a content type that may not meet those requirements,
+      // even if the main type should match - in that case the user should provide a Blob with appropriate content type themselves
+      !Object.keys(parsedContentTypes[0].parameters).length
     ) {
       logger.debug(
         `Adding missing content type '${targetContentType}' to Blob for key '${key}' as per encoding specification.`
@@ -193,7 +200,8 @@ class FormDataBuilder {
       }
 
       // Append as Blob with appropriate content type if unambiguous
-      const maybeContentType = metadata.parsedContentTypes.length === 1 ? { type: metadata.contentType } : undefined;
+      const isFlexibleContentType = this.checkIsFlexibleContentType(metadata, allowedTypes);
+      const maybeContentType = !isFlexibleContentType ? { type: metadata.contentType } : undefined;
       const blob = new Blob([buffer], maybeContentType);
       formData.append(key, blob);
       return;

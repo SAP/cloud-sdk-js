@@ -34,6 +34,176 @@ const logger = createLogger({
 });
 
 /**
+ * @internal
+ */
+interface EncodingMetadata {
+  contentType: string;
+  isImplicit: boolean;
+  parsedContentTypes: {
+    type: string;
+    parameters: { [key: string]: string };
+  }[];
+}
+
+/**
+ * Builder class for constructing FormData from a request body with encoding metadata.
+ * @internal
+ */
+class FormDataBuilder {
+  constructor(
+    private readonly body: Record<string, any>,
+    private readonly encoding: Record<string, EncodingMetadata>
+  ) {}
+
+  /**
+   * Build and return a FormData object from the body and encoding metadata.
+   * @returns The constructed FormData object.
+   */
+  build(): FormData {
+    const formData = new FormData();
+
+    for (const [key, value] of Object.entries(this.body ?? {})) {
+      if (!this.encoding || !this.encoding[key]) {
+        throw new Error(
+          `Missing encoding metadata for property '${key}'. ` +
+            'This indicates a code generation issue. ' +
+            'Please regenerate your API client.'
+        );
+      }
+
+      const metadata = this.encoding[key];
+      const allowedTypes = new Set(
+        metadata.parsedContentTypes.map(ct => ct.type.toLowerCase())
+      );
+
+      if (value instanceof Blob) {
+        this.appendBlob(formData, key, value, metadata);
+      } else {
+        this.appendString(formData, key, value, metadata, allowedTypes);
+      }
+    }
+
+    return formData;
+  }
+
+  /**
+   * Append a Blob value to the FormData with appropriate content type handling.
+   * @param formData - The FormData object to append to.
+   * @param key - The field name.
+   * @param value - The Blob value to append.
+   * @param metadata - Encoding metadata for this field.
+   */
+  private appendBlob(
+    formData: FormData,
+    key: string,
+    value: Blob,
+    metadata: EncodingMetadata
+  ): void {
+    const { contentType: targetContentType, isImplicit: targetIsImplicit, parsedContentTypes } = metadata;
+    const allowedTypes = new Set(
+      parsedContentTypes.map(ct => ct.type.toLowerCase())
+    );
+
+    const isFlexibleContentType =
+      targetContentType &&
+      (targetContentType.includes('*') ||
+        parsedContentTypes.length > 1 ||
+        allowedTypes.has('any'));
+
+    // If `Blob` has no type, we use value from the specification unless the target content type is complex (multiple choices or wildcards)
+    if (
+      !value.type &&
+      !isFlexibleContentType &&
+      !parsedContentTypes[0].parameters.charset
+    ) {
+      logger.debug(
+        `Adding missing content type '${targetContentType}' to Blob for key '${key}' as per encoding specification.`
+      );
+      const withType = new Blob([value], {
+        type: targetContentType
+      });
+      formData.append(key, withType);
+      return;
+    }
+
+    // If `Blob` has a type, we do a surface-level check to warn users about potential mismatches with the specification
+    // unless the target content type is complex (multiple choices or wildcards)
+    // or the encoding is implicit (in which case we are more lenient as there was no specific request from the spec)
+    const valueContentTypeBase = value.type.split(';')[0].trim();
+    if (
+      // Don't warn about implicit encodings (less likely to be relevant)
+      !targetIsImplicit &&
+      // We do not handle more complex content types
+      !isFlexibleContentType &&
+      // Do the actual comparison
+      valueContentTypeBase.toLowerCase() !== targetContentType.toLowerCase()
+    ) {
+      logger.warn(
+        `Content type mismatch for key '${key}': value has type '${value.type}' but encoding specifies '${targetContentType}'.`
+      );
+    }
+    formData.append(key, value);
+  }
+
+  /**
+   * Append a string value to the FormData with appropriate charset encoding.
+   * @param formData - The FormData object to append to.
+   * @param key - The field name.
+   * @param value - The value to append (will be stringified).
+   * @param metadata - Encoding metadata for this field.
+   * @param allowedTypes - Set of allowed content types for this field.
+   */
+  private appendString(
+    formData: FormData,
+    key: string,
+    value: any,
+    metadata: EncodingMetadata,
+    allowedTypes: Set<string>
+  ): void {
+    // Handle string data
+    // Only use JSON.stringify for application/json content type - otherwise may unduly escape e.g. stringified XML
+    // To avoid stringifying pre-stringified JSON, users should use `Blob` or raw `FormData`
+    const stringValue = allowedTypes.has('application/json')
+      ? JSON.stringify(value)
+      : String(value);
+
+    // If a charset is specified in the encoding, we encode the string accordingly (if unambiguous)
+    const targetCharset = new Set(
+      metadata.parsedContentTypes.map(ct => ct.parameters.charset)
+    );
+
+    if (
+      targetCharset.size === 1 &&
+      targetCharset.values().next().value !== undefined
+    ) {
+      const targetCharsetValue = targetCharset.values().next().value;
+
+      // Wrap in try-catch to provide better error message if charset encoding fails (e.g. due to unsupported charset or invalid characters for the charset)
+      let buffer: Buffer;
+      try {
+        buffer = Buffer.from(
+          stringValue,
+          targetCharsetValue as BufferEncoding
+        );
+      } catch (e: any) {
+        throw new ErrorWithCause(
+          `Failed to encode form data field '${key}' with charset '${targetCharsetValue}'.`,
+          e
+        );
+      }
+
+      const blob = new Blob([buffer], {
+        type: metadata.contentType
+      });
+      formData.append(key, blob);
+      return;
+    }
+
+    formData.append(key, stringValue);
+  }
+}
+
+/**
  * Request builder for OpenAPI requests.
  * @template ResponseT - Type of the response for the request.
  */
@@ -199,120 +369,12 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
     // Handle multipart/form-data body unless the body is already a FormData instance
     if (contentType === 'multipart/form-data' && !(body instanceof FormData)) {
-      return this.buildFormData(body);
+      const encoding = this.parameters!._encoding!;
+      const builder = new FormDataBuilder(body, encoding);
+      return builder.build();
     }
 
     return body;
-  }
-
-  private buildFormData(body: Record<string, any>): FormData {
-    const formData = new FormData();
-    const encoding = this.parameters!._encoding;
-
-    for (const [key, value] of Object.entries(body ?? {})) {
-      if (!encoding || !encoding[key]) {
-        throw new Error(
-          `Missing encoding metadata for property '${key}'. ` +
-            'This indicates a code generation issue. ' +
-            'Please regenerate your API client.'
-        );
-      }
-
-      // Content type is provided by the generator in _encoding based on the schema
-      const {
-        contentType: targetContentType,
-        isImplicit: targetIsImplicit,
-        parsedContentTypes
-      } = encoding[key];
-      // Use the first parsed content type (primary type)
-      const allowedTypes = new Set(
-        // TODO: compcase?
-        parsedContentTypes.map(ct => ct.type.toLowerCase())
-      );
-      if (value instanceof Blob) {
-        const isFlexibleContentType =
-          targetContentType &&
-          (targetContentType.includes('*') ||
-            parsedContentTypes.length > 1 ||
-            allowedTypes.has('any'));
-
-        // If `Blob` has no type, we use value from the specification unless the target content type is complex (multiple choices or wildcards)
-        if (
-          !value.type &&
-          !isFlexibleContentType &&
-          !parsedContentTypes[0].parameters.charset
-        ) {
-          logger.debug(
-            `Adding missing content type '${targetContentType}' to Blob for key '${key}' as per encoding specification.`
-          );
-          const withType = new Blob([value], {
-            type: targetContentType
-          });
-          formData.append(key, withType);
-          continue;
-        }
-
-        // If `Blob` has a type, we do a surface-level check to warn users about potential mismatches with the specification
-        // unless the target content type is complex (multiple choices or wildcards)
-        // or the encoding is implicit (in which case we are more lenient as there was no specific request from the spec)
-        const valueContentTypeBase = value.type.split(';')[0].trim();
-        if (
-          // Don't warn about implicit encodings (less likely to be relevant)
-          !targetIsImplicit &&
-          // We do not handle more complex content types
-          !isFlexibleContentType &&
-          // Do the actual comparison
-          valueContentTypeBase.toLowerCase() !== targetContentType.toLowerCase()
-        ) {
-          logger.warn(
-            `Content type mismatch for key '${key}': value has type '${value.type}' but encoding specifies '${targetContentType}'.`
-          );
-        }
-        formData.append(key, value);
-        continue;
-      }
-
-      // Handle string data
-      // Only use JSON.stringify for application/json content type - otherwise may unduly escape e.g. stringified XML
-      // To avoid stringifying pre-stringified JSON, users should use `Blob` or raw `FormData`
-      const stringValue = allowedTypes.has('application/json')
-        ? JSON.stringify(value)
-        : String(value);
-      // If a charset is specified in the encoding, we encode the string accordingly (if unambiguous)
-      const targetCharset = new Set(
-        parsedContentTypes.map(ct => ct.parameters.charset)
-      );
-      if (
-        targetCharset.size === 1 &&
-        targetCharset.values().next().value !== undefined
-      ) {
-        const targetCharsetValue = targetCharset.values().next().value;
-
-        // Wrap in try-catch to provide better error message if charset encoding fails (e.g. due to unsupported charset or invalid characters for the charset)
-        let buffer: Buffer | undefined;
-        try {
-          buffer = Buffer.from(
-            stringValue,
-            targetCharsetValue as BufferEncoding
-          );
-        } catch (e: any) {
-          throw new ErrorWithCause(
-            `Failed to encode form data field '${key}' with charset '${targetCharsetValue}'.`,
-            e
-          );
-        }
-
-        const blob = new Blob([buffer], {
-          type: targetContentType
-        });
-        formData.append(key, blob);
-        continue;
-      }
-
-      formData.append(key, stringValue);
-    }
-
-    return formData;
   }
 
   private getPath(): string {

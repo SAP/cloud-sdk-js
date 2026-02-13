@@ -1,6 +1,16 @@
 // eslint-disable-next-line
-const commonConfig = require('../../test-resources/jest.common.config');
-module.exports = {
+import commonConfig from '../../test-resources/jest.common.config';
+export default {
   ...commonConfig,
-  displayName: 'check-pr',
+  extensionsToTreatAsEsm: ['.ts'],
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: path.resolve(import.meta.dirname, 'tsconfig.test.json')
+      }
+    ]
+  },
+  displayName: 'check-pr'
 };

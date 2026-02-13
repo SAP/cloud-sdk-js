@@ -81848,8 +81848,9 @@ var manypkg_get_packages_cjs = __nccwpck_require__(886);
 
 
 // import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
-// eslint-disable-next line import/no-internal-modules
+// eslint-disable-next-line import/no-internal-modules
 
+// eslint-disable-next-line import/no-internal-modules
 
 
 const { readFile, lstat: lib_lstat, readdir: lib_readdir } = external_node_fs_.promises;

@@ -6,12 +6,13 @@ import { info, warning, error, getInput, setFailed } from '@actions/core';
 import { flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 // import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
-// eslint-disable-next line import/no-internal-modules
+// eslint-disable-next-line import/no-internal-modules
 import {
   readCompilerOptions,
   readIncludeExcludeWithDefaults,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/dist/compiler.js';
+// eslint-disable-next-line import/no-internal-modules
 import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer/create-file.js';
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';

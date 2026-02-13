@@ -1,17 +1,17 @@
 /* eslint-disable jsdoc/require-jsdoc */
-
-import { join, resolve, parse, basename, dirname, posix, sep } from 'path';
-import { promises, existsSync } from 'fs';
+import { join, resolve, parse, basename, dirname, posix, sep } from 'node:path';
+import { promises, existsSync } from 'node:fs';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
 import { flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
+// import directly from the files to avoid importing non-esm compatible functionality (e.g. )
 import {
   readCompilerOptions,
-  defaultPrettierConfig,
   readIncludeExcludeWithDefaults,
   transpileDirectory
-} from '@sap-cloud-sdk/generator-common/internal.js';
+} from '@sap-cloud-sdk/generator-common/dist/compiler.js';
+import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer/create-file.js';
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';
 

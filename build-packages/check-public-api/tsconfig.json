@@ -8,8 +8,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2021",
-    "module": "Node16",
+    "target": "es2024",
+    "module": "nodenext",
     "lib": ["ES2021", "dom"]
   },
   "include": ["index.ts"],

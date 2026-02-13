@@ -65023,6 +65023,7 @@ var semver = __nccwpck_require__(90084);
 
 
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires, import/no-internal-modules
 const { getPackageVersion } = require('../../scripts/get-package-version');
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
@@ -65055,9 +65056,9 @@ function formatJson(json) {
 
 
 
-// eslint-disable-next-line import/no-internal-modules
-const { transformFile } = require('../../scripts/util');
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires, import/no-internal-modules
+const { transformFile } = require('../../scripts/util');
 async function bump() {
     const { version, bumpType } = await getNextVersion();
     if (bumpType === 'major' && version !== getInput('majorVersion')) {

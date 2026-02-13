@@ -422,8 +422,6 @@ async function runCheckApi() {
   }
 }
 
-if (require.main === module) {
-  (async function () {
-    await runCheckApi();
-  })();
+if (import.meta.url === `file://${process.argv[1]}`) {
+  await runCheckApi();
 }

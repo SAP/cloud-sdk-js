@@ -5,7 +5,8 @@ import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
 import { flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
-// import directly from the files to avoid importing non-esm compatible functionality (e.g. )
+// import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
+// eslint-disable-next line import/no-internal-modules
 import {
   readCompilerOptions,
   readIncludeExcludeWithDefaults,

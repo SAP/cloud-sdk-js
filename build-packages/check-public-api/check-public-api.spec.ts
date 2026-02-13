@@ -1,7 +1,6 @@
 import path from 'path';
 import mock from 'mock-fs';
 import * as core from '@actions/core';
-// eslint-disable-next-line no-restricted-imports
 import {
   checkBarrelRecursive,
   checkIndexFileExists,

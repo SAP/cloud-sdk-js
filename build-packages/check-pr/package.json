@@ -4,6 +4,7 @@
   "description": "Checks the current PR for semantical correctness and appropriate changelog.",
   "license": "Apache-2.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/index.js --out ../../.github/actions/check-pr/",

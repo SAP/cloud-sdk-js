@@ -4,6 +4,7 @@
   "description": "Bumps the version of the root package.json and packages according to changesets.",
   "license": "Apache-2.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/build-packages/changesets-fixed-version-bump/index.js --out ../../.github/actions/changesets-fixed-version-bump/",

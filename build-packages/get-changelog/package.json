@@ -4,6 +4,7 @@
   "description": "Gets the current changelog",
   "license": "Apache-2.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/build-packages/get-changelog/index.js --out ../../.github/actions/get-changelog/",

@@ -1,6 +1,10 @@
 import mock from 'mock-fs';
 import * as github from '@actions/core';
-import { validateTitle, validateBody, validateChangesets } from './validators';
+import {
+  validateTitle,
+  validateBody,
+  validateChangesets
+} from './validators.js';
 
 const prTemplate = `unchanged PR template
 with multiple lines`;

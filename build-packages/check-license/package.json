@@ -4,6 +4,7 @@
   "description": "Checks if the licenses of the dependencies are allowed.",
   "license": "Apache-2.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/build-packages/check-license/index.js --out ../../.github/actions/check-license/",

@@ -11,7 +11,7 @@ import {
   defaultPrettierConfig,
   readIncludeExcludeWithDefaults,
   transpileDirectory
-} from '@sap-cloud-sdk/generator-common/internal';
+} from '@sap-cloud-sdk/generator-common/internal.js';
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';
 

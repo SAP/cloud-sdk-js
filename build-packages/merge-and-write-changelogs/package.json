@@ -4,6 +4,7 @@
   "description": "Merges all changelogs produced by changesets into one changelog and writes it to a merged CHANGELOG file",
   "license": "Apache-2.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/build-packages/merge-and-write-changelogs/index.js --out ../../.github/actions/merge-and-write-changelogs/",

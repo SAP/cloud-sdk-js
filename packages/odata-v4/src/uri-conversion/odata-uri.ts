@@ -20,7 +20,6 @@ import type { Entity } from '../entity';
 export function createODataUri<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT
 ): ODataUri<DeSerializersT> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getExpandWrapped<EntityT extends Entity>(
     selects: Selectable<EntityT, DeSerializersT>[],
     expands: Expandable<

@@ -54,6 +54,12 @@ module.exports = defineConfig([
           message:
             'Enums are weird in TypeScript. Prefer union types or const objects instead.'
         }
+      ],
+      'import/no-internal-modules': [
+        'error',
+        {
+          allow: ['@sap-cloud-sdk/**/internal', '@sap-cloud-sdk/**/internal.js']
+        }
       ]
     }
   },

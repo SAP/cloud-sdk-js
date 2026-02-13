@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-
 import { isOrderableEdmType } from '../edm-types';
 import { ComplexTypeField } from './complex-type-field';
 import { EdmTypeField } from './edm-type-field';

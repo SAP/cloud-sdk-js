@@ -222,10 +222,11 @@ module.exports = {
       'error',
       {
         definedTags: [
-          'packageDocumentation',
-          'typeParam',
+          'defaultValue',
           'experimental',
-          'defaultValue'
+          'packageDocumentation',
+          'remarks',
+          'typeParam'
         ],
         // The other default-allowed tags are not supported by tsdoc
         inlineTags: ['link']

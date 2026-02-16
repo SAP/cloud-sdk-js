@@ -215,7 +215,15 @@ const flatConfig = [
       'jsdoc/check-param-names': 'error',
       'jsdoc/check-tag-names': [
         'error',
-        { definedTags: ['packageDocumentation', 'typeParam', 'experimental'] }
+        {
+          definedTags: [
+            'defaultValue',
+            'experimental',
+            'packageDocumentation',
+            'remarks',
+            'typeParam'
+          ]
+        }
       ],
       'jsdoc/check-syntax': 'error',
       'jsdoc/multiline-blocks': 'error',

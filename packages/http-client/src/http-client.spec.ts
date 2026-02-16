@@ -245,6 +245,79 @@ describe('generic http client', () => {
       );
     });
 
+    it('considers abort signal to cancel the request', async () => {
+      const signal = AbortSignal.timeout(10);
+
+      const _scope = nock('https://example.com')
+        .get('/abort')
+        .delay(1000)
+        .reply(200, 'Should not get this');
+
+      const requestPromise = executeHttpRequest(
+        { url: 'https://example.com' },
+        {
+          method: 'get',
+          url: '/abort',
+          signal
+        }
+      );
+
+      await expect(requestPromise).rejects.toMatchObject({
+        code: 'ERR_CANCELED'
+      });
+      // I have confirmed this get's cancelled, but this is not reflected in nock.
+      // expect(scope.isDone()).toBe(false);
+    });
+
+    it('cancels CSRF token fetch when signal is aborted', async () => {
+      const _csrfScope = nock('https://example.com')
+        .head('/api/entity')
+        .delay(10000)
+        .reply(200, {}, { 'x-csrf-token': 'test-token' });
+
+      const postScope = nock('https://example.com')
+        .post('/api/entity')
+        .reply(200, 'Should not get this');
+
+      await expect(
+        executeHttpRequest(
+          { url: 'https://example.com' },
+          {
+            method: 'post',
+            url: '/api/entity',
+            signal: AbortSignal.timeout(50)
+          }
+        )
+      ).rejects.toMatchObject({
+        code: 'ERR_CANCELED'
+      });
+      // I have confirmed this get's cancelled, but this is not reflected in nock.
+      // expect(csrfScope.isDone()).toBe(false);
+      expect(postScope.isDone()).toBe(false);
+    });
+
+    it('rejects immediately when signal is already aborted', async () => {
+      const signal = AbortSignal.abort();
+
+      const scope = nock('https://example.com')
+        .get('/should-not-reach')
+        .reply(200, 'Should never reach this');
+
+      await expect(
+        executeHttpRequest(
+          { url: 'https://example.com' },
+          {
+            method: 'get',
+            url: '/should-not-reach',
+            signal
+          }
+        )
+      ).rejects.toMatchObject({
+        code: 'ERR_CANCELED'
+      });
+      expect(scope.isDone()).toBe(false);
+    });
+
     it('attaches one middleware', async () => {
       nock('https://example.com').get(/.*/).reply(200, 'Initial value.');
       const myMiddleware = buildMiddleware('Middleware One.');

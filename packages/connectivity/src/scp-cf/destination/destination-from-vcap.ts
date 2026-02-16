@@ -72,19 +72,33 @@ async function retrieveDestination({
   jwt,
   destinationName,
   iasOptions,
+  service: serviceBinding,
   serviceBindingTransformFn
 }: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
   jwt?: JwtPayload;
   iasOptions?: IasOptions;
 } & DestinationFromServiceBindingOptions) {
-  const service = getServiceBindingByInstanceName(destinationName);
+  const service =
+    parseService(serviceBinding) ||
+    getServiceBindingByInstanceName(destinationName);
   const destination = await (serviceBindingTransformFn || transform)(service, {
     useCache,
     jwt,
     ...(iasOptions ? { iasOptions } : {})
   });
 
-  return { name: destinationName, ...destination };
+  const name = (serviceBinding && service.name) || destinationName;
+
+  return { name, ...destination };
+}
+
+function parseService(
+  service: DestinationFromServiceBindingOptions['service']
+): Service | undefined {
+  if (typeof service === 'string') {
+    return JSON.parse(service) as Service;
+  }
+  return service;
 }
 
 /**
@@ -95,6 +109,11 @@ export interface DestinationFromServiceBindingOptions {
    * Custom transformation function to control how a {@link Destination} is built from the given {@link Service}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
+
+  /**
+   * A service binding to use instead of looking it up by name. If this is provided, the `destinationName` option is ignored.
+   */
+  service?: Service | string;
 }
 
 /**

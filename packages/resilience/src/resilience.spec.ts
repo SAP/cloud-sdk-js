@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/named
 import axios from 'axios';
 import nock from 'nock';
 import { circuitBreakers } from './circuit-breaker';

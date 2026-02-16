@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/named
 import type { AxiosResponse } from 'axios';
 
 /**

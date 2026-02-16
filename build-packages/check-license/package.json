@@ -4,6 +4,7 @@
   "description": "Checks if the licenses of the dependencies are allowed.",
   "license": "Apache-2.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/build-packages/check-license/index.js --out ../../.github/actions/check-license/",
@@ -13,7 +14,7 @@
     "all": "yarn && yarn run lint && yarn run compile"
   },
   "dependencies": {
-    "@actions/core": "^2.0.3"
+    "@actions/core": "^3.0.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.38.4",

@@ -3,8 +3,8 @@
 import { info } from 'node:console';
 import getReleasePlan from '@changesets/get-release-plan';
 import { inc } from 'semver';
-// eslint-disable-next-line import/no-internal-modules
-import { getPackageVersion } from '../../scripts/get-package-version';
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires, import/no-internal-modules
+const { getPackageVersion } = require('../../scripts/get-package-version');
 
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'] as const;
 

@@ -1,7 +1,6 @@
 import path from 'path';
 import mock from 'mock-fs';
 import * as core from '@actions/core';
-// eslint-disable-next-line no-restricted-imports
 import {
   checkBarrelRecursive,
   checkIndexFileExists,
@@ -12,7 +11,7 @@ import {
   regexExportedIndex,
   typeDescriptorPaths
   // eslint-disable-next-line import/no-useless-path-segments
-} from './index';
+} from './index.js';
 
 describe('check-public-api', () => {
   let errorSpy: any;

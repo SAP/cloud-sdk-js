@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 import { ODataActionRequestConfig } from './odata-action-request-config';
 import type {
   ODataUri,

@@ -1,9 +1,9 @@
 import { resolve } from 'node:path';
 import { getInput, info, setOutput } from '@actions/core';
 import { command } from 'execa';
-// eslint-disable-next-line import/no-internal-modules
-import { transformFile } from '../../scripts/util';
-import { formatJson, getNextVersion } from './util';
+import { formatJson, getNextVersion } from './util.js';
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires, import/no-internal-modules
+const { transformFile } = require('../../scripts/util');
 
 async function bump() {
   const { version, bumpType } = await getNextVersion();

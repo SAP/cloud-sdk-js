@@ -342,7 +342,6 @@ function logRequestInformation(request: HttpRequestConfig) {
   }
 }
 
-// eslint-disable-next-line jsdoc/require-returns-check
 /**
  * Builds a {@link DestinationHttpRequestConfig} for the given destination, merges it into the given `requestConfig` and executes it (using Axios).
  * @param destination - A destination or a destination name and a JWT.

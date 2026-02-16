@@ -1,17 +1,19 @@
 /* eslint-disable jsdoc/require-jsdoc */
-
-import { join, resolve, parse, basename, dirname, posix, sep } from 'path';
-import { promises, existsSync } from 'fs';
+import { join, resolve, parse, basename, dirname, posix, sep } from 'node:path';
+import { promises, existsSync } from 'node:fs';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
 import { flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
+// import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
 import {
   readCompilerOptions,
-  defaultPrettierConfig,
   readIncludeExcludeWithDefaults,
   transpileDirectory
-} from '@sap-cloud-sdk/generator-common/internal';
+  // eslint-disable-next-line import/no-internal-modules
+} from '@sap-cloud-sdk/generator-common/dist/compiler.js';
+// eslint-disable-next-line import/no-internal-modules
+import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer/create-file.js';
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';
 
@@ -420,8 +422,6 @@ async function runCheckApi() {
   }
 }
 
-if (require.main === module) {
-  (async function () {
-    await runCheckApi();
-  })();
+if (import.meta.url === `file://${process.argv[1]}`) {
+  await runCheckApi();
 }

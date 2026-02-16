@@ -79,8 +79,8 @@ class FormDataBuilder {
 
       const encoded: string | Blob =
         value instanceof Blob
-          ? this.encodeBlob({ key, value, metadata })
-          : this.encodeString({ key, value, metadata, allowedTypes });
+          ? this.encodeBlob({ key, value }, metadata)
+          : this.encodeString({ key, value }, metadata, allowedTypes);
 
       formData.append(key, encoded);
     }
@@ -103,21 +103,22 @@ class FormDataBuilder {
 
   /**
    * Encode a Blob value for FormData with appropriate content type handling.
-   * @param params - The parameters object.
+   * @param params - The key and value to encode.
    * @param params.key - The field name.
    * @param params.value - The Blob value to encode.
-   * @param params.metadata - Encoding metadata for this field.
+   * @param metadata - Encoding metadata for this field.
    * @returns Blob - The encoded Blob value.
    */
-  private encodeBlob({
-    key,
-    value,
-    metadata
-  }: {
-    key: string;
-    value: Blob;
-    metadata: EncodingMetadata;
-  }): Blob {
+  private encodeBlob(
+    {
+      key,
+      value
+    }: {
+      key: string;
+      value: Blob;
+    },
+    metadata: EncodingMetadata
+  ): Blob {
     const {
       contentType: targetContentType,
       isImplicit: targetIsImplicit,
@@ -171,24 +172,24 @@ class FormDataBuilder {
 
   /**
    * Encode a string value for FormData with appropriate content type and charset handling.
-   * @param params - The parameters object.
+   * @param params - The key and value to encode.
    * @param params.key - The field name.
    * @param params.value - The value to encode.
-   * @param params.metadata - Encoding metadata for this field.
-   * @param params.allowedTypes - Set of allowed content types for this field.
+   * @param metadata - Encoding metadata for this field.
+   * @param allowedTypes - Set of allowed content types for this field.
    * @returns Blob or string - The encoded value.
    */
-  private encodeString({
-    key,
-    value,
-    metadata,
-    allowedTypes
-  }: {
-    key: string;
-    value: any;
-    metadata: EncodingMetadata;
-    allowedTypes: Set<string>;
-  }): Blob | string {
+  private encodeString(
+    {
+      key,
+      value
+    }: {
+      key: string;
+      value: any;
+    },
+    metadata: EncodingMetadata,
+    allowedTypes: Set<string>
+  ): string | Blob {
     // Handle string data
     // Only use JSON.stringify for application/json content type - otherwise may unduly escape e.g. stringified XML
     // To avoid stringifying pre-stringified JSON, users should use `Blob` or raw `FormData`

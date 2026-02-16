@@ -124,11 +124,7 @@ function checkIfNeedsCompression<
   if (mode === 'never') {
     return 'skip';
   }
-  if (mode === 'always') {
-    return 'compress';
-  }
 
-  const minSize = options?.autoCompressMinSize ?? 1024;
   let payloadSize: number;
   try {
     payloadSize = Buffer.byteLength(payload as any);
@@ -143,6 +139,13 @@ function checkIfNeedsCompression<
     // In this case `zlib` will likely fail as well.
     return 'skip';
   }
+
+  if (mode === 'always') {
+    return 'compress';
+  }
+
+  const minSize = options?.autoCompressMinSize ?? 1024;
+
   const shouldCompress = payloadSize >= minSize;
   const comparison = shouldCompress ? '>=' : '<';
   const action = shouldCompress ? 'Compressing' : 'Skipping compression';

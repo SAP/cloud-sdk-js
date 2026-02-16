@@ -53,25 +53,25 @@ describe('serializeOperation', () => {
       pathPattern: '/test/{id}/{subId}'
     };
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of get requests to the '/test/{id}/{subId}' endpoint.
-       * @param id - Path parameter.
-       * @param subId - Path parameter.
-       * @param queryParameters - Object containing the following keys: limit.
-       * @param headerParameters - Object containing the following keys: resource-group.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<string>(
-        'get',
-        "/test/{id}/{subId}",
-        {
-              pathParameters: { id, subId },
-              queryParameters,
-              headerParameters
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of get requests to the '/test/{id}/{subId}' endpoint.
+ * @param id - Path parameter.
+ * @param subId - Path parameter.
+ * @param queryParameters - Object containing the following keys: limit.
+ * @param headerParameters - Object containing the following keys: resource-group.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<string>(
+  'get',
+  "/test/{id}/{subId}",
+  {
+        pathParameters: { id, subId },
+        headerParameters,
+        queryParameters
+      },
+  TestApi._defaultBasePath
+)"
+`);
   });
 
   it('serializes operation with path and header parameters', () => {
@@ -236,22 +236,22 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of get requests to the '/test' endpoint.
-       * @param queryParameters - Object containing the following keys: limit, page.
-       * @param headerParameters - Object containing the following keys: resource-group.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      getFn: (queryParameters: {'limit'?: number, 'page'?: number}, headerParameters: {'resource-group': string}) => new OpenApiRequestBuilder<any>(
-        'get',
-        "/test",
-        {
-              queryParameters,
-              headerParameters
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of get requests to the '/test' endpoint.
+ * @param queryParameters - Object containing the following keys: limit, page.
+ * @param headerParameters - Object containing the following keys: resource-group.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+getFn: (queryParameters: {'limit'?: number, 'page'?: number}, headerParameters: {'resource-group': string}) => new OpenApiRequestBuilder<any>(
+  'get',
+  "/test",
+  {
+        headerParameters,
+        queryParameters
+      },
+  TestApi._defaultBasePath
+)"
+`);
   });
 
   it('serializes operation with optional query and optional + required header parameters', () => {
@@ -302,22 +302,22 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of get requests to the '/test' endpoint.
-       * @param queryParameters - Object containing the following keys: limit, page.
-       * @param headerParameters - Object containing the following keys: authentication, resource-group.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      getFn: (queryParameters: {'limit'?: number, 'page'?: number}, headerParameters: {'authentication': string, 'resource-group'?: string}) => new OpenApiRequestBuilder<any>(
-        'get',
-        "/test",
-        {
-              queryParameters,
-              headerParameters
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of get requests to the '/test' endpoint.
+ * @param queryParameters - Object containing the following keys: limit, page.
+ * @param headerParameters - Object containing the following keys: authentication, resource-group.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+getFn: (queryParameters: {'limit'?: number, 'page'?: number}, headerParameters: {'authentication': string, 'resource-group'?: string}) => new OpenApiRequestBuilder<any>(
+  'get',
+  "/test",
+  {
+        headerParameters,
+        queryParameters
+      },
+  TestApi._defaultBasePath
+)"
+`);
   });
 
   it('serializes operation with required query and optional header parameters', () => {
@@ -352,22 +352,22 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of get requests to the '/test' endpoint.
-       * @param queryParameters - Object containing the following keys: limit.
-       * @param headerParameters - Object containing the following keys: resource-group.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      getFn: (queryParameters: {'limit': number}, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<any>(
-        'get',
-        "/test",
-        {
-              queryParameters,
-              headerParameters
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of get requests to the '/test' endpoint.
+ * @param queryParameters - Object containing the following keys: limit.
+ * @param headerParameters - Object containing the following keys: resource-group.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+getFn: (queryParameters: {'limit': number}, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<any>(
+  'get',
+  "/test",
+  {
+        headerParameters,
+        queryParameters
+      },
+  TestApi._defaultBasePath
+)"
+`);
   });
 
   it('serializes operation with required query and required header parameters', () => {
@@ -410,22 +410,22 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of get requests to the '/test' endpoint.
-       * @param queryParameters - Object containing the following keys: limit, page.
-       * @param headerParameters - Object containing the following keys: resource-group.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {'resource-group': string}) => new OpenApiRequestBuilder<any>(
-        'get',
-        "/test",
-        {
-              queryParameters,
-              headerParameters
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of get requests to the '/test' endpoint.
+ * @param queryParameters - Object containing the following keys: limit, page.
+ * @param headerParameters - Object containing the following keys: resource-group.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {'resource-group': string}) => new OpenApiRequestBuilder<any>(
+  'get',
+  "/test",
+  {
+        headerParameters,
+        queryParameters
+      },
+  TestApi._defaultBasePath
+)"
+`);
   });
 
   it('serializes operation with only query parameters', () => {

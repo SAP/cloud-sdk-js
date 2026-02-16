@@ -16,12 +16,13 @@ export function parseRequestBody(
   options: ParserOptions
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = refs.resolveObject(requestBody);
-  const schema = parseMediaType(resolvedRequestBody, refs, options);
-  if (schema && resolvedRequestBody) {
+  const mediaType = parseMediaType(resolvedRequestBody, refs, options);
+
+  if (resolvedRequestBody && mediaType) {
     return {
       required: !!resolvedRequestBody.required,
       description: resolvedRequestBody.description,
-      schema
+      ...mediaType
     };
   }
 }

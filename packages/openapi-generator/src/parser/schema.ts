@@ -76,7 +76,7 @@ export function parseSchema(
   }
 
   return {
-    type: getType(schema.type)
+    type: getType(schema.type, schema.format)
   };
 }
 

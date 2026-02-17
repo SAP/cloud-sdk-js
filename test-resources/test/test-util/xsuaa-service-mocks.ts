@@ -76,10 +76,11 @@ export function mockUserTokenGrantCall(
         body.client_id === creds.clientid &&
         body.client_secret === creds.clientsecret &&
         body.grant_type === 'urn:ietf:params:oauth:grant-type:jwt-bearer' &&
-        // For empty assertion, match any assertion.
-        (!body.assertion || body.assertion === accessTokenAssertion) &&
+        // For empty accessTokenAssertion, the assertion is not checked.
+        (!accessTokenAssertion || body.assertion === accessTokenAssertion) &&
         body.response_type === 'token'
-    ))
+      )
+    )
     .times(times)
     .reply(responseCode, accessTokenResponse);
 }

@@ -65,13 +65,14 @@ export function mockUserTokenGrantCall(
   responseCode = 200
 ) {
   return nock(uri)
-    .post('/oauth/token', {
-      client_id: creds.clientid,
-      client_secret: creds.clientsecret,
-      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-      assertion: accessTokenAssertion,
-      response_type: 'token'
-    })
+    .post('/oauth/token', body => (
+        body.client_id === creds.clientid &&
+        body.client_secret === creds.clientsecret &&
+        body.grant_type === 'urn:ietf:params:oauth:grant-type:jwt-bearer' &&
+        // For empty assertion, match any assertion.
+        (!body.assertion || body.assertion === accessTokenAssertion) &&
+        body.response_type === 'token'
+    ))
     .times(times)
     .reply(responseCode, accessTokenResponse);
 }

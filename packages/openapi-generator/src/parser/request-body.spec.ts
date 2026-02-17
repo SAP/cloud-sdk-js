@@ -42,6 +42,9 @@ describe('getRequestBody', () => {
       )
     ).toEqual({
       schema: { type: 'string' },
+      mediaType: 'application/json',
+      encoding: undefined,
+      description: undefined,
       required: false
     });
   });
@@ -70,6 +73,9 @@ describe('getRequestBody', () => {
       )
     ).toEqual({
       schema: { ...schema, ...schemaNaming },
+      mediaType: 'application/json',
+      encoding: undefined,
+      description: undefined,
       required: true
     });
   });

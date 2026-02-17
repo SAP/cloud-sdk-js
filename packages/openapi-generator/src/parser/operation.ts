@@ -156,11 +156,11 @@ export function parsePathParameters(
  * @internal
  */
 export function parseParameters(
-  pathParameters: OpenAPIV3.ParameterObject[],
+  parameters: OpenAPIV3.ParameterObject[],
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiParameter[] {
-  return pathParameters.map(param => ({
+  return parameters.map(param => ({
     ...param,
     originalName: param.name,
     schema: parseSchema(param.schema, refs, options),

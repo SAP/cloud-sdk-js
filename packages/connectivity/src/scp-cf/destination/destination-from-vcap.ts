@@ -8,6 +8,7 @@ import {
 import { isHttpDestination } from './destination-service-types';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import type { Destination } from './destination-service-types';
 import type { CachingOptions } from '../cache';
@@ -28,10 +29,7 @@ const logger = createLogger({
  * @returns A destination.
  */
 export async function getDestinationFromServiceBinding(
-  options: Pick<
-    DestinationFetchOptions,
-    'jwt' | 'iss' | 'useCache' | 'destinationName'
-  > &
+  options: Pick<DestinationFetchOptions, 'jwt' | 'iss' | 'useCache'> &
     DestinationFromServiceBindingOptions & { iasOptions?: IasOptions }
 ): Promise<Destination> {
   const decodedJwt = options.iss
@@ -74,13 +72,12 @@ async function retrieveDestination({
   iasOptions,
   service: serviceBinding,
   serviceBindingTransformFn
-}: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
+}: Pick<DestinationFetchOptions, 'useCache'> & {
   jwt?: JwtPayload;
   iasOptions?: IasOptions;
 } & DestinationFromServiceBindingOptions) {
   const service =
-    parseService(serviceBinding) ||
-    getServiceBindingByInstanceName(destinationName);
+    serviceBinding || getServiceBindingByInstanceName(destinationName);
   const destination = await (serviceBindingTransformFn || transform)(service, {
     useCache,
     jwt,
@@ -92,29 +89,23 @@ async function retrieveDestination({
   return { name, ...destination };
 }
 
-function parseService(
-  service: DestinationFromServiceBindingOptions['service']
-): Service | undefined {
-  if (typeof service === 'string') {
-    return JSON.parse(service) as Service;
-  }
-  return service;
-}
-
 /**
  * Options to customize the behavior of {@link getDestinationFromServiceBinding}.
  */
-export interface DestinationFromServiceBindingOptions {
+export type DestinationFromServiceBindingOptions = {
   /**
    * Custom transformation function to control how a {@link Destination} is built from the given {@link Service}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
-
-  /**
-   * A service binding to use instead of looking it up by name. If this is provided, the `destinationName` option is ignored.
-   */
-  service?: Service | string;
-}
+} & Xor<
+  {
+    /**
+     * A service binding to use directly instead of looking it up by name. Mandatory if no destination name is provided.
+     */
+    service: Service;
+  },
+  Pick<DestinationFetchOptions, 'destinationName'>
+>;
 
 /**
  * Represents options passed to the service binding transform function.

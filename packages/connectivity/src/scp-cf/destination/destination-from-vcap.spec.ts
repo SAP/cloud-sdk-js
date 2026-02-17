@@ -332,8 +332,7 @@ describe('vcap-service-destination', () => {
       }));
 
       const destination = await getDestinationFromServiceBinding({
-        destinationName: 'fallback-name',
-        service: JSON.stringify(serviceBinding),
+        service: serviceBinding,
         serviceBindingTransformFn
       });
 

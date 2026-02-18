@@ -8,7 +8,6 @@ import {
 import { isHttpDestination } from './destination-service-types';
 import { serviceToDestinationTransformers } from './service-binding-to-destination';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
-import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import type { Destination } from './destination-service-types';
 import type { CachingOptions } from '../cache';
@@ -97,15 +96,22 @@ export type DestinationFromServiceBindingOptions = {
    * Custom transformation function to control how a {@link Destination} is built from the given {@link Service}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
-} & Xor<
-  {
-    /**
-     * A service binding to use directly instead of looking it up by name. Mandatory if no destination name is provided.
-     */
-    service: Service;
-  },
-  Pick<DestinationFetchOptions, 'destinationName'>
->;
+} & (
+  | {
+      /**
+       * A service binding to use directly instead of looking it up by name. Mandatory if no destination name is provided.
+       */
+      service: Service;
+      destinationName?: never;
+    }
+  | {
+      /**
+       * The name of the destination to retrieve from service bindings.
+       */
+      destinationName: string;
+      service?: never;
+    }
+);
 
 /**
  * Represents options passed to the service binding transform function.

@@ -7,6 +7,9 @@ module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   globalSetup: '<rootDir>/../../test-resources/bootstrap-global.js',
   setupFiles: ['<rootDir>/../../test-resources/bootstrap-test.js'],
+  setupFilesAfterEnv: [
+    '<rootDir>/../../test-resources/cleanup-circuit-breakers.js'
+  ],
   coverageReporters: ['text', 'cobertura', 'html'],
   coveragePathIgnorePatterns: ['dist/', 'node_modules/', 'test/', '.*.spec.ts'],
   reporters: ['default', 'jest-junit'],

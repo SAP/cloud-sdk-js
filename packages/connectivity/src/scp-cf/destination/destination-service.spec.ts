@@ -1,9 +1,7 @@
 import * as jwt123 from 'jsonwebtoken';
 import nock from 'nock';
-// eslint-disable-next-line import/named
 import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
-// eslint-disable-next-line import/named
 import axios from 'axios';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';

@@ -274,6 +274,10 @@ describe('destination service', () => {
   });
 
   describe('fetchCertificate', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+
     it('fetches the subaccount certificate', async () => {
       mockCertificateCall('server-public-cert.pem', jwt, 'subaccount');
 
@@ -290,6 +294,10 @@ describe('destination service', () => {
     });
 
     it('fetches the instance certificate', async () => {
+      // Mock subaccount call to return 404 so instance call is tried
+      nock(destinationServiceUri)
+        .get('/destination-configuration/v1/subaccountCertificates/server-public-cert.pem')
+        .reply(404);
       mockCertificateCall('server-public-cert.pem', jwt, 'instance');
 
       const actual = await fetchCertificate(

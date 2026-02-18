@@ -28,9 +28,26 @@ function cleanupNock() {
   }
 }
 
+function setupNockForConnectionChecks() {
+  try {
+    const nock = require('nock');
+    // @mswjs/interceptors 0.41.x sends HEAD requests for connection checking
+    // during parallel test execution. Set up a catch-all HEAD interceptor.
+    // Use persist() so it applies to all tests without being consumed.
+    nock(/https?:\/\/.*/)
+      .persist()
+      .head(/.*/)
+      .optionally()
+      .reply(200);
+  } catch (err) {
+    // Ignore if nock is not available
+  }
+}
+
 beforeEach(() => {
   cleanupCircuitBreakers();
   cleanupNock();
+  setupNockForConnectionChecks();
 });
 
 afterEach(() => {

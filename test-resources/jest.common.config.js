@@ -8,7 +8,7 @@ module.exports = {
   globalSetup: '<rootDir>/../../test-resources/bootstrap-global.js',
   setupFiles: ['<rootDir>/../../test-resources/bootstrap-test.js'],
   setupFilesAfterEnv: [
-    '<rootDir>/../../test-resources/cleanup-circuit-breakers.js'
+    '<rootDir>/../../test-resources/unit-test-setup.js'
   ],
   coverageReporters: ['text', 'cobertura', 'html'],
   coveragePathIgnorePatterns: ['dist/', 'node_modules/', 'test/', '.*.spec.ts'],

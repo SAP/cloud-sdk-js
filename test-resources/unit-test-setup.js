@@ -1,4 +1,5 @@
-// Cleanup circuit breakers and nock to prevent test pollution across files
+// Cleanup circuit breakers and nock to prevent test pollution across unit tests
+// E2E tests should NOT include this file as they make real HTTP requests
 
 function cleanupCircuitBreakers() {
   try {

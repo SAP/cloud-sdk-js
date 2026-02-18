@@ -12,7 +12,7 @@ import {
   regexExportedIndex,
   typeDescriptorPaths
   // eslint-disable-next-line import/no-useless-path-segments
-} from './index';
+} from './index.js';
 
 describe('check-public-api', () => {
   let errorSpy: any;

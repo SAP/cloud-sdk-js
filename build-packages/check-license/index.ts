@@ -26,11 +26,12 @@ async function getLicenses(): Promise<ModuleInfos> {
         json: true,
         production: true
       },
-      function (err, packages: ModuleInfos) {
+      (err: any, packages: ModuleInfos) => {
         if (err) {
-          reject(`Error: ${err}`);
+          reject(new Error(`Error: ${err}`));
+        } else {
+          resolvePromise(packages);
         }
-        resolvePromise(packages);
       }
     );
   });
@@ -80,4 +81,4 @@ async function checkLicenses() {
   }
 }
 
-checkLicenses();
+await checkLicenses();

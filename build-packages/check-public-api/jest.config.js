@@ -2,5 +2,15 @@
 const commonConfig = require('../../test-resources/jest.common.config');
 module.exports = {
   ...commonConfig,
-  displayName: 'check-public-api',
+  extensionsToTreatAsEsm: ['.ts'],
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: path.resolve(import.meta.dirname, 'tsconfig.test.json')
+      }
+    ]
+  },
+  displayName: 'check-public-api'
 };

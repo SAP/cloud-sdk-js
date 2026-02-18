@@ -7,8 +7,8 @@
     "incremental": true,
     "declaration": false,
     "esModuleInterop": true,
-    "target": "ESNext",
-    "module": "NodeNext"
+    "target": "esnext",
+    "module": "nodenext"
   },
   "include": ["*.ts"],
   "exclude": []

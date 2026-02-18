@@ -18,8 +18,8 @@
   "dependencies": {
     "@actions/core": "^3.0.0",
     "@manypkg/get-packages": "^2.2.2",
-    "@sap-cloud-sdk/util": "^4.0.0",
     "@sap-cloud-sdk/generator-common": "^4.0.0",
+    "@sap-cloud-sdk/util": "^4.0.0",
     "@types/mock-fs": "^4.13.4",
     "glob": "^13.0.3",
     "mock-fs": "^5.5.0"

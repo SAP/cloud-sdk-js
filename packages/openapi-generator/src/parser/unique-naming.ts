@@ -37,7 +37,6 @@ export function ensureUniqueNames(
   }
   return deduplicateNames(names, { format, reservedWords, separator });
 }
-/* eslint-enable */
 
 /**
  * Validate uniqueness of names.
@@ -105,7 +104,6 @@ export function deduplicateNames(
     return nameGenerator.generateAndSaveUniqueName(format(name));
   }, {});
 }
-/* eslint-enable */
 
 /**
  * Get the names within a list of names that won't have to be renamed.

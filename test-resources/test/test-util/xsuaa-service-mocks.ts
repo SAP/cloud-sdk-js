@@ -77,7 +77,7 @@ export function mockUserTokenGrantCall(
         body.client_secret === creds.clientsecret &&
         body.grant_type === 'urn:ietf:params:oauth:grant-type:jwt-bearer' &&
         // For empty accessTokenAssertion, the assertion is not checked.
-        (!accessTokenAssertion || body.assertion === accessTokenAssertion) &&
+        (body.assertion === accessTokenAssertion || (!accessTokenAssertion && !body.assertion)) &&
         body.response_type === 'token'
       )
     )

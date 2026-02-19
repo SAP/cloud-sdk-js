@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 import { OperationRequestBuilderBase } from '@sap-cloud-sdk/odata-common/internal';
 import {
   ODataBoundActionRequestConfig,

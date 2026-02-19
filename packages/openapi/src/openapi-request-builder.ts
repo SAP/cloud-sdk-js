@@ -1,5 +1,4 @@
 /* eslint-disable max-classes-per-file */
-// eslint-disable-next-line import/named
 import {
   createLogger,
   ErrorWithCause,

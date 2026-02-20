@@ -1,5 +1,4 @@
 import CircuitBreaker from 'opossum';
-// eslint-disable-next-line import/named
 import type { AxiosError } from 'axios';
 import type {
   MiddlewareContext,

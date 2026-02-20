@@ -6,6 +6,10 @@ import type { OpenAPIV3 } from 'openapi-types';
 
 const options = { strictNaming: true, schemaPrefix: '', resolveExternal: true };
 describe('parseOpenApiDocument()', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('does not modify input service specification', () => {
     const input: OpenAPIV3.Document = {
       ...emptyDocument,

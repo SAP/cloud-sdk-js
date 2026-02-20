@@ -16,7 +16,7 @@ export function parseResponses(
     const responseSchemas = Object.entries(responses)
       .filter(([statusCode]) => statusCode.startsWith('2'))
       .map(([, response]) => refs.resolveObject(response))
-      .map(response => parseMediaType(response, refs, options))
+      .map(response => parseMediaType(response, refs, options)?.schema)
       // Undefined responses are filtered
       .filter(response => response) as OpenApiSchema[];
     if (responseSchemas.length) {

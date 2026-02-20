@@ -109,9 +109,7 @@ describe('compress middleware', () => {
         { url: host },
         createTestConfig({
           data: testPayload,
-          middleware: [
-            compress({ mode: 'always', algorithm: 'deflate' })
-          ]
+          middleware: [compress({ mode: 'always', algorithm: 'deflate' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -157,9 +155,7 @@ describe('compress middleware', () => {
               method: 'POST',
               url: '/test',
               data: testPayload,
-              middleware: [
-                compress({ mode: 'always', algorithm: 'zstd' })
-              ]
+              middleware: [compress({ mode: 'always', algorithm: 'zstd' })]
             },
             { fetchCsrfToken: false }
           )
@@ -247,9 +243,7 @@ describe('compress middleware', () => {
         { url: host },
         createTestConfig({
           data: mediumPayload,
-          middleware: [
-            compress({ mode: 'auto', autoCompressMinSize: 400 })
-          ]
+          middleware: [compress({ mode: 'auto', autoCompressMinSize: 400 })]
         }),
         { fetchCsrfToken: false }
       );

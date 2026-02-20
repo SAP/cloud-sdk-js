@@ -3,7 +3,7 @@ import { promisify } from 'node:util';
 import nock from 'nock';
 import axios from 'axios';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { compressRequest } from './compress-request-middleware';
+import { compress } from './compress-request-middleware';
 import { executeHttpRequest } from './http-client';
 import type { HttpRequestConfig } from './http-client-types';
 
@@ -14,7 +14,7 @@ const zstdDecompress = zlib.zstdDecompress
   ? promisify(zlib.zstdDecompress)
   : undefined;
 
-describe('compressRequest middleware', () => {
+describe('compress middleware', () => {
   const host = 'http://example.com';
   const testPayload = 'This is a test payload that should be compressed';
   const largePayload = 'x'.repeat(2000); // 2KB payload for auto mode testing
@@ -53,7 +53,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: testPayload,
-          middleware: [compressRequest({ mode: 'never' })]
+          middleware: [compress({ mode: 'never' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -71,7 +71,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: testPayload,
-          middleware: [compressRequest({ mode: 'always' })]
+          middleware: [compress({ mode: 'always' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -90,7 +90,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: testPayload,
-          middleware: [compressRequest({ mode: 'always', algorithm: 'brotli' })]
+          middleware: [compress({ mode: 'always', algorithm: 'brotli' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -110,7 +110,7 @@ describe('compressRequest middleware', () => {
         createTestConfig({
           data: testPayload,
           middleware: [
-            compressRequest({ mode: 'always', algorithm: 'deflate' })
+            compress({ mode: 'always', algorithm: 'deflate' })
           ]
         }),
         { fetchCsrfToken: false }
@@ -132,7 +132,7 @@ describe('compressRequest middleware', () => {
           { url: host },
           createTestConfig({
             data: testPayload,
-            middleware: [compressRequest({ mode: 'always', algorithm: 'zstd' })]
+            middleware: [compress({ mode: 'always', algorithm: 'zstd' })]
           }),
           { fetchCsrfToken: false }
         );
@@ -158,7 +158,7 @@ describe('compressRequest middleware', () => {
               url: '/test',
               data: testPayload,
               middleware: [
-                compressRequest({ mode: 'always', algorithm: 'zstd' })
+                compress({ mode: 'always', algorithm: 'zstd' })
               ]
             },
             { fetchCsrfToken: false }
@@ -175,7 +175,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: bufferPayload,
-          middleware: [compressRequest({ mode: 'always' })]
+          middleware: [compress({ mode: 'always' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -195,7 +195,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: uint8Payload,
-          middleware: [compressRequest({ mode: 'always' })]
+          middleware: [compress({ mode: 'always' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -213,7 +213,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: largePayload,
-          middleware: [compressRequest({ mode: 'auto' })]
+          middleware: [compress({ mode: 'auto' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -230,7 +230,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: smallPayload,
-          middleware: [compressRequest({ mode: 'auto' })]
+          middleware: [compress({ mode: 'auto' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -248,7 +248,7 @@ describe('compressRequest middleware', () => {
         createTestConfig({
           data: mediumPayload,
           middleware: [
-            compressRequest({ mode: 'auto', autoCompressMinSize: 400 })
+            compress({ mode: 'auto', autoCompressMinSize: 400 })
           ]
         }),
         { fetchCsrfToken: false }
@@ -273,7 +273,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: objectPayload,
-          middleware: [compressRequest({ mode: 'auto' })]
+          middleware: [compress({ mode: 'auto' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -297,7 +297,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: testPayload,
-          middleware: [compressRequest({ mode: 'header-only' })]
+          middleware: [compress({ mode: 'header-only' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -316,7 +316,7 @@ describe('compressRequest middleware', () => {
         createTestConfig({
           data: testPayload,
           headers: { 'Content-Encoding': 'deflate' },
-          middleware: [compressRequest({ mode: 'always' })]
+          middleware: [compress({ mode: 'always' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -333,7 +333,7 @@ describe('compressRequest middleware', () => {
         createTestConfig({
           data: testPayload,
           headers: { 'content-encoding': 'deflate' },
-          middleware: [compressRequest({ mode: 'always' })]
+          middleware: [compress({ mode: 'always' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -354,7 +354,7 @@ describe('compressRequest middleware', () => {
             url: '/test',
             data: testPayload,
             middleware: [
-              compressRequest({ mode: 'always', algorithm: 'invalid' as any })
+              compress({ mode: 'always', algorithm: 'invalid' as any })
             ]
           },
           { fetchCsrfToken: false }
@@ -382,7 +382,7 @@ describe('compressRequest middleware', () => {
         { url: host },
         createTestConfig({
           data: testPayload,
-          middleware: [customMiddleware(), compressRequest({ mode: 'always' })]
+          middleware: [customMiddleware(), compress({ mode: 'always' })]
         }),
         { fetchCsrfToken: false }
       );
@@ -402,7 +402,7 @@ describe('compressRequest middleware', () => {
         createTestConfig({
           data: largePayload,
           middleware: [
-            compressRequest({
+            compress({
               mode: 'always',
               compressOptions: { level: 9 }
             })

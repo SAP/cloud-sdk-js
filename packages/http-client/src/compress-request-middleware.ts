@@ -178,7 +178,7 @@ function getContentEncodingValue(
  * This ensures the payload is compressed once and reused across retry attempts.
  * @returns An HTTP middleware that compresses request payloads based on the provided options.
  */
-export function compressRequest<C extends RequestCompressionAlgorithm = 'gzip'>(
+export function compress<C extends RequestCompressionAlgorithm = 'gzip'>(
   options?: RequestCompressionMiddlewareOptions<C>
 ): HttpMiddleware {
   return (middlewareOptions: HttpMiddlewareOptions) =>

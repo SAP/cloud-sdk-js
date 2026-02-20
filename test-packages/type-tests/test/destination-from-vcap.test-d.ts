@@ -25,7 +25,6 @@ const validWithServiceAndFn: DestinationFromServiceBindingOptions = {
 };
 expectAssignable<DestinationFromServiceBindingOptions>(validWithServiceAndFn);
 
-// Valid case 4: destinationName with optional serviceBindingTransformFn
 const validWithDestNameAndFn: DestinationFromServiceBindingOptions = {
   destinationName: 'my-destination',
   serviceBindingTransformFn: transformFn

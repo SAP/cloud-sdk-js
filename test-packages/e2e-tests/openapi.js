@@ -4,8 +4,6 @@ const express = require('express');
 const SwaggerParser = require('@apidevtools/swagger-parser');
 const multer = require('multer');
 
-const jsf = require('json-schema-faker');
-
 // Configure multer for multipart/form-data parsing
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -18,8 +16,9 @@ async function getSchemas() {
   return document.components.schemas;
 }
 
-function mockData(schemas, schemaName) {
-  return jsf.resolve(schemas[schemaName]);
+async function mockData(schemas, schemaName) {
+  const { generate } = await import('json-schema-faker');
+  return generate(schemas[schemaName]);
 }
 
 function mockTestEntity(schema) {

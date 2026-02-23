@@ -7272,10 +7272,10 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-openapi-backend@^5.15.0:
-  version "5.15.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.15.0.tgz#3e4255685cab11d7adeab8bb836579b3b03f05b4"
-  integrity sha512-yox0nCv511YWUeBNCdKY6xmUB92yEN+N9rHO4BHA5GOAZaNtY+zzuftAdfEwIbCsCcvZJ9ysENCguqBg+hLlWw==
+openapi-backend@^5.16.1:
+  version "5.16.1"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.16.1.tgz#157834ef0f3edf2d8fcace8976e806532bd6a5f5"
+  integrity sha512-1tfLpC+7CajKv08vuFOLm4t8rJvJyqKuyau5IIIrGg3YuQYhmP7JqDL6p6WnbDCusmh3krCrKXoHB6hLF/iHcQ==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^11.1.0"
     ajv "^8.6.2"
@@ -7286,7 +7286,7 @@ openapi-backend@^5.15.0:
     mock-json-schema "^1.0.7"
     openapi-schema-validator "^12.0.0"
     openapi-types "^12.0.2"
-    qs "^6.9.3"
+    qs "^6.15.0"
 
 openapi-schema-validator@^12.0.0:
   version "12.1.3"
@@ -7955,7 +7955,14 @@ pure-rand@^7.0.0:
   resolved "https://registry.npmjs.org/pure-rand/-/pure-rand-7.0.1.tgz#6f53a5a9e3e4a47445822af96821ca509ed37566"
   integrity sha512-oTUZM/NAZS8p7ANR3SHh30kXB+zK2r2BPcEn/awJIbOvq82WoMN4p62AWWp3Hhw50G0xMsw1mhIBLqHw64EcNQ==
 
-qs@^6.14.0, qs@^6.14.1, qs@^6.9.3, qs@~6.14.0:
+qs@^6.14.0, qs@^6.14.1, qs@^6.15.0:
+  version "6.15.0"
+  resolved "https://registry.npmjs.org/qs/-/qs-6.15.0.tgz#db8fd5d1b1d2d6b5b33adaf87429805f1909e7b3"
+  integrity sha512-mAZTtNCeetKMH+pSjrb76NAM8V9a05I9aBZOHztWy/UqcJdQYNsf59vrRKWnojAT9Y+GbIvoTBC++CPHqpDBhQ==
+  dependencies:
+    side-channel "^1.1.0"
+
+qs@~6.14.0:
   version "6.14.2"
   resolved "https://registry.npmjs.org/qs/-/qs-6.14.2.tgz#b5634cf9d9ad9898e31fba3504e866e8efb6798c"
   integrity sha512-V/yCWTTF7VJ9hIh18Ugr2zhJMP01MY7c5kh4J870L7imm6/DIzBsNLTXzMwUA3yZ5b/KBqLx8Kp3uRvd7xSe3Q==

@@ -279,22 +279,6 @@ describe('token accessor', () => {
       await expect(promise).rejects.not.toHaveProperty('cause.config');
     });
 
-    it('jwtBearerToken should throw an error without cause.config property', async () => {
-      mockUserTokenGrantCall(
-        providerXsuaaUrl,
-        1,
-        '',
-        '',
-        destinationBindingClientSecretMock.credentials,
-        401
-      );
-      const promise = jwtBearerToken(
-        signedJwt({ dummy: 'content' }),
-        destinationBindingClientSecretMock
-      );
-      await expect(promise).rejects.not.toHaveProperty('cause.config');
-    });
-
     it('throws an error if the client credentials request fails', async () => {
       mockClientCredentialsGrantCall(
         providerXsuaaUrl,
@@ -361,6 +345,24 @@ describe('token accessor', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Could not find service binding of type \'destination\'."'
       );
+    });
+
+    // This test is placed last because it can cause flaky behavior in subsequent tests
+    // due to async cleanup timing issues with nock 14 and @mswjs/interceptors
+    it('jwtBearerToken should throw an error without cause.config property', async () => {
+      mockUserTokenGrantCall(
+        providerXsuaaUrl,
+        1,
+        '',
+        '',
+        destinationBindingClientSecretMock.credentials,
+        401
+      );
+      const promise = jwtBearerToken(
+        signedJwt({ dummy: 'content' }),
+        destinationBindingClientSecretMock
+      );
+      await expect(promise).rejects.not.toHaveProperty('cause.config');
     });
   });
 });

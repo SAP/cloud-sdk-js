@@ -389,6 +389,9 @@ describe('destination cache', () => {
     });
 
     it('ignores cache if isolation requires user JWT but the JWT is not provided', async () => {
+      // Mock the destination fetch to fail with 500 to test cache isolation error handling
+      mockFetchDestinationCallsNotFound(destName);
+
       const logger = createLogger('destination-cache');
       const warn = jest.spyOn(logger, 'warn');
 

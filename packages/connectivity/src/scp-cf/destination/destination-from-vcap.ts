@@ -28,10 +28,7 @@ const logger = createLogger({
  * @returns A destination.
  */
 export async function getDestinationFromServiceBinding(
-  options: Pick<
-    DestinationFetchOptions,
-    'jwt' | 'iss' | 'useCache' | 'destinationName'
-  > &
+  options: Pick<DestinationFetchOptions, 'jwt' | 'iss' | 'useCache'> &
     DestinationFromServiceBindingOptions & { iasOptions?: IasOptions }
 ): Promise<Destination> {
   const decodedJwt = options.iss
@@ -72,30 +69,49 @@ async function retrieveDestination({
   jwt,
   destinationName,
   iasOptions,
+  service: serviceBinding,
   serviceBindingTransformFn
-}: Pick<DestinationFetchOptions, 'useCache' | 'destinationName'> & {
+}: Pick<DestinationFetchOptions, 'useCache'> & {
   jwt?: JwtPayload;
   iasOptions?: IasOptions;
 } & DestinationFromServiceBindingOptions) {
-  const service = getServiceBindingByInstanceName(destinationName);
+  const service =
+    serviceBinding || getServiceBindingByInstanceName(destinationName);
   const destination = await (serviceBindingTransformFn || transform)(service, {
     useCache,
     jwt,
     ...(iasOptions ? { iasOptions } : {})
   });
 
-  return { name: destinationName, ...destination };
+  const name = (serviceBinding && service.name) || destinationName;
+
+  return { name, ...destination };
 }
 
 /**
  * Options to customize the behavior of {@link getDestinationFromServiceBinding}.
  */
-export interface DestinationFromServiceBindingOptions {
+export type DestinationFromServiceBindingOptions = {
   /**
    * Custom transformation function to control how a {@link Destination} is built from the given {@link Service}.
    */
   serviceBindingTransformFn?: ServiceBindingTransformFunction;
-}
+} & (
+  | {
+      /**
+       * A service binding to use directly instead of looking it up by name. Mandatory if no destination name is provided.
+       */
+      service: Service;
+      destinationName?: never;
+    }
+  | {
+      /**
+       * The name of the destination to retrieve from service bindings.
+       */
+      destinationName: string;
+      service?: never;
+    }
+);
 
 /**
  * Represents options passed to the service binding transform function.

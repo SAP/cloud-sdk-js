@@ -1843,9 +1843,9 @@
   integrity sha512-ju/75+YPkNE5vX1iPer+qtI1eI/LqJVYZgOsmSHI1iiEM1bQL5Gh1lEvyjR9T7ZXVE1FwJa2doWJEEmPNwbZkw==
 
 "@types/lodash@>=4.14.200":
-  version "4.17.23"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.23.tgz#c1bb06db218acc8fc232da0447473fc2fb9d9841"
-  integrity sha512-RDvF6wTulMPjrNdCoYRC8gNR880JNGT8uB+REUpC2Ns4pRqQJhGz90wh7rgdXDPpCczF3VGktDuFGVnz8zP7HA==
+  version "4.17.24"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.17.24.tgz#4ae334fc62c0e915ca8ed8e35dcc6d4eeb29215f"
+  integrity sha512-gIW7lQLZbue7lRSWEFql49QJJWThrTFFeIMJdp3eH4tKoxm1OvEPg02rm4wCCSHS0cL3/Fizimb35b7k8atwsQ==
 
 "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -2734,10 +2734,10 @@ better-sqlite3@^12.0.0:
     bindings "^1.5.0"
     prebuild-install "^7.1.1"
 
-bignumber.js@^9.3.1:
-  version "9.3.1"
-  resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.3.1.tgz#759c5aaddf2ffdc4f154f7b493e1c8770f88c4d7"
-  integrity sha512-Ko0uX15oIUS7wJ3Rb30Fs6SkVbLmPBAKdlm7q9+ak9bbIeFf0MwuBsQV6z7+X768/cHsfg+WlysDWJcmthjsjQ==
+bignumber.js@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-10.0.0.tgz#fa3512e1e1a091bb8ddfe053e8ea9fba5f62bd9e"
+  integrity sha512-Hgb+WGKfPULF8bmXTpaoZoz5TbzSzVBlTIXY/uKjlCyMLpR3J3nsJwHMkg/tk2m+Xkh3SG9W/WsNwgegnzYEQw==
 
 binary-extensions@^2.0.0:
   version "2.3.0"

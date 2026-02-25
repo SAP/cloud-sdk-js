@@ -4307,10 +4307,17 @@ eslint-plugin-import@^2.32.0:
     string.prototype.trimend "^1.0.9"
     tsconfig-paths "^3.15.0"
 
+<<<<<<< HEAD
 eslint-plugin-jsdoc@^62.6.0:
   version "62.6.0"
   resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-62.6.0.tgz#74c65e02fe67aa0a0328d3efbb17480b9d0157d8"
   integrity sha512-Z18zZD1Q2m9usqFbAzb30z+lF8bzE4WiUy+dfOXljJlZ1Jm5uhkuAWfGV97FYyh+WlKfrvpDYs+s1z45eZWMfA==
+=======
+eslint-plugin-jsdoc@^62.7.1:
+  version "62.7.1"
+  resolved "https://registry.npmjs.org/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-62.7.1.tgz#e1ef76d4a7c3b5f7e69acb031feb1571be8ae343"
+  integrity sha512-4Zvx99Q7d1uggYBUX/AIjvoyqXhluGbbKrRmG8SQTLprPFg6fa293tVJH1o1GQwNe3lUydd8ZHzn37OaSncgSQ==
+>>>>>>> f146e607d (chore(deps): bump eslint-plugin-jsdoc from 62.7.0 to 62.7.1 (#6360))
   dependencies:
     "@es-joy/jsdoccomment" "~0.84.0"
     "@es-joy/resolve.exports" "1.2.0"

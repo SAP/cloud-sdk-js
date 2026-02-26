@@ -9285,47 +9285,47 @@ tunnel@^0.0.6:
   resolved "https://registry.npmjs.org/tunnel/-/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
   integrity sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==
 
-turbo-darwin-64@2.8.10:
-  version "2.8.10"
-  resolved "https://registry.npmjs.org/turbo-darwin-64/-/turbo-darwin-64-2.8.10.tgz#38ba73b9bbb3459cd27c6d3b5777bae80daa7e9f"
-  integrity sha512-A03fXh+B7S8mL3PbdhTd+0UsaGrhfyPkODvzBDpKRY7bbeac4MDFpJ7I+Slf2oSkCEeSvHKR7Z4U71uKRUfX7g==
+turbo-darwin-64@2.8.11:
+  version "2.8.11"
+  resolved "https://registry.npmjs.org/turbo-darwin-64/-/turbo-darwin-64-2.8.11.tgz#578dce09b1f148a9fb5f114971df6ba7bb36b53a"
+  integrity sha512-XKaCWaz4OCt77oYYvGCIRpvYD4c/aNaKjRkUpv+e8rN3RZb+5Xsyew4yRO+gaHdMIUhQznXNXfHlhs+/p7lIhA==
 
-turbo-darwin-arm64@2.8.10:
-  version "2.8.10"
-  resolved "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-2.8.10.tgz#1c7a278a6361aef0a4e94849bf7181ff3c91d782"
-  integrity sha512-sidzowgWL3s5xCHLeqwC9M3s9M0i16W1nuQF3Mc7fPHpZ+YPohvcbVFBB2uoRRHYZg6yBnwD4gyUHKTeXfwtXA==
+turbo-darwin-arm64@2.8.11:
+  version "2.8.11"
+  resolved "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-2.8.11.tgz#6a6eb08e2addabac9f7920f87e7d9d1eb54149a1"
+  integrity sha512-VvynLHGUNvQ9k7GZjRPSsRcK4VkioTfFb7O7liAk4nHKjEcMdls7GqxzjVWgJiKz3hWmQGaP9hRa9UUnhVWCxA==
 
-turbo-linux-64@2.8.10:
-  version "2.8.10"
-  resolved "https://registry.npmjs.org/turbo-linux-64/-/turbo-linux-64-2.8.10.tgz#aaa6ede45619daab2be359ec6afc3b0a73941272"
-  integrity sha512-YK9vcpL3TVtqonB021XwgaQhY9hJJbKKUhLv16osxV0HkcQASQWUqR56yMge7puh6nxU67rQlTq1b7ksR1T3KA==
+turbo-linux-64@2.8.11:
+  version "2.8.11"
+  resolved "https://registry.npmjs.org/turbo-linux-64/-/turbo-linux-64-2.8.11.tgz#0cc6a11f110d705a28b4c94e0decd5cbee4491fd"
+  integrity sha512-cbSn37dcm+EmkQ7DD0euy7xV7o2el4GAOr1XujvkAyKjjNvQ+6QIUeDgQcwAx3D17zPpDvfDMJY2dLQadWnkmQ==
 
-turbo-linux-arm64@2.8.10:
-  version "2.8.10"
-  resolved "https://registry.npmjs.org/turbo-linux-arm64/-/turbo-linux-arm64-2.8.10.tgz#a9a52e4eca69968d85f09adb24ba3aec24a50023"
-  integrity sha512-3+j2tL0sG95iBJTm+6J8/45JsETQABPqtFyYjVjBbi6eVGdtNTiBmHNKrbvXRlQ3ZbUG75bKLaSSDHSEEN+btQ==
+turbo-linux-arm64@2.8.11:
+  version "2.8.11"
+  resolved "https://registry.npmjs.org/turbo-linux-arm64/-/turbo-linux-arm64-2.8.11.tgz#27a1b3f809001aec6e2be73d007c32a50e2b5d36"
+  integrity sha512-+trymp2s2aBrhS04l6qFxcExzZ8ffndevuUB9c5RCeqsVpZeiWuGQlWNm5XjOmzoMayxRARZ5ma7yiWbGMiLqQ==
 
-turbo-windows-64@2.8.10:
-  version "2.8.10"
-  resolved "https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-2.8.10.tgz#b0f64a29451477c1ecdc7dbe0555b8e75c464044"
-  integrity sha512-hdeF5qmVY/NFgiucf8FW0CWJWtyT2QPm5mIsX0W1DXAVzqKVXGq+Zf+dg4EUngAFKjDzoBeN6ec2Fhajwfztkw==
+turbo-windows-64@2.8.11:
+  version "2.8.11"
+  resolved "https://registry.npmjs.org/turbo-windows-64/-/turbo-windows-64-2.8.11.tgz#c6e87f8ff12df80585c8293ccf7283af7377be5a"
+  integrity sha512-3kJjFSM4yw1n9Uzmi+XkAUgCae19l/bH6RJ442xo7mnZm0tpOjo33F+FYHoSVpIWVMd0HG0LDccyafPSdylQbA==
 
-turbo-windows-arm64@2.8.10:
-  version "2.8.10"
-  resolved "https://registry.npmjs.org/turbo-windows-arm64/-/turbo-windows-arm64-2.8.10.tgz#8d178389a995f98142b7ce8f76e1fce8a4b7c79d"
-  integrity sha512-QGdr/Q8LWmj+ITMkSvfiz2glf0d7JG0oXVzGL3jxkGqiBI1zXFj20oqVY0qWi+112LO9SVrYdpHS0E/oGFrMbQ==
+turbo-windows-arm64@2.8.11:
+  version "2.8.11"
+  resolved "https://registry.npmjs.org/turbo-windows-arm64/-/turbo-windows-arm64-2.8.11.tgz#46caeead60ff35ee215109d9e1afc63ae3c465bc"
+  integrity sha512-JOM4uF2vuLsJUvibdR6X9QqdZr6BhC6Nhlrw4LKFPsXZZI/9HHLoqAiYRpE4MuzIwldCH/jVySnWXrI1SKto0g==
 
-turbo@^2.8.10:
-  version "2.8.10"
-  resolved "https://registry.npmjs.org/turbo/-/turbo-2.8.10.tgz#4ead3ef7c2fd80f9fe367f9a8b88b8a819fb5065"
-  integrity sha512-OxbzDES66+x7nnKGg2MwBA1ypVsZoDTLHpeaP4giyiHSixbsiTaMyeJqbEyvBdp5Cm28fc+8GG6RdQtic0ijwQ==
+turbo@^2.8.11:
+  version "2.8.11"
+  resolved "https://registry.npmjs.org/turbo/-/turbo-2.8.11.tgz#3c133e59fc228d36cddec1c8569a207ab2c204ac"
+  integrity sha512-H+rwSHHPLoyPOSoHdmI1zY0zy0GGj1Dmr7SeJW+nZiWLz2nex8EJ+fkdVabxXFMNEux+aywI4Sae8EqhmnOv4A==
   optionalDependencies:
-    turbo-darwin-64 "2.8.10"
-    turbo-darwin-arm64 "2.8.10"
-    turbo-linux-64 "2.8.10"
-    turbo-linux-arm64 "2.8.10"
-    turbo-windows-64 "2.8.10"
-    turbo-windows-arm64 "2.8.10"
+    turbo-darwin-64 "2.8.11"
+    turbo-darwin-arm64 "2.8.11"
+    turbo-linux-64 "2.8.11"
+    turbo-linux-arm64 "2.8.11"
+    turbo-windows-64 "2.8.11"
+    turbo-windows-arm64 "2.8.11"
 
 tv4@^1.3.0:
   version "1.3.0"

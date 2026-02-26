@@ -88,10 +88,10 @@ export interface RequestCompressionMiddlewareOptions<
   compressOptions?: RequestCompressorOptions[C];
   /**
    * Compression mode.
-   * - In 'auto' mode, the payload is compressed based on the `autoCompressMinSize` threshold.
-   * - In 'header-only' mode, it is assumed that the payload is already compressed. The middleware will only set the appropriate Content-Encoding header without modifying the payload.
-   * - If 'always' is provided, the payload will always be compressed.
-   * - If 'never' is provided, the payload will never be compressed.
+   * - 'auto' - The payload is compressed based on the `autoCompressMinSize` threshold.
+   * - 'header-only' - It is assumed that the payload is already compressed. The middleware will only set the appropriate Content-Encoding header without modifying the payload.
+   * - 'always' - The payload will always be compressed.
+   * - never' - The payload will never be compressed.
    * @defaultValue 'auto'
    */
   mode?: 'auto' | 'header-only' | 'always' | 'never';
@@ -106,42 +106,32 @@ export interface RequestCompressionMiddlewareOptions<
  * Determines whether the payload needs compression based on the provided options.
  * @param payload - The HTTP request payload.
  * @param options - Configuration options for request compression.
- * @returns Returns one of:
- * - `'compress'` if the payload should be compressed and Content-Encoding header should be set.
- * - `'header-only'` if only the Content-Encoding header should be set (header-only mode).
- * - `'skip'` if compression should be skipped entirely (no header, no compression).
+ * @returns Returns if the payload should be compressed.
  */
 function checkIfNeedsCompression<
   C extends RequestCompressionAlgorithm = 'gzip'
->(
-  payload: unknown,
-  options?: RequestCompressionMiddlewareOptions<C>
-): 'compress' | 'header-only' | 'skip' {
+>(payload: unknown, options?: RequestCompressionMiddlewareOptions<C>): boolean {
   const mode = options?.mode ?? 'auto';
-  if (mode === 'header-only') {
-    return 'header-only';
-  }
-  if (mode === 'never') {
-    return 'skip';
+  if (mode === 'header-only' || mode === 'never') {
+    return false;
   }
 
   let payloadSize: number;
   try {
     payloadSize = Buffer.byteLength(payload as any);
   } catch (e: any) {
-    logger.error(
-      new ErrorWithCause(
-        "Could not determine payload size for 'auto' compression decision.",
-        e
-      )
-    );
+    const message =
+      mode === 'auto'
+        ? "Could not determine payload size for 'auto' compression decision."
+        : 'Could not determine payload size, payload is incompressible, disabling compression';
+    logger.error(new ErrorWithCause(message, e));
     // Skip compression if payload size cannot be determined.
     // In this case `zlib` will likely fail as well.
-    return 'skip';
+    return false;
   }
 
   if (mode === 'always') {
-    return 'compress';
+    return true;
   }
 
   const minSize = options?.autoCompressMinSize ?? 1024;
@@ -152,7 +142,7 @@ function checkIfNeedsCompression<
   logger.debug(
     `Auto compression: payload size ${payloadSize} bytes ${comparison} threshold ${minSize} bytes. ${action}.`
   );
-  return shouldCompress ? 'compress' : 'skip';
+  return shouldCompress;
 }
 
 function getContentEncodingValue(
@@ -190,8 +180,9 @@ export function compress<C extends RequestCompressionAlgorithm = 'gzip'>(
         requestConfig.data,
         options
       );
+      const mode = options?.mode ?? 'auto';
 
-      if (needsCompression === 'skip') {
+      if (!needsCompression && mode !== 'header-only') {
         return middlewareOptions.fn(requestConfig);
       }
 
@@ -200,15 +191,15 @@ export function compress<C extends RequestCompressionAlgorithm = 'gzip'>(
         requestConfig.headers,
         'content-encoding'
       );
-      const ourContentEncoding = getContentEncodingValue(algorithm);
+      const algorithmContentEncoding = getContentEncodingValue(algorithm);
       const targetContentEncoding = currentContentEncoding
-        ? `${currentContentEncoding}, ${ourContentEncoding}`
-        : ourContentEncoding;
+        ? `${currentContentEncoding}, ${algorithmContentEncoding}`
+        : algorithmContentEncoding;
       requestConfig.headers = mergeIgnoreCase(requestConfig.headers, {
         'content-encoding': targetContentEncoding
       });
 
-      if (needsCompression === 'header-only') {
+      if (mode === 'header-only') {
         return middlewareOptions.fn(requestConfig);
       }
 

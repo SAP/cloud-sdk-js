@@ -149,7 +149,7 @@ const flatConfig = [
           varsIgnorePattern: '^_',
           destructuredArrayIgnorePattern: '^_'
         }
-      ]
+      ],
       'import/named': 'error',
       'import/default': 'error',
       'import/namespace': 'error',

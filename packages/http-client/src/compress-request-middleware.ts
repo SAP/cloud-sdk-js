@@ -116,26 +116,28 @@ function checkIfNeedsCompression<
     return false;
   }
 
-  let payloadSize: number;
-  try {
-    payloadSize = Buffer.byteLength(payload as any);
-  } catch (e: any) {
-    const message =
-      mode === 'auto'
-        ? "Could not determine payload size for 'auto' compression decision."
-        : 'Could not determine payload size, payload is incompressible, disabling compression';
-    logger.error(new ErrorWithCause(message, e));
-    // Skip compression if payload size cannot be determined.
-    // In this case `zlib` will likely fail as well.
-    return false;
-  }
-
   if (mode === 'always') {
     return true;
   }
 
-  const minSize = options?.autoCompressMinSize ?? 1024;
+  // Ensure we are in 'auto' mode if we reach this point
+  mode satisfies 'auto';
 
+  let payloadSize: number;
+  try {
+    payloadSize = Buffer.byteLength(payload as any);
+  } catch (e: any) {
+    logger.error(
+      new ErrorWithCause(
+        "Could not determine payload size for 'auto' compression decision. Payload will not be compressed.",
+        e
+      )
+    );
+    // Skip compression if payload size cannot be determined.
+    return false;
+  }
+
+  const minSize = options?.autoCompressMinSize ?? 1024;
   const shouldCompress = payloadSize >= minSize;
   const comparison = shouldCompress ? '>=' : '<';
   const action = shouldCompress ? 'Compressing' : 'Skipping compression';

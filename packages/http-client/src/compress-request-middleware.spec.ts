@@ -278,7 +278,7 @@ describe('compress middleware', () => {
       const loggedError = errorSpy.mock.calls[0][0] as ErrorWithCause;
       expect(loggedError).toBeInstanceOf(ErrorWithCause);
       expect(loggedError.message).toBe(
-        "Could not determine payload size for 'auto' compression decision."
+        "Could not determine payload size for 'auto' compression decision. Payload will not be compressed."
       );
     });
   });

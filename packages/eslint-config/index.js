@@ -147,6 +147,14 @@ module.exports = {
     '@typescript-eslint/prefer-for-of': 'error',
     '@typescript-eslint/prefer-function-type': 'error',
     '@typescript-eslint/unified-signatures': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_'
+      }
+    ],
     'import/named': 'error',
     'import/default': 'error',
     'import/namespace': 'error',
@@ -217,10 +225,11 @@ module.exports = {
       'error',
       {
         definedTags: [
-          'packageDocumentation',
-          'typeParam',
+          'defaultValue',
           'experimental',
-          'defaultValue'
+          'packageDocumentation',
+          'remarks',
+          'typeParam'
         ],
         // The other default-allowed tags are not supported by tsdoc
         inlineTags: ['link']

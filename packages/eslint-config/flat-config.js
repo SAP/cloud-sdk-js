@@ -142,6 +142,14 @@ const flatConfig = [
       '@typescript-eslint/prefer-for-of': 'error',
       '@typescript-eslint/prefer-function-type': 'error',
       '@typescript-eslint/unified-signatures': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_'
+        }
+      ]
       'import/named': 'error',
       'import/default': 'error',
       'import/namespace': 'error',
@@ -210,7 +218,15 @@ const flatConfig = [
       'jsdoc/check-param-names': 'error',
       'jsdoc/check-tag-names': [
         'error',
-        { definedTags: ['packageDocumentation', 'typeParam', 'experimental'] }
+        {
+          definedTags: [
+            'defaultValue',
+            'experimental',
+            'packageDocumentation',
+            'remarks',
+            'typeParam'
+          ]
+        }
       ],
       'jsdoc/check-syntax': 'error',
       'jsdoc/multiline-blocks': 'error',

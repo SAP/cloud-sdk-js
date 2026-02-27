@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/eslint-config
 
+## 4.5.1
+
+### Patch Changes
+
+- 330230c: [Fixed Issue] Correct formatting in ESLint flat-config
+
 ## 4.5.0
 
 ## 4.4.0

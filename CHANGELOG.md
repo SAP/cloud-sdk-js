@@ -28,6 +28,11 @@
 
 -
  
+# 4.5.1
+## Fixed Issues
+
+- [eslint-config] Correct formatting in ESLint flat-config (330230c)
+
 # 4.5.0
 ## Compatibility Notes
 

@@ -1,5 +1,22 @@
 # @sap-cloud-sdk/http-client
 
+## 4.5.0
+
+### Minor Changes
+
+- cbed72f: [Improvement] Add `signal` property to `CustomRequestConfig` and `HttpRequestConfigBase` type definition to document `AbortSignal` support for cancelling HTTP requests.
+- f5715de: [Improvement] Add request compression middleware.
+  Use the `compress()` middleware to compress HTTP request payloads using gzip, brotli, deflate, or zstd algorithms.
+  Supports multiple compression modes: auto (size-based), passthrough (pre-compressed), or forced compression.
+
+### Patch Changes
+
+- Updated dependencies [02d1302]
+- Updated dependencies [962cdcb]
+  - @sap-cloud-sdk/connectivity@4.5.0
+  - @sap-cloud-sdk/resilience@4.5.0
+  - @sap-cloud-sdk/util@4.5.0
+
 ## 4.4.0
 
 ### Patch Changes

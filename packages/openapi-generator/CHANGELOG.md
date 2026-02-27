@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 4.5.0
+
+### Minor Changes
+
+- 3b95c42: [New Functionality] Support request bodies with content type "multipart/form-data".
+- 007541a: [New Functionality] Allow OpenAPI version 3.1. style "type": "null" schemas. OpenAPI version 3.1. support is limited.
+
+### Patch Changes
+
+- Updated dependencies [3b95c42]
+  - @sap-cloud-sdk/openapi@4.5.0
+  - @sap-cloud-sdk/generator-common@4.5.0
+  - @sap-cloud-sdk/util@4.5.0
+
 ## 4.4.0
 
 ### Patch Changes

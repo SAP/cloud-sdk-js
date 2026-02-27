@@ -28,6 +28,25 @@
 
 -
  
+# 4.5.0
+## Compatibility Notes
+
+- [connectivity] Update `@sap/xssec` to version 4.12.2 with changed XSUAA URL behavior.
+  When fetching XSUAA tokens with zone ID (multi-tenant scenarios), xssec now uses the base domain without a tenant subdomain prefix. (02d1302)
+
+## New Features
+
+- [openapi, openapi-generator] Support request bodies with content type "multipart/form-data". (3b95c42)
+- [openapi-generator] Allow OpenAPI version 3.1. style "type": "null" schemas. OpenAPI version 3.1. support is limited. (007541a)
+
+## Improvements
+
+- [connectivity] Allow passing a `service` binding directly through `DestinationFromServiceBindingOptions` instead of looking it up by name. (962cdcb)
+- [http-client] Add `signal` property to `CustomRequestConfig` and `HttpRequestConfigBase` type definition to document `AbortSignal` support for cancelling HTTP requests. (cbed72f)
+- [http-client] Add request compression middleware.
+  Use the `compress()` middleware to compress HTTP request payloads using gzip, brotli, deflate, or zstd algorithms.
+  Supports multiple compression modes: auto (size-based), passthrough (pre-compressed), or forced compression. (f5715de)
+
 # 4.4.0
 ## New Features
 

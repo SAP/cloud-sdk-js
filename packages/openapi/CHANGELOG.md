@@ -1,5 +1,22 @@
 # @sap-cloud-sdk/openapi
 
+## 4.5.0
+
+### Minor Changes
+
+- 3b95c42: [New Functionality] Support request bodies with content type "multipart/form-data".
+
+### Patch Changes
+
+- Updated dependencies [cbed72f]
+- Updated dependencies [02d1302]
+- Updated dependencies [f5715de]
+- Updated dependencies [962cdcb]
+  - @sap-cloud-sdk/http-client@4.5.0
+  - @sap-cloud-sdk/connectivity@4.5.0
+  - @sap-cloud-sdk/resilience@4.5.0
+  - @sap-cloud-sdk/util@4.5.0
+
 ## 4.4.0
 
 ### Patch Changes

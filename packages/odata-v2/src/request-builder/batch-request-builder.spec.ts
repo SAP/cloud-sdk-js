@@ -75,7 +75,7 @@ HTTP/1.1 200 OK
       });
     const response = await batch(
       operations.testFunctionImportGet({} as any)
-    ).execute({ url: baseUrl });
+    ).execute({ url: baseUrl, headers: { 'x-csrf-token': 'test-token' } });
     expect(response[0].isReadResponse()).toBeTruthy();
     if (response[0].isReadResponse()) {
       const casted = testFunctionImportGet({} as any).responseTransformer(
@@ -117,7 +117,10 @@ HTTP/1.1 200 OK
     const changeSet = new BatchChangeSet<DefaultDeSerializers>([
       requestBuilder
     ]);
-    const response = await batch(changeSet).execute({ url: baseUrl });
+    const response = await batch(changeSet).execute({
+      url: baseUrl,
+      headers: { 'x-csrf-token': 'test-token' }
+    });
     expect(response[0].isWriteResponses()).toBeTruthy();
     if (response[0].isWriteResponses()) {
       const casted = testFunctionImportPost({} as any).responseTransformer(
@@ -135,7 +138,7 @@ HTTP/1.1 200 OK
       });
     const response = await batch(
       testEntityApi.requestBuilder().getAll()
-    ).execute({ url: baseUrl });
+    ).execute({ url: baseUrl, headers: { 'x-csrf-token': 'test-token' } });
     expect(response[0].isReadResponse()).toBeTruthy();
     if (response[0].isReadResponse()) {
       const casted = response[0].as(testEntityApi);

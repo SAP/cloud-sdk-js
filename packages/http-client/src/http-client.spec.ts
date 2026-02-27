@@ -4,7 +4,6 @@ import { createPublicKey } from 'node:crypto';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
-// eslint-disable-next-line import/named
 import axios from 'axios';
 import { timeout } from '@sap-cloud-sdk/resilience';
 import * as jwtLib from 'jsonwebtoken';

@@ -1,7 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { parseSchema, parseSchemaProperties } from './schema';
-import type { OpenApiObjectSchema } from '../openapi-types';
+import type {
+  OpenApiObjectSchema,
+  OpenApiSimpleSchema
+} from '../openapi-types';
 import type { OpenAPIV3 } from 'openapi-types';
 
 describe('schema parser', () => {
@@ -70,6 +73,21 @@ describe('schema parser', () => {
           ) as OpenApiObjectSchema
         ).properties[0].nullable
       ).toBe(true);
+    });
+
+    it('parses simple schema with null type', async () => {
+      const schema = {
+        type: 'null'
+      } as any as OpenAPIV3.SchemaObject;
+      expect(
+        (
+          parseSchema(
+            schema,
+            await createTestRefs(),
+            defaultOptions
+          ) as OpenApiSimpleSchema
+        ).type
+      ).toBe('null');
     });
 
     it('parses array schema', async () => {

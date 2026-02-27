@@ -1,9 +1,7 @@
 import * as jwt123 from 'jsonwebtoken';
 import nock from 'nock';
-// eslint-disable-next-line import/named
 import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
-// eslint-disable-next-line import/named
 import axios from 'axios';
 import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
 import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
@@ -274,6 +272,10 @@ describe('destination service', () => {
   });
 
   describe('fetchCertificate', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+
     it('fetches the subaccount certificate', async () => {
       mockCertificateCall('server-public-cert.pem', jwt, 'subaccount');
 
@@ -290,6 +292,12 @@ describe('destination service', () => {
     });
 
     it('fetches the instance certificate', async () => {
+      // Mock subaccount call to return 404 so instance call is tried
+      nock(destinationServiceUri)
+        .get(
+          '/destination-configuration/v1/subaccountCertificates/server-public-cert.pem'
+        )
+        .reply(404);
       mockCertificateCall('server-public-cert.pem', jwt, 'instance');
 
       const actual = await fetchCertificate(

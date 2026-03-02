@@ -89,7 +89,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
-    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/eslintrc": "^3.3.4",
     "@eslint/js": "^9.39.3",
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",

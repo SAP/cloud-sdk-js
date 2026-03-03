@@ -43,7 +43,7 @@
     "@sap-cloud-sdk/connectivity": "^4.5.1",
     "@sap-cloud-sdk/resilience": "^4.5.1",
     "@sap-cloud-sdk/util": "^4.5.1",
-    "axios": "^1.13.5"
+    "axios": "^1.13.6"
   },
   "devDependencies": {
     "https-proxy-agent": "^7.0.6",

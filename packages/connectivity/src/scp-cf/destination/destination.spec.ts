@@ -3,7 +3,12 @@ import {
   certificateMultipleResponse,
   certificateSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
-import { parseDestination, sanitizeDestination } from './destination';
+import {
+  noDestinationErrorMessage,
+  parseDestination,
+  sanitizeDestination
+} from './destination';
+import { isDestinationFetchOptions } from './destination-accessor-types';
 import type { DestinationConfiguration } from './destination';
 import type { Destination } from './destination-service-types';
 
@@ -172,5 +177,44 @@ describe('sanitizeDestination', () => {
 
   it("does not throw when there is no `url` for destinations with type other than 'HTTP' or undefined", () => {
     expect(() => sanitizeDestination({ type: 'RFC' })).not.toThrow();
+  });
+});
+
+describe('isDestinationFetchOptions', () => {
+  it('returns true when destinationName is set', () => {
+    expect(isDestinationFetchOptions({ destinationName: 'my-dest' })).toBe(
+      true
+    );
+  });
+
+  it('returns true when service binding is set', () => {
+    expect(
+      isDestinationFetchOptions({ service: { name: 'my-service' } })
+    ).toBe(true);
+  });
+
+  it('returns false for a plain destination object', () => {
+    expect(
+      isDestinationFetchOptions({ url: 'https://example.com', name: 'dest' })
+    ).toBe(false);
+  });
+});
+
+describe('noDestinationErrorMessage', () => {
+  it('includes destination name when destinationName is provided', () => {
+    const msg = noDestinationErrorMessage({ destinationName: 'my-dest' });
+    expect(msg).toContain('my-dest');
+  });
+
+  it('returns service binding message when only service is provided', () => {
+    const msg = noDestinationErrorMessage({
+      service: { name: 'my-service' }
+    } as any);
+    expect(msg).toContain('service binding');
+  });
+
+  it('returns fallback message for a plain destination object', () => {
+    const msg = noDestinationErrorMessage({ url: 'https://example.com' });
+    expect(msg).toContain('no destination name has been provided');
   });
 });

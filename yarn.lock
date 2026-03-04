@@ -478,14 +478,15 @@
     spawndamnit "^3.0.1"
     term-size "^2.1.0"
 
-"@changesets/config@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/@changesets/config/-/config-3.1.2.tgz#7d04d531285766f8f7ae03648e0b4a97c71aa9b3"
-  integrity sha512-CYiRhA4bWKemdYi/uwImjPxqWNpqGPNbEBdX1BdONALFIDK7MCUj6FPkzD+z9gJcvDFUQJn9aDVf4UG7OT6Kog==
+"@changesets/config@^3.1.2", "@changesets/config@^3.1.3":
+  version "3.1.3"
+  resolved "https://registry.npmjs.org/@changesets/config/-/config-3.1.3.tgz#e261712c6912ec40d7b7d490a1c2b7f2464f2e41"
+  integrity sha512-vnXjcey8YgBn2L1OPWd3ORs0bGC4LoYcK/ubpgvzNVr53JXV5GiTVj7fWdMRsoKUH7hhhMAQnsJUqLr21EncNw==
   dependencies:
     "@changesets/errors" "^0.2.0"
     "@changesets/get-dependents-graph" "^2.1.3"
     "@changesets/logger" "^0.1.1"
+    "@changesets/should-skip-package" "^0.1.2"
     "@changesets/types" "^6.1.0"
     "@manypkg/get-packages" "^1.1.3"
     fs-extra "^7.0.1"
@@ -508,15 +509,15 @@
     picocolors "^1.1.0"
     semver "^7.5.3"
 
-"@changesets/get-release-plan@^4.0.11", "@changesets/get-release-plan@^4.0.14":
-  version "4.0.14"
-  resolved "https://registry.npmjs.org/@changesets/get-release-plan/-/get-release-plan-4.0.14.tgz#4b03a13f7f8107d1a91500cdf020a6181af2ad32"
-  integrity sha512-yjZMHpUHgl4Xl5gRlolVuxDkm4HgSJqT93Ri1Uz8kGrQb+5iJ8dkXJ20M2j/Y4iV5QzS2c5SeTxVSKX+2eMI0g==
+"@changesets/get-release-plan@^4.0.14", "@changesets/get-release-plan@^4.0.15":
+  version "4.0.15"
+  resolved "https://registry.npmjs.org/@changesets/get-release-plan/-/get-release-plan-4.0.15.tgz#7c9280de38682a8bf1b4c5ea2639198670fa0ca9"
+  integrity sha512-Q04ZaRPuEVZtA+auOYgFaVQQSA98dXiVe/yFaZfY7hoSmQICHGvP0TF4u3EDNHWmmCS4ekA/XSpKlSM2PyTS2g==
   dependencies:
     "@changesets/assemble-release-plan" "^6.0.9"
-    "@changesets/config" "^3.1.2"
+    "@changesets/config" "^3.1.3"
     "@changesets/pre" "^2.0.2"
-    "@changesets/read" "^0.6.6"
+    "@changesets/read" "^0.6.7"
     "@changesets/types" "^6.1.0"
     "@manypkg/get-packages" "^1.1.3"
 
@@ -543,10 +544,10 @@
   dependencies:
     picocolors "^1.1.0"
 
-"@changesets/parse@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.npmjs.org/@changesets/parse/-/parse-0.4.2.tgz#d31f6e87fe8b3b404e44b1ffd8bb0caa24094a2f"
-  integrity sha512-Uo5MC5mfg4OM0jU3up66fmSn6/NE9INK+8/Vn/7sMVcdWg46zfbvvUSjD9EMonVqPi9fbrJH9SXHn48Tr1f2yA==
+"@changesets/parse@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.npmjs.org/@changesets/parse/-/parse-0.4.3.tgz#912a7eac7f8cb387b05f749596a68f2f763660e0"
+  integrity sha512-ZDmNc53+dXdWEv7fqIUSgRQOLYoUom5Z40gmLgmATmYR9NbL6FJJHwakcCpzaeCy+1D0m0n7mT4jj2B/MQPl7A==
   dependencies:
     "@changesets/types" "^6.1.0"
     js-yaml "^4.1.1"
@@ -561,14 +562,14 @@
     "@manypkg/get-packages" "^1.1.3"
     fs-extra "^7.0.1"
 
-"@changesets/read@^0.6.6":
-  version "0.6.6"
-  resolved "https://registry.npmjs.org/@changesets/read/-/read-0.6.6.tgz#0097f5d9e9693fae3ca0e3265a5bee5eab614b36"
-  integrity sha512-P5QaN9hJSQQKJShzzpBT13FzOSPyHbqdoIBUd2DJdgvnECCyO6LmAOWSV+O8se2TaZJVwSXjL+v9yhb+a9JeJg==
+"@changesets/read@^0.6.6", "@changesets/read@^0.6.7":
+  version "0.6.7"
+  resolved "https://registry.npmjs.org/@changesets/read/-/read-0.6.7.tgz#65e144c960344b34ae8bd85144752a4b687e92d2"
+  integrity sha512-D1G4AUYGrBEk8vj8MGwf75k9GpN6XL3wg8i42P2jZZwFLXnlr2Pn7r9yuQNbaMCarP7ZQWNJbV6XLeysAIMhTA==
   dependencies:
     "@changesets/git" "^3.0.4"
     "@changesets/logger" "^0.1.1"
-    "@changesets/parse" "^0.4.2"
+    "@changesets/parse" "^0.4.3"
     "@changesets/types" "^6.1.0"
     fs-extra "^7.0.1"
     p-filter "^2.1.0"
@@ -7688,9 +7689,9 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.4.23, postcss@^8.5.1, postcss@^8.5.6:
-  version "8.5.6"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.6.tgz#2825006615a619b4f62a9e7426cc120b349a8f3c"
-  integrity sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==
+  version "8.5.8"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.8.tgz#6230ecc8fb02e7a0f6982e53990937857e13f399"
+  integrity sha512-OW/rX8O/jXnm82Ey1k44pObPtdblfiuWnrd8X7GJ7emImCOstunGbXUpp7HdBrFQX6rJzn3sPT397Wp5aCwCHg==
   dependencies:
     nanoid "^3.3.11"
     picocolors "^1.1.1"

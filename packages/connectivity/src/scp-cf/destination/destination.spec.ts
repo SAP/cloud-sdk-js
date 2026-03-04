@@ -188,9 +188,9 @@ describe('isDestinationFetchOptions', () => {
   });
 
   it('returns true when service binding is set', () => {
-    expect(
-      isDestinationFetchOptions({ service: { name: 'my-service' } })
-    ).toBe(true);
+    expect(isDestinationFetchOptions({ service: { name: 'my-service' } })).toBe(
+      true
+    );
   });
 
   it('returns false for a plain destination object', () => {

@@ -65,7 +65,7 @@ jobs:
           git clone --depth 1 git@github.com:SAP/cloud-sdk.git
           
           # Copy generated docs to versioned folder
-          rsync -avz cloud-sdk-js/knowledge-base/api-reference/ cloud-sdk/static/api/${VERSION}/
+          rsync -avz --delete cloud-sdk-js/knowledge-base/api-reference/ cloud-sdk/static/api/${VERSION}/
           
           cd cloud-sdk
           git add -A

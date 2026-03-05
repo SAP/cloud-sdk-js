@@ -113,7 +113,10 @@ export interface DestinationFetchOptions extends DestinationOptions {
 export function isDestinationFetchOptions(
   destination: any
 ): destination is DestinationFetchOptions {
-  return destination.destinationName !== undefined;
+  return (
+    destination.destinationName !== undefined ||
+    destination.service !== undefined
+  );
 }
 
 /**

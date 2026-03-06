@@ -58,16 +58,17 @@ jobs:
           git config --global user.email "cloud-sdk-js@github.com"
           git config --global user.name "cloud-sdk-js"
           
-          # Use the version input parameter
-          VERSION="${{ inputs.version }}"
+          # Extract major version from input (e.g., v4.5.0 -> v4)
+          FULL_VERSION="${{ inputs.version }}"
+          MAJOR_VERSION=$(echo $FULL_VERSION | sed 's/\(v[0-9]*\).*/\1/')
           
           cd ..
           git clone --depth 1 git@github.com:SAP/cloud-sdk.git
           
           # Copy generated docs to versioned folder
           rsync -avz --delete cloud-sdk-js/knowledge-base/api-reference/ cloud-sdk/static/api/${VERSION}/
-          
+
           cd cloud-sdk
           git add -A
-          git commit -m "Update SAP Cloud SDK for JavaScript API documentation ${VERSION}" || exit 0
+          git commit -m "Update SAP Cloud SDK for JavaScript API documentation ${MAJOR_VERSION}" || exit 0
           git push

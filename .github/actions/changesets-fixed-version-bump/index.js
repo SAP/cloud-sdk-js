@@ -31592,6 +31592,7 @@ var errors = __nccwpck_require__(17789);
 var logger = __nccwpck_require__(68323);
 var getPackages = __nccwpck_require__(94941);
 var getDependentsGraph = __nccwpck_require__(81699);
+var shouldSkipPackage = __nccwpck_require__(81435);
 
 function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
 
@@ -31619,7 +31620,7 @@ var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
 
 var packageJson = {
 	name: "@changesets/config",
-	version: "3.1.2",
+	version: "3.1.3",
 	description: "Utilities for reading and parsing Changeset's config",
 	main: "dist/changesets-config.cjs.js",
 	module: "dist/changesets-config.esm.js",
@@ -31633,7 +31634,8 @@ var packageJson = {
 			"import": "./dist/changesets-config.cjs.mjs",
 			"default": "./dist/changesets-config.cjs.js"
 		},
-		"./package.json": "./package.json"
+		"./package.json": "./package.json",
+		"./schema.json": "./schema.json"
 	},
 	license: "MIT",
 	repository: "https://github.com/changesets/changesets/tree/main/packages/config",
@@ -31645,6 +31647,7 @@ var packageJson = {
 		"@changesets/errors": "^0.2.0",
 		"@changesets/get-dependents-graph": "^2.1.3",
 		"@changesets/logger": "^0.1.1",
+		"@changesets/should-skip-package": "^0.1.2",
 		"@changesets/types": "^6.1.0",
 		"@manypkg/get-packages": "^1.1.3",
 		"fs-extra": "^7.0.1",
@@ -31655,6 +31658,13 @@ var packageJson = {
 		"@types/micromatch": "^4.0.1",
 		"jest-in-case": "^1.0.2",
 		outdent: "^0.5.0"
+	},
+	preconstruct: {
+		exports: {
+			extra: {
+				"./schema.json": "./schema.json"
+			}
+		}
 	}
 };
 
@@ -31709,11 +31719,11 @@ function isArray(arg) {
 }
 let read = async (cwd, packages) => {
   packages !== null && packages !== void 0 ? packages : packages = await getPackages.getPackages(cwd);
-  let json = await fs__namespace.readJSON(path__default["default"].join(cwd, ".changeset", "config.json"));
+  let json = await fs__namespace.readJSON(path__default["default"].join(packages.root.dir, ".changeset", "config.json"));
   return parse(json, packages);
 };
 let parse = (json, packages) => {
-  var _json$changedFilePatt, _json$snapshot$prerel, _json$snapshot, _json$snapshot2, _json$___experimental, _json$___experimental2, _json$___experimental3, _json$___experimental4, _json$privatePackages, _json$privatePackages2;
+  var _json$privatePackages, _json$privatePackages2, _json$changedFilePatt, _json$snapshot$prerel, _json$snapshot, _json$snapshot2, _json$___experimental, _json$___experimental2, _json$___experimental3, _json$___experimental4;
   let messages = [];
   let pkgNames = packages.packages.map(({
     packageJson
@@ -31798,23 +31808,78 @@ let parse = (json, packages) => {
   if (json.updateInternalDependencies !== undefined && !["patch", "minor"].includes(json.updateInternalDependencies)) {
     messages.push(`The \`updateInternalDependencies\` option is set as ${JSON.stringify(json.updateInternalDependencies, null, 2)} but can only be 'patch' or 'minor'`);
   }
+  if (json.privatePackages !== undefined && json.privatePackages !== false) {
+    if (typeof json.privatePackages !== "object") {
+      messages.push(`The \`privatePackages\` option is set as ${JSON.stringify(json.privatePackages, null, 2)} when the only valid values are undefined, false, or an object with optional boolean \`version\` and \`tag\` properties`);
+    } else {
+      if (json.privatePackages.version !== undefined && typeof json.privatePackages.version !== "boolean") {
+        messages.push(`The \`privatePackages.version\` option is set as ${JSON.stringify(json.privatePackages.version, null, 2)} but the only valid values are undefined or a boolean`);
+      }
+      if (json.privatePackages.tag !== undefined && typeof json.privatePackages.tag !== "boolean") {
+        messages.push(`The \`privatePackages.tag\` option is set as ${JSON.stringify(json.privatePackages.tag, null, 2)} but the only valid values are undefined or a boolean`);
+      }
+    }
+  }
+  const privatePackages = json.privatePackages === false ? {
+    tag: false,
+    version: false
+  } : json.privatePackages ? {
+    version: (_json$privatePackages = json.privatePackages.version) !== null && _json$privatePackages !== void 0 ? _json$privatePackages : true,
+    tag: (_json$privatePackages2 = json.privatePackages.tag) !== null && _json$privatePackages2 !== void 0 ? _json$privatePackages2 : false
+  } : {
+    version: true,
+    tag: false
+  };
   if (json.ignore) {
     if (!(isArray(json.ignore) && json.ignore.every(pkgName => typeof pkgName === "string"))) {
       messages.push(`The \`ignore\` option is set as ${JSON.stringify(json.ignore, null, 2)} when the only valid values are undefined or an array of package names`);
     } else {
       messages.push(...getUnmatchedPatterns(json.ignore, pkgNames).map(pkgOrGlob => `The package or glob expression "${pkgOrGlob}" is specified in the \`ignore\` option but it is not found in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch`));
+    }
+  }
 
-      // Validate that all dependents of ignored packages are listed in the ignore list
-      const dependentsGraph = getDependentsGraph.getDependentsGraph(packages, {
-        bumpVersionsWithWorkspaceProtocolOnly: json.bumpVersionsWithWorkspaceProtocolOnly
-      });
-      for (const ignoredPackage of json.ignore) {
-        const dependents = dependentsGraph.get(ignoredPackage) || [];
-        for (const dependent of dependents) {
-          if (!json.ignore.includes(dependent)) {
-            messages.push(`The package "${dependent}" depends on the ignored package "${ignoredPackage}", but "${dependent}" is not being ignored. Please add "${dependent}" to the \`ignore\` option.`);
-          }
+  // Validate that dependents of skipped packages are also skipped.
+  // A package is "skipped" if it's in the ignore list, or if it's private
+  // and privatePackages.version is false.
+  // devDependencies are excluded because they don't affect published consumers —
+  // a stale devDep range on a skipped package is harmless.
+  // Note: assemble-release-plan uses a graph WITH devDeps because it needs to
+  // update devDep ranges in package.json even though they don't cause version bumps.
+  const ignore = isArray(json.ignore) ? json.ignore : [];
+  if (ignore.length || !privatePackages.version) {
+    const dependentsGraph = getDependentsGraph.getDependentsGraph(packages, {
+      ignoreDevDependencies: true,
+      bumpVersionsWithWorkspaceProtocolOnly: json.bumpVersionsWithWorkspaceProtocolOnly
+    });
+    const packagesByName = new Map(packages.packages.map(x => [x.packageJson.name, x]));
+    for (const pkg of packages.packages) {
+      if (!shouldSkipPackage.shouldSkipPackage(pkg, {
+        ignore,
+        allowPrivatePackages: privatePackages.version
+      })) {
+        continue;
+      }
+      const skippedPackage = pkg.packageJson.name;
+      const dependents = dependentsGraph.get(skippedPackage) || [];
+      for (const dependent of dependents) {
+        const dependentPkg = packagesByName.get(dependent);
+        if (!dependentPkg) {
+          continue;
         }
+        if (shouldSkipPackage.shouldSkipPackage(dependentPkg, {
+          ignore,
+          allowPrivatePackages: privatePackages.version
+        })) {
+          continue;
+        }
+        // Private packages don't publish to npm,
+        // so they can safely depend on skipped packages.
+        // This also holds for private packages with other publish targets (like a VS Code extension)
+        // as those typically have to prebundle dependencies.
+        if (dependentPkg.packageJson.private) {
+          continue;
+        }
+        messages.push(`The package "${dependent}" depends on the skipped package "${skippedPackage}", but "${dependent}" is not being skipped. Please add "${dependent}" to the \`ignore\` option.`);
       }
     }
   }
@@ -31875,16 +31940,7 @@ let parse = (json, packages) => {
     },
     prettier: typeof json.prettier === "boolean" ? json.prettier : true,
     // TODO consider enabling this by default in the next major version
-    privatePackages: json.privatePackages === false ? {
-      tag: false,
-      version: false
-    } : json.privatePackages ? {
-      version: (_json$privatePackages = json.privatePackages.version) !== null && _json$privatePackages !== void 0 ? _json$privatePackages : true,
-      tag: (_json$privatePackages2 = json.privatePackages.tag) !== null && _json$privatePackages2 !== void 0 ? _json$privatePackages2 : false
-    } : {
-      version: true,
-      tag: false
-    }
+    privatePackages
   };
   if (config.privatePackages.version === false && config.privatePackages.tag === true) {
     throw new errors.ValidationError(`The \`privatePackages.tag\` option is set to \`true\` but \`privatePackages.version\` is set to \`false\`. This is not allowed.`);
@@ -32204,10 +32260,10 @@ function _objectSpread2(e) {
 
 async function getReleasePlan(cwd, sinceRef, passedConfig) {
   const packages = await getPackages.getPackages(cwd);
-  const preState = await pre.readPreState(cwd);
-  const readConfig = await config.read(cwd, packages);
+  const preState = await pre.readPreState(packages.root.dir);
+  const readConfig = await config.read(packages.root.dir, packages);
   const config$1 = passedConfig ? _objectSpread2(_objectSpread2({}, readConfig), passedConfig) : readConfig;
-  const changesets = await readChangesets__default["default"](cwd, sinceRef);
+  const changesets = await readChangesets__default["default"](packages.root.dir, sinceRef);
   return assembleReleasePlan__default["default"](changesets, packages, config$1, preState);
 }
 
@@ -32573,30 +32629,54 @@ function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; 
 var yaml__default = /*#__PURE__*/_interopDefault(yaml);
 
 const mdRegex = /\s*---([^]*?)\n\s*---(\s*(?:\n|$)[^]*)/;
+const EXAMPLE_FORMAT = `---\n"package-name": patch\n---`;
+const validVersionTypes = ["major", "minor", "patch", "none"];
+function truncate(s, max = 200) {
+  return s.length > max ? s.slice(0, max) + "..." : s;
+}
+function validateReleases(releases, contents) {
+  for (const release of releases) {
+    if (typeof release.name !== "string" || release.name.trim() === "") {
+      throw new Error(`could not parse changeset - invalid package name in frontmatter.\n` + `Expected a non-empty string for package name, but got: ${JSON.stringify(release.name)}\n` + `Changeset contents:\n${truncate(contents)}`);
+    }
+    if (typeof release.type !== "string") {
+      throw new Error(`could not parse changeset - invalid release type for package "${release.name}".\n` + `Expected a string for release type, but got: ${typeof release.type}\n` + `Changeset contents:\n${truncate(contents)}`);
+    }
+    if (!validVersionTypes.includes(release.type)) {
+      throw new Error(`could not parse changeset - invalid version type ${JSON.stringify(release.type)} for package "${release.name}".\n` + `Valid version types are: ${validVersionTypes.join(", ")}\n` + `Changeset contents:\n${truncate(contents)}`);
+    }
+  }
+}
 function parseChangesetFile(contents) {
+  const trimmedContents = contents.trim();
+  if (!trimmedContents) {
+    throw new Error(`could not parse changeset - file is empty.\n` + `Changesets must have frontmatter with package names and version types.\n` + `Example:\n${EXAMPLE_FORMAT}\n\nYour changeset summary here.`);
+  }
   const execResult = mdRegex.exec(contents);
   if (!execResult) {
-    throw new Error(`could not parse changeset - invalid frontmatter: ${contents}`);
+    throw new Error(`could not parse changeset - missing or invalid frontmatter.\n` + `Changesets must start with frontmatter delimited by "---".\n` + `Example:\n${EXAMPLE_FORMAT}\n\nYour changeset summary here.\n` + `Received content:\n${truncate(trimmedContents)}`);
   }
   let [, roughReleases, roughSummary] = execResult;
   let summary = roughSummary.trim();
   let releases;
+  let yamlStuff;
   try {
-    const yamlStuff = yaml__default["default"].load(roughReleases);
-    if (yamlStuff) {
-      releases = Object.entries(yamlStuff).map(([name, type]) => ({
-        name,
-        type
-      }));
-    } else {
-      releases = [];
-    }
+    yamlStuff = yaml__default["default"].load(roughReleases);
   } catch (e) {
-    throw new Error(`could not parse changeset - invalid frontmatter: ${contents}`);
+    throw new Error(`could not parse changeset - invalid YAML in frontmatter.\n` + `The frontmatter between the "---" delimiters must be valid YAML.\n` + `YAML error: ${e instanceof Error ? e.message : String(e)}\n` + `Frontmatter content:\n${roughReleases}`);
   }
-  if (!releases) {
-    throw new Error(`could not parse changeset - unknown error: ${contents}`);
+  if (yamlStuff) {
+    if (typeof yamlStuff !== "object" || Array.isArray(yamlStuff)) {
+      throw new Error(`could not parse changeset - frontmatter must be an object mapping package names to version types.\n` + `Expected format:\n${EXAMPLE_FORMAT}\n` + `Received:\n${roughReleases}`);
+    }
+    releases = Object.entries(yamlStuff).map(([name, type]) => ({
+      name,
+      type
+    }));
+  } else {
+    releases = [];
   }
+  validateReleases(releases, contents);
   return {
     releases,
     summary
@@ -32896,8 +32976,8 @@ async function filterChangesetsSinceRef(changesets, changesetBase, sinceRef) {
   const newHashes = newChangesets.map(c => c.split("/").pop());
   return changesets.filter(dir => newHashes.includes(dir));
 }
-async function getChangesets(cwd, sinceRef) {
-  let changesetBase = path__default["default"].join(cwd, ".changeset");
+async function getChangesets(rootDir, sinceRef) {
+  let changesetBase = path__default["default"].join(rootDir, ".changeset");
   let contents;
   try {
     contents = await fs__namespace["default"].readdir(changesetBase);

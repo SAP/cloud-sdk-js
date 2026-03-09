@@ -1,3 +1,4 @@
+import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
 /******/ var __webpack_modules__ = ({
 
 /***/ 6427:
@@ -54707,308 +54708,308 @@ function wrappy (fn, cb) {
 /***/ 2613:
 /***/ ((module) => {
 
-module.exports = require("assert");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("assert");
 
 /***/ }),
 
 /***/ 290:
 /***/ ((module) => {
 
-module.exports = require("async_hooks");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("async_hooks");
 
 /***/ }),
 
 /***/ 181:
 /***/ ((module) => {
 
-module.exports = require("buffer");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("buffer");
 
 /***/ }),
 
 /***/ 4236:
 /***/ ((module) => {
 
-module.exports = require("console");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("console");
 
 /***/ }),
 
 /***/ 6982:
 /***/ ((module) => {
 
-module.exports = require("crypto");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("crypto");
 
 /***/ }),
 
 /***/ 1637:
 /***/ ((module) => {
 
-module.exports = require("diagnostics_channel");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("diagnostics_channel");
 
 /***/ }),
 
 /***/ 4434:
 /***/ ((module) => {
 
-module.exports = require("events");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("events");
 
 /***/ }),
 
 /***/ 9896:
 /***/ ((module) => {
 
-module.exports = require("fs");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
 
 /***/ }),
 
 /***/ 8611:
 /***/ ((module) => {
 
-module.exports = require("http");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("http");
 
 /***/ }),
 
 /***/ 5675:
 /***/ ((module) => {
 
-module.exports = require("http2");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("http2");
 
 /***/ }),
 
 /***/ 5692:
 /***/ ((module) => {
 
-module.exports = require("https");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("https");
 
 /***/ }),
 
 /***/ 9278:
 /***/ ((module) => {
 
-module.exports = require("net");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("net");
 
 /***/ }),
 
 /***/ 4589:
 /***/ ((module) => {
 
-module.exports = require("node:assert");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:assert");
 
 /***/ }),
 
 /***/ 6698:
 /***/ ((module) => {
 
-module.exports = require("node:async_hooks");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:async_hooks");
 
 /***/ }),
 
 /***/ 4573:
 /***/ ((module) => {
 
-module.exports = require("node:buffer");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:buffer");
 
 /***/ }),
 
 /***/ 7540:
 /***/ ((module) => {
 
-module.exports = require("node:console");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:console");
 
 /***/ }),
 
 /***/ 7598:
 /***/ ((module) => {
 
-module.exports = require("node:crypto");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:crypto");
 
 /***/ }),
 
 /***/ 3053:
 /***/ ((module) => {
 
-module.exports = require("node:diagnostics_channel");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:diagnostics_channel");
 
 /***/ }),
 
 /***/ 610:
 /***/ ((module) => {
 
-module.exports = require("node:dns");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:dns");
 
 /***/ }),
 
 /***/ 8474:
 /***/ ((module) => {
 
-module.exports = require("node:events");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:events");
 
 /***/ }),
 
 /***/ 7067:
 /***/ ((module) => {
 
-module.exports = require("node:http");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:http");
 
 /***/ }),
 
 /***/ 2467:
 /***/ ((module) => {
 
-module.exports = require("node:http2");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:http2");
 
 /***/ }),
 
 /***/ 7030:
 /***/ ((module) => {
 
-module.exports = require("node:net");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:net");
 
 /***/ }),
 
 /***/ 643:
 /***/ ((module) => {
 
-module.exports = require("node:perf_hooks");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:perf_hooks");
 
 /***/ }),
 
 /***/ 1792:
 /***/ ((module) => {
 
-module.exports = require("node:querystring");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:querystring");
 
 /***/ }),
 
 /***/ 7075:
 /***/ ((module) => {
 
-module.exports = require("node:stream");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:stream");
 
 /***/ }),
 
 /***/ 1692:
 /***/ ((module) => {
 
-module.exports = require("node:tls");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:tls");
 
 /***/ }),
 
 /***/ 3136:
 /***/ ((module) => {
 
-module.exports = require("node:url");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:url");
 
 /***/ }),
 
 /***/ 7975:
 /***/ ((module) => {
 
-module.exports = require("node:util");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:util");
 
 /***/ }),
 
 /***/ 3429:
 /***/ ((module) => {
 
-module.exports = require("node:util/types");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:util/types");
 
 /***/ }),
 
 /***/ 5919:
 /***/ ((module) => {
 
-module.exports = require("node:worker_threads");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:worker_threads");
 
 /***/ }),
 
 /***/ 8522:
 /***/ ((module) => {
 
-module.exports = require("node:zlib");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:zlib");
 
 /***/ }),
 
 /***/ 857:
 /***/ ((module) => {
 
-module.exports = require("os");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("os");
 
 /***/ }),
 
 /***/ 2987:
 /***/ ((module) => {
 
-module.exports = require("perf_hooks");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("perf_hooks");
 
 /***/ }),
 
 /***/ 3480:
 /***/ ((module) => {
 
-module.exports = require("querystring");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("querystring");
 
 /***/ }),
 
 /***/ 2203:
 /***/ ((module) => {
 
-module.exports = require("stream");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("stream");
 
 /***/ }),
 
 /***/ 3774:
 /***/ ((module) => {
 
-module.exports = require("stream/web");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("stream/web");
 
 /***/ }),
 
 /***/ 3193:
 /***/ ((module) => {
 
-module.exports = require("string_decoder");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("string_decoder");
 
 /***/ }),
 
 /***/ 4756:
 /***/ ((module) => {
 
-module.exports = require("tls");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("tls");
 
 /***/ }),
 
 /***/ 7016:
 /***/ ((module) => {
 
-module.exports = require("url");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("url");
 
 /***/ }),
 
 /***/ 9023:
 /***/ ((module) => {
 
-module.exports = require("util");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("util");
 
 /***/ }),
 
 /***/ 8253:
 /***/ ((module) => {
 
-module.exports = require("util/types");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("util/types");
 
 /***/ }),
 
 /***/ 8167:
 /***/ ((module) => {
 
-module.exports = require("worker_threads");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("worker_threads");
 
 /***/ }),
 
 /***/ 3106:
 /***/ ((module) => {
 
-module.exports = require("zlib");
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("zlib");
 
 /***/ }),
 
@@ -56835,7 +56836,7 @@ function file_command_prepareKeyValueMessage(key, value) {
 }
 //# sourceMappingURL=file-command.js.map
 ;// CONCATENATED MODULE: external "path"
-const external_path_namespaceObject = require("path");
+const external_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("path");
 // EXTERNAL MODULE: external "http"
 var external_http_ = __nccwpck_require__(8611);
 // EXTERNAL MODULE: external "https"
@@ -58102,7 +58103,7 @@ var external_string_decoder_ = __nccwpck_require__(3193);
 // EXTERNAL MODULE: external "events"
 var external_events_ = __nccwpck_require__(4434);
 ;// CONCATENATED MODULE: external "child_process"
-const external_child_process_namespaceObject = require("child_process");
+const external_child_process_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("child_process");
 // EXTERNAL MODULE: external "assert"
 var external_assert_ = __nccwpck_require__(2613);
 ;// CONCATENATED MODULE: ../../node_modules/@actions/io/lib/io-util.js
@@ -58558,7 +58559,7 @@ function io_copyFile(srcFile, destFile, force) {
 }
 //# sourceMappingURL=io.js.map
 ;// CONCATENATED MODULE: external "timers"
-const external_timers_namespaceObject = require("timers");
+const external_timers_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("timers");
 ;// CONCATENATED MODULE: ../../node_modules/@actions/exec/lib/toolrunner.js
 var toolrunner_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -59613,9 +59614,9 @@ function getIDToken(aud) {
 // EXTERNAL MODULE: ../../node_modules/@actions/github/lib/github.js
 var github = __nccwpck_require__(8064);
 ;// CONCATENATED MODULE: external "node:fs/promises"
-const promises_namespaceObject = require("node:fs/promises");
+const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
 ;// CONCATENATED MODULE: external "node:path"
-const external_node_path_namespaceObject = require("node:path");
+const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
 ;// CONCATENATED MODULE: ./lib/validators.js
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable jsdoc/require-jsdoc */

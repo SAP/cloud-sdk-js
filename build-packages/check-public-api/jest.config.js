@@ -1,5 +1,7 @@
 // eslint-disable-next-line
 import commonConfig from '../../test-resources/jest.common.config.js';
+import { path } from 'node:path';
+
 export default {
   ...commonConfig,
   extensionsToTreatAsEsm: ['.ts'],

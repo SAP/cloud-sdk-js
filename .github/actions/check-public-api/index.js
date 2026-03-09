@@ -71306,7 +71306,7 @@ function addCopyrightHeader(content, withCopyright) {
     return (0, util_1.codeBlock) `
 ${(0, util_2.getCopyrightHeader)()}
 ${content}
-${util_1.unixEOL}
+\n
 `;
 }
 /**
@@ -71695,7 +71695,6 @@ function filterDuplicatesRight(arr, comparator = (left, right) => left === right
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.codeBlock = codeBlock;
-const string_formatter_1 = __nccwpck_require__(1366);
 const array_1 = __nccwpck_require__(9947);
 const string_1 = __nccwpck_require__(4757);
 /**
@@ -71712,26 +71711,26 @@ const string_1 = __nccwpck_require__(4757);
 function codeBlock(strings, ...args) {
     const pre = strings.slice(0, -1).map(string => {
         const trimmed = trimRightNewlines(string);
-        return trimmed.length === string.length ? string : trimmed + string_formatter_1.unixEOL;
+        return trimmed.length === string.length ? string : `${trimmed}\n`;
     });
     pre.push(strings[strings.length - 1]);
     const indents = strings.slice(0, -1).map(s => {
-        const indentation = s.split(string_formatter_1.unixEOL).pop();
+        const indentation = s.split('\n').pop();
         return !indentation.trim() ? indentation : '';
     });
     const post = args.map((arg, i) => ('' + arg)
-        .split(string_formatter_1.unixEOL)
+        .split('\n')
         .map(subArg => indents[i] + subArg)
-        .join(string_formatter_1.unixEOL));
+        .join('\n'));
     const zipped = (0, array_1.zip)(pre, post);
     return (0, string_1.trim)(zipped.join(''));
 }
 function trimRightNewlines(string) {
-    let subStrings = string.split(string_formatter_1.unixEOL);
+    let subStrings = string.split('\n');
     if (!subStrings[subStrings.length - 1].trim()) {
         subStrings = subStrings.slice(0, -1);
     }
-    return subStrings.join(string_formatter_1.unixEOL);
+    return subStrings.join('\n');
 }
 //# sourceMappingURL=code-block.js.map
 
@@ -71745,7 +71744,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.documentationBlock = documentationBlock;
 const array_1 = __nccwpck_require__(9947);
 const logger_1 = __nccwpck_require__(4587);
-const string_formatter_1 = __nccwpck_require__(1366);
 const logger = (0, logger_1.createLogger)('documentation-block');
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -71770,10 +71768,10 @@ function documentationBlock(strings, ...args) {
         return '';
     }
     content = maskProblematicCharacters(content);
-    let lines = content.split(string_formatter_1.unixEOL);
+    let lines = content.split('\n');
     lines = adjustIndentation(lines, textIndentation);
-    content = lines.join(`${string_formatter_1.unixEOL} * `);
-    const result = ['/**', ` * ${content}`, ' */'].join(string_formatter_1.unixEOL);
+    content = lines.join('\n * ');
+    const result = ['/**', ` * ${content}`, ' */'].join('\n');
     return result;
 }
 /*
@@ -71782,15 +71780,15 @@ myContent
 `
  */
 function removeLeadingEmptyLines(firstLine) {
-    const lines = firstLine.split(string_formatter_1.unixEOL);
+    const lines = firstLine.split('\n');
     const indexFirstNonEmpty = lines.findIndex(str => str.match(/\w/)) || 0;
-    return lines.splice(indexFirstNonEmpty).join(string_formatter_1.unixEOL);
+    return lines.splice(indexFirstNonEmpty).join('\n');
 }
 /*
  The arguments do not contain any indentation so this is added via this method.
  */
 function addIndentationToArguments(args, textIndentation) {
-    const argsWithIndentation = args.map(arg => arg.replace(/\n/g, string_formatter_1.unixEOL + ' '.repeat(textIndentation)));
+    const argsWithIndentation = args.map(arg => arg.replace(/\n/g, '\n '.repeat(textIndentation)));
     return argsWithIndentation;
 }
 /*
@@ -71880,7 +71878,6 @@ function equalArrays(arr1, arr2) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ErrorWithCause = void 0;
 exports.isErrorWithCause = isErrorWithCause;
-const string_formatter_1 = __nccwpck_require__(1366);
 const logger_1 = __nccwpck_require__(4587);
 const logger = (0, logger_1.createLogger)({
     package: 'util',
@@ -71912,18 +71909,18 @@ class ErrorWithCause extends Error {
             let response = '';
             if (cause.response?.data) {
                 try {
-                    response = `${string_formatter_1.unixEOL}${JSON.stringify(cause.response?.data, null, 2)}`;
+                    response = `\n${JSON.stringify(cause.response?.data, null, 2)}`;
                 }
                 catch (error) {
                     logger.warn(`Failed to stringify response data: ${error.message}`);
-                    response = `${string_formatter_1.unixEOL}${cause.response?.data}`;
+                    response = `\n${cause.response?.data}`;
                 }
             }
-            this.stack = `${this.stack}${string_formatter_1.unixEOL}Caused by:${string_formatter_1.unixEOL}HTTP Response: ${cause.message}${response}`;
+            this.stack = `${this.stack}\nCaused by:\nHTTP Response: ${cause.message}${response}`;
         }
         else if (this.stack && cause?.stack) {
             // Stack is a non-standard property according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types
-            this.stack = `${this.stack}${string_formatter_1.unixEOL}Caused by:${string_formatter_1.unixEOL}${cause.stack}`;
+            this.stack = `${this.stack}\nCaused by:\n${cause.stack}`;
         }
     }
     /**
@@ -72756,10 +72753,12 @@ const voca_1 = __importDefault(__nccwpck_require__(8579));
  * Within all files generated by the SDK we use the unix style end of line delimiter.
  * We do not consider if the generator is executed on windows or unix systems.
  * It will always be `\n` to have consistent clients between operating systems.
+ * @deprecated Since v4.6.0. Use '\n' directly instead.
  */
 exports.unixEOL = '\n';
 /**
  * For request payloads, etc., it is convention to use the `\r\n` new line.
+ * @deprecated Since v4.6.0. Use '\r\n' directly instead.
  */
 exports.webEOL = '\r\n';
 /**
@@ -72811,14 +72810,14 @@ function kebabCase(str) {
  * @returns The JSON object as string.
  */
 function formatJson(json) {
-    return JSON.stringify(json, null, 2) + exports.unixEOL;
+    return JSON.stringify(json, null, 2) + '\n';
 }
 //# sourceMappingURL=string-formatter.js.map
 
 /***/ }),
 
 /***/ 4757:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
@@ -72827,7 +72826,6 @@ exports.trimLeft = trimLeft;
 exports.trimRight = trimRight;
 exports.trim = trim;
 exports.removeFileExtension = removeFileExtension;
-const string_formatter_1 = __nccwpck_require__(1366);
 /**
  * Encode a string to a base64 encoded string.
  * @param str - String to encode.
@@ -72842,7 +72840,7 @@ function encodeBase64(str) {
  * @returns String without whitespace on the left side.
  */
 function trimLeft(string) {
-    const subStrings = string.split(string_formatter_1.unixEOL);
+    const subStrings = string.split('\n');
     const leftTrimmed = subStrings[0].trimStart();
     if (!leftTrimmed) {
         subStrings.shift();
@@ -72850,7 +72848,7 @@ function trimLeft(string) {
     else {
         subStrings[0] = leftTrimmed;
     }
-    return subStrings.join(string_formatter_1.unixEOL);
+    return subStrings.join('\n');
 }
 /**
  * Remove whitespace from the right side of a string.
@@ -72858,7 +72856,7 @@ function trimLeft(string) {
  * @returns String without whitespace on the right side.
  */
 function trimRight(string) {
-    const subStrings = string.split(string_formatter_1.unixEOL);
+    const subStrings = string.split('\n');
     const rightTrimmed = subStrings[subStrings.length - 1].trimEnd();
     if (!rightTrimmed) {
         subStrings.pop();
@@ -72866,7 +72864,7 @@ function trimRight(string) {
     else {
         subStrings[subStrings.length - 1] = rightTrimmed;
     }
-    return subStrings.join(string_formatter_1.unixEOL);
+    return subStrings.join('\n');
 }
 /**
  * Remove whitespace from the left and right side of a string.

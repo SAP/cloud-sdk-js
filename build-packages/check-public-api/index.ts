@@ -3,7 +3,7 @@ import { join, resolve, parse, basename, dirname, posix, sep } from 'node:path';
 import { promises, existsSync } from 'node:fs';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
-import { flatten, unixEOL } from '@sap-cloud-sdk/util';
+import { flatten } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 // import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
 import {
@@ -140,7 +140,7 @@ function compareApisAndLog(
     }
   });
   info(`We have found ${allExportedIndex.length} exports.`);
-  info(`Public api: ${allExportedIndex.sort().join(`,${unixEOL}`)}`);
+  info(`Public api: ${allExportedIndex.sort().join(',\n')}`);
 
   return setsAreEqual;
 }

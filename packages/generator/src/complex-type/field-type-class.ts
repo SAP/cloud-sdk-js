@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { Scope, StructureKind } from 'ts-morph';
 import { getGenericParameters } from '../generator-utils';
 import {
@@ -55,7 +54,7 @@ export function fieldTypeClass(
           }
         ],
         docs: [
-          `${unixEOL}Creates an instance of ${complexType.fieldType}.${unixEOL}@param fieldName - Actual name of the field as used in the OData request.${unixEOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
+          `\nCreates an instance of ${complexType.fieldType}.\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
         ],
         statements: [
           `super(fieldName, fieldOf, deSerializers, ${complexType.typeName}, fieldOptions);`

@@ -1,4 +1,3 @@
-import { unixEOL } from './string-formatter';
 /**
  * Encode a string to a base64 encoded string.
  * @param str - String to encode.
@@ -14,14 +13,14 @@ export function encodeBase64(str: string): string {
  * @returns String without whitespace on the left side.
  */
 export function trimLeft(string: string): string {
-  const subStrings = string.split(unixEOL);
+  const subStrings = string.split('\n');
   const leftTrimmed = subStrings[0].trimStart();
   if (!leftTrimmed) {
     subStrings.shift();
   } else {
     subStrings[0] = leftTrimmed;
   }
-  return subStrings.join(unixEOL);
+  return subStrings.join('\n');
 }
 
 /**
@@ -30,14 +29,14 @@ export function trimLeft(string: string): string {
  * @returns String without whitespace on the right side.
  */
 export function trimRight(string: string): string {
-  const subStrings = string.split(unixEOL);
+  const subStrings = string.split('\n');
   const rightTrimmed = subStrings[subStrings.length - 1].trimEnd();
   if (!rightTrimmed) {
     subStrings.pop();
   } else {
     subStrings[subStrings.length - 1] = rightTrimmed;
   }
-  return subStrings.join(unixEOL);
+  return subStrings.join('\n');
 }
 
 /**

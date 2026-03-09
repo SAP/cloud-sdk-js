@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { StructureKind } from 'ts-morph';
 import {
   entityNotDeserializable,
@@ -31,10 +30,11 @@ describe('function', () => {
       returnType:
         'BoundOperationRequestBuilder<BreakfastEntity<T>, T, Params<T>, string>',
       docs: [
-        `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
+        'order a breakfast \n@param parameters - Object containing all parameters for the function.\n@returns A request builder that allows to overwrite some of the values and execute the resulting request.'
       ],
       isExported: true,
-      statements: `const params = {${unixEOL}withHoneyToast: new OperationParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new BoundOperationRequestBuilder(this._entityApi, this, 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers, 'function');`
+      statements:
+        "const params = {\nwithHoneyToast: new OperationParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)\n};\n\nreturn new BoundOperationRequestBuilder(this._entityApi, this, 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers, 'function');"
     });
   });
 
@@ -54,10 +54,11 @@ describe('function', () => {
       returnType:
         'OperationRequestBuilder<DeSerializersT, Params<DeSerializersT>, string>',
       docs: [
-        `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
+        'order a breakfast \n@param parameters - Object containing all parameters for the function.\n@returns A request builder that allows to overwrite some of the values and execute the resulting request.'
       ],
       isExported: true,
-      statements: `const params = {${unixEOL}withHoneyToast: new OperationParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}return new OperationRequestBuilder('post', 'some/path/to/food', 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers);`
+      statements:
+        "const params = {\nwithHoneyToast: new OperationParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)\n};\n\nreturn new OperationRequestBuilder('post', 'some/path/to/food', 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers);"
     });
   });
 

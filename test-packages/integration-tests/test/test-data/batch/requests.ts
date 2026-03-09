@@ -1,4 +1,3 @@
-import { webEOL } from '@sap-cloud-sdk/util';
 import {
   multiChangesetRequest,
   singleChangesetRequest,
@@ -13,7 +12,7 @@ export const multiRetrieveRequest = () =>
     '--batch_.*',
     ...getByKeyRequest,
     '--batch_.*--'
-  ].join(webEOL);
+  ].join('\r\n');
 
 export const multiChangesetBatchRequest = () =>
   [
@@ -24,7 +23,7 @@ export const multiChangesetBatchRequest = () =>
     '--batch_.*',
     ...singleChangesetRequestWithCustomUrl,
     '--batch_.*'
-  ].join(webEOL);
+  ].join('\r\n');
 
 export const mixedBatchRequest = () =>
   [
@@ -33,7 +32,7 @@ export const mixedBatchRequest = () =>
     '--batch_.*',
     ...singleChangesetRequest,
     '--batch_.*--'
-  ].join(webEOL);
+  ].join('\r\n');
 
 export const mixedErrorRequest = () =>
   [
@@ -47,4 +46,4 @@ export const mixedErrorRequest = () =>
     ...singleChangesetRequest,
     '--batch_.*--',
     ''
-  ].join(webEOL);
+  ].join('\r\n');

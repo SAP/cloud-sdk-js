@@ -1,4 +1,4 @@
-import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
 import { collectRefs, getSchemaPropertiesDocumentation } from '../schema-util';
 import { serializeSchema } from './schema';
@@ -53,5 +53,5 @@ export function schemaDocumentation(schema: OpenApiPersistedSchema): string {
       `Representation of the '${schema.schemaName}' schema.`,
     ...getSchemaPropertiesDocumentation(schema.schemaProperties)
   ];
-  return documentationBlock`${lines.join(unixEOL)}`;
+  return documentationBlock`${lines.join('\n')}`;
 }

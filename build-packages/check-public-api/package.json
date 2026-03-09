@@ -9,7 +9,7 @@
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/index.js --external prettier --external typescript  --out ../../.github/actions/check-public-api/",
     "test": "yarn test:unit",
-    "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules yarn jest",
     "lint": "eslint && prettier --check **/*.ts",
     "lint:fix": "eslint --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",
@@ -29,6 +29,7 @@
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",
     "prettier": "^3.8.1",
+    "ts-jest": "^29.1.0",
     "typescript": "~5.9.3"
   }
 }

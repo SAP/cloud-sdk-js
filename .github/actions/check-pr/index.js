@@ -59618,7 +59618,6 @@ const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.ur
 ;// CONCATENATED MODULE: external "node:path"
 const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
 ;// CONCATENATED MODULE: ./lib/validators.js
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable jsdoc/require-jsdoc */
 
 
@@ -59626,7 +59625,7 @@ const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(impo
 const validCommitTypes = ['feat', 'fix', 'chore'];
 // Expected format: preamble(topic)!: Title text
 async function validateTitle(title) {
-    if (!title.includes(':')) {
+    if (!title || !title.includes(':')) {
         return setFailed('PR title does not adhere to conventional commit guidelines. No preamble found.');
     }
     const [preamble, postamble] = title.split(':');
@@ -59644,7 +59643,7 @@ async function validatePreamble(preamble) {
 }
 function validateCommitType(commitType) {
     if (!commitType || !validCommitTypes.includes(commitType)) {
-        return setFailed(`PR title does not adhere to conventional commit guidelines. Commit type found: ${commitType}. Must be one of ${validCommitTypes.join(', ')}`);
+        return setFailed(`PR title does not adhere to conventional commit guidelines. Commit type found: ${commitType}. Must be one of ${validCommitTypes.join(', ')}.`);
     }
     info('✓ Commit type: OK');
 }
@@ -59726,8 +59725,8 @@ async function validateBody(body) {
 
 
 try {
-    validateTitle(github.context.payload.pull_request.title);
-    validateBody(github.context.payload.pull_request.body.replace(/\r\n/g, '\n'));
+    validateTitle(github.context.payload.pull_request?.title);
+    validateBody(github.context.payload.pull_request?.body?.replace(/\r\n/g, '\n'));
 }
 catch (err) {
     setFailed(err);

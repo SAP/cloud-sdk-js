@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es2021",
+    "target": "ES2022",
     "module": "Node16",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
     "outDir": "./lib",
-    "tsBuildInfoFile": "./lib/.tsbuildinfo",
-    "composite": false,
-    "incremental": true,
-    "declaration": false,
-    "esModuleInterop": true
+    "tsBuildInfoFile": "./lib/.tsbuildinfo"
   },
-  "files": ["index.ts"],
+  "include": ["*.ts"],
   "exclude": []
 }

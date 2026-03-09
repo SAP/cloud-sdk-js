@@ -1,5 +1,4 @@
 import { documentationBlock } from './documentation-block';
-import { unixEOL } from './string-formatter';
 
 describe('documentation-block', () => {
   it('creates empty string for empty documentation block', () => {
@@ -38,16 +37,14 @@ describe('documentation-block', () => {
 
   it('creates single line documentation', () => {
     const actual = documentationBlock`A single line of documentation.`;
-    expect(actual).toBe(
-      `/**${unixEOL} * A single line of documentation.${unixEOL} */`
-    );
+    expect(actual).toBe('/**\n * A single line of documentation.\n */');
   });
 
   it('creates single line documentation with single argument', () => {
     const argument = 'myArgument';
     const actual = documentationBlock`Some text before ${argument} my text after.`;
     expect(actual).toBe(
-      `/**${unixEOL} * Some text before myArgument my text after.${unixEOL} */`
+      '/**\n * Some text before myArgument my text after.\n */'
     );
   });
 
@@ -56,7 +53,7 @@ describe('documentation-block', () => {
     const argument2 = 'myArgument2';
     const actual = documentationBlock`${argument1} Some text before ${argument2} my text after.`;
     expect(actual).toBe(
-      `/**${unixEOL} * myArgument1 Some text before myArgument2 my text after.${unixEOL} */`
+      '/**\n * myArgument1 Some text before myArgument2 my text after.\n */'
     );
   });
 
@@ -84,7 +81,7 @@ describe('documentation-block', () => {
       'First Line',
       'Second Line',
       'Third Line'
-    ].join(unixEOL);
+    ].join('\n');
     const actual = documentationBlock`
     A single line of documentation with new lines in argument
     ${argumentWithNewLines}.`;
@@ -94,7 +91,7 @@ describe('documentation-block', () => {
   it('masks */ character', () => {
     const actual = documentationBlock`A single line of */ documentation with illegal */.`;
     expect(actual).toBe(
-      `/**${unixEOL} * A single line of \\*\\/ documentation with illegal \\*\\/.${unixEOL} */`
+      '/**\n * A single line of \\*\\/ documentation with illegal \\*\\/.\n */'
     );
   });
 

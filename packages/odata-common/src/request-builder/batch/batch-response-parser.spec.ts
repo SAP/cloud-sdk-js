@@ -1,4 +1,4 @@
-import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   detectNewLineSymbol,
   getResponseBody,
@@ -32,12 +32,12 @@ describe('batch response parser', () => {
   describe('getResponseBody', () => {
     it('retrieves the response body when there are >= 3 lines', () => {
       const responseLines = ['--partId', '', 'responseBody'];
-      const response = responseLines.join(unixEOL);
+      const response = responseLines.join('\n');
       expect(getResponseBody(response)).toBe(responseLines[2]);
     });
 
     it('retrieves the response body when there are < 3 lines', () => {
-      const response = ['--partId', 'responseBody'].join(unixEOL);
+      const response = ['--partId', 'responseBody'].join('\n');
       expect(() =>
         getResponseBody(response)
       ).toThrowErrorMatchingInlineSnapshot(
@@ -54,7 +54,7 @@ describe('batch response parser', () => {
       `--${changesetId}`,
       'changeSetResponse',
       `--${changesetId}--`
-    ].join(unixEOL);
+    ].join('\n');
     const createBatchResponse = (
       data,
       headers: Record<string, any> = {
@@ -69,7 +69,7 @@ describe('batch response parser', () => {
         `--${batchId}`,
         changeSetResponse,
         `--${batchId}--`
-      ].join(unixEOL);
+      ].join('\n');
 
       expect(splitBatchResponse(createBatchResponse(body))).toEqual([
         retrieveResponse,
@@ -84,7 +84,7 @@ describe('batch response parser', () => {
         `--${batchId}`,
         changeSetResponse,
         `--${batchId}--`
-      ].join(unixEOL);
+      ].join('\n');
 
       expect(
         splitBatchResponse(
@@ -109,7 +109,7 @@ describe('batch response parser', () => {
         '',
         `--${batchId}--`,
         ''
-      ].join(unixEOL);
+      ].join('\n');
 
       expect(splitBatchResponse(createBatchResponse(body))).toEqual([
         retrieveResponse,
@@ -118,13 +118,13 @@ describe('batch response parser', () => {
     });
 
     it('returns empty array for empty response', () => {
-      const body = ['', '', ''].join(unixEOL);
+      const body = ['', '', ''].join('\n');
       expect(splitBatchResponse(createBatchResponse(body))).toEqual([]);
     });
 
     it('throws an error when headers do not contain boundary', () => {
       const body = [`--${batchId}`, retrieveResponse, `--${batchId}--`].join(
-        unixEOL
+        '\n'
       );
       const response = createBatchResponse(body, {
         'Content-Type': 'multipart/mixed'
@@ -155,7 +155,7 @@ describe('batch response parser', () => {
         `--${changeSetId}`,
         response2,
         `--${changeSetId}--`
-      ].join(unixEOL);
+      ].join('\n');
 
       expect(splitChangeSetResponse(changeSet)).toEqual([response1, response2]);
     });
@@ -168,13 +168,13 @@ describe('batch response parser', () => {
         `--${changeSetId}`,
         response1,
         `--${changeSetId}--`
-      ].join(unixEOL);
+      ].join('\n');
 
       expect(splitChangeSetResponse(changeSet)).toEqual([response1]);
     });
 
     it('throws error if there is no boundary in the headers', () => {
-      const changeSet = ['', ''].join(unixEOL);
+      const changeSet = ['', ''].join('\n');
       expect(() => splitChangeSetResponse(changeSet)).toThrow(
         'Could not parse change set response.'
       );
@@ -205,13 +205,13 @@ describe('batch response parser', () => {
       'Content-Length: X',
       'content-transfer-encoding: binary',
       ''
-    ].join(unixEOL);
+    ].join('\n');
 
     const secondHeader = [
       'Content-Length: X',
       'dataserviceversion: 2.0',
       ''
-    ].join(unixEOL);
+    ].join('\n');
 
     const body = { valid: 'json' };
 
@@ -221,7 +221,7 @@ describe('batch response parser', () => {
         'HTTP/1.1 200 Success',
         secondHeader,
         JSON.stringify(body)
-      ].join(unixEOL);
+      ].join('\n');
 
       expect(parseResponseData(response)).toEqual({
         httpCode: 200,
@@ -235,7 +235,7 @@ describe('batch response parser', () => {
         'HTTP/1.1 204 No Content',
         secondHeader,
         ''
-      ].join(unixEOL);
+      ].join('\n');
 
       expect(parseResponseData(response)).toEqual({
         httpCode: 204,
@@ -249,7 +249,7 @@ describe('batch response parser', () => {
         'HTTP/1.1 201 Created',
         secondHeader,
         JSON.stringify(body)
-      ].join(unixEOL);
+      ].join('\n');
 
       expect(parseResponseData(response)).toEqual({
         httpCode: 201,
@@ -297,7 +297,7 @@ describe('batch response parser', () => {
         '--3B17E95920A7FAF8BCB7495D043515001--',
         '',
         '--3B17E95920A7FAF8BCB7495D043515000--'
-      ].join(unixEOL);
+      ].join('\n');
       const batchResponse = {
         data,
         status: 200,
@@ -332,7 +332,7 @@ describe('batch response parser', () => {
         '--changeset_3ff17c33-5fcf-4b0a-ab17-84917374e43e--',
         '',
         '--batch_89b52e20-aee8-46c8-8fda-a74b4684191b--'
-      ].join(unixEOL);
+      ].join('\n');
       const batchResponse = {
         data,
         status: 200,

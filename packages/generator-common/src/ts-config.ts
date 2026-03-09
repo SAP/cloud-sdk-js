@@ -1,6 +1,6 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
-import { unixEOL, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 const { readFile, lstat } = promises;
 /**
  * @internal
@@ -28,7 +28,7 @@ export const defaultTsConfig = (
  * @internal
  */
 export function formatTsConfig(generateESM?: boolean): string {
-  return JSON.stringify(defaultTsConfig(generateESM), null, 2) + unixEOL;
+  return JSON.stringify(defaultTsConfig(generateESM), null, 2) + '\n';
 }
 
 /**

@@ -1,11 +1,10 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { breakfastEntity } from '../../../test/test-util/data-model';
 import { requestBuilderSourceFile } from './file';
 
 describe('source file', () => {
   it('generates the expected imports', () => {
     const sourceFileAsString = requestBuilderSourceFile(breakfastEntity, 'v2');
-    const lines = sourceFileAsString.split(unixEOL);
+    const lines = sourceFileAsString.split('\n');
     const odataV2ImportLine = lines.filter(
       line => line.indexOf('@sap-cloud-sdk/odata-v2') > 1
     )[0];

@@ -1,4 +1,3 @@
-import { unixEOL } from './string-formatter';
 import {
   trim,
   encodeBase64,
@@ -15,11 +14,11 @@ describe('encodeBase64', () => {
 
 describe('trim', () => {
   it('trims leading and trailing empty lines', () => {
-    expect(trim(`${unixEOL}${unixEOL}A${unixEOL}`)).toEqual(`${unixEOL}A`);
+    expect(trim('\n\nA\n')).toEqual('\nA');
   });
 
   it('trims two whitespace lines', () => {
-    expect(trim(` ${unixEOL} `)).toEqual('');
+    expect(trim(' \n ')).toEqual('');
   });
 
   it('trims two whitespace lines 2', () => {
@@ -40,9 +39,7 @@ describe('trim', () => {
   });
 
   it('trims right whitespace with new line', () => {
-    expect(trimRight(` line1 ${unixEOL} line2 `)).toEqual(
-      ` line1 ${unixEOL} line2`
-    );
+    expect(trimRight(' line1 \n line2 ')).toEqual(' line1 \n line2');
   });
 
   it('trims right whitespace and new line', () => {
@@ -54,9 +51,7 @@ describe('trim', () => {
   });
 
   it('trims left whitespace with new line', () => {
-    expect(trimLeft(` line1 ${unixEOL} line2 `)).toEqual(
-      `line1 ${unixEOL} line2 `
-    );
+    expect(trimLeft(' line1 \n line2 ')).toEqual('line1 \n line2 ');
   });
 
   it('removes file extension', () => {

@@ -80417,8 +80417,7 @@ function documentationBlock(strings, ...args) {
     let lines = content.split('\n');
     lines = adjustIndentation(lines, textIndentation);
     content = lines.join('\n * ');
-    const result = ['/**', ` * ${content}`, ' */'].join('\n');
-    return result;
+    return ['/**', ` * ${content}`, ' */'].join('\n');
 }
 /*
 New lines at the beginning are mainly unintentional when you make documentationBlock`
@@ -80434,7 +80433,7 @@ function removeLeadingEmptyLines(firstLine) {
  The arguments do not contain any indentation so this is added via this method.
  */
 function addIndentationToArguments(args, textIndentation) {
-    const argsWithIndentation = args.map(arg => arg.replace(/\n/g, '\n '.repeat(textIndentation)));
+    const argsWithIndentation = args.map(arg => arg.replace(/\n/g, '\n' + ' '.repeat(textIndentation)));
     return argsWithIndentation;
 }
 /*

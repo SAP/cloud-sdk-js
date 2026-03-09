@@ -37,8 +37,7 @@ export function documentationBlock(
   lines = adjustIndentation(lines, textIndentation);
   content = lines.join('\n * ');
 
-  const result = ['/**', ` * ${content}`, ' */'].join('\n');
-  return result;
+  return ['/**', ` * ${content}`, ' */'].join('\n');
 }
 
 /*
@@ -60,7 +59,7 @@ function addIndentationToArguments(
   textIndentation: number
 ): string[] {
   const argsWithIndentation = args.map(arg =>
-    arg.replace(/\n/g, '\n '.repeat(textIndentation))
+    arg.replace(/\n/g, '\n' + ' '.repeat(textIndentation))
   );
   return argsWithIndentation;
 }

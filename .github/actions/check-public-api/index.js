@@ -77202,7 +77202,7 @@ function addCopyrightHeader(content, withCopyright) {
     return (0, util_1.codeBlock) `
 ${(0, util_2.getCopyrightHeader)()}
 ${content}
-\n
+${util_1.unixEOL}
 `;
 }
 /**
@@ -80340,6 +80340,7 @@ function filterDuplicatesRight(arr, comparator = (left, right) => left === right
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.codeBlock = codeBlock;
+const string_formatter_1 = __nccwpck_require__(81366);
 const array_1 = __nccwpck_require__(29947);
 const string_1 = __nccwpck_require__(94757);
 /**
@@ -80356,26 +80357,26 @@ const string_1 = __nccwpck_require__(94757);
 function codeBlock(strings, ...args) {
     const pre = strings.slice(0, -1).map(string => {
         const trimmed = trimRightNewlines(string);
-        return trimmed.length === string.length ? string : `${trimmed}\n`;
+        return trimmed.length === string.length ? string : trimmed + string_formatter_1.unixEOL;
     });
     pre.push(strings[strings.length - 1]);
     const indents = strings.slice(0, -1).map(s => {
-        const indentation = s.split('\n').pop();
+        const indentation = s.split(string_formatter_1.unixEOL).pop();
         return !indentation.trim() ? indentation : '';
     });
     const post = args.map((arg, i) => ('' + arg)
-        .split('\n')
+        .split(string_formatter_1.unixEOL)
         .map(subArg => indents[i] + subArg)
-        .join('\n'));
+        .join(string_formatter_1.unixEOL));
     const zipped = (0, array_1.zip)(pre, post);
     return (0, string_1.trim)(zipped.join(''));
 }
 function trimRightNewlines(string) {
-    let subStrings = string.split('\n');
+    let subStrings = string.split(string_formatter_1.unixEOL);
     if (!subStrings[subStrings.length - 1].trim()) {
         subStrings = subStrings.slice(0, -1);
     }
-    return subStrings.join('\n');
+    return subStrings.join(string_formatter_1.unixEOL);
 }
 //# sourceMappingURL=code-block.js.map
 
@@ -80390,6 +80391,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.documentationBlock = documentationBlock;
 const array_1 = __nccwpck_require__(29947);
 const logger_1 = __nccwpck_require__(14587);
+const string_formatter_1 = __nccwpck_require__(81366);
 const logger = (0, logger_1.createLogger)('documentation-block');
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -80414,10 +80416,10 @@ function documentationBlock(strings, ...args) {
         return '';
     }
     content = maskProblematicCharacters(content);
-    let lines = content.split('\n');
+    let lines = content.split(string_formatter_1.unixEOL);
     lines = adjustIndentation(lines, textIndentation);
-    content = lines.join('\n * ');
-    const result = ['/**', ` * ${content}`, ' */'].join('\n');
+    content = lines.join(`${string_formatter_1.unixEOL} * `);
+    const result = ['/**', ` * ${content}`, ' */'].join(string_formatter_1.unixEOL);
     return result;
 }
 /*
@@ -80426,15 +80428,15 @@ myContent
 `
  */
 function removeLeadingEmptyLines(firstLine) {
-    const lines = firstLine.split('\n');
+    const lines = firstLine.split(string_formatter_1.unixEOL);
     const indexFirstNonEmpty = lines.findIndex(str => str.match(/\w/)) || 0;
-    return lines.splice(indexFirstNonEmpty).join('\n');
+    return lines.splice(indexFirstNonEmpty).join(string_formatter_1.unixEOL);
 }
 /*
  The arguments do not contain any indentation so this is added via this method.
  */
 function addIndentationToArguments(args, textIndentation) {
-    const argsWithIndentation = args.map(arg => arg.replace(/\n/g, '\n '.repeat(textIndentation)));
+    const argsWithIndentation = args.map(arg => arg.replace(/\n/g, string_formatter_1.unixEOL + ' '.repeat(textIndentation)));
     return argsWithIndentation;
 }
 /*
@@ -80526,6 +80528,7 @@ function equalArrays(arr1, arr2) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ErrorWithCause = void 0;
 exports.isErrorWithCause = isErrorWithCause;
+const string_formatter_1 = __nccwpck_require__(81366);
 const logger_1 = __nccwpck_require__(14587);
 const logger = (0, logger_1.createLogger)({
     package: 'util',
@@ -80557,18 +80560,18 @@ class ErrorWithCause extends Error {
             let response = '';
             if (cause.response?.data) {
                 try {
-                    response = `\n${JSON.stringify(cause.response?.data, null, 2)}`;
+                    response = `${string_formatter_1.unixEOL}${JSON.stringify(cause.response?.data, null, 2)}`;
                 }
                 catch (error) {
                     logger.warn(`Failed to stringify response data: ${error.message}`);
-                    response = `\n${cause.response?.data}`;
+                    response = `${string_formatter_1.unixEOL}${cause.response?.data}`;
                 }
             }
-            this.stack = `${this.stack}\nCaused by:\nHTTP Response: ${cause.message}${response}`;
+            this.stack = `${this.stack}${string_formatter_1.unixEOL}Caused by:${string_formatter_1.unixEOL}HTTP Response: ${cause.message}${response}`;
         }
         else if (this.stack && cause?.stack) {
             // Stack is a non-standard property according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types
-            this.stack = `${this.stack}\nCaused by:\n${cause.stack}`;
+            this.stack = `${this.stack}${string_formatter_1.unixEOL}Caused by:${string_formatter_1.unixEOL}${cause.stack}`;
         }
     }
     /**

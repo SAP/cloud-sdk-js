@@ -79,8 +79,8 @@ jobs:
         name: Undeclared dependency Check
       - uses: ./.github/actions/check-public-api
         with:
-            force_internal_exports: 'true'
-            excluded_packages: 'eslint-config, util, test-util'
+          force_internal_exports: 'true'
+          excluded_packages: 'eslint-config, util, test-util'
         name: Check public api
       - run: yarn test:self
         name: Self tests for tools
@@ -88,7 +88,7 @@ jobs:
         name: Circular dependency Check
       - run: yarn doc
         name: API Doc Check
-      - uses: ./.github/actions/check-license
+      - run: yarn check:license
         name: License Check
       - if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
         name: Slack Notify

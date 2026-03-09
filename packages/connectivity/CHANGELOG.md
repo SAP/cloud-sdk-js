@@ -1,5 +1,25 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.5.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.5.1
+- @sap-cloud-sdk/util@4.5.1
+
+## 4.5.0
+
+### Minor Changes
+
+- 02d1302: [Compatibility Note] Update `@sap/xssec` to version 4.12.2 with changed XSUAA URL behavior.
+  When fetching XSUAA tokens with zone ID (multi-tenant scenarios), xssec now uses the base domain without a tenant subdomain prefix.
+- 962cdcb: [Improvement] Allow passing a `service` binding directly through `DestinationFromServiceBindingOptions` instead of looking it up by name.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.5.0
+- @sap-cloud-sdk/util@4.5.0
+
 ## 4.4.0
 
 ### Minor Changes

@@ -27969,6 +27969,7 @@ var errors = __nccwpck_require__(17789);
 var logger = __nccwpck_require__(68323);
 var getPackages = __nccwpck_require__(94941);
 var getDependentsGraph = __nccwpck_require__(81699);
+var shouldSkipPackage = __nccwpck_require__(81435);
 
 function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
 
@@ -27996,7 +27997,7 @@ var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
 
 var packageJson = {
 	name: "@changesets/config",
-	version: "3.1.2",
+	version: "3.1.3",
 	description: "Utilities for reading and parsing Changeset's config",
 	main: "dist/changesets-config.cjs.js",
 	module: "dist/changesets-config.esm.js",
@@ -28010,7 +28011,8 @@ var packageJson = {
 			"import": "./dist/changesets-config.cjs.mjs",
 			"default": "./dist/changesets-config.cjs.js"
 		},
-		"./package.json": "./package.json"
+		"./package.json": "./package.json",
+		"./schema.json": "./schema.json"
 	},
 	license: "MIT",
 	repository: "https://github.com/changesets/changesets/tree/main/packages/config",
@@ -28022,6 +28024,7 @@ var packageJson = {
 		"@changesets/errors": "^0.2.0",
 		"@changesets/get-dependents-graph": "^2.1.3",
 		"@changesets/logger": "^0.1.1",
+		"@changesets/should-skip-package": "^0.1.2",
 		"@changesets/types": "^6.1.0",
 		"@manypkg/get-packages": "^1.1.3",
 		"fs-extra": "^7.0.1",
@@ -28032,6 +28035,13 @@ var packageJson = {
 		"@types/micromatch": "^4.0.1",
 		"jest-in-case": "^1.0.2",
 		outdent: "^0.5.0"
+	},
+	preconstruct: {
+		exports: {
+			extra: {
+				"./schema.json": "./schema.json"
+			}
+		}
 	}
 };
 
@@ -28086,11 +28096,11 @@ function isArray(arg) {
 }
 let read = async (cwd, packages) => {
   packages !== null && packages !== void 0 ? packages : packages = await getPackages.getPackages(cwd);
-  let json = await fs__namespace.readJSON(path__default["default"].join(cwd, ".changeset", "config.json"));
+  let json = await fs__namespace.readJSON(path__default["default"].join(packages.root.dir, ".changeset", "config.json"));
   return parse(json, packages);
 };
 let parse = (json, packages) => {
-  var _json$changedFilePatt, _json$snapshot$prerel, _json$snapshot, _json$snapshot2, _json$___experimental, _json$___experimental2, _json$___experimental3, _json$___experimental4, _json$privatePackages, _json$privatePackages2;
+  var _json$privatePackages, _json$privatePackages2, _json$changedFilePatt, _json$snapshot$prerel, _json$snapshot, _json$snapshot2, _json$___experimental, _json$___experimental2, _json$___experimental3, _json$___experimental4;
   let messages = [];
   let pkgNames = packages.packages.map(({
     packageJson
@@ -28175,23 +28185,78 @@ let parse = (json, packages) => {
   if (json.updateInternalDependencies !== undefined && !["patch", "minor"].includes(json.updateInternalDependencies)) {
     messages.push(`The \`updateInternalDependencies\` option is set as ${JSON.stringify(json.updateInternalDependencies, null, 2)} but can only be 'patch' or 'minor'`);
   }
+  if (json.privatePackages !== undefined && json.privatePackages !== false) {
+    if (typeof json.privatePackages !== "object") {
+      messages.push(`The \`privatePackages\` option is set as ${JSON.stringify(json.privatePackages, null, 2)} when the only valid values are undefined, false, or an object with optional boolean \`version\` and \`tag\` properties`);
+    } else {
+      if (json.privatePackages.version !== undefined && typeof json.privatePackages.version !== "boolean") {
+        messages.push(`The \`privatePackages.version\` option is set as ${JSON.stringify(json.privatePackages.version, null, 2)} but the only valid values are undefined or a boolean`);
+      }
+      if (json.privatePackages.tag !== undefined && typeof json.privatePackages.tag !== "boolean") {
+        messages.push(`The \`privatePackages.tag\` option is set as ${JSON.stringify(json.privatePackages.tag, null, 2)} but the only valid values are undefined or a boolean`);
+      }
+    }
+  }
+  const privatePackages = json.privatePackages === false ? {
+    tag: false,
+    version: false
+  } : json.privatePackages ? {
+    version: (_json$privatePackages = json.privatePackages.version) !== null && _json$privatePackages !== void 0 ? _json$privatePackages : true,
+    tag: (_json$privatePackages2 = json.privatePackages.tag) !== null && _json$privatePackages2 !== void 0 ? _json$privatePackages2 : false
+  } : {
+    version: true,
+    tag: false
+  };
   if (json.ignore) {
     if (!(isArray(json.ignore) && json.ignore.every(pkgName => typeof pkgName === "string"))) {
       messages.push(`The \`ignore\` option is set as ${JSON.stringify(json.ignore, null, 2)} when the only valid values are undefined or an array of package names`);
     } else {
       messages.push(...getUnmatchedPatterns(json.ignore, pkgNames).map(pkgOrGlob => `The package or glob expression "${pkgOrGlob}" is specified in the \`ignore\` option but it is not found in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch`));
+    }
+  }
 
-      // Validate that all dependents of ignored packages are listed in the ignore list
-      const dependentsGraph = getDependentsGraph.getDependentsGraph(packages, {
-        bumpVersionsWithWorkspaceProtocolOnly: json.bumpVersionsWithWorkspaceProtocolOnly
-      });
-      for (const ignoredPackage of json.ignore) {
-        const dependents = dependentsGraph.get(ignoredPackage) || [];
-        for (const dependent of dependents) {
-          if (!json.ignore.includes(dependent)) {
-            messages.push(`The package "${dependent}" depends on the ignored package "${ignoredPackage}", but "${dependent}" is not being ignored. Please add "${dependent}" to the \`ignore\` option.`);
-          }
+  // Validate that dependents of skipped packages are also skipped.
+  // A package is "skipped" if it's in the ignore list, or if it's private
+  // and privatePackages.version is false.
+  // devDependencies are excluded because they don't affect published consumers —
+  // a stale devDep range on a skipped package is harmless.
+  // Note: assemble-release-plan uses a graph WITH devDeps because it needs to
+  // update devDep ranges in package.json even though they don't cause version bumps.
+  const ignore = isArray(json.ignore) ? json.ignore : [];
+  if (ignore.length || !privatePackages.version) {
+    const dependentsGraph = getDependentsGraph.getDependentsGraph(packages, {
+      ignoreDevDependencies: true,
+      bumpVersionsWithWorkspaceProtocolOnly: json.bumpVersionsWithWorkspaceProtocolOnly
+    });
+    const packagesByName = new Map(packages.packages.map(x => [x.packageJson.name, x]));
+    for (const pkg of packages.packages) {
+      if (!shouldSkipPackage.shouldSkipPackage(pkg, {
+        ignore,
+        allowPrivatePackages: privatePackages.version
+      })) {
+        continue;
+      }
+      const skippedPackage = pkg.packageJson.name;
+      const dependents = dependentsGraph.get(skippedPackage) || [];
+      for (const dependent of dependents) {
+        const dependentPkg = packagesByName.get(dependent);
+        if (!dependentPkg) {
+          continue;
         }
+        if (shouldSkipPackage.shouldSkipPackage(dependentPkg, {
+          ignore,
+          allowPrivatePackages: privatePackages.version
+        })) {
+          continue;
+        }
+        // Private packages don't publish to npm,
+        // so they can safely depend on skipped packages.
+        // This also holds for private packages with other publish targets (like a VS Code extension)
+        // as those typically have to prebundle dependencies.
+        if (dependentPkg.packageJson.private) {
+          continue;
+        }
+        messages.push(`The package "${dependent}" depends on the skipped package "${skippedPackage}", but "${dependent}" is not being skipped. Please add "${dependent}" to the \`ignore\` option.`);
       }
     }
   }
@@ -28252,16 +28317,7 @@ let parse = (json, packages) => {
     },
     prettier: typeof json.prettier === "boolean" ? json.prettier : true,
     // TODO consider enabling this by default in the next major version
-    privatePackages: json.privatePackages === false ? {
-      tag: false,
-      version: false
-    } : json.privatePackages ? {
-      version: (_json$privatePackages = json.privatePackages.version) !== null && _json$privatePackages !== void 0 ? _json$privatePackages : true,
-      tag: (_json$privatePackages2 = json.privatePackages.tag) !== null && _json$privatePackages2 !== void 0 ? _json$privatePackages2 : false
-    } : {
-      version: true,
-      tag: false
-    }
+    privatePackages
   };
   if (config.privatePackages.version === false && config.privatePackages.tag === true) {
     throw new errors.ValidationError(`The \`privatePackages.tag\` option is set to \`true\` but \`privatePackages.version\` is set to \`false\`. This is not allowed.`);
@@ -28587,10 +28643,10 @@ function _objectSpread2(e) {
 
 async function getReleasePlan(cwd, sinceRef, passedConfig) {
   const packages = await getPackages.getPackages(cwd);
-  const preState = await pre.readPreState(cwd);
-  const readConfig = await config.read(cwd, packages);
+  const preState = await pre.readPreState(packages.root.dir);
+  const readConfig = await config.read(packages.root.dir, packages);
   const config$1 = passedConfig ? _objectSpread2(_objectSpread2({}, readConfig), passedConfig) : readConfig;
-  const changesets = await readChangesets__default["default"](cwd, sinceRef);
+  const changesets = await readChangesets__default["default"](packages.root.dir, sinceRef);
   return assembleReleasePlan__default["default"](changesets, packages, config$1, preState);
 }
 
@@ -28953,30 +29009,54 @@ function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; 
 var yaml__default = /*#__PURE__*/_interopDefault(yaml);
 
 const mdRegex = /\s*---([^]*?)\n\s*---(\s*(?:\n|$)[^]*)/;
+const EXAMPLE_FORMAT = `---\n"package-name": patch\n---`;
+const validVersionTypes = ["major", "minor", "patch", "none"];
+function truncate(s, max = 200) {
+  return s.length > max ? s.slice(0, max) + "..." : s;
+}
+function validateReleases(releases, contents) {
+  for (const release of releases) {
+    if (typeof release.name !== "string" || release.name.trim() === "") {
+      throw new Error(`could not parse changeset - invalid package name in frontmatter.\n` + `Expected a non-empty string for package name, but got: ${JSON.stringify(release.name)}\n` + `Changeset contents:\n${truncate(contents)}`);
+    }
+    if (typeof release.type !== "string") {
+      throw new Error(`could not parse changeset - invalid release type for package "${release.name}".\n` + `Expected a string for release type, but got: ${typeof release.type}\n` + `Changeset contents:\n${truncate(contents)}`);
+    }
+    if (!validVersionTypes.includes(release.type)) {
+      throw new Error(`could not parse changeset - invalid version type ${JSON.stringify(release.type)} for package "${release.name}".\n` + `Valid version types are: ${validVersionTypes.join(", ")}\n` + `Changeset contents:\n${truncate(contents)}`);
+    }
+  }
+}
 function parseChangesetFile(contents) {
+  const trimmedContents = contents.trim();
+  if (!trimmedContents) {
+    throw new Error(`could not parse changeset - file is empty.\n` + `Changesets must have frontmatter with package names and version types.\n` + `Example:\n${EXAMPLE_FORMAT}\n\nYour changeset summary here.`);
+  }
   const execResult = mdRegex.exec(contents);
   if (!execResult) {
-    throw new Error(`could not parse changeset - invalid frontmatter: ${contents}`);
+    throw new Error(`could not parse changeset - missing or invalid frontmatter.\n` + `Changesets must start with frontmatter delimited by "---".\n` + `Example:\n${EXAMPLE_FORMAT}\n\nYour changeset summary here.\n` + `Received content:\n${truncate(trimmedContents)}`);
   }
   let [, roughReleases, roughSummary] = execResult;
   let summary = roughSummary.trim();
   let releases;
+  let yamlStuff;
   try {
-    const yamlStuff = yaml__default["default"].load(roughReleases);
-    if (yamlStuff) {
-      releases = Object.entries(yamlStuff).map(([name, type]) => ({
-        name,
-        type
-      }));
-    } else {
-      releases = [];
-    }
+    yamlStuff = yaml__default["default"].load(roughReleases);
   } catch (e) {
-    throw new Error(`could not parse changeset - invalid frontmatter: ${contents}`);
+    throw new Error(`could not parse changeset - invalid YAML in frontmatter.\n` + `The frontmatter between the "---" delimiters must be valid YAML.\n` + `YAML error: ${e instanceof Error ? e.message : String(e)}\n` + `Frontmatter content:\n${roughReleases}`);
   }
-  if (!releases) {
-    throw new Error(`could not parse changeset - unknown error: ${contents}`);
+  if (yamlStuff) {
+    if (typeof yamlStuff !== "object" || Array.isArray(yamlStuff)) {
+      throw new Error(`could not parse changeset - frontmatter must be an object mapping package names to version types.\n` + `Expected format:\n${EXAMPLE_FORMAT}\n` + `Received:\n${roughReleases}`);
+    }
+    releases = Object.entries(yamlStuff).map(([name, type]) => ({
+      name,
+      type
+    }));
+  } else {
+    releases = [];
   }
+  validateReleases(releases, contents);
   return {
     releases,
     summary
@@ -29274,8 +29354,8 @@ async function filterChangesetsSinceRef(changesets, changesetBase, sinceRef) {
   const newHashes = newChangesets.map(c => c.split("/").pop());
   return changesets.filter(dir => newHashes.includes(dir));
 }
-async function getChangesets(cwd, sinceRef) {
-  let changesetBase = path__default["default"].join(cwd, ".changeset");
+async function getChangesets(rootDir, sinceRef) {
+  let changesetBase = path__default["default"].join(rootDir, ".changeset");
   let contents;
   try {
     contents = await fs__namespace["default"].readdir(changesetBase);
@@ -36923,7 +37003,7 @@ module.exports = readShebang;
 
 
 const path = __nccwpck_require__(16928);
-const which = __nccwpck_require__(13340);
+const which = __nccwpck_require__(67514);
 const getPathKey = __nccwpck_require__(50661);
 
 function resolveCommandAttempt(parsed, withoutPathExt) {
@@ -36972,6 +37052,138 @@ function resolveCommand(parsed) {
 }
 
 module.exports = resolveCommand;
+
+
+/***/ }),
+
+/***/ 67514:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const isWindows = process.platform === 'win32' ||
+    process.env.OSTYPE === 'cygwin' ||
+    process.env.OSTYPE === 'msys'
+
+const path = __nccwpck_require__(16928)
+const COLON = isWindows ? ';' : ':'
+const isexe = __nccwpck_require__(49648)
+
+const getNotFoundError = (cmd) =>
+  Object.assign(new Error(`not found: ${cmd}`), { code: 'ENOENT' })
+
+const getPathInfo = (cmd, opt) => {
+  const colon = opt.colon || COLON
+
+  // If it has a slash, then we don't bother searching the pathenv.
+  // just check the file itself, and that's it.
+  const pathEnv = cmd.match(/\//) || isWindows && cmd.match(/\\/) ? ['']
+    : (
+      [
+        // windows always checks the cwd first
+        ...(isWindows ? [process.cwd()] : []),
+        ...(opt.path || process.env.PATH ||
+          /* istanbul ignore next: very unusual */ '').split(colon),
+      ]
+    )
+  const pathExtExe = isWindows
+    ? opt.pathExt || process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM'
+    : ''
+  const pathExt = isWindows ? pathExtExe.split(colon) : ['']
+
+  if (isWindows) {
+    if (cmd.indexOf('.') !== -1 && pathExt[0] !== '')
+      pathExt.unshift('')
+  }
+
+  return {
+    pathEnv,
+    pathExt,
+    pathExtExe,
+  }
+}
+
+const which = (cmd, opt, cb) => {
+  if (typeof opt === 'function') {
+    cb = opt
+    opt = {}
+  }
+  if (!opt)
+    opt = {}
+
+  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
+  const found = []
+
+  const step = i => new Promise((resolve, reject) => {
+    if (i === pathEnv.length)
+      return opt.all && found.length ? resolve(found)
+        : reject(getNotFoundError(cmd))
+
+    const ppRaw = pathEnv[i]
+    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
+
+    const pCmd = path.join(pathPart, cmd)
+    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
+      : pCmd
+
+    resolve(subStep(p, i, 0))
+  })
+
+  const subStep = (p, i, ii) => new Promise((resolve, reject) => {
+    if (ii === pathExt.length)
+      return resolve(step(i + 1))
+    const ext = pathExt[ii]
+    isexe(p + ext, { pathExt: pathExtExe }, (er, is) => {
+      if (!er && is) {
+        if (opt.all)
+          found.push(p + ext)
+        else
+          return resolve(p + ext)
+      }
+      return resolve(subStep(p, i, ii + 1))
+    })
+  })
+
+  return cb ? step(0).then(res => cb(null, res), cb) : step(0)
+}
+
+const whichSync = (cmd, opt) => {
+  opt = opt || {}
+
+  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
+  const found = []
+
+  for (let i = 0; i < pathEnv.length; i ++) {
+    const ppRaw = pathEnv[i]
+    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
+
+    const pCmd = path.join(pathPart, cmd)
+    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
+      : pCmd
+
+    for (let j = 0; j < pathExt.length; j ++) {
+      const cur = p + pathExt[j]
+      try {
+        const is = isexe.sync(cur, { pathExt: pathExtExe })
+        if (is) {
+          if (opt.all)
+            found.push(cur)
+          else
+            return cur
+        }
+      } catch (ex) {}
+    }
+  }
+
+  if (opt.all && found.length)
+    return found
+
+  if (opt.nothrow)
+    return null
+
+  throw getNotFoundError(cmd)
+}
+
+module.exports = which
+which.sync = whichSync
 
 
 /***/ }),
@@ -52256,7 +52468,7 @@ module.exports.callCount = function_ => {
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 
-const pMap = __nccwpck_require__(11083);
+const pMap = __nccwpck_require__(40876);
 
 const pFilter = async (iterable, filterer, options) => {
 	const values = await pMap(
@@ -52270,6 +52482,85 @@ const pFilter = async (iterable, filterer, options) => {
 module.exports = pFilter;
 // TODO: Remove this for the next major release
 module.exports["default"] = pFilter;
+
+
+/***/ }),
+
+/***/ 40876:
+/***/ ((module) => {
+
+
+
+const pMap = (iterable, mapper, options) => new Promise((resolve, reject) => {
+	options = Object.assign({
+		concurrency: Infinity
+	}, options);
+
+	if (typeof mapper !== 'function') {
+		throw new TypeError('Mapper function is required');
+	}
+
+	const {concurrency} = options;
+
+	if (!(typeof concurrency === 'number' && concurrency >= 1)) {
+		throw new TypeError(`Expected \`concurrency\` to be a number from 1 and up, got \`${concurrency}\` (${typeof concurrency})`);
+	}
+
+	const ret = [];
+	const iterator = iterable[Symbol.iterator]();
+	let isRejected = false;
+	let isIterableDone = false;
+	let resolvingCount = 0;
+	let currentIndex = 0;
+
+	const next = () => {
+		if (isRejected) {
+			return;
+		}
+
+		const nextItem = iterator.next();
+		const i = currentIndex;
+		currentIndex++;
+
+		if (nextItem.done) {
+			isIterableDone = true;
+
+			if (resolvingCount === 0) {
+				resolve(ret);
+			}
+
+			return;
+		}
+
+		resolvingCount++;
+
+		Promise.resolve(nextItem.value)
+			.then(element => mapper(element, i))
+			.then(
+				value => {
+					ret[i] = value;
+					resolvingCount--;
+					next();
+				},
+				error => {
+					isRejected = true;
+					reject(error);
+				}
+			);
+	};
+
+	for (let i = 0; i < concurrency; i++) {
+		next();
+
+		if (isIterableDone) {
+			break;
+		}
+	}
+});
+
+module.exports = pMap;
+// TODO: Remove this for the next major release
+module.exports["default"] = pMap;
 
 
 /***/ }),
@@ -52393,85 +52684,6 @@ const pLimit = concurrency => {
 
 module.exports = pLimit;
 module.exports["default"] = pLimit;
-
-
-/***/ }),
-
-/***/ 11083:
-/***/ ((module) => {
-
-
-
-const pMap = (iterable, mapper, options) => new Promise((resolve, reject) => {
-	options = Object.assign({
-		concurrency: Infinity
-	}, options);
-
-	if (typeof mapper !== 'function') {
-		throw new TypeError('Mapper function is required');
-	}
-
-	const {concurrency} = options;
-
-	if (!(typeof concurrency === 'number' && concurrency >= 1)) {
-		throw new TypeError(`Expected \`concurrency\` to be a number from 1 and up, got \`${concurrency}\` (${typeof concurrency})`);
-	}
-
-	const ret = [];
-	const iterator = iterable[Symbol.iterator]();
-	let isRejected = false;
-	let isIterableDone = false;
-	let resolvingCount = 0;
-	let currentIndex = 0;
-
-	const next = () => {
-		if (isRejected) {
-			return;
-		}
-
-		const nextItem = iterator.next();
-		const i = currentIndex;
-		currentIndex++;
-
-		if (nextItem.done) {
-			isIterableDone = true;
-
-			if (resolvingCount === 0) {
-				resolve(ret);
-			}
-
-			return;
-		}
-
-		resolvingCount++;
-
-		Promise.resolve(nextItem.value)
-			.then(element => mapper(element, i))
-			.then(
-				value => {
-					ret[i] = value;
-					resolvingCount--;
-					next();
-				},
-				error => {
-					isRejected = true;
-					reject(error);
-				}
-			);
-	};
-
-	for (let i = 0; i < concurrency; i++) {
-		next();
-
-		if (isIterableDone) {
-			break;
-		}
-	}
-});
-
-module.exports = pMap;
-// TODO: Remove this for the next major release
-module.exports["default"] = pMap;
 
 
 /***/ }),
@@ -60756,380 +60968,248 @@ exports.z = function (fn) {
 
 /***/ }),
 
-/***/ 13340:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const isWindows = process.platform === 'win32' ||
-    process.env.OSTYPE === 'cygwin' ||
-    process.env.OSTYPE === 'msys'
-
-const path = __nccwpck_require__(16928)
-const COLON = isWindows ? ';' : ':'
-const isexe = __nccwpck_require__(49648)
-
-const getNotFoundError = (cmd) =>
-  Object.assign(new Error(`not found: ${cmd}`), { code: 'ENOENT' })
-
-const getPathInfo = (cmd, opt) => {
-  const colon = opt.colon || COLON
-
-  // If it has a slash, then we don't bother searching the pathenv.
-  // just check the file itself, and that's it.
-  const pathEnv = cmd.match(/\//) || isWindows && cmd.match(/\\/) ? ['']
-    : (
-      [
-        // windows always checks the cwd first
-        ...(isWindows ? [process.cwd()] : []),
-        ...(opt.path || process.env.PATH ||
-          /* istanbul ignore next: very unusual */ '').split(colon),
-      ]
-    )
-  const pathExtExe = isWindows
-    ? opt.pathExt || process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM'
-    : ''
-  const pathExt = isWindows ? pathExtExe.split(colon) : ['']
-
-  if (isWindows) {
-    if (cmd.indexOf('.') !== -1 && pathExt[0] !== '')
-      pathExt.unshift('')
-  }
-
-  return {
-    pathEnv,
-    pathExt,
-    pathExtExe,
-  }
-}
-
-const which = (cmd, opt, cb) => {
-  if (typeof opt === 'function') {
-    cb = opt
-    opt = {}
-  }
-  if (!opt)
-    opt = {}
-
-  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
-  const found = []
-
-  const step = i => new Promise((resolve, reject) => {
-    if (i === pathEnv.length)
-      return opt.all && found.length ? resolve(found)
-        : reject(getNotFoundError(cmd))
-
-    const ppRaw = pathEnv[i]
-    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
-
-    const pCmd = path.join(pathPart, cmd)
-    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
-      : pCmd
-
-    resolve(subStep(p, i, 0))
-  })
-
-  const subStep = (p, i, ii) => new Promise((resolve, reject) => {
-    if (ii === pathExt.length)
-      return resolve(step(i + 1))
-    const ext = pathExt[ii]
-    isexe(p + ext, { pathExt: pathExtExe }, (er, is) => {
-      if (!er && is) {
-        if (opt.all)
-          found.push(p + ext)
-        else
-          return resolve(p + ext)
-      }
-      return resolve(subStep(p, i, ii + 1))
-    })
-  })
-
-  return cb ? step(0).then(res => cb(null, res), cb) : step(0)
-}
-
-const whichSync = (cmd, opt) => {
-  opt = opt || {}
-
-  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
-  const found = []
-
-  for (let i = 0; i < pathEnv.length; i ++) {
-    const ppRaw = pathEnv[i]
-    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
-
-    const pCmd = path.join(pathPart, cmd)
-    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
-      : pCmd
-
-    for (let j = 0; j < pathExt.length; j ++) {
-      const cur = p + pathExt[j]
-      try {
-        const is = isexe.sync(cur, { pathExt: pathExtExe })
-        if (is) {
-          if (opt.all)
-            found.push(cur)
-          else
-            return cur
-        }
-      } catch (ex) {}
-    }
-  }
-
-  if (opt.all && found.length)
-    return found
-
-  if (opt.nothrow)
-    return null
-
-  throw getNotFoundError(cmd)
-}
-
-module.exports = which
-which.sync = whichSync
-
-
-/***/ }),
-
 /***/ 42613:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("assert");
+module.exports = require("assert");
 
 /***/ }),
 
 /***/ 20181:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("buffer");
+module.exports = require("buffer");
 
 /***/ }),
 
 /***/ 35317:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("child_process");
+module.exports = require("child_process");
 
 /***/ }),
 
 /***/ 49140:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("constants");
+module.exports = require("constants");
 
 /***/ }),
 
 /***/ 24434:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("events");
+module.exports = require("events");
 
 /***/ }),
 
 /***/ 79896:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
+module.exports = require("fs");
 
 /***/ }),
 
 /***/ 58611:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("http");
+module.exports = require("http");
 
 /***/ }),
 
 /***/ 65692:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("https");
+module.exports = require("https");
 
 /***/ }),
 
 /***/ 69278:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("net");
+module.exports = require("net");
 
 /***/ }),
 
 /***/ 34589:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:assert");
+module.exports = require("node:assert");
 
 /***/ }),
 
 /***/ 16698:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:async_hooks");
+module.exports = require("node:async_hooks");
 
 /***/ }),
 
 /***/ 4573:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:buffer");
+module.exports = require("node:buffer");
 
 /***/ }),
 
 /***/ 37540:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:console");
+module.exports = require("node:console");
 
 /***/ }),
 
 /***/ 77598:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:crypto");
+module.exports = require("node:crypto");
 
 /***/ }),
 
 /***/ 53053:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:diagnostics_channel");
+module.exports = require("node:diagnostics_channel");
 
 /***/ }),
 
 /***/ 40610:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:dns");
+module.exports = require("node:dns");
 
 /***/ }),
 
 /***/ 78474:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:events");
+module.exports = require("node:events");
 
 /***/ }),
 
 /***/ 37067:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:http");
+module.exports = require("node:http");
 
 /***/ }),
 
 /***/ 32467:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:http2");
+module.exports = require("node:http2");
 
 /***/ }),
 
 /***/ 77030:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:net");
+module.exports = require("node:net");
 
 /***/ }),
 
 /***/ 643:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:perf_hooks");
+module.exports = require("node:perf_hooks");
 
 /***/ }),
 
 /***/ 41792:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:querystring");
+module.exports = require("node:querystring");
 
 /***/ }),
 
 /***/ 57075:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:stream");
+module.exports = require("node:stream");
 
 /***/ }),
 
 /***/ 41692:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:tls");
+module.exports = require("node:tls");
 
 /***/ }),
 
 /***/ 73136:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:url");
+module.exports = require("node:url");
 
 /***/ }),
 
 /***/ 57975:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:util");
+module.exports = require("node:util");
 
 /***/ }),
 
 /***/ 73429:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:util/types");
+module.exports = require("node:util/types");
 
 /***/ }),
 
 /***/ 75919:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:worker_threads");
+module.exports = require("node:worker_threads");
 
 /***/ }),
 
 /***/ 38522:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:zlib");
+module.exports = require("node:zlib");
 
 /***/ }),
 
 /***/ 70857:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("os");
+module.exports = require("os");
 
 /***/ }),
 
 /***/ 16928:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("path");
+module.exports = require("path");
 
 /***/ }),
 
 /***/ 2203:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("stream");
+module.exports = require("stream");
 
 /***/ }),
 
 /***/ 13193:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("string_decoder");
+module.exports = require("string_decoder");
 
 /***/ }),
 
 /***/ 64756:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("tls");
+module.exports = require("tls");
 
 /***/ }),
 
 /***/ 39023:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("util");
+module.exports = require("util");
 
 /***/ }),
 
@@ -62058,7 +62138,7 @@ if (process.platform === 'linux') {
 var __webpack_exports__ = {};
 
 ;// CONCATENATED MODULE: external "node:path"
-const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
+const external_node_path_namespaceObject = require("node:path");
 // EXTERNAL MODULE: external "os"
 var external_os_ = __nccwpck_require__(70857);
 ;// CONCATENATED MODULE: ../../node_modules/@actions/core/lib/utils.js
@@ -62190,7 +62270,7 @@ function escapeProperty(s) {
 }
 //# sourceMappingURL=command.js.map
 ;// CONCATENATED MODULE: external "crypto"
-const external_crypto_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("crypto");
+const external_crypto_namespaceObject = require("crypto");
 // EXTERNAL MODULE: external "fs"
 var external_fs_ = __nccwpck_require__(79896);
 ;// CONCATENATED MODULE: ../../node_modules/@actions/core/lib/file-command.js
@@ -63952,7 +64032,7 @@ function io_copyFile(srcFile, destFile, force) {
 }
 //# sourceMappingURL=io.js.map
 ;// CONCATENATED MODULE: external "timers"
-const external_timers_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("timers");
+const external_timers_namespaceObject = require("timers");
 ;// CONCATENATED MODULE: ../../node_modules/@actions/exec/lib/toolrunner.js
 var toolrunner_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }

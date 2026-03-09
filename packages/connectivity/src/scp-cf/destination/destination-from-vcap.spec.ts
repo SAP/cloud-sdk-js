@@ -289,6 +289,93 @@ describe('vcap-service-destination', () => {
     );
   });
 
+  describe('service parameter', () => {
+    it('uses provided service binding directly instead of lookup and uses its name', async () => {
+      const serviceBinding = {
+        name: 'direct-s4-service',
+        label: 's4-hana-cloud',
+        tags: [],
+        credentials: {
+          Password: 'DIRECT_PASSWORD',
+          URL: 'https://direct.example.com',
+          User: 'DIRECT_USER'
+        }
+      } as any;
+
+      await expect(
+        getDestinationFromServiceBinding({
+          destinationName: 'non-existent-service',
+          service: serviceBinding
+        })
+      ).resolves.toEqual({
+        url: 'https://direct.example.com',
+        authentication: 'BasicAuthentication',
+        username: 'DIRECT_USER',
+        password: 'DIRECT_PASSWORD',
+        name: 'direct-s4-service'
+      });
+    });
+
+    it('works with custom transform function', async () => {
+      const serviceBinding = {
+        name: 'custom-service',
+        label: 'custom',
+        tags: [],
+        credentials: {
+          apiUrl: 'https://custom-api.example.com'
+        }
+      } as any;
+
+      const serviceBindingTransformFn = jest.fn(async (service: Service) => ({
+        url: service.credentials.apiUrl,
+        authentication: 'NoAuthentication' as const
+      }));
+
+      const destination = await getDestinationFromServiceBinding({
+        service: serviceBinding,
+        serviceBindingTransformFn
+      });
+
+      expect(destination).toEqual({
+        url: 'https://custom-api.example.com',
+        authentication: 'NoAuthentication',
+        name: 'custom-service'
+      });
+      expect(serviceBindingTransformFn).toHaveBeenCalledWith(
+        serviceBinding,
+        expect.any(Object)
+      );
+    });
+
+    it('passes through additional options like jwt and useCache', async () => {
+      mockServiceToken();
+
+      const serviceBinding = {
+        name: 'destination-service',
+        label: 'destination',
+        tags: [],
+        credentials: {
+          clientid: 'test-client-id',
+          clientsecret: 'test-secret',
+          uri: 'https://test-destination.example.com'
+        }
+      } as any;
+
+      const destination = await getDestinationFromServiceBinding({
+        destinationName: 'fallback',
+        service: serviceBinding,
+        jwt: providerUserToken,
+        useCache: true
+      });
+
+      expect(destination).toMatchObject({
+        url: 'https://test-destination.example.com',
+        authentication: 'OAuth2ClientCredentials',
+        name: 'destination-service'
+      });
+    });
+  });
+
   describe('IAS service binding', () => {
     function mockIasClientCredentialsToken(aud: string) {
       const token = signedJwt({ jti: 'some-jti', ias_apis: [], aud });

@@ -1,6 +1,5 @@
 // eslint-disable-next-line
 import commonConfig from '../../test-resources/jest.common.config.js';
-import path from 'node:path';
 
 export default {
   ...commonConfig,
@@ -9,8 +8,7 @@ export default {
     '^.+\\.tsx?$': [
       'ts-jest',
       {
-        useESM: true,
-        tsconfig: path.resolve(import.meta.dirname, 'tsconfig.test.json')
+        useESM: true
       }
     ]
   },

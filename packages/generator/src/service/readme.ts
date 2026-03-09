@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import {
   helpfulLinksSection,
   usageHeaderText
@@ -49,7 +48,7 @@ export function readme(service: VdmServiceMetadata): string {
     ...addUsageExample(service),
     ...helpfulLinksSection(),
     ''
-  ].join(unixEOL);
+  ].join('\n');
 }
 
 function addUsageExample(service: VdmServiceMetadata): string[] {

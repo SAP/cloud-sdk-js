@@ -1,4 +1,4 @@
-import { unixEOL, titleFormat } from '@sap-cloud-sdk/util';
+import { titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot, ensureString } from '../generator-utils';
 import type {
   EdmxDocumented,
@@ -25,7 +25,7 @@ export function longDescription(
   if (documented.Documentation) {
     const summary = ensureString(documented.Documentation.Summary);
     const longDesc = ensureString(documented.Documentation.LongDescription);
-    docs = `${summary}${unixEOL}${longDesc}`.trim();
+    docs = `${summary}\n${longDesc}`.trim();
   }
   if (!docs && described) {
     docs = ensureString(described.description);
@@ -55,7 +55,7 @@ export function propertyDescription(
 ): string {
   const short = shortPropertyDescription(property, swaggerProperty);
   const long = longDescription(property, swaggerProperty);
-  return `${short}${unixEOL}${long}`.trim();
+  return `${short}\n${long}`.trim();
 }
 /**
  * @internal

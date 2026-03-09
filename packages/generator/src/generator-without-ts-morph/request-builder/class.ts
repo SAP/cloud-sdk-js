@@ -1,4 +1,4 @@
-import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { getFunctionDoc, getRequestBuilderDescription } from '../../typedoc';
 import type { VdmEntity } from '../../vdm-types';
 
@@ -7,9 +7,9 @@ import type { VdmEntity } from '../../vdm-types';
  */
 export function requestBuilderClass(entity: VdmEntity): string {
   return (
-    unixEOL +
+    '\n' +
     documentationBlock`${getRequestBuilderDescription(entity)}` +
-    unixEOL +
+    '\n' +
     codeBlock`export class ${
       entity.className
     }RequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<${
@@ -60,7 +60,7 @@ function getByKeyRequestBuilder(entity: VdmEntity): string {
         }))
       }
     )}` +
-    unixEOL +
+    '\n' +
     codeBlock`getByKey(${entity.keys
       .map(
         key =>
@@ -83,7 +83,7 @@ function getAllRequestBuilder({ className }: VdmEntity): string {
         }
       }
     )}` +
-    unixEOL +
+    '\n' +
     codeBlock`getAll(): GetAllRequestBuilder<${className}<T>, T> {
     return new GetAllRequestBuilder<${className}<T>, T>(this.entityApi);
   }`
@@ -108,7 +108,7 @@ function createRequestBuilder({ className }: VdmEntity): string {
         ]
       }
     )}` +
-    unixEOL +
+    '\n' +
     codeBlock`create(entity: ${className}<T>): CreateRequestBuilder<${className}<T>, T>{
     return new CreateRequestBuilder<${className}<T>, T>(this.entityApi, entity);
   }`
@@ -133,7 +133,7 @@ function updateRequestBuilder({ className }: VdmEntity): string {
         ]
       }
     )}` +
-    unixEOL +
+    '\n' +
     codeBlock`update(entity: ${className}<T>): UpdateRequestBuilder<${className}<T>, T>{
     return new UpdateRequestBuilder<${className}<T>, T>(this.entityApi, entity);
   }`
@@ -228,7 +228,7 @@ function deleteRequestBuilderStatements(entity: VdmEntity): string {
   );
   const keys = entity.keys
     .map((key, index) => `${key.originalName}: ${params[index]}!`)
-    .join(`,${unixEOL}`);
+    .join(',\n');
   return `return new DeleteRequestBuilder<${entity.className}<T>, T>(this.entityApi, ${params[0]} instanceof ${entity.className} ? ${params[0]} : {${keys}});`;
 }
 
@@ -238,7 +238,7 @@ function buildParametrizedStatements(
 ) {
   const params = entity.keys
     .map(key => `${key.originalName}: ${key.propertyNameAsParam}`)
-    .join(`,${unixEOL}`);
+    .join(',\n');
   return `return new ${requestBuilder}<${entity.className}<T>, T>(this.entityApi, {${params}});`;
 }
 

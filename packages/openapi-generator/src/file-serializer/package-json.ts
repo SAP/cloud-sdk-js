@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { packageJsonBase } from '@sap-cloud-sdk/generator-common/internal';
 import type { PackageJsonOptions } from '@sap-cloud-sdk/generator-common/internal';
 
@@ -32,6 +31,6 @@ export function packageJson(
       },
       null,
       2
-    ) + unixEOL
+    ) + '\n'
   );
 }

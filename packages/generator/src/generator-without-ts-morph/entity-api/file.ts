@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
 import {
   navPropertyFieldTypeImportNames,
@@ -23,7 +22,7 @@ export function entityApiFile(
 ): string {
   const imports = serializeImports(getImports(entity, service, options));
   const content = classContent(entity, service);
-  return [imports, content].join(unixEOL);
+  return [imports, content].join('\n');
 }
 
 // todo Use this function instead the one above, when the todo of "de-serializers.ts" is solved, so that unnecessary external dependencies are not imported.
@@ -33,7 +32,7 @@ export function entityApiFile(
 //   return [
 //     imports,
 //     content
-//   ].join(unixEOL);
+//   ].join('\n');
 // }
 
 function getImports(

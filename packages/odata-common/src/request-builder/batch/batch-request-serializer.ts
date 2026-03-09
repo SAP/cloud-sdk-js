@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { ODataRequest } from '../../request';
 import { BatchChangeSet } from './batch-change-set';
@@ -29,9 +28,9 @@ export function serializeChangeSet<DeSerializersT extends DeSerializers>(
       `--${changeSet.boundary}`,
       changeSet.requests
         .map(request => serializeRequest(request, options))
-        .join(`${unixEOL}--${changeSet.boundary}${unixEOL}`),
+        .join(`\n--${changeSet.boundary}\n`),
       `--${changeSet.boundary}--`
-    ].join(unixEOL);
+    ].join('\n');
   }
 }
 
@@ -73,7 +72,7 @@ export function serializeRequest(
     '',
     ...getPayload(request),
     ''
-  ].join(unixEOL);
+  ].join('\n');
 }
 
 type RequestBuildersWithBatchReference = Omit<MethodRequestBuilder, 'execute'> &
@@ -139,7 +138,7 @@ export function serializeBatchRequest<DeSerializersT extends DeSerializers>(
         : serializeRequest(subRequest, options)
     )
     .filter(validRequest => !!validRequest)
-    .join(`${unixEOL}--${request.requestConfig.boundary}${unixEOL}`);
+    .join(`\n--${request.requestConfig.boundary}\n`);
 
   const serializedBatchRequest = serializedSubRequests
     ? [
@@ -147,7 +146,7 @@ export function serializeBatchRequest<DeSerializersT extends DeSerializers>(
         serializedSubRequests,
         `--${request.requestConfig.boundary}--`,
         ''
-      ].join(unixEOL)
+      ].join('\n')
     : serializedSubRequests;
 
   // The batch standard expects CRLF line endings for batch requests

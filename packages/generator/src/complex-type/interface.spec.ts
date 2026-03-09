@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { StructureKind } from 'ts-morph';
 import {
   complexMeal,
@@ -19,17 +18,17 @@ describe('interface', () => {
           name: 'complexity',
           type: "DeserializedType<DeSerializersT, 'Edm.String'>",
           hasQuestionToken: false,
-          docs: [`${unixEOL}something something very good`]
+          docs: ['\nsomething something very good']
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
           type: "DeserializedType<DeSerializersT, 'Edm.Int16'>",
           hasQuestionToken: false,
-          docs: [`${unixEOL}something something very much`]
+          docs: ['\nsomething something very much']
         }
       ],
-      docs: [`${unixEOL}ComplexMealType`]
+      docs: ['\nComplexMealType']
     });
   });
 
@@ -45,17 +44,17 @@ describe('interface', () => {
           name: 'complexDesert',
           type: "DeserializedType<DeSerializersT, 'ComplexDesert'>",
           hasQuestionToken: false,
-          docs: [`${unixEOL}the desert`]
+          docs: ['\nthe desert']
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
           type: "DeserializedType<DeSerializersT, 'Edm.Int16'>",
           hasQuestionToken: false,
-          docs: [`${unixEOL}something something very much`]
+          docs: ['\nsomething something very much']
         }
       ],
-      docs: [`${unixEOL}ComplexMealWithDesertType`]
+      docs: ['\nComplexMealWithDesertType']
     });
   });
 });

@@ -1,6 +1,5 @@
 import { zip } from './array';
 import { createLogger } from './logger';
-import { unixEOL } from './string-formatter';
 
 const logger = createLogger('documentation-block');
 /**
@@ -34,11 +33,11 @@ export function documentationBlock(
     return '';
   }
   content = maskProblematicCharacters(content);
-  let lines = content.split(unixEOL);
+  let lines = content.split('\n');
   lines = adjustIndentation(lines, textIndentation);
-  content = lines.join(`${unixEOL} * `);
+  content = lines.join('\n * ');
 
-  const result = ['/**', ` * ${content}`, ' */'].join(unixEOL);
+  const result = ['/**', ` * ${content}`, ' */'].join('\n');
   return result;
 }
 
@@ -48,9 +47,9 @@ myContent
 `
  */
 function removeLeadingEmptyLines(firstLine: string): string {
-  const lines = firstLine.split(unixEOL);
+  const lines = firstLine.split('\n');
   const indexFirstNonEmpty = lines.findIndex(str => str.match(/\w/)) || 0;
-  return lines.splice(indexFirstNonEmpty).join(unixEOL);
+  return lines.splice(indexFirstNonEmpty).join('\n');
 }
 
 /*
@@ -61,7 +60,7 @@ function addIndentationToArguments(
   textIndentation: number
 ): string[] {
   const argsWithIndentation = args.map(arg =>
-    arg.replace(/\n/g, unixEOL + ' '.repeat(textIndentation))
+    arg.replace(/\n/g, '\n '.repeat(textIndentation))
   );
   return argsWithIndentation;
 }

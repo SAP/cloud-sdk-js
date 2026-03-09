@@ -1,4 +1,4 @@
-import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { serializeImports } from '@sap-cloud-sdk/generator-common/internal';
 import { collectRefs, getUniqueRefs } from '../schema-util';
 import { serializeOperation } from './operation';
@@ -36,7 +36,7 @@ export const ${api.name} = {
 };
 `;
 
-  return [imports, apiDoc, apiContent].join(unixEOL);
+  return [imports, apiDoc, apiContent].join('\n');
 }
 /**
  * Get the unique reference schemas for all request body types in the given operation list.

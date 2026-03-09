@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import {
   helpfulLinksSection,
   usageHeaderText
@@ -17,8 +16,8 @@ export function readme(openApiDocument: OpenApiDocument): string {
 This package contains the OpenAPI client for the ${openApiDocument.serviceName}.
 ${openApiDocument.serviceDescription ?? ''}
 
-${addUsageExample(openApiDocument).join(unixEOL)}
-${helpfulLinksSection().join(unixEOL)}
+${addUsageExample(openApiDocument).join('\n')}
+${helpfulLinksSection().join('\n')}
     
 `;
 }

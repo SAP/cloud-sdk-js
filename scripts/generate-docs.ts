@@ -2,7 +2,6 @@
 import { lstatSync, readdirSync, renameSync, readFileSync } from 'fs';
 import { resolve, basename, extname } from 'path';
 import execa from 'execa';
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile } from './util';
 import { deflate } from 'zlib';
 import { promisify } from 'util';
@@ -157,14 +156,14 @@ async function insertCopyright() {
     filePaths.map(async filePath => {
       const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
       return transformFile(filePath, file => {
-        const lines = file.split(unixEOL);
+        const lines = file.split('\n');
         // Insert the copyright div before the line including </footer> #yikes
         lines.splice(
           lines.findIndex(line => line.includes('</footer>')),
           0,
           copyrightDiv
         );
-        return lines.join(unixEOL);
+        return lines.join('\n');
       });
     })
   );
@@ -175,7 +174,7 @@ function validateLogs(generationLogs: string) {
     'Found invalid symbol reference(s) in JSDocs, they will not render as links in the generated documentation.';
   const [, invalidLinks] = generationLogs.split(invalidLinksMessage);
   if (invalidLinks) {
-    throw Error(`Error: ${invalidLinksMessage}${unixEOL}${invalidLinks}`);
+    throw Error(`Error: ${invalidLinksMessage}\n${invalidLinks}`);
   }
 }
 

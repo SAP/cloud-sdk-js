@@ -1,5 +1,4 @@
 import {
-  unixEOL,
   isNullish,
   createLogger,
   encodeBase64,
@@ -66,7 +65,7 @@ function headerFromTokens(
         'The destination tried to provide authorization tokens but failed in all cases. This is most likely due to misconfiguration.',
         'Original error messages:',
         ...authTokens.map(token => token.error)
-      ].join(unixEOL)
+      ].join('\n')
     );
   }
   const authToken = usableTokens[0];

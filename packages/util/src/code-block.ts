@@ -1,4 +1,3 @@
-import { unixEOL } from './string-formatter';
 import { zip } from './array';
 import { trim } from './string';
 /**
@@ -18,19 +17,19 @@ export function codeBlock(
 ): string {
   const pre = strings.slice(0, -1).map(string => {
     const trimmed = trimRightNewlines(string);
-    return trimmed.length === string.length ? string : trimmed + unixEOL;
+    return trimmed.length === string.length ? string : `${trimmed}\n`;
   });
   pre.push(strings[strings.length - 1]);
 
   const indents = strings.slice(0, -1).map(s => {
-    const indentation = s.split(unixEOL).pop()!;
+    const indentation = s.split('\n').pop()!;
     return !indentation.trim() ? indentation : '';
   });
   const post = args.map((arg, i) =>
     ('' + arg)
-      .split(unixEOL)
+      .split('\n')
       .map(subArg => indents[i] + subArg)
-      .join(unixEOL)
+      .join('\n')
   );
 
   const zipped = zip(pre, post);
@@ -38,9 +37,9 @@ export function codeBlock(
 }
 
 function trimRightNewlines(string: string): string {
-  let subStrings = string.split(unixEOL);
+  let subStrings = string.split('\n');
   if (!subStrings[subStrings.length - 1].trim()) {
     subStrings = subStrings.slice(0, -1);
   }
-  return subStrings.join(unixEOL);
+  return subStrings.join('\n');
 }

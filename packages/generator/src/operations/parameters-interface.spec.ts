@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { StructureKind } from 'ts-morph';
 import {
   orderBreakfast,
@@ -17,12 +16,10 @@ describe('parameters-interface', () => {
           name: 'withHoneyToast',
           type: 'boolean',
           hasQuestionToken: false,
-          docs: [`${unixEOL}Breakfast includes a honey toast`]
+          docs: ['\nBreakfast includes a honey toast']
         }
       ],
-      docs: [
-        `${unixEOL}Type of the parameters to be passed to {@link orderBreakfast}.`
-      ]
+      docs: ['\nType of the parameters to be passed to {@link orderBreakfast}.']
     });
   });
 
@@ -36,12 +33,10 @@ describe('parameters-interface', () => {
           name: 'withHoneyToast',
           type: 'boolean | null',
           hasQuestionToken: true,
-          docs: [`${unixEOL}Breakfast includes a honey toast`]
+          docs: ['\nBreakfast includes a honey toast']
         }
       ],
-      docs: [
-        `${unixEOL}Type of the parameters to be passed to {@link orderBreakfast}.`
-      ]
+      docs: ['\nType of the parameters to be passed to {@link orderBreakfast}.']
     });
   });
 });

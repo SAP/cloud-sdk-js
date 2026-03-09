@@ -4,7 +4,7 @@ import { join, resolve, parse, basename, dirname, posix, sep } from 'path';
 import { promises, existsSync } from 'fs';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
-import { flatten, unixEOL } from '@sap-cloud-sdk/util';
+import { flatten } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 import {
   readCompilerOptions,
@@ -138,7 +138,7 @@ function compareApisAndLog(
     }
   });
   info(`We have found ${allExportedIndex.length} exports.`);
-  info(`Public api: ${allExportedIndex.sort().join(`,${unixEOL}`)}`);
+  info(`Public api: ${allExportedIndex.sort().join(',\n')}`);
 
   return setsAreEqual;
 }

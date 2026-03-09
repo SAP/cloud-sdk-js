@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import {
   complexMeal,
@@ -34,7 +33,7 @@ describe('namespace', () => {
             }
           ],
           docs: [
-            `${unixEOL}Metadata information on all properties of the \`ComplexMealType\` complex type.`
+            '\nMetadata information on all properties of the `ComplexMealType` complex type.'
           ],
           isExported: true
         }
@@ -70,7 +69,7 @@ describe('namespace', () => {
             }
           ],
           docs: [
-            `${unixEOL}Metadata information on all properties of the \`ComplexMealWithDesertType\` complex type.`
+            '\nMetadata information on all properties of the `ComplexMealWithDesertType` complex type.'
           ],
           isExported: true
         }

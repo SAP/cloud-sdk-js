@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import type {
   ModuleDeclarationStructure,
@@ -48,7 +47,7 @@ function propertyMetadata(
       }
     ],
     docs: [
-      `${unixEOL}Metadata information on all properties of the \`${complexType.typeName}\` complex type.`
+      `\nMetadata information on all properties of the \`${complexType.typeName}\` complex type.`
     ],
     isExported: true
   };

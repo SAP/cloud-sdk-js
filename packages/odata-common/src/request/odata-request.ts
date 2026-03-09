@@ -1,5 +1,4 @@
 import {
-  unixEOL,
   ErrorWithCause,
   mergeIgnoreCase,
   pickIgnoreCase,
@@ -298,5 +297,5 @@ function messageFromS4ErrorResponse(error): string {
     propertyExists(error.response.data.error, 'message', 'value')
       ? error.response.data.error.message.value
       : ''
-  }${unixEOL}${JSON.stringify(error.response.data.error)}`;
+  }\n${JSON.stringify(error.response.data.error)}`;
 }

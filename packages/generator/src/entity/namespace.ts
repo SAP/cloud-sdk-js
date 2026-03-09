@@ -1,4 +1,4 @@
-import { unixEOL, unique } from '@sap-cloud-sdk/util';
+import { unique } from '@sap-cloud-sdk/util';
 import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import { isOrderableEdmType } from '@sap-cloud-sdk/odata-common';
 import { getGenericParameters, linkClass } from '../generator-utils';
@@ -263,7 +263,7 @@ function allFields(
               )
             )
             .map(name => `${entity.className}.${name}`)
-            .join(`, ${unixEOL}`)}
+            .join(', \n')}
           ]`
       }
     ],

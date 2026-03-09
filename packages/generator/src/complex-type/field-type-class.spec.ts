@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { Scope, StructureKind } from 'ts-morph';
 import {
   complexMeal,
@@ -31,7 +30,7 @@ describe('field-type-class', () => {
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Complexity', 'Edm.String', false)",
           docs: [
-            `Representation of the {@link ComplexMealType.complexity} property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
+            "Representation of the {@link ComplexMealType.complexity} property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ]
         },
         {
@@ -41,12 +40,12 @@ describe('field-type-class', () => {
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Amount', 'Edm.Int16', false)",
           docs: [
-            `Representation of the {@link ComplexMealType.amount} property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
+            "Representation of the {@link ComplexMealType.amount} property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
           ]
         }
       ],
       docs: [
-        `ComplexMealField${unixEOL}@typeParam EntityT - Type of the entity the complex type field belongs to.`
+        'ComplexMealField\n@typeParam EntityT - Type of the entity the complex type field belongs to.'
       ],
       ctors: [
         {

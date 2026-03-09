@@ -1,6 +1,6 @@
 import { resolve } from 'node:path';
 import mock from 'mock-fs';
-import { getNextVersion } from './util';
+import { getNextVersion } from './util.js';
 
 describe('getNextVersion', () => {
   afterEach(() => {

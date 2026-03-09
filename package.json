@@ -90,7 +90,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.30.0",
     "@eslint/eslintrc": "^3.3.5",
-    "@eslint/js": "^9.39.3",
+    "@eslint/js": "^9.39.4",
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mock-fs": "^4.13.4",

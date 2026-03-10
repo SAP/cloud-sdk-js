@@ -9,7 +9,7 @@ updates:
       timezone: 'Europe/Berlin'
     open-pull-requests-limit: 10
     cooldown:
-      days: 4
+      default-days: 4
     ignore:
       # We only want to do major node updates on purpose, so don't create dependabot PRs for major versions
       - dependency-name: '@types/node'
@@ -36,4 +36,4 @@ updates:
       time: '01:00'
       timezone: 'Europe/Berlin'
     cooldown:
-      days: 4
+      default-days: 4

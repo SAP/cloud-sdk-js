@@ -10,6 +10,8 @@ on:
 jobs:
   bump:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.bump.outputs.version }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -29,10 +31,7 @@ jobs:
         with:
           majorVersion: ${{ inputs.majorVersion }}
 
-      - run: |
-          yarn ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
-          yarn generate
-          yarn doc
+      - run: yarn ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
         env:
           NEXT_PACKAGE_VERSION: ${{ steps.bump.outputs.version }}
 
@@ -46,3 +45,11 @@ jobs:
         uses: ./.github/actions/commit-and-tag
         with:
           version: ${{ steps.bump.outputs.version }}
+
+  generate-api-docs:
+    name: Generate and Push API Documentation
+    needs: [bump]
+    uses: ./.github/workflows/api-docs.yml
+    secrets: inherit
+    with:
+      version: v${{ needs.bump.outputs.version }}

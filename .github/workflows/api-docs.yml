@@ -1,44 +1,72 @@
 name: api-docs
 
 on:
-  push:
-    branches:
-      - 'main'
-      - 'v*-main'
-    paths:
-      - 'knowledge-base/api-reference/**'
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version to generate docs for'
+        required: true
+        type: string
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to generate docs for'
+        required: true
+        type: string
 
 jobs:
-  push-to-documentation-branch:
+  generate-and-push-docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Add key
+      
+      - run: git fetch --depth=1
+      
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'yarn'
+      
+      - run: yarn install --frozen-lockfile --ignore-engines
+      
+      - name: Generate API documentation
+        run: |
+          yarn generate
+          yarn doc
+      
+      - name: Setup SSH key for cloud-sdk repo
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          echo "${{ secrets.GH_CLOUD_SDK_WRITE_KEY   }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.GH_CLOUD_SDK_WRITE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           cat <<EOT >> ~/.ssh/config
           Host github.com
           HostName github.com
           IdentityFile ~/.ssh/id_rsa
           EOT
-      - name: Push generated API documentation to the SAP/cloud-sdk repo
+      
+      - name: Push generated API documentation to cloud-sdk repo
         env:
           USE_SSH: true
           GIT_USER: cloud-sdk-js
         run: |
           git config --global user.email "cloud-sdk-js@github.com"
           git config --global user.name "cloud-sdk-js"
-          M_VERSION=`awk -F'"' '/"version": "[0-9\.]+"/{ print $4; exit; }' package.json | awk -F'.' '{print "v"$1; exit; }'`
+          
+          # Extract major version from input (e.g., v4.5.0 -> v4)
+          FULL_VERSION="${{ inputs.version }}"
+          MAJOR_VERSION=$(echo $FULL_VERSION | sed 's/\(v[0-9]*\).*/\1/')
+          
           cd ..
           git clone --depth 1 git@github.com:SAP/cloud-sdk.git
-          rsync -avz cloud-sdk-js/knowledge-base/api-reference/ cloud-sdk/static/api/$M_VERSION/
+          
+          # Copy generated docs to versioned folder
+          rsync -avz --delete cloud-sdk-js/knowledge-base/api-reference/ cloud-sdk/static/api/${MAJOR_VERSION}/
+
           cd cloud-sdk
           git add -A
-          git commit -a -m "Update SAP Cloud SDK for JavaScript API documentation" || exit 0
+          git commit -m "Update SAP Cloud SDK for JavaScript API documentation ${MAJOR_VERSION}" || exit 0
           git push

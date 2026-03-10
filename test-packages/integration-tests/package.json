@@ -29,7 +29,7 @@
     "@sap-cloud-sdk/odata-common": "^4.5.1",
     "@sap-cloud-sdk/odata-v2": "^4.5.1",
     "@sap-cloud-sdk/openapi-generator": "^4.5.1",
-    "bignumber.js": "^9.3.1",
+    "bignumber.js": "^10.0.2",
     "moment": "^2.30.1",
     "execa": "^5.0.0",
     "jsonwebtoken": "^9.0.3",

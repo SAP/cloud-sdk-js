@@ -17,8 +17,7 @@ import {
   createLogger,
   ErrorWithCause,
   isNullish,
-  sanitizeRecord,
-  unixEOL
+  sanitizeRecord
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { isHttpRequestConfigWithOrigin } from './http-client-types';
@@ -332,10 +331,10 @@ function logRequestInformation(request: HttpRequestConfig) {
   if (request.headers) {
     const headerText = Object.entries(sanitizeRecord(request.headers))
       .map(([key, value]) => `${key}:${value}`)
-      .join(unixEOL);
+      .join('\n');
 
     logger.debug(
-      `${basicRequestInfo}${unixEOL}The headers of the request are:${unixEOL}${headerText}`
+      `${basicRequestInfo}\nThe headers of the request are:\n${headerText}`
     );
   } else {
     logger.debug(basicRequestInfo);

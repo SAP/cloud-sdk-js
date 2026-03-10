@@ -1,4 +1,3 @@
-import * as zlib from 'node:zlib';
 import { promisify } from 'node:util';
 import {
   createLogger,
@@ -6,6 +5,7 @@ import {
   pickValueIgnoreCase,
   mergeIgnoreCase
 } from '@sap-cloud-sdk/util';
+import type * as zlibType from 'node:zlib';
 import type {
   HttpMiddleware,
   HttpMiddlewareOptions,
@@ -17,25 +17,57 @@ const logger = createLogger({
   messageContext: 'compress-request-middleware'
 });
 
-const brotliCompress = promisify(zlib.brotliCompress);
-const gzipCompress = promisify(zlib.gzip);
-const deflateCompress = promisify(zlib.deflate);
-const zstdCompress = zlib.zstdCompress
-  ? promisify(zlib.zstdCompress)
-  : undefined;
+interface CompressorsMap {
+  brotli?: (
+    data: zlibType.InputType,
+    options?: RequestCompressorOptions['brotli']
+  ) => Promise<Buffer>;
+  gzip?: (
+    data: zlibType.InputType,
+    options?: RequestCompressorOptions['gzip']
+  ) => Promise<Buffer>;
+  deflate?: (
+    data: zlibType.InputType,
+    options?: RequestCompressorOptions['deflate']
+  ) => Promise<Buffer>;
+  zstd?: (
+    data: zlibType.InputType,
+    options?: RequestCompressorOptions['zstd']
+  ) => Promise<Buffer>;
+}
 
-const compressors = {
-  brotli: brotliCompress,
-  gzip: gzipCompress,
-  deflate: deflateCompress,
-  zstd: zstdCompress
-};
+/**
+ * Cache for available compressors to avoid redundant dynamic imports and checks.
+ * @internal
+ */
+export let compressorsCache: Promise<CompressorsMap> | undefined;
 
-function getSupportedAlgorithms(): string {
-  return Object.entries(compressors)
-    .filter(([, fn]) => fn !== undefined)
-    .map(([name]) => `'${name}'`)
-    .join(', ');
+/**
+ * Dynamically imports zlib and checks for available compression algorithms.
+ * Caches the result to optimize subsequent calls.
+ * @internal
+ * @returns A promise that resolves to a map of available compressors.
+ */
+function getCompressors(): Promise<CompressorsMap> {
+  return (compressorsCache ??= (async () => {
+    // Dynamically import zlib to avoid issues in environments where it's not available (e.g., browsers).
+    const zlib: Partial<typeof zlibType> = await import('node:zlib').catch(
+      () => ({})
+    );
+
+    return {
+      ...(zlib.brotliCompress && { brotli: promisify(zlib.brotliCompress) }),
+      ...(zlib.gzip && { gzip: promisify(zlib.gzip) }),
+      ...(zlib.deflate && { deflate: promisify(zlib.deflate) }),
+      ...(zlib.zstdCompress && { zstd: promisify(zlib.zstdCompress) as any })
+    };
+  })());
+}
+
+function getSupportedAlgorithms(available: Record<string, any>): string {
+  return Object.keys(available).length
+    ? Object.keys(available).join(', ')
+    : 'N/A';
 }
 
 /**
@@ -57,11 +89,11 @@ export type RequestCompressionAlgorithm =
  */
 export interface RequestCompressorOptions {
   /** Options to control gzip compression. */
-  gzip: zlib.ZlibOptions;
+  gzip: zlibType.ZlibOptions;
   /** Options to control brotli compression. */
-  brotli: zlib.BrotliOptions;
+  brotli: zlibType.BrotliOptions;
   /** Options to control deflate compression. */
-  deflate: zlib.ZlibOptions;
+  deflate: zlibType.ZlibOptions;
   /**
    * Options to control zstd compression.
    * @remarks
@@ -205,15 +237,21 @@ export function compress<C extends RequestCompressionAlgorithm = 'gzip'>(
         return middlewareOptions.fn(requestConfig);
       }
 
-      const compressor = compressors[algorithm];
+      const available = await getCompressors();
+      const compressor = available[algorithm];
       if (!compressor) {
+        if (!Object.keys(available).length) {
+          throw new Error(
+            `No compression algorithms are available in this environment. Cannot apply '${algorithm}' compression.`
+          );
+        }
         if (algorithm === 'zstd') {
           throw new Error(
-            `'zstd' compression is not supported in Node.js versions older than v22.15.0. Supported algorithms for this version are: ${getSupportedAlgorithms()}.`
+            `'zstd' compression is not supported in this environment. On Node.js, it requires v22.15.0 or higher. Supported algorithms are: ${getSupportedAlgorithms(available)}.`
           );
         }
         throw new Error(
-          `Unsupported compression algorithm '${algorithm}'. Supported algorithms are: ${getSupportedAlgorithms()}.`
+          `Unsupported compression algorithm '${algorithm}'. Supported algorithms are: ${getSupportedAlgorithms(available)}.`
         );
       }
 

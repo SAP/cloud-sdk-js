@@ -1,4 +1,4 @@
-import { unixEOL, titleFormat } from '@sap-cloud-sdk/util';
+import { titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot } from './generator-utils';
 import { getServiceName } from './service-generator';
 import type {
@@ -48,7 +48,7 @@ export function getFunctionDoc(
 export function getComplexTypeFieldDescription(
   complexType: VdmComplexType
 ): string {
-  return `${complexType.fieldType}${unixEOL}@typeParam EntityT - Type of the entity the complex type field belongs to.`;
+  return `${complexType.fieldType}\n@typeParam EntityT - Type of the entity the complex type field belongs to.`;
 }
 /**
  * @internal
@@ -71,8 +71,8 @@ export function getPropertyDescription(
  * @internal
  */
 export function addLeadingNewline(documentation: string): string {
-  if (!documentation.startsWith(unixEOL)) {
-    return unixEOL + documentation;
+  if (!documentation.startsWith('\n')) {
+    return `\n${documentation}`;
   }
   return documentation;
 }
@@ -95,13 +95,13 @@ export function getComplexTypePropertyDescription(
   property: VdmProperty,
   complexTypeName: string
 ): string {
-  return `Representation of the {@link ${complexTypeName}.${property.instancePropertyName}} property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`;
+  return `Representation of the {@link ${complexTypeName}.${property.instancePropertyName}} property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API.`;
 }
 /**
  * @internal
  */
 export function getStaticPropertyDescription(property: VdmProperty): string {
-  return `Static representation of the {@link ${property.instancePropertyName}} property for query construction.${unixEOL}Use to reference this property in query operations such as 'select' in the fluent request API.`;
+  return `Static representation of the {@link ${property.instancePropertyName}} property for query construction.\nUse to reference this property in query operations such as 'select' in the fluent request API.`;
 }
 /**
  * @internal
@@ -113,7 +113,7 @@ export function getStaticNavPropertyDescription(
     property.isCollection ? 'one-to-many' : 'one-to-one'
   } navigation property {@link ${
     property.instancePropertyName
-  }} for query construction.${unixEOL}Use to reference this property in query operations such as 'select' in the fluent request API.`;
+  }} for query construction.\nUse to reference this property in query operations such as 'select' in the fluent request API.`;
 }
 /**
  * @internal
@@ -168,13 +168,13 @@ function addConstraints(
   constraints: VdmPropertyValueConstraints
 ): string {
   if (constraints.maxLength) {
-    description += `${unixEOL}Maximum length: ${constraints.maxLength}.`;
+    description += `\nMaximum length: ${constraints.maxLength}.`;
   }
   if (constraints.nullable) {
-    description += `${unixEOL}@nullable`;
+    description += '\n@nullable';
   }
   if (constraints.precision !== undefined) {
-    description += `${unixEOL}Precision: ${constraints.precision}.`;
+    description += `\nPrecision: ${constraints.precision}.`;
   }
 
   return description;
@@ -203,7 +203,7 @@ export interface NamedDocType extends DocType {
 }
 
 function tagToText(tag: string, description = ''): string {
-  return `${unixEOL}@${tag}` + (description ? ` ${description}` : '');
+  return `\n@${tag}` + (description ? ` ${description}` : '');
 }
 /**
  * @internal
@@ -212,5 +212,5 @@ export function enumDocs(enumType: VdmEnumType): string {
   return [
     `This enum represents the enum type "{@link ${enumType.originalName}}".`,
     `The members represent values of EDM type ${enumType.underlyingType}.`
-  ].join(`${unixEOL}`);
+  ].join('\n');
 }

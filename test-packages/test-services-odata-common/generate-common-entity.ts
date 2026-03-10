@@ -2,7 +2,6 @@
 
 import { promises } from 'fs';
 import { join, resolve } from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { generate } from '@sap-cloud-sdk/generator/src';
 import {
@@ -82,7 +81,7 @@ function addODataVersion(str: string): string {
     const nameString = str.match(/static override _entityName =.*/)![0];
     return str.replace(
       nameString,
-      [nameString, 'readonly _oDataVersion: any;'].join(unixEOL)
+      [nameString, 'readonly _oDataVersion: any;'].join('\n')
     );
   }
   return str;
@@ -97,7 +96,7 @@ function addODataVersionToConstructor(str: any) {
         nameString,
         "this._oDataVersion = 'v2';",
         "nonEnumerable(this, '_oDataVersion')"
-      ].join(unixEOL)
+      ].join('\n')
     );
   }
   return str;
@@ -164,7 +163,7 @@ async function generateCommonTestEntity() {
     removeBatchFunctions(service),
     'export const { commonEntityApi } = commonService();',
     'export const { commonEntityApi: commonEntityApiCustom } = commonService(\n  customTestDeSerializers\n);'
-  ].join(unixEOL);
+  ].join('\n');
   await createFile(__dirname, 'common-entity.ts', allParts, {
     overwrite: true,
     prettierOptions: defaultPrettierConfig

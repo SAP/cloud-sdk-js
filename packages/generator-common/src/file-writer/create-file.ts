@@ -1,11 +1,6 @@
 import { join, parse } from 'node:path';
 import { promises } from 'node:fs';
-import {
-  codeBlock,
-  createLogger,
-  ErrorWithCause,
-  unixEOL
-} from '@sap-cloud-sdk/util';
+import { codeBlock, createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { format } from 'prettier';
 import { getCopyrightHeader } from '../util';
 import type { BuiltInParserName, Options as PrettierOptions } from 'prettier';
@@ -131,7 +126,7 @@ function addCopyrightHeader(content: string, withCopyright: boolean): string {
   return codeBlock`
 ${getCopyrightHeader()}
 ${content}
-${unixEOL}
+\n
 `;
 }
 

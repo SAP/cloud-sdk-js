@@ -3,6 +3,7 @@ import { promisify } from 'node:util';
 import nock from 'nock';
 import axios from 'axios';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import * as compressModule from './compress-request-middleware';
 import { compress } from './compress-request-middleware';
 import { executeHttpRequest } from './http-client';
 import type { HttpRequestConfig } from './http-client-types';
@@ -43,6 +44,8 @@ describe('compress middleware', () => {
   afterEach(() => {
     nock.cleanAll();
     jest.clearAllMocks();
+    // Reset the compressors cache so each test gets a fresh resolution.
+    compressModule.compressorsCache = undefined;
   });
 
   describe('mode: never', () => {
@@ -354,6 +357,26 @@ describe('compress middleware', () => {
           { fetchCsrfToken: false }
         )
       ).rejects.toThrow('Unsupported compression algorithm');
+    });
+
+    it('throws error when no compression algorithms are available', async () => {
+      // Pre-seed the cache with an empty compressors map to simulate an environment with no zlib.
+      compressModule.compressorsCache = Promise.resolve({});
+
+      await expect(
+        executeHttpRequest(
+          { url: host },
+          {
+            method: 'POST',
+            url: '/test',
+            data: testPayload,
+            middleware: [compress({ mode: 'always' })]
+          },
+          { fetchCsrfToken: false }
+        )
+      ).rejects.toThrow(
+        "No compression algorithms are available in this environment. Cannot apply 'gzip' compression."
+      );
     });
   });
 

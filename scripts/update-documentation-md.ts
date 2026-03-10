@@ -1,5 +1,4 @@
 import { resolve } from 'node:path';
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile } from './util';
 import { exit } from 'node:process';
 
@@ -9,13 +8,13 @@ async function updateDocumentationMd() {
   }
   await transformFile(resolve('DOCUMENTATION.md'), documentation =>
     documentation
-      .split(unixEOL)
+      .split('\n')
       .map(line =>
         line.startsWith('## Version:')
           ? `## Version: ${process.env.NEXT_PACKAGE_VERSION}`
           : line
       )
-      .join(unixEOL)
+      .join('\n')
   );
 }
 

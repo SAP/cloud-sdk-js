@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import mock from 'mock-fs';
-import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   createFile,
   defaultPrettierConfig,
@@ -64,7 +64,7 @@ describe('createFile', () => {
       defaultCreateConfig
     );
     expect(await readFile('directory/filename.json', 'utf8')).toEqual(
-      `{ "content": 123 }${unixEOL}`
+      '{ "content": 123 }\n'
     );
   });
 
@@ -103,7 +103,7 @@ describe('createFile', () => {
     );
     expect(
       await readFile('directory/formatted.ts', { encoding: 'utf-8' })
-    ).toContain(`const abc = '123';${unixEOL}`);
+    ).toContain("const abc = '123';\n");
   });
 
   it('uses custom prettier config', async () => {
@@ -113,7 +113,7 @@ describe('createFile', () => {
     });
     expect(
       await readFile('directory/formatted.ts', { encoding: 'utf-8' })
-    ).toContain(`const abc = "123"${unixEOL}`);
+    ).toContain('const abc = "123"\n');
   });
 
   it('uses default config if custom prettier config is not found', async () => {

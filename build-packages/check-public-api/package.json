@@ -4,21 +4,22 @@
   "description": "Checks if the APIs in a package are correctly marked public or internal.",
   "license": "Apache-2.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/index.js --external prettier --external typescript  --out ../../.github/actions/check-public-api/",
     "test": "yarn test:unit",
-    "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules yarn jest",
     "lint": "eslint && prettier --check **/*.ts",
     "lint:fix": "eslint --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",
     "all": "yarn && yarn run lint && yarn run compile"
   },
   "dependencies": {
-    "@actions/core": "^2.0.3",
+    "@actions/core": "^3.0.0",
     "@manypkg/get-packages": "^2.2.2",
-    "@sap-cloud-sdk/util": "^4.0.0",
     "@sap-cloud-sdk/generator-common": "^4.0.0",
+    "@sap-cloud-sdk/util": "^4.0.0",
     "@types/mock-fs": "^4.13.4",
     "glob": "^13.0.6",
     "mock-fs": "^5.5.0"

@@ -174,7 +174,7 @@ describe('imports', () => {
       namedImports: ['2']
     } as ImportDeclarationStructure;
 
-    it('merges named imports', () => {
+    it('merges imports', () => {
       const merged = {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: './module',
@@ -195,7 +195,7 @@ describe('imports', () => {
       ).toEqual([merged, momentImport, bigNumberImport]);
     });
 
-    it('merges named imports including type imports', () => {
+    it('merges imports including type imports', () => {
       const declarations = [
         { ...declaration1FromModule, isTypeOnly: true },
         declaration2FromModule

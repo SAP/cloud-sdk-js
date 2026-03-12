@@ -141,7 +141,7 @@ export function enumTypeImportDeclarations(
   );
 }
 
-// Only supports named imports
+// Does not support writer functions or strings as named imports
 /**
  * @internal
  */
@@ -151,27 +151,29 @@ export function mergeImportDeclarations(
   return importDeclarations
     .reduce(
       (mergedDeclarations: ImportDeclarationStructure[], importDeclaration) => {
-        const sameModuleSpecifier = mergedDeclarations.find(
+        const mergedDeclaration = mergedDeclarations.find(
           declaration =>
             declaration.moduleSpecifier === importDeclaration.moduleSpecifier &&
             declaration.isTypeOnly === importDeclaration.isTypeOnly
         );
-        if (sameModuleSpecifier) {
-          if (!sameModuleSpecifier.namedImports) {
-            sameModuleSpecifier.namedImports = [
-              ...(importDeclaration.namedImports as string[])
-            ];
-          } else if (sameModuleSpecifier.namedImports instanceof Array) {
-            sameModuleSpecifier.namedImports = [
-              ...sameModuleSpecifier.namedImports,
-              ...(importDeclaration.namedImports as string[])
-            ];
-          } else {
-            sameModuleSpecifier.namedImports = [
-              sameModuleSpecifier.namedImports,
-              ...(importDeclaration.namedImports as string[])
-            ];
+        if (mergedDeclaration) {
+          const mergedNamedImports = mergedDeclaration.namedImports || [];
+          const newNamedImports = importDeclaration.namedImports || [];
+          if (
+            !Array.isArray(mergedNamedImports) ||
+            !Array.isArray(newNamedImports)
+          ) {
+            throw new Error(
+              'mergeImportDeclarations only supports array or undefined named imports. This should never happen.'
+            );
           }
+          mergedDeclaration.namedImports = unique([
+            ...mergedNamedImports,
+            ...newNamedImports
+          ]);
+
+          mergedDeclaration.defaultImport =
+            mergedDeclaration.defaultImport || importDeclaration.defaultImport;
         } else {
           mergedDeclarations.push(importDeclaration);
         }
@@ -179,19 +181,11 @@ export function mergeImportDeclarations(
       },
       []
     )
-    .map(importDeclaration => {
-      if (!importDeclaration.namedImports) {
-        importDeclaration.namedImports = undefined;
-      } else if (importDeclaration.namedImports instanceof Array) {
-        importDeclaration.namedImports = unique(importDeclaration.namedImports);
-      } else {
-        importDeclaration.namedImports = [importDeclaration.namedImports];
-      }
-      return importDeclaration;
-    })
     .filter(
       importDeclaration =>
-        importDeclaration.namedImports && importDeclaration.namedImports.length
+        (importDeclaration.namedImports &&
+          importDeclaration.namedImports.length) ||
+        importDeclaration.defaultImport
     );
 }
 

@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEntityLvl2SingleLinkRequestBuilder = void 0;
+/*
+ * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
 const TestEntityLvl2SingleLink_1 = require("./TestEntityLvl2SingleLink");
 /**

@@ -60971,245 +60971,245 @@ exports.z = function (fn) {
 /***/ 42613:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("assert");
+module.exports = require("assert");
 
 /***/ }),
 
 /***/ 20181:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("buffer");
+module.exports = require("buffer");
 
 /***/ }),
 
 /***/ 35317:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("child_process");
+module.exports = require("child_process");
 
 /***/ }),
 
 /***/ 49140:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("constants");
+module.exports = require("constants");
 
 /***/ }),
 
 /***/ 24434:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("events");
+module.exports = require("events");
 
 /***/ }),
 
 /***/ 79896:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
+module.exports = require("fs");
 
 /***/ }),
 
 /***/ 58611:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("http");
+module.exports = require("http");
 
 /***/ }),
 
 /***/ 65692:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("https");
+module.exports = require("https");
 
 /***/ }),
 
 /***/ 69278:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("net");
+module.exports = require("net");
 
 /***/ }),
 
 /***/ 34589:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:assert");
+module.exports = require("node:assert");
 
 /***/ }),
 
 /***/ 16698:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:async_hooks");
+module.exports = require("node:async_hooks");
 
 /***/ }),
 
 /***/ 4573:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:buffer");
+module.exports = require("node:buffer");
 
 /***/ }),
 
 /***/ 37540:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:console");
+module.exports = require("node:console");
 
 /***/ }),
 
 /***/ 77598:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:crypto");
+module.exports = require("node:crypto");
 
 /***/ }),
 
 /***/ 53053:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:diagnostics_channel");
+module.exports = require("node:diagnostics_channel");
 
 /***/ }),
 
 /***/ 40610:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:dns");
+module.exports = require("node:dns");
 
 /***/ }),
 
 /***/ 78474:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:events");
+module.exports = require("node:events");
 
 /***/ }),
 
 /***/ 37067:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:http");
+module.exports = require("node:http");
 
 /***/ }),
 
 /***/ 32467:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:http2");
+module.exports = require("node:http2");
 
 /***/ }),
 
 /***/ 77030:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:net");
+module.exports = require("node:net");
 
 /***/ }),
 
 /***/ 643:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:perf_hooks");
+module.exports = require("node:perf_hooks");
 
 /***/ }),
 
 /***/ 41792:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:querystring");
+module.exports = require("node:querystring");
 
 /***/ }),
 
 /***/ 57075:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:stream");
+module.exports = require("node:stream");
 
 /***/ }),
 
 /***/ 41692:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:tls");
+module.exports = require("node:tls");
 
 /***/ }),
 
 /***/ 73136:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:url");
+module.exports = require("node:url");
 
 /***/ }),
 
 /***/ 57975:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:util");
+module.exports = require("node:util");
 
 /***/ }),
 
 /***/ 73429:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:util/types");
+module.exports = require("node:util/types");
 
 /***/ }),
 
 /***/ 75919:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:worker_threads");
+module.exports = require("node:worker_threads");
 
 /***/ }),
 
 /***/ 38522:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:zlib");
+module.exports = require("node:zlib");
 
 /***/ }),
 
 /***/ 70857:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("os");
+module.exports = require("os");
 
 /***/ }),
 
 /***/ 16928:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("path");
+module.exports = require("path");
 
 /***/ }),
 
 /***/ 2203:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("stream");
+module.exports = require("stream");
 
 /***/ }),
 
 /***/ 13193:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("string_decoder");
+module.exports = require("string_decoder");
 
 /***/ }),
 
 /***/ 64756:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("tls");
+module.exports = require("tls");
 
 /***/ }),
 
 /***/ 39023:
 /***/ ((module) => {
 
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("util");
+module.exports = require("util");
 
 /***/ }),
 
@@ -62138,7 +62138,7 @@ if (process.platform === 'linux') {
 var __webpack_exports__ = {};
 
 ;// CONCATENATED MODULE: external "node:path"
-const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
+const external_node_path_namespaceObject = require("node:path");
 // EXTERNAL MODULE: external "os"
 var external_os_ = __nccwpck_require__(70857);
 ;// CONCATENATED MODULE: ../../node_modules/@actions/core/lib/utils.js
@@ -62270,7 +62270,7 @@ function escapeProperty(s) {
 }
 //# sourceMappingURL=command.js.map
 ;// CONCATENATED MODULE: external "crypto"
-const external_crypto_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("crypto");
+const external_crypto_namespaceObject = require("crypto");
 // EXTERNAL MODULE: external "fs"
 var external_fs_ = __nccwpck_require__(79896);
 ;// CONCATENATED MODULE: ../../node_modules/@actions/core/lib/file-command.js
@@ -64032,7 +64032,7 @@ function io_copyFile(srcFile, destFile, force) {
 }
 //# sourceMappingURL=io.js.map
 ;// CONCATENATED MODULE: external "timers"
-const external_timers_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("timers");
+const external_timers_namespaceObject = require("timers");
 ;// CONCATENATED MODULE: ../../node_modules/@actions/exec/lib/toolrunner.js
 var toolrunner_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }

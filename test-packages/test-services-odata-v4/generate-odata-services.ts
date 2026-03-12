@@ -1,4 +1,4 @@
-import { resolve, join } from 'path';
+import { resolve, join } from 'node:path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate } from '@sap-cloud-sdk/generator';
 

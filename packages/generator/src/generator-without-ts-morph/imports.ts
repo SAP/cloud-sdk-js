@@ -11,10 +11,19 @@ export function externalImportDeclarations(
   properties: VdmMappedEdmType[]
 ): Import[] {
   return potentialExternalImportDeclarations
-    .map(([moduleIdentifier, ...names]) =>
-      externalImportDeclaration(properties, moduleIdentifier, names)
+    .map(({ moduleSpecifier, namedImports, defaultImport }) =>
+      externalImportDeclaration(
+        properties,
+        moduleSpecifier,
+        namedImports,
+        defaultImport
+      )
     )
-    .filter(declaration => declaration.names && declaration.names.length);
+    .filter(
+      declaration =>
+        (declaration.names && declaration.names.length) ||
+        declaration.defaultImport
+    );
 }
 
 /**
@@ -23,13 +32,19 @@ export function externalImportDeclarations(
 export function externalImportDeclaration(
   properties: VdmMappedEdmType[],
   moduleIdentifier: string,
-  names: string[]
+  names: string[] = [],
+  defaultImport: string | undefined
 ): Import {
   return {
     moduleIdentifier,
     names: names.filter(namedImport =>
       properties.map(prop => prop.jsType).includes(namedImport)
-    )
+    ),
+    defaultImport: properties
+      .map(prop => prop.jsType)
+      .includes(defaultImport || '')
+      ? defaultImport
+      : undefined
   };
 }
 

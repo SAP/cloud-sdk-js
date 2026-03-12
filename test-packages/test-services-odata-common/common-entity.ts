@@ -7,8 +7,6 @@
 /* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.
 The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/
 
-import { Moment } from 'moment';
-import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
   CollectionField,
@@ -564,6 +562,8 @@ export class CommonEntityApi<
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
+import BigNumber from 'bignumber.js';
 
 export function commonService<
   BinaryT = string,

@@ -8,6 +8,10 @@ export interface Import {
    */
   names: string[];
   /**
+   * The default export to import.
+   */
+  defaultImport?: string | undefined;
+  /**
    * The module to import from.
    */
   moduleIdentifier: string;
@@ -21,11 +25,13 @@ export interface Import {
  * @internal
  */
 export function serializeImports(imports: Import[]): string {
-  const relevantImports = imports.filter(({ names }) => names.length);
+  const relevantImports = imports.filter(
+    ({ names, defaultImport }) => names.length || defaultImport
+  );
   return relevantImports
     .map(
-      ({ names, moduleIdentifier, typeOnly }) =>
-        codeBlock`import ${typeOnly ? 'type ' : ''}{ ${names.join(
+      ({ names, defaultImport, moduleIdentifier, typeOnly }) =>
+        codeBlock`import ${typeOnly ? 'type ' : ''}${defaultImport ? `${defaultImport},` : ''}{ ${names.join(
           ', '
         )} } from '${moduleIdentifier}';`
     )

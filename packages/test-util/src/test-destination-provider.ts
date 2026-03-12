@@ -246,18 +246,16 @@ function readJson(filePath: string): { [key: string]: any } {
   try {
     content = readFileSync(filePath, 'utf-8');
   } catch (error) {
-    throw new Error(
-      `Failed to read file at path: ${filePath}.
-      Original error: ${error.message}`
-    );
+    throw new Error(`Failed to read file at path: ${filePath}.`, {
+      cause: error
+    });
   }
 
   try {
     return JSON.parse(content);
   } catch (error) {
-    throw new Error(
-      `File read from path ${filePath} is not valid JSON.
-      Original error: ${error.message}`
-    );
+    throw new Error(`File read from path ${filePath} is not valid JSON.`, {
+      cause: error
+    });
   }
 }

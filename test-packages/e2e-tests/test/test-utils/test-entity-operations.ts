@@ -21,7 +21,7 @@ export async function deleteEntity(key: number, destination): Promise<void> {
     return testEntityApi.requestBuilder().delete(fetched).execute(destination);
   } catch (e) {
     if (!e.stack.includes('Request failed with status code 404')) {
-      throw new Error(e);
+      throw new Error('Failed to delete entity.', { cause: e });
     }
   }
 }

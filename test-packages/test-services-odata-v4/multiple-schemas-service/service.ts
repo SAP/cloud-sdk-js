@@ -17,7 +17,7 @@ import {
   TestActionImportNoParameterComplexReturnType1Parameters,
   TestActionImportNoParameterComplexReturnType2Parameters
 } from './operations';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,

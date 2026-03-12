@@ -565,6 +565,8 @@ export class CommonEntityApi<
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
+import BigNumber from 'bignumber.js';
+
 export function commonService<
   BinaryT = string,
   BooleanT = boolean,

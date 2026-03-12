@@ -63,7 +63,8 @@ export function imports(
     })),
     ...operations,
     {
-      names: ['BigNumber'],
+      names: [],
+      defaultImport: 'BigNumber',
       moduleIdentifier: 'bignumber.js'
     },
     {

@@ -56,8 +56,8 @@ function complexTypeImport(
  */
 export function externalImports(properties: VdmMappedEdmType[]): Import[] {
   return potentialExternalImportDeclarations
-    .map(([moduleIdentifier, ...names]) =>
-      externalImport(properties, moduleIdentifier, names)
+    .map(({ moduleSpecifier, namedImports = [], defaultImport }) =>
+      externalImport(properties, moduleSpecifier, namedImports, defaultImport)
     )
     .filter(anImport => anImport.names && anImport.names.length);
 }
@@ -65,13 +65,15 @@ export function externalImports(properties: VdmMappedEdmType[]): Import[] {
 function externalImport(
   properties: VdmMappedEdmType[],
   moduleIdentifier: string,
-  names: string[]
+  names: string[] = [],
+  defaultImport: string | undefined
 ): Import {
   return {
     moduleIdentifier,
     names: names.filter(name =>
       properties.map(prop => prop.jsType).includes(name)
-    )
+    ),
+    defaultImport
   };
 }
 

@@ -14,8 +14,14 @@ import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal
  * @internal
  */
 export const potentialExternalImportDeclarations = [
-  ['moment', 'Moment', 'Duration'],
-  ['bignumber.js', 'BigNumber']
+  {
+    moduleSpecifier: 'moment',
+    namedImports: ['Moment', 'Duration']
+  },
+  {
+    moduleSpecifier: 'bignumber.js',
+    defaultImport: 'BigNumber'
+  }
 ];
 
 /**
@@ -25,32 +31,35 @@ export function externalImportDeclarationsTsMorph(
   properties: VdmMappedEdmType[]
 ): ImportDeclarationStructure[] {
   return potentialExternalImportDeclarations
-    .map(([moduleSpecifier, ...namedImports]) =>
-      externalImportDeclarationTsMorph(
-        properties,
-        moduleSpecifier,
-        namedImports
-      )
+    .map(importDeclaration =>
+      externalImportDeclarationTsMorph(properties, importDeclaration)
     )
     .filter(
-      declaration => declaration.namedImports && declaration.namedImports.length
+      declaration =>
+        (declaration.namedImports && declaration.namedImports.length) ||
+        declaration.defaultImport
     );
 }
 
-/**
- * @internal
- */
-export function externalImportDeclarationTsMorph(
+function externalImportDeclarationTsMorph(
   properties: VdmMappedEdmType[],
-  moduleSpecifier: string,
-  namedImports: string[]
+  {
+    moduleSpecifier,
+    namedImports = [],
+    defaultImport
+  }: (typeof potentialExternalImportDeclarations)[number]
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier,
     namedImports: namedImports.filter(namedImport =>
       properties.map(prop => prop.jsType).includes(namedImport)
-    )
+    ),
+    defaultImport:
+      defaultImport &&
+      properties
+        .map(prop => prop.jsType)
+        .find(jsType => jsType === defaultImport)
   };
 }
 

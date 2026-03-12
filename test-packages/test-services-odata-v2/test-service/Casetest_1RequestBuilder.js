@@ -1,11 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Casetest_1RequestBuilder = void 0;
-/*
- * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 const Casetest_1_1 = require("./Casetest_1");
 /**

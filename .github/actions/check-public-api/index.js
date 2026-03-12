@@ -71355,9 +71355,9 @@ const util_1 = __nccwpck_require__(1238);
  * @internal
  */
 function serializeImports(imports) {
-    const relevantImports = imports.filter(({ names }) => names.length);
+    const relevantImports = imports.filter(({ names, defaultImport }) => names.length || defaultImport);
     return relevantImports
-        .map(({ names, moduleIdentifier, typeOnly }) => (0, util_1.codeBlock) `import ${typeOnly ? 'type ' : ''}{ ${names.join(', ')} } from '${moduleIdentifier}';`)
+        .map(({ names, defaultImport, moduleIdentifier, typeOnly }) => (0, util_1.codeBlock) `import ${typeOnly ? 'type ' : ''}${defaultImport ? `${defaultImport},` : ''}{ ${names.join(', ')} } from '${moduleIdentifier}';`)
         .join('\n');
 }
 //# sourceMappingURL=imports.js.map

@@ -1,4 +1,3 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { packageJsonBase } from '@sap-cloud-sdk/generator-common/internal';
 import type { PackageJsonOptions } from '@sap-cloud-sdk/generator-common/internal';
 
@@ -8,11 +7,16 @@ import type { PackageJsonOptions } from '@sap-cloud-sdk/generator-common/interna
  * @returns The package.json contents.
  * @internal
  */
-export function packageJson(options: PackageJsonOptions): string {
+export function packageJson(
+  options: PackageJsonOptions & { generateESM?: boolean }
+): string {
+  // Determine module type based on generateESM option
+  const moduleType = options.generateESM ? 'esm' : 'commonjs';
+
   return (
     JSON.stringify(
       {
-        ...packageJsonBase(options),
+        ...packageJsonBase({ ...options, moduleType }),
         files: ['**/*.js', '**/*.js.map', '**/*.d.ts', '**/d.ts.map'],
 
         scripts: {
@@ -27,6 +31,6 @@ export function packageJson(options: PackageJsonOptions): string {
       },
       null,
       2
-    ) + unixEOL
+    ) + '\n'
   );
 }

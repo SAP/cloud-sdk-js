@@ -27,6 +27,7 @@ import {
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import * as tokenAccessor from '../token-accessor';
 import { decodeJwt } from '../jwt';
+import { identityServicesCache } from '../environment-accessor';
 import { parseDestination } from './destination';
 import {
   getAllDestinationsFromDestinationService,
@@ -171,6 +172,7 @@ describe('JWT type and selection strategies', () => {
   afterEach(() => {
     nock.cleanAll();
     jest.clearAllMocks();
+    identityServicesCache.clear();
   });
 
   describe('user token', () => {

@@ -1,4 +1,4 @@
-import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { getType } from '../parser';
 import {
   isReferenceObject,
@@ -34,7 +34,7 @@ export function serializeSchema(schema: OpenApiSchema): string {
     const type = serializeSchema(schema.items);
     return schema.uniqueItems
       ? `Set<${type}>`
-      : ['properties', 'allOf', 'oneOf', 'anyOf'].some(
+      : ['properties', 'allOf', 'oneOf', 'anyOf', 'enum'].some(
             prop => prop in schema.items
           )
         ? `(${type})[]`
@@ -103,7 +103,7 @@ function serializeObjectSchemaForProperties(
   return codeBlock`{
       ${properties
         .map(property => serializePropertyWithDocumentation(property))
-        .join(unixEOL)}
+        .join('\n')}
     }`;
 }
 
@@ -127,7 +127,7 @@ function serializePropertyWithDocumentation(
     serializeSchema(property.schema)
   );
   if (documentation) {
-    return [documentation, serialized].join(unixEOL);
+    return [documentation, serialized].join('\n');
   }
   return serialized;
 }
@@ -145,7 +145,7 @@ export function schemaPropertyDocumentation(
 
   signature.push(...getSchemaPropertiesDocumentation(schema.schemaProperties));
 
-  return documentationBlock`${signature.join(unixEOL)}`;
+  return documentationBlock`${signature.join('\n')}`;
 }
 
 function serializeXOfSchemaWithDiscriminator(

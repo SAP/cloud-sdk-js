@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -56,7 +56,7 @@ import {
   TestActionImportSharedEntityReturnTypeCollectionParameters,
   TestActionImportNullableTestParameters
 } from './operations';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,

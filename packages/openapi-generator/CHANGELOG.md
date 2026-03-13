@@ -1,5 +1,71 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 4.5.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@4.5.1
+- @sap-cloud-sdk/openapi@4.5.1
+- @sap-cloud-sdk/util@4.5.1
+
+## 4.5.0
+
+### Minor Changes
+
+- 3b95c42: [New Functionality] Support request bodies with content type "multipart/form-data".
+- 007541a: [New Functionality] Allow OpenAPI version 3.1. style "type": "null" schemas. OpenAPI version 3.1. support is limited.
+
+### Patch Changes
+
+- Updated dependencies [3b95c42]
+  - @sap-cloud-sdk/openapi@4.5.0
+  - @sap-cloud-sdk/generator-common@4.5.0
+  - @sap-cloud-sdk/util@4.5.0
+
+## 4.4.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@4.4.0
+- @sap-cloud-sdk/openapi@4.4.0
+- @sap-cloud-sdk/util@4.4.0
+
+## 4.3.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@4.3.1
+- @sap-cloud-sdk/openapi@4.3.1
+- @sap-cloud-sdk/util@4.3.1
+
+## 4.3.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/generator-common@4.3.0
+- @sap-cloud-sdk/openapi@4.3.0
+- @sap-cloud-sdk/util@4.3.0
+
+## 4.2.0
+
+### Patch Changes
+
+- f17ca59: [Fixed Issue] Improve the handling of arrays of enums
+- Updated dependencies [e09754a]
+- Updated dependencies [c73c7fa]
+  - @sap-cloud-sdk/openapi@4.2.0
+  - @sap-cloud-sdk/generator-common@4.2.0
+  - @sap-cloud-sdk/util@4.2.0
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies [011b841]
+  - @sap-cloud-sdk/openapi@4.1.2
+  - @sap-cloud-sdk/util@4.1.2
+  - @sap-cloud-sdk/generator-common@4.1.2
+
 ## 4.1.1
 
 ### Patch Changes

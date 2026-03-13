@@ -52,8 +52,10 @@ export interface OpenApiApi {
  * Representation of an operation.
  * @internal
  */
-export interface OpenApiOperation
-  extends Omit<OpenAPIV3.OperationObject, 'requestBody'> {
+export interface OpenApiOperation extends Omit<
+  OpenAPIV3.OperationObject,
+  'requestBody'
+> {
   /**
    * List of tags on an operation. Used for documentation.
    */
@@ -129,8 +131,7 @@ export const methods: Method[] = Object.values(supportedMethods);
  * @internal
  */
 export interface OpenApiParameter
-  extends Omit<OpenAPIV3.ParameterObject, 'schema'>,
-    OpenApiNamedSchema {
+  extends Omit<OpenAPIV3.ParameterObject, 'schema'>, OpenApiNamedSchema {
   /**
    * Name as in the specification.
    */
@@ -153,10 +154,39 @@ export interface OpenApiRequestBody {
   schema: OpenApiSchema;
 
   /**
+   * Media type of the body.
+   */
+  mediaType: string;
+
+  /**
    * Description of the body.
    */
   description?: string;
+
+  /**
+   * Encoding options for multipart/form-data properties.
+   * Maps property names to their encoding configuration (e.g., contentType).
+   */
+  encoding?: Record<
+    string,
+    {
+      contentType: string;
+      isImplicit: boolean;
+      parsedContentTypes: {
+        type: string;
+        parameters: { [key: string]: string };
+      }[];
+    }
+  >;
 }
+
+/**
+ * Representation of a media type.
+ * @internal
+ */
+export type OpenApiMediaTypeObject = OpenAPIV3.MediaTypeObject & {
+  mediaType: string;
+};
 
 /**
  * Represents all possible Types of schemas.

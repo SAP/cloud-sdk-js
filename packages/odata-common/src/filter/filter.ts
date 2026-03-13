@@ -46,15 +46,14 @@ export type FilterOperatorByType<FieldT> = FieldT extends string
  * @example `Product.NAME.equals('cloud-sdk')` creates a filter for the entity `Product` that matches in case the field `NAME` equals 'cloud-sdk'.
  *
  * See also: {@link Filterable}.
- * @typeParam EntityT - Type of the entity to be filtered on.
- * @typeParam FieldT - Type of the field to be filtered by.
+ * @template EntityT - Type of the entity to be filtered on.
+ * @template FieldT - Type of the field to be filtered by.
  */
 export class Filter<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
   FieldT
-> implements EntityIdentifiable<EntityT, DeSerializersT>
-{
+> implements EntityIdentifiable<EntityT, DeSerializersT> {
   /**
    * Entity type of the entity tp be filtered.
    */

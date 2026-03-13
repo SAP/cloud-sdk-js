@@ -13,7 +13,6 @@ import type {
   FilterFunctionReturnType as FilterFunctionReturnTypeBase
 } from '@sap-cloud-sdk/odata-common/internal';
 import type { Entity } from './entity';
-// eslint-disable valid-jsdoc
 
 export function filterFunction<EntityT extends Entity>(
   functionName: string,

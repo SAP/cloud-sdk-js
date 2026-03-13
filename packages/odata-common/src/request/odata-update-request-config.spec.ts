@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { updateRequestConfig } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import { commonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 import { testEntityResourcePath } from '../../test/test-util';
@@ -35,7 +35,7 @@ describe('ODataUpdateRequestConfig', () => {
   });
 
   it('has resourcePath with keys', () => {
-    const keyPropGuid = uuid();
+    const keyPropGuid = randomUUID();
     const keyPropString = 'keyProp';
     config.keys = {
       KeyPropertyGuid: keyPropGuid,

@@ -1,4 +1,3 @@
-import { unixEOL } from './string-formatter';
 import { createLogger } from './logger';
 import type { AxiosError } from 'axios';
 
@@ -38,16 +37,16 @@ export class ErrorWithCause extends Error {
       let response = '';
       if (cause.response?.data) {
         try {
-          response = `${unixEOL}${JSON.stringify(cause.response?.data, null, 2)}`;
+          response = `\n${JSON.stringify(cause.response?.data, null, 2)}`;
         } catch (error) {
           logger.warn(`Failed to stringify response data: ${error.message}`);
-          response = `${unixEOL}${cause.response?.data}`;
+          response = `\n${cause.response?.data}`;
         }
       }
-      this.stack = `${this.stack}${unixEOL}Caused by:${unixEOL}HTTP Response: ${cause.message}${response}`;
+      this.stack = `${this.stack}\nCaused by:\nHTTP Response: ${cause.message}${response}`;
     } else if (this.stack && cause?.stack) {
       // Stack is a non-standard property according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types
-      this.stack = `${this.stack}${unixEOL}Caused by:${unixEOL}${cause.stack}`;
+      this.stack = `${this.stack}\nCaused by:\n${cause.stack}`;
     }
   }
   /**

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "4.1.1",
+  "version": "4.5.1",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -26,7 +26,11 @@
     "internal.d.ts",
     "internal.js"
   ],
-  "repository": "github:SAP/cloud-sdk-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/cloud-sdk-js.git",
+    "directory": "packages/generator"
+  },
   "scripts": {
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
@@ -39,22 +43,22 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/generator-common": "^4.1.1",
-    "@sap-cloud-sdk/odata-common": "^4.1.1",
-    "@sap-cloud-sdk/odata-v2": "^4.1.1",
-    "@sap-cloud-sdk/odata-v4": "^4.1.1",
-    "@sap-cloud-sdk/util": "^4.1.1",
+    "@sap-cloud-sdk/generator-common": "^4.5.1",
+    "@sap-cloud-sdk/odata-common": "^4.5.1",
+    "@sap-cloud-sdk/odata-v2": "^4.5.1",
+    "@sap-cloud-sdk/odata-v4": "^4.5.1",
+    "@sap-cloud-sdk/util": "^4.5.1",
     "@types/fs-extra": "^11.0.4",
-    "fast-xml-parser": "^5.2.5",
-    "fs-extra": "^11.3.1",
-    "ts-morph": "^26.0.0",
-    "typescript": "~5.9.2",
+    "fast-xml-parser": "^5.4.2",
+    "fs-extra": "^11.3.4",
+    "ts-morph": "^27.0.2",
+    "typescript": "~5.9.3",
     "voca": "^1.4.1",
-    "winston": "^3.17.0"
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "execa": "^5.0.0",
     "mock-fs": "^5.5.0",
-    "prettier": "^3.6.2"
+    "prettier": "^3.8.1"
   }
 }

@@ -1,5 +1,4 @@
 import {
-  unixEOL,
   ErrorWithCause,
   mergeIgnoreCase,
   pickIgnoreCase,
@@ -28,7 +27,7 @@ import type { ODataRequestConfig } from './odata-request-config';
 
 /**
  * OData request configuration for an entity type.
- * @typeParam EntityT - Type of the entity to setup a request for.
+ * @template EntityT - Type of the entity to setup a request for.
  */
 export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
@@ -298,5 +297,5 @@ function messageFromS4ErrorResponse(error): string {
     propertyExists(error.response.data.error, 'message', 'value')
       ? error.response.data.error.message.value
       : ''
-  }${unixEOL}${JSON.stringify(error.response.data.error)}`;
+  }\n${JSON.stringify(error.response.data.error)}`;
 }

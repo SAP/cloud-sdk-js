@@ -8,13 +8,20 @@ import type {
   VdmNavigationProperty,
   VdmProperty
 } from './vdm-types';
+import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
  * @internal
  */
 export const potentialExternalImportDeclarations = [
-  ['moment', 'Moment', 'Duration'],
-  ['bignumber.js', 'BigNumber']
+  {
+    moduleSpecifier: 'moment',
+    namedImports: ['Moment', 'Duration']
+  },
+  {
+    moduleSpecifier: 'bignumber.js',
+    defaultImport: 'BigNumber'
+  }
 ];
 
 /**
@@ -24,32 +31,35 @@ export function externalImportDeclarationsTsMorph(
   properties: VdmMappedEdmType[]
 ): ImportDeclarationStructure[] {
   return potentialExternalImportDeclarations
-    .map(([moduleSpecifier, ...namedImports]) =>
-      externalImportDeclarationTsMorph(
-        properties,
-        moduleSpecifier,
-        namedImports
-      )
+    .map(importDeclaration =>
+      externalImportDeclarationTsMorph(properties, importDeclaration)
     )
     .filter(
-      declaration => declaration.namedImports && declaration.namedImports.length
+      declaration =>
+        (declaration.namedImports && declaration.namedImports.length) ||
+        declaration.defaultImport
     );
 }
 
-/**
- * @internal
- */
-export function externalImportDeclarationTsMorph(
+function externalImportDeclarationTsMorph(
   properties: VdmMappedEdmType[],
-  moduleSpecifier: string,
-  namedImports: string[]
+  {
+    moduleSpecifier,
+    namedImports = [],
+    defaultImport
+  }: (typeof potentialExternalImportDeclarations)[number]
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier,
     namedImports: namedImports.filter(namedImport =>
       properties.map(prop => prop.jsType).includes(namedImport)
-    )
+    ),
+    defaultImport:
+      defaultImport &&
+      properties
+        .map(prop => prop.jsType)
+        .find(jsType => jsType === defaultImport)
   };
 }
 
@@ -107,12 +117,13 @@ export function navPropertyFieldTypeImportNames(
  * @internal
  */
 export function complexTypeImportDeclarations(
-  properties: VdmProperty[]
+  properties: VdmProperty[],
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   return mergeImportDeclarations(
     properties
       .filter(prop => prop.isComplex)
-      .map(prop => complexTypeImportDeclaration(prop))
+      .map(prop => complexTypeImportDeclaration(prop, options))
   );
 }
 
@@ -120,16 +131,17 @@ export function complexTypeImportDeclarations(
  * @internal
  */
 export function enumTypeImportDeclarations(
-  properties: VdmProperty[]
+  properties: VdmProperty[],
+  options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
   return mergeImportDeclarations(
     properties
       .filter(prop => prop.isEnum)
-      .map(prop => enumTypeImportDeclaration(prop))
+      .map(prop => enumTypeImportDeclaration(prop, options))
   );
 }
 
-// Only supports named imports
+// Does not support writer functions or strings as named imports
 /**
  * @internal
  */
@@ -139,27 +151,29 @@ export function mergeImportDeclarations(
   return importDeclarations
     .reduce(
       (mergedDeclarations: ImportDeclarationStructure[], importDeclaration) => {
-        const sameModuleSpecifier = mergedDeclarations.find(
+        const mergedDeclaration = mergedDeclarations.find(
           declaration =>
             declaration.moduleSpecifier === importDeclaration.moduleSpecifier &&
             declaration.isTypeOnly === importDeclaration.isTypeOnly
         );
-        if (sameModuleSpecifier) {
-          if (!sameModuleSpecifier.namedImports) {
-            sameModuleSpecifier.namedImports = [
-              ...(importDeclaration.namedImports as string[])
-            ];
-          } else if (sameModuleSpecifier.namedImports instanceof Array) {
-            sameModuleSpecifier.namedImports = [
-              ...sameModuleSpecifier.namedImports,
-              ...(importDeclaration.namedImports as string[])
-            ];
-          } else {
-            sameModuleSpecifier.namedImports = [
-              sameModuleSpecifier.namedImports,
-              ...(importDeclaration.namedImports as string[])
-            ];
+        if (mergedDeclaration) {
+          const mergedNamedImports = mergedDeclaration.namedImports || [];
+          const newNamedImports = importDeclaration.namedImports || [];
+          if (
+            !Array.isArray(mergedNamedImports) ||
+            !Array.isArray(newNamedImports)
+          ) {
+            throw new Error(
+              'mergeImportDeclarations only supports array or undefined named imports. This should never happen.'
+            );
           }
+          mergedDeclaration.namedImports = unique([
+            ...mergedNamedImports,
+            ...newNamedImports
+          ]);
+
+          mergedDeclaration.defaultImport =
+            mergedDeclaration.defaultImport || importDeclaration.defaultImport;
         } else {
           mergedDeclarations.push(importDeclaration);
         }
@@ -167,38 +181,36 @@ export function mergeImportDeclarations(
       },
       []
     )
-    .map(importDeclaration => {
-      if (!importDeclaration.namedImports) {
-        importDeclaration.namedImports = undefined;
-      } else if (importDeclaration.namedImports instanceof Array) {
-        importDeclaration.namedImports = unique(importDeclaration.namedImports);
-      } else {
-        importDeclaration.namedImports = [importDeclaration.namedImports];
-      }
-      return importDeclaration;
-    })
     .filter(
       importDeclaration =>
-        importDeclaration.namedImports && importDeclaration.namedImports.length
+        (importDeclaration.namedImports &&
+          importDeclaration.namedImports.length) ||
+        importDeclaration.defaultImport
     );
 }
 
 function complexTypeImportDeclaration(
-  prop: VdmProperty
+  prop: VdmProperty,
+  options?: CreateFileOptions
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: `./${prop.jsType}`,
+    moduleSpecifier: options?.generateESM
+      ? `./${prop.jsType}.js`
+      : `./${prop.jsType}`,
     namedImports: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])]
   };
 }
 
 function enumTypeImportDeclaration(
-  prop: VdmProperty
+  prop: VdmProperty,
+  options?: CreateFileOptions
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: `./${prop.jsType}`,
+    moduleSpecifier: options?.generateESM
+      ? `./${prop.jsType}.js`
+      : `./${prop.jsType}`,
     namedImports: [prop.jsType]
   };
 }

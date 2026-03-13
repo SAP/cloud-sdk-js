@@ -1,18 +1,7 @@
-
 {
-  "extension": [
-    ".ts"
-  ],
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "**/*.d.ts"
-  ],
-  "reporter": [
-    "cobertura",
-    "html",
-    "text-summary"
-  ],
+  "extension": [".ts"],
+  "include": ["src/**/*"],
+  "exclude": ["**/*.d.ts"],
+  "reporter": ["cobertura", "html", "text-summary"],
   "all": true
 }

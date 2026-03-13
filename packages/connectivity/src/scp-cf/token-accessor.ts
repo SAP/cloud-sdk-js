@@ -36,6 +36,7 @@ export async function serviceToken(
   };
 
   const serviceBinding = resolveServiceBinding(service);
+
   const serviceCredentials = serviceBinding.credentials;
   const tenantForCaching = options?.jwt
     ? getTenantId(options.jwt) || getSubdomain(options.jwt)

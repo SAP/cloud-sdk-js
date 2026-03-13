@@ -1,5 +1,58 @@
 # @sap-cloud-sdk/test-services-openapi
 
+## 4.5.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/openapi-generator@4.5.1
+- @sap-cloud-sdk/util@4.5.1
+
+## 4.5.0
+
+### Patch Changes
+
+- Updated dependencies [3b95c42]
+- Updated dependencies [007541a]
+  - @sap-cloud-sdk/openapi-generator@4.5.0
+  - @sap-cloud-sdk/util@4.5.0
+
+## 4.4.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/openapi-generator@4.4.0
+- @sap-cloud-sdk/util@4.4.0
+
+## 4.3.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/openapi-generator@4.3.1
+- @sap-cloud-sdk/util@4.3.1
+
+## 4.3.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/openapi-generator@4.3.0
+- @sap-cloud-sdk/util@4.3.0
+
+## 4.2.0
+
+### Patch Changes
+
+- Updated dependencies [f17ca59]
+  - @sap-cloud-sdk/openapi-generator@4.2.0
+  - @sap-cloud-sdk/util@4.2.0
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies [011b841]
+  - @sap-cloud-sdk/util@4.1.2
+  - @sap-cloud-sdk/openapi-generator@4.1.2
+
 ## 4.1.1
 
 ### Patch Changes

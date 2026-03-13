@@ -63,8 +63,8 @@ type ParsedOptionType<OptionT extends Option> = OptionT extends {
 
 /**
  * Union type of the options that specify the given property name.
- * @typeParam OptionPropertyT - The literal name of the property in each option.
- * @typeParam CliOptionsT - Configuration of CLI options.
+ * @template OptionPropertyT - The literal name of the property in each option.
+ * @template CliOptionsT - Configuration of CLI options.
  */
 type OptionsWith<
   OptionPropertyT extends keyof Option,

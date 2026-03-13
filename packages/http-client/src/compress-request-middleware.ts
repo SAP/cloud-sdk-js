@@ -1,0 +1,273 @@
+import { promisify } from 'node:util';
+import {
+  createLogger,
+  ErrorWithCause,
+  pickValueIgnoreCase,
+  mergeIgnoreCase
+} from '@sap-cloud-sdk/util';
+import type * as zlibType from 'node:zlib';
+import type {
+  HttpMiddleware,
+  HttpMiddlewareOptions,
+  HttpRequestConfig
+} from './http-client-types';
+
+const logger = createLogger({
+  package: 'http-client',
+  messageContext: 'compress-request-middleware'
+});
+
+interface CompressorsMap {
+  brotli?: (
+    data: zlibType.InputType,
+    options?: RequestCompressorOptions['brotli']
+  ) => Promise<Buffer>;
+  gzip?: (
+    data: zlibType.InputType,
+    options?: RequestCompressorOptions['gzip']
+  ) => Promise<Buffer>;
+  deflate?: (
+    data: zlibType.InputType,
+    options?: RequestCompressorOptions['deflate']
+  ) => Promise<Buffer>;
+  zstd?: (
+    data: zlibType.InputType,
+    options?: RequestCompressorOptions['zstd']
+  ) => Promise<Buffer>;
+}
+
+/**
+ * Cache for available compressors to avoid redundant dynamic imports and checks.
+ * @internal
+ */
+export let compressorsCache: Promise<CompressorsMap> | undefined;
+
+/**
+ * Dynamically imports zlib and checks for available compression algorithms.
+ * Caches the result to optimize subsequent calls.
+ * @internal
+ * @returns A promise that resolves to a map of available compressors.
+ */
+function getCompressors(): Promise<CompressorsMap> {
+  return (compressorsCache ??= (async () => {
+    // Dynamically import zlib to avoid issues in environments where it's not available (e.g., browsers).
+    const zlib: Partial<typeof zlibType> = await import('node:zlib').catch(
+      () => ({})
+    );
+
+    return {
+      ...(zlib.brotliCompress && { brotli: promisify(zlib.brotliCompress) }),
+      ...(zlib.gzip && { gzip: promisify(zlib.gzip) }),
+      ...(zlib.deflate && { deflate: promisify(zlib.deflate) }),
+      ...(zlib.zstdCompress && { zstd: promisify(zlib.zstdCompress) as any })
+    };
+  })());
+}
+
+function getSupportedAlgorithms(available: Record<string, any>): string {
+  return Object.keys(available).length
+    ? Object.keys(available).join(', ')
+    : 'N/A';
+}
+
+/**
+ * Supported compression algorithms.
+ * @remarks
+ * - `gzip` is widely supported.
+ * - `brotli` is supported by modern servers and can offer better compression rates, but may be slower.
+ * - `deflate` is similar to `gzip` but less commonly used.
+ * - `zstd` is experimental, requires Node.js v22.15.0 or higher, and can provide higher compression ratios and speed.
+ */
+export type RequestCompressionAlgorithm =
+  | 'gzip'
+  | 'brotli'
+  | 'deflate'
+  | 'zstd';
+
+/**
+ * Options for different request compressors to configure their behavior (e.g., compression level).
+ */
+export interface RequestCompressorOptions {
+  /** Options to control gzip compression. */
+  gzip: zlibType.ZlibOptions;
+  /** Options to control brotli compression. */
+  brotli: zlibType.BrotliOptions;
+  /** Options to control deflate compression. */
+  deflate: zlibType.ZlibOptions;
+  /**
+   * Options to control zstd compression.
+   * @remarks
+   * Zstd options will become available once Node.js v22.15.0 is the minimum supported version.
+   */
+  zstd: Record<string, any>;
+}
+
+/**
+ * Configuration for the request compression middleware.
+ */
+export interface RequestCompressionMiddlewareOptions<
+  C extends RequestCompressionAlgorithm = 'gzip'
+> {
+  /**
+   * The algorithm to compress the payload with.
+   * Please note that not all servers support all algorithms.
+   * @defaultValue 'gzip'
+   */
+  algorithm?: C;
+  /**
+   * Options for the chosen compression algorithm, e.g. to control the compression effort.
+   */
+  compressOptions?: RequestCompressorOptions[C];
+  /**
+   * Compression mode.
+   * - 'auto' - The payload is compressed based on the `autoCompressMinSize` threshold.
+   * - 'header-only' - It is assumed that the payload is already compressed. The middleware will only set the appropriate Content-Encoding header without modifying the payload.
+   * - 'always' - The payload will always be compressed.
+   * - never' - The payload will never be compressed.
+   * @defaultValue 'auto'
+   */
+  mode?: 'auto' | 'header-only' | 'always' | 'never';
+  /**
+   * Minimum size in bytes a payload must have to be compressed in 'auto' mode.
+   * @defaultValue 1024
+   */
+  autoCompressMinSize?: number;
+}
+
+/**
+ * Determines whether the payload needs compression based on the provided options.
+ * @param payload - The HTTP request payload.
+ * @param options - Configuration options for request compression.
+ * @returns Returns if the payload should be compressed.
+ */
+function checkIfNeedsCompression<
+  C extends RequestCompressionAlgorithm = 'gzip'
+>(payload: unknown, options?: RequestCompressionMiddlewareOptions<C>): boolean {
+  const mode = options?.mode ?? 'auto';
+  if (mode === 'header-only' || mode === 'never') {
+    return false;
+  }
+
+  if (mode === 'always') {
+    return true;
+  }
+
+  // Ensure we are in 'auto' mode if we reach this point
+  mode satisfies 'auto';
+
+  let payloadSize: number;
+  try {
+    payloadSize = Buffer.byteLength(payload as any);
+  } catch (e: any) {
+    logger.error(
+      new ErrorWithCause(
+        "Could not determine payload size for 'auto' compression decision. Payload will not be compressed.",
+        e
+      )
+    );
+    // Skip compression if payload size cannot be determined.
+    return false;
+  }
+
+  const minSize = options?.autoCompressMinSize ?? 1024;
+  const shouldCompress = payloadSize >= minSize;
+  const comparison = shouldCompress ? '>=' : '<';
+  const action = shouldCompress ? 'Compressing' : 'Skipping compression';
+  logger.debug(
+    `Auto compression: payload size ${payloadSize} bytes ${comparison} threshold ${minSize} bytes. ${action}.`
+  );
+  return shouldCompress;
+}
+
+function getContentEncodingValue(
+  algorithm?: RequestCompressionAlgorithm
+): string {
+  switch (algorithm) {
+    case 'brotli':
+      return 'br';
+    case undefined:
+    case 'gzip':
+      return 'gzip';
+    default:
+      return algorithm;
+  }
+}
+
+/**
+ * Middleware to compress HTTP request payloads.
+ * @param options - Configuration options for request compression.
+ * @remarks
+ * **Middleware Ordering**: Place compression middleware early in your middleware array,
+ * typically after logging/csrf but before resilience middleware (retry, timeout, circuit breaker).
+ * This ensures the payload is compressed once and reused across retry attempts.
+ * @returns An HTTP middleware that compresses request payloads based on the provided options.
+ */
+export function compress<C extends RequestCompressionAlgorithm = 'gzip'>(
+  options?: RequestCompressionMiddlewareOptions<C>
+): HttpMiddleware {
+  return (middlewareOptions: HttpMiddlewareOptions) =>
+    async (requestConfig: HttpRequestConfig) => {
+      const algorithm: RequestCompressionAlgorithm =
+        options?.algorithm ?? 'gzip';
+
+      const needsCompression = checkIfNeedsCompression(
+        requestConfig.data,
+        options
+      );
+      const mode = options?.mode ?? 'auto';
+
+      if (!needsCompression && mode !== 'header-only') {
+        return middlewareOptions.fn(requestConfig);
+      }
+
+      // If the payload already has a Content-Encoding header, we need to preserve it and append our encoding to it.
+      const currentContentEncoding = pickValueIgnoreCase(
+        requestConfig.headers,
+        'content-encoding'
+      );
+      const algorithmContentEncoding = getContentEncodingValue(algorithm);
+      const targetContentEncoding = currentContentEncoding
+        ? `${currentContentEncoding}, ${algorithmContentEncoding}`
+        : algorithmContentEncoding;
+      requestConfig.headers = mergeIgnoreCase(requestConfig.headers, {
+        'content-encoding': targetContentEncoding
+      });
+
+      if (mode === 'header-only') {
+        return middlewareOptions.fn(requestConfig);
+      }
+
+      const available = await getCompressors();
+      const compressor = available[algorithm];
+      if (!compressor) {
+        if (!Object.keys(available).length) {
+          throw new Error(
+            `No compression algorithms are available in this environment. Cannot apply '${algorithm}' compression.`
+          );
+        }
+        if (algorithm === 'zstd') {
+          throw new Error(
+            `'zstd' compression is not supported in this environment. On Node.js, it requires v22.15.0 or higher. Supported algorithms are: ${getSupportedAlgorithms(available)}.`
+          );
+        }
+        throw new Error(
+          `Unsupported compression algorithm '${algorithm}'. Supported algorithms are: ${getSupportedAlgorithms(available)}.`
+        );
+      }
+
+      // TODO: (future) Consider streaming compression for large payloads
+      const compressed = await compressor(
+        requestConfig.data,
+        options?.compressOptions as any
+      ).catch((err: Error) => {
+        throw new ErrorWithCause(
+          `Failed to compress request payload using '${algorithm}'.`,
+          err
+        );
+      });
+
+      requestConfig.data = compressed;
+
+      return middlewareOptions.fn(requestConfig);
+    };
+}

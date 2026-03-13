@@ -16,12 +16,12 @@ import type { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 
 /**
  * Create OData query to update an entity.
- * @typeParam EntityT - Type of the entity to be updated.
+ * @template EntityT - Type of the entity to be updated.
  */
 export class UpdateRequestBuilder<
-    EntityT extends Entity,
-    DeSerializersT extends DeSerializers = DefaultDeSerializers
-  >
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>
   extends UpdateRequestBuilderBase<EntityT, DeSerializersT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {

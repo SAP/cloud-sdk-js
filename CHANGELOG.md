@@ -28,6 +28,60 @@
 
 -
  
+# 4.5.1
+## Fixed Issues
+
+- [eslint-config] Correct formatting in ESLint flat-config (330230c)
+
+# 4.5.0
+## Compatibility Notes
+
+- [connectivity] Update `@sap/xssec` to version 4.12.2 with changed XSUAA URL behavior.
+  When fetching XSUAA tokens with zone ID (multi-tenant scenarios), xssec now uses the base domain without a tenant subdomain prefix. (02d1302)
+
+## New Features
+
+- [openapi, openapi-generator] Support request bodies with content type "multipart/form-data". (3b95c42)
+- [openapi-generator] Allow OpenAPI version 3.1. style "type": "null" schemas. OpenAPI version 3.1. support is limited. (007541a)
+
+## Improvements
+
+- [connectivity] Allow passing a `service` binding directly through `DestinationFromServiceBindingOptions` instead of looking it up by name. (962cdcb)
+- [http-client] Add `signal` property to `CustomRequestConfig` and `HttpRequestConfigBase` type definition to document `AbortSignal` support for cancelling HTTP requests. (cbed72f)
+- [http-client] Add request compression middleware.
+  Use the `compress()` middleware to compress HTTP request payloads using gzip, brotli, deflate, or zstd algorithms.
+  Supports multiple compression modes: auto (size-based), passthrough (pre-compressed), or forced compression. (f5715de)
+
+# 4.4.0
+## New Features
+
+- [connectivity] Support IAS (App-to-App) authentication. Use `transformServiceBindingToDestination()` function or `getDestinationFromServiceBinding()` function to create a destination targeting an IAS application. (d444438)
+
+# 4.3.1
+## Improvements
+
+- [eslint-config] Open the peer dependency range of the `eslint` module to include version 8 and 9. Version 9 can now be used without the potentially unsafe npm flag `--legacy-peer-deps`. (6431463)
+
+# 4.3.0
+## New Features
+
+- [connectivity] Support certificates in JKS format for `ClientCertificateAuthentication`. (ab96aff)
+
+# 4.2.0
+## New Features
+
+- [generator, generator-common] Introduce option `generateESM` in OData generator to generate ESM compatible code. (c73c7fa)
+
+## Fixed Issues
+
+- [openapi] Fix missing `type: module` in generated `package.json` when `--generateESM` option is enabled. (e09754a)
+- [openapi-generator] Improve the handling of arrays of enums (f17ca59)
+
+# 4.1.2
+## Fixed Issues
+
+- [connectivity, http-client, openapi, resilience, util] Update `axios` to `1.12.2` to fix vulnerability to DoS attack. Refer [here](https://github.com/advisories/GHSA-4hjh-wcwx-xvwj) for more details. (011b841)
+
 # 4.1.1
 ## Fixed Issues
 

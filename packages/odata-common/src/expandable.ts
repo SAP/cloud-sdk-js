@@ -5,7 +5,7 @@ import type { EntityApi } from './entity-api';
 
 /**
  * Represents everything that can be used in an `.expand` statement. Only relevant for OData v4 requests.
- * @typeParam EntityT - Type of the entity to be selected on
+ * @template EntityT - Type of the entity to be selected on.
  */
 export type Expandable<
   EntityT extends EntityBase,

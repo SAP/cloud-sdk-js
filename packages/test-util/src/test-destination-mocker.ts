@@ -110,8 +110,8 @@ function getDestinationsFromEnv(): Destination[] {
     const envDestinations = process.env['destinations'] || '[]';
     return JSON.parse(envDestinations);
   } catch (error) {
-    throw new Error(
-      `Destinations environment variable cannot be read: ${error.message}`
-    );
+    throw new Error('Destinations environment variable cannot be read.', {
+      cause: error
+    });
   }
 }

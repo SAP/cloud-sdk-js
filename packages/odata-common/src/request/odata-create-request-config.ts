@@ -7,7 +7,7 @@ import type { EntityApi } from '../entity-api';
 
 /**
  * OData create request configuration for an entity type.
- * @typeParam EntityT - Type of the entity to setup a request for
+ * @template EntityT - Type of the entity to setup a request for.
  */
 export class ODataCreateRequestConfig<
   EntityT extends EntityBase,

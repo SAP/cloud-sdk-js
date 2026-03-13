@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { oDataTypedClientParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
 import { commonODataUri } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import { commonEntityApi } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
@@ -68,25 +68,19 @@ describe('OData Request', () => {
   });
 
   it('request config contains headers without ETag value when there is no ETag config', async () => {
-    const destination: HttpDestination = {
-      url: 'http://example.com'
-    };
+    const destination: HttpDestination = { url: 'http://example.com' };
 
     const request = createRequest(ODataGetAllRequestConfig, destination);
 
     expect(request.headers()).toEqual(
-      expect.not.objectContaining({
-        'if-match': expect.anything()
-      })
+      expect.not.objectContaining({ 'if-match': expect.anything() })
     );
   });
 
   describe('requestConfig', () => {
     it('should overwrite default request config with filtered custom request config', async () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      request.config.customRequestConfiguration = {
-        method: 'merge'
-      };
+      request.config.customRequestConfiguration = { method: 'merge' };
       const config = await request['requestConfig']();
       expect(config['method']).toBe('merge');
     });
@@ -98,9 +92,6 @@ function createRequest(
   destination: HttpDestination = { url: '' }
 ) {
   const config = new requestConfigConstructor(commonEntityApi, commonODataUri);
-  config.keys = {
-    KeyPropertyGuid: uuid(),
-    KeyPropertyString: 'id'
-  };
+  config.keys = { KeyPropertyGuid: randomUUID(), KeyPropertyString: 'id' };
   return new ODataRequest(config, destination);
 }

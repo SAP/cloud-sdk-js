@@ -9,9 +9,9 @@ import type {
 
 /**
  * Represents the API of an entity, including its request and entity builders as well as its schema.
- * @typeParam EntityT - Type of the entity.
- * @typeParam DeSerializersT - Type of the (de-)serializers.
- * @typeParam JsonT - Type of the entity without methods.
+ * @template EntityT - Type of the entity.
+ * @template DeSerializersT - Type of the (de-)serializers.
+ * @template JsonT - Type of the entity without methods.
  */
 export interface EntityApi<
   EntityT extends EntityBase,

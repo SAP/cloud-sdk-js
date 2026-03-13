@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Generated client for service ApiTestSrv"`;
 

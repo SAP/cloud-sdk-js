@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
@@ -282,7 +280,6 @@ export abstract class EntityBase {
    */
   protected asObject(visitedEntities: EntityBase[] = []): Record<string, any> {
     visitedEntities.push(this);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return Object.keys(this)
       .filter(
         key =>

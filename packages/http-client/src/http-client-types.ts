@@ -9,8 +9,7 @@ import type { BasicProxyConfiguration } from '@sap-cloud-sdk/connectivity';
 /**
  * Context for HttpRequests of the middleware.
  */
-export interface HttpMiddlewareContext
-  extends MiddlewareContext<HttpRequestConfig> {
+export interface HttpMiddlewareContext extends MiddlewareContext<HttpRequestConfig> {
   /**
    * JWT used in the request.
    */
@@ -156,6 +155,10 @@ export interface HttpRequestConfigBase {
    * Encoder for the query parameters key and values. Per default parameters and keys are percent encoded.
    */
   parameterEncoder?: ParameterEncoder;
+  /**
+   * An `AbortSignal` to cancel the request.
+   */
+  signal?: AbortSignal;
 }
 
 /**
@@ -208,6 +211,7 @@ export type CustomRequestConfig = Pick<
   | 'httpAgent'
   | 'httpsAgent'
   | 'parameterEncoder'
+  | 'signal'
 > &
   Record<string, any>;
 

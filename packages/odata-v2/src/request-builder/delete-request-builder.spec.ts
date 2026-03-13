@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import nock from 'nock';
-import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
   mockDeleteRequest
@@ -8,7 +8,7 @@ import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { DeleteRequestBuilder } from './delete-request-builder';
 
 describe('DeleteRequestBuilder', () => {
-  const keyPropGuid = uuid();
+  const keyPropGuid = randomUUID();
   const keyPropString = 'TEST_ID';
 
   afterEach(() => {
@@ -17,9 +17,7 @@ describe('DeleteRequestBuilder', () => {
 
   it('delete request with keys should resolve', async () => {
     mockDeleteRequest(
-      {
-        path: testEntityResourcePath(keyPropGuid, keyPropString)
-      },
+      { path: testEntityResourcePath(keyPropGuid, keyPropString) },
       testEntityApi
     );
 
@@ -43,9 +41,7 @@ describe('DeleteRequestBuilder', () => {
     mockDeleteRequest(
       {
         path: testEntityResourcePath(keyPropGuid, keyPropString),
-        additionalHeaders: {
-          'if-match': versionId
-        }
+        additionalHeaders: { 'if-match': versionId }
       },
       testEntityApi
     );
@@ -63,9 +59,7 @@ describe('DeleteRequestBuilder', () => {
     mockDeleteRequest(
       {
         path: testEntityResourcePath(keyPropGuid, keyPropString),
-        additionalHeaders: {
-          'if-match': versionId
-        }
+        additionalHeaders: { 'if-match': versionId }
       },
       testEntityApi
     );
@@ -82,9 +76,7 @@ describe('DeleteRequestBuilder', () => {
 
   it('delete requests does not use if-match header when the version identifier is an empty string', async () => {
     mockDeleteRequest(
-      {
-        path: testEntityResourcePath(keyPropGuid, keyPropString)
-      },
+      { path: testEntityResourcePath(keyPropGuid, keyPropString) },
       testEntityApi
     );
 
@@ -102,9 +94,7 @@ describe('DeleteRequestBuilder', () => {
     mockDeleteRequest(
       {
         path: testEntityResourcePath(keyPropGuid, keyPropString),
-        additionalHeaders: {
-          'if-match': '*'
-        }
+        additionalHeaders: { 'if-match': '*' }
       },
       testEntityApi
     );
@@ -138,9 +128,7 @@ describe('DeleteRequestBuilder', () => {
   describe('executeRaw', () => {
     it('returns request and raw response', async () => {
       mockDeleteRequest(
-        {
-          path: testEntityResourcePath(keyPropGuid, keyPropString)
-        },
+        { path: testEntityResourcePath(keyPropGuid, keyPropString) },
         testEntityApi
       );
 

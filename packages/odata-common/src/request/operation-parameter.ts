@@ -2,7 +2,7 @@ import type { EdmTypeShared } from '../edm-types';
 
 /**
  * Internal representation of operation parameters. It adds metadata to the value.
- * @typeParam ValueT - Type of the value.
+ * @template ValueT - Type of the value.
  */
 export class OperationParameter<ValueT> {
   /**
@@ -20,7 +20,7 @@ export class OperationParameter<ValueT> {
 
 /**
  * Internal representation of all parameters of an operation as a map.
- * @typeParam ParametersT - External representation of all parameters
+ * @template ParametersT - External representation of all parameters.
  */
 export type OperationParameters<ParametersT> = {
   [K in keyof ParametersT]: OperationParameter<ParametersT[K]>;

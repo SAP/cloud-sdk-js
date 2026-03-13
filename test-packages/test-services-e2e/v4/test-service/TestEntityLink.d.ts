@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -14,8 +14,8 @@ import type { TestEntityLinkApi } from './TestEntityLinkApi';
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
 export declare class TestEntityLink<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityLinkType<T>
 {

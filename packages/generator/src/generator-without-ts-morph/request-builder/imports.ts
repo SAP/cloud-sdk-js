@@ -1,7 +1,10 @@
 import { unique } from '@sap-cloud-sdk/util';
 import { propertyTypeImportNames } from '../../imports';
 import { externalImportDeclarations, odataImportDeclaration } from '../imports';
-import type { Import } from '@sap-cloud-sdk/generator-common/internal';
+import type {
+  Import,
+  CreateFileOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { VdmEntity, VdmProperty } from '../../vdm-types';
 
@@ -10,7 +13,8 @@ import type { VdmEntity, VdmProperty } from '../../vdm-types';
  */
 export function requestBuilderImportDeclarations(
   entity: VdmEntity,
-  oDataVersion: ODataVersion
+  oDataVersion: ODataVersion,
+  options?: CreateFileOptions
 ): Import[] {
   return [
     ...externalImportDeclarations(entity.keys),
@@ -23,12 +27,15 @@ export function requestBuilderImportDeclarations(
       ].sort(),
       oDataVersion
     ),
-    entityImportDeclaration(entity),
-    ...entityKeyImportDeclaration(entity.keys)
+    entityImportDeclaration(entity, options),
+    ...entityKeyImportDeclaration(entity.keys, options)
   ];
 }
 
-function requestBuilderImports(entity: VdmEntity) {
+/**
+ * @internal
+ */
+export function requestBuilderImports(entity: VdmEntity): string[] {
   const imports = [
     'DefaultDeSerializers',
     'DeSerializers',
@@ -54,20 +61,36 @@ function requestBuilderImports(entity: VdmEntity) {
   return imports;
 }
 
-function entityImportDeclaration(entity: VdmEntity): Import {
+/**
+ * @internal
+ */
+function entityImportDeclaration(
+  entity: VdmEntity,
+  options?: CreateFileOptions
+): Import {
+  const generateESM = options?.generateESM;
   return {
     names: [entity.className],
-    moduleIdentifier: `./${entity.className}`
+    moduleIdentifier: generateESM
+      ? `./${entity.className}.js`
+      : `./${entity.className}`
   };
 }
 
-function entityKeyImportDeclaration(properties: VdmProperty[]): Import[] {
+/**
+ * @internal
+ */
+function entityKeyImportDeclaration(
+  properties: VdmProperty[],
+  options?: CreateFileOptions
+): Import[] {
+  const generateESM = options?.generateESM;
   return unique(
     properties
       .filter(property => property.isEnum)
       .map(property => property.jsType)
   ).map(type => ({
     names: [type],
-    moduleIdentifier: `./${type}`
+    moduleIdentifier: generateESM ? `./${type}.js` : `./${type}`
   }));
 }

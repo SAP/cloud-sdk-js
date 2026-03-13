@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable jsdoc/require-jsdoc */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -7,8 +6,8 @@ import { getInput, setFailed, info } from '@actions/core';
 const validCommitTypes = ['feat', 'fix', 'chore'];
 
 // Expected format: preamble(topic)!: Title text
-export async function validateTitle(title: string): Promise<void> {
-  if (!title.includes(':')) {
+export async function validateTitle(title: string | undefined): Promise<void> {
+  if (!title || !title.includes(':')) {
     return setFailed(
       'PR title does not adhere to conventional commit guidelines. No preamble found.'
     );
@@ -41,12 +40,12 @@ async function validatePreamble(preamble: string): Promise<void> {
   );
 }
 
-function validateCommitType(commitType) {
+function validateCommitType(commitType: string) {
   if (!commitType || !validCommitTypes.includes(commitType)) {
     return setFailed(
       `PR title does not adhere to conventional commit guidelines. Commit type found: ${commitType}. Must be one of ${validCommitTypes.join(
         ', '
-      )}`
+      )}.`
     );
   }
   info('✓ Commit type: OK');
@@ -150,7 +149,7 @@ export function validateChangesets(
   info('✓ Changesets: OK');
 }
 
-export async function validateBody(body: string) {
+export async function validateBody(body: string | undefined): Promise<void> {
   const template = await readFile(
     resolve('.github', 'PULL_REQUEST_TEMPLATE.md'),
     'utf-8'

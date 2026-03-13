@@ -4,6 +4,7 @@
   "description": "Bumps the version of the root package.json and packages according to changesets.",
   "license": "Apache-2.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "postcompile": "ncc build lib/build-packages/changesets-fixed-version-bump/index.js --out ../../.github/actions/changesets-fixed-version-bump/",
@@ -13,16 +14,16 @@
     "all": "yarn && yarn run lint && yarn run compile"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
+    "@actions/core": "^3.0.0",
     "@changesets/get-release-plan": "^4.0.11",
     "execa": "^5.0.0",
-    "semver": "^7.7.2"
+    "semver": "^7.7.4"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.3",
+    "@vercel/ncc": "^0.38.4",
     "depcheck": "^1.4.7",
-    "eslint": "^8.57.1",
-    "prettier": "^3.6.2",
-    "typescript": "~5.9.2"
+    "eslint": "^9.39.2",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.3"
   }
 }

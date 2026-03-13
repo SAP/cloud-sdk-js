@@ -1,5 +1,75 @@
 # @sap-cloud-sdk/odata-v4
 
+## 4.5.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@4.5.1
+- @sap-cloud-sdk/http-client@4.5.1
+- @sap-cloud-sdk/odata-common@4.5.1
+- @sap-cloud-sdk/util@4.5.1
+
+## 4.5.0
+
+### Patch Changes
+
+- Updated dependencies [cbed72f]
+- Updated dependencies [02d1302]
+- Updated dependencies [f5715de]
+- Updated dependencies [962cdcb]
+  - @sap-cloud-sdk/http-client@4.5.0
+  - @sap-cloud-sdk/connectivity@4.5.0
+  - @sap-cloud-sdk/odata-common@4.5.0
+  - @sap-cloud-sdk/util@4.5.0
+
+## 4.4.0
+
+### Patch Changes
+
+- Updated dependencies [d444438]
+  - @sap-cloud-sdk/connectivity@4.4.0
+  - @sap-cloud-sdk/http-client@4.4.0
+  - @sap-cloud-sdk/odata-common@4.4.0
+  - @sap-cloud-sdk/util@4.4.0
+
+## 4.3.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@4.3.1
+- @sap-cloud-sdk/http-client@4.3.1
+- @sap-cloud-sdk/odata-common@4.3.1
+- @sap-cloud-sdk/util@4.3.1
+
+## 4.3.0
+
+### Patch Changes
+
+- Updated dependencies [ab96aff]
+  - @sap-cloud-sdk/connectivity@4.3.0
+  - @sap-cloud-sdk/http-client@4.3.0
+  - @sap-cloud-sdk/odata-common@4.3.0
+  - @sap-cloud-sdk/util@4.3.0
+
+## 4.2.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/connectivity@4.2.0
+- @sap-cloud-sdk/http-client@4.2.0
+- @sap-cloud-sdk/odata-common@4.2.0
+- @sap-cloud-sdk/util@4.2.0
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies [011b841]
+  - @sap-cloud-sdk/connectivity@4.1.2
+  - @sap-cloud-sdk/http-client@4.1.2
+  - @sap-cloud-sdk/util@4.1.2
+  - @sap-cloud-sdk/odata-common@4.1.2
+
 ## 4.1.1
 
 ### Patch Changes

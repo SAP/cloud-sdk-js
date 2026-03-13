@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -15,8 +15,8 @@ import type { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
  * See https://api.sap.com/api/path for more information.
  */
 export class TestEntityLvl2MultiLink<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntityLvl2MultiLinkType<T>
 {

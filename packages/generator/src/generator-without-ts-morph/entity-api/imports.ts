@@ -1,7 +1,10 @@
 import { unique } from '@sap-cloud-sdk/util';
 import { potentialExternalImportDeclarations } from '../../imports';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
-import type { Import } from '@sap-cloud-sdk/generator-common/internal';
+import type {
+  Import,
+  CreateFileOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 import type { VdmMappedEdmType, VdmProperty } from '../../vdm-types';
 
 /**
@@ -24,18 +27,26 @@ export function odataImport(
 /**
  * @internal
  */
-export function complexTypeImports(properties: VdmProperty[]): Import[] {
+export function complexTypeImports(
+  properties: VdmProperty[],
+  options?: CreateFileOptions
+): Import[] {
   return mergeImports(
     properties
       .filter(prop => prop.isComplex)
-      .map(prop => complexTypeImport(prop))
+      .map(prop => complexTypeImport(prop, options))
   );
 }
 
-function complexTypeImport(prop: VdmProperty): Import {
+function complexTypeImport(
+  prop: VdmProperty,
+  options?: CreateFileOptions
+): Import {
   return {
     names: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])],
-    moduleIdentifier: `./${prop.jsType}`,
+    moduleIdentifier: options?.generateESM
+      ? `./${prop.jsType}.js`
+      : `./${prop.jsType}`,
     typeOnly: false
   };
 }
@@ -45,8 +56,8 @@ function complexTypeImport(prop: VdmProperty): Import {
  */
 export function externalImports(properties: VdmMappedEdmType[]): Import[] {
   return potentialExternalImportDeclarations
-    .map(([moduleIdentifier, ...names]) =>
-      externalImport(properties, moduleIdentifier, names)
+    .map(({ moduleSpecifier, namedImports = [], defaultImport }) =>
+      externalImport(properties, moduleSpecifier, namedImports, defaultImport)
     )
     .filter(anImport => anImport.names && anImport.names.length);
 }
@@ -54,28 +65,40 @@ export function externalImports(properties: VdmMappedEdmType[]): Import[] {
 function externalImport(
   properties: VdmMappedEdmType[],
   moduleIdentifier: string,
-  names: string[]
+  names: string[] = [],
+  defaultImport: string | undefined
 ): Import {
   return {
     moduleIdentifier,
     names: names.filter(name =>
       properties.map(prop => prop.jsType).includes(name)
-    )
+    ),
+    defaultImport
   };
 }
 
 /**
  * @internal
  */
-export function enumTypeImports(properties: VdmProperty[]): Import[] {
+export function enumTypeImports(
+  properties: VdmProperty[],
+  options?: CreateFileOptions
+): Import[] {
   return mergeImports(
-    properties.filter(prop => prop.isEnum).map(prop => enumTypeImport(prop))
+    properties
+      .filter(prop => prop.isEnum)
+      .map(prop => enumTypeImport(prop, options))
   );
 }
 
-function enumTypeImport(prop: VdmProperty): Import {
+function enumTypeImport(
+  prop: VdmProperty,
+  options?: CreateFileOptions
+): Import {
   return {
-    moduleIdentifier: `./${prop.jsType}`,
+    moduleIdentifier: options?.generateESM
+      ? `./${prop.jsType}.js`
+      : `./${prop.jsType}`,
     names: [prop.jsType],
     typeOnly: false
   };

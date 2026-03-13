@@ -20,8 +20,9 @@ import type { HttpDestination } from '@sap-cloud-sdk/connectivity/internal';
 import type { WriteBuilder } from '@sap-cloud-sdk/test-services-odata-common/common-request-config';
 import type { CommonEntity } from '@sap-cloud-sdk/test-services-odata-common/common-entity';
 
-jest.mock('uuid', () => ({
-  v4: jest.fn(() => '<content-id>')
+jest.mock('node:crypto', () => ({
+  ...jest.requireActual('node:crypto'),
+  randomUUID: jest.fn(() => '<content-id>')
 }));
 
 function commonEntity(): CommonEntity {
@@ -32,10 +33,7 @@ function commonEntity(): CommonEntity {
     .stringProperty('value')
     .build();
 }
-const entityKeys = {
-  KeyPropertyGuid: 'testId',
-  KeyPropertyString: 'test'
-};
+const entityKeys = { KeyPropertyGuid: 'testId', KeyPropertyString: 'test' };
 
 function changeSet(requests: WriteBuilder[]): BatchChangeSet {
   return new BatchChangeSet<any>(requests, 'changeSet_boundary');

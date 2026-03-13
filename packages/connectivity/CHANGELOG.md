@@ -1,5 +1,70 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.5.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.5.1
+- @sap-cloud-sdk/util@4.5.1
+
+## 4.5.0
+
+### Minor Changes
+
+- 02d1302: [Compatibility Note] Update `@sap/xssec` to version 4.12.2 with changed XSUAA URL behavior.
+  When fetching XSUAA tokens with zone ID (multi-tenant scenarios), xssec now uses the base domain without a tenant subdomain prefix.
+- 962cdcb: [Improvement] Allow passing a `service` binding directly through `DestinationFromServiceBindingOptions` instead of looking it up by name.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.5.0
+- @sap-cloud-sdk/util@4.5.0
+
+## 4.4.0
+
+### Minor Changes
+
+- d444438: [New Functionality] Support IAS (App-to-App) authentication. Use `transformServiceBindingToDestination()` function or `getDestinationFromServiceBinding()` function to create a destination targeting an IAS application.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.4.0
+- @sap-cloud-sdk/util@4.4.0
+
+## 4.3.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.3.1
+- @sap-cloud-sdk/util@4.3.1
+
+## 4.3.0
+
+### Minor Changes
+
+- ab96aff: [New Functionality] Support certificates in JKS format for `ClientCertificateAuthentication`.
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.3.0
+- @sap-cloud-sdk/util@4.3.0
+
+## 4.2.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/resilience@4.2.0
+- @sap-cloud-sdk/util@4.2.0
+
+## 4.1.2
+
+### Patch Changes
+
+- 011b841: [Fixed Issue] Update `axios` to `1.12.2` to fix vulnerability to DoS attack. Refer [here](https://github.com/advisories/GHSA-4hjh-wcwx-xvwj) for more details.
+- Updated dependencies [011b841]
+  - @sap-cloud-sdk/resilience@4.1.2
+  - @sap-cloud-sdk/util@4.1.2
+
 ## 4.1.1
 
 ### Patch Changes

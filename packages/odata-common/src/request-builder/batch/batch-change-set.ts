@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import type { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
 import type { CreateRequestBuilderBase } from '../create-request-builder-base';
 import type { EntityBase } from '../../entity-base';
@@ -19,7 +19,7 @@ export class BatchChangeSet<
    */
   constructor(
     readonly requests: ChangesetBuilderTypes<DeSerializersT>[],
-    readonly boundary: string = `changeset_${uuid()}`
+    readonly boundary: string = `changeset_${randomUUID()}`
   ) {}
 }
 

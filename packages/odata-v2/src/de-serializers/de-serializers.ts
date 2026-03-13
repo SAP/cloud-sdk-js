@@ -25,21 +25,21 @@ export interface DeSerializers<
   DateTimeOffsetT = any,
   TimeT = any
 > extends DeSerializersCommon<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT
-  > {
+  BinaryT,
+  BooleanT,
+  ByteT,
+  DecimalT,
+  DoubleT,
+  FloatT,
+  Int16T,
+  Int32T,
+  Int64T,
+  GuidT,
+  SByteT,
+  SingleT,
+  StringT,
+  AnyT
+> {
   /**
    * DeSerializer for `Edm.DateTime` to the generic type `DateTimeT`.
    */

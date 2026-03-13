@@ -11,6 +11,16 @@ It also uses the `eslint-config-prettier` to avoid any formatting conflicts when
 
 ## How to use
 
+Import the flat configuration in your `eslint.config.js`:
+
+```
+import sapCloudSdkConfig from '@sap-cloud-sdk/eslint-config/flat-config';
+```
+
+Then add it to your own configuration in `defineConfig()`: `defineConfig(sapCloudSdkConfig, /* your config */)`.
+
+### Legacy ESLint configuration files
+
 To add the configuration please adjust your ESlint configuration (usually called `.eslintrc` or `.eslintrc.js`):
 
 ```

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -14,8 +14,8 @@ import type { TestEntity50PropApi } from './TestEntity50PropApi';
  * This class represents the entity "TestEntity50Prop" of service "TestService".
  */
 export declare class TestEntity50Prop<
-    T extends DeSerializers = DefaultDeSerializers
-  >
+  T extends DeSerializers = DefaultDeSerializers
+>
   extends Entity
   implements TestEntity50PropType<T>
 {

@@ -10,5 +10,6 @@ export const momentImport = {
 export const bigNumberImport = {
   kind: StructureKind.ImportDeclaration,
   moduleSpecifier: 'bignumber.js',
-  namedImports: ['BigNumber']
+  defaultImport: 'BigNumber',
+  namedImports: []
 } as ImportDeclarationStructure;

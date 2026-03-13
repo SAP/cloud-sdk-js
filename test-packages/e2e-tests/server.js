@@ -5,7 +5,7 @@ const { createOpenApiApp } = require('./openapi');
 
 async function startServer() {
   const app = express();
-  const odataApp = createCapApp();
+  const odataApp = await createCapApp();
   const restApp = await createOpenApiApp();
 
   app.use('/odata', odataApp);

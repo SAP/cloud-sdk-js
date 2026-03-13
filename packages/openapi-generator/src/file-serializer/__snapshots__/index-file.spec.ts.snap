@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`index-file apiIndexFile serializes the api index file following the esm format 1`] = `
 "    export * from './test-api.js';

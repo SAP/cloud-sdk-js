@@ -10,7 +10,7 @@ For testing if two versions works together do the following in the e2e folder:
 
 ```bash
 rm -r node_modules/ && yarn install --ignore-engines       //contains state of pm2
-rm sqlite.db && yarn deploy && yarn stop && yarn start     //recreate DB
+rm sqlite.db && yarn deploy && yarn pretest:e2e && yarn posttest:e2e     //recreate DB
 //execute your tests
 ```
 

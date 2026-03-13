@@ -3,9 +3,9 @@ const cds = require('@sap/cds');
 const express = require('express');
 
 module.exports = {
-  createCapApp() {
+  async createCapApp() {
     const app = express();
-    cds
+    await cds
       .serve('all')
       .to('odata') // Use odata format (default is 'fiori')
       .in(app);

@@ -2,7 +2,6 @@
 
 import { promises } from 'fs';
 import { join, resolve } from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { generate } from '@sap-cloud-sdk/generator/src';
 import {
@@ -82,7 +81,7 @@ function addODataVersion(str: string): string {
     const nameString = str.match(/static override _entityName =.*/)![0];
     return str.replace(
       nameString,
-      [nameString, 'readonly _oDataVersion: any;'].join(unixEOL)
+      [nameString, 'readonly _oDataVersion: any;'].join('\n')
     );
   }
   return str;
@@ -97,7 +96,7 @@ function addODataVersionToConstructor(str: any) {
         nameString,
         "this._oDataVersion = 'v2';",
         "nonEnumerable(this, '_oDataVersion')"
-      ].join(unixEOL)
+      ].join('\n')
     );
   }
   return str;
@@ -164,7 +163,7 @@ async function generateCommonTestEntity() {
     removeBatchFunctions(service),
     'export const { commonEntityApi } = commonService();',
     'export const { commonEntityApi: commonEntityApiCustom } = commonService(\n  customTestDeSerializers\n);'
-  ].join(unixEOL);
+  ].join('\n');
   await createFile(__dirname, 'common-entity.ts', allParts, {
     overwrite: true,
     prettierOptions: defaultPrettierConfig
@@ -174,8 +173,6 @@ async function generateCommonTestEntity() {
 const disclaimer = `/* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.
 The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/`;
 const imports = `
-  import { Moment } from "moment";
-  import { BigNumber } from "bignumber.js";
   import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time, nonEnumerable } from '../../packages/odata-common/src/internal';
   import { customTestDeSerializers } from '../../test-resources/test/test-util';
   `;

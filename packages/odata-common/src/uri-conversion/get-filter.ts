@@ -58,7 +58,7 @@ export interface GetFilter {
 export function createGetFilter(uriConverter: UriConverter): GetFilter {
   /**
    * Get an object containing the given filter as query parameter, or an empty object if none was given.
-   * @typeParam EntityT - Type of the entity to filter on.
+   * @template EntityT - Type of the entity to filter on.
    * @param filter - The filter to transform to a query parameter.
    * @param entityApi - Entity API for building the filter.
    * @returns An object containing the query parameter with encoding or an empty object.

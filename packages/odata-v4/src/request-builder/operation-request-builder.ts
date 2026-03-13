@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 import { OperationRequestBuilderBase } from '@sap-cloud-sdk/odata-common/internal';
 import {
   ODataFunctionRequestConfig,
@@ -13,8 +12,8 @@ import type {
 
 /**
  * Create OData request to execute an operation.
- * @typeParam ParametersT - Type of the operation parameters.
- * @typeParam ReturnT - Type of the operation return value.
+ * @template ParametersT - Type of the operation parameters.
+ * @template ReturnT - Type of the operation return value.
  */
 export class OperationRequestBuilder<
   DeSerializersT extends DeSerializers,

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/openapi",
-  "version": "4.1.1",
+  "version": "4.5.1",
   "description": "SAP Cloud SDK for JavaScript openapi",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -23,7 +23,11 @@
     "internal.js",
     "internal.d.ts"
   ],
-  "repository": "github:SAP/cloud-sdk-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/cloud-sdk-js.git",
+    "directory": "packages/openapi"
+  },
   "scripts": {
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
@@ -36,14 +40,14 @@
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^4.1.1",
-    "@sap-cloud-sdk/http-client": "^4.1.1",
-    "@sap-cloud-sdk/resilience": "^4.1.1",
-    "@sap-cloud-sdk/util": "^4.1.1",
-    "axios": "^1.11.0"
+    "@sap-cloud-sdk/connectivity": "^4.5.1",
+    "@sap-cloud-sdk/http-client": "^4.5.1",
+    "@sap-cloud-sdk/resilience": "^4.5.1",
+    "@sap-cloud-sdk/util": "^4.5.1",
+    "axios": "^1.13.6"
   },
   "devDependencies": {
-    "nock": "^14.0.10",
-    "typescript": "~5.9.2"
+    "nock": "^14.0.11",
+    "typescript": "~5.9.3"
   }
 }

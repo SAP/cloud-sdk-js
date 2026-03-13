@@ -1,8 +1,6 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { packageJsonBase } from '@sap-cloud-sdk/generator-common/internal';
 import type { ODataVersion } from '@sap-cloud-sdk/util';
 import type { PackageJsonOptions as PackageJsonOptionsBase } from '@sap-cloud-sdk/generator-common/internal';
-
 /**
  * @internal
  */
@@ -20,16 +18,20 @@ export interface PackageJsonOptions extends PackageJsonOptionsBase {
  * @internal
  */
 export async function packageJson(
-  options: PackageJsonOptions
+  options: PackageJsonOptions & { generateESM?: boolean }
 ): Promise<string> {
   const oDataModule =
     options.oDataVersion === 'v2'
       ? '@sap-cloud-sdk/odata-v2'
       : '@sap-cloud-sdk/odata-v4';
+
+  // Determine module type based on generateESM option
+  const moduleType = options.generateESM ? 'esm' : 'commonjs';
+
   return (
     JSON.stringify(
       {
-        ...packageJsonBase(options),
+        ...packageJsonBase({ ...options, moduleType }),
         files: [
           '**/*.js',
           '**/*.js.map',
@@ -50,6 +52,6 @@ export async function packageJson(
       },
       null,
       2
-    ) + unixEOL
+    ) + '\n'
   );
 }

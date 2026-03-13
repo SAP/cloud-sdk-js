@@ -1,7 +1,16 @@
-import mock from 'mock-fs';
 import path from 'path';
-import * as core from '@actions/core';
-import {
+import mock from 'mock-fs';
+import { jest } from '@jest/globals';
+
+jest.unstable_mockModule('@actions/core', () => ({
+  error: jest.fn(),
+  info: jest.fn(),
+  warning: jest.fn(),
+  getInput: jest.fn(),
+  setFailed: jest.fn()
+}));
+
+const {
   checkBarrelRecursive,
   checkIndexFileExists,
   exportAllInBarrel,
@@ -10,16 +19,16 @@ import {
   parseExportedObjectsInFile,
   regexExportedIndex,
   typeDescriptorPaths
-} from './index';
+  // eslint-disable-next-line import/no-useless-path-segments
+} = await import('./index.js');
+const { error } = await import('@actions/core');
 
 describe('check-public-api', () => {
-  let errorSpy: any;
-
-  beforeEach(() => {
-    errorSpy = jest.spyOn(core, 'error').mockImplementation();
+  beforeEach(async () => {
+    (error as jest.Mock).mockClear();
   });
+
   afterEach(() => {
-    errorSpy.mockRestore();
     mock.restore();
   });
 
@@ -33,7 +42,7 @@ describe('check-public-api', () => {
         }
       });
       checkIndexFileExists('root/index.ts');
-      expect(errorSpy).toHaveBeenCalledWith('No index.ts file found in root.');
+      expect(error).toHaveBeenCalledWith('No index.ts file found in root.');
     });
 
     it('fails if internal.ts is not present in root', async () => {
@@ -46,7 +55,7 @@ describe('check-public-api', () => {
         }
       });
       await exportAllInBarrel('src', 'internal.ts');
-      expect(errorSpy).toHaveBeenCalledWith(
+      expect(error).toHaveBeenCalledWith(
         "No 'internal.ts' file found in 'src'."
       );
     });
@@ -66,10 +75,10 @@ describe('check-public-api', () => {
 
       await exportAllInBarrel('dir1', 'index.ts');
 
-      expect(errorSpy).toHaveBeenCalledWith(
+      expect(error).toHaveBeenCalledWith(
         `'dir2' is not exported in '${path.normalize('dir1/index.ts')}'.`
       );
-      expect(errorSpy).toHaveBeenCalledWith("'index.ts' is not in sync.");
+      expect(error).toHaveBeenCalledWith("'index.ts' is not in sync.");
     });
 
     it('checkBarrelRecursive passes recursive check for barrel file exports', async () => {
@@ -201,7 +210,7 @@ describe('check-public-api', () => {
       });
 
       await parseIndexFile('index.ts', true);
-      expect(errorSpy).toHaveBeenCalledWith(
+      expect(error).toHaveBeenCalledWith(
         "Re-exporting internal modules is not allowed. 'internal' exported in 'index.ts'."
       );
     });

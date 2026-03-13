@@ -2,7 +2,6 @@
 import { lstatSync, readdirSync, renameSync, readFileSync } from 'fs';
 import { resolve, basename, extname } from 'path';
 import execa from 'execa';
-import { unixEOL } from '@sap-cloud-sdk/util';
 import { transformFile } from './util';
 import { deflate } from 'zlib';
 import { promisify } from 'util';
@@ -35,8 +34,8 @@ const isNavigationJs = fileName => basename(fileName) === 'navigation.js';
 
 const pipe =
   (...fns) =>
-    start =>
-      fns.reduce((state, fn) => fn(state), start);
+  start =>
+    fns.reduce((state, fn) => fn(state), start);
 
 async function adjustForGitHubPages() {
   const documentationFilePaths = flatten(readDir(resolve(docPath)));
@@ -64,11 +63,11 @@ async function adjustForGitHubPages() {
  * @returns A promise that resolves to the parsed JSON object.
  */
 export async function decompressJson(base64: string) {
-  const binaryData = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+  const binaryData = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
   const blob = new Blob([binaryData]);
   const decompressedStream = blob
     .stream()
-    .pipeThrough(new DecompressionStream("deflate"));
+    .pipeThrough(new DecompressionStream('deflate'));
   const decompressedText = await new Response(decompressedStream).text();
   return JSON.parse(decompressedText);
 }
@@ -81,7 +80,7 @@ export async function decompressJson(base64: string) {
  */
 export async function compressJson(data: any) {
   const gz = await deflateP(Buffer.from(JSON.stringify(data)));
-  return gz.toString("base64");
+  return gz.toString('base64');
 }
 
 async function adjustSearchJs(paths) {
@@ -91,10 +90,7 @@ async function adjustSearchJs(paths) {
   }
 
   await transformFile(filtered[0], async file => {
-    const dataRegexResult =
-      /window.searchData = "(.*)";/.exec(
-        file
-      );
+    const dataRegexResult = /window.searchData = "(.*)";/.exec(file);
     if (!dataRegexResult) {
       throw Error(
         `Cannot adjust links in 'search.js'. File content did not match expected pattern.`
@@ -118,10 +114,7 @@ async function adjustNavigationJs(paths) {
   }
 
   await transformFile(filtered[0], async file => {
-    const dataRegexResult =
-      /window.navigationData = "(.*)"/.exec(
-        file
-      );
+    const dataRegexResult = /window.navigationData = "(.*)"/.exec(file);
     if (!dataRegexResult) {
       throw Error(
         `Cannot adjust links in 'navigation.js'. File content did not match expected pattern.`
@@ -163,14 +156,14 @@ async function insertCopyright() {
     filePaths.map(async filePath => {
       const copyrightDiv = `<div class="container"><p>Copyright Ⓒ ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.</p></div>`;
       return transformFile(filePath, file => {
-        const lines = file.split(unixEOL);
+        const lines = file.split('\n');
         // Insert the copyright div before the line including </footer> #yikes
         lines.splice(
           lines.findIndex(line => line.includes('</footer>')),
           0,
           copyrightDiv
         );
-        return lines.join(unixEOL);
+        return lines.join('\n');
       });
     })
   );
@@ -181,7 +174,7 @@ function validateLogs(generationLogs: string) {
     'Found invalid symbol reference(s) in JSDocs, they will not render as links in the generated documentation.';
   const [, invalidLinks] = generationLogs.split(invalidLinksMessage);
   if (invalidLinks) {
-    throw Error(`Error: ${invalidLinksMessage}${unixEOL}${invalidLinks}`);
+    throw Error(`Error: ${invalidLinksMessage}\n${invalidLinks}`);
   }
 }
 

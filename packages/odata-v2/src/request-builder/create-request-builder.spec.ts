@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import nock from 'nock';
-import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
   defaultHost,
@@ -20,17 +20,11 @@ describe('CreateRequestBuilder', () => {
   });
 
   it('should only send field properties set using the builder', async () => {
-    const keyProp = uuid();
+    const keyProp = randomUUID();
     const stringProp = 'testStr';
     const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
-    mockCreateRequest(
-      {
-        body: postBody,
-        path: 'A_TestEntity'
-      },
-      testEntityApi
-    );
+    mockCreateRequest({ body: postBody, path: 'A_TestEntity' }, testEntityApi);
 
     const entity = testEntityApi
       .entityBuilder()
@@ -50,18 +44,13 @@ describe('CreateRequestBuilder', () => {
     const stringProp = 'etagTest';
     const eTag = 'someEtag';
 
-    const postBody = {
-      StringProperty: stringProp
-    };
+    const postBody = { StringProperty: stringProp };
 
     mockCreateRequest(
       {
         body: postBody,
         path: 'A_TestEntity',
-        responseBody: {
-          ...postBody,
-          __metadata: { etag: eTag }
-        }
+        responseBody: { ...postBody, __metadata: { etag: eTag } }
       },
       testEntityApi
     );
@@ -83,13 +72,7 @@ describe('CreateRequestBuilder', () => {
     const stringProp = 'test';
     const postBody = { to_SingleLink: { StringProperty: stringProp } };
 
-    mockCreateRequest(
-      {
-        body: postBody,
-        path: 'A_TestEntity'
-      },
-      testEntityApi
-    );
+    mockCreateRequest({ body: postBody, path: 'A_TestEntity' }, testEntityApi);
 
     const entity = testEntityApi
       .entityBuilder()
@@ -146,7 +129,7 @@ describe('CreateRequestBuilder', () => {
   });
 
   it('create an entity with custom fields', async () => {
-    const keyProp = uuid();
+    const keyProp = randomUUID();
     const stringProp = 'test';
 
     const customFields = {
@@ -161,13 +144,7 @@ describe('CreateRequestBuilder', () => {
       ...customFields
     };
 
-    mockCreateRequest(
-      {
-        body: postBody,
-        path: 'A_TestEntity'
-      },
-      testEntityApi
-    );
+    mockCreateRequest({ body: postBody, path: 'A_TestEntity' }, testEntityApi);
 
     const entity = testEntityApi
       .entityBuilder()
@@ -187,7 +164,7 @@ describe('CreateRequestBuilder', () => {
   it('create entity as a child of an entity', async () => {
     const booleanProp = false;
     const int16Prop = 17;
-    const parentKeyGuid = uuid();
+    const parentKeyGuid = randomUUID();
     const parentKeyString = 'test-key';
 
     const childEntity = testEntityMultiLinkApi
@@ -209,13 +186,7 @@ describe('CreateRequestBuilder', () => {
       parentKeyString
     )}/to_MultiLink`;
 
-    mockCreateRequest(
-      {
-        body: postBody,
-        path: toChildPath
-      },
-      testEntityApi
-    );
+    mockCreateRequest({ body: postBody, path: toChildPath }, testEntityApi);
 
     const actual = await new CreateRequestBuilder(
       testEntityMultiLinkApi,
@@ -241,10 +212,7 @@ describe('CreateRequestBuilder', () => {
     const body = { StringProperty: stringProp, customPropKey: customPropVal };
 
     mockCreateRequest(
-      {
-        body,
-        path: 'A_TestEntity/$links/to_MultiLink'
-      },
+      { body, path: 'A_TestEntity/$links/to_MultiLink' },
       testEntityApi
     );
 
@@ -258,13 +226,7 @@ describe('CreateRequestBuilder', () => {
   });
 
   it('throws an error when request execution fails', async () => {
-    mockCreateRequest(
-      {
-        statusCode: 500,
-        path: 'A_TestEntity'
-      },
-      testEntityApi
-    );
+    mockCreateRequest({ statusCode: 500, path: 'A_TestEntity' }, testEntityApi);
 
     const someEntity = testEntityApi.entityBuilder().stringProperty('').build();
 
@@ -277,7 +239,7 @@ describe('CreateRequestBuilder', () => {
   });
 
   it('create an entity with csrf token request when the option is set to false', async () => {
-    const keyProp = uuid();
+    const keyProp = randomUUID();
     const stringProp = 'testStr';
     const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
@@ -300,15 +262,12 @@ describe('CreateRequestBuilder', () => {
 
   describe('executeRaw', () => {
     it('returns request and raw response', async () => {
-      const keyProp = uuid();
+      const keyProp = randomUUID();
       const stringProp = 'testStr';
       const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
       mockCreateRequest(
-        {
-          body: postBody,
-          path: 'A_TestEntity'
-        },
+        { body: postBody, path: 'A_TestEntity' },
         testEntityApi
       );
 

@@ -1,4 +1,4 @@
-import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { serializeSchema } from './schema';
 import type {
   OpenApiOperation,
@@ -108,6 +108,18 @@ function serializeParamsForSignature(
   }
 }
 
+function getHeaderParameters(operation: OpenApiOperation): string | undefined {
+  if (operation.requestBody?.mediaType) {
+    const contentTypeStr = `'content-type': '${operation.requestBody.mediaType}'`;
+    return operation.headerParameters.length
+      ? `headerParameters: {${contentTypeStr}, ...headerParameters}`
+      : `headerParameters: {${contentTypeStr}}`;
+  }
+  if (operation.headerParameters.length) {
+    return 'headerParameters';
+  }
+}
+
 function serializeParamsForRequestBuilder(
   operation: OpenApiOperation
 ): string | undefined {
@@ -121,13 +133,24 @@ function serializeParamsForRequestBuilder(
   }
   if (operation.requestBody) {
     params.push('body');
+    if (
+      operation.requestBody.encoding &&
+      Object.keys(operation.requestBody.encoding).length
+    ) {
+      params.push(
+        `_encoding: ${JSON.stringify(operation.requestBody.encoding)}`
+      );
+    }
+  }
+
+  const headerParam = getHeaderParameters(operation);
+  if (headerParam) {
+    params.push(headerParam);
   }
   if (operation.queryParameters.length) {
     params.push('queryParameters');
   }
-  if (operation.headerParameters.length) {
-    params.push('headerParameters');
-  }
+
   if (params.length) {
     return codeBlock`{
       ${params.join(',\n')}
@@ -164,7 +187,7 @@ export function operationDocumentation(operation: OpenApiOperation): string {
     '@returns The request builder, use the `execute()` method to trigger the request.'
   );
   const lines = [getOperationDescriptionText(operation), ...signature];
-  return documentationBlock`${lines.join(unixEOL)}`;
+  return documentationBlock`${lines.join('\n')}`;
 }
 
 function getSignatureOfPathParameters(

@@ -1,4 +1,5 @@
 import { setOutput, setFailed } from '@actions/core';
+// eslint-disable-next-line import/no-internal-modules
 import { getChangelog } from '../../scripts/get-changelog';
 
 (async () => {

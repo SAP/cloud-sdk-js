@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DefaultApi = void 0;
 /*
- * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -31,7 +31,8 @@ exports.DefaultApi = {
      */
     patchEntity: (pathParam, body) => new openapi_1.OpenApiRequestBuilder('patch', '/entities/{pathParam}', {
         pathParameters: { pathParam },
-        body
+        body,
+        headerParameters: { 'content-type': 'application/json' }
     }, exports.DefaultApi._defaultBasePath)
 };
 //# sourceMappingURL=default-api.js.map

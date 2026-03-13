@@ -32,7 +32,7 @@ export type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
  * Type to describe possible inputs for `.fromJson`.
  * This is based on the JSON type of an entity and allows all properties to be optional recursively.
  * It also allows setting unknown properties, which will be treated as custom fields.
- * @typeParam JsonT - JSON type of the entity.
+ * @template JsonT - JSON type of the entity.
  */
 // prettier-ignore
 export type FromJsonType<JsonT> = {

@@ -1,6 +1,9 @@
 import https from 'node:https';
 import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
+import {
+  basicHeader,
+  replaceSubdomain
+} from '@sap-cloud-sdk/connectivity/internal';
 import type { ServiceCredentials } from '@sap-cloud-sdk/connectivity';
 
 export function mockClientCredentialsGrantCall(
@@ -11,7 +14,11 @@ export function mockClientCredentialsGrantCall(
   zoneId?: string,
   delay = 0
 ) {
-  return nock(uri, {
+  // When zoneId is provided, xssec 4.12.2+ uses the base uaadomain without subdomain
+  // to avoid correlation with the provider's tenant on server side
+  const targetUri = zoneId ? replaceSubdomain(uri, undefined) : uri;
+
+  return nock(targetUri, {
     reqheaders: xsuaaRequestHeaders(zoneId ? { 'x-zid': zoneId } : {}),
     badheaders: zoneId ? [] : ['x-zid']
   })
@@ -65,13 +72,15 @@ export function mockUserTokenGrantCall(
   responseCode = 200
 ) {
   return nock(uri)
-    .post('/oauth/token', {
-      client_id: creds.clientid,
-      client_secret: creds.clientsecret,
-      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-      assertion: accessTokenAssertion,
-      response_type: 'token'
-    })
+    .post('/oauth/token', body => (
+        body.client_id === creds.clientid &&
+        body.client_secret === creds.clientsecret &&
+        body.grant_type === 'urn:ietf:params:oauth:grant-type:jwt-bearer' &&
+        // For empty accessTokenAssertion, the assertion is not checked.
+        (body.assertion === accessTokenAssertion || (!accessTokenAssertion && !body.assertion)) &&
+        body.response_type === 'token'
+      )
+    )
     .times(times)
     .reply(responseCode, accessTokenResponse);
 }

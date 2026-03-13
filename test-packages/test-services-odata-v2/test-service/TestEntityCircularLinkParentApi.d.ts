@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
@@ -19,9 +19,10 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 export declare class TestEntityCircularLinkParentApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements
-    EntityApi<TestEntityCircularLinkParent<DeSerializersT>, DeSerializersT>
-{
+> implements EntityApi<
+  TestEntityCircularLinkParent<DeSerializersT>,
+  DeSerializersT
+> {
   deSerializers: DeSerializersT;
   private constructor();
   /**

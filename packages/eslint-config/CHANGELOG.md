@@ -1,5 +1,27 @@
 # @sap-cloud-sdk/eslint-config
 
+## 4.5.1
+
+### Patch Changes
+
+- 330230c: [Fixed Issue] Correct formatting in ESLint flat-config
+
+## 4.5.0
+
+## 4.4.0
+
+## 4.3.1
+
+### Patch Changes
+
+- 6431463: [Improvement] Open the peer dependency range of the `eslint` module to include version 8 and 9. Version 9 can now be used without the potentially unsafe npm flag `--legacy-peer-deps`.
+
+## 4.3.0
+
+## 4.2.0
+
+## 4.1.2
+
 ## 4.1.1
 
 ## 4.1.0

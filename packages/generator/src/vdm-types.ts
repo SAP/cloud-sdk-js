@@ -185,9 +185,7 @@ export interface VdmPropertyValueConstraints {
  * @internal
  */
 export interface VdmProperty
-  extends VdmPropertyDescriptor,
-    VdmPropertyValueConstraints,
-    VdmMappedEdmType {
+  extends VdmPropertyDescriptor, VdmPropertyValueConstraints, VdmMappedEdmType {
   /**
    * @internal
    */

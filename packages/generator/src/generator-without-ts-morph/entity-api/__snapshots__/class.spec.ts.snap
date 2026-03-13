@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`entity api class gets proper class content 1`] = `
 "export class BreakfastApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 

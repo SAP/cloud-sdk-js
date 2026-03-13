@@ -19,11 +19,11 @@ import type { ConstructorOrField } from './constructor-or-field';
  * Moreover, classes implementing this abstract class will provide property fields, that can be used for filtering and ordering.
  *
  * See also: {@link Selectable}.
- * @typeParam EntityT - Type of the entity the field belongs to.
- * @typeParam DeSerializersT - Type of the (de-)serializers.
- * @typeParam ComplexT - Type of complex type represented by this field.
- * @typeParam NullableT - Boolean type that represents whether the field is nullable.
- * @typeParam SelectableT - Boolean type that represents whether the field is selectable.
+ * @template EntityT - Type of the entity the field belongs to.
+ * @template DeSerializersT - Type of the (de-)serializers.
+ * @template ComplexT - Type of complex type represented by this field.
+ * @template NullableT - Boolean type that represents whether the field is nullable.
+ * @template SelectableT - Boolean type that represents whether the field is selectable.
  */
 export abstract class ComplexTypeField<
   EntityT extends EntityBase,

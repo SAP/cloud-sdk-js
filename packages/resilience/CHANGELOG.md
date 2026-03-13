@@ -1,5 +1,49 @@
 # @sap-cloud-sdk/resilience
 
+## 4.5.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@4.5.1
+
+## 4.5.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@4.5.0
+
+## 4.4.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@4.4.0
+
+## 4.3.1
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@4.3.1
+
+## 4.3.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@4.3.0
+
+## 4.2.0
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@4.2.0
+
+## 4.1.2
+
+### Patch Changes
+
+- 011b841: [Fixed Issue] Update `axios` to `1.12.2` to fix vulnerability to DoS attack. Refer [here](https://github.com/advisories/GHSA-4hjh-wcwx-xvwj) for more details.
+- Updated dependencies [011b841]
+  - @sap-cloud-sdk/util@4.1.2
+
 ## 4.1.1
 
 ### Patch Changes

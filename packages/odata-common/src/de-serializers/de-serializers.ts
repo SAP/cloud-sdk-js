@@ -83,7 +83,7 @@ export interface DeSerializers<
 /**
  * Represents a set of functions for serialization, deserialization and optionally serialization for URIs.
  * The return type of the `deserialize` function is the type of the input to the `serialize` and `serializeToUri` functions.
- * @typeParam DeserializedT - The return type of `deserialize` and input of `serialize` and `serializeToUri`.
+ * @template DeserializedT - The return type of `deserialize` and input of `serialize` and `serializeToUri`.
  */
 export interface DeSerializer<DeserializedT> {
   /**
@@ -115,8 +115,8 @@ export interface DeSerializer<DeserializedT> {
 
 /**
  * Infers the deserialized type for an EDM type from the given (de-)serializers type.
- * @typeParam DeSerializersT - Type of the (de-)serializers.
- * @typeParam EdmT - Return type of the deserialize function for the given EDM type.
+ * @template DeSerializersT - Type of the (de-)serializers.
+ * @template EdmT - Return type of the deserialize function for the given EDM type.
  */
 export type DeserializedType<
   DeSerializersT extends DeSerializers,

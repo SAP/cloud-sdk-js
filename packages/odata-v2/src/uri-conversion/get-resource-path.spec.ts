@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { v4 as uuid } from 'uuid';
 import {
   createGetResourcePathForKeys,
   createUriConverter
@@ -12,7 +12,7 @@ const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
 
 describe('get resource path', () => {
   it('adds keys to path', () => {
-    const keyPropGuid = uuid();
+    const keyPropGuid = randomUUID();
     const keyPropString = 'keyProp';
     const keys = {
       KeyPropertyGuid: keyPropGuid,
@@ -33,7 +33,7 @@ describe('get resource path', () => {
   });
 
   it('throws error if not all keys are set', () => {
-    const keys = { KeyPropertyGuid: uuid() };
+    const keys = { KeyPropertyGuid: randomUUID() };
 
     expect(() =>
       getResourcePathForKeys(keys, testEntityApi)
@@ -62,7 +62,7 @@ describe('get resource path', () => {
     const logger = createLogger('get-resource-path');
     const warnSpy = jest.spyOn(logger, 'warn');
     const keys = {
-      KeyPropertyGuid: uuid(),
+      KeyPropertyGuid: randomUUID(),
       KeyPropertyString: '',
       StringProperty: 'test'
     };
@@ -75,7 +75,7 @@ describe('get resource path', () => {
 
   it('URI encodes keys with special characters', () => {
     const keys = {
-      KeyPropertyGuid: uuid(),
+      KeyPropertyGuid: randomUUID(),
       KeyPropertyString: 'DEV?TEST06'
     };
     const expected =
@@ -86,7 +86,7 @@ describe('get resource path', () => {
 
   it('URI encodes keys containing single quote', () => {
     const keys = {
-      KeyPropertyGuid: uuid(),
+      KeyPropertyGuid: randomUUID(),
       KeyPropertyString: "DEV'TEST06"
     };
     const expected =
@@ -97,7 +97,7 @@ describe('get resource path', () => {
 
   it('URI encodes keys containing path segment separator', () => {
     const keys = {
-      KeyPropertyGuid: uuid(),
+      KeyPropertyGuid: randomUUID(),
       KeyPropertyString: 'DEV/TEST06'
     };
     const expected =

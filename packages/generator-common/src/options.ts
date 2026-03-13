@@ -117,6 +117,12 @@ export function getCommonCliOptions(serviceType: ServiceType) {
       describe: getReadmeText(serviceType),
       default: false,
       hidden: true
+    },
+    generateESM: {
+      describe:
+        'When enabled, all generated files follow the ECMAScript module syntax.',
+      type: 'boolean',
+      default: false
     }
   } as const;
 }
@@ -193,4 +199,8 @@ export interface CommonGeneratorOptions {
    * Generate default `README.md` files in the client directories.
    */
   readme?: boolean;
+  /**
+   * Generate ECMAScript modules instead of CommonJS modules.
+   */
+  generateESM?: boolean;
 }

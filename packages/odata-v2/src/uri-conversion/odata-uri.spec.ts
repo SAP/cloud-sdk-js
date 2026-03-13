@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import moment from 'moment';
-import { v4 as uuid } from 'uuid';
 import {
   and,
   filterFunction,
@@ -338,7 +338,7 @@ describe('getEntityKeys', () => {
   it('should extract entity keys correctly', () => {
     const entity = testEntityApi
       .entityBuilder()
-      .keyPropertyGuid(uuid())
+      .keyPropertyGuid(randomUUID())
       .keyPropertyString('98765/4321')
       .stringProperty('any')
       .build();

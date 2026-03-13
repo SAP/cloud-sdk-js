@@ -1,5 +1,5 @@
+import { randomUUID } from 'node:crypto';
 import nock from 'nock';
-import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 import {
   defaultDestination,
@@ -9,7 +9,7 @@ import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { UpdateRequestBuilder } from './update-request-builder';
 
 function createTestEntity() {
-  const keyPropGuid = uuid();
+  const keyPropGuid = randomUUID();
   const keyPropString = 'stringId';
   const int32Prop = 125;
   const keyPropDate = moment();

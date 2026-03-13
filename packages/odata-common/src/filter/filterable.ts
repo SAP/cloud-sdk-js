@@ -12,7 +12,7 @@ import type { FilterLink } from './filter-link';
 
 /**
  * A union of all types that can be used for filtering.
- * @typeParam EntityT - Type of the entity to be filtered on.
+ * @template EntityT - Type of the entity to be filtered on.
  */
 export type Filterable<
   EntityT extends EntityBase,
@@ -30,7 +30,6 @@ export type Filterable<
   | BooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityApiT>;
 
-/* eslint-disable jsdoc/require-returns-check, jsdoc/require-param, jsdoc/check-param-names */
 /**
  * Combine {@link Filterable}s with logical `and` to create a {@link FilterList}.
  * @example
@@ -46,7 +45,7 @@ export type Filterable<
  *  .getAll()
  *  .filter(filterExp1, filterExp2);
  * ```
- * @typeParam EntityT - Type of the entity filter on.
+ * @template EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `and`.
  * @returns The newly created FilterList.
  */
@@ -62,7 +61,7 @@ export function and<
 >(
   ...expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
-// eslint-disable-next-line jsdoc/require-jsdoc
+
 export function and<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
@@ -75,9 +74,7 @@ export function and<
 ): FilterList<EntityT, DeSerializersT> {
   return new FilterList(transformVariadicArgumentToArray(first, rest));
 }
-/* eslint-enable jsdoc/require-returns-check, jsdoc/require-param, jsdoc/check-param-names */
 
-/* eslint-disable jsdoc/require-returns-check, jsdoc/require-param, jsdoc/check-param-names */
 /**
  * Combine {@link Filterable}s with logical `or` to create a {@link FilterList}.
  * @example
@@ -86,7 +83,7 @@ export function and<
  *  .getAll()
  *  .filter(or(filterExp1, filterExp2));
  * ```
- * @typeParam EntityT - Type of the entity filter on.
+ * @template EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `or`.
  * @returns The newly created FilterList.
  */
@@ -102,7 +99,6 @@ export function or<
 >(
   ...expressions: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT>;
-// eslint-disable-next-line jsdoc/require-jsdoc
 export function or<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
@@ -114,7 +110,6 @@ export function or<
 ): FilterList<EntityT, DeSerializersT> {
   return new FilterList([], transformVariadicArgumentToArray(first, rest));
 }
-/* eslint-enable jsdoc/require-returns-check, jsdoc/require-param, jsdoc/check-param-names */
 
 /**
  * Negate a filter.

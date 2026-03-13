@@ -22,7 +22,12 @@ const destination: HttpDestination = {
   password: 'password',
   sapClient: '123',
   authTokens: [],
-  originalProperties: {}
+  originalProperties: {},
+  // Provide CSRF token to skip HEAD requests in tests
+  headers: {
+    'x-csrf-token': 'mocked-x-csrf-token',
+    cookie: 'mocked-cookie-0; mocked-cookie-1'
+  }
 };
 
 const mockedBuildHeaderResponse = {
@@ -30,20 +35,8 @@ const mockedBuildHeaderResponse = {
   'set-cookie': ['mocked-cookie-0', 'mocked-cookie-1']
 };
 
-function mockCsrfTokenRequest(path?: string) {
-  nock(host, {
-    reqheaders: {
-      'x-csrf-token': 'Fetch'
-    }
-  })
-    .head(path ? `${basePath}/${path}` : basePath)
-    .reply(200, '', mockedBuildHeaderResponse);
-}
-
 describe('operation request builder', () => {
   it('should call simple action', async () => {
-    mockCsrfTokenRequest('TestActionImportNoParameterNoReturnType');
-
     nock(host, {
       reqheaders: {
         'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token']
@@ -62,8 +55,6 @@ describe('operation request builder', () => {
     const responseValue = 'SomeUntypedResponse';
     const response = { value: responseValue };
 
-    mockCsrfTokenRequest('TestActionImportUnsupportedEdmTypes');
-
     nock(host)
       .post(`${basePath}/TestActionImportUnsupportedEdmTypes`, {
         SimpleParam: 'someUntypedParameter'
@@ -77,8 +68,6 @@ describe('operation request builder', () => {
   });
 
   it('should call an action and parse the response', async () => {
-    mockCsrfTokenRequest('TestActionImportMultipleParameterComplexReturnType');
-
     const tsBody = { stringParam: 'LaLa', nonNullableStringParam: 'LuLu' };
     const tsResponse = { stringProperty: 'someResponseValue' };
 
@@ -103,8 +92,6 @@ describe('operation request builder', () => {
 
   describe('executeRaw', () => {
     it('returns request and raw response', async () => {
-      mockCsrfTokenRequest('TestActionImportNoParameterNoReturnType');
-
       nock(host)
         .post(`${basePath}/TestActionImportNoParameterNoReturnType`)
         .reply(204);

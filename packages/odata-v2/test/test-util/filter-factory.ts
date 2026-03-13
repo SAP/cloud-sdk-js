@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { testEntityApi, testEntityApiCustom } from './test-data';
 
 export const testFilterString = {
@@ -21,7 +21,7 @@ export const testFilterBoolean = {
   odataStr: 'BooleanProperty eq true'
 };
 
-const id = uuid();
+const id = randomUUID();
 
 export const testFilterGuid = {
   filter: testEntityApi.schema.GUID_PROPERTY.equals(id),

@@ -48,7 +48,9 @@ export async function getDestinationFromServiceBinding(
   }
 
   const retrievalOptions = { ...options, jwt: decodedJwt, iasOptions };
-  let destination = (await retrieveDestination(retrievalOptions)) as Destination;
+  let destination = (await retrieveDestination(
+    retrievalOptions
+  )) as Destination;
 
   destination = addForwardedAuthTokenIfNeeded(destination, options.jwt);
 

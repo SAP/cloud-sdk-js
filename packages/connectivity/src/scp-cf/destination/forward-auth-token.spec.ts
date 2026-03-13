@@ -14,7 +14,7 @@ describe('forward auth token', () => {
   it('does not set an auth token, when `forwardAuthToken` is not set', () => {
     const jwt = signedJwt({});
     let destination: Destination = {};
-    destination = addForwardedAuthTokenIfNeeded({}, jwt);
+    destination = addForwardedAuthTokenIfNeeded(destination, jwt);
     expect(destination.authTokens).toBeUndefined();
   });
 

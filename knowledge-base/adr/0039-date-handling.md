@@ -38,7 +38,7 @@ This cannot be achieved without breaking changes and will result in a major vers
 ## Option A - Temporal.js
 
 Good news!
-Temporal has become a stage 4 proposal as of March 11th ([see the 9 year journey](https://bloomberg.github.io/js-blog/post/temporal/)).
+[Temporal](https://github.com/tc39/ecma262/pull/3759) has become a stage 4 proposal as of March 11th ([see the 9 year journey](https://bloomberg.github.io/js-blog/post/temporal/)).
 This is the obvious candidate, given that Temporal is now officially becoming part of ES2026 and Node.js v26 and it is [available through TS 6](https://devblogs.microsoft.com/typescript/announcing-typescript-6-0-rc/#new-types-for-temporal) already.
 
 For a quick win, we can already recommend usage of the temporal de-serializers as of today.

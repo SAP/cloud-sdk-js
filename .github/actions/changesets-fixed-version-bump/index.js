@@ -10392,7 +10392,7 @@ module.exports = makeError;
 
 
 const os = __nccwpck_require__(70857);
-const onExit = __nccwpck_require__(791);
+const onExit = __nccwpck_require__(71947);
 
 const DEFAULT_FORCE_KILL_TIMEOUT = 1000 * 5;
 
@@ -10721,6 +10721,275 @@ module.exports = {
 	validateInputSync
 };
 
+
+
+/***/ }),
+
+/***/ 71947:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+// Note: since nyc uses this module to output coverage, any lines
+// that are in the direct sync flow of nyc's outputCoverage are
+// ignored, since we can never get coverage for them.
+// grab a reference to node's real process object right away
+var process = global.process
+
+const processOk = function (process) {
+  return process &&
+    typeof process === 'object' &&
+    typeof process.removeListener === 'function' &&
+    typeof process.emit === 'function' &&
+    typeof process.reallyExit === 'function' &&
+    typeof process.listeners === 'function' &&
+    typeof process.kill === 'function' &&
+    typeof process.pid === 'number' &&
+    typeof process.on === 'function'
+}
+
+// some kind of non-node environment, just no-op
+/* istanbul ignore if */
+if (!processOk(process)) {
+  module.exports = function () {
+    return function () {}
+  }
+} else {
+  var assert = __nccwpck_require__(42613)
+  var signals = __nccwpck_require__(38910)
+  var isWin = /^win/i.test(process.platform)
+
+  var EE = __nccwpck_require__(24434)
+  /* istanbul ignore if */
+  if (typeof EE !== 'function') {
+    EE = EE.EventEmitter
+  }
+
+  var emitter
+  if (process.__signal_exit_emitter__) {
+    emitter = process.__signal_exit_emitter__
+  } else {
+    emitter = process.__signal_exit_emitter__ = new EE()
+    emitter.count = 0
+    emitter.emitted = {}
+  }
+
+  // Because this emitter is a global, we have to check to see if a
+  // previous version of this library failed to enable infinite listeners.
+  // I know what you're about to say.  But literally everything about
+  // signal-exit is a compromise with evil.  Get used to it.
+  if (!emitter.infinite) {
+    emitter.setMaxListeners(Infinity)
+    emitter.infinite = true
+  }
+
+  module.exports = function (cb, opts) {
+    /* istanbul ignore if */
+    if (!processOk(global.process)) {
+      return function () {}
+    }
+    assert.equal(typeof cb, 'function', 'a callback must be provided for exit handler')
+
+    if (loaded === false) {
+      load()
+    }
+
+    var ev = 'exit'
+    if (opts && opts.alwaysLast) {
+      ev = 'afterexit'
+    }
+
+    var remove = function () {
+      emitter.removeListener(ev, cb)
+      if (emitter.listeners('exit').length === 0 &&
+          emitter.listeners('afterexit').length === 0) {
+        unload()
+      }
+    }
+    emitter.on(ev, cb)
+
+    return remove
+  }
+
+  var unload = function unload () {
+    if (!loaded || !processOk(global.process)) {
+      return
+    }
+    loaded = false
+
+    signals.forEach(function (sig) {
+      try {
+        process.removeListener(sig, sigListeners[sig])
+      } catch (er) {}
+    })
+    process.emit = originalProcessEmit
+    process.reallyExit = originalProcessReallyExit
+    emitter.count -= 1
+  }
+  module.exports.unload = unload
+
+  var emit = function emit (event, code, signal) {
+    /* istanbul ignore if */
+    if (emitter.emitted[event]) {
+      return
+    }
+    emitter.emitted[event] = true
+    emitter.emit(event, code, signal)
+  }
+
+  // { <signal>: <listener fn>, ... }
+  var sigListeners = {}
+  signals.forEach(function (sig) {
+    sigListeners[sig] = function listener () {
+      /* istanbul ignore if */
+      if (!processOk(global.process)) {
+        return
+      }
+      // If there are no other listeners, an exit is coming!
+      // Simplest way: remove us and then re-send the signal.
+      // We know that this will kill the process, so we can
+      // safely emit now.
+      var listeners = process.listeners(sig)
+      if (listeners.length === emitter.count) {
+        unload()
+        emit('exit', null, sig)
+        /* istanbul ignore next */
+        emit('afterexit', null, sig)
+        /* istanbul ignore next */
+        if (isWin && sig === 'SIGHUP') {
+          // "SIGHUP" throws an `ENOSYS` error on Windows,
+          // so use a supported signal instead
+          sig = 'SIGINT'
+        }
+        /* istanbul ignore next */
+        process.kill(process.pid, sig)
+      }
+    }
+  })
+
+  module.exports.signals = function () {
+    return signals
+  }
+
+  var loaded = false
+
+  var load = function load () {
+    if (loaded || !processOk(global.process)) {
+      return
+    }
+    loaded = true
+
+    // This is the number of onSignalExit's that are in play.
+    // It's important so that we can count the correct number of
+    // listeners on signals, and don't wait for the other one to
+    // handle it instead of us.
+    emitter.count += 1
+
+    signals = signals.filter(function (sig) {
+      try {
+        process.on(sig, sigListeners[sig])
+        return true
+      } catch (er) {
+        return false
+      }
+    })
+
+    process.emit = processEmit
+    process.reallyExit = processReallyExit
+  }
+  module.exports.load = load
+
+  var originalProcessReallyExit = process.reallyExit
+  var processReallyExit = function processReallyExit (code) {
+    /* istanbul ignore if */
+    if (!processOk(global.process)) {
+      return
+    }
+    process.exitCode = code || /* istanbul ignore next */ 0
+    emit('exit', process.exitCode, null)
+    /* istanbul ignore next */
+    emit('afterexit', process.exitCode, null)
+    /* istanbul ignore next */
+    originalProcessReallyExit.call(process, process.exitCode)
+  }
+
+  var originalProcessEmit = process.emit
+  var processEmit = function processEmit (ev, arg) {
+    if (ev === 'exit' && processOk(global.process)) {
+      /* istanbul ignore else */
+      if (arg !== undefined) {
+        process.exitCode = arg
+      }
+      var ret = originalProcessEmit.apply(this, arguments)
+      /* istanbul ignore next */
+      emit('exit', process.exitCode, null)
+      /* istanbul ignore next */
+      emit('afterexit', process.exitCode, null)
+      /* istanbul ignore next */
+      return ret
+    } else {
+      return originalProcessEmit.apply(this, arguments)
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ 38910:
+/***/ ((module) => {
+
+// This is not the set of all possible signals.
+//
+// It IS, however, the set of all signals that trigger
+// an exit on either Linux or BSD systems.  Linux is a
+// superset of the signal names supported on BSD, and
+// the unknown signals just fail to register, so we can
+// catch that easily enough.
+//
+// Don't bother with SIGKILL.  It's uncatchable, which
+// means that we can't fire any callbacks anyway.
+//
+// If a user does happen to register a handler on a non-
+// fatal signal like SIGWINCH or something, and then
+// exit, it'll end up firing `process.emit('exit')`, so
+// the handler will be fired anyway.
+//
+// SIGBUS, SIGFPE, SIGSEGV and SIGILL, when not raised
+// artificially, inherently leave the process in a
+// state from which it is not safe to try and enter JS
+// listeners.
+module.exports = [
+  'SIGABRT',
+  'SIGALRM',
+  'SIGHUP',
+  'SIGINT',
+  'SIGTERM'
+]
+
+if (process.platform !== 'win32') {
+  module.exports.push(
+    'SIGVTALRM',
+    'SIGXCPU',
+    'SIGXFSZ',
+    'SIGUSR2',
+    'SIGTRAP',
+    'SIGSYS',
+    'SIGQUIT',
+    'SIGIOT'
+    // should detect profiler and enable/disable accordingly.
+    // see #21
+    // 'SIGPROF'
+  )
+}
+
+if (process.platform === 'linux') {
+  module.exports.push(
+    'SIGIO',
+    'SIGPOLL',
+    'SIGPWR',
+    'SIGSTKFLT',
+    'SIGUNUSED'
+  )
+}
 
 
 /***/ }),
@@ -25156,7 +25425,7 @@ module.exports.callCount = function_ => {
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 
-const pMap = __nccwpck_require__(40876);
+const pMap = __nccwpck_require__(11083);
 
 const pFilter = async (iterable, filterer, options) => {
 	const values = await pMap(
@@ -25170,85 +25439,6 @@ const pFilter = async (iterable, filterer, options) => {
 module.exports = pFilter;
 // TODO: Remove this for the next major release
 module.exports["default"] = pFilter;
-
-
-/***/ }),
-
-/***/ 40876:
-/***/ ((module) => {
-
-
-
-const pMap = (iterable, mapper, options) => new Promise((resolve, reject) => {
-	options = Object.assign({
-		concurrency: Infinity
-	}, options);
-
-	if (typeof mapper !== 'function') {
-		throw new TypeError('Mapper function is required');
-	}
-
-	const {concurrency} = options;
-
-	if (!(typeof concurrency === 'number' && concurrency >= 1)) {
-		throw new TypeError(`Expected \`concurrency\` to be a number from 1 and up, got \`${concurrency}\` (${typeof concurrency})`);
-	}
-
-	const ret = [];
-	const iterator = iterable[Symbol.iterator]();
-	let isRejected = false;
-	let isIterableDone = false;
-	let resolvingCount = 0;
-	let currentIndex = 0;
-
-	const next = () => {
-		if (isRejected) {
-			return;
-		}
-
-		const nextItem = iterator.next();
-		const i = currentIndex;
-		currentIndex++;
-
-		if (nextItem.done) {
-			isIterableDone = true;
-
-			if (resolvingCount === 0) {
-				resolve(ret);
-			}
-
-			return;
-		}
-
-		resolvingCount++;
-
-		Promise.resolve(nextItem.value)
-			.then(element => mapper(element, i))
-			.then(
-				value => {
-					ret[i] = value;
-					resolvingCount--;
-					next();
-				},
-				error => {
-					isRejected = true;
-					reject(error);
-				}
-			);
-	};
-
-	for (let i = 0; i < concurrency; i++) {
-		next();
-
-		if (isIterableDone) {
-			break;
-		}
-	}
-});
-
-module.exports = pMap;
-// TODO: Remove this for the next major release
-module.exports["default"] = pMap;
 
 
 /***/ }),
@@ -25372,6 +25562,85 @@ const pLimit = concurrency => {
 
 module.exports = pLimit;
 module.exports["default"] = pLimit;
+
+
+/***/ }),
+
+/***/ 11083:
+/***/ ((module) => {
+
+
+
+const pMap = (iterable, mapper, options) => new Promise((resolve, reject) => {
+	options = Object.assign({
+		concurrency: Infinity
+	}, options);
+
+	if (typeof mapper !== 'function') {
+		throw new TypeError('Mapper function is required');
+	}
+
+	const {concurrency} = options;
+
+	if (!(typeof concurrency === 'number' && concurrency >= 1)) {
+		throw new TypeError(`Expected \`concurrency\` to be a number from 1 and up, got \`${concurrency}\` (${typeof concurrency})`);
+	}
+
+	const ret = [];
+	const iterator = iterable[Symbol.iterator]();
+	let isRejected = false;
+	let isIterableDone = false;
+	let resolvingCount = 0;
+	let currentIndex = 0;
+
+	const next = () => {
+		if (isRejected) {
+			return;
+		}
+
+		const nextItem = iterator.next();
+		const i = currentIndex;
+		currentIndex++;
+
+		if (nextItem.done) {
+			isIterableDone = true;
+
+			if (resolvingCount === 0) {
+				resolve(ret);
+			}
+
+			return;
+		}
+
+		resolvingCount++;
+
+		Promise.resolve(nextItem.value)
+			.then(element => mapper(element, i))
+			.then(
+				value => {
+					ret[i] = value;
+					resolvingCount--;
+					next();
+				},
+				error => {
+					isRejected = true;
+					reject(error);
+				}
+			);
+	};
+
+	for (let i = 0; i < concurrency; i++) {
+		next();
+
+		if (isIterableDone) {
+			break;
+		}
+	}
+});
+
+module.exports = pMap;
+// TODO: Remove this for the next major release
+module.exports["default"] = pMap;
 
 
 /***/ }),
@@ -32629,275 +32898,6 @@ module.exports = /^#!(.*)/;
 
 /***/ }),
 
-/***/ 791:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-// Note: since nyc uses this module to output coverage, any lines
-// that are in the direct sync flow of nyc's outputCoverage are
-// ignored, since we can never get coverage for them.
-// grab a reference to node's real process object right away
-var process = global.process
-
-const processOk = function (process) {
-  return process &&
-    typeof process === 'object' &&
-    typeof process.removeListener === 'function' &&
-    typeof process.emit === 'function' &&
-    typeof process.reallyExit === 'function' &&
-    typeof process.listeners === 'function' &&
-    typeof process.kill === 'function' &&
-    typeof process.pid === 'number' &&
-    typeof process.on === 'function'
-}
-
-// some kind of non-node environment, just no-op
-/* istanbul ignore if */
-if (!processOk(process)) {
-  module.exports = function () {
-    return function () {}
-  }
-} else {
-  var assert = __nccwpck_require__(42613)
-  var signals = __nccwpck_require__(14074)
-  var isWin = /^win/i.test(process.platform)
-
-  var EE = __nccwpck_require__(24434)
-  /* istanbul ignore if */
-  if (typeof EE !== 'function') {
-    EE = EE.EventEmitter
-  }
-
-  var emitter
-  if (process.__signal_exit_emitter__) {
-    emitter = process.__signal_exit_emitter__
-  } else {
-    emitter = process.__signal_exit_emitter__ = new EE()
-    emitter.count = 0
-    emitter.emitted = {}
-  }
-
-  // Because this emitter is a global, we have to check to see if a
-  // previous version of this library failed to enable infinite listeners.
-  // I know what you're about to say.  But literally everything about
-  // signal-exit is a compromise with evil.  Get used to it.
-  if (!emitter.infinite) {
-    emitter.setMaxListeners(Infinity)
-    emitter.infinite = true
-  }
-
-  module.exports = function (cb, opts) {
-    /* istanbul ignore if */
-    if (!processOk(global.process)) {
-      return function () {}
-    }
-    assert.equal(typeof cb, 'function', 'a callback must be provided for exit handler')
-
-    if (loaded === false) {
-      load()
-    }
-
-    var ev = 'exit'
-    if (opts && opts.alwaysLast) {
-      ev = 'afterexit'
-    }
-
-    var remove = function () {
-      emitter.removeListener(ev, cb)
-      if (emitter.listeners('exit').length === 0 &&
-          emitter.listeners('afterexit').length === 0) {
-        unload()
-      }
-    }
-    emitter.on(ev, cb)
-
-    return remove
-  }
-
-  var unload = function unload () {
-    if (!loaded || !processOk(global.process)) {
-      return
-    }
-    loaded = false
-
-    signals.forEach(function (sig) {
-      try {
-        process.removeListener(sig, sigListeners[sig])
-      } catch (er) {}
-    })
-    process.emit = originalProcessEmit
-    process.reallyExit = originalProcessReallyExit
-    emitter.count -= 1
-  }
-  module.exports.unload = unload
-
-  var emit = function emit (event, code, signal) {
-    /* istanbul ignore if */
-    if (emitter.emitted[event]) {
-      return
-    }
-    emitter.emitted[event] = true
-    emitter.emit(event, code, signal)
-  }
-
-  // { <signal>: <listener fn>, ... }
-  var sigListeners = {}
-  signals.forEach(function (sig) {
-    sigListeners[sig] = function listener () {
-      /* istanbul ignore if */
-      if (!processOk(global.process)) {
-        return
-      }
-      // If there are no other listeners, an exit is coming!
-      // Simplest way: remove us and then re-send the signal.
-      // We know that this will kill the process, so we can
-      // safely emit now.
-      var listeners = process.listeners(sig)
-      if (listeners.length === emitter.count) {
-        unload()
-        emit('exit', null, sig)
-        /* istanbul ignore next */
-        emit('afterexit', null, sig)
-        /* istanbul ignore next */
-        if (isWin && sig === 'SIGHUP') {
-          // "SIGHUP" throws an `ENOSYS` error on Windows,
-          // so use a supported signal instead
-          sig = 'SIGINT'
-        }
-        /* istanbul ignore next */
-        process.kill(process.pid, sig)
-      }
-    }
-  })
-
-  module.exports.signals = function () {
-    return signals
-  }
-
-  var loaded = false
-
-  var load = function load () {
-    if (loaded || !processOk(global.process)) {
-      return
-    }
-    loaded = true
-
-    // This is the number of onSignalExit's that are in play.
-    // It's important so that we can count the correct number of
-    // listeners on signals, and don't wait for the other one to
-    // handle it instead of us.
-    emitter.count += 1
-
-    signals = signals.filter(function (sig) {
-      try {
-        process.on(sig, sigListeners[sig])
-        return true
-      } catch (er) {
-        return false
-      }
-    })
-
-    process.emit = processEmit
-    process.reallyExit = processReallyExit
-  }
-  module.exports.load = load
-
-  var originalProcessReallyExit = process.reallyExit
-  var processReallyExit = function processReallyExit (code) {
-    /* istanbul ignore if */
-    if (!processOk(global.process)) {
-      return
-    }
-    process.exitCode = code || /* istanbul ignore next */ 0
-    emit('exit', process.exitCode, null)
-    /* istanbul ignore next */
-    emit('afterexit', process.exitCode, null)
-    /* istanbul ignore next */
-    originalProcessReallyExit.call(process, process.exitCode)
-  }
-
-  var originalProcessEmit = process.emit
-  var processEmit = function processEmit (ev, arg) {
-    if (ev === 'exit' && processOk(global.process)) {
-      /* istanbul ignore else */
-      if (arg !== undefined) {
-        process.exitCode = arg
-      }
-      var ret = originalProcessEmit.apply(this, arguments)
-      /* istanbul ignore next */
-      emit('exit', process.exitCode, null)
-      /* istanbul ignore next */
-      emit('afterexit', process.exitCode, null)
-      /* istanbul ignore next */
-      return ret
-    } else {
-      return originalProcessEmit.apply(this, arguments)
-    }
-  }
-}
-
-
-/***/ }),
-
-/***/ 14074:
-/***/ ((module) => {
-
-// This is not the set of all possible signals.
-//
-// It IS, however, the set of all signals that trigger
-// an exit on either Linux or BSD systems.  Linux is a
-// superset of the signal names supported on BSD, and
-// the unknown signals just fail to register, so we can
-// catch that easily enough.
-//
-// Don't bother with SIGKILL.  It's uncatchable, which
-// means that we can't fire any callbacks anyway.
-//
-// If a user does happen to register a handler on a non-
-// fatal signal like SIGWINCH or something, and then
-// exit, it'll end up firing `process.emit('exit')`, so
-// the handler will be fired anyway.
-//
-// SIGBUS, SIGFPE, SIGSEGV and SIGILL, when not raised
-// artificially, inherently leave the process in a
-// state from which it is not safe to try and enter JS
-// listeners.
-module.exports = [
-  'SIGABRT',
-  'SIGALRM',
-  'SIGHUP',
-  'SIGINT',
-  'SIGTERM'
-]
-
-if (process.platform !== 'win32') {
-  module.exports.push(
-    'SIGVTALRM',
-    'SIGXCPU',
-    'SIGXFSZ',
-    'SIGUSR2',
-    'SIGTRAP',
-    'SIGSYS',
-    'SIGQUIT',
-    'SIGIOT'
-    // should detect profiler and enable/disable accordingly.
-    // see #21
-    // 'SIGPROF'
-  )
-}
-
-if (process.platform === 'linux') {
-  module.exports.push(
-    'SIGIO',
-    'SIGPOLL',
-    'SIGPWR',
-    'SIGSTKFLT',
-    'SIGUNUSED'
-  )
-}
-
-
-/***/ }),
-
 /***/ 85737:
 /***/ ((module) => {
 
@@ -32922,7 +32922,7 @@ module.exports = path => {
 // @flow
 
 const crossSpawn = __nccwpck_require__(24422);
-const { onExit } = __nccwpck_require__(88160)
+const { onExit } = __nccwpck_require__(91328)
 const EventEmitter = __nccwpck_require__(24434);
 const ChildProcessPromise = __nccwpck_require__(21543);
 
@@ -61852,7 +61852,7 @@ try {
 
 /***/ }),
 
-/***/ 88160:
+/***/ 91328:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -61863,7 +61863,7 @@ exports.unload = exports.load = exports.onExit = exports.signals = void 0;
 // that are in the direct sync flow of nyc's outputCoverage are
 // ignored, since we can never get coverage for them.
 // grab a reference to node's real process object right away
-const signals_js_1 = __nccwpck_require__(25241);
+const signals_js_1 = __nccwpck_require__(22137);
 Object.defineProperty(exports, "signals", ({ enumerable: true, get: function () { return signals_js_1.signals; } }));
 const processOk = (process) => !!process &&
     typeof process === 'object' &&
@@ -62137,7 +62137,7 @@ exports.unload = _a.unload;
 
 /***/ }),
 
-/***/ 25241:
+/***/ 22137:
 /***/ ((__unused_webpack_module, exports) => {
 
 

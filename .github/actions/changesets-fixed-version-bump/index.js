@@ -62227,6 +62227,8 @@ var __webpack_exports__ = {};
 
 ;// CONCATENATED MODULE: external "node:path"
 const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
+;// CONCATENATED MODULE: external "node:module"
+const external_node_module_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:module");
 // EXTERNAL MODULE: external "os"
 var external_os_ = __nccwpck_require__(70857);
 ;// CONCATENATED MODULE: ../../node_modules/@actions/core/lib/utils.js
@@ -65191,8 +65193,10 @@ var semver = __nccwpck_require__(90084);
 
 
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires, import/no-internal-modules
-const { getPackageVersion } = require('../../scripts/get-package-version');
+
+const util_require = (0,external_node_module_namespaceObject.createRequire)(import.meta.url);
+// eslint-disable-next-line import/no-internal-modules
+const { getPackageVersion } = util_require('../../scripts/get-package-version');
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
     const currentVersion = await getPackageVersion();
@@ -65225,8 +65229,10 @@ function formatJson(json) {
 
 
 
-// eslint-disable-next-line import/no-internal-modules, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-const { transformFile } = require('../../scripts/util');
+
+const changesets_fixed_version_bump_require = (0,external_node_module_namespaceObject.createRequire)(import.meta.url);
+// eslint-disable-next-line import/no-internal-modules
+const { transformFile } = changesets_fixed_version_bump_require('../../scripts/util');
 async function bump() {
     const { version, bumpType } = await getNextVersion();
     if (bumpType === 'major' && version !== getInput('majorVersion')) {

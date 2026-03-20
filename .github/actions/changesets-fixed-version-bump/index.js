@@ -65194,9 +65194,10 @@ var semver = __nccwpck_require__(90084);
 
 
 
+
 const util_require = (0,external_node_module_namespaceObject.createRequire)(import.meta.url);
-// eslint-disable-next-line import/no-internal-modules
-const { getPackageVersion } = util_require('../../scripts/get-package-version');
+// eslint-disable-next-line import/no-dynamic-require
+const { getPackageVersion } = util_require((0,external_node_path_namespaceObject.resolve)(process.cwd(), 'scripts/get-package-version'));
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
     const currentVersion = await getPackageVersion();
@@ -65231,8 +65232,8 @@ function formatJson(json) {
 
 
 const changesets_fixed_version_bump_require = (0,external_node_module_namespaceObject.createRequire)(import.meta.url);
-// eslint-disable-next-line import/no-internal-modules
-const { transformFile } = changesets_fixed_version_bump_require('../../scripts/util');
+// eslint-disable-next-line import/no-dynamic-require
+const { transformFile } = changesets_fixed_version_bump_require((0,external_node_path_namespaceObject.resolve)(process.cwd(), 'scripts/util'));
 async function bump() {
     const { version, bumpType } = await getNextVersion();
     if (bumpType === 'major' && version !== getInput('majorVersion')) {

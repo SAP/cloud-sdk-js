@@ -1,15 +1,13 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import { info } from 'node:console';
-import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import getReleasePlan from '@changesets/get-release-plan';
 import { inc } from 'semver';
 
-const require = createRequire(import.meta.url);
-// eslint-disable-next-line import/no-dynamic-require
-const { getPackageVersion } = require(
-  resolve(process.cwd(), 'scripts/get-package-version')
-);
+async function getPackageVersion(): Promise<string> {
+  const packageJson = await readFile('package.json', 'utf8');
+  return JSON.parse(packageJson).version;
+}
 
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'] as const;
 

@@ -62225,10 +62225,10 @@ if (process.platform === 'linux') {
 /************************************************************************/
 var __webpack_exports__ = {};
 
+;// CONCATENATED MODULE: external "node:fs/promises"
+const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
 ;// CONCATENATED MODULE: external "node:path"
 const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
-;// CONCATENATED MODULE: external "node:module"
-const external_node_module_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:module");
 // EXTERNAL MODULE: external "os"
 var external_os_ = __nccwpck_require__(70857);
 ;// CONCATENATED MODULE: ../../node_modules/@actions/core/lib/utils.js
@@ -65194,10 +65194,10 @@ var semver = __nccwpck_require__(90084);
 
 
 
-
-const util_require = (0,external_node_module_namespaceObject.createRequire)(import.meta.url);
-// eslint-disable-next-line import/no-dynamic-require
-const { getPackageVersion } = util_require((0,external_node_path_namespaceObject.resolve)(process.cwd(), 'scripts/get-package-version'));
+async function getPackageVersion() {
+    const packageJson = await (0,promises_namespaceObject.readFile)('package.json', 'utf8');
+    return JSON.parse(packageJson).version;
+}
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
     const currentVersion = await getPackageVersion();
@@ -65231,9 +65231,10 @@ function formatJson(json) {
 
 
 
-const changesets_fixed_version_bump_require = (0,external_node_module_namespaceObject.createRequire)(import.meta.url);
-// eslint-disable-next-line import/no-dynamic-require
-const { transformFile } = changesets_fixed_version_bump_require((0,external_node_path_namespaceObject.resolve)(process.cwd(), 'scripts/util'));
+async function transformFile(filePath, transformFn) {
+    const file = await (0,promises_namespaceObject.readFile)(filePath, { encoding: 'utf8' });
+    await (0,promises_namespaceObject.writeFile)(filePath, await transformFn(file), { encoding: 'utf8' });
+}
 async function bump() {
     const { version, bumpType } = await getNextVersion();
     if (bumpType === 'major' && version !== getInput('majorVersion')) {

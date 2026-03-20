@@ -9,9 +9,11 @@ async function getPackageVersion(): Promise<string> {
 
 async function getChangelog(v?: string): Promise<string> {
   const changelog = readFileSync('CHANGELOG.md', { encoding: 'utf8' });
-  const [, olderLogs] = changelog.split(`\n# ${v || (await getPackageVersion())}`);
-  const logs = olderLogs.split(`\n# `)[0];
-  return logs.slice(logs.indexOf(`\n##`) + 1);
+  const [, olderLogs] = changelog.split(
+    `\n# ${v || (await getPackageVersion())}`
+  );
+  const logs = olderLogs.split('\n# ')[0];
+  return logs.slice(logs.indexOf('\n##') + 1);
 }
 
 (async () => {

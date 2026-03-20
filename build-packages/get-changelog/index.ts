@@ -1,6 +1,18 @@
+import { readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { setOutput, setFailed } from '@actions/core';
-// eslint-disable-next-line import/no-internal-modules
-import { getChangelog } from '../../scripts/get-changelog';
+
+async function getPackageVersion(): Promise<string> {
+  const packageJson = await readFile('package.json', 'utf8');
+  return JSON.parse(packageJson).version;
+}
+
+async function getChangelog(v?: string): Promise<string> {
+  const changelog = readFileSync('CHANGELOG.md', { encoding: 'utf8' });
+  const [, olderLogs] = changelog.split(`\n# ${v || (await getPackageVersion())}`);
+  const logs = olderLogs.split(`\n# `)[0];
+  return logs.slice(logs.indexOf(`\n##`) + 1);
+}
 
 (async () => {
   try {

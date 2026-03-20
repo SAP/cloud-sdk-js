@@ -1,9 +1,11 @@
 /* eslint-disable jsdoc/require-jsdoc */
-
 import { info } from 'node:console';
+import { createRequire } from 'node:module';
 import getReleasePlan from '@changesets/get-release-plan';
 import { inc } from 'semver';
-// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires, import/no-internal-modules
+
+const require = createRequire(import.meta.url);
+// eslint-disable-next-line import/no-internal-modules
 const { getPackageVersion } = require('../../scripts/get-package-version');
 
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'] as const;

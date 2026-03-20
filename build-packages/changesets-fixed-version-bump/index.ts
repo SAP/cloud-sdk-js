@@ -1,8 +1,11 @@
 import { resolve } from 'node:path';
+import { createRequire } from 'node:module';
 import { getInput, info, setOutput } from '@actions/core';
 import { command } from 'execa';
 import { formatJson, getNextVersion } from './util.js';
-// eslint-disable-next-line import/no-internal-modules, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+
+const require = createRequire(import.meta.url);
+// eslint-disable-next-line import/no-internal-modules
 const { transformFile } = require('../../scripts/util');
 
 async function bump() {

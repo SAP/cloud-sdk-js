@@ -5,8 +5,8 @@ import { command } from 'execa';
 import { formatJson, getNextVersion } from './util.js';
 
 const require = createRequire(import.meta.url);
-// eslint-disable-next-line import/no-internal-modules
-const { transformFile } = require('../../scripts/util');
+// eslint-disable-next-line import/no-dynamic-require
+const { transformFile } = require(resolve(process.cwd(), 'scripts/util'));
 
 async function bump() {
   const { version, bumpType } = await getNextVersion();

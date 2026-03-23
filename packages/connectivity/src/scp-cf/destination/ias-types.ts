@@ -122,12 +122,11 @@ export type IasTokenOptions = IasOptions &
 
 /**
  * Result of an IAS token request via {@link getIasToken}.
- * Contains the access token with decoded claims, expiration information,
- * and an optional refresh token (available for JWT bearer flows).
+ * Contains the access token expiration information, and an optional refresh token (available for JWT bearer flows).
  */
 export interface IasTokenResult {
   /**
-   * The IAS access token with decoded claims.
+   * The IAS access token as a string.
    */
   token: string;
   /**

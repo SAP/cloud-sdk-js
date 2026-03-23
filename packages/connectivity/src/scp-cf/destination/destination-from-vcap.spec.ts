@@ -379,20 +379,22 @@ describe('vcap-service-destination', () => {
   describe('IAS service binding', () => {
     function mockIasClientCredentialsToken(aud: string) {
       const token = signedJwt({ jti: 'some-jti', ias_apis: [], aud });
-      const spy = jest.spyOn(identityService, 'getIasToken').mockResolvedValue({
-        access_token: token,
-        expires_in: 3600,
-        token_type: 'bearer',
-        aud,
-        scope: '' as const,
-        ias_apis: [],
-        jti: 'some-jti'
-      });
+      const spy = jest
+        .spyOn(identityService, 'fetchIasToken')
+        .mockResolvedValue({
+          access_token: token,
+          expires_in: 3600,
+          token_type: 'bearer',
+          aud,
+          scope: '' as const,
+          ias_apis: [],
+          jti: 'some-jti'
+        });
       return { token, spy };
     }
 
     it('creates a destination for IAS service with App2App authentication using resource name', async () => {
-      const { token: mockToken, spy: getIasTokenSpy } =
+      const { token: mockToken, spy: fetchIasTokenSpy } =
         mockIasClientCredentialsToken('target-app-name');
 
       const destination = await getDestinationFromServiceBinding({
@@ -415,7 +417,7 @@ describe('vcap-service-destination', () => {
         ]
       });
 
-      expect(getIasTokenSpy).toHaveBeenCalledWith(
+      expect(fetchIasTokenSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           name: 'my-identity-service',
           label: 'identity'
@@ -427,7 +429,7 @@ describe('vcap-service-destination', () => {
     });
 
     it('creates a destination for IAS service with App2App authentication using providerClientId', async () => {
-      const { token: mockToken, spy: getIasTokenSpy } =
+      const { token: mockToken, spy: fetchIasTokenSpy } =
         mockIasClientCredentialsToken('target-app-name');
 
       const destination = await getDestinationFromServiceBinding({
@@ -452,7 +454,7 @@ describe('vcap-service-destination', () => {
         ]
       });
 
-      expect(getIasTokenSpy).toHaveBeenCalledWith(
+      expect(fetchIasTokenSpy).toHaveBeenCalledWith(
         expect.anything(),
         expect.objectContaining({
           resource: {

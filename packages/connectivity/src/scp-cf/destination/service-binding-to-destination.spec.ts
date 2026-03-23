@@ -1,19 +1,14 @@
 import { resolveServiceBinding } from '../environment-accessor/service-bindings';
-import { getIasToken } from '../identity-service';
-import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { decodeJwt } from '../jwt';
-import { serviceToken } from '../token-accessor';
+import { serviceToken, getIasToken } from '../token-accessor';
 import {
   transformServiceBindingToClientCredentialsDestination,
   transformServiceBindingToDestination
 } from './service-binding-to-destination';
 
-jest.mock('../identity-service', () => ({
-  getIasToken: jest.fn()
-}));
-
 jest.mock('../token-accessor', () => ({
-  serviceToken: jest.fn()
+  serviceToken: jest.fn(),
+  getIasToken: jest.fn()
 }));
 
 jest.mock('../jwt', () => ({
@@ -129,18 +124,14 @@ describe('service binding to destination', () => {
   beforeAll(() => {
     (serviceToken as jest.Mock).mockResolvedValue('access-token');
     (getIasToken as jest.Mock).mockResolvedValue({
-      access_token: 'ias-access-token',
-      token_type: 'Bearer',
-      expires_in: 3600,
-      scope: 'openid',
-      jti: 'mock-jti'
+      token: 'ias-access-token',
+      expiresIn: 3600
     });
     (decodeJwt as jest.Mock).mockReturnValue({ exp: 1596549600 });
     process.env.VCAP_SERVICES = JSON.stringify(services);
   });
 
   beforeEach(() => {
-    clientCredentialsTokenCache.clear();
     jest.clearAllMocks();
   });
 
@@ -525,14 +516,10 @@ describe('service binding to destination', () => {
   describe('transformIasBindingToDestination requestAs handling', () => {
     beforeEach(() => {
       jest.clearAllMocks();
-      clientCredentialsTokenCache.clear();
       // Re-apply mock after clearAllMocks
       (getIasToken as jest.Mock).mockResolvedValue({
-        access_token: 'ias-access-token',
-        token_type: 'Bearer',
-        expires_in: 3600,
-        scope: 'openid',
-        jti: 'mock-jti'
+        token: 'ias-access-token',
+        expiresIn: 3600
       });
     });
 
@@ -562,16 +549,10 @@ describe('service binding to destination', () => {
         expect.objectContaining({
           label: 'identity'
         }),
-        expect.objectContaining({})
+        expect.objectContaining({
+          requestAs: 'provider-tenant'
+        })
       );
-
-      // Verify cache was populated with provider tenant
-      const cached = clientCredentialsTokenCache.getTokenIas({
-        iasInstance: 'tenant.accounts.ondemand.com',
-        appTid: 'provider-tenant-id',
-        clientId: 'identity-clientid'
-      });
-      expect(cached?.access_token).toBe('ias-access-token');
 
       // Restore original VCAP_SERVICES
       process.env.VCAP_SERVICES = JSON.stringify(services);
@@ -586,13 +567,15 @@ describe('service binding to destination', () => {
         }
       );
 
-      // Verify cache was populated with current tenant
-      const cached = clientCredentialsTokenCache.getTokenIas({
-        iasInstance: 'tenant.accounts.ondemand.com',
-        appTid: 'current-tenant-id',
-        clientId: 'identity-clientid'
-      });
-      expect(cached?.access_token).toBe('ias-access-token');
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({
+          label: 'identity'
+        }),
+        expect.objectContaining({
+          jwt: { app_tid: 'current-tenant-id' },
+          requestAs: 'current-tenant'
+        })
+      );
     });
 
     it('defaults to current tenant when requestAs is not specified', async () => {
@@ -603,13 +586,14 @@ describe('service binding to destination', () => {
         }
       );
 
-      // Verify cache was populated with current tenant (default behavior)
-      const cached = clientCredentialsTokenCache.getTokenIas({
-        iasInstance: 'tenant.accounts.ondemand.com',
-        appTid: 'current-tenant-id',
-        clientId: 'identity-clientid'
-      });
-      expect(cached?.access_token).toBe('ias-access-token');
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({
+          label: 'identity'
+        }),
+        expect.objectContaining({
+          jwt: { app_tid: 'current-tenant-id' }
+        })
+      );
     });
 
     it('prioritizes explicit appTid over requestAs', async () => {
@@ -637,13 +621,15 @@ describe('service binding to destination', () => {
         }
       );
 
-      // Verify cache was populated with explicit appTid, not provider tenant
-      const cached = clientCredentialsTokenCache.getTokenIas({
-        iasInstance: 'tenant.accounts.ondemand.com',
-        appTid: 'explicit-tenant-789',
-        clientId: 'identity-clientid'
-      });
-      expect(cached?.access_token).toBe('ias-access-token');
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({
+          label: 'identity'
+        }),
+        expect.objectContaining({
+          appTid: 'explicit-tenant-789',
+          requestAs: 'provider-tenant'
+        })
+      );
 
       // Restore original VCAP_SERVICES
       process.env.VCAP_SERVICES = JSON.stringify(services);
@@ -653,72 +639,50 @@ describe('service binding to destination', () => {
   describe('transformIasBindingToDestination cache functionality', () => {
     beforeEach(() => {
       jest.clearAllMocks();
-      clientCredentialsTokenCache.clear();
       // Re-apply mock after clearAllMocks
       (getIasToken as jest.Mock).mockResolvedValue({
-        access_token: 'ias-access-token',
-        token_type: 'Bearer',
-        expires_in: 3600,
-        scope: 'openid',
-        jti: 'mock-jti'
+        token: 'ias-access-token',
+        expiresIn: 3600
       });
     });
 
-    it('caches IAS token after first request', async () => {
+    it('passes useCache true by default to getIasToken', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         { jwt: { app_tid: 'tenant-123' } }
       );
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
-
-      // Second call should use cached token
-      await transformServiceBindingToDestination(
-        resolveServiceBinding('identity'),
-        { jwt: { app_tid: 'tenant-123' } }
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ useCache: true })
       );
-
-      // Should still only be called once due to cache hit
-      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
-    it('does not cache IAS token if useCache is false', async () => {
+    it('passes useCache false when useCache is false', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         { jwt: { app_tid: 'tenant-123' }, useCache: false }
       );
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
-
-      // Second call should use cached token
-      await transformServiceBindingToDestination(
-        resolveServiceBinding('identity'),
-        { jwt: { app_tid: 'tenant-123' }, useCache: false }
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ useCache: false })
       );
-
-      // Should be called twice - no caching
-      expect(getIasToken).toHaveBeenCalledTimes(2);
     });
 
-    it('does cache IAS token if useCache is true', async () => {
+    it('passes useCache true when useCache is true', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         { jwt: { app_tid: 'tenant-123' }, useCache: true }
       );
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
-
-      // Second call should use cached token
-      await transformServiceBindingToDestination(
-        resolveServiceBinding('identity'),
-        { jwt: { app_tid: 'tenant-123' }, useCache: true }
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ useCache: true })
       );
-
-      // Should still only be called once due to cache hit
-      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
-    it('uses cache key with resource parameter', async () => {
+    it('passes resource parameter to getIasToken', async () => {
       const resource = { name: 'my-app' };
 
       await transformServiceBindingToDestination(
@@ -729,21 +693,13 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
-
-      // Second call with same resource should use cache
-      await transformServiceBindingToDestination(
-        resolveServiceBinding('identity'),
-        {
-          jwt: { app_tid: 'tenant-123' },
-          iasOptions: { resource }
-        }
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ resource })
       );
-
-      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
-    it('does not use cache for different resource parameters', async () => {
+    it('passes different resource parameters to getIasToken', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         {
@@ -752,9 +708,11 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ resource: { name: 'app1' } })
+      );
 
-      // Second call with different resource should NOT use cache
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         {
@@ -764,26 +722,36 @@ describe('service binding to destination', () => {
       );
 
       expect(getIasToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenLastCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ resource: { name: 'app2' } })
+      );
     });
 
-    it('isolates cache by tenant (appTid)', async () => {
+    it('passes jwt for tenant context to getIasToken', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         { jwt: { app_tid: 'tenant-123' } }
       );
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ jwt: { app_tid: 'tenant-123' } })
+      );
 
-      // Different tenant should not use cache
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         { jwt: { app_tid: 'tenant-456' } }
       );
 
       expect(getIasToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenLastCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ jwt: { app_tid: 'tenant-456' } })
+      );
     });
 
-    it('supports resource with providerClientId', async () => {
+    it('passes resource with providerClientId to getIasToken', async () => {
       const resource = { providerClientId: 'resource-client-123' };
 
       await transformServiceBindingToDestination(
@@ -794,21 +762,13 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
-
-      // Second call with same resource should use cache
-      await transformServiceBindingToDestination(
-        resolveServiceBinding('identity'),
-        {
-          jwt: { app_tid: 'tenant-123' },
-          iasOptions: { resource }
-        }
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ resource })
       );
-
-      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
-    it('supports resource with providerClientId and providerTenantId', async () => {
+    it('passes resource with providerClientId and providerTenantId to getIasToken', async () => {
       const resource = {
         providerClientId: 'resource-client-123',
         providerTenantId: 'resource-tenant-456'
@@ -822,21 +782,13 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
-
-      // Second call with same resource should use cache
-      await transformServiceBindingToDestination(
-        resolveServiceBinding('identity'),
-        {
-          jwt: { app_tid: 'tenant-123' },
-          iasOptions: { resource }
-        }
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ resource })
       );
-
-      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
-    it('does not cache JWT bearer tokens (OAuth2JWTBearer)', async () => {
+    it('passes OAuth2JWTBearer authenticationType to getIasToken', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         {
@@ -848,47 +800,28 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
-
-      // Second call should NOT use cache for JWT bearer tokens
-      await transformServiceBindingToDestination(
-        resolveServiceBinding('identity'),
-        {
-          jwt: { app_tid: 'tenant-123' },
-          iasOptions: {
-            authenticationType: 'OAuth2JWTBearer',
-            assertion: 'user-jwt-token'
-          }
-        }
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({
+          authenticationType: 'OAuth2JWTBearer',
+          assertion: 'user-jwt-token'
+        })
       );
-
-      // Should be called twice - no caching for JWT bearer
-      expect(getIasToken).toHaveBeenCalledTimes(2);
     });
 
-    it('handles missing app_tid (no JWT, no provider tenant)', async () => {
+    it('calls getIasToken without jwt when no jwt is provided', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity')
       );
 
       expect(getIasToken).toHaveBeenCalledTimes(1);
-
-      // Verify cache was populated with just IAS tenant (no app_tid)
-      const cached = clientCredentialsTokenCache.getTokenIas({
-        iasInstance: 'tenant.accounts.ondemand.com',
-        clientId: 'identity-clientid'
-      });
-      expect(cached?.access_token).toBe('ias-access-token');
-
-      // Second call without app_tid should use cache
-      await transformServiceBindingToDestination(
-        resolveServiceBinding('identity')
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ label: 'identity' }),
+        expect.objectContaining({ useCache: true })
       );
-
-      expect(getIasToken).toHaveBeenCalledTimes(1);
     });
 
-    it('isolates cache by IAS tenant (different service URLs)', async () => {
+    it('passes different service bindings to getIasToken', async () => {
       const iasService1 = {
         ...services.identity[0],
         name: 'ias-service-1',
@@ -909,27 +842,24 @@ describe('service binding to destination', () => {
         }
       };
 
-      // First call to IAS service 1
       await transformServiceBindingToDestination(iasService1, {
         jwt: { app_tid: 'tenant-123' }
       });
 
-      expect(getIasToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledWith(
+        expect.objectContaining({ name: 'ias-service-1' }),
+        expect.objectContaining({ jwt: { app_tid: 'tenant-123' } })
+      );
 
-      // Second call to IAS service 2 with same app_tid should NOT use cache
-      // because IAS tenant is different
       await transformServiceBindingToDestination(iasService2, {
         jwt: { app_tid: 'tenant-123' }
       });
 
       expect(getIasToken).toHaveBeenCalledTimes(2);
-
-      // Third call to IAS service 1 again with same app_tid should use cache
-      await transformServiceBindingToDestination(iasService1, {
-        jwt: { app_tid: 'tenant-123' }
-      });
-
-      expect(getIasToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenLastCalledWith(
+        expect.objectContaining({ name: 'ias-service-2' }),
+        expect.objectContaining({ jwt: { app_tid: 'tenant-123' } })
+      );
     });
   });
 });

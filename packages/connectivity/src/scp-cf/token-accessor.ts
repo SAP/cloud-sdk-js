@@ -8,7 +8,15 @@ import {
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
-import type { Service } from './environment-accessor';
+import { fetchIasToken, getIasAppTid } from './identity-service';
+import {
+  type IasOptions,
+  type IasTokenOptions,
+  type IasTokenResult,
+  type Destination,
+  buildIasDestination
+} from './destination';
+import type { Service, ServiceCredentials } from './environment-accessor';
 import type { CachingOptions } from './cache';
 import type { JwtPayload } from './jsonwebtoken-type';
 
@@ -87,4 +95,81 @@ export async function jwtBearerToken(
 ): Promise<string> {
   const resolvedService = resolveServiceBinding(service);
   return getUserToken(resolvedService, jwt);
+}
+
+/**
+ * @internal
+ */
+async function resolveIdentityService(
+  service: ServiceCredentials | string | Service
+): Promise<Service> {
+  if (typeof service === 'string') {
+    return resolveServiceBinding(service);
+  }
+  return 'credentials' in service
+    ? (service as Service)
+    : { name: 'identity', label: 'identity', tags: [], credentials: service };
+}
+
+/**
+ * Returns an IAS token from the Identity Authentication Service.
+ * Supports both technical user (OAuth2ClientCredentials) and business user (OAuth2JWTBearer) flows.
+ * @param service - Service credentials, a service type string (e.g., 'identity'), or a {@link Service} instance.
+ * @param options - Options for IAS token retrieval. See {@link IasTokenOptions}.
+ * @returns An {@link IasTokenResult} containing the access token, expiration, and optional refresh token.
+ */
+export async function getIasToken(
+  service: ServiceCredentials | string | Service,
+  options?: IasTokenOptions
+): Promise<IasTokenResult> {
+  const useCache = options?.useCache !== false;
+  const jwt = options?.jwt;
+  const iasOptions: IasOptions = {
+    authenticationType: 'OAuth2ClientCredentials',
+    ...options
+  };
+
+  const resolvedService: Service = await resolveIdentityService(service);
+  // Resolve appTid from requestAs for technical user flows
+  if (
+    iasOptions.authenticationType !== 'OAuth2JWTBearer' &&
+    !iasOptions.appTid
+  ) {
+    iasOptions.appTid = getIasAppTid(iasOptions, resolvedService, jwt);
+  }
+
+  const response = await fetchIasToken(resolvedService, {
+    ...iasOptions,
+    jwt,
+    useCache
+  });
+
+  return {
+    token: response.access_token,
+    expiresIn: response.expires_in,
+    refreshToken: response.refresh_token
+  };
+}
+
+/**
+ * Creates an {@link Destination} from IAS service credentials.
+ * Fetches an IAS token and builds a destination with the token, mTLS key pair (if available),
+ * and the target URL.
+ * @param service - The IAS service credentials.
+ * @param options - Options for IAS token retrieval and destination configuration. See {@link IasTokenOptions}.
+ * @returns A promise that resolves to an HTTP destination.
+ */
+export async function getIasDestination(
+  service: ServiceCredentials | string | Service,
+  options?: IasTokenOptions
+): Promise<Destination> {
+  const resolvedService = await resolveIdentityService(service);
+  const { token } = await getIasToken(resolvedService, options);
+
+  const iasOptions: IasOptions = {
+    authenticationType: 'OAuth2ClientCredentials',
+    ...options
+  };
+
+  return buildIasDestination(token, resolvedService, iasOptions);
 }

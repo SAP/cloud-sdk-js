@@ -1,8 +1,5 @@
-import { serviceToken } from '../token-accessor';
+import { serviceToken, getIasToken } from '../token-accessor';
 import { decodeJwt } from '../jwt';
-import { getIasToken } from '../identity-service';
-import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
-import { parseUrlAndGetHost } from '../subdomain-replacer';
 import type { Service } from '../environment-accessor';
 import type {
   ServiceBindingTransformFunction,
@@ -12,8 +9,7 @@ import type {
   AuthenticationType,
   Destination
 } from './destination-service-types';
-import type { IasOptions, IasOptionsTechnicalUser } from './ias-types';
-import type { CachingOptions } from '../cache';
+import type { IasOptions } from './ias-types';
 
 /**
  * @internal
@@ -168,29 +164,6 @@ async function xfS4hanaCloudBindingToDestination(
     password: service.credentials.Password
   };
 }
-/**
- * Tries to resolve `app_tid` based on supplied IAS options.
- * @param iasOptions - IAS technical user options.
- * @param service - Service binding for identity service.
- * @param options - Service binding transform options.
- * @returns The BTP app_tid based on `requestAs` configuration.
- */
-function getIasAppTid(
-  iasOptions: IasOptionsTechnicalUser,
-  service: Service,
-  options?: ServiceBindingTransformOptions
-): string | undefined {
-  const { requestAs } = iasOptions;
-  if (requestAs === 'provider-tenant') {
-    return service.app_tid;
-  }
-  if (requestAs === 'current-tenant' || !requestAs) {
-    return options?.jwt?.app_tid;
-  }
-
-  requestAs satisfies never;
-  throw new Error(`Invalid requestAs value: ${requestAs}`);
-}
 
 /**
  * Builds destination based on supplied IAS options.
@@ -199,8 +172,9 @@ function getIasAppTid(
  * @param service - Service binding for identity service.
  * @param iasOptions - IAS options to build the destination.
  * @returns A destination object.
+ * @internal
  */
-function buildIasDestination(
+export function buildIasDestination(
   accessToken: string,
   service: Service,
   iasOptions: IasOptions
@@ -226,55 +200,18 @@ async function transformIasBindingToDestination(
   service: Service,
   options?: ServiceBindingTransformOptions
 ): Promise<Destination> {
-  const iasOptions = {
-    authenticationType: 'OAuth2ClientCredentials' as const,
-    useCache: options?.useCache !== false,
+  const iasOptions: IasOptions = {
+    authenticationType: 'OAuth2ClientCredentials',
     ...(options?.iasOptions || {})
-  } satisfies IasOptions & CachingOptions;
+  };
 
-  const iasInstance = parseUrlAndGetHost(service.credentials.url);
-
-  // Technical user client credentials grant preperation
-  if (iasOptions.authenticationType === 'OAuth2ClientCredentials') {
-    if (!iasOptions.appTid) {
-      iasOptions.appTid = getIasAppTid(iasOptions, service, options);
-    }
-
-    if (iasOptions.useCache) {
-      const cached = clientCredentialsTokenCache.getTokenIas({
-        iasInstance,
-        appTid: iasOptions.appTid,
-        clientId: service.credentials.clientid,
-        resource: options?.iasOptions?.resource
-      });
-      if (cached) {
-        return buildIasDestination(cached.access_token, service, iasOptions);
-      }
-    }
-  }
-
-  const response = await getIasToken(service, {
+  const { token } = await getIasToken(service, {
     jwt: options?.jwt,
+    useCache: options?.useCache !== false,
     ...iasOptions
   });
 
-  if (
-    iasOptions.authenticationType === 'OAuth2ClientCredentials' &&
-    iasOptions.useCache &&
-    response
-  ) {
-    clientCredentialsTokenCache.cacheIasToken(
-      {
-        iasInstance,
-        appTid: iasOptions.appTid,
-        clientId: service.credentials.clientid,
-        resource: iasOptions?.resource
-      },
-      response
-    );
-  }
-
-  return buildIasDestination(response.access_token, service, iasOptions);
+  return buildIasDestination(token, service, iasOptions);
 }
 
 /**

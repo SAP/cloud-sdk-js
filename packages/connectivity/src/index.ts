@@ -17,6 +17,8 @@ export {
   retrieveJwt,
   jwtBearerToken,
   serviceToken,
+  getIasToken,
+  getIasDestination,
   isHttpDestination,
   assertHttpDestination,
   DestinationSelectionStrategies,
@@ -63,7 +65,9 @@ export type {
   IasOptionsBase,
   IasOptionsBusinessUser,
   IasOptionsTechnicalUser,
-  IasResource
+  IasResource,
+  IasTokenOptions,
+  IasTokenResult
 } from './scp-cf';
 
 export type {

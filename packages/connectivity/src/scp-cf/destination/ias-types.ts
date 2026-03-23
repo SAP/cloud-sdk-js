@@ -1,6 +1,8 @@
 import type { Xor } from '@sap-cloud-sdk/util';
 import type { AuthenticationType } from './destination-service-types';
 import type { IdentityService } from '@sap/xssec';
+import type { CachingOptions } from '../cache';
+import type { JwtPayload } from '../jsonwebtoken-type';
 
 /**
  * The application resource for which the token is requested for App-to-App communication.
@@ -103,3 +105,39 @@ export interface IasOptionsBusinessUser extends IasOptionsBase {
  * Options for IAS token retrieval with type-safe authentication type/assertion relationship.
  */
 export type IasOptions = IasOptionsTechnicalUser | IasOptionsBusinessUser;
+
+/**
+ * Options for fetching an IAS token via {@link getIasToken}.
+ */
+export type IasTokenOptions = IasOptions &
+  CachingOptions & {
+    /**
+     * JWT for tenant context resolution.
+     * For technical user flows (OAuth2ClientCredentials), this JWT's `app_tid` claim
+     * is used to determine the current tenant when `requestAs` is 'current-tenant' (default).
+     * Not needed for business user flows (OAuth2JWTBearer) where the assertion provides context.
+     */
+    jwt?: JwtPayload;
+  };
+
+/**
+ * Result of an IAS token request via {@link getIasToken}.
+ * Contains the access token with decoded claims, expiration information,
+ * and an optional refresh token (available for JWT bearer flows).
+ */
+export interface IasTokenResult {
+  /**
+   * The IAS access token with decoded claims.
+   */
+  token: string;
+  /**
+   * The refresh token, if returned by the token endpoint.
+   * Only sometimes available for JWT bearer (`OAuth2JWTBearer`) flows.
+   * Fetching refresh tokens is disabled in most cases by the SAP Cloud SDK.
+   */
+  refreshToken?: string;
+  /**
+   * The number of seconds until the access token expires, as returned by the token endpoint.
+   */
+  expiresIn: number;
+}

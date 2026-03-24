@@ -62225,6 +62225,8 @@ if (process.platform === 'linux') {
 /************************************************************************/
 var __webpack_exports__ = {};
 
+;// CONCATENATED MODULE: external "node:fs/promises"
+const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
 ;// CONCATENATED MODULE: external "node:path"
 const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
 // EXTERNAL MODULE: external "os"
@@ -65191,8 +65193,11 @@ var semver = __nccwpck_require__(90084);
 
 
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires, import/no-internal-modules
-const { getPackageVersion } = require('../../scripts/get-package-version');
+
+async function getPackageVersion() {
+    const packageJson = await (0,promises_namespaceObject.readFile)('package.json', 'utf8');
+    return JSON.parse(packageJson).version;
+}
 const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
 async function getNextVersion() {
     const currentVersion = await getPackageVersion();
@@ -65225,8 +65230,11 @@ function formatJson(json) {
 
 
 
-// eslint-disable-next-line import/no-internal-modules, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-const { transformFile } = require('../../scripts/util');
+
+async function transformFile(filePath, transformFn) {
+    const file = await (0,promises_namespaceObject.readFile)(filePath, { encoding: 'utf8' });
+    await (0,promises_namespaceObject.writeFile)(filePath, await transformFn(file), { encoding: 'utf8' });
+}
 async function bump() {
     const { version, bumpType } = await getNextVersion();
     if (bumpType === 'major' && version !== getInput('majorVersion')) {

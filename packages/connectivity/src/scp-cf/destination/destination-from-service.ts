@@ -434,7 +434,13 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destinationOrigin: DestinationOrigin
   ) {
     if (!this.options.useCache) {
-      return destination;
+      return;
+    }
+    if (destination.authentication === 'SAMLAssertion') {
+      logger.debug(
+        'Destination with authentication type SAMLAssertion will not be cached.'
+      );
+      return;
     }
     await destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'

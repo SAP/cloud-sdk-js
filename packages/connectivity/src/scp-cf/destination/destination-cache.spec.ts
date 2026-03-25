@@ -16,7 +16,8 @@ import {
   certificateSingleResponse,
   destinationName,
   oauthSingleResponse,
-  onPremisePrincipalPropagationMultipleResponse
+  onPremisePrincipalPropagationMultipleResponse,
+  samlAssertionSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import {
   providerServiceToken,
@@ -282,6 +283,34 @@ describe('destination cache', () => {
 
       expect(c1).toBeUndefined();
       expect(c2!.url).toBe('https://subscriber2.example');
+    });
+
+    it('does not cache destinations with authentication type SAMLAssertion', async () => {
+      mockJwtBearerToken();
+      mockFetchDestinationCalls(samlAssertionSingleResponse, {
+        serviceToken: subscriberServiceToken,
+        mockWithTokenRetrievalCall: {
+          headers: { 'x-user-token': subscriberUserToken }
+        }
+      });
+
+      const logger = createLogger('destination-accessor-service');
+      const debugSpy = jest.spyOn(logger, 'debug');
+
+      await getDestination({
+        destinationName,
+        jwt: subscriberUserToken
+      });
+
+      const cached = await destinationCache.retrieveDestinationFromCache(
+        decodeJwt(subscriberUserToken),
+        destinationName,
+        'tenant-user'
+      );
+      expect(cached).toBeUndefined();
+      expect(debugSpy).toHaveBeenCalledWith(
+        'Destination with authentication type SAMLAssertion will not be cached.'
+      );
     });
 
     it('disables the cache if explicitly specified', async () => {

@@ -223,15 +223,16 @@ async function getIasTokenImpl(arg: IasParameters): Promise<IasTokenResponse> {
   );
 
   const tokenOptions = transformIasOptionsToXssecArgs(arg);
+  const useCache = arg.useCache !== false;
 
   const response: IdentityService.TokenFetchResponse =
     arg.authenticationType === 'OAuth2JWTBearer'
       ? // JWT bearer grant for business user access
-        arg.useCache !== false
+        useCache
         ? await identityService.getJwtBearerToken(arg.assertion, tokenOptions)
         : await identityService.fetchJwtBearerToken(arg.assertion, tokenOptions)
       : // Technical user client credentials grant
-        arg.useCache !== false
+        useCache
         ? await identityService.getClientCredentialsToken(tokenOptions)
         : await identityService.fetchClientCredentialsToken(tokenOptions);
 

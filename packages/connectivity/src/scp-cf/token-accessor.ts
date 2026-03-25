@@ -103,7 +103,7 @@ export async function jwtBearerToken(
  * @internal
  */
 async function resolveIdentityService(
-  service: ServiceCredentials | string | Service
+  service: ServiceCredentials | 'identity' | Service
 ): Promise<Service> {
   if (typeof service === 'string') {
     return resolveServiceBinding(service);
@@ -116,12 +116,15 @@ async function resolveIdentityService(
 /**
  * Returns an IAS token from the Identity Authentication Service.
  * Supports both technical user (OAuth2ClientCredentials) and business user (OAuth2JWTBearer) flows.
- * @param service - Service credentials, a service type string (e.g., 'identity'), or a {@link Service} instance.
+ * @remarks
+ * Prefer using `'identity'` (default) for the `service` parameter.
+ * Passing raw ServiceCredentials or Service directly is only recommended for environments where service bindings are unavailable as they hardcode the credentials.
+ * @param service - Service credentials {@link ServiceCredentials}, the service type (always 'identity' for IAS), or a {@link Service} binding.
  * @param options - Options for IAS token retrieval. See {@link IasTokenOptions}.
  * @returns An {@link IasTokenResult} containing the access token, expiration, and optional refresh token.
  */
 export async function getIasToken(
-  service: ServiceCredentials | string | Service,
+  service: ServiceCredentials | 'identity' | Service = 'identity',
   options?: IasTokenOptions
 ): Promise<IasTokenResult> {
   const useCache = options?.useCache !== false;
@@ -157,12 +160,15 @@ export async function getIasToken(
  * Creates an {@link Destination} from IAS service credentials.
  * Fetches an IAS token and builds a destination with the token, mTLS key pair (if available),
  * and the target URL.
- * @param service - The IAS service credentials.
+ * @remarks
+ * Prefer using `'identity'` (default) for the `service` parameter.
+ * Passing raw ServiceCredentials or Service directly is only recommended for environments where service bindings are unavailable as they hardcode the credentials.
+ * @param service - Service credentials {@link ServiceCredentials}, the service type (always 'identity' for IAS), or a {@link Service} binding.
  * @param options - Options for IAS token retrieval and destination configuration. See {@link IasTokenOptions}.
  * @returns A promise that resolves to an HTTP destination.
  */
 export async function getIasDestination(
-  service: ServiceCredentials | string | Service,
+  service: ServiceCredentials | 'identity' | Service = 'identity',
   options?: IasTokenOptions
 ): Promise<Destination> {
   const resolvedService = await resolveIdentityService(service);

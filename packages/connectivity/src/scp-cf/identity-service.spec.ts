@@ -1,6 +1,7 @@
 import { signedJwt } from '../../../../test-resources/test/test-util';
 import {
   fetchIasToken,
+  getIasAppTid,
   shouldExchangeToken,
   identityServicesCache
 } from './identity-service';
@@ -677,5 +678,45 @@ describe('fetchIasToken', () => {
         undefined
       );
     });
+  });
+});
+
+describe('getIasAppTid', () => {
+  const mockService = {
+    name: 'identity',
+    label: 'identity',
+    tags: ['identity'],
+    credentials: {
+      clientid: 'client-id',
+      clientsecret: 'secret',
+      url: 'https://provider.accounts.ondemand.com',
+      app_tid: 'provider-tid'
+    }
+  };
+
+  it('returns credentials.app_tid for requestAs="provider-tenant"', () => {
+    expect(getIasAppTid({ requestAs: 'provider-tenant' }, mockService)).toBe(
+      'provider-tid'
+    );
+  });
+
+  it('returns jwt.app_tid for requestAs="current-tenant"', () => {
+    expect(
+      getIasAppTid({ requestAs: 'current-tenant' }, mockService, {
+        app_tid: 'subscriber-tid'
+      })
+    ).toBe('subscriber-tid');
+  });
+
+  it('returns jwt.app_tid when requestAs is not set', () => {
+    expect(getIasAppTid({}, mockService, { app_tid: 'subscriber-tid' })).toBe(
+      'subscriber-tid'
+    );
+  });
+
+  it('returns undefined for current-tenant when no jwt is provided', () => {
+    expect(
+      getIasAppTid({ requestAs: 'current-tenant' }, mockService)
+    ).toBeUndefined();
   });
 });

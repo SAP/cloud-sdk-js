@@ -274,7 +274,7 @@ export function getIasAppTid(
 ): string | undefined {
   const { requestAs } = iasOptions;
   if (requestAs === 'provider-tenant') {
-    return service.app_tid;
+    return service.credentials.app_tid;
   }
   if (requestAs === 'current-tenant' || !requestAs) {
     return jwt?.app_tid;

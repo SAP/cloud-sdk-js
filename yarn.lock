@@ -1579,10 +1579,10 @@
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-6.7.1.tgz#a3a51dc5a204c8d930660169172e52b172354078"
   integrity sha512-vfPhfLoT5sy73LBo8fGwYJ030tXY/ZY+1PSnVxLsghycg3/eMt06HrnI8Pt6vc7ia57x3/QGcHYXa+06SF3pZA==
 
-"@sap/cds-dk@9.8.2":
-  version "9.8.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.8.2.tgz#88832b0d3b0f3aff2c4f13869787a8fe6a71109c"
-  integrity sha512-PGynoQpOCD8Nsr0EEzsEHWg8szYBLVtVd6byxvaaAPYBkNAj2WA+kin6gWaDTiyG3kJa0BSGPk4PCbA2xDoE9A==
+"@sap/cds-dk@9.8.3":
+  version "9.8.3"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-9.8.3.tgz#99072dcab52898aea0e0486fa5de920e8703c308"
+  integrity sha512-krQpely2tIm7DdHMDKtoIMPwfoKV/vGsLfrqq07LA677QmrDXtMXfZbmpzuIY4SdvYVYurcH9nM9y6E+mpyVQg==
   dependencies:
     "@cap-js/asyncapi" "^1.0.0"
     "@cap-js/openapi" "^1.0.0"
@@ -7032,9 +7032,9 @@ neo-async@^2.6.2:
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
 "netmask@>=2.0.1 ", netmask@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
-  integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/netmask/-/netmask-2.1.0.tgz#d915b3374cafeab6bc0d7c9da06be0e77ee94365"
+  integrity sha512-z9sZrk6wyf8/NDKKqe+Tyl58XtgkYrV4kgt1O8xrzYvpl1LvPacPo0imMLHfpStk3kgCIq1ksJ2bmJn9hue2lQ==
 
 nock@^14.0.11:
   version "14.0.11"

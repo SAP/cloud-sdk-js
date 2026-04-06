@@ -1197,10 +1197,10 @@
     jju "^1.4.0"
     js-yaml "^4.1.0"
 
-"@mswjs/interceptors@^0.41.0":
-  version "0.41.2"
-  resolved "https://registry.npmjs.org/@mswjs/interceptors/-/interceptors-0.41.2.tgz#6e490a41f9701edf237aa561b5cd23fe262f4ce6"
-  integrity sha512-7G0Uf0yK3f2bjElBLGHIQzgRgMESczOMyYVasq1XK8P5HaXtlW4eQhz9MBL+TQILZLaruq+ClGId+hH0w4jvWw==
+"@mswjs/interceptors@^0.39.5":
+  version "0.39.8"
+  resolved "https://registry.npmjs.org/@mswjs/interceptors/-/interceptors-0.39.8.tgz#0a2cf4cf26a731214ca4156273121f67dff7ebf8"
+  integrity sha512-2+BzZbjRO7Ct61k8fMNHEtoKjeWI9pIlHFTqBwZ5icHpqszIgEZbjb1MW5Z0+bITTCTl3gk4PDBxs9tA/csXvA==
   dependencies:
     "@open-draft/deferred-promise" "^2.2.0"
     "@open-draft/logger" "^0.3.0"
@@ -7036,14 +7036,13 @@ neo-async@^2.6.2:
   resolved "https://registry.npmjs.org/netmask/-/netmask-2.1.0.tgz#d915b3374cafeab6bc0d7c9da06be0e77ee94365"
   integrity sha512-z9sZrk6wyf8/NDKKqe+Tyl58XtgkYrV4kgt1O8xrzYvpl1LvPacPo0imMLHfpStk3kgCIq1ksJ2bmJn9hue2lQ==
 
-nock@^14.0.11:
-  version "14.0.11"
-  resolved "https://registry.npmjs.org/nock/-/nock-14.0.11.tgz#4ed20d50433b0479ddabd9f03c5886054608aeae"
-  integrity sha512-u5xUnYE+UOOBA6SpELJheMCtj2Laqx15Vl70QxKo43Wz/6nMHXS7PrEioXLjXAwhmawdEMNImwKCcPhBJWbKVw==
+nock@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.npmjs.org/nock/-/nock-15.0.0.tgz#99c95472e767da991698f6a7cee59893f5453c83"
+  integrity sha512-EoAVk4Y8Yv4JUQz62sv8zmv+DoBblD/pht/q7aW/td1WietaFWrivzhMGGCLmx2qjpLcOrbyammedW8IRUU5TA==
   dependencies:
-    "@mswjs/interceptors" "^0.41.0"
+    "@mswjs/interceptors" "^0.39.5"
     json-stringify-safe "^5.0.1"
-    propagate "^2.0.0"
 
 node-abi@^3.3.0:
   version "3.75.0"
@@ -8001,11 +8000,6 @@ promptly@2.2.0:
   integrity sha512-aC9j+BZsRSSzEsXBNBwDnAxujdx19HycZoKgRgzWnS8eOHg1asuf9heuLprfbe739zY3IdUQx+Egv6Jn135WHA==
   dependencies:
     read "^1.0.4"
-
-propagate@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/propagate/-/propagate-2.0.1.tgz#40cdedab18085c792334e64f0ac17256d38f9a45"
-  integrity sha512-vGrhOavPSTz4QVNuBNdcNXePNdNMaO1xj9yBeH1ScQPjk/rhg9sSlCXPhMkFuaNNW/syTvYqsnbIJxMBfRbbag==
 
 proxy-addr@^2.0.7, proxy-addr@~2.0.7:
   version "2.0.7"

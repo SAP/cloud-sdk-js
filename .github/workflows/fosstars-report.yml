@@ -8,12 +8,14 @@ jobs:
   create_fosstars_report:
     runs-on: ubuntu-latest
     name: 'Security rating'
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v6
       - uses: SAP/fosstars-rating-core-action@v1.14.0
         with:
           report-branch: fosstars-report
-          token: '${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}'
+          token: ${{ secrets.GITHUB_TOKEN }}
       - if: failure() || cancelled()
         name: Slack Notify
         uses: rtCamp/action-slack-notify@v2.3.3

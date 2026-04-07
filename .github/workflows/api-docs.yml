@@ -19,50 +19,48 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      
+
       - run: git fetch --depth=1
-      
+
       - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'yarn'
-      
+
       - run: yarn install --frozen-lockfile --ignore-engines
-      
+
       - name: Generate API documentation
         run: |
           yarn generate
           yarn doc
-      
-      - name: Setup SSH key for cloud-sdk repo
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          echo "${{ secrets.GH_CLOUD_SDK_WRITE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          cat <<EOT >> ~/.ssh/config
-          Host github.com
-          HostName github.com
-          IdentityFile ~/.ssh/id_rsa
-          EOT
-      
+
+      - uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          app-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
+          owner: SAP
+          repositories: cloud-sdk
+          permission-contents: write
+
       - name: Push generated API documentation to cloud-sdk repo
         env:
-          USE_SSH: true
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           GIT_USER: cloud-sdk-js
+          BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
+          BOT_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
         run: |
-          git config --global user.email "cloud-sdk-js@github.com"
-          git config --global user.name "cloud-sdk-js"
-          
+          gh auth setup-git
+          git config user.email "$BOT_EMAIL"
+          git config user.name "$BOT_NAME"
+
           # Extract major version from input (e.g., v4.5.0 -> v4)
           FULL_VERSION="${{ inputs.version }}"
           MAJOR_VERSION=$(echo $FULL_VERSION | sed 's/\(v[0-9]*\).*/\1/')
-          
+
           cd ..
-          git clone --depth 1 git@github.com:SAP/cloud-sdk.git
-          
+          git clone --depth 1 https://github.com/SAP/cloud-sdk.git
+
           # Copy generated docs to versioned folder
           rsync -avz --delete cloud-sdk-js/knowledge-base/api-reference/ cloud-sdk/static/api/${MAJOR_VERSION}/
 

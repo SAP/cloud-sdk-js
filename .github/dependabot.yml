@@ -10,6 +10,7 @@ updates:
     open-pull-requests-limit: 10
     cooldown:
       default-days: 4
+    versioning-strategy: widen
     ignore:
       # We only want to do major node updates on purpose, so don't create dependabot PRs for major versions
       - dependency-name: '@types/node'

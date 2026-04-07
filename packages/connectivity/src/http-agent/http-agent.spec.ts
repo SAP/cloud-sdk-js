@@ -1,5 +1,11 @@
+jest.mock('fs', () => jest.requireActual('memfs').fs);
+jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
+jest.mock('node:fs', () => jest.requireActual('memfs').fs);
+jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
+
 import { X509Certificate } from 'node:crypto';
-import mock from 'mock-fs';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { createLogger } from '@sap-cloud-sdk/util';
 
 // Mock jks-js module
@@ -7,8 +13,8 @@ jest.mock('jks-js', () => ({
   toPem: jest.fn()
 }));
 import * as jks from 'jks-js';
+import { certAsString } from '@sap-cloud-sdk/test-util-shared/test-certificate';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
-import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
 import { getAgentConfig } from './http-agent';
 import type { HttpDestination } from '../scp-cf/destination';
 import type { DestinationCertificate } from '../scp-cf';
@@ -293,16 +299,14 @@ describe('getAgentConfig', () => {
   describe('mTLS', () => {
     describe('on CloudFoundry', () => {
       beforeEach(() => {
-        mock({
-          'cf-crypto': {
-            'cf-cert': certAsString,
-            'cf-key': 'my-key'
-          }
-        });
+        vol.fromJSON(
+          { 'cf-crypto/cf-cert': certAsString, 'cf-crypto/cf-key': 'my-key' },
+          process.cwd()
+        );
       });
 
       afterEach(() => {
-        mock.restore();
+        vol.reset();
       });
 
       afterEach(async () => {

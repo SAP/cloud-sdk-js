@@ -3,7 +3,7 @@ import {
   mockServiceBindings,
   signedJwt,
   xsuaaBindingMock
-} from '../../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/test-util-shared';
 import { decodeOrMakeJwt } from './binding';
 
 describe('decodeOrMakeJwt', () => {

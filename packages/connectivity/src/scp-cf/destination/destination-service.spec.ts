@@ -3,9 +3,9 @@ import nock from 'nock';
 import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 import axios from 'axios';
-import { mockCertificateCall } from '../../../../../test-resources/test/test-util';
-import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
-import { privateKey } from '../../../../../test-resources/test/test-util/keys';
+import { mockCertificateCall } from '@sap-cloud-sdk/test-util-shared';
+import { destinationServiceUri } from '@sap-cloud-sdk/test-util-shared/environment-mocks';
+import { privateKey } from '@sap-cloud-sdk/test-util-shared/keys';
 import { parseDestination } from './destination';
 import {
   fetchCertificate,

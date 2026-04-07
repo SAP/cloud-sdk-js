@@ -1,5 +1,14 @@
-import mock from 'mock-fs';
 import { jest } from '@jest/globals';
+import { vol } from 'memfs';
+
+jest.unstable_mockModule('fs', () => import('memfs').then(m => m.fs));
+jest.unstable_mockModule('fs/promises', () =>
+  import('memfs').then(m => m.fs.promises)
+);
+jest.unstable_mockModule('node:fs', () => import('memfs').then(m => m.fs));
+jest.unstable_mockModule('node:fs/promises', () =>
+  import('memfs').then(m => m.fs.promises)
+);
 
 jest.unstable_mockModule('@actions/core', () => ({
   error: jest.fn(),
@@ -21,19 +30,20 @@ with multiple lines`;
 
 describe('check-pr', () => {
   beforeEach(() => {
-    mock({
-      '.github': {
-        'PULL_REQUEST_TEMPLATE.md': prTemplate
+    vol.fromJSON(
+      {
+        '.github/PULL_REQUEST_TEMPLATE.md': prTemplate,
+        'my-changeset.md': '[Fixed Issue] Something is fixed.'
       },
-      'my-changeset.md': '[Fixed Issue] Something is fixed.'
-    });
+      process.cwd()
+    );
 
     getInput.mockReturnValue('my-changeset.md');
     process.exitCode = 0;
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
     setFailed.mockClear();
   });
 

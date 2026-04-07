@@ -1,6 +1,15 @@
 import path from 'path';
-import mock from 'mock-fs';
 import { jest } from '@jest/globals';
+import { vol } from 'memfs';
+
+jest.unstable_mockModule('fs', () => import('memfs').then(m => m.fs));
+jest.unstable_mockModule('fs/promises', () =>
+  import('memfs').then(m => m.fs.promises)
+);
+jest.unstable_mockModule('node:fs', () => import('memfs').then(m => m.fs));
+jest.unstable_mockModule('node:fs/promises', () =>
+  import('memfs').then(m => m.fs.promises)
+);
 
 jest.unstable_mockModule('@actions/core', () => ({
   error: jest.fn(),
@@ -29,31 +38,29 @@ describe('check-public-api', () => {
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   describe('exportAllInBarrel', () => {
     it('checkIndexFileExists fails if index file is not in root', () => {
-      mock({
-        root: {
-          dir1: {
-            'index.ts': ''
-          }
-        }
-      });
+      vol.fromJSON(
+        {
+          'root/dir1/index.ts': ''
+        },
+        process.cwd()
+      );
       checkIndexFileExists('root/index.ts');
       expect(error).toHaveBeenCalledWith('No index.ts file found in root.');
     });
 
     it('fails if internal.ts is not present in root', async () => {
-      mock({
-        src: {
-          file1: '',
-          dir2: {
-            file2: ''
-          }
-        }
-      });
+      vol.fromJSON(
+        {
+          'src/file1': '',
+          'src/dir2/file2': ''
+        },
+        process.cwd()
+      );
       await exportAllInBarrel('src', 'internal.ts');
       expect(error).toHaveBeenCalledWith(
         "No 'internal.ts' file found in 'src'."
@@ -61,17 +68,17 @@ describe('check-public-api', () => {
     });
 
     it('fails if a file is not exported in barrel file', async () => {
-      mock({
-        dir1: {
-          file1: '',
-          'index.ts': "export * from './file1';",
-          dir2: {
-            file2: '',
-            file3: '',
-            'index.ts': "export * from './file2';export * from './file3';"
-          }
-        }
-      });
+      vol.fromJSON(
+        {
+          'dir1/file1': '',
+          'dir1/index.ts': "export * from './file1';",
+          'dir1/dir2/file2': '',
+          'dir1/dir2/file3': '',
+          'dir1/dir2/index.ts':
+            "export * from './file2';export * from './file3';"
+        },
+        process.cwd()
+      );
 
       await exportAllInBarrel('dir1', 'index.ts');
 
@@ -82,32 +89,31 @@ describe('check-public-api', () => {
     });
 
     it('checkBarrelRecursive passes recursive check for barrel file exports', async () => {
-      mock({
-        dir1: {
-          file1: '',
-          'index.ts': "export * from './file1'; export * from './dir2';",
-          dir2: {
-            file2: '',
-            file3: '',
-            'index.ts': "export * from './file2';export * from './file3';"
-          }
-        }
-      });
+      vol.fromJSON(
+        {
+          'dir1/file1': '',
+          'dir1/index.ts': "export * from './file1'; export * from './dir2';",
+          'dir1/dir2/file2': '',
+          'dir1/dir2/file3': '',
+          'dir1/dir2/index.ts':
+            "export * from './file2';export * from './file3';"
+        },
+        process.cwd()
+      );
       await checkBarrelRecursive('dir1');
     });
 
     it('typeDescriptorPaths finds the .d.ts files and excludes index.d.ts', async () => {
-      mock({
-        dir1: {
-          'file1.d.ts': '',
-          'index.d.ts': '',
-          dir2: {
-            'file2.d.ts': '',
-            'file3.d.ts': '',
-            'index.d.ts': ''
-          }
-        }
-      });
+      vol.fromJSON(
+        {
+          'dir1/file1.d.ts': '',
+          'dir1/index.d.ts': '',
+          'dir1/dir2/file2.d.ts': '',
+          'dir1/dir2/file3.d.ts': '',
+          'dir1/dir2/index.d.ts': ''
+        },
+        process.cwd()
+      );
 
       expect(await typeDescriptorPaths('dir1')).toEqual([
         path.normalize('dir1/file1.d.ts'),
@@ -163,15 +169,16 @@ describe('check-public-api', () => {
 
   describe('parseIndexFile', () => {
     it('parses referenced star imports', async () => {
-      mock({
-        'index.ts': "export * from './common';export * from './subdir/ref';",
-        'common.ts':
-          "export { commonExport } from './local';export * from './crossref';",
-        'crossref.ts': "export { crossRefExport } from './local';",
-        subdir: {
-          'ref.ts': "export { subdirRefExport } from './local';"
-        }
-      });
+      vol.fromJSON(
+        {
+          'index.ts': "export * from './common';export * from './subdir/ref';",
+          'common.ts':
+            "export { commonExport } from './local';export * from './crossref';",
+          'crossref.ts': "export { crossRefExport } from './local';",
+          'subdir/ref.ts': "export { subdirRefExport } from './local';"
+        },
+        process.cwd()
+      );
 
       await expect(parseIndexFile('index.ts', true)).resolves.toEqual([
         'commonExport',
@@ -181,22 +188,28 @@ describe('check-public-api', () => {
     });
 
     it('parses exports types correctly', async () => {
-      mock({
-        'index.ts':
-          "export * from './common';export type { namedExport } from './named';",
-        'common.ts': "export type { commonExport } from './local'",
-        'named.ts': "export type { namedExport } from './local'"
-      });
+      vol.fromJSON(
+        {
+          'index.ts':
+            "export * from './common';export type { namedExport } from './named';",
+          'common.ts': "export type { commonExport } from './local'",
+          'named.ts': "export type { namedExport } from './local'"
+        },
+        process.cwd()
+      );
 
       const result = await parseIndexFile('index.ts', true);
       expect(result).toEqual(['namedExport', 'commonExport']);
     });
 
     it('ignores public re-exports', async () => {
-      mock({
-        'index.ts':
-          "export { ignoreme } from '@other/package';export { local } from './local';"
-      });
+      vol.fromJSON(
+        {
+          'index.ts':
+            "export { ignoreme } from '@other/package';export { local } from './local';"
+        },
+        process.cwd()
+      );
 
       await expect(parseIndexFile('index.ts', true)).resolves.toEqual([
         'local'
@@ -204,10 +217,13 @@ describe('check-public-api', () => {
     });
 
     it('throws an error on internal re-exports', async () => {
-      mock({
-        'index.ts':
-          "export { internal } from '@other/package/internal';export { local } from './local';"
-      });
+      vol.fromJSON(
+        {
+          'index.ts':
+            "export { internal } from '@other/package/internal';export { local } from './local';"
+        },
+        process.cwd()
+      );
 
       await parseIndexFile('index.ts', true);
       expect(error).toHaveBeenCalledWith(
@@ -243,9 +259,9 @@ export declare type MyType = {value:string}
 `;
 
 const dummyIndexFile = `export { o1 } from './bla';
-    
+
     export { o2,  o3 as o3$Some_thing   } from './bla';  // :-) This is a comment
-    export { o4     as  o4Something, 
+    export { o4     as  o4Something,
     /****
       * * This is a block comment **??? *
       * **/

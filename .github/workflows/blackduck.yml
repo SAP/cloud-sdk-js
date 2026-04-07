@@ -11,12 +11,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-engines
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - run: sudo apt-get install jq
       - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
       - name: Blackduck Scan
@@ -30,8 +27,8 @@ jobs:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}
           DETECT_TIMEOUT: 6000
-          DETECT_YARN_EXCLUDED_WORKSPACES: test-packages/**
-          DETECT_YARN_DEPENDENCY_TYPES_EXCLUDED: NON_PRODUCTION
+          DETECT_PNPM_EXCLUDED_WORKSPACES: test-packages/**
+          DETECT_PNPM_DEPENDENCY_TYPES_EXCLUDED: NON_PRODUCTION
       - if: failure() || cancelled()
         name: Slack Notify
         uses: rtCamp/action-slack-notify@v2.3.3

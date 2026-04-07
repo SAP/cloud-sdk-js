@@ -7,7 +7,7 @@
   "private": true,
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "test": "yarn test:integration",
+    "test": "pnpm run test:integration",
     "test:integration": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
@@ -15,26 +15,30 @@
     "check:dependencies": "depcheck . --ignores=@sap-cloud-sdk/generator,@sap-cloud-sdk/openapi-generator"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^4.5.1",
-    "@sap-cloud-sdk/http-client": "^4.5.1",
-    "@sap-cloud-sdk/test-services-odata-v2": "^4.5.1",
-    "@sap-cloud-sdk/test-services-odata-v4": "^4.5.1",
-    "@sap-cloud-sdk/test-util": "^4.5.1",
-    "@sap-cloud-sdk/util": "^4.5.1",
+    "@sap-cloud-sdk/connectivity": "workspace:^",
+    "@sap-cloud-sdk/http-client": "workspace:^",
+    "@sap-cloud-sdk/test-services-odata-v2": "workspace:^",
+    "@sap-cloud-sdk/test-services-odata-v4": "workspace:^",
+    "@sap-cloud-sdk/test-util": "workspace:^",
+    "@sap-cloud-sdk/test-util-shared": "workspace:^",
+    "@sap-cloud-sdk/util": "workspace:^",
     "@sap/xssec": "^4.13.0",
     "axios": "^1.13.6"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator": "^4.5.1",
-    "@sap-cloud-sdk/odata-common": "^4.5.1",
-    "@sap-cloud-sdk/odata-v2": "^4.5.1",
-    "@sap-cloud-sdk/openapi-generator": "^4.5.1",
+    "@jest/globals": "^30.3.0",
+    "@sap-cloud-sdk/generator": "workspace:^",
+    "@sap-cloud-sdk/odata-common": "workspace:^",
+    "@sap-cloud-sdk/odata-v2": "workspace:^",
+    "@sap-cloud-sdk/openapi-generator": "workspace:^",
     "bignumber.js": "^10.0.2",
-    "moment": "^2.30.1",
+    "depcheck": "^1.4.7",
     "execa": "^5.0.0",
     "jsonwebtoken": "^9.0.3",
-    "mock-fs": "^5.5.0",
+    "memfs": "^4.57.1",
+    "moment": "^2.30.1",
     "nock": "^14.0.11",
+    "prettier": "^3.8.1",
     "winston": "^3.19.0"
   }
 }

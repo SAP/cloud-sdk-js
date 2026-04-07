@@ -30,25 +30,33 @@
   },
   "scripts": {
     "compile": "tsc -b",
-    "prepublishOnly": "yarn compile && yarn readme",
-    "test": "yarn test:unit",
+    "prepublishOnly": "pnpm run compile && pnpm run readme",
+    "test": "pnpm run test:unit",
     "test:unit": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck .",
-    "readme": "ts-node ../../scripts/replace-common-readme.ts"
+    "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^4.5.1",
-    "@sap-cloud-sdk/http-client": "^4.5.1",
-    "@sap-cloud-sdk/util": "^4.5.1",
+    "@sap-cloud-sdk/connectivity": "workspace:^",
+    "@sap-cloud-sdk/http-client": "workspace:^",
+    "@sap-cloud-sdk/util": "workspace:^",
     "bignumber.js": "^10.0.2",
     "moment": "^2.30.1",
     "voca": "^1.4.1"
   },
   "devDependencies": {
-    "typescript": "~5.9.3",
-    "@sap-cloud-sdk/test-services-odata-common": "^4.5.1"
+    "@sap-cloud-sdk/test-services-odata-common": "workspace:^",
+    "@sap-cloud-sdk/test-util-shared": "workspace:^",
+    "depcheck": "^1.4.7",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.3"
+  },
+  "dependenciesMeta": {
+    "@sap-cloud-sdk/test-services-odata-common": {
+      "injected": true
+    }
   }
 }

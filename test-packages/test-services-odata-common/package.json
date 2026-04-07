@@ -2,13 +2,6 @@
   "name": "@sap-cloud-sdk/test-services-odata-common",
   "version": "4.5.1",
   "description": "Custom Services for testing",
-  "files": [
-    "**/*.js",
-    "**/*.js.map",
-    "**/*.d.ts",
-    "**/d.ts.map",
-    "**/*-csn.json"
-  ],
   "private": true,
   "publishConfig": {
     "access": "restricted"
@@ -24,10 +17,8 @@
     "bignumber.js": "^10.0.2"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator-common": "^4.5.1"
-  },
-  "peerDependencies": {
-    "@sap-cloud-sdk/generator": "^4.0.0",
-    "@sap-cloud-sdk/util": "^4.0.0"
+    "@sap-cloud-sdk/test-util-shared": "workspace:^",
+    "depcheck": "^1.4.7",
+    "prettier": "^3.8.1"
   }
 }

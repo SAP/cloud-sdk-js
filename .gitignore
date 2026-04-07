@@ -7,6 +7,7 @@ build-packages/**/lib
 .DS_Store
 coverage
 yarn-error.log
+pnpm-debug.log
 *.tgz
 **credentials.json
 .idea
@@ -34,7 +35,7 @@ test-packages/integration-tests/test/auth-flows/user-access-token.json
 test-packages/integration-tests/test/auth-flows/systems.json
 
 test-packages/memory-tests/**/test-service
-test-packages/memory-tests/**/yarn.lock
+test-packages/memory-tests/**/pnpm-lock.yaml
 
 test-packages/e2e-tests/test/generator-test-output
 test-packages/e2e-tests/test/mail/test-output

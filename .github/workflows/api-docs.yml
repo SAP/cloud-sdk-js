@@ -19,21 +19,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-
-      - run: git fetch --depth=1
-
-      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: 'yarn'
-
-      - run: yarn install --frozen-lockfile --ignore-engines
+          persist-credentials: false
+      - uses: ./.github/actions/setup
 
       - name: Generate API documentation
         run: |
-          yarn generate
-          yarn doc
-
+          pnpm run generate
+          pnpm run doc
+      
       - uses: actions/create-github-app-token@v3
         id: app-token
         with:

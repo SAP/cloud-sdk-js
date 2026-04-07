@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { signedJwt } from '../../../../../test-resources/test/test-util';
+import { signedJwt } from '@sap-cloud-sdk/test-util-shared';
 import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
 
 describe('forward auth token', () => {

@@ -1,6 +1,12 @@
+jest.mock('fs', () => jest.requireActual('memfs').fs);
+jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
+jest.mock('node:fs', () => jest.requireActual('memfs').fs);
+jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
+
 import { join, resolve } from 'path';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import mock from 'mock-fs';
 import {
   getOptionsWithoutDefaults,
   parseOptions,
@@ -108,16 +114,26 @@ describe('options parser', () => {
     });
 
     it('includes using glob using cwd', () => {
+      vol.fromJSON(
+        { 'package.json': '{}', 'tsconfig.json': '{}' },
+        process.cwd()
+      );
       expect(parseOptions({ include }, { include: '*.json' }).include).toEqual(
         absoluteJsonPaths
       );
+      vol.reset();
     });
 
     it('includes using glob using root', () => {
+      vol.fromJSON(
+        { 'package.json': '{}', 'tsconfig.json': '{}' },
+        process.cwd()
+      );
       expect(
         parseOptions({ include }, { include: join(resolve(), '*.json') })
           .include
       ).toEqual(absoluteJsonPaths);
+      vol.reset();
     });
 
     it('does not fail on include option not set', () => {
@@ -130,13 +146,9 @@ describe('options parser', () => {
         type: 'string' as const
       };
 
-      mock({
-        '/dummy/root': {
-          'file-1.json': '',
-          'sub-1': {
-            'file-2.json': ''
-          }
-        }
+      vol.fromJSON({
+        '/dummy/root/file-1.json': '',
+        '/dummy/root/sub-1/file-2.json': ''
       });
       expect(
         parseOptions(
@@ -146,7 +158,7 @@ describe('options parser', () => {
       ).toEqual(
         ['file-1.json', 'sub-1/file-2.json'].map(s => resolve('/dummy/root', s))
       );
-      mock.restore();
+      vol.reset();
     });
 
     it('coerces value even if unset, using other options', () => {

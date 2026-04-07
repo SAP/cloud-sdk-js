@@ -1,0 +1,24 @@
+name: setup
+description: Setup repo, node and pnpm.
+inputs:
+  node-version:
+    description: 'Node.js version'
+    default: '22'
+  registry-url:
+    description: 'The registry URL to use for npm packages'
+    default: 'https://registry.npmjs.org'
+  pnpm-install-args:
+    description: 'Arguments to pass to pnpm install'
+    default: '--frozen-lockfile'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: pnpm/action-setup@v5
+    - uses: actions/setup-node@v6
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: ${{ inputs.registry-url }}
+        cache: 'pnpm'
+    - run: pnpm install ${{ inputs.pnpm-install-args }}
+      shell: bash

@@ -1,0 +1,7 @@
+{
+  "apiType": "OData",
+  "language": "JavaScript",
+  "serviceStatus": "verified",
+  "generatorVersion": "4.5.1",
+  "apiSpecificUsage": "import { apiTestSrv } from './generated/API_TEST_SRV';\n\nconst { caseTestApi } = apiTestSrv();\nconst resultPromise = caseTestApi.requestBuilder().getAll().top(5).execute({ destinationName: 'myDestinationName' });\n"
+}

@@ -8,7 +8,7 @@ export interface DeSerializers<
   // todo: Given that this generic type is mandatory and odata v2/v4 specific types are optional.
   // For entity api files, we should not put unused import.
   // So "import { Duration } from 'moment';" can be omitted when the "Edm.Duration" (v4 specific) is not used.
-  // However, even if "Edm.Decimal" is not used, the "import { BigNumber } from 'bignumber.js';" has to be provided, as it's used as default deserializer of the DecimalT (mandatory).
+  // However, even if "Edm.Decimal" is not used, the "import BigNumber from 'bignumber.js';" has to be provided, as it's used as default deserializer of the DecimalT (mandatory).
   DecimalT = any,
   DoubleT = any,
   FloatT = any,

@@ -1,6 +1,12 @@
+jest.mock('fs', () => jest.requireActual('memfs').fs);
+jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
+jest.mock('node:fs', () => jest.requireActual('memfs').fs);
+jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
+
 import { X509Certificate } from 'node:crypto';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import mock from 'mock-fs';
 import {
   mockServiceBindings,
   providerServiceToken,
@@ -9,8 +15,8 @@ import {
   subscriberUserToken,
   unmockDestinationsEnv,
   xsuaaBindingMock
-} from '../../../../../test-resources/test/test-util';
-import { certAsString } from '../../../../../test-resources/test/test-util/test-certificate';
+} from '@sap-cloud-sdk/test-util-shared';
+import { certAsString } from '@sap-cloud-sdk/test-util-shared/test-certificate';
 import {
   registerDestination,
   searchRegisteredDestination
@@ -37,16 +43,14 @@ describe('register-destination', () => {
   describe('with XSUAA service binding', () => {
     beforeEach(() => {
       mockServiceBindings();
-      mock({
-        'cf-crypto': {
-          'cf-cert': certAsString,
-          'cf-key': 'my-key'
-        }
-      });
+      vol.fromJSON(
+        { 'cf-crypto/cf-cert': certAsString, 'cf-crypto/cf-key': 'my-key' },
+        process.cwd()
+      );
     });
 
     afterEach(() => {
-      mock.restore();
+      vol.reset();
     });
 
     afterAll(() => {

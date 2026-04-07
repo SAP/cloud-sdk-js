@@ -25,13 +25,8 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
           ref: 'main'
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: 'yarn'
-
-      - run: yarn install --frozen-lockfile --ignore-engines
+          persist-credentials: true
+      - uses: ./.github/actions/setup
 
       - name: bump version
         id: bump
@@ -39,7 +34,7 @@ jobs:
         with:
           majorVersion: ${{ inputs.majorVersion }}
 
-      - run: yarn ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
+      - run: pnpm exec ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
         env:
           NEXT_PACKAGE_VERSION: ${{ steps.bump.outputs.version }}
 

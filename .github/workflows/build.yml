@@ -32,19 +32,18 @@ jobs:
         node-version: [20, 22]
     steps:
       - uses: actions/checkout@v6
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v6
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-engines
-      - run: yarn test:unit
+      - run: pnpm run test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
-      - run: yarn test:integration
-      - run: yarn test:self
-      - run: yarn test:build-packages
-      - run: yarn test:type
+      - run: pnpm run test:integration
+      - run: pnpm run test:self
+      - run: pnpm run test:build-packages
+      - run: pnpm run test:type
       - if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
         name: Slack Notify
         uses: rtCamp/action-slack-notify@v2.3.3
@@ -63,32 +62,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: 'yarn'
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - name: REUSE Compliance Check
         uses: fsfe/reuse-action@v6
-      - run: yarn install --frozen-lockfile --ignore-engines
-      - run: yarn lint
+      - run: pnpm run lint
         name: Static Code Check
-      - run: yarn check:test-service
+      - run: pnpm run check:test-service
         name: Test Service Version Check
-      - run: yarn check:dependencies
+      - run: pnpm run check:dependencies
         name: Undeclared dependency Check
       - uses: ./.github/actions/check-public-api
         with:
           force_internal_exports: 'true'
           excluded_packages: 'eslint-config, util, test-util'
         name: Check public api
-      - run: yarn test:self
+      - run: pnpm run test:self
         name: Self tests for tools
-      - run: yarn check:circular
+      - run: pnpm run check:circular
         name: Circular dependency Check
-      - run: yarn doc
+      - run: pnpm run doc
         name: API Doc Check
-      - run: yarn check:license
+      - run: pnpm run check:license
         name: License Check
       - if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
         name: Slack Notify
@@ -108,13 +104,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-engines
-      - run: yarn test:e2e
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: pnpm run test:e2e
 
   dependabot:
     runs-on: ubuntu-latest
@@ -141,6 +134,7 @@ jobs:
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
   canary-release-pre-check:
     if: inputs.is-workflow-call && inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest
@@ -152,7 +146,8 @@ jobs:
       REF: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v6
-      - run: git fetch --depth=1
+        with:
+          persist-credentials: false
       - id: date-check
         name: Check if latest commit is within 24 hrs
         run: |
@@ -168,6 +163,7 @@ jobs:
           else
               echo "skip-release=false" >> $GITHUB_OUTPUT
           fi
+
   canary-release:
     # execute canary release if:
     # either the canary-release was scheduled and the canary-pre-check step resulted in skip-release=false
@@ -179,34 +175,31 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v6
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v6
+        with:
+          persist-credentials: true
+      - uses: ./.github/actions/setup
         with:
           node-version: 24 # Will install npm 11 needed for trusted publishing
-          cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
-      - run: yarn install --frozen-lockfile --ignore-engines
       - name: Canary Release
         run: |
           date=`date +%Y%m%d%H%M%S`
           rm -f .changeset/*.md
           cp canary-release-changeset.md .changeset
-          yarn changeset pre enter ${date}
-          yarn changeset version
-          yarn changeset pre exit
-          yarn changeset publish --tag canary
+          pnpm changeset pre enter ${date}
+          pnpm changeset version
+          pnpm changeset pre exit
+          pnpm changeset publish --tag canary
+
   draft-github-release:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     needs: [tests, checks]
     steps:
       - uses: actions/checkout@v6
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-engines
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - uses: ./.github/actions/get-changelog
         name: Get Changelog
         id: get-changelog

@@ -1,5 +1,10 @@
-import { resolve } from 'path';
-import mock from 'mock-fs';
+jest.mock('fs', () => jest.requireActual('memfs').fs);
+jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
+jest.mock('node:fs', () => jest.requireActual('memfs').fs);
+jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
+
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { credentials, systems } from '../test/test-util/test-destinations';
 import {
   mockAllTestDestinations,
@@ -11,23 +16,23 @@ import {
 import type { Destination } from '@sap-cloud-sdk/connectivity';
 
 describe('setTestDestinationInEnv', () => {
-  const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
-
   let envDestination: Destination = {
     url: 'https://example.com',
     name: 'envDestination'
   };
 
   beforeEach(() => {
-    mock({
-      [pathRootNodeModules]: mock.load(pathRootNodeModules),
-      'systems.json': JSON.stringify(systems),
-      'credentials.json': JSON.stringify(credentials)
-    });
+    vol.fromJSON(
+      {
+        'systems.json': JSON.stringify(systems),
+        'credentials.json': JSON.stringify(credentials)
+      },
+      process.cwd()
+    );
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
     delete process.env['destinations'];
   });
 

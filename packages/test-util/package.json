@@ -12,6 +12,23 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./mock-fs": {
+      "types": "./dist/mock-fs.d.ts",
+      "default": "./dist/mock-fs.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "mock-fs": [
+        "./dist/mock-fs.d.ts"
+      ]
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -28,21 +45,25 @@
   },
   "scripts": {
     "compile": "tsc -b",
-    "prepublishOnly": "yarn compile && yarn readme",
-    "test": "yarn test:unit",
+    "prepublishOnly": "pnpm run compile && pnpm run readme",
+    "test": "pnpm run test:unit",
     "test:unit": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck .",
-    "readme": "ts-node ../../scripts/replace-common-readme.ts"
+    "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^4.5.1",
-    "@sap-cloud-sdk/util": "^4.5.1"
+    "@sap-cloud-sdk/connectivity": "workspace:^",
+    "@sap-cloud-sdk/util": "workspace:^"
   },
   "devDependencies": {
-    "mock-fs": "^5.5.0",
+    "@jest/globals": "^30.3.0",
+    "depcheck": "^1.4.7",
+    "memfs": "^4.57.1",
+    "prettier": "^3.8.1",
+    "unionfs": "^4.6.0",
     "typescript": "~5.9.3"
   }
 }

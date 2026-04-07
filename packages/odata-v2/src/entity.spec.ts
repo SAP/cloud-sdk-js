@@ -5,7 +5,7 @@ import {
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
 } from '../test/test-util';
-import type { customTestDeSerializers } from '../../../test-resources/test/test-util';
+import type { customTestDeSerializers } from '@sap-cloud-sdk/test-util-shared';
 import type { CustomDeSerializers } from './de-serializers';
 
 describe('entity', () => {

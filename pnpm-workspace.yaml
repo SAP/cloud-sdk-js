@@ -1,0 +1,42 @@
+packages:
+  - 'packages/connectivity'
+  - 'packages/http-client'
+  - 'packages/openapi'
+  - 'packages/odata-common'
+  - 'packages/odata-v2'
+  - 'packages/odata-v4'
+  - 'packages/eslint-config'
+  - 'packages/generator'
+  - 'packages/test-util'
+  - 'packages/util'
+  - 'packages/openapi-generator'
+  - 'packages/generator-common'
+  - 'packages/temporal-de-serializers'
+  - 'packages/resilience'
+  - 'test-resources/test/test-util'
+  - 'test-packages/integration-tests'
+  - 'test-packages/e2e-tests'
+  - 'test-packages/test-services-odata-common'
+  - 'test-packages/test-services-odata-v2'
+  - 'test-packages/test-services-odata-v4'
+  - 'test-packages/test-services-openapi'
+  - 'test-packages/test-services-e2e'
+  - 'test-packages/type-tests'
+  - 'test-packages/self-tests'
+  - 'build-packages/changesets-fixed-version-bump'
+  - 'build-packages/check-license'
+  - 'build-packages/check-pr'
+  - 'build-packages/check-public-api'
+  - 'build-packages/get-changelog'
+  - 'build-packages/merge-changelogs'
+  - 'build-packages/changelog'
+  - 'build-packages/merge-and-write-changelogs'
+
+blockExoticSubdeps: true
+minimumReleaseAge: 5760
+allowBuilds:
+ # Needed for e2e tests
+ better-sqlite3: true
+minimumReleaseAgeExclude:
+  # Add minimum age exceptions for audit issues here
+  # - sample-package@0.1.0

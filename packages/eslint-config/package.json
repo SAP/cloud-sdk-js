@@ -26,7 +26,7 @@
     "directory": "packages/eslint-config"
   },
   "scripts": {
-    "readme": "ts-node ../../scripts/replace-common-readme.ts"
+    "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
     "@eslint/js": "^10.0.1",

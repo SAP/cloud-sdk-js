@@ -111,10 +111,11 @@ export function searchEnvVariablesForDestination(
 
         destination = addForwardedAuthTokenIfNeeded(destination, options.jwt);
 
-        return isHttpDestination(destination) &&
-          ['internet', 'private-link'].includes(proxyStrategy(destination))
-          ? addProxyConfigurationInternet(destination)
-          : destination;
+        if (isHttpDestination(destination) &&
+          ['internet', 'private-link'].includes(proxyStrategy(destination))) {
+          destination = addProxyConfigurationInternet(destination);
+        }
+        return destination;
       }
     } catch (error) {
       logger.error(

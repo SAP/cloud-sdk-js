@@ -422,7 +422,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         destination,
         origin
       );
-    } else if (
+    }
+
+    if (
       authentication === 'OAuth2Password' ||
       authentication === 'ClientCertificateAuthentication' ||
       authentication === 'OAuth2ClientCredentials' ||
@@ -439,7 +441,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         destination,
         origin
       );
-    } else if (authentication === 'OAuth2RefreshToken') {
+    }
+
+    if (authentication === 'OAuth2RefreshToken') {
       // OK!
       // If origin is provider, provider jwt + refresh token is used.
       // -> Auth token can be cached in destination cache as subscriber is not used.
@@ -449,7 +453,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         destination,
         origin
       );
-    } else if (authentication === 'PrincipalPropagation') {
+    }
+
+    if (authentication === 'PrincipalPropagation') {
       // BAD...
       // If origin is provider, next time subscriber jwt might change
       // -> It might be an invalid user jwt next time, and SDK won't throw as destination cached already.
@@ -457,6 +463,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         DestinationFromServiceRetriever.throwUserTokenMissing(destination);
       }
     }
+
     return destination;
 
     // For BAD cases above, we need to isolate the cache additionally with the subscriber jwt (better than using user jwt directly).

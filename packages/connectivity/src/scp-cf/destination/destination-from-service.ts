@@ -418,7 +418,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       // If origin is provider, next time subscriber jwt might change.
       // -> It might be an invalid user jwt next time, and SDK won't throw as destination cached already.
       // -> SDK will use auth token retrieved with the previous subscriber jwt for a different subscriber next time.
-      destination = await this.fetchDestinationWithUserExchangeFlows(
+      return this.fetchDestinationWithUserExchangeFlows(
         destination,
         origin
       );
@@ -435,7 +435,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       //   then the subdomain of the tenant is sent to destination service and jwt will be exchanged based on the templated token service url.
       // If origin is subscriber
       // -> Auth token can be cached in destination cache as destination is tenant-isolated.
-      destination = await this.fetchDestinationWithNonUserExchangeFlows(
+      return this.fetchDestinationWithNonUserExchangeFlows(
         destination,
         origin
       );
@@ -445,7 +445,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       // -> Auth token can be cached in destination cache as subscriber is not used.
       // If origin is subscriber, subscriber jwt + refresh token is used.
       // -> Auth token can be cached in destination cache as destination is tenant-isolated.
-      destination = await this.fetchDestinationWithRefreshTokenFlow(
+      return this.fetchDestinationWithRefreshTokenFlow(
         destination,
         origin
       );

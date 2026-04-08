@@ -44,6 +44,6 @@
     "@sap-cloud-sdk/odata-common": "^4.5.1"
   },
   "devDependencies": {
-    "typescript": "~5.9.3"
+    "typescript": "~6.0.2"
   }
 }

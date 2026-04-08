@@ -54,10 +54,5 @@
     "nock": "^14.0.11",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3"
-  },
-  "dependenciesMeta": {
-    "@sap-cloud-sdk/test-services-odata-v4": {
-      "injected": true
-    }
   }
 }

@@ -500,9 +500,6 @@ importers:
       voca:
         specifier: ^1.4.1
         version: 1.4.1
-    dependenciesMeta:
-      '@sap-cloud-sdk/test-services-odata-common':
-        injected: true
     devDependencies:
       '@sap-cloud-sdk/test-services-odata-common':
         specifier: workspace:^
@@ -540,9 +537,6 @@ importers:
       moment:
         specifier: ^2.30.1
         version: 2.30.1
-    dependenciesMeta:
-      '@sap-cloud-sdk/test-services-odata-v2':
-        injected: true
     devDependencies:
       '@sap-cloud-sdk/resilience':
         specifier: workspace:^
@@ -586,9 +580,6 @@ importers:
       moment:
         specifier: ^2.30.1
         version: 2.30.1
-    dependenciesMeta:
-      '@sap-cloud-sdk/test-services-odata-v4':
-        injected: true
     devDependencies:
       '@sap-cloud-sdk/test-services-odata-v4':
         specifier: workspace:^

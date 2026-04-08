@@ -53,10 +53,5 @@
     "depcheck": "^1.4.7",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3"
-  },
-  "dependenciesMeta": {
-    "@sap-cloud-sdk/test-services-odata-common": {
-      "injected": true
-    }
   }
 }

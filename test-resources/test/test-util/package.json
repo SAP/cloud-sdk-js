@@ -3,6 +3,9 @@
   "version": "4.5.1",
   "description": "Shared test utilities for SAP Cloud SDK packages",
   "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  },
   "license": "Apache-2.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

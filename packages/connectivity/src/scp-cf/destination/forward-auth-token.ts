@@ -51,17 +51,15 @@ export function addForwardedAuthTokenIfNeeded(
   token?: string
 ): Destination {
   if (destination.forwardAuthToken) {
-    let authTokens: [DestinationAuthToken] | undefined;
     if (validateToken(token)) {
       logger.debug(
         "Option 'forwardAuthToken' enabled on destination. Using the given token for the destination."
       );
-      authTokens = buildDestinationAuthToken(token);
+      return {
+        ...destination,
+        authTokens: buildDestinationAuthToken(token)
+      };
     }
-    return {
-      ...destination,
-      authTokens
-    };
   }
   return destination;
 }

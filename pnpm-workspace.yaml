@@ -33,6 +33,7 @@ packages:
   - 'build-packages/merge-and-write-changelogs'
 
 blockExoticSubdeps: true
+trustPolicy: no-downgrade
 minimumReleaseAge: 5760
 allowBuilds:
  # Needed for e2e tests

@@ -57,8 +57,12 @@ export function buildDestination(
   > = 'OAuth2ClientCredentials'
 ): Destination {
   const expirationTime = decodeJwt(token).exp;
-  const expiresIn = expirationTime
-    ? Math.floor((expirationTime * 1000 - Date.now()) / 1000).toString(10)
+  const expirationTimeMs = expirationTime ? expirationTime * 1000 : undefined;
+  const now = Date.now();
+
+  const expiresIn = expirationTimeMs
+    ? // Calculate time delta (ms) and convert to seconds (string)
+      Math.floor((expirationTimeMs - now) / 1000).toString()
     : undefined;
   return {
     url,

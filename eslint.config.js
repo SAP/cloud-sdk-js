@@ -95,5 +95,25 @@ module.exports = defineConfig([
     rules: {
       'jsdoc/require-description-complete-sentence': 'off'
     }
+  },
+  {
+    // avoid circular imports via destination barrel
+    files: [
+      'packages/connectivity/src/scp-cf/token-accessor.ts'
+    ],
+    rules: {
+      'import/no-internal-modules': [
+        'error',
+        {
+          allow: [
+            '@sap-cloud-sdk/**/internal',
+            '@sap-cloud-sdk/**/internal.js',
+            '**/destination/build-ias-destination',
+            '**/destination/ias-types',
+            '**/destination/destination-service-types'
+          ]
+        }
+      ]
+    }
   }
 ]);

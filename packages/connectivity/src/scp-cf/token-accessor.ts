@@ -9,7 +9,6 @@ import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { resolveServiceBinding } from './environment-accessor';
 import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 import { fetchIasToken, getIasAppTid } from './identity-service';
-/* eslint-disable import/no-internal-modules -- avoid circular imports via destination barrel */
 import { buildIasDestination } from './destination/build-ias-destination';
 import type {
   IasOptions,
@@ -17,7 +16,6 @@ import type {
   IasTokenResult
 } from './destination/ias-types';
 import type { Destination } from './destination/destination-service-types';
-/* eslint-enable import/no-internal-modules */
 import type { Service, ServiceCredentials } from './environment-accessor';
 import type { CachingOptions } from './cache';
 import type { JwtPayload } from './jsonwebtoken-type';

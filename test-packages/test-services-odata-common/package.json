@@ -24,7 +24,8 @@
     "bignumber.js": "^10.0.2"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator-common": "^4.5.1"
+    "@sap-cloud-sdk/generator-common": "^4.5.1",
+    "@sap-cloud-sdk/test-util-shared": "*"
   },
   "peerDependencies": {
     "@sap-cloud-sdk/generator": "^4.0.0",

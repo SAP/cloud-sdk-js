@@ -48,8 +48,9 @@
     "moment": "^2.30.1"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-services-odata-v2": "^4.5.1",
     "@sap-cloud-sdk/resilience": "^4.5.1",
+    "@sap-cloud-sdk/test-services-odata-v2": "^4.5.1",
+    "@sap-cloud-sdk/test-util-shared": "*",
     "nock": "^14.0.11",
     "typescript": "~5.9.3"
   }

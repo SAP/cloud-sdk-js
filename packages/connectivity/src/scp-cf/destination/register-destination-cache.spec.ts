@@ -1,7 +1,7 @@
 import { X509Certificate } from 'node:crypto';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { certAsString } from '../../../../../test-resources/test/test-util/test-certificate';
+import { certAsString } from '@sap-cloud-sdk/test-util-shared/test-certificate';
 import { registerDestinationCache } from './register-destination-cache';
 
 const { mtls, destination } = registerDestinationCache;

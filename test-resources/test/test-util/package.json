@@ -1,0 +1,38 @@
+{
+  "name": "@sap-cloud-sdk/test-util-shared",
+  "version": "4.5.1",
+  "description": "Shared test utilities for SAP Cloud SDK packages",
+  "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./custom-de-serializers": "./dist/custom-de-serializers.js",
+    "./destination-service-mocks": "./dist/destination-service-mocks.js",
+    "./environment-mocks": "./dist/environment-mocks.js",
+    "./example-destination-service-responses": "./dist/example-destination-service-responses.js",
+    "./keys": "./dist/keys.js",
+    "./mocked-access-tokens": "./dist/mocked-access-tokens.js",
+    "./request-mocker": "./dist/request-mocker.js",
+    "./test-cache": "./dist/test-cache.js",
+    "./test-certificate": "./dist/test-certificate.js",
+    "./test-data": "./dist/test-data.js",
+    "./token-accessor-mocks": "./dist/token-accessor-mocks.js",
+    "./xsuaa-service-mocks": "./dist/xsuaa-service-mocks.js"
+  },
+  "scripts": {
+    "compile": "tsc -b"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.3",
+    "moment": "^2.30.1",
+    "nock": "^14.0.11"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  }
+}

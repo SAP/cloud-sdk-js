@@ -9,11 +9,11 @@ import {
   subscriberXsuaaUrl,
   testTenants,
   uaaDomain
-} from '../../../../test-resources/test/test-util/environment-mocks';
+} from '@sap-cloud-sdk/test-util-shared/environment-mocks';
 import {
   signedJwt,
   signedXsuaaJwt
-} from '../../../../test-resources/test/test-util/keys';
+} from '@sap-cloud-sdk/test-util-shared/keys';
 import {
   providerServiceToken,
   providerUserPayload,
@@ -21,12 +21,12 @@ import {
   subscriberServiceToken,
   subscriberUserPayload,
   subscriberUserToken
-} from '../../../../test-resources/test/test-util/mocked-access-tokens';
+} from '@sap-cloud-sdk/test-util-shared/mocked-access-tokens';
 import {
   mockClientCredentialsGrantCall,
   mockClientCredentialsGrantWithCertCall,
   mockUserTokenGrantCall
-} from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
+} from '@sap-cloud-sdk/test-util-shared/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { jwtBearerToken, serviceToken } from './token-accessor';
 import { clearXsuaaServices } from './environment-accessor';

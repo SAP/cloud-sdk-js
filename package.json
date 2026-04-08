@@ -28,6 +28,7 @@
     "packages/generator-common",
     "packages/temporal-de-serializers",
     "packages/resilience",
+    "test-resources/test/test-util",
     "test-packages/integration-tests",
     "test-packages/e2e-tests",
     "test-packages/test-services-odata-common",

@@ -29,11 +29,12 @@
     "@sap-cloud-sdk/odata-common": "^4.5.1",
     "@sap-cloud-sdk/odata-v2": "^4.5.1",
     "@sap-cloud-sdk/openapi-generator": "^4.5.1",
+    "@sap-cloud-sdk/test-util-shared": "*",
     "bignumber.js": "^10.0.2",
-    "moment": "^2.30.1",
     "execa": "^5.0.0",
     "jsonwebtoken": "^9.0.3",
     "mock-fs": "^5.5.0",
+    "moment": "^2.30.1",
     "nock": "^14.0.11",
     "winston": "^3.19.0"
   }

@@ -4,7 +4,7 @@ import moment from 'moment';
 import {
   defaultDestination,
   mockUpdateRequest
-} from '../../../../test-resources/test/test-util/request-mocker';
+} from '@sap-cloud-sdk/test-util-shared/request-mocker';
 import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { UpdateRequestBuilder } from './update-request-builder';
 

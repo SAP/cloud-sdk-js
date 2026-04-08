@@ -1,26 +1,26 @@
 import {
   mockServiceBindings,
   xsuaaBindingMock
-} from '../../../../../test-resources/test/test-util/environment-mocks';
+} from '@sap-cloud-sdk/test-util-shared/environment-mocks';
 import {
   subscriberServiceToken,
   subscriberUserToken
-} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
+} from '@sap-cloud-sdk/test-util-shared/mocked-access-tokens';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+} from '@sap-cloud-sdk/test-util-shared/token-accessor-mocks';
 import {
   mockFetchDestinationCalls,
   mockFetchDestinationCallsNotFound,
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall
-} from '../../../../../test-resources/test/test-util/destination-service-mocks';
+} from '@sap-cloud-sdk/test-util-shared/destination-service-mocks';
 import {
   basicMultipleResponse,
   destinationName,
   oauthMultipleResponse
-} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
+} from '@sap-cloud-sdk/test-util-shared/example-destination-service-responses';
 import {
   getAllDestinationsFromDestinationService,
   getDestination

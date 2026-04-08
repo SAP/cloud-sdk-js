@@ -174,7 +174,7 @@ const disclaimer = `/* This entity was generated from the COMMON_SRV.edmx and th
 The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/`;
 const imports = `
   import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time, nonEnumerable } from '../../packages/odata-common/src/internal';
-  import { customTestDeSerializers } from '../../test-resources/test/test-util';
+  import { customTestDeSerializers } from '@sap-cloud-sdk/test-util-shared';
   `;
 const disableEslint = '/* eslint-disable */';
 

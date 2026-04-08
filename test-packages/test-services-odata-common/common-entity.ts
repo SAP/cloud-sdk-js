@@ -34,7 +34,7 @@ import {
   Time,
   nonEnumerable
 } from '../../packages/odata-common/src/internal';
-import { customTestDeSerializers } from '../../test-resources/test/test-util';
+import { customTestDeSerializers } from '@sap-cloud-sdk/test-util-shared';
 
 /*
  * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.

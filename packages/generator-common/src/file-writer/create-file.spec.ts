@@ -1,6 +1,16 @@
+// eslint-disable-next-line import/order
+import { mockFsFactory } from '@sap-cloud-sdk/test-util/mock-fs';
+const mockFs = () => mockFsFactory(jest.requireActual('fs'));
+
+jest.mock('fs', () => mockFs());
+jest.mock('fs/promises', () => mockFs().promises);
+jest.mock('node:fs', () => mockFs());
+jest.mock('node:fs/promises', () => mockFs().promises);
+
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import mock from 'mock-fs';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   createFile,
@@ -10,7 +20,6 @@ import {
 import type { CreateFileOptions } from './create-file';
 
 describe('createFile', () => {
-  const pathRootNodeModules = resolve(__dirname, '../../../../node_modules');
   const pathFormattedPackageJson = resolve(
     __dirname,
     '../../test/package.json'
@@ -21,20 +30,22 @@ describe('createFile', () => {
   };
 
   beforeEach(() => {
-    mock({
-      [pathRootNodeModules]: mock.load(pathRootNodeModules),
-      [pathFormattedPackageJson]: mock.load(pathFormattedPackageJson),
+    const realFs = jest.requireActual('fs');
+    const formattedPackageJsonContent = realFs.readFileSync(
+      pathFormattedPackageJson,
+      'utf8'
+    );
+    vol.fromJSON({
       [resolve(process.cwd(), 'some-dir', '.prettierrc')]: JSON.stringify({
         semi: false
       }),
-      directory: {
-        existingFile: 'already exists'
-      }
+      'directory/existingFile': 'already exists',
+      [pathFormattedPackageJson]: formattedPackageJsonContent
     });
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   it('creates formatted content with copyright for non typescript files', async () => {

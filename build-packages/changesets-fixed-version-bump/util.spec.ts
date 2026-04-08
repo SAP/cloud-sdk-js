@@ -1,29 +1,44 @@
 import { resolve } from 'node:path';
-import mock from 'mock-fs';
+import { readFileSync } from 'node:fs';
+import { vol } from 'memfs';
+import { jest, describe, afterEach, it } from '@jest/globals';
 import { getNextVersion } from './util.js';
+
+jest.unstable_mockModule('fs', () => import('memfs').then(m => m.fs));
+jest.unstable_mockModule('fs/promises', () =>
+  import('memfs').then(m => m.fs.promises)
+);
+jest.unstable_mockModule('node:fs', () => import('memfs').then(m => m.fs));
+jest.unstable_mockModule('node:fs/promises', () =>
+  import('memfs').then(m => m.fs.promises)
+);
+
+const changesetConfig = readFileSync(
+  resolve('..', '.changeset', 'config.json'),
+  'utf8'
+);
 
 describe('getNextVersion', () => {
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
-  const sharedMock = {
+  const sharedFiles = {
     'package.json':
       '{ "name": "sap-cloud-sdk", "version": "1.2.3", "workspaces": ["packages/connectivity"] }',
-    packages: {
-      connectivity: {
-        'package.json': '{ "name": "@sap-cloud-sdk/connectivity" }'
-      }
-    }
+    'packages/connectivity/package.json':
+      '{ "name": "@sap-cloud-sdk/connectivity" }'
   };
 
   it('should make a patch update', async () => {
-    mock({
-      ...sharedMock,
-      '.changeset': {
-        'config.json': mock.load(resolve('..', '.changeset', 'config.json')),
-        'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---'
-      }
-    });
+    vol.fromJSON(
+      {
+        ...sharedFiles,
+        '.changeset/config.json': changesetConfig,
+        '.changeset/alex.md':
+          '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---'
+      },
+      process.cwd()
+    );
 
     expect(await getNextVersion()).toEqual({
       version: '1.2.4',
@@ -32,14 +47,17 @@ describe('getNextVersion', () => {
   });
 
   it('should make a minor update', async () => {
-    mock({
-      ...sharedMock,
-      '.changeset': {
-        'config.json': mock.load(resolve('..', '.changeset', 'config.json')),
-        'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---',
-        'bob.md': '---\n' + "'@sap-cloud-sdk/connectivity': minor\n" + '---'
-      }
-    });
+    vol.fromJSON(
+      {
+        ...sharedFiles,
+        '.changeset/config.json': changesetConfig,
+        '.changeset/alex.md':
+          '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---',
+        '.changeset/bob.md':
+          '---\n' + "'@sap-cloud-sdk/connectivity': minor\n" + '---'
+      },
+      process.cwd()
+    );
 
     expect(await getNextVersion()).toEqual({
       version: '1.3.0',
@@ -48,14 +66,17 @@ describe('getNextVersion', () => {
   });
 
   it('should make a major update', async () => {
-    mock({
-      ...sharedMock,
-      '.changeset': {
-        'config.json': mock.load(resolve('..', '.changeset', 'config.json')),
-        'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': major\n" + '---',
-        'bob.md': '---\n' + "'@sap-cloud-sdk/connectivity': minor\n" + '---'
-      }
-    });
+    vol.fromJSON(
+      {
+        ...sharedFiles,
+        '.changeset/config.json': changesetConfig,
+        '.changeset/alex.md':
+          '---\n' + "'@sap-cloud-sdk/connectivity': major\n" + '---',
+        '.changeset/bob.md':
+          '---\n' + "'@sap-cloud-sdk/connectivity': minor\n" + '---'
+      },
+      process.cwd()
+    );
 
     expect(await getNextVersion()).toEqual({
       version: '2.0.0',
@@ -64,12 +85,13 @@ describe('getNextVersion', () => {
   });
 
   it('should throw an error, when no changesets exist', async () => {
-    mock({
-      ...sharedMock,
-      '.changeset': {
-        'config.json': mock.load(resolve('..', '.changeset', 'config.json'))
-      }
-    });
+    vol.fromJSON(
+      {
+        ...sharedFiles,
+        '.changeset/config.json': changesetConfig
+      },
+      process.cwd()
+    );
 
     await expect(getNextVersion()).rejects.toThrow(
       'Invalid new version -- the current version: 1.2.3 and the release type: none."'

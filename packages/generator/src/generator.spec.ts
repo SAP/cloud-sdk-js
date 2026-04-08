@@ -1,7 +1,17 @@
+// eslint-disable-next-line import/order
+import { mockFsFactory } from '@sap-cloud-sdk/test-util/mock-fs';
+const mockFs = () => mockFsFactory(jest.requireActual('fs'));
+
+jest.mock('fs', () => mockFs());
+jest.mock('fs/promises', () => mockFs().promises);
+jest.mock('node:fs', () => mockFs());
+jest.mock('node:fs/promises', () => mockFs().promises);
+
 import { join, resolve } from 'path';
 import { promises } from 'fs';
+import { jest } from '@jest/globals';
 import { transports } from 'winston';
-import mock from 'mock-fs';
+import { vol } from 'memfs';
 import prettier from 'prettier';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/dist/options-parser';
@@ -32,8 +42,6 @@ const pathTestService = resolve(
   'API_TEST_SRV',
   'API_TEST_SRV.edmx'
 );
-const pathToGeneratorCommon = resolve(__dirname, '../../generator-common');
-const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
 
 jest.setTimeout(60000); // Set timeout to 60 seconds as runners appear to be slow
 
@@ -43,14 +51,14 @@ describe('generator', () => {
   describe('common', () => {
     let project;
     beforeEach(async () => {
-      mock({
-        common: {},
-        someDir: {},
-        '/prettier/config': JSON.stringify({ printWidth: 66 }),
-        [pathTestResources]: mock.load(pathTestResources),
-        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
-        [pathRootNodeModules]: mock.load(pathRootNodeModules)
-      });
+      vol.fromJSON(
+        {
+          'common/.keep': '',
+          'someDir/.keep': '',
+          '/prettier/config': JSON.stringify({ printWidth: 66 })
+        },
+        process.cwd()
+      );
 
       const options = createOptions({
         input: pathTestService,
@@ -66,7 +74,7 @@ describe('generator', () => {
       await generate(options);
     });
 
-    afterEach(() => mock.restore());
+    afterEach(() => vol.reset());
 
     it('fails if skip validation is not enabled', async () => {
       const options = createOptions({
@@ -160,15 +168,12 @@ describe('generator', () => {
   describe('v2', () => {
     let files: SourceFile[];
     beforeEach(async () => {
-      mock({
-        'v2-test': {},
-        [pathTestResources]: mock.load(pathTestResources)
-      });
+      vol.fromJSON({ 'v2-test/.keep': '' }, process.cwd());
       files = await getGeneratedFiles('v2', 'v2-test');
     });
 
     afterEach(async () => {
-      mock.restore();
+      vol.reset();
     });
 
     it('generates expected number of files', () => {
@@ -199,15 +204,12 @@ describe('generator', () => {
   describe('v4', () => {
     let files: SourceFile[];
     beforeEach(async () => {
-      mock({
-        'v4-test': {},
-        [pathTestResources]: mock.load(pathTestResources)
-      });
+      vol.fromJSON({ 'v4-test/.keep': '' }, process.cwd());
       files = await getGeneratedFiles('v4', 'v4-test');
     });
 
     afterEach(() => {
-      mock.restore();
+      vol.reset();
     });
 
     it('generates expected number of files', () => {
@@ -279,29 +281,31 @@ describe('generator', () => {
 
   describe('get input file paths', () => {
     beforeEach(() => {
-      mock({
-        root: {
-          inputDir: {
-            'test-service.txt': 'dummy text specification file',
-            'test-service.edmx': 'dummy edmx specification file',
-            'test-service.xml': 'dummy xml specification file',
-            'test-service.XML': 'dummy XML specification file',
-            'empty-dir': {},
-            'sub-dir': {
-              'test-service.edmx': 'dummy edmx specification file',
-              'test-service.xml': 'dummy edmx specification file',
-              'test-service.XML': 'dummy XML specification file',
-              'test-service.EDMX': 'dummy xml specification file',
-              'test-service.txt': 'dummy text specification file'
-            }
-          },
-          outputDir: {}
-        }
-      });
+      vol.fromJSON(
+        {
+          'root/inputDir/test-service.txt': 'dummy text specification file',
+          'root/inputDir/test-service.edmx': 'dummy edmx specification file',
+          'root/inputDir/test-service.xml': 'dummy xml specification file',
+          'root/inputDir/test-service.XML': 'dummy XML specification file',
+          'root/inputDir/empty-dir/.keep': '',
+          'root/inputDir/sub-dir/test-service.edmx':
+            'dummy edmx specification file',
+          'root/inputDir/sub-dir/test-service.xml':
+            'dummy edmx specification file',
+          'root/inputDir/sub-dir/test-service.XML':
+            'dummy XML specification file',
+          'root/inputDir/sub-dir/test-service.EDMX':
+            'dummy xml specification file',
+          'root/inputDir/sub-dir/test-service.txt':
+            'dummy text specification file',
+          'root/outputDir/.keep': ''
+        },
+        process.cwd()
+      );
     });
 
     afterEach(() => {
-      mock.restore();
+      vol.reset();
     });
 
     const input = 'root/inputDir';
@@ -349,26 +353,24 @@ describe('generator', () => {
 
   describe('optionsPerService', () => {
     beforeEach(async () => {
-      mock({
-        common: {},
-        temp: {
-          'options.json': JSON.stringify('')
+      vol.fromJSON(
+        {
+          'common/.keep': '',
+          'temp/options.json': JSON.stringify(''),
+          existingConfig: JSON.stringify({
+            [getRelPathWithPosixSeparator(pathTestService)]: {
+              directoryName: 'custom-value'
+            }
+          }),
+          anotherConfig:
+            '{ "inputDir/spec2.json": {"directoryName": "customName" } }'
         },
-        [pathTestResources]: mock.load(pathTestResources),
-        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
-        [pathRootNodeModules]: mock.load(pathRootNodeModules),
-        existingConfig: JSON.stringify({
-          [getRelPathWithPosixSeparator(pathTestService)]: {
-            directoryName: 'custom-value'
-          }
-        }),
-        anotherConfig:
-          '{ "inputDir/spec2.json": {"directoryName": "customName" } }'
-      });
+        process.cwd()
+      );
     });
 
     afterEach(() => {
-      mock.restore();
+      vol.reset();
     });
 
     it('writes options per service with custom name', async () => {
@@ -482,16 +484,16 @@ describe('generator', () => {
 
   describe('logger', () => {
     beforeEach(() => {
-      mock({
-        common: {},
-        '/prettier/config': JSON.stringify({ printWidth: 66 }),
-        [pathTestResources]: mock.load(pathTestResources),
-        [pathToGeneratorCommon]: mock.load(pathToGeneratorCommon),
-        [pathRootNodeModules]: mock.load(pathRootNodeModules)
-      });
+      vol.fromJSON(
+        {
+          'common/.keep': '',
+          '/prettier/config': JSON.stringify({ printWidth: 66 })
+        },
+        process.cwd()
+      );
     });
 
-    afterEach(() => mock.restore());
+    afterEach(() => vol.reset());
 
     it('should not display verbose logs by default', async () => {
       const consoleSpy = jest.spyOn(process.stdout, 'write');

@@ -32,11 +32,11 @@
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
     "test": "yarn test:unit",
-    "test:unit": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi'",
+    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi,memfs'",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
@@ -51,9 +51,12 @@
   },
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "^14.1.1",
+    "@jest/globals": "^30.3.0",
+    "@sap-cloud-sdk/test-util": "^4.5.1",
     "@types/content-type": "^1.1.9",
     "@types/js-yaml": "^4.0.9",
-    "mock-fs": "^5.5.0",
+    "depcheck": "^1.4.7",
+    "memfs": "^4.57.1",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3"
   }

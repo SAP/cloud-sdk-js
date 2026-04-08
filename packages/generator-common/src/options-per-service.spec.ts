@@ -9,7 +9,13 @@ jest.mock('path', () => {
   };
 });
 
-import mock from 'mock-fs';
+jest.mock('fs', () => jest.requireActual('memfs').fs);
+jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
+jest.mock('node:fs', () => jest.requireActual('memfs').fs);
+jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
+
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import {
   getOptionsPerService,
   getOriginalOptionsPerService,
@@ -26,15 +32,14 @@ describe('getOriginalOptionsPerService', () => {
   };
 
   beforeEach(() => {
-    mock({
-      path: {
-        'myConfig.json': JSON.stringify(config)
-      }
-    });
+    vol.fromJSON(
+      { 'path/myConfig.json': JSON.stringify(config) },
+      process.cwd()
+    );
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   it('returns a config if an existent file path was given', async () => {
@@ -109,7 +114,7 @@ describe('getServiceOptions', () => {
 
 describe('getOptionsPerService', () => {
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   it('builds PerService config without options per service.', async () => {
@@ -131,11 +136,10 @@ describe('getOptionsPerService', () => {
       }
     };
 
-    mock({
-      path: {
-        'myConfig.json': JSON.stringify(config)
-      }
-    });
+    vol.fromJSON(
+      { 'path/myConfig.json': JSON.stringify(config) },
+      process.cwd()
+    );
 
     await expect(
       getOptionsPerService(['/user/path/service'], {
@@ -157,11 +161,10 @@ describe('getOptionsPerService', () => {
       }
     };
 
-    mock({
-      path: {
-        'myPartialConfig.json': JSON.stringify(partialConfig)
-      }
-    });
+    vol.fromJSON(
+      { 'path/myPartialConfig.json': JSON.stringify(partialConfig) },
+      process.cwd()
+    );
 
     await expect(
       getOptionsPerService(['/user/path/service'], {

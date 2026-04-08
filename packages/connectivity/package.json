@@ -50,9 +50,12 @@
     "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
+    "@jest/globals": "^30.3.0",
     "@sap-cloud-sdk/test-util-shared": "*",
-    "mock-fs": "^5.5.0",
+    "depcheck": "^1.4.7",
+    "memfs": "^4.57.1",
     "nock": "^14.0.11",
+    "prettier": "^3.8.1",
     "typescript": "~5.9.3"
   }
 }

@@ -1,23 +1,32 @@
+import { mockFsFactory } from '@sap-cloud-sdk/test-util/mock-fs';
+const mockFs = () => mockFsFactory(jest.requireActual('fs'));
+
+jest.mock('fs', () => mockFs());
+jest.mock('fs/promises', () => mockFs().promises);
+jest.mock('node:fs', () => mockFs());
+jest.mock('node:fs/promises', () => mockFs().promises);
+
+// eslint-disable-next-line import/order
 import { join, resolve } from 'path';
-import mock from 'mock-fs';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { parseOptions } from '@sap-cloud-sdk/generator-common/internal';
 import { parseCmdArgs } from '../cli-parser';
 import { cliOptions } from './options';
 
 describe('parseGeneratorOptions', () => {
   beforeEach(() => {
-    mock({
-      inputDir: {
-        'spec.json': ''
+    vol.fromJSON(
+      {
+        'inputDir/spec.json': '',
+        'existent-directory/existent-file': 'file content'
       },
-      'existent-directory': {
-        'existent-file': 'file content'
-      }
-    });
+      process.cwd()
+    );
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
     jest.clearAllMocks();
   });
 
@@ -167,7 +176,7 @@ describe('parseGeneratorOptions', () => {
   });
 
   it('parses a given path to a config file and returns its content as parsed generator options', () => {
-    mock.restore();
+    vol.reset();
     const path = resolve(__dirname, '../../test/test-config.json');
 
     const parsed = parseOptions(cliOptions, parseCmdArgs(['--config', path]));
@@ -181,7 +190,7 @@ describe('parseGeneratorOptions', () => {
     jest.spyOn(process, 'exit').mockImplementation(number => {
       throw new Error('process.exit: ' + number);
     });
-    mock.restore();
+    vol.reset();
     const path = resolve(__dirname, '../../test/test-config-wrong-key.json');
     expect(() =>
       parseOptions(cliOptions, parseCmdArgs(['--config', path]))

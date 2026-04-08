@@ -12,6 +12,23 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./mock-fs": {
+      "types": "./dist/mock-fs.d.ts",
+      "default": "./dist/mock-fs.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "mock-fs": [
+        "./dist/mock-fs.d.ts"
+      ]
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -42,7 +59,11 @@
     "@sap-cloud-sdk/util": "^4.5.1"
   },
   "devDependencies": {
-    "mock-fs": "^5.5.0",
+    "@jest/globals": "^30.3.0",
+    "depcheck": "^1.4.7",
+    "memfs": "^4.57.1",
+    "prettier": "^3.8.1",
+    "unionfs": "^4.6.0",
     "typescript": "~5.9.3"
   }
 }

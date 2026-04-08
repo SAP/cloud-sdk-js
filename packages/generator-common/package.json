@@ -32,11 +32,11 @@
     "compile": "tsc -b",
     "prepublishOnly": "yarn compile && yarn readme",
     "test": "yarn test:unit",
-    "test:unit": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck .",
+    "check:dependencies": "depcheck . --ignores=memfs",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
@@ -44,13 +44,16 @@
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^11.3.4",
     "glob": "^13.0.6",
-    "typescript": "~5.9.3",
     "prettier": "^3.8.1",
-    "yargs": "^17.7.2",
-    "voca": "^1.4.1"
+    "voca": "^1.4.1",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@jest/globals": "^30.3.0",
+    "@sap-cloud-sdk/test-util": "^4.5.1",
     "@types/yargs": "^17.0.33",
-    "mock-fs": "^5.5.0"
+    "depcheck": "^1.4.7",
+    "memfs": "^4.57.1",
+    "typescript": "~5.9.3"
   }
 }

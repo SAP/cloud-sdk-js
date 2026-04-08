@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { vol } from 'memfs';
+import { jest, describe, afterEach, it } from '@jest/globals';
 import { getNextVersion } from './util.js';
 
 jest.unstable_mockModule('fs', () => import('memfs').then(m => m.fs));

@@ -11,6 +11,6 @@
     "module": "NodeNext"
   },
   "include": ["*.ts"],
-  "exclude": ["*.spec.ts"]
+  "exclude": []
 }
 

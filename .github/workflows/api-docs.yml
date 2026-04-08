@@ -27,7 +27,7 @@ jobs:
         run: |
           pnpm run generate
           pnpm run doc
-      
+
       - uses: actions/create-github-app-token@v3
         id: app-token
         with:

@@ -2,6 +2,13 @@
   "name": "@sap-cloud-sdk/test-services-odata-common",
   "version": "4.5.1",
   "description": "Custom Services for testing",
+  "files": [
+    "**/*.js",
+    "**/*.js.map",
+    "**/*.d.ts",
+    "**/d.ts.map",
+    "**/*-csn.json"
+  ],
   "private": true,
   "publishConfig": {
     "access": "restricted"

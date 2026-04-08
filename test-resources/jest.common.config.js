@@ -10,9 +10,6 @@ module.exports = {
   setupFilesAfterEnv: [
     '<rootDir>/../../test-resources/unit-test-setup.js'
   ],
-  transformIgnorePatterns: [
-    'node_modules/(?!(\\.pnpm/.+/node_modules/)?@sap-cloud-sdk/test-services-)'
-  ],
   coverageReporters: ['text', 'cobertura', 'html'],
   coveragePathIgnorePatterns: ['dist/', 'node_modules/', 'test/', '.*.spec.ts'],
   reporters: ['default', 'jest-junit'],

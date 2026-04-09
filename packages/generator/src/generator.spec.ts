@@ -42,6 +42,7 @@ const pathTestService = resolve(
   'API_TEST_SRV',
   'API_TEST_SRV.edmx'
 );
+const pathTestServiceDir = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
 
 jest.setTimeout(60000); // Set timeout to 60 seconds as runners appear to be slow
 
@@ -59,6 +60,7 @@ describe('generator', () => {
         },
         process.cwd()
       );
+      vol.fromJSON({ '.keep': '' }, pathTestServiceDir);
 
       const options = createOptions({
         input: pathTestService,
@@ -491,6 +493,7 @@ describe('generator', () => {
         },
         process.cwd()
       );
+      vol.fromJSON({ '.keep': '' }, pathTestServiceDir);
     });
 
     afterEach(() => vol.reset());

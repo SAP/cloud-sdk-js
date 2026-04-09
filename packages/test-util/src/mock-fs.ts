@@ -81,26 +81,6 @@ export function mockFsFactory(realFs: typeof fs): IUnionFs {
     return realFs.lstatSync(p, options);
   };
 
-  // When existsSync finds a directory on real fs, mirror it into memfs
-  // so that subsequent writes (routed to memfs) can find the parent dir.
-  ufs.existsSync = (p: fs.PathLike) => {
-    try {
-      memfs.statSync(p);
-      return true;
-    } catch {
-      // Use special handling (described above)
-    }
-    try {
-      const stat = realFs.statSync(p);
-      if (stat.isDirectory()) {
-        memfs.mkdirSync(p, { recursive: true });
-      }
-      return true;
-    } catch {
-      return false;
-    }
-  };
-
   // Bridge copyFile: read from union (finds file on either layer),
   // write to memfs
   (ufs as any).copyFileSync = (src: string, dest: string) => {

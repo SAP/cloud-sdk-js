@@ -7,6 +7,9 @@ inputs:
   registry-url:
     description: 'The registry URL to use for npm packages'
     default: 'https://registry.npmjs.org'
+  pnpm-version:
+    description: 'PNPM version'
+    default: '10'
   pnpm-install-args:
     description: 'Arguments to pass to pnpm install'
     default: '--frozen-lockfile'
@@ -15,6 +18,8 @@ runs:
   using: 'composite'
   steps:
     - uses: pnpm/action-setup@v5
+      with:
+        version: ${{ inputs.pnpm-version }}
     - uses: actions/setup-node@v6
       with:
         node-version: ${{ inputs.node-version }}

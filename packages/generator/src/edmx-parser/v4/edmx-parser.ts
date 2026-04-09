@@ -122,7 +122,7 @@ export function parseEntitySetsV4(root: any): EdmxEntitySet[] {
 }
 
 function parseNavigationPropertyBinding(
-  entitySet
+  entitySet: any
 ): EdmxNavigationPropertyBinding[] {
   return forceArray(entitySet.NavigationPropertyBinding);
 }

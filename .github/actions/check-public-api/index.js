@@ -69301,6 +69301,9 @@ async function readCompilerOptions(pathToTsConfig) {
     if (options.module) {
         options.module = parseModuleKind(options.module);
     }
+    if (needsIgnoreDeprecationsTs6(options.moduleResolution, options.target, options.module)) {
+        options.ignoreDeprecations = '6.0';
+    }
     return options;
 }
 function parseModuleResolutionKind(input) {
@@ -69351,6 +69354,22 @@ function parseModuleKind(input) {
     }
     logger.warn(`The selected module kind ${input} is not found - Fallback commonJS used`);
     return typescript_1.ModuleKind.CommonJS;
+}
+function needsIgnoreDeprecationsTs6(moduleResolutionKind, scriptTarget, moduleKind) {
+    if (moduleResolutionKind === typescript_1.ModuleResolutionKind.NodeJs ||
+        moduleResolutionKind === typescript_1.ModuleResolutionKind.Classic) {
+        logger.warn(`The selected module resolution kind ${typescript_1.ModuleResolutionKind[moduleResolutionKind]} is deprecated with TypeScript 6.0`);
+        return true;
+    }
+    if (scriptTarget === typescript_1.ScriptTarget.ES3 || scriptTarget === typescript_1.ScriptTarget.ES5) {
+        logger.warn(`The selected script target ${typescript_1.ScriptTarget[scriptTarget]} is deprecated with TypeScript 6.0`);
+        return true;
+    }
+    if (moduleKind === typescript_1.ModuleKind.AMD) {
+        logger.warn(`The selected module kind ${typescript_1.ModuleKind[moduleKind]} is deprecated with TypeScript 6.0`);
+        return true;
+    }
+    return false;
 }
 //# sourceMappingURL=compiler.js.map
 
@@ -70082,7 +70101,7 @@ class ErrorWithCause extends Error {
         this.addStack(cause);
     }
     isAxiosError(err) {
-        return err['isAxiosError'] === true;
+        return 'isAxiosError' in err && err.isAxiosError === true;
     }
     addStack(cause) {
         // Axios removed the stack property in version 0.27 which gave no useful information anyway. This adds the http cause.

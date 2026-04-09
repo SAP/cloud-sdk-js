@@ -50,6 +50,7 @@
     "voca": "^1.4.1"
   },
   "devDependencies": {
+    "@types/fast-levenshtein": "^0.0.4",
     "@types/yargs": "^17.0.33",
     "mock-fs": "^5.5.0"
   }

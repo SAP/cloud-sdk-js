@@ -27,8 +27,8 @@ export abstract class CreateRequestBuilderBase<
   >
   implements EntityIdentifiable<EntityT, DeSerializersT>, WithBatchReference
 {
-  readonly _deSerializers: DeSerializersT;
-  private _batchReference: BatchReference;
+  readonly _deSerializers!: DeSerializersT;
+  private _batchReference!: BatchReference;
 
   /**
    * Creates an instance of CreateRequestBuilder.

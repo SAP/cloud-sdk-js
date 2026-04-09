@@ -95,6 +95,8 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mock-fs": "^4.13.4",
     "@types/node": "^22.19.15",
+    "@types/sap__xsenv": "^3.3.2",
+    "@types/semver": "^7.7.1",
     "@types/voca": "^1.4.6",
     "axios": "^1.13.6",
     "cross-env": "10.1.0",

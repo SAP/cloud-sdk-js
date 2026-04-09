@@ -29,7 +29,7 @@ export abstract class GetByKeyRequestBuilderBase<
   >
   implements WithBatchReference
 {
-  private _batchReference: BatchReference;
+  private _batchReference!: BatchReference;
 
   /**
    * Creates an instance of GetByKeyRequestBuilder.

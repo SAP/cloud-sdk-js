@@ -17,8 +17,8 @@ export class Order<EntityT extends EntityBase> implements EntityIdentifiable<
   EntityT,
   any
 > {
-  readonly _entityConstructor: Constructable<EntityT>;
-  readonly _entity: EntityT;
+  readonly _entityConstructor!: Constructable<EntityT>;
+  readonly _entity!: EntityT;
   readonly _deSerializers: any;
 
   /**

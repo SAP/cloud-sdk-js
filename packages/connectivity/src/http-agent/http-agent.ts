@@ -256,9 +256,9 @@ function isSupportedFormat(format: string | undefined): boolean {
   return !!format && supportedCertificateFormats.includes(format);
 }
 
-function selectCertificate(destination): DestinationCertificate {
-  const certificate = destination.certificates.find(
-    c => c.name === destination.keyStoreName
+function selectCertificate(destination: Destination): DestinationCertificate {
+  const certificate = destination.certificates?.find(
+    (c: DestinationCertificate) => c.name === destination.keyStoreName
   );
 
   if (!certificate) {

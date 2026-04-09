@@ -7,7 +7,7 @@ import {
   pickValueIgnoreCase,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import type {
   HttpMiddleware,
@@ -137,13 +137,13 @@ async function makeCsrfRequest(
     });
     return findCsrfHeader(response.headers);
   } catch (error) {
-    if (findCsrfHeader(error.response?.headers)) {
+    if (isAxiosError(error) && findCsrfHeader(error.response?.headers)) {
       return findCsrfHeader(error.response?.headers);
     }
     logger.warn(
       new ErrorWithCause(
         `Failed to get CSRF token from  URL: ${requestConfig.url}.`,
-        error
+        error as Error
       )
     );
   }

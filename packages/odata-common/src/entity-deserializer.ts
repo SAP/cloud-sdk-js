@@ -75,11 +75,8 @@ export function entityDeserializer<T extends DeSerializers>(
    * @param requestHeader - Optional parameter which may be used to add a version identifier (ETag) to the entity.
    * @returns An instance of the entity class.
    */
-  function deserializeEntity<
-    EntityApiT extends EntityApi<EntityBase, any>,
-    JsonT
-  >(
-    json: Partial<JsonT>,
+  function deserializeEntity<EntityApiT extends EntityApi<EntityBase, any>>(
+    json: Record<string, any>,
     entityApi: EntityApiT,
     requestHeader?: any
   ): EntityType<EntityApiT> {
@@ -100,10 +97,9 @@ export function entityDeserializer<T extends DeSerializers>(
 
   function getFieldValue<
     EntityT extends EntityBase,
-    DeSerializersT extends DeSerializers,
-    JsonT
+    DeSerializersT extends DeSerializers
   >(
-    json: Partial<JsonT>,
+    json: Record<string, any>,
     field:
       | Field<EntityT>
       | Link<EntityT, DeSerializersT, EntityApi<EntityBase, DeSerializersT>>
@@ -136,10 +132,9 @@ export function entityDeserializer<T extends DeSerializers>(
   function getLinkFromJson<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>,
-    JsonT
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
   >(
-    json: Partial<JsonT>,
+    json: Record<string, any>,
     link: Link<EntityT, DeSerializersT, LinkedEntityApiT>
   ) {
     return link instanceof OneToOneLink
@@ -152,13 +147,12 @@ export function entityDeserializer<T extends DeSerializers>(
   function getSingleLinkFromJson<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>,
-    JsonT
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
   >(
-    json: Partial<JsonT>,
+    json: Record<string, any>,
     link: Link<EntityT, DeSerializersT, LinkedEntityApiT>
   ): EntityType<LinkedEntityApiT> | null {
-    if (isExpandedProperty(json, link)) {
+    if (isExpandedProperty(json, link as unknown as Link<any, any, any>)) {
       return deserializeEntity(json[link._fieldName], link._linkedEntityApi);
     }
     return null;
@@ -167,15 +161,14 @@ export function entityDeserializer<T extends DeSerializers>(
   function getMultiLinkFromJson<
     EntityT extends EntityBase,
     DeSerializersT extends DeSerializers,
-    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>,
-    JsonT
+    LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
   >(
-    json: Partial<JsonT>,
+    json: Record<string, any>,
     link: Link<EntityT, DeSerializersT, LinkedEntityApiT>
   ): EntityType<LinkedEntityApiT>[] | undefined {
-    if (isSelectedProperty(json, link)) {
+    if (isSelectedProperty(json, link as unknown as Link<any, any, any>)) {
       const results = extractDataFromOneToManyLink(json[link._fieldName]);
-      return results.map(linkJson =>
+      return results.map((linkJson: any) =>
         deserializeEntity(linkJson, link._linkedEntityApi)
       );
     }
@@ -289,8 +282,8 @@ export function extractEtagFromHeader(headers: any): string | undefined {
  * @returns An object containing the custom fields as key-value pairs.
  * @internal
  */
-export function extractCustomFields<JsonT>(
-  json: Partial<JsonT>,
+export function extractCustomFields(
+  json: Record<string, any>,
   schema: Record<string, any>
 ): Record<string, any> {
   const regularODataProperties = [
@@ -302,7 +295,7 @@ export function extractCustomFields<JsonT>(
   const regularFields = new Set<string>(regularODataProperties);
   return Object.keys(json)
     .filter(key => !regularFields.has(key))
-    .reduce((customFields, key) => {
+    .reduce((customFields: Record<string, any>, key) => {
       customFields[key] = json[key];
       return customFields;
     }, {});

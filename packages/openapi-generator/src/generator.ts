@@ -108,10 +108,10 @@ export async function generateWithParsedOptions(
         : 'Could not generate client.';
     await finishAll(promises, errorMessage);
   } catch (err) {
-    if (err.message?.includes('error TS2307')) {
+    if ((err as Error).message?.includes('error TS2307')) {
       throw new ErrorWithCause(
         'Did you forget to install "@sap-cloud-sdk/openapi"?',
-        err
+        err as Error
       );
     }
     throw err;

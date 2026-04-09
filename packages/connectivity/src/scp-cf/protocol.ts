@@ -18,5 +18,5 @@ export type Protocol = 'http' | 'https' | 'socks';
 export function getProtocol(protocol: string): Protocol | undefined {
   return protocol.endsWith(':')
     ? getProtocol(protocol.slice(0, -1))
-    : protocols[protocol];
+    : protocols[protocol as Protocol];
 }

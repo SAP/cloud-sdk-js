@@ -22,7 +22,7 @@ export class ODataBoundFunctionRequestConfig<
   extends ODataFunctionRequestConfig<DeSerializersT, ParametersT>
   implements WithKeys
 {
-  keys: Record<string, any>;
+  keys!: Record<string, any>;
   constructor(
     method: RequestMethodType,
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,

@@ -7,7 +7,7 @@ export const apiDocsDir = resolve('knowledge-base', 'api-reference');
 
 export async function transformFile(
   filePath: string,
-  transformFn: CallableFunction
+  transformFn: (content: string) => string | Promise<string>
 ): Promise<void> {
   const file = await readFile(filePath, { encoding: 'utf8' });
   const transformedFile = await transformFn(file);

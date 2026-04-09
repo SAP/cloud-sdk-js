@@ -23,13 +23,13 @@ export class FilterLink<
   /**
    * Entity type of the entity tp be filtered.
    */
-  readonly _entity: EntityT;
-  readonly _deSerializers: DeSerializersT;
+  readonly _entity!: EntityT;
+  readonly _deSerializers!: DeSerializersT;
 
   /**
    * Linked entity to be filtered by.
    */
-  readonly _linkedEntityType: EntityType<LinkedEntityApiT>;
+  readonly _linkedEntityType!: EntityType<LinkedEntityApiT>;
 
   /**
    * Creates an instance of `FilterLink`.
@@ -55,8 +55,8 @@ export function isFilterLink<
 >(
   filterable: Filterable<EntityT, DeSerializersT>
 ): filterable is FilterLink<EntityT, DeSerializersT, LinkedEntityApiT> {
+  const f = filterable as unknown as Record<string, unknown>;
   return (
-    typeof filterable['link'] !== 'undefined' &&
-    typeof filterable['filters'] !== 'undefined'
+    typeof f['link'] !== 'undefined' && typeof f['filters'] !== 'undefined'
   );
 }

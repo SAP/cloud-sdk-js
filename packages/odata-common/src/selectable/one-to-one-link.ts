@@ -25,7 +25,7 @@ export class OneToOneLink<
   /**
    * Filterables to apply to the given entity based on the linked entity.
    */
-  filters: Filterable<EntityType<LinkedEntityApiT>, DeSerializersT>;
+  filters!: Filterable<EntityType<LinkedEntityApiT>, DeSerializersT>;
 
   clone(): this {
     const clonedLink = super.clone();

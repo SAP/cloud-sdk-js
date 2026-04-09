@@ -1940,6 +1940,11 @@
   resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.8.tgz#958b91c991b1867ced318bedea0e215ee050726e"
   integrity sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==
 
+"@types/fast-levenshtein@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.npmjs.org/@types/fast-levenshtein/-/fast-levenshtein-0.0.4.tgz#a16ff6607189edf08ac631e54b5774b0faf12d87"
+  integrity sha512-tkDveuitddQCxut1Db8eEFfMahTjOumTJGPHmT9E7KUH+DkVq9WTpVvlfenf3S+uCBeu8j5FP2xik/KfxOEjeA==
+
 "@types/fs-extra@^11.0.4":
   version "11.0.4"
   resolved "https://registry.npmjs.org/@types/fs-extra/-/fs-extra-11.0.4.tgz#e16a863bb8843fba8c5004362b5a73e17becca45"
@@ -2087,10 +2092,28 @@
   resolved "https://registry.npmjs.org/@types/retry/-/retry-0.12.5.tgz#f090ff4bd8d2e5b940ff270ab39fd5ca1834a07e"
   integrity sha512-3xSjTp3v03X/lSQLkczaN9UIEwJMoMCA1+Nb5HfbJEQWogdeQIyVtTvxPXDQjZ5zws8rFQfVfRdz03ARihPJgw==
 
+"@types/sap__xsenv@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.npmjs.org/@types/sap__xsenv/-/sap__xsenv-3.3.2.tgz#4f9bfd741815e7fe534c68bc85f7d1f4b09eb069"
+  integrity sha512-yK6uL5yvXcMFkGjg+lWA3etJM6rQUFV3rstd118V3q0udMe5wcg+qB0poVTjKLZs4aX+n1DVrqukdRgVdwiK7g==
+
+"@types/semver@^7.7.1":
+  version "7.7.1"
+  resolved "https://registry.npmjs.org/@types/semver/-/semver-7.7.1.tgz#3ce3af1a5524ef327d2da9e4fd8b6d95c8d70528"
+  integrity sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==
+
 "@types/stack-utils@^2.0.3":
   version "2.0.3"
   resolved "https://registry.npmjs.org/@types/stack-utils/-/stack-utils-2.0.3.tgz#6209321eb2c1712a7e7466422b8cb1fc0d9dd5d8"
   integrity sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==
+
+"@types/swagger2openapi@^7.0.4":
+  version "7.0.4"
+  resolved "https://registry.npmjs.org/@types/swagger2openapi/-/swagger2openapi-7.0.4.tgz#56723c4184c067a70f2cd47f7607e5330770dded"
+  integrity sha512-ffMqzciTDihOKH4Q//9Ond1yb5JP1P5FC/aFPsLK4blea1Fwk2aYctiNCkAh5etDYFswFXS+5LV/vuGkf+PU6A==
+  dependencies:
+    "@types/node" "*"
+    openapi-types "^12.1.0"
 
 "@types/triple-beam@^1.3.2":
   version "1.3.5"
@@ -7391,7 +7414,7 @@ openapi-schema-validator@^12.0.0:
     lodash.merge "^4.6.1"
     openapi-types "^12.1.3"
 
-openapi-types@^12.0.2, openapi-types@^12.1.3:
+openapi-types@^12.0.2, openapi-types@^12.1.0, openapi-types@^12.1.3:
   version "12.1.3"
   resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-12.1.3.tgz#471995eb26c4b97b7bd356aacf7b91b73e777dd3"
   integrity sha512-N4YtSYJqghVu4iek2ZUvcN/0aqH1kRDuNqzcycDxhOUpg7GdvLa2F3DgS6yBNhInhv2r/6I0Flkn7CqL8+nIcw==

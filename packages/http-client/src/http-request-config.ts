@@ -53,7 +53,10 @@ export function mergeOptionsWithPriority(
   if (headersOrParams) {
     return origins.reduce(
       (mergedHeadersOrParams, origin) =>
-        mergeIgnoreCase(mergedHeadersOrParams, headersOrParams[origin]),
+        mergeIgnoreCase(
+          mergedHeadersOrParams,
+          headersOrParams[origin as keyof OriginOptionsInternal]
+        ),
       {}
     );
   }

@@ -35,7 +35,9 @@ export class ODataFunctionRequestConfig<
   }
 
   resourcePath(): string {
-    return `${this.functionName}(${Object.values(this.parameters)
+    return `${this.functionName}(${Object.values(
+      this.parameters as Record<string, OperationParameter<ParametersT>>
+    )
       .map(
         (parameter: OperationParameter<ParametersT>) =>
           `${parameter.originalName}=${this.oDataUri.convertToUriFormat(

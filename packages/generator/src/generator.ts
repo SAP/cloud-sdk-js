@@ -110,14 +110,17 @@ async function generateWithParsedOptions(
     const chunks = splitInChunks(directories, options.transpilationProcesses);
     try {
       await chunks.reduce(
-        (all, chunk) => all.then(() => transpileDirectories(chunk, options)),
+        (all: Promise<void>, chunk) =>
+          all
+            .then(() => transpileDirectories(chunk, options))
+            .then(() => undefined),
         Promise.resolve()
       );
     } catch (err) {
-      if (err.message?.includes('error TS2307')) {
+      if ((err as Error).message?.includes('error TS2307')) {
         throw new ErrorWithCause(
           getInstallODataErrorMessage(projectAndServices),
-          err
+          err as Error
         );
       }
       throw err;

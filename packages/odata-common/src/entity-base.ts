@@ -54,14 +54,14 @@ export abstract class EntityBase {
    * Remote state refers to the last known state of the entity on the remote system from which it has been retrieved or to which it has been posted.
    * It is stored as map, where the keys are stored in the format of the original OData properties.
    */
-  protected remoteState: { [keys: string]: any };
+  protected remoteState!: { [keys: string]: any };
 
   /**
    * The current ETag version of the entity in the remote system.
    * The ETag identified the version of the in the remote system. It will be automatically set in the "if-match" header of update requests and can be set as a custom header for delete requests.
    * When no ETag is provided by the remote system the value of this variable defaults to "*".
    */
-  protected _versionIdentifier: string;
+  protected _versionIdentifier!: string;
 
   /**
    * A mapper representing custom fields in an entity.
@@ -170,7 +170,8 @@ export abstract class EntityBase {
     state = state || this.asObject();
     this.remoteState = Object.entries(state).reduce(
       (stateObject, [fieldName, value]) => {
-        const propertyName = this[camelCase(fieldName)]
+        const self = this as Record<string, any>;
+        const propertyName = self[camelCase(fieldName)]
           ? camelCase(fieldName)
           : fieldName;
         return { ...stateObject, [propertyName]: value };
@@ -251,15 +252,18 @@ export abstract class EntityBase {
     key: string,
     visitedEntities: EntityBase[] = []
   ): any {
+    const self = this as Record<string, any>;
     if (isNavigationProperty(key, this._entityApi.schema)) {
-      if (isNullish(this[key])) {
-        return this[key];
+      if (isNullish(self[key])) {
+        return self[key];
       }
-      return Array.isArray(this[key])
-        ? this[key].map(linkedEntity => linkedEntity.asObject(visitedEntities))
-        : this[key].asObject(visitedEntities);
+      return Array.isArray(self[key])
+        ? self[key].map((linkedEntity: any) =>
+            linkedEntity.asObject(visitedEntities)
+          )
+        : self[key].asObject(visitedEntities);
     }
-    return Array.isArray(this[key]) ? [...this[key]] : this[key];
+    return Array.isArray(self[key]) ? [...self[key]] : self[key];
   }
 
   /**
@@ -280,12 +284,13 @@ export abstract class EntityBase {
    */
   protected asObject(visitedEntities: EntityBase[] = []): Record<string, any> {
     visitedEntities.push(this);
+    const self = this as Record<string, any>;
     return Object.keys(this)
       .filter(
         key =>
           this.propertyIsEnumerable(key) &&
           (!isNavigationProperty(key, this._entityApi.schema) ||
-            !this.isVisitedEntity(this[key], visitedEntities))
+            !this.isVisitedEntity(self[key], visitedEntities))
       )
       .reduce(
         (accumulatedMap, key) => ({
@@ -362,8 +367,8 @@ export function entityBuilder<
   const builder = new EntityBuilder<EntityT, DeSerializersT>(entityApi);
   Object.values(entityApi.schema).forEach((field: any) => {
     const fieldName = `${camelCase(field._fieldName)}`;
-    builder[fieldName] = function (value) {
-      this._entity[fieldName] = value;
+    (builder as Record<string, any>)[fieldName] = function (value: any) {
+      (this._entity as Record<string, any>)[fieldName] = value;
       return this;
     };
   });

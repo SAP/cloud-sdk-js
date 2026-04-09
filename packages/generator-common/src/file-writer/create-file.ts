@@ -163,12 +163,12 @@ export async function createFile(
     });
   } catch (err) {
     const recommendation =
-      err.code === 'EEXIST' && !overwrite
+      (err as NodeJS.ErrnoException).code === 'EEXIST' && !overwrite
         ? ' File already exists. If you want to allow overwriting files, enable the `overwrite` flag.'
         : '';
     throw new ErrorWithCause(
       `Could not write file "${fileName}".${recommendation}`,
-      err
+      err as Error
     );
   }
 }

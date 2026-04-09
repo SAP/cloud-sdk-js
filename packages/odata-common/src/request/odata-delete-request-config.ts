@@ -16,8 +16,8 @@ export class ODataDeleteRequestConfig<
   extends ODataRequestConfig
   implements WithKeys, WithETag
 {
-  keys: Record<string, any>;
-  eTag: string;
+  keys!: Record<string, any>;
+  eTag!: string;
   versionIdentifierIgnored = false;
 
   /**

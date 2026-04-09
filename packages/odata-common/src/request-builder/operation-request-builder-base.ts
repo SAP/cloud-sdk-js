@@ -23,7 +23,7 @@ export abstract class OperationRequestBuilderBase<
   extends MethodRequestBuilder<RequestConfigT>
   implements WithBatchReference
 {
-  private _batchReference: BatchReference;
+  private _batchReference!: BatchReference;
   /**
    * Base class for function and action request builder.
    * @param responseTransformer - Transformation function for the response.

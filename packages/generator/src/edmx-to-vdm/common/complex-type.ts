@@ -39,7 +39,7 @@ export function transformComplexTypesBase(
       ...formatted,
       [c.Name]: formatter.originalToComplexTypeName(c.Name)
     }),
-    {}
+    {} as Record<string, string>
   );
   return complexTypes.map(c => {
     const typeName = formattedTypes[c.Name];

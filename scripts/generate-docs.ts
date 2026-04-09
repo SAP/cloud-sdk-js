@@ -12,30 +12,28 @@ const docPath = resolve(
   JSON.parse(readFileSync('tsconfig.typedoc.json', 'utf8')).typedocOptions.out
 );
 
-const isDirectory = entryPath => lstatSync(entryPath).isDirectory();
-const flatten = arr =>
-  arr.reduce(
+const isDirectory = (entryPath: string) => lstatSync(entryPath).isDirectory();
+type NestedArray<T> = (T | NestedArray<T>)[];
+
+const flatten = <T>(arr: NestedArray<T>): T[] =>
+  arr.reduce<T[]>(
     (prev, curr) =>
-      curr instanceof Array ? [...prev, ...flatten(curr)] : [...prev, curr],
+      Array.isArray(curr) ? [...prev, ...flatten(curr)] : [...prev, curr],
     []
   );
-const inputDirAbsPath = input => resolve(__dirname, input);
+const inputDirAbsPath = (input: string) => resolve(__dirname, input);
 
-const readDir = input =>
-  pipe(inputDirAbsPath, absPath =>
-    readdirSync(absPath)
-      .map(file => resolve(absPath, file))
-      .map(file => (isDirectory(file) ? readDir(file) : file))
-  )(input);
+const readDir = (input: string): NestedArray<string> => {
+  const absPath = inputDirAbsPath(input);
+  return readdirSync(absPath)
+    .map(file => resolve(absPath, file))
+    .map(file => (isDirectory(file) ? readDir(file) : file));
+};
 
-const isHtmlFile = fileName => extname(fileName) === '.html';
-const isSearchJs = fileName => basename(fileName) === 'search.js';
-const isNavigationJs = fileName => basename(fileName) === 'navigation.js';
-
-const pipe =
-  (...fns) =>
-  start =>
-    fns.reduce((state, fn) => fn(state), start);
+const isHtmlFile = (fileName: string) => extname(fileName) === '.html';
+const isSearchJs = (fileName: string) => basename(fileName) === 'search.js';
+const isNavigationJs = (fileName: string) =>
+  basename(fileName) === 'navigation.js';
 
 async function adjustForGitHubPages() {
   const documentationFilePaths = flatten(readDir(resolve(docPath)));
@@ -83,13 +81,13 @@ export async function compressJson(data: any) {
   return gz.toString('base64');
 }
 
-async function adjustSearchJs(paths) {
+async function adjustSearchJs(paths: string[]) {
   const filtered = paths.filter(isSearchJs);
   if (filtered.length !== 1) {
     throw Error(`Expected one 'search.js', but found: ${filtered.length}.`);
   }
 
-  await transformFile(filtered[0], async file => {
+  await transformFile(filtered[0], async (file: string) => {
     const dataRegexResult = /window.searchData = "(.*)";/.exec(file);
     if (!dataRegexResult) {
       throw Error(
@@ -98,7 +96,7 @@ async function adjustSearchJs(paths) {
     }
 
     const searchItems = await decompressJson(dataRegexResult[1]);
-    searchItems.rows.forEach(s => {
+    searchItems.rows.forEach((s: { url: string }) => {
       s.url = removeUnderlinePrefix(s.url);
     });
 
@@ -107,13 +105,13 @@ async function adjustSearchJs(paths) {
   });
 }
 
-async function adjustNavigationJs(paths) {
+async function adjustNavigationJs(paths: string[]) {
   const filtered = paths.filter(isNavigationJs);
   if (filtered.length !== 1) {
     throw Error(`Expected one 'navigation.js', but found: ${filtered.length}.`);
   }
 
-  await transformFile(filtered[0], async file => {
+  await transformFile(filtered[0], async (file: string) => {
     const dataRegexResult = /window.navigationData = "(.*)"/.exec(file);
     if (!dataRegexResult) {
       throw Error(
@@ -123,10 +121,10 @@ async function adjustNavigationJs(paths) {
 
     const navigationItems = await decompressJson(dataRegexResult[1]);
     navigationItems
-      .filter(n => n.path)
-      .forEach(n => {
+      .filter((n: { path: string; children: { path: string }[] }) => n.path)
+      .forEach((n: { path: string; children: { path: string }[] }) => {
         n.path = removeUnderlinePrefix(n.path);
-        n.children.forEach(c => {
+        n.children.forEach((c: { path: string }) => {
           c.path = removeUnderlinePrefix(c.path);
         });
       });
@@ -136,14 +134,14 @@ async function adjustNavigationJs(paths) {
   });
 }
 
-function removeUnderlinePrefix(str) {
+function removeUnderlinePrefix(str: string) {
   const i = str.indexOf('_');
   // Remove the first `_`
   return str.substring(0, i) + str.substring(i + 1);
 }
 
-function removeUnderlinePrefixFromFileName(filePath) {
-  const newPath = filePath.replace(/_.*.html/gi, function (x) {
+function removeUnderlinePrefixFromFileName(filePath: string) {
+  const newPath = filePath.replace(/_.*.html/gi, function (x: string) {
     return x.substring(1);
   });
   renameSync(filePath, newPath);

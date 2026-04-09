@@ -20,6 +20,6 @@ async function getChangelog(v?: string): Promise<string> {
   try {
     setOutput('changelog', await getChangelog());
   } catch (error) {
-    setFailed(error.message);
+    setFailed((error as Error).message);
   }
 })();

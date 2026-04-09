@@ -162,7 +162,7 @@ export class DestinationFromServiceRetriever {
     return da.addProxyConfiguration(withTrustStore);
   }
 
-  private static throwUserTokenMissing(destination) {
+  private static throwUserTokenMissing(destination: Destination) {
     throw Error(
       `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
     );

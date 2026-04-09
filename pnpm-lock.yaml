@@ -142,6 +142,28 @@ importers:
         specifier: ~5.9.3
         version: 5.9.3
 
+  build-packages/check-license:
+    dependencies:
+      '@actions/core':
+        specifier: ^3.0.0
+        version: 3.0.0
+    devDependencies:
+      '@vercel/ncc':
+        specifier: ^0.38.4
+        version: 0.38.4
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.4
+      prettier:
+        specifier: ^3.8.1
+        version: 3.8.1
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+
   build-packages/check-pr:
     dependencies:
       '@actions/core':

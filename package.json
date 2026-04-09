@@ -40,7 +40,7 @@
     "checks": "turbo run check && pnpm run check:circular && pnpm run check:license && pnpm run check:test-service",
     "check:circular": "madge --extensions ts --ts-config=./tsconfig.json --circular --exclude 'dist|test-packages|connectivity/src/scp-cf/environment-accessor.ts|http-client/src/csrf-token-header.ts' ./packages",
     "check:dependencies": "turbo run check:dependencies",
-    "check:license": "node scripts/check-licenses.js",
+    "check:license": "node ./.github/actions/check-license/index.js",
     "check:test-service": "pnpm run generate && pnpm exec ts-node scripts/check-test-service-for-changes.ts",
     "check:public-api": "cross-env INPUT_FORCE_INTERNAL_EXPORTS=true INPUT_EXCLUDED_PACKAGES=eslint-config,util,test-util node ./.github/actions/check-public-api/index.js",
     "connectivity": "pnpm --filter @sap-cloud-sdk/connectivity",

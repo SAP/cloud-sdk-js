@@ -33,7 +33,7 @@
     "@sap-cloud-sdk/util": "^4.5.1",
     "@sap/cds": "^9.8.4",
     "@sap/cds-dk": "9.8.3",
-    "axios": "^1.13.6",
+    "axios": "^1.15.0",
     "execa": "^5.0.0",
     "express": "^4.22.1",
     "fs-extra": "^11.3.4",

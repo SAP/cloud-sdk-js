@@ -31,11 +31,14 @@ jobs:
       - name: Run Lint
         run: yarn lint:fix
       - name: Commit Changes if needed
+        env:
+          BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
+          BOT_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
         run: |
           diff=`git diff`
           if [ ! -z "$diff" ]; then
-            git config --global user.email "cloud-sdk-js@github.com"
-            git config --global user.name "cloud-sdk-js"
+            git config --global user.email "$BOT_EMAIL"
+            git config --global user.name "$BOT_NAME"
             git commit -m "Changes from lint:fix" -a
             git push
           fi

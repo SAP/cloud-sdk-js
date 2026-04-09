@@ -15,7 +15,6 @@
   "tsd": {
     "directory": "test-packages/type-tests/test-new"
   },
-  "packageManager": "pnpm@10.33.0",
   "devEngines": {
     "packageManager": {
       "name": "pnpm",

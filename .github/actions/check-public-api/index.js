@@ -69358,15 +69358,15 @@ function parseModuleKind(input) {
 function needsIgnoreDeprecationsTs6(moduleResolutionKind, scriptTarget, moduleKind) {
     if (moduleResolutionKind === typescript_1.ModuleResolutionKind.NodeJs ||
         moduleResolutionKind === typescript_1.ModuleResolutionKind.Classic) {
-        logger.warn(`The selected module resolution kind ${typescript_1.ModuleResolutionKind[moduleResolutionKind]} is deprecated with TypeScript 6.0`);
+        logger.warn(`The selected module resolution kind ${typescript_1.ModuleResolutionKind[moduleResolutionKind]} is not deprecated with TypeScript 6.0`);
         return true;
     }
     if (scriptTarget === typescript_1.ScriptTarget.ES3 || scriptTarget === typescript_1.ScriptTarget.ES5) {
-        logger.warn(`The selected script target ${typescript_1.ScriptTarget[scriptTarget]} is deprecated with TypeScript 6.0`);
+        logger.warn(`The selected script target ${typescript_1.ScriptTarget[scriptTarget]} is not deprecated with TypeScript 6.0`);
         return true;
     }
     if (moduleKind === typescript_1.ModuleKind.AMD) {
-        logger.warn(`The selected module kind ${typescript_1.ModuleKind[moduleKind]} is deprecated with TypeScript 6.0`);
+        logger.warn(`The selected module kind ${typescript_1.ModuleKind[moduleKind]} is not deprecated with TypeScript 6.0`);
         return true;
     }
     return false;

@@ -1,5 +1,5 @@
 name: 'Merge Changelogs'
 description: 'Merges all public changelogs from changesets into a single changelog.'
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'index.js'

@@ -1,0 +1,26 @@
+{
+  "name": "check-license",
+  "version": "1.0.0",
+  "description": "Checks if the licenses of the dependencies are allowed.",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "postcompile": "ncc build lib/build-packages/check-license/index.js --out ../../.github/actions/check-license/",
+    "lint": "eslint && prettier --check **/*.ts",
+    "lint:fix": "eslint --fix --quiet && prettier --write **/*.ts",
+    "check:dependencies": "depcheck --skip-missing=true .",
+    "all": "pnpm install && pnpm run lint && pnpm run compile"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.4",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.39.2",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.3"
+  }
+}

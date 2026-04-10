@@ -76321,7 +76321,7 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony import */ var node_path__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(6760);
 /* harmony import */ var node_fs__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(3024);
 /* harmony import */ var glob__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(576);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(5200);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(919);
 /* harmony import */ var _sap_cloud_sdk_util__WEBPACK_IMPORTED_MODULE_4__ = __nccwpck_require__(1238);
 /* harmony import */ var mock_fs__WEBPACK_IMPORTED_MODULE_5__ = __nccwpck_require__(5850);
 /* harmony import */ var _sap_cloud_sdk_generator_common_dist_compiler_js__WEBPACK_IMPORTED_MODULE_6__ = __nccwpck_require__(2776);
@@ -76625,7 +76625,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 5200:
+/***/ 919:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 
@@ -76815,7 +76815,7 @@ var external_path_ = __nccwpck_require__(6928);
 var external_http_ = __nccwpck_require__(8611);
 // EXTERNAL MODULE: external "https"
 var external_https_ = __nccwpck_require__(5692);
-;// CONCATENATED MODULE: ../../node_modules/@actions/core/node_modules/@actions/http-client/lib/proxy.js
+;// CONCATENATED MODULE: ../../node_modules/@actions/http-client/lib/proxy.js
 function getProxyUrl(reqUrl) {
     const usingSsl = reqUrl.protocol === 'https:';
     if (checkBypass(reqUrl)) {
@@ -76910,7 +76910,7 @@ class DecodedURL extends URL {
 var node_modules_tunnel = __nccwpck_require__(5070);
 // EXTERNAL MODULE: ../../node_modules/undici/index.js
 var undici = __nccwpck_require__(1684);
-;// CONCATENATED MODULE: ../../node_modules/@actions/core/node_modules/@actions/http-client/lib/index.js
+;// CONCATENATED MODULE: ../../node_modules/@actions/http-client/lib/index.js
 /* eslint-disable @typescript-eslint/no-explicit-any */
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -77607,7 +77607,7 @@ class lib_HttpClient {
 }
 const lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => ((c[k.toLowerCase()] = obj[k]), c), {});
 //# sourceMappingURL=index.js.map
-;// CONCATENATED MODULE: ../../node_modules/@actions/core/node_modules/@actions/http-client/lib/auth.js
+;// CONCATENATED MODULE: ../../node_modules/@actions/http-client/lib/auth.js
 var auth_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {

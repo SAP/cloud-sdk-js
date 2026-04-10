@@ -46,19 +46,23 @@ function isSapDependency(dependency: string): boolean {
   );
 }
 
-const isAllowedPackage = (license: string, pkg: PackageInfo): boolean =>
-  isSapDependency(pkg.name) ||
-  (license === 'Unknown' && ALLOWED_UNKNOWN.includes(pkg.name)) ||
-  ALLOWED_LICENSES.has(license);
+function isAllowedPackage(license: string, pkg: PackageInfo): boolean {
+  return (
+    isSapDependency(pkg.name) ||
+    (license === 'Unknown' && ALLOWED_UNKNOWN.includes(pkg.name)) ||
+    ALLOWED_LICENSES.has(license)
+  );
+}
 
-const getDisallowedPackages = (
+function getDisallowedPackages(
   licenseMap: Record<string, PackageInfo[]>
-): DisallowedPackage[] =>
-  Object.entries(licenseMap).flatMap(([license, packages]) =>
+): DisallowedPackage[] {
+  return Object.entries(licenseMap).flatMap(([license, packages]) =>
     packages
       .filter(pkg => !isAllowedPackage(license, pkg))
       .map(pkg => ({ license, pkg }))
   );
+}
 
 function buildErrorMessage(disallowedPackages: DisallowedPackage[]): string {
   const disallowedLicenseMessages = disallowedPackages.map(
@@ -79,6 +83,7 @@ function checkLicenses(): void {
   const disallowedPackages = getDisallowedPackages(licenseMap);
   if (disallowedPackages.length) {
     setFailed(buildErrorMessage(disallowedPackages));
+    return;
   }
 
   info('All production dependency licenses are acceptable.');

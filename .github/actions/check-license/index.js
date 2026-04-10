@@ -30895,12 +30895,16 @@ function isSapDependency(dependency) {
     const [scope] = dependency.split('/');
     return (scope === '@sap' || scope === '@sap-cloud-sdk' || scope === '@sap-ai-sdk');
 }
-const isAllowedPackage = (license, pkg) => isSapDependency(pkg.name) ||
-    (license === 'Unknown' && ALLOWED_UNKNOWN.includes(pkg.name)) ||
-    ALLOWED_LICENSES.has(license);
-const getDisallowedPackages = (licenseMap) => Object.entries(licenseMap).flatMap(([license, packages]) => packages
-    .filter(pkg => !isAllowedPackage(license, pkg))
-    .map(pkg => ({ license, pkg })));
+function isAllowedPackage(license, pkg) {
+    return (isSapDependency(pkg.name) ||
+        (license === 'Unknown' && ALLOWED_UNKNOWN.includes(pkg.name)) ||
+        ALLOWED_LICENSES.has(license));
+}
+function getDisallowedPackages(licenseMap) {
+    return Object.entries(licenseMap).flatMap(([license, packages]) => packages
+        .filter(pkg => !isAllowedPackage(license, pkg))
+        .map(pkg => ({ license, pkg })));
+}
 function buildErrorMessage(disallowedPackages) {
     const disallowedLicenseMessages = disallowedPackages.map(({ license, pkg }) => `Disallowed license "${license}" used by: ${packageInfoToString(pkg)}`);
     return `Found ${disallowedPackages.length} disallowed licenses:\n${disallowedLicenseMessages.join('\n')}`;
@@ -30914,6 +30918,7 @@ function checkLicenses() {
     const disallowedPackages = getDisallowedPackages(licenseMap);
     if (disallowedPackages.length) {
         setFailed(buildErrorMessage(disallowedPackages));
+        return;
     }
     info('All production dependency licenses are acceptable.');
 }

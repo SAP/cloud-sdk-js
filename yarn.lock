@@ -1651,9 +1651,9 @@
     verror "1.10.1"
 
 "@sap/xsenv@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-6.1.0.tgz#5076ba09ffff7cdd4c339d3b966ffd394f4d57e4"
-  integrity sha512-vlW4Zad3uiDqHtnYdQ0TsEIH8VIO4HmPGDowfBL5dIcHPmeKDISEQ9ibeHL5FkceqvYcXJEQAVZ5/hsHDqlXZg==
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-6.2.0.tgz#8fec97a2d76e2337fc3ba9863095f97a7f350d02"
+  integrity sha512-8jrsX1OAM3YUqGU+4deggqvkxrBrHAPYEllBX0YJfWNffgxSZKHG75bRd/RV6hxPwulPL0DeHfd2eYJMeY5gdw==
   dependencies:
     debug "4.4.3"
     node-cache "^5.1.2"

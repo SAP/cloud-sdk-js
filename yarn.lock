@@ -6266,9 +6266,9 @@ json-parse-even-better-errors@^5.0.0:
   integrity sha512-ZF1nxZ28VhQouRWhUcVlUIN3qwSgPuswK05s/HIaoetAoE/9tngVmCHjSxmSQPav1nd+lPtTL0YZ/2AFdR/iYQ==
 
 json-schema-faker@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.6.0.tgz#c9c52f1cbb94c87ddf40be8af7e4a0102a3c2635"
-  integrity sha512-KfTcb8UEjD4n1VBI1BOoHWOqSADP6KMah5BBKT/GeYxM4LbzOoyDs3T71jbrR3TflUtNiT8zSTpLiFU62iHZFQ==
+  version "0.6.1"
+  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.6.1.tgz#652cb821bc58725adbf3013cb6c52963c255245d"
+  integrity sha512-IMF9QGFn/j7sys1LxgYpt/+0LUozFE8R/yUav4D7NqsHnh5L0mbJZOiU724nlJ3g+ZZo6NykVtTeJLoVcOP6Xw==
 
 json-schema-traverse@^0.4.1:
   version "0.4.1"

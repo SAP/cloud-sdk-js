@@ -1613,9 +1613,9 @@
     "@sap/hdi-deploy" "^5"
 
 "@sap/cds@>=8.3", "@sap/cds@^9.8.4":
-  version "9.8.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-9.8.4.tgz#d1b7049fc0a810878ffa9f37bf97e0a06b7682fc"
-  integrity sha512-1cnFdz4Ex4LV15dztDsSLDiilVdJ2mfTqr5A3TGsRd/6cM31SnHhuZ/Ra0FEErodokNS2pwasGZmSfgHVDW8KA==
+  version "9.8.5"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-9.8.5.tgz#2c70d5f871be69c9aabc4e8173c5e15f12ba2828"
+  integrity sha512-AU7HzrdEf8u13W2Aff8GyqKpJh6w9yXK/68xvXD+6cuU21JcGOLQ+dInbNV8vRKaCMn2cVVrsx7OoR+j7z5QKA==
   dependencies:
     "@sap/cds-compiler" "^6.4"
     "@sap/cds-fiori" "^2"

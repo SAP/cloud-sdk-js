@@ -52,10 +52,22 @@ jobs:
           VERSION: ${{ steps.bump.outputs.version }}
 
       - name: commit and tag
-        uses: ./.github/actions/commit-and-tag
-        with:
-          version: ${{ steps.bump.outputs.version }}
-          github-token: ${{ steps.app-token.outputs.token }}
+        run: |
+          git config --global user.email "sap-cloud-sdk@github.com"
+          git config --global user.name "sap-cloud-sdk"
+          git checkout -b "release/v$VERSION"
+          git add -A
+          git commit -m "v$VERSION"
+          git tag "v$VERSION" -m "v$VERSION"
+          git push --follow-tags origin "release/v$VERSION"
+          gh pr create \
+            --title "v$VERSION" \
+            --body "Automated version bump to v$VERSION" \
+            --base main \
+            --head "release/v$VERSION"
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
   generate-api-docs:
     name: Generate and Push API Documentation

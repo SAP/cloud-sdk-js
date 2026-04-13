@@ -28,6 +28,19 @@
 
 -
  
+# 4.6.0
+## Compatibility Notes
+
+- [util] Deprecate `unixEOL` and `webEOL`. Use '\n' or '\r\n' respectively. (a6c8ff6)
+
+## Fixed Issues
+
+- [connectivity] Destinations with authentication type "SAMLAssertion" are no longer cached, even if caching is enabled. (see https://github.com/SAP/cloud-sdk-js/issues/6396) (0800e7a)
+- [connectivity] Support `TrustStoreLocation` for `OAuth2ClientCredentials` destinations. (8637346)
+- [connectivity] Extend `isDestinationFetchOptions` to check `service` property. (259d8ad)
+- [http-client] Improve handling of missing `zlib`-module in the `compress()` middleware and lazy-load it only when needed.
+  To compress requests in the browser, ensure that a suitable polyfill is provided. (7ea34ce)
+
 # 4.5.1
 ## Fixed Issues
 

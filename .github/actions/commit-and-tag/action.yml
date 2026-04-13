@@ -10,19 +10,29 @@ inputs:
   user-name:
     description: User name to use for the commit
     default: sap-cloud-sdk
+  github-token:
+    required: true
+    description: GitHub token used to create the pull request
 runs:
   using: 'composite'
   steps:
     - run: |
         git config --global user.email "$USER_EMAIL"
         git config --global user.name "$USER_NAME"
+        git checkout -b "release/v$VERSION"
         git add -A
         git commit -m "v$VERSION"
         git tag "v$VERSION" -m "v$VERSION"
-        git push --follow-tags
+        git push --follow-tags origin "release/v$VERSION"
+        gh pr create \
+          --title "v$VERSION" \
+          --body "Automated version bump to v$VERSION" \
+          --base main \
+          --head "release/v$VERSION"
       shell: bash
       # map inputs to environment variables to avoid shell injection
       env:
         VERSION: ${{ inputs.version }}
         USER_EMAIL: ${{ inputs.user-email }}
         USER_NAME: ${{ inputs.user-name }}
+        GH_TOKEN: ${{ inputs.github-token }}

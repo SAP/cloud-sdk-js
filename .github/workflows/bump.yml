@@ -55,6 +55,7 @@ jobs:
         uses: ./.github/actions/commit-and-tag
         with:
           version: ${{ steps.bump.outputs.version }}
+          github-token: ${{ steps.app-token.outputs.token }}
 
   generate-api-docs:
     name: Generate and Push API Documentation

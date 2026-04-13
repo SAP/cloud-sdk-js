@@ -21,6 +21,11 @@ jobs:
           owner: SAP
           repositories: cloud-sdk-js
           permission-contents: write
+      - name: Check Token Permissions
+        run: |
+          curl -I -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
+           -H "Accept: application/vnd.github+json" \
+           https://api.github.com/repos/SAP/cloud-sdk-js 
       - uses: actions/checkout@v6
         with:
           token: ${{ steps.app-token.outputs.token }}

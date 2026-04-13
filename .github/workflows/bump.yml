@@ -18,9 +18,6 @@ jobs:
         with:
           app-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
           private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
-          owner: SAP
-          repositories: cloud-sdk-js
-          permission-contents: write
       - name: Check Token Permissions
         run: |
           curl -I -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \

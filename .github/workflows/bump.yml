@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           token: ${{ steps.app-token.outputs.token }}
-          ref: 'main'
+          ref: 'push-test2'
 
       - uses: actions/setup-node@v6
         with:
@@ -39,25 +39,25 @@ jobs:
         with:
           majorVersion: ${{ inputs.majorVersion }}
 
-      - run: yarn ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
-        env:
-          NEXT_PACKAGE_VERSION: ${{ steps.bump.outputs.version }}
+      # - run: yarn ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
+      #   env:
+      #     NEXT_PACKAGE_VERSION: ${{ steps.bump.outputs.version }}
 
-      - name: merge Changelogs
-        id: merge-changelogs
-        uses: ./.github/actions/merge-and-write-changelogs
-        env:
-          VERSION: ${{ steps.bump.outputs.version }}
+      # - name: merge Changelogs
+      #   id: merge-changelogs
+      #   uses: ./.github/actions/merge-and-write-changelogs
+      #   env:
+      #     VERSION: ${{ steps.bump.outputs.version }}
 
       - name: commit and tag
         uses: ./.github/actions/commit-and-tag
         with:
           version: ${{ steps.bump.outputs.version }}
 
-  generate-api-docs:
-    name: Generate and Push API Documentation
-    needs: [bump]
-    uses: ./.github/workflows/api-docs.yml
-    secrets: inherit
-    with:
-      version: v${{ needs.bump.outputs.version }}
+  # generate-api-docs:
+  #   name: Generate and Push API Documentation
+  #   needs: [bump]
+  #   uses: ./.github/workflows/api-docs.yml
+  #   secrets: inherit
+  #   with:
+  #     version: v${{ needs.bump.outputs.version }}

@@ -1,13 +1,13 @@
-import { readFile } from 'fs/promises';
-import http from 'http';
-import https from 'https';
+import { readFile } from 'node:fs/promises';
+import http from 'node:http';
+import https from 'node:https';
 import * as jks from 'jks-js';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 // eslint-disable-next-line import/no-internal-modules
 import { getProtocolOrDefault } from '../scp-cf/get-protocol';
 // eslint-disable-next-line import/no-internal-modules
-import { Cache } from '../scp-cf/cache';
+import { Cache, hashCacheKey } from '../scp-cf/cache';
 import {
   addProxyConfigurationInternet,
   getProxyConfig,
@@ -307,7 +307,7 @@ function createAgent(
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   const protocol = getProtocolOrDefault(destination);
-  const cacheKey = JSON.stringify({ protocol, options });
+  const cacheKey = hashCacheKey({ protocol, options });
 
   return agentCreateCache.getOrInsertComputed(cacheKey, () => {
     logger.debug(

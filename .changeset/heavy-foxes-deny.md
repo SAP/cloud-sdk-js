@@ -3,4 +3,4 @@
 '@sap-cloud-sdk/http-client': minor
 ---
 
-[Improvement] Cache custom http and https agents and enable keep-alive by default
+[Improvement] Cache custom http and https agents and enable the keep-alive option by default.

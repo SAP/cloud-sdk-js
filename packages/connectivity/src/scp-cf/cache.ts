@@ -3,6 +3,10 @@ interface CacheInterface<T> {
   get(key: string | undefined): T | undefined;
   set(key: string | undefined, item: CacheEntry<T>): void;
   clear(): void;
+  getOrInsertComputed(
+    key: string | undefined,
+    computeFn: () => CacheEntry<T>
+  ): T;
 }
 
 /**
@@ -39,21 +43,25 @@ export class Cache<T> implements CacheInterface<T> {
   /**
    * Object that stores all cached entries.
    */
-  private cache: Record<string, CacheEntry<T>>;
+  private cache: Map<string, CacheEntry<T>>;
 
   /**
    * Creates an instance of Cache.
    * @param defaultValidityTime - The default validity time in milliseconds. Use 0 for unlimited cache duration.
+   * @param maxSize - The maximum number of entries in the cache. Use Infinity for unlimited size. Items are evicted based on a least recently used (LRU) strategy.
    */
-  constructor(private defaultValidityTime: number) {
-    this.cache = {};
+  constructor(
+    private defaultValidityTime: number,
+    private maxSize = Infinity
+  ) {
+    this.cache = new Map<string, CacheEntry<T>>();
   }
 
   /**
    * Clear all cached items.
    */
   clear(): void {
-    this.cache = {};
+    this.cache.clear();
   }
 
   /**
@@ -62,7 +70,7 @@ export class Cache<T> implements CacheInterface<T> {
    * @returns A boolean value that indicates whether the entry exists in cache.
    */
   hasKey(key: string): boolean {
-    return this.cache.hasOwnProperty(key);
+    return this.cache.has(key);
   }
 
   /**
@@ -71,9 +79,19 @@ export class Cache<T> implements CacheInterface<T> {
    * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
    */
   get(key: string | undefined): T | undefined {
-    return key && this.hasKey(key) && !isExpired(this.cache[key])
-      ? this.cache[key].entry
-      : undefined;
+    const entry = key ? this.cache.get(key) : undefined;
+    if (entry) {
+      if (isExpired(entry)) {
+        this.cache.delete(key!);
+        return undefined;
+      }
+      // LRU cache: Move accessed entry to the end of the Map to mark it as recently used
+      if (this.maxSize !== Infinity) {
+        this.cache.delete(key!);
+        this.cache.set(key!, entry);
+      }
+    }
+    return entry?.entry;
   }
 
   /**
@@ -82,10 +100,41 @@ export class Cache<T> implements CacheInterface<T> {
    * @param item - The entry to cache.
    */
   set(key: string | undefined, item: CacheEntry<T>): void {
-    if (key) {
-      const expires = item.expires ?? this.inferDefaultExpirationTime();
-      this.cache[key] = { entry: item.entry, expires };
+    if (!key) {
+      return;
     }
+    if (
+      this.cache.size >= this.maxSize &&
+      this.cache.size > 0 &&
+      !this.cache.has(key)
+    ) {
+      // Evict the least recently used (LRU) entry
+      const lruKey = this.cache.keys().next().value;
+      this.cache.delete(lruKey!); // SAFETY: size > 0
+    }
+    if (this.maxSize !== Infinity && this.cache.has(key)) {
+      // If the key already exists, delete it to update its position in the LRU order
+      this.cache.delete(key);
+    }
+
+    const expires = item.expires ?? this.inferDefaultExpirationTime();
+    this.cache.set(key, { entry: item.entry, expires });
+  }
+
+  getOrInsertComputed(
+    key: string | undefined,
+    computeFn: () => CacheEntry<T>
+  ): T {
+    if (!key) {
+      return computeFn().entry;
+    }
+    const cachedEntry = this.get(key);
+    if (cachedEntry !== undefined) {
+      return cachedEntry;
+    }
+    const newEntry = computeFn();
+    this.set(key, newEntry);
+    return newEntry.entry;
   }
 
   private inferDefaultExpirationTime(): number | undefined {

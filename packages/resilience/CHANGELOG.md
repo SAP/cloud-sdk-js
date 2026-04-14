@@ -1,11 +1,5 @@
 # @sap-cloud-sdk/resilience
 
-## 4.6.1
-
-### Patch Changes
-
-- @sap-cloud-sdk/util@4.6.1
-
 ## 4.6.0
 
 ### Patch Changes

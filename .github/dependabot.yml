@@ -30,6 +30,9 @@ updates:
       # yargs v18 needs ESM, see https://github.com/yargs/yargs/releases/tag/v18.0.0, we'll stay on v17 until we can use ESM
       - dependency-name: 'yargs'
         update-types: ['version-update:semver-major']
+      # ohash v2 needs ESM, https://github.com/unjs/ohash/releases/tag/v2.0.1, we'll stay on v1 until we can use ESM
+      - dependency-name: 'ohash'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:

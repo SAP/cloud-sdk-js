@@ -311,7 +311,7 @@ function createAgent(
 
   return agentCreateCache.getOrInsertComputed(cacheKey, () => {
     logger.debug(
-      `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || ''} with options: ${JSON.stringify(options)}`
+      `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || '<unknown>'}`
     );
     const optionsWithDefaults = { keepAlive: true, ...options };
     const entry =

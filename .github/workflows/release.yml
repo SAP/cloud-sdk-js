@@ -45,13 +45,10 @@ jobs:
           npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
       - name: Open PR
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          GIT_USER: cloud-sdk-js
           BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
           BOT_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
         run: |
 
-          gh auth setup-git
           git config user.email "$BOT_EMAIL"
           git config user.name "$BOT_NAME"
           gh config set prompt disabled

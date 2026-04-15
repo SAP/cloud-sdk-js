@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+
 interface CacheInterface<T> {
   hasKey(key: string): boolean;
   get(key: string | undefined): T | undefined;
@@ -145,6 +147,17 @@ export class Cache<T> implements CacheInterface<T> {
           .valueOf()
       : undefined;
   }
+}
+
+/**
+ * Hashes the given value to create a cache key.
+ * @internal
+ * @param value - The value to hash.
+ * @returns A hash of the given value using a cryptographic hash function.
+ */
+export function hashCacheKey(value: Record<string, unknown>): string {
+  const serialized = JSON.stringify(value);
+  return createHash('blake2s256').update(serialized).digest('hex');
 }
 
 function isExpired<T>(item: CacheEntry<T>): boolean {

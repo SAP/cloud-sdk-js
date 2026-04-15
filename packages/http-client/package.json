@@ -36,15 +36,14 @@
     "coverage": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck . --ignores=ohash",
+    "check:dependencies": "depcheck .",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
     "@sap-cloud-sdk/connectivity": "^4.6.0",
     "@sap-cloud-sdk/resilience": "^4.6.0",
     "@sap-cloud-sdk/util": "^4.6.0",
-    "axios": "^1.15.0",
-    "ohash": "^1.1.6"
+    "axios": "^1.15.0"
   },
   "devDependencies": {
     "https-proxy-agent": "^7.0.6",

@@ -53,6 +53,8 @@ jobs:
         uses: ./.github/actions/commit-and-tag
         with:
           version: ${{ steps.bump.outputs.version }}
+          user-email: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
+          user-name: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
 
   generate-api-docs:
     name: Generate and Push API Documentation

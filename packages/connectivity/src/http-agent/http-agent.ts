@@ -292,14 +292,14 @@ function validateFormat(certificate: DestinationCertificate) {
  * Exported for testing purposes only.
  * @internal
  */
-export const agentCreateCache = new Cache<HttpAgentConfig | HttpsAgentConfig>(
+export const agentCache = new Cache<HttpAgentConfig | HttpsAgentConfig>(
   3600000, // 1 hour
   100 // max 100 LRU-cached agents
 );
 
 /**
  * @internal
- * Agents are cache for up to one hour, but can be evicted earlier if more than 100 agents are created.
+ * Agents are cached for up to one hour, but can be evicted earlier if more than 100 agents are created.
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
  */
 function createAgent(
@@ -309,7 +309,7 @@ function createAgent(
   const protocol = getProtocolOrDefault(destination);
   const cacheKey = hashCacheKey({ protocol, options });
 
-  return agentCreateCache.getOrInsertComputed(cacheKey, () => {
+  return agentCache.getOrInsertComputed(cacheKey, () => {
     logger.debug(
       `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || '<unknown>'}`
     );

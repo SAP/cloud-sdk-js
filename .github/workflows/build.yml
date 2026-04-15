@@ -39,8 +39,6 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-engines
       - run: yarn test:unit
-        env:
-          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - run: yarn test:integration
       - run: yarn test:self
       - run: yarn test:build-packages

@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { stringify } from 'safe-stable-stringify';
 
 interface CacheInterface<T> {
   hasKey(key: string): boolean;
@@ -81,17 +82,23 @@ export class Cache<T> implements CacheInterface<T> {
    * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
    */
   get(key: string | undefined): T | undefined {
-    const entry = key ? this.cache.get(key) : undefined;
-    if (entry) {
-      if (isExpired(entry)) {
-        this.cache.delete(key!);
-        return undefined;
-      }
-      // LRU cache: Move accessed entry to the end of the Map to mark it as recently used
-      if (this.maxSize !== Infinity) {
-        this.cache.delete(key!);
-        this.cache.set(key!, entry);
-      }
+    if (!key) {
+      return undefined;
+    }
+    const entry = this.cache.get(key);
+    if (!entry) {
+      return undefined;
+    }
+
+    if (isExpired(entry)) {
+      this.cache.delete(key!);
+      return undefined;
+    }
+
+    // LRU cache: Move accessed entry to the end of the Map to mark it as recently used
+    if (this.maxSize !== Infinity) {
+      this.cache.delete(key!);
+      this.cache.set(key!, entry);
     }
     return entry?.entry;
   }
@@ -150,53 +157,13 @@ export class Cache<T> implements CacheInterface<T> {
 }
 
 /**
- * Stringifies a given object in a deterministic way, so that the same objects always yield the same string representation.
- * @param toSerialize - The object to stringify.
- * @returns A string representation of the given object.
- */
-function stringifyJsonSafe(toSerialize: Record<string, unknown>): string {
-  return JSON.stringify(toSerialize, (_key, value) => {
-    if (value instanceof Map) {
-      return [
-        ['dataType', 'Map'],
-        ['value', Array.from(value.entries()).sort()]
-      ];
-    }
-    if (value instanceof Set) {
-      return [
-        ['dataType', 'Set'],
-        ['value', Array.from(value.values()).sort()]
-      ];
-    }
-    if (typeof value === 'function') {
-      return [
-        ['dataType', 'Function'],
-        ['value', value.toString()]
-      ];
-    }
-    if (value instanceof Object && !Array.isArray(value)) {
-      return [
-        ['dataType', 'Object'],
-        [
-          'value',
-          Object.entries(value).sort(([keyA], [keyB]) =>
-            keyA.localeCompare(keyB)
-          )
-        ]
-      ];
-    }
-    return value;
-  });
-}
-
-/**
  * Hashes the given value to create a cache key.
  * @internal
  * @param value - The value to hash.
  * @returns A hash of the given value using a cryptographic hash function.
  */
 export function hashCacheKey(value: Record<string, unknown>): string {
-  const serialized = stringifyJsonSafe(value);
+  const serialized = stringify(value);
   return createHash('blake2s256').update(serialized).digest('hex');
 }
 

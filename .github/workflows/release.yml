@@ -10,6 +10,13 @@ jobs:
       id-token: write
       
     steps:
+      - uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          client-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
+          owner: SAP
+          repositories: cloud-sdk
       - uses: actions/checkout@v6
         with:
           ref: 'main'
@@ -30,23 +37,31 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: SAP/cloud-sdk
-          token: ${{ secrets.GH_DOCS_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
           path: ./cloud-sdk
       - name: Update release notes
         run: |
           npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
       - name: Open PR
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GIT_USER: cloud-sdk-js
+          BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
+          BOT_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
         run: |
+
+          gh auth setup-git
+          git config user.email "$BOT_EMAIL"
+          git config user.name "$BOT_NAME"
+          gh config set prompt disabled
+
           cd cloud-sdk
-          git config --local user.email "${{ secrets.GH_DOCS_EMAIL }}"
-          git config --local user.name "${{ secrets.GH_DOCS_USER }}"
+
           git checkout -b "update-release-notes"
           git commit -m "update release notes" -a
           git push -u origin update-release-notes
 
-          echo ${{ secrets.GH_DOCS_TOKEN }} | gh auth login --hostname github.com --with-token
-          gh config set prompt disabled
           PR_BODY="Auto-created by update release notes workflow."
           PR_TITLE="Update JS Release Notes"
           gh pr create --head "update-release-notes" --title "${PR_TITLE}" --body "${PR_BODY}"

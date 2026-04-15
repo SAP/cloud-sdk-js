@@ -150,13 +150,53 @@ export class Cache<T> implements CacheInterface<T> {
 }
 
 /**
+ * Stringifies a given object in a deterministic way, so that the same objects always yield the same string representation.
+ * @param toSerialize - The object to stringify.
+ * @returns A string representation of the given object.
+ */
+function stringifyJsonSafe(toSerialize: Record<string, unknown>): string {
+  return JSON.stringify(toSerialize, (_key, value) => {
+    if (value instanceof Map) {
+      return [
+        ['dataType', 'Map'],
+        ['value', Array.from(value.entries()).sort()]
+      ];
+    }
+    if (value instanceof Set) {
+      return [
+        ['dataType', 'Set'],
+        ['value', Array.from(value.values()).sort()]
+      ];
+    }
+    if (typeof value === 'function') {
+      return [
+        ['dataType', 'Function'],
+        ['value', value.toString()]
+      ];
+    }
+    if (value instanceof Object && !Array.isArray(value)) {
+      return [
+        ['dataType', 'Object'],
+        [
+          'value',
+          Object.entries(value).sort(([keyA], [keyB]) =>
+            keyA.localeCompare(keyB)
+          )
+        ]
+      ];
+    }
+    return value;
+  });
+}
+
+/**
  * Hashes the given value to create a cache key.
  * @internal
  * @param value - The value to hash.
  * @returns A hash of the given value using a cryptographic hash function.
  */
 export function hashCacheKey(value: Record<string, unknown>): string {
-  const serialized = JSON.stringify(value);
+  const serialized = stringifyJsonSafe(value);
   return createHash('blake2s256').update(serialized).digest('hex');
 }
 

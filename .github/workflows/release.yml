@@ -10,17 +10,17 @@ jobs:
       id-token: write
       
     steps:
-      - uses: actions/create-github-app-token@v3
+      - uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         id: app-token
         with:
           client-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
           private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
           owner: SAP
           repositories: cloud-sdk
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: 'main'
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: 24 # Will install npm 11 needed for trusted publishing
           registry-url: 'https://registry.npmjs.org'
@@ -34,7 +34,7 @@ jobs:
         run: |
           yarn changeset publish
       - name: Checkout Docs
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: SAP/cloud-sdk
           token: ${{ steps.app-token.outputs.token }}

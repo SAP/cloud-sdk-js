@@ -7,10 +7,13 @@
     "incremental": true,
     "declaration": false,
     "esModuleInterop": true,
-    "target": "ESNext",
+    "strict": true,
+    "target": "esnext",
+    "noUncheckedSideEffectImports": true,
+    "libReplacement": false,
     "module": "NodeNext"
   },
+  "types": ["node"],
   "include": ["*.ts"],
   "exclude": []
 }
-

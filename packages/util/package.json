@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/util",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "description": "SAP Cloud SDK for JavaScript general utilities",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -38,7 +38,7 @@
     "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "axios": "^1.13.6",
+    "axios": "^1.15.0",
     "logform": "^2.7.0",
     "voca": "^1.4.1",
     "winston": "^3.19.0",

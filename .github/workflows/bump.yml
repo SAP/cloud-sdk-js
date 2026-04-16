@@ -13,15 +13,15 @@ jobs:
     outputs:
       version: ${{ steps.bump.outputs.version }}
     steps:
-      - uses: actions/create-github-app-token@v3
+      - uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         id: app-token
         with:
-          app-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
+          client-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
           private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
           owner: SAP
           repositories: cloud-sdk-js
           permission-contents: write
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ steps.app-token.outputs.token }}
           ref: 'main'
@@ -48,6 +48,8 @@ jobs:
         uses: ./.github/actions/commit-and-tag
         with:
           version: ${{ steps.bump.outputs.version }}
+          user-email: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
+          user-name: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
 
   generate-api-docs:
     name: Generate and Push API Documentation

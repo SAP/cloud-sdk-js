@@ -4,5 +4,5 @@ outputs:
   changelog:
     description: 'The current changelog'
 runs:
-  using: 'node16'
+  using: 'node24'
   main: 'index.js'

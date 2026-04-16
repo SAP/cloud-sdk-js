@@ -32,7 +32,6 @@ packages:
   - 'build-packages/changelog'
   - 'build-packages/merge-and-write-changelogs'
 
-blockExoticSubdeps: true
 trustPolicy: no-downgrade
 minimumReleaseAge: 5760
 allowBuilds:
@@ -41,3 +40,4 @@ allowBuilds:
 minimumReleaseAgeExclude:
   # Add minimum age exceptions for audit issues here
   # - sample-package@0.1.0
+# blockExoticSubdeps: true

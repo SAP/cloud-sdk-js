@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/type-tests",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "description": "Tests to ensure correct types in the SAP Cloud SDK for JavaScript.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",

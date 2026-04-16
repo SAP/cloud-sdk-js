@@ -396,6 +396,13 @@
   dependencies:
     generic-pool "^3.9.0"
 
+"@cap-js/db-service@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.npmjs.org/@cap-js/db-service/-/db-service-2.9.0.tgz#cc82c597225d7b330df938e09226380a8db17d47"
+  integrity sha512-WCXhoqezaF6A5I2l0MNZeHKXXtHRNEq7Rp0R89/uccOHQIx0DuU0U9NuJJPV/1G5RGk2QKQ9VBo/KYn+MZuuNQ==
+  dependencies:
+    generic-pool "^3.9.0"
+
 "@cap-js/openapi@^1.0.0":
   version "1.2.3"
   resolved "https://registry.npmjs.org/@cap-js/openapi/-/openapi-1.2.3.tgz#a86d4f39a540a38ab5b4060fb906fa3d3230de89"
@@ -409,6 +416,14 @@
   integrity sha512-oNg2f56sfELshyp0eSmYYwG1lt4Zmc135sLIzS8iykHdRVxxJpTrPj0jx0Y4Hc6sfC9u25LRXVu/ZKqjm9Yu+Q==
   dependencies:
     "@cap-js/db-service" "^2"
+    better-sqlite3 "^12.0.0"
+
+"@cap-js/sqlite@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/@cap-js/sqlite/-/sqlite-2.2.0.tgz#4a6b346981ed6d857bfa59fa59a75864011d2095"
+  integrity sha512-FPj+uVU/14vtGUl2P/Q8y7XhZbsLgrCav2O5PjHPXnupegjby4sMJkgVNxVHnkyKPFgO/W8uEsq9r5TU9VPx8w==
+  dependencies:
+    "@cap-js/db-service" "^2.9.0"
     better-sqlite3 "^12.0.0"
 
 "@changesets/apply-release-plan@^7.1.0":
@@ -7057,11 +7072,6 @@ node-abi@^3.3.0:
   dependencies:
     semver "^7.3.5"
 
-node-addon-api@^8.0.0:
-  version "8.6.0"
-  resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-8.6.0.tgz#b22497201b465cd0a92ef2c01074ee5068c79a6d"
-  integrity sha512-gBVjCaqDlRUk0EwoPNKzIr9KkS9041G/q31IBShPs1Xz6UTA+EXdZADbzqAJQrpDRq71CIMnOP5VMut3SL0z5Q==
-
 node-cache@^5.1.2:
   version "5.1.2"
   resolved "https://registry.npmjs.org/node-cache/-/node-cache-5.1.2.tgz#f264dc2ccad0a780e76253a694e9fd0ed19c398d"
@@ -7088,7 +7098,7 @@ node-forge@^1.4.0:
   resolved "https://registry.npmjs.org/node-forge/-/node-forge-1.4.0.tgz#1c7b7d8bdc2d078739f58287d589d903a11b2fc2"
   integrity sha512-LarFH0+6VfriEhqMMcLX2F7SwSXeWwnEAJEsYm5QKWchiVYVvJyV9v7UDvUv+w5HO23ZpQTXDv/GxdDdMyOuoQ==
 
-node-gyp@12.x, node-gyp@^12.1.0:
+node-gyp@^12.1.0:
   version "12.2.0"
   resolved "https://registry.npmjs.org/node-gyp/-/node-gyp-12.2.0.tgz#ff73f6f509e33d8b7e768f889ffc9738ad117b07"
   integrity sha512-q23WdzrQv48KozXlr0U1v9dwO/k59NHeSzn6loGcasyf0UnSrtzs8kRxM+mfwJSf0DkX0s43hcqgnSO4/VNthQ==
@@ -7872,7 +7882,7 @@ postcss@>=8.2.10, postcss@^8.4.23, postcss@^8.5.1, postcss@^8.5.6:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-prebuild-install@^7.1.1, prebuild-install@^7.1.3:
+prebuild-install@^7.1.1:
   version "7.1.3"
   resolved "https://registry.npmjs.org/prebuild-install/-/prebuild-install-7.1.3.tgz#d630abad2b147443f20a212917beae68b8092eec"
   integrity sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug==
@@ -8900,18 +8910,6 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
 
-sqlite3@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.npmjs.org/sqlite3/-/sqlite3-6.0.1.tgz#c0956e7834931c406b283c87b66771c847a6abfc"
-  integrity sha512-X0czUUMG2tmSqJpEQa3tCuZSHKIx8PwM53vLZzKp/o6Rpy25fiVfjdbnZ988M8+O3ZWR1ih0K255VumCb3MAnQ==
-  dependencies:
-    bindings "^1.5.0"
-    node-addon-api "^8.0.0"
-    prebuild-install "^7.1.3"
-    tar "^7.5.10"
-  optionalDependencies:
-    node-gyp "12.x"
-
 ssri@^13.0.0:
   version "13.0.1"
   resolved "https://registry.npmjs.org/ssri/-/ssri-13.0.1.tgz#2d8946614d33f4d0c84946bb370dce7a9379fd18"
@@ -9231,7 +9229,7 @@ tar-stream@^3.1.5:
     fast-fifo "^1.2.0"
     streamx "^2.15.0"
 
-tar@>=6.1.2, tar@^7.4.3, tar@^7.5.10, tar@^7.5.4:
+tar@>=6.1.2, tar@^7.4.3, tar@^7.5.4:
   version "7.5.13"
   resolved "https://registry.npmjs.org/tar/-/tar-7.5.13.tgz#0d214ed56781a26edc313581c0e2d929ceeb866d"
   integrity sha512-tOG/7GyXpFevhXVh8jOPJrmtRpOTsYqUIkVdVooZYJS/z8WhfQUX8RJILmeuJNinGAMSu1veBr4asSHFt5/hng==

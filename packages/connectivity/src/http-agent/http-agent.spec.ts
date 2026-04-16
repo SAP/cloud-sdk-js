@@ -9,7 +9,7 @@ jest.mock('jks-js', () => ({
 import * as jks from 'jks-js';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { certAsString } from '../../../../test-resources/test/test-util/test-certificate';
-import { agentCreateCache, getAgentConfig } from './http-agent';
+import { agentCache, getAgentConfig } from './http-agent';
 import type { HttpDestination } from '../scp-cf/destination';
 import type { DestinationCertificate } from '../scp-cf';
 
@@ -259,7 +259,7 @@ describe('createAgent', () => {
 
 describe('agent caching', () => {
   beforeEach(() => {
-    agentCreateCache.clear();
+    agentCache.clear();
   });
 
   it('returns the same agent instance for the same destination options', async () => {

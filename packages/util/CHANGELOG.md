@@ -1,5 +1,11 @@
 # @sap-cloud-sdk/util
 
+## 4.6.0
+
+### Minor Changes
+
+- a6c8ff6: [Compatibility Note] Deprecate `unixEOL` and `webEOL`. Use '\n' or '\r\n' respectively.
+
 ## 4.5.1
 
 ## 4.5.0

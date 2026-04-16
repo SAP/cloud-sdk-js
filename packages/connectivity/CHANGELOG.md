@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.6.0
+
+### Minor Changes
+
+- 0800e7a: [Fixed Issue] Destinations with authentication type "SAMLAssertion" are no longer cached, even if caching is enabled. (see https://github.com/SAP/cloud-sdk-js/issues/6396)
+
+### Patch Changes
+
+- 8637346: [Fixed Issue] Support `TrustStoreLocation` for `OAuth2ClientCredentials` destinations.
+- 259d8ad: [Fixed Issue] Extend `isDestinationFetchOptions` to check `service` property.
+- Updated dependencies [a6c8ff6]
+  - @sap-cloud-sdk/util@4.6.0
+  - @sap-cloud-sdk/resilience@4.6.0
+
 ## 4.5.1
 
 ### Patch Changes

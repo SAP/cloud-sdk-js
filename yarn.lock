@@ -1843,10 +1843,10 @@
     "@ts-graphviz/ast" "^2.0.7"
     "@ts-graphviz/common" "^2.1.5"
 
-"@ts-morph/common@~0.28.1":
-  version "0.28.1"
-  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.28.1.tgz#10ec52182d5c310832b669af7784a34fc3da3ca1"
-  integrity sha512-W74iWf7ILp1ZKNYXY5qbddNaml7e9Sedv5lvU1V8lftlitkc9Pq1A+jlH23ltDgWYeZFFEqGCD1Ies9hqu3O+g==
+"@ts-morph/common@~0.29.0":
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/@ts-morph/common/-/common-0.29.0.tgz#bb1ed737f309c8270bb2e92207066343c1302ae2"
+  integrity sha512-35oUmphHbJvQ/+UTwFNme/t2p3FoKiGJ5auTjjpNTop2dyREspirjMy82PLSC1pnDJ8ah1GU98hwpVt64YXQsg==
   dependencies:
     minimatch "^10.0.1"
     path-browserify "^1.0.1"
@@ -7874,9 +7874,9 @@ postcss-values-parser@^6.0.2:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.4.23, postcss@^8.5.1, postcss@^8.5.6:
-  version "8.5.9"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.9.tgz#f6ee9e0b94f0f19c97d2f172bfbd7fc71fe1cca4"
-  integrity sha512-7a70Nsot+EMX9fFU3064K/kdHWZqGVY+BADLyXc8Dfv+mTLLVl6JzJpPaCZ2kQL9gIJvKXSLMHhqdRRjwQeFtw==
+  version "8.5.10"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.10.tgz#8992d8c30acf3f12169e7c09514a12fed7e48356"
+  integrity sha512-pMMHxBOZKFU6HgAZ4eyGnwXF/EvPGGqUr0MnZ5+99485wwW41kW91A4LOGxSHhgugZmSChL5AlElNdwlNgcnLQ==
   dependencies:
     nanoid "^3.3.11"
     picocolors "^1.1.1"
@@ -9357,12 +9357,12 @@ ts-jest@^29.4.9:
     type-fest "^4.41.0"
     yargs-parser "^21.1.1"
 
-ts-morph@^27.0.2:
-  version "27.0.2"
-  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-27.0.2.tgz#7b2fcce6822eeca3942fa6c601f159d5920b1422"
-  integrity sha512-fhUhgeljcrdZ+9DZND1De1029PrE+cMkIP7ooqkLRTrRLTqcki2AstsyJm0vRNbTbVCNJ0idGlbBrfqc7/nA8w==
+ts-morph@^28.0.0:
+  version "28.0.0"
+  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-28.0.0.tgz#cd3ebdf89742a32b06ea7327df6445364ee26631"
+  integrity sha512-Wp3tnZ2bzwxyTZMtgWVzXDfm7lB1Drz+y9DmmYH/L702PQhPyVrp3pkou3yIz4qjS14GY9kcpmLiOOMvl8oG1g==
   dependencies:
-    "@ts-morph/common" "~0.28.1"
+    "@ts-morph/common" "~0.29.0"
     code-block-writer "^13.0.3"
 
 ts-node@^10.9.2:

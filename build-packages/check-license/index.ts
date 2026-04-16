@@ -6,7 +6,7 @@ import bloakList from '@blueoak/list/index.json' with { type: 'json' };
 // Permissive FLOSS licenses are ok, see https://blueoakcouncil.org/list for details.
 const ALLOWED_STATUSES = new Set(['Model', 'Gold', 'Silver', 'Bronze']);
 // Some packages have multiple licenses, and as long as one of them is acceptable, we allow it.
-const ADDITIONAL_ALLOWED = new Set(['(BSD-3-Clause OR GPL-2.0)']);
+const ADDITIONAL_ALLOWED = new Set(['(BSD-3-Clause OR GPL-2.0)', 'CC-BY-3.0']);
 const ALLOWED_LICENSES = new Set(
   bloakList
     .filter(({ name }) => ALLOWED_STATUSES.has(name))

@@ -2,16 +2,10 @@ import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { vol } from 'memfs';
 import { jest, describe, afterEach, it } from '@jest/globals';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util';
 import { getNextVersion } from './util.js';
 
-jest.unstable_mockModule('fs', () => import('memfs').then(m => m.fs));
-jest.unstable_mockModule('fs/promises', () =>
-  import('memfs').then(m => m.fs.promises)
-);
-jest.unstable_mockModule('node:fs', () => import('memfs').then(m => m.fs));
-jest.unstable_mockModule('node:fs/promises', () =>
-  import('memfs').then(m => m.fs.promises)
-);
+mockFsWithMemfs(jest);
 
 const changesetConfig = readFileSync(
   resolve('..', '.changeset', 'config.json'),

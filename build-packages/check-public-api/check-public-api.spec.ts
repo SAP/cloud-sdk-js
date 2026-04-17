@@ -1,15 +1,9 @@
 import path from 'path';
 import { jest } from '@jest/globals';
 import { vol } from 'memfs';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util';
 
-jest.unstable_mockModule('fs', () => import('memfs').then(m => m.fs));
-jest.unstable_mockModule('fs/promises', () =>
-  import('memfs').then(m => m.fs.promises)
-);
-jest.unstable_mockModule('node:fs', () => import('memfs').then(m => m.fs));
-jest.unstable_mockModule('node:fs/promises', () =>
-  import('memfs').then(m => m.fs.promises)
-);
+mockFsWithMemfs(jest);
 
 jest.unstable_mockModule('@actions/core', () => ({
   error: jest.fn(),

@@ -1,6 +1,7 @@
 import { createFsFromVolume, vol } from 'memfs';
 import { Union, type IFS, type IUnionFs } from 'unionfs';
 import type * as fs from 'fs';
+import type { jest } from '@jest/globals';
 
 /**
  * Creates an overlay filesystem: memfs on top of the real fs.
@@ -94,4 +95,21 @@ export function mockFsFactory(realFs: typeof fs): IUnionFs {
   };
 
   return ufs;
+}
+
+/**
+ * Mock all `fs` module variants with pure memfs using `jest.unstable_mockModule` (ESM).
+ * Must be called before any dynamic `import()` of modules that use `fs`.
+ * @param j - The jest object
+ * @internal
+ */
+export function mockFsWithMemfs(j: typeof jest): void {
+  j.unstable_mockModule('fs', () => import('memfs').then(m => m.fs));
+  j.unstable_mockModule('fs/promises', () =>
+    import('memfs').then(m => m.fs.promises)
+  );
+  j.unstable_mockModule('node:fs', () => import('memfs').then(m => m.fs));
+  j.unstable_mockModule('node:fs/promises', () =>
+    import('memfs').then(m => m.fs.promises)
+  );
 }

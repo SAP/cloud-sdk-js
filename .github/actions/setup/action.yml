@@ -7,7 +7,7 @@ inputs:
   registry-url:
     description: 'The registry URL to use for npm packages. Defaults to the SAP Artifactory mirror when npm-token is provided, otherwise npmjs.'
     default: ''
-  npm-token:
+  registry-token:
     description: 'The auth token for the npm registry'
     default: ''
   pnpm-version:
@@ -49,4 +49,4 @@ runs:
     - run: pnpm install ${{ inputs.pnpm-install-args }}
       shell: bash
       env:
-        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
+        NODE_AUTH_TOKEN: ${{ inputs.registry-token }}

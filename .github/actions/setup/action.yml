@@ -1,0 +1,67 @@
+name: setup
+description: Setup repo, node and pnpm.
+inputs:
+  node-version:
+    description: 'Node.js version'
+    default: '22'
+  registry-url:
+    description: 'The registry URL to use for npm packages'
+    default: 'https://registry.npmjs.org'
+  use-pnpm-registry-mirror:
+    description: 'Whether to configure pnpm to use the SAP Artifactory npm mirror'
+    default: 'true'
+  pnpm-registry-mirror-url:
+    description: 'The registry URL to use for pnpm installs when the SAP Artifactory mirror is enabled'
+    default: 'https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/'
+  pnpm-registry-mirror-token:
+    description: 'The auth token for the SAP Artifactory npm mirror'
+    default: ''
+  pnpm-version:
+    description: 'PNPM version'
+    default: '10'
+  pnpm-install-args:
+    description: 'Arguments to pass to pnpm install'
+    default: '--frozen-lockfile'
+  package-manager-cache:
+    description: 'Whether to enable caching for pnpm. Set to false to disable caching.'
+    default: 'true'
+  ref:
+    description: 'The GitHub ref to checkout'
+    default: ${{ github.ref }}
+  token:
+    description: 'The GitHub token to use for checkout'
+    default: ${{ github.token }}
+  persist-credentials:
+    description: 'Whether to configure the token or SSH key with the local git config'
+    default: false
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        ref: ${{ inputs.ref }}
+        token: ${{ inputs.token }}
+        persist-credentials: ${{ inputs.persist-credentials }}
+    - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+      with:
+        version: ${{ inputs.pnpm-version }}
+    - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: ${{ inputs.registry-url }}
+        cache: 'pnpm'
+        package-manager-cache: ${{ inputs.package-manager-cache }}
+    - if: ${{ inputs.use-pnpm-registry-mirror == 'true' && inputs.pnpm-registry-mirror-token != '' && (github.repository == 'SAP/ai-sdk-js' || github.repository == 'SAP/cloud-sdk-js') }}
+      shell: bash
+      env:
+        PNPM_REGISTRY_MIRROR_URL: ${{ inputs.pnpm-registry-mirror-url }}
+        PNPM_REGISTRY_MIRROR_TOKEN: ${{ inputs.pnpm-registry-mirror-token }}
+      run: |
+        registry_host="${PNPM_REGISTRY_MIRROR_URL#https://}"
+        registry_host="${registry_host#http://}"
+
+        pnpm config set --location=user registry "$PNPM_REGISTRY_MIRROR_URL"
+        pnpm config set --location=user "//$registry_host:_authToken" "$PNPM_REGISTRY_MIRROR_TOKEN"
+    - run: pnpm install ${{ inputs.pnpm-install-args }}
+      shell: bash

@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.3.0",
-    "@sap-cloud-sdk/test-util": "^4.5.1",
+    "@sap-cloud-sdk/test-util": "^4.6.0",
     "depcheck": "^1.4.7",
     "execa": "^5.0.0",
     "memfs": "^4.57.1",

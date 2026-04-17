@@ -52,7 +52,7 @@
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "^14.1.1",
     "@jest/globals": "^30.3.0",
-    "@sap-cloud-sdk/test-util": "^4.5.1",
+    "@sap-cloud-sdk/test-util": "^4.6.0",
     "@types/content-type": "^1.1.9",
     "@types/js-yaml": "^4.0.9",
     "depcheck": "^1.4.7",

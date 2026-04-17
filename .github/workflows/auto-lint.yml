@@ -8,13 +8,21 @@ jobs:
     if: github.actor != 'dependabot[bot]' && !github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        id: app-token
+        with:
+          client-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
+          owner: SAP
+          repositories: cloud-sdk-js
+          permission-contents: write
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
-          token: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
       - run: git fetch --depth=1
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version: 22
           cache: 'yarn'
@@ -23,11 +31,14 @@ jobs:
       - name: Run Lint
         run: yarn lint:fix
       - name: Commit Changes if needed
+        env:
+          BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
+          BOT_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
         run: |
           diff=`git diff`
           if [ ! -z "$diff" ]; then
-            git config --global user.email "cloud-sdk-js@github.com"
-            git config --global user.name "cloud-sdk-js"
+            git config --global user.email "$BOT_EMAIL"
+            git config --global user.name "$BOT_NAME"
             git commit -m "Changes from lint:fix" -a
             git push
           fi

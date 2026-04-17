@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-util-shared",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "description": "Shared test utilities for SAP Cloud SDK packages",
   "private": true,
   "publishConfig": {

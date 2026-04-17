@@ -73184,9 +73184,11 @@ async function checkApiOfPackage(pathToPackage) {
     }
 }
 async function checkIndexFileExists(indexFilePath) {
-    const statInfo = await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.lstat)(indexFilePath, { bigint: true });
-    if (!statInfo || !statInfo.isFile()) {
-        throw new Error(`No index.ts file found in ${indexFilePath}`);
+    const isFile = await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.lstat)(indexFilePath)
+        .then(stat => stat.isFile())
+        .catch(() => false);
+    if (!isFile) {
+        (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__/* .error */ .z3)(`No index.ts file found in ${(0,node_path__WEBPACK_IMPORTED_MODULE_0__.dirname)(indexFilePath)}.`);
     }
 }
 /**

@@ -1,23 +1,41 @@
 import path from 'path';
-import { jest } from '@jest/globals';
+import { describe, jest, beforeEach } from '@jest/globals';
 import { vol } from 'memfs';
 
-jest.unstable_mockModule('fs', () => import('memfs').then(m => m.fs));
-jest.unstable_mockModule('fs/promises', () =>
-  import('memfs').then(m => m.fs.promises)
+jest.unstable_mockModule('fs', () =>
+  import('memfs').then(m => ({
+    ...m.fs,
+    default: m.fs
+  }))
 );
-jest.unstable_mockModule('node:fs', () => import('memfs').then(m => m.fs));
+jest.unstable_mockModule('fs/promises', () =>
+  import('memfs').then(m => ({
+    ...m.fs.promises,
+    default: m.fs.promises
+  }))
+);
+jest.unstable_mockModule('node:fs', () =>
+  import('memfs').then(m => ({
+    ...m.fs,
+    default: m.fs
+  }))
+);
 jest.unstable_mockModule('node:fs/promises', () =>
-  import('memfs').then(m => m.fs.promises)
+  import('memfs').then(m => ({
+    ...m.fs.promises,
+    default: m.fs.promises
+  }))
 );
 
-jest.unstable_mockModule('@actions/core', () => ({
+const actionsCoreMock = {
   error: jest.fn(),
   info: jest.fn(),
   warning: jest.fn(),
   getInput: jest.fn(),
   setFailed: jest.fn()
-}));
+};
+
+jest.unstable_mockModule('@actions/core', () => actionsCoreMock);
 
 const {
   checkBarrelRecursive,
@@ -30,27 +48,25 @@ const {
   typeDescriptorPaths
   // eslint-disable-next-line import/no-useless-path-segments
 } = await import('./index.js');
-const { error } = await import('@actions/core');
 
 describe('check-public-api', () => {
-  beforeEach(async () => {
-    (error as jest.Mock).mockClear();
-  });
-
-  afterEach(() => {
+  beforeEach(() => {
+    actionsCoreMock.error.mockReset();
     vol.reset();
   });
 
   describe('exportAllInBarrel', () => {
-    it('checkIndexFileExists fails if index file is not in root', () => {
+    it('checkIndexFileExists fails if index fi  le is not in root', async () => {
       vol.fromJSON(
         {
           'root/dir1/index.ts': ''
         },
         process.cwd()
       );
-      checkIndexFileExists('root/index.ts');
-      expect(error).toHaveBeenCalledWith('No index.ts file found in root.');
+      await checkIndexFileExists('root/index.ts');
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
+        'No index.ts file found in root.'
+      );
     });
 
     it('fails if internal.ts is not present in root', async () => {
@@ -62,7 +78,7 @@ describe('check-public-api', () => {
         process.cwd()
       );
       await exportAllInBarrel('src', 'internal.ts');
-      expect(error).toHaveBeenCalledWith(
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
         "No 'internal.ts' file found in 'src'."
       );
     });
@@ -82,10 +98,12 @@ describe('check-public-api', () => {
 
       await exportAllInBarrel('dir1', 'index.ts');
 
-      expect(error).toHaveBeenCalledWith(
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
         `'dir2' is not exported in '${path.normalize('dir1/index.ts')}'.`
       );
-      expect(error).toHaveBeenCalledWith("'index.ts' is not in sync.");
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
+        "'index.ts' is not in sync."
+      );
     });
 
     it('checkBarrelRecursive passes recursive check for barrel file exports', async () => {
@@ -226,7 +244,7 @@ describe('check-public-api', () => {
       );
 
       await parseIndexFile('index.ts', true);
-      expect(error).toHaveBeenCalledWith(
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
         "Re-exporting internal modules is not allowed. 'internal' exported in 'index.ts'."
       );
     });

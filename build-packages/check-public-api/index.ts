@@ -187,9 +187,11 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
 export async function checkIndexFileExists(
   indexFilePath: string
 ): Promise<void> {
-  const statInfo = await lstat(indexFilePath, { bigint: true });
-  if (!statInfo || !statInfo.isFile()) {
-    throw new Error(`No index.ts file found in ${indexFilePath}`);
+  const isFile = await lstat(indexFilePath)
+    .then(stat => stat.isFile())
+    .catch(() => false);
+  if (!isFile) {
+    error(`No index.ts file found in ${dirname(indexFilePath)}.`);
   }
 }
 

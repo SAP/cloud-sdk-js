@@ -10,5 +10,5 @@ inputs:
     description: 'Regular expression for paths to be ignore when checking the public API.'
 
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'index.js'

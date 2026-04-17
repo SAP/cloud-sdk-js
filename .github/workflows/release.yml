@@ -17,14 +17,13 @@ jobs:
           private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
           owner: SAP
           repositories: cloud-sdk
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: sap/cloud-sdk-js/.github/actions/setup@pnpm-setup
         with:
           ref: 'main'
           persist-credentials: true
-      - uses: ./.github/actions/setup
-        with:
           node-version: 24 # Will install npm 11 needed for trusted publishing
           registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
       - name: Legacy Release
         if: startsWith(github.ref, 'refs/tags/v1') || startsWith(github.ref, 'refs/tags/v2') || startsWith(github.ref, 'refs/tags/v3')
         run: |

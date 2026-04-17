@@ -581,13 +581,17 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destination: Destination,
     origin: DestinationOrigin
   ): Promise<Destination> {
-    if (destination.originalProperties?.TrustStoreLocation) {
+    const originalProperties = destination.originalProperties;
+    const trustStoreLocation =
+      originalProperties?.TrustStoreLocation ||
+      originalProperties?.destinationConfiguration?.TrustStoreLocation;
+    if (trustStoreLocation) {
       const trustStoreCertificate = await fetchCertificate(
         getDestinationServiceCredentials().uri,
         origin === 'provider'
           ? this.providerServiceToken.encoded
           : this.subscriberToken!.serviceJwt!.encoded,
-        destination.originalProperties.TrustStoreLocation
+        trustStoreLocation
       );
       destination.trustStoreCertificate = trustStoreCertificate;
     }

@@ -1,6 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import { join, resolve, parse, basename, dirname, posix, sep } from 'node:path';
-import { mkdtemp, rm,  readFile, lstat, readdir } from 'node:fs/promises';
+import { mkdtemp, rm, readFile, lstat, readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
@@ -184,7 +184,9 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   }
 }
 
-export async function checkIndexFileExists(indexFilePath: string): Promise<void> {
+export async function checkIndexFileExists(
+  indexFilePath: string
+): Promise<void> {
   const statInfo = await lstat(indexFilePath, { bigint: true });
   if (!statInfo || !statInfo.isFile()) {
     throw new Error(`No index.ts file found in ${indexFilePath}`);
@@ -337,7 +339,11 @@ export async function exportAllInBarrel(
   barrelFileName: string
 ): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
-  if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
+  if (
+    await lstat(barrelFilePath)
+      .then(stat => stat.isFile())
+      .catch(() => false)
+  ) {
     const dirContents = (
       await glob('*', {
         ignore: [

@@ -73053,7 +73053,7 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony export */   tk: () => (/* binding */ regexExportedIndex)
 /* harmony export */ });
 /* harmony import */ var node_path__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(6760);
-/* harmony import */ var node_fs__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(3024);
+/* harmony import */ var node_fs_promises__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(1455);
 /* harmony import */ var node_os__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(8161);
 /* harmony import */ var glob__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(576);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_4__ = __nccwpck_require__(5200);
@@ -73073,7 +73073,6 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 // eslint-disable-next-line import/no-internal-modules
 
 
-const { readFile, lstat, readdir } = node_fs__WEBPACK_IMPORTED_MODULE_1__.promises;
 const pathToTsConfigRoot = (0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)(process.cwd(), 'tsconfig.json');
 const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 const regexExportedInternal = /\.\/([\w-]+)/g;
@@ -73150,7 +73149,7 @@ function compareApisAndLog(allExportedIndex, allExportedTypes) {
 async function checkApiOfPackage(pathToPackage) {
     (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__/* .info */ .pq)(`Check package: ${pathToPackage}`);
     const { pathToSource, pathToTsConfig } = paths(pathToPackage);
-    const pathCompiled = (0,node_fs__WEBPACK_IMPORTED_MODULE_1__.mkdtempSync)((0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)((0,node_os__WEBPACK_IMPORTED_MODULE_2__.tmpdir)(), 'check-public-api-'));
+    const pathCompiled = await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.mkdtemp)((0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)((0,node_os__WEBPACK_IMPORTED_MODULE_2__.tmpdir)(), 'check-public-api-'));
     try {
         const opts = await getCompilerOptions(pathToPackage, pathCompiled);
         const includeExclude = await (0,_sap_cloud_sdk_generator_common_dist_compiler_js__WEBPACK_IMPORTED_MODULE_6__/* .readIncludeExcludeWithDefaults */ .JA)(pathToTsConfig);
@@ -73171,7 +73170,7 @@ async function checkApiOfPackage(pathToPackage) {
             await checkBarrelRecursive(pathToSource);
         }
         const indexFilePath = (0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)(pathToSource, 'index.ts');
-        checkIndexFileExists(indexFilePath);
+        await checkIndexFileExists(indexFilePath);
         const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
         const allExportedIndex = await parseIndexFile(indexFilePath, forceInternalExports);
         const setsAreEqual = compareApisAndLog(allExportedIndex, allExportedTypes);
@@ -73181,12 +73180,13 @@ async function checkApiOfPackage(pathToPackage) {
         (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__/* .info */ .pq)(`The index.ts of package ${pathToPackage} is in sync with the type annotations.\n`);
     }
     finally {
-        (0,node_fs__WEBPACK_IMPORTED_MODULE_1__.rmSync)(pathCompiled, { recursive: true, force: true });
+        await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.rm)(pathCompiled, { recursive: true, force: true });
     }
 }
-function checkIndexFileExists(indexFilePath) {
-    if (!(0,node_fs__WEBPACK_IMPORTED_MODULE_1__.existsSync)(indexFilePath)) {
-        (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__/* .error */ .z3)('No index.ts file found in root.');
+async function checkIndexFileExists(indexFilePath) {
+    const statInfo = await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.lstat)(indexFilePath, { bigint: true });
+    if (!statInfo || !statInfo.isFile()) {
+        throw new Error(`No index.ts file found in ${indexFilePath}`);
     }
 }
 /**
@@ -73208,7 +73208,7 @@ async function typeDescriptorPaths(cwd) {
 async function parseTypeDefinitionFiles(pathCompiled) {
     const typeDefinitionPaths = await typeDescriptorPaths(pathCompiled);
     const result = await Promise.all(typeDefinitionPaths.map(async (pathTypeDefinition) => {
-        const fileContent = await readFile(pathTypeDefinition, 'utf8');
+        const fileContent = await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.readFile)(pathTypeDefinition, 'utf8');
         const types = parseExportedObjectsInFile(fileContent);
         return types.map(type => ({ path: pathTypeDefinition, ...type }));
     }));
@@ -73261,7 +73261,7 @@ function checkInternalReExports(fileContent, filePath) {
 }
 async function parseIndexFile(filePath, forceInternalExports) {
     const cwd = (0,node_path__WEBPACK_IMPORTED_MODULE_0__.dirname)(filePath);
-    const fileContent = await readFile(filePath, 'utf-8');
+    const fileContent = await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.readFile)(filePath, 'utf-8');
     checkInternalReExports(fileContent, filePath);
     const localExports = forceInternalExports
         ? parseBarrelFile(fileContent, regexExportedIndex)
@@ -73283,7 +73283,7 @@ function captureGroupsFromGlobalRegex(regex, str) {
     return groups.map(group => group[1]);
 }
 async function checkBarrelRecursive(cwd) {
-    (await readdir(cwd, { withFileTypes: true }))
+    (await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.readdir)(cwd, { withFileTypes: true }))
         .filter(dirent => dirent.isDirectory())
         .forEach(async (subDir) => {
         if (subDir.name !== '__snapshots__') {
@@ -73294,7 +73294,9 @@ async function checkBarrelRecursive(cwd) {
 }
 async function exportAllInBarrel(cwd, barrelFileName) {
     const barrelFilePath = (0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)(cwd, barrelFileName);
-    if ((0,node_fs__WEBPACK_IMPORTED_MODULE_1__.existsSync)(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
+    if (await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.lstat)(barrelFilePath)
+        .then(stat => stat.isFile())
+        .catch(() => false)) {
         const dirContents = (await (0,glob__WEBPACK_IMPORTED_MODULE_3__/* .glob */ .TI)('*', {
             ignore: [
                 '**/*.spec.ts',
@@ -73306,7 +73308,7 @@ async function exportAllInBarrel(cwd, barrelFileName) {
             ],
             cwd
         })).map(name => (0,node_path__WEBPACK_IMPORTED_MODULE_0__.basename)(name, '.ts'));
-        const exportedFiles = parseBarrelFile(await readFile(barrelFilePath, 'utf8'), regexExportedInternal);
+        const exportedFiles = parseBarrelFile(await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.readFile)(barrelFilePath, 'utf8'), regexExportedInternal);
         if (compareBarrels(dirContents, exportedFiles, barrelFilePath)) {
             (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__/* .error */ .z3)(`'${barrelFileName}' is not in sync.`);
         }

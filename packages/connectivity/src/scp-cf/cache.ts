@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import * as crypto from 'node:crypto';
 import { stringify } from 'safe-stable-stringify';
 
 interface CacheInterface<T> {
@@ -164,7 +164,14 @@ export class Cache<T> implements CacheInterface<T> {
  */
 export function hashCacheKey(value: Record<string, unknown>): string {
   const serialized = stringify(value);
-  return createHash('blake2s256').update(serialized).digest('hex');
+
+  // TODO: crypto.hash is available in Node.js v20.12.0 and later.
+  // Remove the fallback to crypto.createHash once Node.js 22 is the minimum supported version.
+  if (typeof crypto.hash === 'function') {
+    return crypto.hash('blake2s256', serialized, 'base64url');
+  }
+
+  return crypto.createHash('blake2s256').update(serialized).digest('base64url');
 }
 
 function isExpired<T>(item: CacheEntry<T>): boolean {

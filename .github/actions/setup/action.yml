@@ -6,10 +6,8 @@ inputs:
     default: '22'
   registry-url:
     description: 'The registry URL to use for npm packages. Defaults to the SAP Artifactory mirror when npm-token is provided, otherwise npmjs.'
-    default: ''
   registry-token:
     description: 'The auth token for the npm registry'
-    default: ''
   pnpm-version:
     description: 'PNPM version'
     default: '10'

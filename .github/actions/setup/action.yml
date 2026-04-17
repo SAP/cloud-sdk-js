@@ -5,16 +5,10 @@ inputs:
     description: 'Node.js version'
     default: '22'
   registry-url:
-    description: 'The registry URL to use for npm packages'
-    default: 'https://registry.npmjs.org'
-  use-pnpm-registry-mirror:
-    description: 'Whether to configure pnpm to use the SAP Artifactory npm mirror'
-    default: 'true'
-  pnpm-registry-mirror-url:
-    description: 'The registry URL to use for pnpm installs when the SAP Artifactory mirror is enabled'
-    default: 'https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/'
-  pnpm-registry-mirror-token:
-    description: 'The auth token for the SAP Artifactory npm mirror'
+    description: 'The registry URL to use for npm packages. Defaults to the SAP Artifactory mirror when npm-token is provided, otherwise npmjs.'
+    default: ''
+  npm-token:
+    description: 'The auth token for the npm registry'
     default: ''
   pnpm-version:
     description: 'PNPM version'
@@ -49,19 +43,10 @@ runs:
     - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
       with:
         node-version: ${{ inputs.node-version }}
-        registry-url: ${{ inputs.registry-url }}
+        registry-url: ${{ inputs.registry-url != '' && inputs.registry-url || (inputs.npm-token != '' && 'https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/' || 'https://registry.npmjs.org') }}
         cache: 'pnpm'
         package-manager-cache: ${{ inputs.package-manager-cache }}
-    - if: ${{ inputs.use-pnpm-registry-mirror == 'true' && inputs.pnpm-registry-mirror-token != '' && (github.repository == 'SAP/ai-sdk-js' || github.repository == 'SAP/cloud-sdk-js') }}
-      shell: bash
-      env:
-        PNPM_REGISTRY_MIRROR_URL: ${{ inputs.pnpm-registry-mirror-url }}
-        PNPM_REGISTRY_MIRROR_TOKEN: ${{ inputs.pnpm-registry-mirror-token }}
-      run: |
-        registry_host="${PNPM_REGISTRY_MIRROR_URL#https://}"
-        registry_host="${registry_host#http://}"
-
-        pnpm config set --location=user registry "$PNPM_REGISTRY_MIRROR_URL"
-        pnpm config set --location=user "//$registry_host:_authToken" "$PNPM_REGISTRY_MIRROR_TOKEN"
     - run: pnpm install ${{ inputs.pnpm-install-args }}
       shell: bash
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}

@@ -29,9 +29,9 @@ describe('createFile', () => {
     overwrite: true
   };
 
-  beforeEach(() => {
-    const realFs = jest.requireActual('fs');
-    const formattedPackageJsonContent = realFs.readFileSync(
+  beforeEach(async () => {
+    const realFs = jest.requireActual('node:fs/promises');
+    const formattedPackageJsonContent = await realFs.readFile(
       pathFormattedPackageJson,
       'utf8'
     );

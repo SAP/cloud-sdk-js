@@ -30,35 +30,27 @@ export function mockFsFactory(realFs: typeof fs): IUnionFs {
   ufs.use(realFs);
   ufs.use(memfs);
 
-  // All writes go directly to memfs — bypasses unionfs fallthrough
-  // which swallows intentional errors like EEXIST from flag:'wx'.
-  for (const m of [
-    'writeFileSync',
-    'mkdirSync',
-    'appendFileSync',
-    'rmdirSync',
-    'unlinkSync',
-    'renameSync'
-  ] as const) {
-    if (memfs[m]) {
-      (ufs as any)[m] = memfs[m].bind(memfs);
-    }
-  }
-  for (const m of [
-    'writeFile',
-    'mkdir',
-    'appendFile',
-    'rmdir',
-    'unlink',
-    'rename'
-  ] as const) {
-    if (memfs.promises[m]) {
-      (ufs as any).promises[m] = memfs.promises[m].bind(memfs.promises);
-    }
-  }
+  overrideWriteOperations(ufs, memfs);
 
-  // Fix unionfs statSync: with { throwIfNoEntry: false }, memfs returns
-  // undefined instead of throwing, so unionfs stops instead of falling through.
+  fixStatSyncFallthrough(ufs, memfs, realFs);
+
+  return ufs;
+}
+
+/**
+ * Fix unionfs stat sync fallthrough behavior: with { throwIfNoEntry: false },
+ * memfs returns undefined instead of throwing, so unionfs stops instead of
+ * falling through to the real fs.
+ * @param ufs The unionfs instance to override.
+ * @param memfs The memfs instance to try first.
+ * @param realFs The real fs module to fall back to if memfs doesn't have the file.
+ * @internal
+ */
+function fixStatSyncFallthrough(
+  ufs: IUnionFs,
+  memfs: IFS,
+  realFs: typeof fs
+): void {
   (ufs as any).statSync = (p: string, options?: any) => {
     try {
       const result = memfs.statSync(p, options);
@@ -70,6 +62,7 @@ export function mockFsFactory(realFs: typeof fs): IUnionFs {
     }
     return realFs.statSync(p, options);
   };
+
   (ufs as any).lstatSync = (p: string, options?: any) => {
     try {
       const result = memfs.lstatSync(p, options);
@@ -81,6 +74,43 @@ export function mockFsFactory(realFs: typeof fs): IUnionFs {
     }
     return realFs.lstatSync(p, options);
   };
+}
+
+/**
+ * Route write operations directly to memfs to avoid unionfs fallthrough
+ * behavior swallowing intentional errors (e.g. EEXIST with flag: 'wx').
+ * @param ufs The unionfs instance to override.
+ * @param memfs The memfs instance to route writes to.
+ * @internal
+ */
+function overrideWriteOperations(ufs: IUnionFs, memfs: IFS): void {
+  for (const m of [
+    'writeFileSync',
+    'mkdirSync',
+    'appendFileSync',
+    'rmdirSync',
+    'unlinkSync',
+    'renameSync'
+  ] as const) {
+    if ((memfs as any)[m]) {
+      (ufs as any)[m] = (memfs as any)[m].bind(memfs);
+    }
+  }
+
+  for (const m of [
+    'writeFile',
+    'mkdir',
+    'appendFile',
+    'rmdir',
+    'unlink',
+    'rename'
+  ] as const) {
+    if ((memfs as any).promises[m]) {
+      (ufs as any).promises[m] = (memfs as any).promises[m].bind(
+        (memfs as any).promises
+      );
+    }
+  }
 
   // Bridge copyFile: read from union (finds file on either layer),
   // write to memfs
@@ -93,8 +123,6 @@ export function mockFsFactory(realFs: typeof fs): IUnionFs {
       await (ufs as any).promises.readFile(src)
     );
   };
-
-  return ufs;
 }
 
 /**
@@ -104,12 +132,32 @@ export function mockFsFactory(realFs: typeof fs): IUnionFs {
  * @internal
  */
 export function mockFsWithMemfs(j: typeof jest): void {
-  j.unstable_mockModule('fs', () => import('memfs').then(m => m.fs));
-  j.unstable_mockModule('fs/promises', () =>
-    import('memfs').then(m => m.fs.promises)
+  j.unstable_mockModule('fs', () =>
+    import('memfs').then(m => ({
+      ...m.fs,
+      default: m.fs,
+      __esModule: true
+    }))
   );
-  j.unstable_mockModule('node:fs', () => import('memfs').then(m => m.fs));
+  j.unstable_mockModule('fs/promises', () =>
+    import('memfs').then(m => ({
+      ...m.fs.promises,
+      default: m.fs.promises,
+      __esModule: true
+    }))
+  );
+  j.unstable_mockModule('node:fs', () =>
+    import('memfs').then(m => ({
+      ...m.fs,
+      default: m.fs,
+      __esModule: true
+    }))
+  );
   j.unstable_mockModule('node:fs/promises', () =>
-    import('memfs').then(m => m.fs.promises)
+    import('memfs').then(m => ({
+      ...m.fs.promises,
+      default: m.fs.promises,
+      __esModule: true
+    }))
   );
 }

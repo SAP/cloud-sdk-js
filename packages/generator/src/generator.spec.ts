@@ -36,13 +36,8 @@ import type { SourceFile } from 'ts-morph';
 const { readFile } = promises;
 
 const pathTestResources = resolve(__dirname, '../../../test-resources');
-const pathTestService = resolve(
-  oDataServiceSpecs,
-  'v2',
-  'API_TEST_SRV',
-  'API_TEST_SRV.edmx'
-);
 const pathTestServiceDir = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
+const pathTestService = join(pathTestServiceDir, 'API_TEST_SRV.edmx');
 
 jest.setTimeout(60000); // Set timeout to 60 seconds as runners appear to be slow
 

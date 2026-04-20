@@ -2,4 +2,4 @@
 '@sap-cloud-sdk/connectivity': patch
 ---
 
-[Fixed Issue] Avoid caching jwt if `forwardAuthToken` is set to `true`.
+[Fixed Issue] Avoid caching JWT if `forwardAuthToken` is set to `true`.

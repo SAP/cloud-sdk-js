@@ -3,6 +3,8 @@ const mockFs = () => mockFsFactory(jest.requireActual('fs'));
 
 jest.mock('fs', () => mockFs());
 jest.mock('fs/promises', () => mockFs().promises);
+jest.mock('node:fs', () => mockFs());
+jest.mock('node:fs/promises', () => mockFs().promises);
 
 // eslint-disable-next-line import/order
 import { join, resolve } from 'path';

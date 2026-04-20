@@ -38,10 +38,31 @@ runs:
     - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       with:
         version: ${{ inputs.pnpm-version }}
+    - id: resolve-registry-url
+      shell: bash
+      run: |
+        if [[ -n "$REGISTRY_URL" ]]; then
+          echo "url=$REGISTRY_URL" >> $GITHUB_OUTPUT
+        elif [[ -n "$REGISTRY_TOKEN" ]]; then
+          echo "url=https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/" >> $GITHUB_OUTPUT
+        elif [[ "$REPO" == "SAP/ai-sdk-js" || "$REPO" == "SAP/cloud-sdk-js" ]]; then
+          workflow_file="${WORKFLOW_REF#${REPO}/}"
+          workflow_file="${workflow_file%@*}"
+
+          echo "::error file=$workflow_file::The input 'registry-token' is required when 'registry-url' is not provided."
+          exit 1
+        else
+          echo "url=https://registry.npmjs.org" >> $GITHUB_OUTPUT
+        fi
+      env:
+        REGISTRY_URL: ${{ inputs.registry-url }}
+        REGISTRY_TOKEN: ${{ inputs.registry-token }}
+        REPO: ${{ github.repository }}
+        WORKFLOW_REF: ${{ github.workflow_ref }}
     - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
       with:
         node-version: ${{ inputs.node-version }}
-        registry-url: ${{ inputs.registry-url != '' && inputs.registry-url || (inputs.npm-token != '' && 'https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/' || 'https://registry.npmjs.org') }}
+        registry-url: ${{ steps.resolve-registry-url.outputs.url }}
         cache: 'pnpm'
         package-manager-cache: ${{ inputs.package-manager-cache }}
     - run: pnpm install ${{ inputs.pnpm-install-args }}

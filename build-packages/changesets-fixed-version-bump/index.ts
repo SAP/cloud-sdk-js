@@ -1,9 +1,16 @@
+import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { getInput, info, setOutput } from '@actions/core';
 import { command } from 'execa';
 import { formatJson, getNextVersion } from './util.js';
-// eslint-disable-next-line import/no-internal-modules, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-const { transformFile } = require('../../scripts/util');
+
+async function transformFile(
+  filePath: string,
+  transformFn: (content: string) => string | Promise<string>
+): Promise<void> {
+  const file = await readFile(filePath, { encoding: 'utf8' });
+  await writeFile(filePath, await transformFn(file), { encoding: 'utf8' });
+}
 
 async function bump() {
   const { version, bumpType } = await getNextVersion();

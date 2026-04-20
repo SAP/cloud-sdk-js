@@ -2,7 +2,7 @@
 
 ## Status
 
-decided
+superseded
 
 ## Context
 

@@ -6,12 +6,11 @@
     "composite": false,
     "incremental": true,
     "declaration": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "module": "NodeNext"
   },
   "files": [
-    "index.ts",
-    "../../scripts/get-changelog.ts",
-    "../../scripts/util.ts"
+    "index.ts"
   ],
   "exclude": []
 }

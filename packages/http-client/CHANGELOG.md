@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/http-client
 
+## 4.6.0
+
+### Patch Changes
+
+- 7ea34ce: [Fixed Issue] Improve handling of missing `zlib`-module in the `compress()` middleware and lazy-load it only when needed.
+  To compress requests in the browser, ensure that a suitable polyfill is provided.
+- Updated dependencies [8637346]
+- Updated dependencies [259d8ad]
+- Updated dependencies [a6c8ff6]
+- Updated dependencies [0800e7a]
+  - @sap-cloud-sdk/connectivity@4.6.0
+  - @sap-cloud-sdk/util@4.6.0
+  - @sap-cloud-sdk/resilience@4.6.0
+
 ## 4.5.1
 
 ### Patch Changes

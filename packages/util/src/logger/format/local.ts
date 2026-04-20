@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { styleText } from 'node:util';
 import { format } from 'winston';
 import type { TransformableInfo } from 'logform';
 
@@ -18,7 +18,7 @@ export const local = combine(
       info.custom_fields &&
       typeof info.custom_fields === 'object' &&
       'messageContext' in info.custom_fields
-        ? `${chalk.blue(`(${info.custom_fields.messageContext})`)}: `
+        ? `${styleText('blue', `(${info.custom_fields.messageContext})`)}: `
         : '';
     // Type guard to ensure message is a string
     const message = typeof info.message === 'string' ? info.message : '';
@@ -26,9 +26,9 @@ export const local = combine(
     const paddingLength =
       message.length - trimmedMessage.length + messageContext.length;
     if (info.error) {
-      info.level = chalk.inverse(info.level);
+      info.level = styleText('inverse', info.level);
     }
-    return `${chalk.gray(`[${info.timestamp}]`)} ${
+    return `${styleText('gray', `[${info.timestamp}]`)} ${
       info.level
     } ${messageContext.padStart(paddingLength, ' ')}${trimmedMessage}`;
   })

@@ -24,7 +24,8 @@ export interface CacheEntry<T> {
  */
 export interface CachingOptions {
   /**
-   * A boolean value that indicates whether to read destinations from cache.
+   * A boolean value that indicates whether to read and write destinations from and to cache.
+   * This never writes destinations with authentication type "SAMLAssertion".
    */
   useCache?: boolean;
 }

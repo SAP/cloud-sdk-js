@@ -21,6 +21,7 @@ import {
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
+  oauthClientCredentialsSingleResponse,
   onPremisePrincipalPropagationMultipleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { getDestination } from './destination-accessor';
@@ -178,6 +179,33 @@ describe('truststore configuration', () => {
     const actual = await getDestination({
       destinationName: 'TrustStoreDestination',
       jwt: providerUserToken,
+      selectionStrategy: alwaysProvider,
+      cacheVerificationKeys: false
+    });
+    expect(actual?.trustStoreCertificate).toEqual({
+      name: 'my-cert.pem',
+      content: expect.any(String),
+      type: 'CERTIFICATE'
+    });
+  });
+
+  it('returns a destination with truststore for OAuth2ClientCredentials', async () => {
+    const destinationWithTrustStore = {
+      ...oauthClientCredentialsSingleResponse,
+      destinationConfiguration: {
+        ...oauthClientCredentialsSingleResponse.destinationConfiguration,
+        TrustStoreLocation: 'my-cert.pem'
+      }
+    };
+    mockCertificateCall('my-cert.pem', providerServiceToken, 'subaccount');
+    mockServiceBindings();
+    mockServiceToken();
+    mockJwtBearerToken();
+
+    mockFetchDestinationCalls(destinationWithTrustStore);
+
+    const actual = await getDestination({
+      destinationName: 'FINAL-DESTINATION',
       selectionStrategy: alwaysProvider,
       cacheVerificationKeys: false
     });

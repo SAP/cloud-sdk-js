@@ -311,7 +311,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       origin === 'provider'
         ? this.providerServiceToken
         : // on type level this could be undefined, but logically if the origin is subscriber, it must be defined.
-          this.subscriberToken.serviceJwt!;
+        this.subscriberToken.serviceJwt!;
 
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`
@@ -477,6 +477,12 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     if (!this.options.useCache) {
       return;
     }
+    if (destination.authentication === 'SAMLAssertion') {
+      logger.debug(
+        'Destination with authentication type SAMLAssertion will not be cached.'
+      );
+      return;
+    }
     await destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'
         ? getRequiredSubscriberToken(this.subscriberToken)
@@ -575,7 +581,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
     if (
       this.options.selectionStrategy.toString() ===
-        subscriberFirst.toString() &&
+      subscriberFirst.toString() &&
       resultFromSubscriber
     ) {
       return false;
@@ -616,8 +622,11 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destination: Destination,
     origin: DestinationOrigin
   ): Promise<Destination> {
+
+    const { originalProperties } = destination;
     const trustStoreLocation =
-      destination.originalProperties?.TrustStoreLocation;
+      originalProperties?.TrustStoreLocation ||
+      originalProperties?.destinationConfiguration?.TrustStoreLocation;
     if (trustStoreLocation) {
       const trustStoreCertificate = await fetchCertificate(
         getDestinationServiceCredentials().uri,

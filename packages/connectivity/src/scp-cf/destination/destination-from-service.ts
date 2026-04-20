@@ -622,7 +622,6 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     destination: Destination,
     origin: DestinationOrigin
   ): Promise<Destination> {
-
     const { originalProperties } = destination;
     const trustStoreLocation =
       originalProperties?.TrustStoreLocation ||

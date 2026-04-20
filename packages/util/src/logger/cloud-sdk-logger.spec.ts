@@ -1,7 +1,5 @@
 jest.mock('fs', () => jest.requireActual('memfs').fs);
 jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
-jest.mock('node:fs', () => jest.requireActual('memfs').fs);
-jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
 
 import * as fs from 'fs';
 import { jest } from '@jest/globals';

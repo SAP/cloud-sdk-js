@@ -16,8 +16,6 @@ import type { jest } from '@jest/globals';
  *   const mockFs = () => mockFsFactory(jest.requireActual('fs'));
  *   jest.mock('fs', () => mockFs());
  *   jest.mock('fs/promises', () => mockFs().promises);
- *   jest.mock('node:fs', () => mockFs());
- *   jest.mock('node:fs/promises', () => mockFs().promises);
  * @param realFs The real fs module to use as the base layer.
  * @returns A unionfs instance that combines memfs and the real fs.
  * @internal

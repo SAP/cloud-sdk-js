@@ -4,8 +4,6 @@ const mockFs = () => mockFsFactory(jest.requireActual('fs'));
 
 jest.mock('fs', () => mockFs());
 jest.mock('fs/promises', () => mockFs().promises);
-jest.mock('node:fs', () => mockFs());
-jest.mock('node:fs/promises', () => mockFs().promises);
 
 import { join, resolve } from 'path';
 import { promises } from 'fs';

@@ -35,9 +35,13 @@ describe('check-public-api', () => {
 
   describe('exportAllInBarrel', () => {
     it('checkIndexFileExists fails if index fi  le is not in root', async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'root/dir1/index.ts': ''
+          root: {
+            dir1: {
+              'index.ts': ''
+            }
+          }
         },
         process.cwd()
       );
@@ -48,10 +52,14 @@ describe('check-public-api', () => {
     });
 
     it('fails if internal.ts is not present in root', async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'src/file1': '',
-          'src/dir2/file2': ''
+          src: {
+            file1: '',
+            dir2: {
+              file2: ''
+            }
+          }
         },
         process.cwd()
       );
@@ -62,14 +70,17 @@ describe('check-public-api', () => {
     });
 
     it('fails if a file is not exported in barrel file', async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'dir1/file1': '',
-          'dir1/index.ts': "export * from './file1';",
-          'dir1/dir2/file2': '',
-          'dir1/dir2/file3': '',
-          'dir1/dir2/index.ts':
-            "export * from './file2';export * from './file3';"
+          dir1: {
+            file1: '',
+            'index.ts': "export * from './file1';",
+            dir2: {
+              file2: '',
+              file3: '',
+              'index.ts': "export * from './file2';export * from './file3';"
+            }
+          }
         },
         process.cwd()
       );
@@ -85,14 +96,17 @@ describe('check-public-api', () => {
     });
 
     it('checkBarrelRecursive passes recursive check for barrel file exports', async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'dir1/file1': '',
-          'dir1/index.ts': "export * from './file1'; export * from './dir2';",
-          'dir1/dir2/file2': '',
-          'dir1/dir2/file3': '',
-          'dir1/dir2/index.ts':
-            "export * from './file2';export * from './file3';"
+          dir1: {
+            file1: '',
+            'index.ts': "export * from './file1'; export * from './dir2';",
+            dir2: {
+              file2: '',
+              file3: '',
+              'index.ts': "export * from './file2';export * from './file3';"
+            }
+          }
         },
         process.cwd()
       );
@@ -100,13 +114,17 @@ describe('check-public-api', () => {
     });
 
     it('typeDescriptorPaths finds the .d.ts files and excludes index.d.ts', async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'dir1/file1.d.ts': '',
-          'dir1/index.d.ts': '',
-          'dir1/dir2/file2.d.ts': '',
-          'dir1/dir2/file3.d.ts': '',
-          'dir1/dir2/index.d.ts': ''
+          dir1: {
+            'file1.d.ts': '',
+            'index.d.ts': '',
+            dir2: {
+              'file2.d.ts': '',
+              'file3.d.ts': '',
+              'index.d.ts': ''
+            }
+          }
         },
         process.cwd()
       );
@@ -165,13 +183,15 @@ describe('check-public-api', () => {
 
   describe('parseIndexFile', () => {
     it('parses referenced star imports', async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
           'index.ts': "export * from './common';export * from './subdir/ref';",
           'common.ts':
             "export { commonExport } from './local';export * from './crossref';",
           'crossref.ts': "export { crossRefExport } from './local';",
-          'subdir/ref.ts': "export { subdirRefExport } from './local';"
+          subdir: {
+            'ref.ts': "export { subdirRefExport } from './local';"
+          }
         },
         process.cwd()
       );
@@ -184,7 +204,7 @@ describe('check-public-api', () => {
     });
 
     it('parses exports types correctly', async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
           'index.ts':
             "export * from './common';export type { namedExport } from './named';",
@@ -199,7 +219,7 @@ describe('check-public-api', () => {
     });
 
     it('ignores public re-exports', async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
           'index.ts':
             "export { ignoreme } from '@other/package';export { local } from './local';"
@@ -213,7 +233,7 @@ describe('check-public-api', () => {
     });
 
     it('throws an error on internal re-exports', async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
           'index.ts':
             "export { internal } from '@other/package/internal';export { local } from './local';"

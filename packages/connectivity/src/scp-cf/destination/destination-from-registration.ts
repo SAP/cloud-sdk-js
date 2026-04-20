@@ -110,8 +110,10 @@ export async function searchRegisteredDestination(
 
   destination = addForwardedAuthTokenIfNeeded(destination, options.jwt);
 
-  if (isHttpDestination(destination) &&
-    ['internet', 'private-link'].includes(proxyStrategy(destination))) {
+  if (
+    isHttpDestination(destination) &&
+    ['internet', 'private-link'].includes(proxyStrategy(destination))
+  ) {
     destination = addProxyConfigurationInternet(destination);
   }
   return destination;

@@ -311,7 +311,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       origin === 'provider'
         ? this.providerServiceToken
         : // on type level this could be undefined, but logically if the origin is subscriber, it must be defined.
-        this.subscriberToken.serviceJwt!;
+          this.subscriberToken.serviceJwt!;
 
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`
@@ -412,10 +412,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       (authentication === 'OAuth2SAMLBearerAssertion' &&
         !this.usesSystemUser(destination))
     ) {
-      return this.fetchDestinationWithUserExchangeFlows(
-        destination,
-        origin
-      );
+      return this.fetchDestinationWithUserExchangeFlows(destination, origin);
     }
 
     if (
@@ -424,17 +421,11 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       authentication === 'OAuth2ClientCredentials' ||
       this.usesSystemUser(destination)
     ) {
-      return this.fetchDestinationWithNonUserExchangeFlows(
-        destination,
-        origin
-      );
+      return this.fetchDestinationWithNonUserExchangeFlows(destination, origin);
     }
 
     if (authentication === 'OAuth2RefreshToken') {
-      return this.fetchDestinationWithRefreshTokenFlow(
-        destination,
-        origin
-      );
+      return this.fetchDestinationWithRefreshTokenFlow(destination, origin);
     }
 
     if (authentication === 'PrincipalPropagation') {
@@ -581,7 +572,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
     if (
       this.options.selectionStrategy.toString() ===
-      subscriberFirst.toString() &&
+        subscriberFirst.toString() &&
       resultFromSubscriber
     ) {
       return false;

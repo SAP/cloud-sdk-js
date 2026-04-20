@@ -30,24 +30,25 @@ describe('generator', () => {
 
   describe('get input file paths', () => {
     beforeEach(() => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'root/inputDir/test-service.txt': 'dummy text specification file',
-          'root/inputDir/test-service.json': 'dummy json specification file',
-          'root/inputDir/test-service.JSON': 'dummy JSON specification file',
-          'root/inputDir/test-service.yaml': 'dummy yaml specification file',
-          'root/inputDir/empty-dir/.keep': '',
-          'root/inputDir/sub-dir/test-service.YAML':
-            'dummy YAML specification file',
-          'root/inputDir/sub-dir/test-service.yml':
-            'dummy yml specification file',
-          'root/inputDir/sub-dir/test-service.YML':
-            'dummy YML specification file',
-          'root/inputDir/sub-dir/test-service.xml':
-            'dummy xml specification file',
-          'root/inputDir/sub-dir/test-service2.json':
-            'dummy json specification file',
-          'root/outputDir/.keep': ''
+          root: {
+            inputDir: {
+              'test-service.txt': 'dummy text specification file',
+              'test-service.json': 'dummy json specification file',
+              'test-service.JSON': 'dummy JSON specification file',
+              'test-service.yaml': 'dummy yaml specification file',
+              'empty-dir': { '.keep': '' },
+              'sub-dir': {
+                'test-service.YAML': 'dummy YAML specification file',
+                'test-service.yml': 'dummy yml specification file',
+                'test-service.YML': 'dummy YML specification file',
+                'test-service.xml': 'dummy xml specification file',
+                'test-service2.json': 'dummy json specification file'
+              }
+            },
+            outputDir: { '.keep': '' }
+          }
         },
         process.cwd()
       );
@@ -114,13 +115,17 @@ describe('generator', () => {
       const serviceSpec = await promises.readFile(inputFile, {
         encoding: 'utf8'
       });
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
           '/prettier/config': JSON.stringify({ printWidth: 66 }),
-          'root/inputDir/mySpec.json': serviceSpec,
-          'root/additionalFiles/CHANGELOG.md': 'some content',
-          'root/additionalFiles/OtherFile.txt': 'some content',
-          'root/outputDir/.keep': ''
+          root: {
+            inputDir: { 'mySpec.json': serviceSpec },
+            additionalFiles: {
+              'CHANGELOG.md': 'some content',
+              'OtherFile.txt': 'some content'
+            },
+            outputDir: { '.keep': '' }
+          }
         },
         process.cwd()
       );
@@ -209,17 +214,19 @@ describe('generator', () => {
 
   describe('optionsPerService', () => {
     beforeEach(() => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'inputDir/spec.json': JSON.stringify({
-            ...emptyDocument,
-            paths: {
-              '/path': { get: { response: { type: 'string' } } }
-            },
-            components: {
-              schemas: { test: { type: 'string' } }
-            }
-          }),
+          inputDir: {
+            'spec.json': JSON.stringify({
+              ...emptyDocument,
+              paths: {
+                '/path': { get: { response: { type: 'string' } } }
+              },
+              components: {
+                schemas: { test: { type: 'string' } }
+              }
+            })
+          },
           existingConfig:
             '{ "inputDir/spec.json": {"directoryName": "customName" , "basePath": "/base/path/for/service" } }',
           anotherConfig:
@@ -291,18 +298,20 @@ describe('generator', () => {
 
   describe('overwrite', () => {
     beforeEach(() => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'specs/spec.json': JSON.stringify({
-            ...emptyDocument,
-            paths: {
-              '/path': { get: { response: { type: 'string' } } }
-            },
-            components: {
-              schemas: { test: { type: 'string' } }
-            }
-          }),
-          'out/spec/schema/test.ts': 'some content'
+          specs: {
+            'spec.json': JSON.stringify({
+              ...emptyDocument,
+              paths: {
+                '/path': { get: { response: { type: 'string' } } }
+              },
+              components: {
+                schemas: { test: { type: 'string' } }
+              }
+            })
+          },
+          out: { spec: { schema: { 'test.ts': 'some content' } } }
         },
         process.cwd()
       );

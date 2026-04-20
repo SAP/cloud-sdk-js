@@ -43,8 +43,8 @@ describe('register-destination', () => {
   describe('with XSUAA service binding', () => {
     beforeEach(() => {
       mockServiceBindings();
-      vol.fromJSON(
-        { 'cf-crypto/cf-cert': certAsString, 'cf-crypto/cf-key': 'my-key' },
+      vol.fromNestedJSON(
+        { 'cf-crypto': { 'cf-cert': certAsString, 'cf-key': 'my-key' } },
         process.cwd()
       );
     });

@@ -277,7 +277,7 @@ describe('Cloud SDK Logger', () => {
     });
     it('should replace all transports in all active loggers with the global transport', async () => {
       const consoleSpy = jest.spyOn(process.stdout, 'write');
-      vol.fromJSON({ 'test.log': 'content' }, process.cwd());
+      vol.fromNestedJSON({ 'test.log': 'content' }, process.cwd());
       const fileTransport = new transports.File({
         filename: 'test.log',
         level: 'info'

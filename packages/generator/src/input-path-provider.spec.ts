@@ -12,7 +12,7 @@ describe('swaggerPathForEdmx', () => {
   afterEach(() => vol.reset());
 
   it('replaces path ending with .json', () => {
-    vol.fromJSON({
+    vol.fromNestedJSON({
       '/service-specs/service.edmx': '',
       '/service-specs/service.json': ''
     });
@@ -22,7 +22,7 @@ describe('swaggerPathForEdmx', () => {
   });
 
   it('replaces path ending with .JSON', () => {
-    vol.fromJSON({
+    vol.fromNestedJSON({
       '/service-specs/service.edmx': '',
       '/service-specs/service.JSON': ''
     });
@@ -32,7 +32,7 @@ describe('swaggerPathForEdmx', () => {
   });
 
   it('returns undefined if there is no equally named json file', () => {
-    vol.fromJSON({
+    vol.fromNestedJSON({
       '/service-specs/service.edmx': '',
       '/service-specs/SERVICE.json': '',
       '/service-specs/service.txt': ''

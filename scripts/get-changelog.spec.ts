@@ -12,7 +12,7 @@ describe('get changelog', () => {
   });
 
   it('should return correct changelog for specific version', async () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
         'CHANGELOG.md': `
 # @sap-cloud-sdk/test
@@ -38,7 +38,7 @@ describe('get changelog', () => {
   });
 
   it('should return empty string when version not found', () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
         'CHANGELOG.md': `
 # @sap-cloud-sdk/test

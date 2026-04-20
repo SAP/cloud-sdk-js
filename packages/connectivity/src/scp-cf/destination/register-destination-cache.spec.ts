@@ -19,8 +19,8 @@ describe('register-destination-cache', () => {
   });
 
   beforeEach(() => {
-    vol.fromJSON(
-      { 'cf-crypto/cf-cert': certAsString, 'cf-crypto/cf-key': 'my-key' },
+    vol.fromNestedJSON(
+      { 'cf-crypto': { 'cf-cert': certAsString, 'cf-key': 'my-key' } },
       process.cwd()
     );
   });

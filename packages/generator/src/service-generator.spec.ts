@@ -37,7 +37,7 @@ describe('service-generator', () => {
         const optionsPerService: OptionsPerService = {
           [getRelPathWithPosixSeparator(pathSpec)]: serviceOptions
         };
-        vol.fromJSON({
+        vol.fromNestedJSON({
           [pathConfig]: JSON.stringify(optionsPerService)
         });
 

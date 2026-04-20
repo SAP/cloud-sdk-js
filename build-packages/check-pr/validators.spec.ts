@@ -24,9 +24,9 @@ with multiple lines`;
 
 describe('check-pr', () => {
   beforeEach(() => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
-        '.github/PULL_REQUEST_TEMPLATE.md': prTemplate,
+        '.github': { 'PULL_REQUEST_TEMPLATE.md': prTemplate },
         'my-changeset.md': '[Fixed Issue] Something is fixed.'
       },
       process.cwd()

@@ -29,33 +29,49 @@ jest.setTimeout(300000);
 
 describe('compiler options', () => {
   beforeEach(() => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
-        'config1/tsconfig.json': JSON.stringify({
-          compilerOptions: { moduleResolution: 'node' }
-        }),
-        'config2/tsconfig.json': JSON.stringify({
-          compilerOptions: { moduleResolution: 'classic' }
-        }),
-        'config3/tsconfig.json': JSON.stringify({
-          compilerOptions: { lib: ['es5'] }
-        }),
-        'config4/tsconfig.json': JSON.stringify({
-          compilerOptions: { target: 'es2019' }
-        }),
-        'config5/tsconfig.json': JSON.stringify({
-          compilerOptions: { module: 'AMD' }
-        }),
-        'config6/tsconfig.json': JSON.stringify({
-          exclude: ['def'],
-          include: ['abc']
-        }),
-        'config7/tsconfig.json': JSON.stringify({
-          compilerOptions: { moduleResolution: 'node16' }
-        }),
-        'config8/tsconfig.json': JSON.stringify({
-          compilerOptions: { moduleResolution: 'nodenext' }
-        })
+        config1: {
+          'tsconfig.json': JSON.stringify({
+            compilerOptions: { moduleResolution: 'node' }
+          })
+        },
+        config2: {
+          'tsconfig.json': JSON.stringify({
+            compilerOptions: { moduleResolution: 'classic' }
+          })
+        },
+        config3: {
+          'tsconfig.json': JSON.stringify({
+            compilerOptions: { lib: ['es5'] }
+          })
+        },
+        config4: {
+          'tsconfig.json': JSON.stringify({
+            compilerOptions: { target: 'es2019' }
+          })
+        },
+        config5: {
+          'tsconfig.json': JSON.stringify({
+            compilerOptions: { module: 'AMD' }
+          })
+        },
+        config6: {
+          'tsconfig.json': JSON.stringify({
+            exclude: ['def'],
+            include: ['abc']
+          })
+        },
+        config7: {
+          'tsconfig.json': JSON.stringify({
+            compilerOptions: { moduleResolution: 'node16' }
+          })
+        },
+        config8: {
+          'tsconfig.json': JSON.stringify({
+            compilerOptions: { moduleResolution: 'nodenext' }
+          })
+        }
       },
       process.cwd()
     );
@@ -134,14 +150,20 @@ describe('compilation', () => {
   };
 
   beforeEach(async () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
-        'test-src/file-1.ts': "export type someOtherType='A'|'B'",
-        'test-src/index.ts': "export * from './file-1'",
-        'test-src/sub-folder/file-2.ts': "export type someType= 'A' | 'B'",
-        'test-src/test-file.spec.ts': 'This should be excluded per default',
-        'test-src/sub-folder/index.ts': "export * from './file-2'",
-        'broken-src/file.ts': `const foo = 1;${EOL}const bar = 1;${EOL}   foo = 2;`
+        'test-src': {
+          'file-1.ts': "export type someOtherType='A'|'B'",
+          'index.ts': "export * from './file-1'",
+          'sub-folder': {
+            'file-2.ts': "export type someType= 'A' | 'B'",
+            'index.ts': "export * from './file-2'"
+          },
+          'test-file.spec.ts': 'This should be excluded per default'
+        },
+        'broken-src': {
+          'file.ts': `const foo = 1;${EOL}const bar = 1;${EOL}   foo = 2;`
+        }
       },
       process.cwd()
     );

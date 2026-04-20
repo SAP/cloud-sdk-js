@@ -114,7 +114,7 @@ describe('options parser', () => {
     });
 
     it('includes using glob using cwd', () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         { 'package.json': '{}', 'tsconfig.json': '{}' },
         process.cwd()
       );
@@ -125,7 +125,7 @@ describe('options parser', () => {
     });
 
     it('includes using glob using root', () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         { 'package.json': '{}', 'tsconfig.json': '{}' },
         process.cwd()
       );
@@ -146,7 +146,7 @@ describe('options parser', () => {
         type: 'string' as const
       };
 
-      vol.fromJSON({
+      vol.fromNestedJSON({
         '/dummy/root/file-1.json': '',
         '/dummy/root/sub-1/file-2.json': ''
       });

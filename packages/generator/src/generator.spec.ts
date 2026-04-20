@@ -47,15 +47,15 @@ describe('generator', () => {
   describe('common', () => {
     let project;
     beforeEach(async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'common/.keep': '',
-          'someDir/.keep': '',
+          common: { '.keep': '' },
+          someDir: { '.keep': '' },
           '/prettier/config': JSON.stringify({ printWidth: 66 })
         },
         process.cwd()
       );
-      vol.fromJSON({ '.keep': '' }, pathTestServiceDir);
+      vol.fromNestedJSON({ '.keep': '' }, pathTestServiceDir);
 
       const options = createOptions({
         input: pathTestService,
@@ -165,7 +165,7 @@ describe('generator', () => {
   describe('v2', () => {
     let files: SourceFile[];
     beforeEach(async () => {
-      vol.fromJSON({ 'v2-test/.keep': '' }, process.cwd());
+      vol.fromNestedJSON({ 'v2-test': { '.keep': '' } }, process.cwd());
       files = await getGeneratedFiles('v2', 'v2-test');
     });
 
@@ -201,7 +201,7 @@ describe('generator', () => {
   describe('v4', () => {
     let files: SourceFile[];
     beforeEach(async () => {
-      vol.fromJSON({ 'v4-test/.keep': '' }, process.cwd());
+      vol.fromNestedJSON({ 'v4-test': { '.keep': '' } }, process.cwd());
       files = await getGeneratedFiles('v4', 'v4-test');
     });
 
@@ -278,24 +278,25 @@ describe('generator', () => {
 
   describe('get input file paths', () => {
     beforeEach(() => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'root/inputDir/test-service.txt': 'dummy text specification file',
-          'root/inputDir/test-service.edmx': 'dummy edmx specification file',
-          'root/inputDir/test-service.xml': 'dummy xml specification file',
-          'root/inputDir/test-service.XML': 'dummy XML specification file',
-          'root/inputDir/empty-dir/.keep': '',
-          'root/inputDir/sub-dir/test-service.edmx':
-            'dummy edmx specification file',
-          'root/inputDir/sub-dir/test-service.xml':
-            'dummy edmx specification file',
-          'root/inputDir/sub-dir/test-service.XML':
-            'dummy XML specification file',
-          'root/inputDir/sub-dir/test-service.EDMX':
-            'dummy xml specification file',
-          'root/inputDir/sub-dir/test-service.txt':
-            'dummy text specification file',
-          'root/outputDir/.keep': ''
+          root: {
+            inputDir: {
+              'test-service.txt': 'dummy text specification file',
+              'test-service.edmx': 'dummy edmx specification file',
+              'test-service.xml': 'dummy xml specification file',
+              'test-service.XML': 'dummy XML specification file',
+              'empty-dir': { '.keep': '' },
+              'sub-dir': {
+                'test-service.edmx': 'dummy edmx specification file',
+                'test-service.xml': 'dummy edmx specification file',
+                'test-service.XML': 'dummy XML specification file',
+                'test-service.EDMX': 'dummy xml specification file',
+                'test-service.txt': 'dummy text specification file'
+              }
+            },
+            outputDir: { '.keep': '' }
+          }
         },
         process.cwd()
       );
@@ -350,10 +351,10 @@ describe('generator', () => {
 
   describe('optionsPerService', () => {
     beforeEach(async () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'common/.keep': '',
-          'temp/options.json': JSON.stringify(''),
+          common: { '.keep': '' },
+          temp: { 'options.json': JSON.stringify('') },
           existingConfig: JSON.stringify({
             [getRelPathWithPosixSeparator(pathTestService)]: {
               directoryName: 'custom-value'
@@ -481,14 +482,14 @@ describe('generator', () => {
 
   describe('logger', () => {
     beforeEach(() => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
-          'common/.keep': '',
+          common: { '.keep': '' },
           '/prettier/config': JSON.stringify({ printWidth: 66 })
         },
         process.cwd()
       );
-      vol.fromJSON({ '.keep': '' }, pathTestServiceDir);
+      vol.fromNestedJSON({ '.keep': '' }, pathTestServiceDir);
     });
 
     afterEach(() => vol.reset());

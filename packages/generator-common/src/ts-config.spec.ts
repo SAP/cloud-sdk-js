@@ -29,8 +29,8 @@ describe('tsconfigJson', () => {
 
   it('returns a custom config content if custom file path is defined', async () => {
     const customConfig = { customConfig: true };
-    vol.fromJSON(
-      { 'path/customConfig.json': JSON.stringify(customConfig) },
+    vol.fromNestedJSON(
+      { path: { 'customConfig.json': JSON.stringify(customConfig) } },
       process.cwd()
     );
     const tsConfig = await tsconfigJson(false, './path/customConfig.json');
@@ -39,8 +39,8 @@ describe('tsconfigJson', () => {
 
   it('returns custom config content if custom directory path is defined', async () => {
     const customConfig = { customConfig: true };
-    vol.fromJSON(
-      { 'path/tsconfig.json': JSON.stringify(customConfig) },
+    vol.fromNestedJSON(
+      { path: { 'tsconfig.json': JSON.stringify(customConfig) } },
       process.cwd()
     );
     const tsConfig = await tsconfigJson(false, './path');
@@ -48,7 +48,7 @@ describe('tsconfigJson', () => {
   });
 
   it('returns custom config content if custom file or directory does not exist', async () => {
-    vol.fromJSON({});
+    vol.fromNestedJSON({});
     await expect(() => tsconfigJson(false, './path')).rejects.toThrow(
       'Could not read tsconfig.json at ./path.'
     );

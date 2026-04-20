@@ -19,7 +19,7 @@ describe('test-destination-provider', () => {
 
   describe('getDestinations', () => {
     it('returns a list of destinations taken from the first matching file(s) found by recursively traversing the file hierarchy upwards starting at "./"', () => {
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
           'systems.json': JSON.stringify(systems),
           'credentials.json': JSON.stringify(credentials)
@@ -50,7 +50,7 @@ describe('test-destination-provider', () => {
 
     it('allows providing paths to the systems and credentials file directly', () => {
       const parentDir = resolve(process.cwd(), '..');
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
           'systems.json': JSON.stringify(systems),
           'credentials.json': JSON.stringify(credentials)
@@ -94,7 +94,10 @@ describe('test-destination-provider', () => {
     });
 
     it('throws an error if the provided credentialsFilePath is invalid', () => {
-      vol.fromJSON({ 'systems.json': JSON.stringify(systems) }, process.cwd());
+      vol.fromNestedJSON(
+        { 'systems.json': JSON.stringify(systems) },
+        process.cwd()
+      );
 
       expect(() =>
         getTestDestinations({
@@ -107,7 +110,10 @@ describe('test-destination-provider', () => {
     });
 
     it('works when providing only a path to a systems.json', () => {
-      vol.fromJSON({ 'systems.json': JSON.stringify(systems) }, process.cwd());
+      vol.fromNestedJSON(
+        { 'systems.json': JSON.stringify(systems) },
+        process.cwd()
+      );
 
       const destinations = getTestDestinations({
         systemsFilePath: resolve(process.cwd(), 'systems.json')
@@ -134,13 +140,13 @@ describe('test-destination-provider', () => {
 
     it('works when providing only a path to a credentials.json when a systems.json can be found', () => {
       const parentDir = resolve(process.cwd(), '..');
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
           'systems.json': JSON.stringify(systems)
         },
         process.cwd()
       );
-      vol.fromJSON(
+      vol.fromNestedJSON(
         {
           'credentials.json': JSON.stringify(credentials)
         },
@@ -171,7 +177,10 @@ describe('test-destination-provider', () => {
     });
 
     it('works if a systems.json is found but no credentials.json', () => {
-      vol.fromJSON({ 'systems.json': JSON.stringify(systems) }, process.cwd());
+      vol.fromNestedJSON(
+        { 'systems.json': JSON.stringify(systems) },
+        process.cwd()
+      );
 
       const destinations = getTestDestinations();
       expect(destinations).toEqual([
@@ -195,14 +204,14 @@ describe('test-destination-provider', () => {
     });
 
     it('throws a reasonable error when the JSON file cannot be found', () => {
-      vol.fromJSON({ '.keep': '' }, process.cwd());
+      vol.fromNestedJSON({ '.keep': '' }, process.cwd());
       expect(() => getTestDestinations()).toThrow(
         /^No systems.json could be found when searching in directory.*/
       );
     });
 
     it('throws a reasonable error when the file does not contain proper JSON', () => {
-      vol.fromJSON({ 'systems.json': 'not proper JSON' }, process.cwd());
+      vol.fromNestedJSON({ 'systems.json': 'not proper JSON' }, process.cwd());
 
       expect(() => getTestDestinations()).toThrow(
         /^File read from path.*is not valid JSON./
@@ -211,7 +220,7 @@ describe('test-destination-provider', () => {
   });
 
   it('throws a reasonable error when the format is not correct', () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       { 'systems.json': '{"systems":[{"alias":"Foo"}]}' },
       process.cwd()
     );
@@ -228,7 +237,7 @@ describe('getDestinationByAlias', () => {
   });
 
   it('locates the files and returns the destination by alias', () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
         'systems.json': JSON.stringify(systems),
         'credentials.json': JSON.stringify(credentials)
@@ -259,7 +268,7 @@ describe('getDestinationByAlias', () => {
   });
 
   it("throws an error if the specified destination can't be found", () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
         'systems.json': JSON.stringify(systems),
         'credentials.json': JSON.stringify(credentials)

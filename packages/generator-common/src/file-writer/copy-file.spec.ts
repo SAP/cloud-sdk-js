@@ -14,8 +14,8 @@ describe('copyFile', () => {
 
   it('should copy file', async () => {
     const newContent = 'new';
-    vol.fromJSON(
-      { 'dest/some.ts': '', 'src/changelog': newContent },
+    vol.fromNestedJSON(
+      { dest: { 'some.ts': '' }, src: { changelog: newContent } },
       process.cwd()
     );
     await copyFile('src/changelog', 'dest/changelog');
@@ -27,11 +27,10 @@ describe('copyFile', () => {
 
   it('should overwrite when overwrite is set', async () => {
     const newContent = 'new';
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
-        'dest/some.ts': '',
-        'dest/changelog': 'old',
-        'src/changelog': newContent
+        dest: { 'some.ts': '', changelog: 'old' },
+        src: { changelog: newContent }
       },
       process.cwd()
     );
@@ -44,11 +43,10 @@ describe('copyFile', () => {
 
   it('should not overwrite when overwrite is not set', async () => {
     const oldContent = 'old';
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
-        'dest/some.ts': '',
-        'dest/changelog': oldContent,
-        'src/changelog': 'new'
+        dest: { 'some.ts': '', changelog: oldContent },
+        src: { changelog: 'new' }
       },
       process.cwd()
     );

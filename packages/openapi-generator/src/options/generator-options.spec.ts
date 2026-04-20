@@ -16,10 +16,10 @@ import { cliOptions } from './options';
 
 describe('parseGeneratorOptions', () => {
   beforeEach(() => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
-        'inputDir/spec.json': '',
-        'existent-directory/existent-file': 'file content'
+        inputDir: { 'spec.json': '' },
+        'existent-directory': { 'existent-file': 'file content' }
       },
       process.cwd()
     );

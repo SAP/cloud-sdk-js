@@ -22,7 +22,7 @@ describe('setTestDestinationInEnv', () => {
   };
 
   beforeEach(() => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
         'systems.json': JSON.stringify(systems),
         'credentials.json': JSON.stringify(credentials)

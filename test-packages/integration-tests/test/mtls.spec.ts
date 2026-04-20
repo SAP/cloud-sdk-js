@@ -18,8 +18,8 @@ import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 describe('mTLS on CloudFoundry', () => {
   beforeEach(() => {
-    vol.fromJSON(
-      { 'cf-crypto/cf-cert': 'my-cert', 'cf-crypto/cf-key': 'my-key' },
+    vol.fromNestedJSON(
+      { 'cf-crypto': { 'cf-cert': 'my-cert', 'cf-key': 'my-key' } },
       process.cwd()
     );
 

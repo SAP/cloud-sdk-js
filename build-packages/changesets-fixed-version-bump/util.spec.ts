@@ -19,17 +19,21 @@ describe('getNextVersion', () => {
   const sharedFiles = {
     'package.json':
       '{ "name": "sap-cloud-sdk", "version": "1.2.3", "workspaces": ["packages/connectivity"] }',
-    'packages/connectivity/package.json':
-      '{ "name": "@sap-cloud-sdk/connectivity" }'
+    packages: {
+      connectivity: {
+        'package.json': '{ "name": "@sap-cloud-sdk/connectivity" }'
+      }
+    }
   };
 
   it('should make a patch update', async () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
         ...sharedFiles,
-        '.changeset/config.json': changesetConfig,
-        '.changeset/alex.md':
-          '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---'
+        '.changeset': {
+          'config.json': changesetConfig,
+          'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---'
+        }
       },
       process.cwd()
     );
@@ -41,14 +45,14 @@ describe('getNextVersion', () => {
   });
 
   it('should make a minor update', async () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
         ...sharedFiles,
-        '.changeset/config.json': changesetConfig,
-        '.changeset/alex.md':
-          '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---',
-        '.changeset/bob.md':
-          '---\n' + "'@sap-cloud-sdk/connectivity': minor\n" + '---'
+        '.changeset': {
+          'config.json': changesetConfig,
+          'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---',
+          'bob.md': '---\n' + "'@sap-cloud-sdk/connectivity': minor\n" + '---'
+        }
       },
       process.cwd()
     );
@@ -60,14 +64,14 @@ describe('getNextVersion', () => {
   });
 
   it('should make a major update', async () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
         ...sharedFiles,
-        '.changeset/config.json': changesetConfig,
-        '.changeset/alex.md':
-          '---\n' + "'@sap-cloud-sdk/connectivity': major\n" + '---',
-        '.changeset/bob.md':
-          '---\n' + "'@sap-cloud-sdk/connectivity': minor\n" + '---'
+        '.changeset': {
+          'config.json': changesetConfig,
+          'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': major\n" + '---',
+          'bob.md': '---\n' + "'@sap-cloud-sdk/connectivity': minor\n" + '---'
+        }
       },
       process.cwd()
     );
@@ -79,10 +83,10 @@ describe('getNextVersion', () => {
   });
 
   it('should throw an error, when no changesets exist', async () => {
-    vol.fromJSON(
+    vol.fromNestedJSON(
       {
         ...sharedFiles,
-        '.changeset/config.json': changesetConfig
+        '.changeset': { 'config.json': changesetConfig }
       },
       process.cwd()
     );

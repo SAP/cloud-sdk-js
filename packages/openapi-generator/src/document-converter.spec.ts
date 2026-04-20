@@ -147,7 +147,7 @@ describe('document-converter', () => {
 
     it('does not throw error for JSON or YAML files', async () => {
       const jsonContent = { test: 'test' };
-      vol.fromJSON({
+      vol.fromNestedJSON({
         '/path/spec.json': JSON.stringify(jsonContent),
         '/path/spec.yaml': 'test: test',
         '/path/spec.yml': 'test: test'
@@ -164,7 +164,7 @@ describe('document-converter', () => {
     });
 
     it('throws an error for non JSON or YAML files', async () => {
-      vol.fromJSON({
+      vol.fromNestedJSON({
         '/path/no-extension': 'test',
         '/path/other-extension.test': 'test'
       });

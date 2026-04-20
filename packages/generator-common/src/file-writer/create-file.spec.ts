@@ -35,11 +35,11 @@ describe('createFile', () => {
       pathFormattedPackageJson,
       'utf8'
     );
-    vol.fromJSON({
+    vol.fromNestedJSON({
       [resolve(process.cwd(), 'some-dir', '.prettierrc')]: JSON.stringify({
         semi: false
       }),
-      'directory/existingFile': 'already exists',
+      directory: { existingFile: 'already exists' },
       [pathFormattedPackageJson]: formattedPackageJsonContent
     });
   });

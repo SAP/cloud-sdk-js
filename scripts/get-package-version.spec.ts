@@ -13,13 +13,13 @@ describe('get package version', () => {
   });
 
   it('returns the version of the package json in the same directory', async () => {
-    vol.fromJSON({ 'package.json': `{ "version": "1.2.3" }` }, process.cwd());
+    vol.fromNestedJSON({ 'package.json': `{ "version": "1.2.3" }` }, process.cwd());
     expect(await getPackageVersion()).toEqual('1.2.3');
   });
 
   it('returns the version of a designated package json', async () => {
-    vol.fromJSON(
-      { 'dir/package.json': `{ "version": "4.5.6" }` },
+    vol.fromNestedJSON(
+      { dir: { 'package.json': `{ "version": "4.5.6" }` } },
       process.cwd()
     );
     expect(await getPackageVersion(resolve('dir', 'package.json'))).toEqual(

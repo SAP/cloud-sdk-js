@@ -32,8 +32,8 @@ describe('getOriginalOptionsPerService', () => {
   };
 
   beforeEach(() => {
-    vol.fromJSON(
-      { 'path/myConfig.json': JSON.stringify(config) },
+    vol.fromNestedJSON(
+      { path: { 'myConfig.json': JSON.stringify(config) } },
       process.cwd()
     );
   });
@@ -136,8 +136,8 @@ describe('getOptionsPerService', () => {
       }
     };
 
-    vol.fromJSON(
-      { 'path/myConfig.json': JSON.stringify(config) },
+    vol.fromNestedJSON(
+      { path: { 'myConfig.json': JSON.stringify(config) } },
       process.cwd()
     );
 
@@ -161,8 +161,8 @@ describe('getOptionsPerService', () => {
       }
     };
 
-    vol.fromJSON(
-      { 'path/myPartialConfig.json': JSON.stringify(partialConfig) },
+    vol.fromNestedJSON(
+      { path: { 'myPartialConfig.json': JSON.stringify(partialConfig) } },
       process.cwd()
     );
 

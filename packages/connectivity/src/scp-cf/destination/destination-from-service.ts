@@ -116,18 +116,17 @@ export class DestinationFromServiceRetriever {
     if (!fromCache) {
       /* Destination NOT from cache */
 
-      // Fetch and add auth token if needed,
-      // meaning `forwardAuthToken` is `false`
+      // Fetch and add auth token if needed.
+      // Needed means `forwardAuthToken` is `false`
       // AND authentication is one of the supported types
-
       // TODO: Check if the auth token is bound to options.jwt which might change next time for caching.
       destination = await retriever.fetchAndAddAuthTokenIfNeeded(
         destination,
         origin
       );
 
-      // Add trust store configuration if needed,
-      // meaning `TrustStoreLocation` is defined
+      // Add trust store configuration if needed.
+      // Needed means `TrustStoreLocation` is defined
       destination = await retriever.addTrustStoreConfigurationIfNeeded(
         destination,
         origin
@@ -138,7 +137,7 @@ export class DestinationFromServiceRetriever {
     }
 
     // Add auth token based on the given `options.jwt` if needed
-    // meaning `forwardAuthToken` is `true`
+    // Needed means `forwardAuthToken` is `true`
     destination = addForwardedAuthTokenIfNeeded(destination, options.jwt);
 
     // Add proxy configuration based on the proxy strategy

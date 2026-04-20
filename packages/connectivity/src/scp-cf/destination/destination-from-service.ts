@@ -119,7 +119,6 @@ export class DestinationFromServiceRetriever {
       // Fetch and add auth token if needed.
       // Needed means `forwardAuthToken` is `false`
       // AND authentication is one of the supported types
-      // TODO: Check if the auth token is bound to options.jwt which might change next time for caching.
       destination = await retriever.fetchAndAddAuthTokenIfNeeded(
         destination,
         origin

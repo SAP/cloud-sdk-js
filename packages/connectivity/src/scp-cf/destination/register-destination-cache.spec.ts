@@ -1,13 +1,7 @@
-jest.mock('fs', () => jest.requireActual('memfs').fs);
-jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
-jest.mock('node:fs', () => jest.requireActual('memfs').fs);
-jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
-
 import { X509Certificate } from 'node:crypto';
-import { jest } from '@jest/globals';
-import { vol } from 'memfs';
+import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { certAsString } from '@sap-cloud-sdk/test-util-shared/test-certificate';
+import { certAsString } from '@sap-cloud-sdk/test-util-internal/test-certificate';
 import { registerDestinationCache } from './register-destination-cache';
 
 const { mtls, destination } = registerDestinationCache;
@@ -19,16 +13,18 @@ describe('register-destination-cache', () => {
   });
 
   beforeEach(() => {
-    vol.fromJSON(
-      { 'cf-crypto/cf-cert': certAsString, 'cf-crypto/cf-key': 'my-key' },
-      process.cwd()
-    );
+    mock({
+      'cf-crypto': {
+        'cf-cert': certAsString,
+        'cf-key': 'my-key'
+      }
+    });
   });
 
   afterEach(() => {
     destination.clear();
     mtls.clear();
-    vol.reset();
+    mock.restore();
     jest.clearAllMocks();
   });
 

@@ -2,12 +2,12 @@
 
 import { promises } from 'fs';
 import { join, resolve } from 'path';
-import { createOptions } from '../../packages/generator/test/test-util/create-generator-options';
-import { generate } from '../../packages/generator/src';
+import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
+import { generate } from '@sap-cloud-sdk/generator/src';
 import {
   createFile,
   defaultPrettierConfig
-} from '../../packages/generator-common/dist/file-writer';
+} from '@sap-cloud-sdk/generator-common/dist/file-writer';
 
 const outDir = resolve(__dirname, 'common-service');
 
@@ -174,7 +174,7 @@ const disclaimer = `/* This entity was generated from the COMMON_SRV.edmx and th
 The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/`;
 const imports = `
   import { AllFields, CollectionField, ComplexTypeField, Constructable, ConstructorOrField, CustomField, CustomDeSerializers, defaultDeSerializers, DefaultDeSerializers, DeserializedType, DeSerializers, EdmTypeField, EntityApi, EntityBase as Entity, entityBuilder, EntityBuilderType, Field, FieldBuilder, FieldOptions, mergeDefaultDeSerializersWith, OneToOneLink, OrderableEdmTypeField, PropertyMetadata, Time, nonEnumerable } from '../../packages/odata-common/src/internal';
-  import { customTestDeSerializers } from '@sap-cloud-sdk/test-util-shared';
+  import { customTestDeSerializers } from '@sap-cloud-sdk/test-util-internal';
   `;
 const disableEslint = '/* eslint-disable */';
 

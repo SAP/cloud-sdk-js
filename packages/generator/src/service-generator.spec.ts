@@ -1,15 +1,5 @@
-import { mockFsFactory } from '@sap-cloud-sdk/test-util/mock-fs';
-const mockFs = () => mockFsFactory(jest.requireActual('fs'));
-
-jest.mock('fs', () => mockFs());
-jest.mock('fs/promises', () => mockFs().promises);
-jest.mock('node:fs', () => mockFs());
-jest.mock('node:fs/promises', () => mockFs().promises);
-
-// eslint-disable-next-line import/order
 import { resolve } from 'path';
-import { jest } from '@jest/globals';
-import { vol } from 'memfs';
+import mock from 'mock-fs';
 import { getRelPathWithPosixSeparator } from '@sap-cloud-sdk/generator-common/internal';
 import { createParsedOptions } from '../test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
@@ -37,8 +27,9 @@ describe('service-generator', () => {
         const optionsPerService: OptionsPerService = {
           [getRelPathWithPosixSeparator(pathSpec)]: serviceOptions
         };
-        vol.fromJSON({
-          [pathConfig]: JSON.stringify(optionsPerService)
+        mock({
+          [pathConfig]: JSON.stringify(optionsPerService),
+          [pathSpec]: mock.load(pathSpec)
         });
 
         const serviceMetadata = await parseService(
@@ -58,7 +49,7 @@ describe('service-generator', () => {
         expect(serviceMetadata.serviceOptions.packageName).toEqual(
           serviceOptions.packageName
         );
-        vol.reset();
+        mock.restore();
       });
     });
 

@@ -1,28 +1,28 @@
 {
-  "name": "@sap-cloud-sdk/test-util-shared",
-  "version": "4.5.1",
+  "name": "@sap-cloud-sdk/test-util-internal",
+  "version": "4.6.0",
   "description": "Shared test utilities for SAP Cloud SDK packages",
   "private": true,
   "publishConfig": {
     "access": "restricted"
   },
   "license": "Apache-2.0",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./index.ts",
+  "types": "./index.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./custom-de-serializers": "./dist/custom-de-serializers.js",
-    "./destination-service-mocks": "./dist/destination-service-mocks.js",
-    "./environment-mocks": "./dist/environment-mocks.js",
-    "./example-destination-service-responses": "./dist/example-destination-service-responses.js",
-    "./keys": "./dist/keys.js",
-    "./mocked-access-tokens": "./dist/mocked-access-tokens.js",
-    "./request-mocker": "./dist/request-mocker.js",
-    "./test-cache": "./dist/test-cache.js",
-    "./test-certificate": "./dist/test-certificate.js",
-    "./test-data": "./dist/test-data.js",
-    "./token-accessor-mocks": "./dist/token-accessor-mocks.js",
-    "./xsuaa-service-mocks": "./dist/xsuaa-service-mocks.js"
+    ".": "./index.ts",
+    "./custom-de-serializers": "./custom-de-serializers.ts",
+    "./destination-service-mocks": "./destination-service-mocks.ts",
+    "./environment-mocks": "./environment-mocks.ts",
+    "./example-destination-service-responses": "./example-destination-service-responses.ts",
+    "./keys": "./keys.ts",
+    "./mocked-access-tokens": "./mocked-access-tokens.ts",
+    "./request-mocker": "./request-mocker.ts",
+    "./test-cache": "./test-cache.ts",
+    "./test-certificate": "./test-certificate.ts",
+    "./test-data": "./test-data.ts",
+    "./token-accessor-mocks": "./token-accessor-mocks.ts",
+    "./xsuaa-service-mocks": "./xsuaa-service-mocks.ts"
   },
   "scripts": {
     "compile": "tsc -b"

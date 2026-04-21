@@ -1,20 +1,16 @@
-jest.mock('fs', () => jest.requireActual('memfs').fs);
-jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
-jest.mock('node:fs', () => jest.requireActual('memfs').fs);
-jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
-
 import { sep } from 'path';
-import { jest } from '@jest/globals';
-import { vol } from 'memfs';
+import mock from 'mock-fs';
 import { swaggerPathForEdmx } from './input-path-provider';
 
 describe('swaggerPathForEdmx', () => {
-  afterEach(() => vol.reset());
+  afterEach(() => mock.restore());
 
   it('replaces path ending with .json', () => {
-    vol.fromJSON({
-      '/service-specs/service.edmx': '',
-      '/service-specs/service.json': ''
+    mock({
+      '/service-specs': {
+        'service.edmx': '',
+        'service.json': ''
+      }
     });
     expect(swaggerPathForEdmx('/service-specs/service.edmx')).toEqual(
       `${sep}service-specs${sep}service.json`
@@ -22,9 +18,11 @@ describe('swaggerPathForEdmx', () => {
   });
 
   it('replaces path ending with .JSON', () => {
-    vol.fromJSON({
-      '/service-specs/service.edmx': '',
-      '/service-specs/service.JSON': ''
+    mock({
+      '/service-specs': {
+        'service.edmx': '',
+        'service.JSON': ''
+      }
     });
     expect(swaggerPathForEdmx('/service-specs/service.edmx')).toEqual(
       `${sep}service-specs${sep}service.JSON`
@@ -32,10 +30,12 @@ describe('swaggerPathForEdmx', () => {
   });
 
   it('returns undefined if there is no equally named json file', () => {
-    vol.fromJSON({
-      '/service-specs/service.edmx': '',
-      '/service-specs/SERVICE.json': '',
-      '/service-specs/service.txt': ''
+    mock({
+      '/service-specs': {
+        'service.edmx': '',
+        'SERVICE.json': '',
+        'service.txt': ''
+      }
     });
     expect(swaggerPathForEdmx('/service-specs/service.edmx')).toBeUndefined();
   });

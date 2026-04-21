@@ -309,7 +309,7 @@ importers:
       '@jest/globals':
         specifier: ^30.3.0
         version: 30.3.0
-      '@sap-cloud-sdk/test-util-shared':
+      '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       depcheck:
@@ -483,7 +483,7 @@ importers:
         specifier: ^1.15.0
         version: 1.15.0
     devDependencies:
-      '@sap-cloud-sdk/test-util-shared':
+      '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       depcheck:
@@ -529,7 +529,7 @@ importers:
       '@sap-cloud-sdk/test-services-odata-common':
         specifier: workspace:^
         version: link:../../test-packages/test-services-odata-common
-      '@sap-cloud-sdk/test-util-shared':
+      '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       depcheck:
@@ -569,12 +569,9 @@ importers:
       '@sap-cloud-sdk/test-services-odata-v2':
         specifier: workspace:^
         version: link:../../test-packages/test-services-odata-v2
-      '@sap-cloud-sdk/test-util-shared':
+      '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
       nock:
         specifier: ^14.0.11
         version: 14.0.11
@@ -609,12 +606,9 @@ importers:
       '@sap-cloud-sdk/test-services-odata-v4':
         specifier: workspace:^
         version: link:../../test-packages/test-services-odata-v4
-      '@sap-cloud-sdk/test-util-shared':
+      '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
       nock:
         specifier: ^14.0.11
         version: 14.0.11
@@ -643,7 +637,7 @@ importers:
         specifier: ^1.15.0
         version: 1.15.0
     devDependencies:
-      '@sap-cloud-sdk/test-util-shared':
+      '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       depcheck:
@@ -874,8 +868,8 @@ importers:
         specifier: ^9.8.4
         version: 9.8.4(@eslint/js@10.0.1(eslint@9.39.4))(tar@7.5.13)
       '@sap/cds-dk':
-        specifier: 9.8.3
-        version: 9.8.3(@eslint/js@10.0.1(eslint@9.39.4))(tar@7.5.13)
+        specifier: 9.8.4
+        version: 9.8.4(@eslint/js@10.0.1(eslint@9.39.4))(tar@7.5.13)
       axios:
         specifier: ^1.15.0
         version: 1.15.0
@@ -936,7 +930,7 @@ importers:
       '@sap-cloud-sdk/test-util':
         specifier: workspace:^
         version: link:../../packages/test-util
-      '@sap-cloud-sdk/test-util-shared':
+      '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@sap-cloud-sdk/util':
@@ -979,6 +973,9 @@ importers:
       memfs:
         specifier: ^4.57.1
         version: 4.57.1(tslib@2.8.1)
+      mock-fs:
+        specifier: ^5.5.0
+        version: 5.5.0
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1028,11 +1025,20 @@ importers:
 
   test-packages/test-services-odata-common:
     dependencies:
+      '@sap-cloud-sdk/generator':
+        specifier: workspace:^
+        version: link:../../packages/generator
+      '@sap-cloud-sdk/util':
+        specifier: workspace:^
+        version: link:../../packages/util
       bignumber.js:
         specifier: ^10.0.2
         version: 10.0.2
     devDependencies:
-      '@sap-cloud-sdk/test-util-shared':
+      '@sap-cloud-sdk/generator-common':
+        specifier: workspace:^
+        version: link:../../packages/generator-common
+      '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       depcheck:
@@ -1967,8 +1973,8 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  '@sap/cds-dk@9.8.3':
-    resolution: {integrity: sha512-krQpely2tIm7DdHMDKtoIMPwfoKV/vGsLfrqq07LA677QmrDXtMXfZbmpzuIY4SdvYVYurcH9nM9y6E+mpyVQg==}
+  '@sap/cds-dk@9.8.4':
+    resolution: {integrity: sha512-SZ8/J74QNBwZcRZzo5dQKGnVAMVHOUkFTrtDsB1meMIZDqTgjeKIgpSDk7LVDnHABXkSq6xVYwP2NAevIA9j8Q==}
     hasBin: true
 
   '@sap/cds-fiori@2.3.0':
@@ -4716,6 +4722,10 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  mock-fs@5.5.0:
+    resolution: {integrity: sha512-d/P1M/RacgM3dB0sJ8rjeRNXxtapkPCUnMGmIN0ixJ16F/E4GUZCvWcSGfWGz8eaXYvn1s9baUwNjI4LOPEjiA==}
+    engines: {node: '>=12.0.0'}
+
   mock-json-schema@1.1.2:
     resolution: {integrity: sha512-3IyduYlhfzPy+nFN8wxUjloUi1hM7l8lN5LITuauUNMQltynJIOfLf/DADwTAp2d6kvSBtWojly1EuxX5B0WkA==}
 
@@ -7315,7 +7325,7 @@ snapshots:
 
   '@sap/cds-compiler@6.8.0': {}
 
-  '@sap/cds-dk@9.8.3(@eslint/js@10.0.1(eslint@9.39.4))(tar@7.5.13)':
+  '@sap/cds-dk@9.8.4(@eslint/js@10.0.1(eslint@9.39.4))(tar@7.5.13)':
     dependencies:
       '@cap-js/asyncapi': 1.0.3(@sap/cds@9.8.4(@eslint/js@10.0.1(eslint@9.39.4))(tar@7.5.13))
       '@cap-js/openapi': 1.4.0(@sap/cds@9.8.4(@eslint/js@10.0.1(eslint@9.39.4))(tar@7.5.13))
@@ -10440,6 +10450,8 @@ snapshots:
   mkdirp-classic@0.5.3: {}
 
   mkdirp@1.0.4: {}
+
+  mock-fs@5.5.0: {}
 
   mock-json-schema@1.1.2:
     dependencies:

@@ -9,7 +9,7 @@ import {
   proxyStrategy
 } from './http-proxy-util';
 import { isHttpDestination } from './destination-service-types';
-import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import { addForwardedAuthTokenIfNeeded } from './forward-auth-token';
 import type { Destination } from './destination-service-types';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 
@@ -103,18 +103,21 @@ export function searchEnvVariablesForDestination(
 
   if (getDestinationsEnvVariable()) {
     try {
-      const destination = getDestinationFromEnvByName(options.destinationName);
+      let destination = getDestinationFromEnvByName(options.destinationName);
       if (destination) {
         logger.info(
           `Successfully retrieved destination '${options.destinationName}' from environment variable.`
         );
 
-        setForwardedAuthTokenIfNeeded(destination, options.jwt);
+        destination = addForwardedAuthTokenIfNeeded(destination, options.jwt);
 
-        return isHttpDestination(destination) &&
+        if (
+          isHttpDestination(destination) &&
           ['internet', 'private-link'].includes(proxyStrategy(destination))
-          ? addProxyConfigurationInternet(destination)
-          : destination;
+        ) {
+          destination = addProxyConfigurationInternet(destination);
+        }
+        return destination;
       }
     } catch (error) {
       logger.error(

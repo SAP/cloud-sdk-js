@@ -1,6 +1,6 @@
 import { resolve, join } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { generate } from '../../packages/generator/src';
+import { generate } from '@sap-cloud-sdk/generator';
 
 const logger = createLogger('generate-odata-services');
 

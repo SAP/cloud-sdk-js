@@ -3,7 +3,7 @@ import { Socket } from 'net';
 import {
   mockServiceBindings,
   signedJwtForVerification
-} from '@sap-cloud-sdk/test-util-shared';
+} from '@sap-cloud-sdk/test-util-internal';
 import { audiences, decodeJwt, isXsuaaToken, retrieveJwt, userId } from './jwt';
 
 describe('jwt', () => {

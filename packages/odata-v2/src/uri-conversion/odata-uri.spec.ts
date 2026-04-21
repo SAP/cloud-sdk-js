@@ -6,7 +6,7 @@ import {
   not,
   or
 } from '@sap-cloud-sdk/odata-common/internal';
-import { customTestDeSerializers } from '@sap-cloud-sdk/test-util-shared/custom-de-serializers';
+import { customTestDeSerializers } from '@sap-cloud-sdk/test-util-internal/custom-de-serializers';
 import {
   testFilterBoolean,
   testFilterGuid,

@@ -1,12 +1,7 @@
-jest.mock('fs', () => jest.requireActual('memfs').fs);
-jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
-jest.mock('node:fs', () => jest.requireActual('memfs').fs);
-jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
-
+import * as path from 'path';
 import * as fs from 'fs';
-import { jest } from '@jest/globals';
 import { transports } from 'winston';
-import { vol } from 'memfs';
+import mock from 'mock-fs';
 import {
   cloudSdkExceptionLogger,
   createLogger,
@@ -277,7 +272,14 @@ describe('Cloud SDK Logger', () => {
     });
     it('should replace all transports in all active loggers with the global transport', async () => {
       const consoleSpy = jest.spyOn(process.stdout, 'write');
-      vol.fromJSON({ 'test.log': 'content' }, process.cwd());
+      const rootNodeModules = path.resolve(
+        __dirname,
+        '../../../../node_modules'
+      );
+      mock({
+        'test.log': 'content',
+        [rootNodeModules]: mock.load(rootNodeModules)
+      });
       const fileTransport = new transports.File({
         filename: 'test.log',
         level: 'info'
@@ -319,7 +321,7 @@ describe('Cloud SDK Logger', () => {
         expect(log).not.toMatch(
           /logs verbose nowhere because the level is higher than info/
         );
-        vol.reset();
+        mock.restore();
       });
     });
     it('should accept an array with multiple transports', () => {

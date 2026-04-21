@@ -1,11 +1,4 @@
-jest.mock('fs', () => jest.requireActual('memfs').fs);
-jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
-jest.mock('node:fs', () => jest.requireActual('memfs').fs);
-jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
-
-import { resolve } from 'path';
-import { jest } from '@jest/globals';
-import { vol } from 'memfs';
+import mock from 'mock-fs';
 import { credentials, systems } from '../test/test-util/test-destinations';
 import {
   getTestDestinationByAlias,
@@ -14,18 +7,15 @@ import {
 
 describe('test-destination-provider', () => {
   afterEach(() => {
-    vol.reset();
+    mock.restore();
   });
 
   describe('getDestinations', () => {
     it('returns a list of destinations taken from the first matching file(s) found by recursively traversing the file hierarchy upwards starting at "./"', () => {
-      vol.fromJSON(
-        {
-          'systems.json': JSON.stringify(systems),
-          'credentials.json': JSON.stringify(credentials)
-        },
-        process.cwd()
-      );
+      mock({
+        'systems.json': JSON.stringify(systems),
+        'credentials.json': JSON.stringify(credentials)
+      });
 
       const destinations = getTestDestinations();
       expect(destinations).toEqual([
@@ -49,18 +39,14 @@ describe('test-destination-provider', () => {
     });
 
     it('allows providing paths to the systems and credentials file directly', () => {
-      const parentDir = resolve(process.cwd(), '..');
-      vol.fromJSON(
-        {
-          'systems.json': JSON.stringify(systems),
-          'credentials.json': JSON.stringify(credentials)
-        },
-        parentDir
-      );
+      mock({
+        '../systems.json': JSON.stringify(systems),
+        '../credentials.json': JSON.stringify(credentials)
+      });
 
       const destinations = getTestDestinations({
-        systemsFilePath: resolve(parentDir, 'systems.json'),
-        credentialsFilePath: resolve(parentDir, 'credentials.json')
+        systemsFilePath: '../systems.json',
+        credentialsFilePath: '../credentials.json'
       });
       expect(destinations).toEqual([
         {
@@ -94,11 +80,13 @@ describe('test-destination-provider', () => {
     });
 
     it('throws an error if the provided credentialsFilePath is invalid', () => {
-      vol.fromJSON({ 'systems.json': JSON.stringify(systems) }, process.cwd());
+      mock({
+        'systems.json': JSON.stringify(systems)
+      });
 
       expect(() =>
         getTestDestinations({
-          systemsFilePath: resolve(process.cwd(), 'systems.json'),
+          systemsFilePath: './systems.json',
           credentialsFilePath: 'nopenopenope'
         })
       ).toThrowErrorMatchingInlineSnapshot(
@@ -107,10 +95,12 @@ describe('test-destination-provider', () => {
     });
 
     it('works when providing only a path to a systems.json', () => {
-      vol.fromJSON({ 'systems.json': JSON.stringify(systems) }, process.cwd());
+      mock({
+        'systems.json': JSON.stringify(systems)
+      });
 
       const destinations = getTestDestinations({
-        systemsFilePath: resolve(process.cwd(), 'systems.json')
+        systemsFilePath: './systems.json'
       });
       expect(destinations).toEqual([
         {
@@ -133,22 +123,13 @@ describe('test-destination-provider', () => {
     });
 
     it('works when providing only a path to a credentials.json when a systems.json can be found', () => {
-      const parentDir = resolve(process.cwd(), '..');
-      vol.fromJSON(
-        {
-          'systems.json': JSON.stringify(systems)
-        },
-        process.cwd()
-      );
-      vol.fromJSON(
-        {
-          'credentials.json': JSON.stringify(credentials)
-        },
-        parentDir
-      );
+      mock({
+        'systems.json': JSON.stringify(systems),
+        '../credentials.json': JSON.stringify(credentials)
+      });
 
       const destinations = getTestDestinations({
-        credentialsFilePath: resolve(parentDir, 'credentials.json')
+        credentialsFilePath: '../credentials.json'
       });
       expect(destinations).toEqual([
         {
@@ -171,7 +152,9 @@ describe('test-destination-provider', () => {
     });
 
     it('works if a systems.json is found but no credentials.json', () => {
-      vol.fromJSON({ 'systems.json': JSON.stringify(systems) }, process.cwd());
+      mock({
+        'systems.json': JSON.stringify(systems)
+      });
 
       const destinations = getTestDestinations();
       expect(destinations).toEqual([
@@ -195,14 +178,16 @@ describe('test-destination-provider', () => {
     });
 
     it('throws a reasonable error when the JSON file cannot be found', () => {
-      vol.fromJSON({ '.keep': '' }, process.cwd());
+      mock();
       expect(() => getTestDestinations()).toThrow(
         /^No systems.json could be found when searching in directory.*/
       );
     });
 
     it('throws a reasonable error when the file does not contain proper JSON', () => {
-      vol.fromJSON({ 'systems.json': 'not proper JSON' }, process.cwd());
+      mock({
+        'systems.json': 'not proper JSON'
+      });
 
       expect(() => getTestDestinations()).toThrow(
         /^File read from path.*is not valid JSON./
@@ -211,10 +196,9 @@ describe('test-destination-provider', () => {
   });
 
   it('throws a reasonable error when the format is not correct', () => {
-    vol.fromJSON(
-      { 'systems.json': '{"systems":[{"alias":"Foo"}]}' },
-      process.cwd()
-    );
+    mock({
+      'systems.json': '{"systems":[{"alias":"Foo"}]}'
+    });
 
     expect(() => getTestDestinations()).toThrow(
       /A system in .* is not valid - Mandatory alias or url missing./
@@ -224,17 +208,14 @@ describe('test-destination-provider', () => {
 
 describe('getDestinationByAlias', () => {
   afterEach(() => {
-    vol.reset();
+    mock.restore();
   });
 
   it('locates the files and returns the destination by alias', () => {
-    vol.fromJSON(
-      {
-        'systems.json': JSON.stringify(systems),
-        'credentials.json': JSON.stringify(credentials)
-      },
-      process.cwd()
-    );
+    mock({
+      'systems.json': JSON.stringify(systems),
+      'credentials.json': JSON.stringify(credentials)
+    });
 
     const sysOne = getTestDestinationByAlias('SYS_001');
     const sysTwo = getTestDestinationByAlias('SYS_002');
@@ -259,13 +240,10 @@ describe('getDestinationByAlias', () => {
   });
 
   it("throws an error if the specified destination can't be found", () => {
-    vol.fromJSON(
-      {
-        'systems.json': JSON.stringify(systems),
-        'credentials.json': JSON.stringify(credentials)
-      },
-      process.cwd()
-    );
+    mock({
+      'systems.json': JSON.stringify(systems),
+      'credentials.json': JSON.stringify(credentials)
+    });
 
     expect(() => getTestDestinationByAlias('NOPE'))
       .toThrowErrorMatchingInlineSnapshot(`

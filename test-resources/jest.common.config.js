@@ -6,9 +6,9 @@ module.exports = {
   },
   moduleFileExtensions: ['js', 'json', 'ts'],
   moduleNameMapper: {
-    '^@sap-cloud-sdk/test-util-shared/(.+)$':
+    '^@sap-cloud-sdk/test-util-internal/(.+)$':
       '<rootDir>/../../test-resources/test/test-util/$1.ts',
-    '^@sap-cloud-sdk/test-util-shared$':
+    '^@sap-cloud-sdk/test-util-internal$':
       '<rootDir>/../../test-resources/test/test-util/index.ts'
   },
   globalSetup: '<rootDir>/../../test-resources/bootstrap-global.js',

@@ -1,15 +1,9 @@
-jest.mock('fs', () => jest.requireActual('memfs').fs);
-jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
-jest.mock('node:fs', () => jest.requireActual('memfs').fs);
-jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
-
-import { jest } from '@jest/globals';
-import { vol } from 'memfs';
+import mock from 'mock-fs';
 import { defaultTsConfig, tsconfigJson } from './ts-config';
 
 describe('tsconfigJson', () => {
   afterEach(() => {
-    vol.reset();
+    mock.restore();
   });
 
   it('returns the default tsconfig if transpilation is enabled', async () => {
@@ -29,26 +23,28 @@ describe('tsconfigJson', () => {
 
   it('returns a custom config content if custom file path is defined', async () => {
     const customConfig = { customConfig: true };
-    vol.fromJSON(
-      { 'path/customConfig.json': JSON.stringify(customConfig) },
-      process.cwd()
-    );
+    mock({
+      path: {
+        'customConfig.json': JSON.stringify(customConfig)
+      }
+    });
     const tsConfig = await tsconfigJson(false, './path/customConfig.json');
     expect(JSON.parse(tsConfig!)).toEqual(customConfig);
   });
 
   it('returns custom config content if custom directory path is defined', async () => {
     const customConfig = { customConfig: true };
-    vol.fromJSON(
-      { 'path/tsconfig.json': JSON.stringify(customConfig) },
-      process.cwd()
-    );
+    mock({
+      path: {
+        'tsconfig.json': JSON.stringify(customConfig)
+      }
+    });
     const tsConfig = await tsconfigJson(false, './path');
     expect(JSON.parse(tsConfig!)).toEqual(customConfig);
   });
 
   it('returns custom config content if custom file or directory does not exist', async () => {
-    vol.fromJSON({});
+    mock({});
     await expect(() => tsconfigJson(false, './path')).rejects.toThrow(
       'Could not read tsconfig.json at ./path.'
     );

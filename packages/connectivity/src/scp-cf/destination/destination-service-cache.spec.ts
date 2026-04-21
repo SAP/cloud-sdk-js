@@ -1,12 +1,12 @@
 import nock from 'nock';
-import { mockServiceBindings } from '@sap-cloud-sdk/test-util-shared/environment-mocks';
-import { mockServiceToken } from '@sap-cloud-sdk/test-util-shared/token-accessor-mocks';
+import { mockServiceBindings } from '@sap-cloud-sdk/test-util-internal/environment-mocks';
+import { mockServiceToken } from '@sap-cloud-sdk/test-util-internal/token-accessor-mocks';
 import {
   providerServiceToken,
   subscriberServiceToken,
   subscriberUserToken
-} from '@sap-cloud-sdk/test-util-shared/mocked-access-tokens';
-import { mockSubaccountDestinationsCall } from '@sap-cloud-sdk/test-util-shared/destination-service-mocks';
+} from '@sap-cloud-sdk/test-util-internal/mocked-access-tokens';
+import { mockSubaccountDestinationsCall } from '@sap-cloud-sdk/test-util-internal/destination-service-mocks';
 import { decodeJwt } from '../jwt';
 import { destinationServiceCache } from './destination-service-cache';
 import { fetchDestinations } from './destination-service';

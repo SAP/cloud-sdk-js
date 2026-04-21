@@ -12,7 +12,7 @@
     "compile": {
       "dependsOn": ["^compile"]
     },
-    "@sap-cloud-sdk/test-util-shared#compile": {
+    "@sap-cloud-sdk/test-util-internal#compile": {
       "dependsOn": [
         "@sap-cloud-sdk/connectivity#compile",
         "@sap-cloud-sdk/odata-common#compile",

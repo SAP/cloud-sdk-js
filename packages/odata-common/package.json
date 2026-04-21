@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-services-odata-common": "workspace:^",
-    "@sap-cloud-sdk/test-util-shared": "workspace:^",
+    "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "depcheck": "^1.4.7",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3"

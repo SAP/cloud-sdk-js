@@ -1,6 +1,6 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import { join, resolve, parse, basename, dirname, posix, sep } from 'node:path';
-import { promises, existsSync, mkdtempSync, rmSync } from 'node:fs';
+import { mkdtemp, rm, readFile, lstat, readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
@@ -16,8 +16,6 @@ import {
 import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer/create-file.js';
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';
-
-const { readFile, lstat, readdir } = promises;
 
 const pathToTsConfigRoot = join(process.cwd(), 'tsconfig.json');
 export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
@@ -138,7 +136,7 @@ function compareApisAndLog(
 export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   info(`Check package: ${pathToPackage}`);
   const { pathToSource, pathToTsConfig } = paths(pathToPackage);
-  const pathCompiled = mkdtempSync(join(tmpdir(), 'check-public-api-'));
+  const pathCompiled = await mkdtemp(join(tmpdir(), 'check-public-api-'));
   try {
     const opts = await getCompilerOptions(pathToPackage, pathCompiled);
     const includeExclude = await readIncludeExcludeWithDefaults(pathToTsConfig);
@@ -166,7 +164,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     }
 
     const indexFilePath = join(pathToSource, 'index.ts');
-    checkIndexFileExists(indexFilePath);
+    await checkIndexFileExists(indexFilePath);
 
     const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
     const allExportedIndex = await parseIndexFile(
@@ -182,13 +180,18 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
       `The index.ts of package ${pathToPackage} is in sync with the type annotations.\n`
     );
   } finally {
-    rmSync(pathCompiled, { recursive: true, force: true });
+    await rm(pathCompiled, { recursive: true, force: true });
   }
 }
 
-export function checkIndexFileExists(indexFilePath: string): void {
-  if (!existsSync(indexFilePath)) {
-    error('No index.ts file found in root.');
+export async function checkIndexFileExists(
+  indexFilePath: string
+): Promise<void> {
+  const isFile = await lstat(indexFilePath)
+    .then(stat => stat.isFile())
+    .catch(() => false);
+  if (!isFile) {
+    error(`No index.ts file found in ${dirname(indexFilePath)}.`);
   }
 }
 
@@ -338,7 +341,11 @@ export async function exportAllInBarrel(
   barrelFileName: string
 ): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
-  if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
+  if (
+    await lstat(barrelFilePath)
+      .then(stat => stat.isFile())
+      .catch(() => false)
+  ) {
     const dirContents = (
       await glob('*', {
         ignore: [

@@ -43,11 +43,13 @@ runs:
       run: |
         if [[ -n "$REGISTRY_URL" ]]; then
           echo "url=$REGISTRY_URL" >> $GITHUB_OUTPUT
-        elif [[ -n "$REGISTRY_TOKEN" ]]; then
-          echo "url=https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/" >> $GITHUB_OUTPUT
         elif [[ "$REPO" == "SAP/ai-sdk-js" || "$REPO" == "SAP/cloud-sdk-js" ]]; then
-          echo "::error::The input 'registry-token' is required when 'registry-url' is not provided."
-          exit 1
+          if [[ -n "$REGISTRY_TOKEN" ]]; then
+            echo "url=https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/" >> $GITHUB_OUTPUT
+          else
+            echo "::error::The input 'registry-token' is required when 'registry-url' is not provided."
+            exit 1
+          fi
         else
           echo "url=https://registry.npmjs.org" >> $GITHUB_OUTPUT
         fi
@@ -55,7 +57,6 @@ runs:
         REGISTRY_URL: ${{ inputs.registry-url }}
         REGISTRY_TOKEN: ${{ inputs.registry-token }}
         REPO: ${{ github.repository }}
-        WORKFLOW_REF: ${{ github.workflow_ref }}
     - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
       with:
         node-version: ${{ inputs.node-version }}

@@ -13,14 +13,18 @@ var getDependentsGraph = __nccwpck_require__(81699);
 var shouldSkipPackage = __nccwpck_require__(81435);
 var semverParse = __nccwpck_require__(15797);
 var semverGt = __nccwpck_require__(60955);
+var path = __nccwpck_require__(76760);
 var semverSatisfies = __nccwpck_require__(17871);
+var validRange = __nccwpck_require__(23381);
 var semverInc = __nccwpck_require__(35542);
 
 function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
 
 var semverParse__default = /*#__PURE__*/_interopDefault(semverParse);
 var semverGt__default = /*#__PURE__*/_interopDefault(semverGt);
+var path__default = /*#__PURE__*/_interopDefault(path);
 var semverSatisfies__default = /*#__PURE__*/_interopDefault(semverSatisfies);
+var validRange__default = /*#__PURE__*/_interopDefault(validRange);
 var semverInc__default = /*#__PURE__*/_interopDefault(semverInc);
 
 function _toPrimitive(t, r) {
@@ -94,16 +98,26 @@ function getHighestReleaseType(releases) {
 function getCurrentHighestVersion(packageGroup, packagesByName) {
   let highestVersion;
   for (let pkgName of packageGroup) {
-    let pkg = packagesByName.get(pkgName);
-    if (!pkg) {
-      console.error(`FATAL ERROR IN CHANGESETS! We were unable to version for package group: ${pkgName} in package group: ${packageGroup.toString()}`);
-      throw new Error(`fatal: could not resolve linked packages`);
-    }
+    let pkg = mapGetOrThrowInternal(packagesByName, pkgName, `We were unable to version for package group: ${pkgName} in package group: ${packageGroup.toString()}`);
     if (highestVersion === undefined || semverGt__default["default"](pkg.packageJson.version, highestVersion)) {
       highestVersion = pkg.packageJson.version;
     }
   }
   return highestVersion;
+}
+function mapGetOrThrow(map, key, errorMessage) {
+  const value = map.get(key);
+  if (value === undefined) {
+    throw new Error(errorMessage);
+  }
+  return value;
+}
+function mapGetOrThrowInternal(map, key, errorMessage) {
+  const value = map.get(key);
+  if (value === undefined) {
+    throw new errors.InternalError(errorMessage);
+  }
+  return value;
 }
 
 /*
@@ -153,10 +167,7 @@ function incrementVersion(release, preInfo) {
   }
   let version = semverInc__default["default"](release.oldVersion, release.type);
   if (preInfo !== undefined && preInfo.state.mode !== "exit") {
-    let preVersion = preInfo.preVersions.get(release.name);
-    if (preVersion === undefined) {
-      throw new errors.InternalError(`preVersion for ${release.name} does not exist when preState is defined`);
-    }
+    let preVersion = mapGetOrThrowInternal(preInfo.preVersions, release.name, `preVersion for ${release.name} does not exist when preState is defined`);
     // why are we adding this ourselves rather than passing 'pre' + versionType to semver.inc?
     // because semver.inc with prereleases is confusing and this seems easier
     version += `-${preInfo.state.tag}.${preVersion}`;
@@ -179,6 +190,7 @@ function incrementVersion(release, preInfo) {
 function determineDependents({
   releases,
   packagesByName,
+  rootDir,
   dependencyGraph,
   preInfo,
   config
@@ -191,21 +203,18 @@ function determineDependents({
     const nextRelease = pkgsToSearch.shift();
     if (!nextRelease) continue;
     // pkgDependents will be a list of packages that depend on nextRelease ie. ['avatar-group', 'comment']
-    const pkgDependents = dependencyGraph.get(nextRelease.name);
-    if (!pkgDependents) {
-      throw new Error(`Error in determining dependents - could not find package in repository: ${nextRelease.name}`);
-    }
+    const pkgDependents = mapGetOrThrowInternal(dependencyGraph, nextRelease.name, `Error in determining dependents - could not find package in repository: ${nextRelease.name}`);
     pkgDependents.map(dependent => {
       let type;
-      const dependentPackage = packagesByName.get(dependent);
-      if (!dependentPackage) throw new Error("Dependency map is incorrect");
+      const dependentPackage = mapGetOrThrowInternal(packagesByName, dependent, "Dependency map is incorrect");
       if (shouldSkipPackage.shouldSkipPackage(dependentPackage, {
         ignore: config.ignore,
         allowPrivatePackages: config.privatePackages.version
       })) {
         type = "none";
       } else {
-        const dependencyVersionRanges = getDependencyVersionRanges(dependentPackage.packageJson, nextRelease);
+        const dependencyPackage = mapGetOrThrowInternal(packagesByName, nextRelease.name, "Dependency map is incorrect");
+        const dependencyVersionRanges = getDependencyVersionRanges(rootDir, dependentPackage.packageJson, nextRelease, dependencyPackage);
         for (const {
           depType,
           versionRange
@@ -286,7 +295,7 @@ function determineDependents({
   The array can contain more than one elements in case a dependency appears in multiple
   dependency lists. For example, a package that is both a peerDepenency and a devDependency.
 */
-function getDependencyVersionRanges(dependentPkgJSON, dependencyRelease) {
+function getDependencyVersionRanges(rootDir, dependentPkgJSON, dependencyRelease, dependencyPackage) {
   const DEPENDENCY_TYPES = ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"];
   const dependencyVersionRanges = [];
   for (const type of DEPENDENCY_TYPES) {
@@ -304,7 +313,17 @@ function getDependencyVersionRanges(dependentPkgJSON, dependencyRelease) {
         case "~":
           versionRange = `${versionRange}${dependencyRelease.oldVersion}`;
           break;
-        // default: keep the stripped range as is
+        default:
+          {
+            if (!validRange__default["default"](versionRange)) {
+              if (path__default["default"].posix.normalize(versionRange) === path__default["default"].relative(rootDir, dependencyPackage.dir).replace(/\\/g, "/")) {
+                versionRange = dependencyRelease.oldVersion;
+              } else {
+                continue;
+              }
+            }
+            // fallthrough: keep the stripped range as is
+          }
       }
     }
     dependencyVersionRanges.push({
@@ -341,18 +360,18 @@ function flattenReleases(changesets, packagesByName, config) {
     // If their dependencies need updates, they will be added to releases by `determineDependents()` with release type `none`
     .filter(({
       name
-    }) => !shouldSkipPackage.shouldSkipPackage(packagesByName.get(name), {
-      ignore: config.ignore,
-      allowPrivatePackages: config.privatePackages.version
-    })).forEach(({
+    }) => {
+      const pkg = mapGetOrThrowInternal(packagesByName, name, `Couldn't find package named "${name}" listed in changeset "${changeset.id}"`);
+      return !shouldSkipPackage.shouldSkipPackage(pkg, {
+        ignore: config.ignore,
+        allowPrivatePackages: config.privatePackages.version
+      });
+    }).forEach(({
       name,
       type
     }) => {
+      let pkg = mapGetOrThrowInternal(packagesByName, name, `Couldn't find package named "${name}" listed in changeset "${changeset.id}"`);
       let release = releases.get(name);
-      let pkg = packagesByName.get(name);
-      if (!pkg) {
-        throw new Error(`"${changeset.id}" changeset mentions a release for a package "${name}" but such a package could not be found.`);
-      }
       if (!release) {
         release = {
           name,
@@ -385,7 +404,8 @@ function matchFixedConstraint(releases, packagesByName, config) {
 
     // Finally, we update the packages so all of them are on the highest version
     for (let pkgName of fixedPackages) {
-      if (shouldSkipPackage.shouldSkipPackage(packagesByName.get(pkgName), {
+      const pkg = mapGetOrThrowInternal(packagesByName, pkgName, `Could not find package named "${pkgName}" listed in fixed group ${JSON.stringify(fixedPackages)}`);
+      if (shouldSkipPackage.shouldSkipPackage(pkg, {
         ignore: config.ignore,
         allowPrivatePackages: config.privatePackages.version
       })) {
@@ -478,7 +498,7 @@ function getNewVersion(release, preInfo) {
 function assembleReleasePlan(changesets, packages, config,
 // intentionally not using an optional parameter here so the result of `readPreState` has to be passed in here
 preState,
-// snapshot: undefined            ->  not using snaphot
+// snapshot: undefined            ->  not using snapshot
 // snapshot: { tag: undefined }   ->  --snapshot (empty tag)
 // snapshot: { tag: "canary" }    ->  --snapshot canary
 snapshot) {
@@ -503,6 +523,11 @@ snapshot) {
   // flattened down to one release per package, having a reference back to their
   // changesets, and with a calculated new versions
   let releases = flattenReleases(relevantChangesets, packagesByName, refinedConfig);
+
+  // Unlike the config/CLI validation graphs, this graph intentionally includes
+  // devDependencies. While devDeps don't cause version bumps (determineDependents
+  // assigns type "none"), they must appear in the release plan so that
+  // apply-release-plan can update their version ranges in package.json.
   let dependencyGraph = getDependentsGraph.getDependentsGraph(packages, {
     bumpVersionsWithWorkspaceProtocolOnly: refinedConfig.bumpVersionsWithWorkspaceProtocolOnly
   });
@@ -512,6 +537,7 @@ snapshot) {
     let dependentAdded = determineDependents({
       releases,
       packagesByName,
+      rootDir: packages.root.dir,
       dependencyGraph,
       preInfo,
       config: refinedConfig
@@ -565,10 +591,8 @@ function getRelevantChangesets(changesets, packagesByName, config, preState) {
     const skippedPackages = [];
     const notSkippedPackages = [];
     for (const release of changeset.releases) {
-      const packageByName = packagesByName.get(release.name);
-      if (!packageByName) {
-        throw new Error(`Found changeset ${changeset.id} for package ${release.name} which is not in the workspace`);
-      }
+      // this acts as an early validation in this package so we don't throw an internal error here
+      const packageByName = mapGetOrThrow(packagesByName, release.name, `Found changeset ${changeset.id} for package ${release.name} which is not in the workspace`);
       if (shouldSkipPackage.shouldSkipPackage(packageByName, {
         ignore: config.ignore,
         allowPrivatePackages: config.privatePackages.version
@@ -588,10 +612,11 @@ function getRelevantChangesets(changesets, packagesByName, config, preState) {
   }
   return changesets;
 }
-function getHighestPreVersion(packageGroup, packagesByName) {
+function getHighestPreVersion(groupKind, packageGroup, packagesByName) {
   let highestPreVersion = 0;
-  for (let pkg of packageGroup) {
-    highestPreVersion = Math.max(getPreVersion(packagesByName.get(pkg).packageJson.version), highestPreVersion);
+  for (let pkgName of packageGroup) {
+    const pkg = mapGetOrThrowInternal(packagesByName, pkgName, `Could not find package named "${pkgName}" listed in ${groupKind} group ${JSON.stringify(packageGroup)}`);
+    highestPreVersion = Math.max(getPreVersion(pkg.packageJson.version), highestPreVersion);
   }
   return highestPreVersion;
 }
@@ -621,13 +646,13 @@ function getPreInfo(changesets, packagesByName, config, preState) {
     preVersions.set(pkg.packageJson.name, getPreVersion(pkg.packageJson.version));
   }
   for (let fixedGroup of config.fixed) {
-    let highestPreVersion = getHighestPreVersion(fixedGroup, packagesByName);
+    let highestPreVersion = getHighestPreVersion("fixed", fixedGroup, packagesByName);
     for (let fixedPackage of fixedGroup) {
       preVersions.set(fixedPackage, highestPreVersion);
     }
   }
   for (let linkedGroup of config.linked) {
-    let highestPreVersion = getHighestPreVersion(linkedGroup, packagesByName);
+    let highestPreVersion = getHighestPreVersion("linked", linkedGroup, packagesByName);
     for (let linkedPackage of linkedGroup) {
       preVersions.set(linkedPackage, highestPreVersion);
     }
@@ -685,7 +710,7 @@ var micromatch__default = /*#__PURE__*/_interopDefault(micromatch);
 
 var packageJson = {
 	name: "@changesets/config",
-	version: "3.1.3",
+	version: "3.1.4",
 	description: "Utilities for reading and parsing Changeset's config",
 	main: "dist/changesets-config.cjs.js",
 	module: "dist/changesets-config.esm.js",
@@ -710,7 +735,7 @@ var packageJson = {
 	],
 	dependencies: {
 		"@changesets/errors": "^0.2.0",
-		"@changesets/get-dependents-graph": "^2.1.3",
+		"@changesets/get-dependents-graph": "^2.1.4",
 		"@changesets/logger": "^0.1.1",
 		"@changesets/should-skip-package": "^0.1.2",
 		"@changesets/types": "^6.1.0",
@@ -1099,50 +1124,42 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 var Range = __nccwpck_require__(32946);
 var pc = __nccwpck_require__(96596);
+var path = __nccwpck_require__(76760);
 
 function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; }
 
 var Range__default = /*#__PURE__*/_interopDefault(Range);
 var pc__default = /*#__PURE__*/_interopDefault(pc);
+var path__default = /*#__PURE__*/_interopDefault(path);
 
 // This is a modified version of the graph-getting in bolt
 const DEPENDENCY_TYPES = ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"];
-
 const getAllDependencies = (config, ignoreDevDependencies) => {
   const allDependencies = new Map();
-
   for (const type of DEPENDENCY_TYPES) {
     const deps = config[type];
     if (!deps) continue;
-
     for (const name of Object.keys(deps)) {
       const depRange = deps[name];
-
       if (type === "devDependencies" && (ignoreDevDependencies || depRange.startsWith("link:") || depRange.startsWith("file:"))) {
         continue;
       }
-
       allDependencies.set(name, depRange);
     }
   }
-
   return allDependencies;
 };
-
 const isProtocolRange = range => range.indexOf(":") !== -1;
-
 const getValidRange = potentialRange => {
   if (isProtocolRange(potentialRange)) {
     return null;
   }
-
   try {
     return new Range__default["default"](potentialRange);
   } catch (_unused) {
     return null;
   }
 };
-
 function getDependencyGraph(packages, {
   ignoreDevDependencies = false,
   bumpVersionsWithWorkspaceProtocolOnly = false
@@ -1152,60 +1169,64 @@ function getDependencyGraph(packages, {
   const packagesByName = {
     [packages.root.packageJson.name]: packages.root
   };
+  const relativePathsByName = {
+    [packages.root.packageJson.name]: "."
+  };
   const queue = [packages.root];
-
   for (const pkg of packages.packages) {
     queue.push(pkg);
     packagesByName[pkg.packageJson.name] = pkg;
+    relativePathsByName[pkg.packageJson.name] = path__default["default"].relative(packages.root.dir, pkg.dir).replace(/\\/g, "/");
   }
-
   for (const pkg of queue) {
     const {
       name
     } = pkg.packageJson;
     const dependencies = [];
     const allDependencies = getAllDependencies(pkg.packageJson, ignoreDevDependencies);
-
     for (let [depName, depRange] of allDependencies) {
       const match = packagesByName[depName];
       if (!match) continue;
       const expected = match.packageJson.version;
+      const rawDepRange = depRange;
       const usesWorkspaceRange = depRange.startsWith("workspace:");
-
       if (usesWorkspaceRange) {
         depRange = depRange.replace(/^workspace:/, "");
-
         if (depRange === "*" || depRange === "^" || depRange === "~") {
           dependencies.push(depName);
+          continue;
+        }
+        if (path__default["default"].posix.normalize(depRange) === relativePathsByName[depName]) {
+          dependencies.push(depName);
+          continue;
+        }
+        if (!getValidRange(depRange)) {
+          valid = false;
+          console.error(`Package ${pc__default["default"].cyan(`"${name}"`)} must depend on the current version of ${pc__default["default"].cyan(`"${depName}"`)}: ${pc__default["default"].green(`"${expected}"`)} vs ${pc__default["default"].red(`"${rawDepRange}"`)}`);
           continue;
         }
       } else if (bumpVersionsWithWorkspaceProtocolOnly) {
         continue;
       }
-
       const range = getValidRange(depRange);
-
       if (range && !range.test(expected) || isProtocolRange(depRange)) {
         valid = false;
-        console.error(`Package ${pc__default["default"].cyan(`"${name}"`)} must depend on the current version of ${pc__default["default"].cyan(`"${depName}"`)}: ${pc__default["default"].green(`"${expected}"`)} vs ${pc__default["default"].red(`"${depRange}"`)}`);
-        continue;
-      } // `depRange` could have been a tag and if a tag has been used there might have been a reason for that
-      // we should not count this as a local monorepro dependant
-
-
-      if (!range) {
+        console.error(`Package ${pc__default["default"].cyan(`"${name}"`)} must depend on the current version of ${pc__default["default"].cyan(`"${depName}"`)}: ${pc__default["default"].green(`"${expected}"`)} vs ${pc__default["default"].red(`"${rawDepRange}"`)}`);
         continue;
       }
 
+      // `depRange` could have been a tag and if a tag has been used there might have been a reason for that
+      // we should not count this as a local monorepro dependant
+      if (!range) {
+        continue;
+      }
       dependencies.push(depName);
     }
-
     graph.set(name, {
       pkg,
       dependencies
     });
   }
-
   return {
     graph,
     valid
@@ -1232,7 +1253,6 @@ function getDependentsGraph(packages, opts) {
   packages.packages.forEach(pkg => {
     const dependent = pkg.packageJson.name;
     const valFromDependencyGraph = dependencyGraph.get(dependent);
-
     if (valFromDependencyGraph) {
       const dependencies = valFromDependencyGraph.dependencies;
       dependencies.forEach(dependency => {
@@ -61196,6 +61216,13 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:net");
 
 /***/ }),
 
+/***/ 76760:
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
+
+/***/ }),
+
 /***/ 643:
 /***/ ((module) => {
 
@@ -62227,8 +62254,8 @@ var __webpack_exports__ = {};
 
 ;// CONCATENATED MODULE: external "node:fs/promises"
 const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
-;// CONCATENATED MODULE: external "node:path"
-const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
+// EXTERNAL MODULE: external "node:path"
+var external_node_path_ = __nccwpck_require__(76760);
 // EXTERNAL MODULE: external "os"
 var external_os_ = __nccwpck_require__(70857);
 ;// CONCATENATED MODULE: ../../node_modules/@actions/core/lib/utils.js
@@ -65249,7 +65276,7 @@ async function bump() {
     await (0,execa.command)('node_modules/@changesets/cli/bin.js version');
 }
 async function updateRootPackageJson(version) {
-    await transformFile((0,external_node_path_namespaceObject.resolve)('package.json'), packageJson => formatJson({
+    await transformFile((0,external_node_path_.resolve)('package.json'), packageJson => formatJson({
         ...JSON.parse(packageJson),
         version: `${version}`
     }));

@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@pnpm-setup
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - run: sudo apt-get install jq

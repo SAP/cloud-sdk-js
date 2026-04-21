@@ -1,5 +1,11 @@
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+
+mockFsWithMemfs(jest);
+
+// eslint-disable-next-line import/order
 import { X509Certificate } from 'node:crypto';
-import mock from 'mock-fs';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { certAsString } from '@sap-cloud-sdk/test-util-internal/test-certificate';
 import { registerDestinationCache } from './register-destination-cache';
@@ -13,18 +19,16 @@ describe('register-destination-cache', () => {
   });
 
   beforeEach(() => {
-    mock({
-      'cf-crypto': {
-        'cf-cert': certAsString,
-        'cf-key': 'my-key'
-      }
-    });
+    vol.fromNestedJSON(
+      { 'cf-crypto': { 'cf-cert': certAsString, 'cf-key': 'my-key' } },
+      process.cwd()
+    );
   });
 
   afterEach(() => {
     destination.clear();
     mtls.clear();
-    mock.restore();
+    vol.reset();
     jest.clearAllMocks();
   });
 

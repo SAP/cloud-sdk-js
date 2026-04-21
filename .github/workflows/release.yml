@@ -17,7 +17,7 @@ jobs:
           private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
           owner: SAP
           repositories: cloud-sdk
-      - uses: sap/cloud-sdk-js/.github/actions/setup@pnpm-setup
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           ref: 'main'
           persist-credentials: true

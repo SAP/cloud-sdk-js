@@ -16,17 +16,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./mock-fs": {
-      "types": "./dist/mock-fs.d.ts",
-      "default": "./dist/mock-fs.js"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "mock-fs": [
-        "./dist/mock-fs.d.ts"
-      ]
     }
   },
   "publishConfig": {
@@ -60,6 +49,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.3.0",
+    "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "depcheck": "^1.4.7",
     "memfs": "^4.57.1",
     "prettier": "^3.8.1",

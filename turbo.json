@@ -20,6 +20,9 @@
         "@sap-cloud-sdk/odata-v4#compile"
       ]
     },
+    "@sap-cloud-sdk/util#compile": {
+      "dependsOn": []
+    },
     "@sap-cloud-sdk/connectivity#compile": {
       "dependsOn": [
         "@sap-cloud-sdk/resilience#compile",

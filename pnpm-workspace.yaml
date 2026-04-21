@@ -31,6 +31,7 @@ packages:
   - 'build-packages/merge-changelogs'
   - 'build-packages/changelog'
   - 'build-packages/merge-and-write-changelogs'
+  - 'build-packages/test-utils'
 
 blockExoticSubdeps: true
 minimumReleaseAge: 5760

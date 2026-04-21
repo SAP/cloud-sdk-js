@@ -24,6 +24,7 @@
     "memfs": "^4.57.1"
   },
   "devDependencies": {
+    "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
     "@vercel/ncc": "^0.38.4",
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",

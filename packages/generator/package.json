@@ -39,7 +39,7 @@
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/odata-v2,@sap-cloud-sdk/odata-v4,memfs'",
+    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/odata-v2,@sap-cloud-sdk/odata-v4'",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.3.0",
-    "@sap-cloud-sdk/test-util": "^4.6.0",
+    "@sap-cloud-sdk/test-util-internal": "*",
     "depcheck": "^1.4.7",
     "execa": "^5.0.0",
     "memfs": "^4.57.1",

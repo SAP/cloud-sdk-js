@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/order
-import { mockFsFactory } from '@sap-cloud-sdk/test-util/mock-fs';
+import { mockFsFactory } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
 const mockFs = () => mockFsFactory(jest.requireActual('fs'));
 
 jest.mock('fs', () => mockFs());

@@ -2,7 +2,7 @@ import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { vol } from 'memfs';
 import { jest, describe, afterEach, it } from '@jest/globals';
-import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
 import { getNextVersion } from './util.js';
 
 mockFsWithMemfs(jest);

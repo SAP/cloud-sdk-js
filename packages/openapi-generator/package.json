@@ -36,7 +36,7 @@
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi,memfs'",
+    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi'",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
@@ -52,7 +52,7 @@
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "^14.1.1",
     "@jest/globals": "^30.3.0",
-    "@sap-cloud-sdk/test-util": "^4.6.0",
+    "@sap-cloud-sdk/test-util-internal": "*",
     "@types/content-type": "^1.1.9",
     "@types/js-yaml": "^4.0.9",
     "depcheck": "^1.4.7",

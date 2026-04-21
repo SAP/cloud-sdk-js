@@ -36,7 +36,7 @@
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck . --ignores=memfs",
+    "check:dependencies": "depcheck .",
     "readme": "ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.3.0",
-    "@sap-cloud-sdk/test-util": "^4.6.0",
+    "@sap-cloud-sdk/test-util-internal": "*",
     "@types/yargs": "^17.0.33",
     "depcheck": "^1.4.7",
     "memfs": "^4.57.1",

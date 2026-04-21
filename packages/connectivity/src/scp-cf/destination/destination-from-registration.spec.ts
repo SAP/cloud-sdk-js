@@ -15,8 +15,8 @@ import {
   subscriberUserToken,
   unmockDestinationsEnv,
   xsuaaBindingMock
-} from '@sap-cloud-sdk/test-util-shared';
-import { certAsString } from '@sap-cloud-sdk/test-util-shared/test-certificate';
+} from '@sap-cloud-sdk/test-util-internal';
+import { certAsString } from '@sap-cloud-sdk/test-util-internal/test-certificate';
 import {
   registerDestination,
   searchRegisteredDestination

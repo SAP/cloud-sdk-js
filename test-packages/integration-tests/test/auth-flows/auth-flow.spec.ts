@@ -23,7 +23,7 @@ describe('dummy test suite, should be removed', () => {
 //   getDestinationFromDestinationService,
 //   serviceToken
 // } from '../../../../packages/connectivity/src/internal';
-// import { signedJwt } from '@sap-cloud-sdk/test-util-shared';
+// import { signedJwt } from '@sap-cloud-sdk/test-util-internal';
 // import {
 //   loadLocalVcap,
 //   readSystems,

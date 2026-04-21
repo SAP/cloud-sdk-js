@@ -31,7 +31,7 @@ import {
   testTenants,
   xsuaaBindingMock,
   publicKey
-} from '@sap-cloud-sdk/test-util-shared';
+} from '@sap-cloud-sdk/test-util-internal';
 import * as csrf from './csrf-token-middleware';
 import {
   buildHttpRequest,

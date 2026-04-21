@@ -48,7 +48,7 @@
     "voca": "^1.4.1"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-util-shared": "*",
+    "@sap-cloud-sdk/test-util-internal": "*",
     "typescript": "~5.9.3",
     "@sap-cloud-sdk/test-services-odata-common": "^4.6.0"
   }

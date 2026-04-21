@@ -21,7 +21,7 @@ import {
   providerServiceToken,
   createOriginalTestEntityDataWithLinks,
   mockFetchDestinationCalls
-} from '@sap-cloud-sdk/test-util-shared';
+} from '@sap-cloud-sdk/test-util-internal';
 import {
   testEntityApi,
   testEntitySingleLinkApi,

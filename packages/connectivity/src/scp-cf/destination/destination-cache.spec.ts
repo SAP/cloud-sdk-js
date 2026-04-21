@@ -3,33 +3,33 @@ import nock from 'nock';
 import {
   mockFetchDestinationCalls,
   mockFetchDestinationCallsNotFound
-} from '@sap-cloud-sdk/test-util-shared/destination-service-mocks';
+} from '@sap-cloud-sdk/test-util-internal/destination-service-mocks';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
   testTenants,
   uaaDomain
-} from '@sap-cloud-sdk/test-util-shared/environment-mocks';
+} from '@sap-cloud-sdk/test-util-internal/environment-mocks';
 import {
   certificateSingleResponse,
   destinationName,
   oauthSingleResponse,
   onPremisePrincipalPropagationMultipleResponse,
   samlAssertionSingleResponse
-} from '@sap-cloud-sdk/test-util-shared/example-destination-service-responses';
+} from '@sap-cloud-sdk/test-util-internal/example-destination-service-responses';
 import {
   providerServiceToken,
   providerUserToken,
   providerUserPayload,
   subscriberServiceToken,
   subscriberUserToken
-} from '@sap-cloud-sdk/test-util-shared/mocked-access-tokens';
-import { TestCache } from '@sap-cloud-sdk/test-util-shared/test-cache';
+} from '@sap-cloud-sdk/test-util-internal/mocked-access-tokens';
+import { TestCache } from '@sap-cloud-sdk/test-util-internal/test-cache';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '@sap-cloud-sdk/test-util-shared/token-accessor-mocks';
+} from '@sap-cloud-sdk/test-util-internal/token-accessor-mocks';
 import { decodeJwt } from '../jwt';
 import { destinationServiceCache } from './destination-service-cache';
 import {

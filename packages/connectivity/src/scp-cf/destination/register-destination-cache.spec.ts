@@ -7,7 +7,7 @@ import { X509Certificate } from 'node:crypto';
 import { jest } from '@jest/globals';
 import { vol } from 'memfs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { certAsString } from '@sap-cloud-sdk/test-util-shared/test-certificate';
+import { certAsString } from '@sap-cloud-sdk/test-util-internal/test-certificate';
 import { registerDestinationCache } from './register-destination-cache';
 
 const { mtls, destination } = registerDestinationCache;

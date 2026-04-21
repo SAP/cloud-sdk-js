@@ -13,7 +13,7 @@ jest.mock('jks-js', () => ({
   toPem: jest.fn()
 }));
 import * as jks from 'jks-js';
-import { certAsString } from '@sap-cloud-sdk/test-util-shared/test-certificate';
+import { certAsString } from '@sap-cloud-sdk/test-util-internal/test-certificate';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { getAgentConfig } from './http-agent';
 import type { HttpDestination } from '../scp-cf/destination';

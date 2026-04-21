@@ -1,4 +1,4 @@
-import { signedJwt } from '@sap-cloud-sdk/test-util-shared';
+import { signedJwt } from '@sap-cloud-sdk/test-util-internal';
 import {
   identityServicesCache,
   getIdentityServiceInstanceFromCredentials

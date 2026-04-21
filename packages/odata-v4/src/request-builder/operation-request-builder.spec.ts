@@ -9,7 +9,7 @@ import {
   testFunctionImportMultipleParams
 } from '@sap-cloud-sdk/test-services-odata-v4/test-service';
 import { entitySerializer } from '@sap-cloud-sdk/odata-common';
-import { defaultDestination } from '@sap-cloud-sdk/test-util-shared/request-mocker';
+import { defaultDestination } from '@sap-cloud-sdk/test-util-internal/request-mocker';
 import { defaultDeSerializers } from '../de-serializers';
 import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 

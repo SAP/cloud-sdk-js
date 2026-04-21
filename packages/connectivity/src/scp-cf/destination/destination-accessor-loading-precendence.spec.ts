@@ -1,9 +1,9 @@
-import { mockServiceBindings } from '@sap-cloud-sdk/test-util-shared';
+import { mockServiceBindings } from '@sap-cloud-sdk/test-util-internal';
 import { getDestination, useOrFetchDestination } from './destination-accessor';
 import { registerDestination } from './destination-from-registration';
 import { registerDestinationCache } from './register-destination-cache';
 import type { DestinationWithName } from './destination-from-registration';
-import type { MockServiceBindings } from '@sap-cloud-sdk/test-util-shared';
+import type { MockServiceBindings } from '@sap-cloud-sdk/test-util-internal';
 
 function mockEnvDestinations() {
   process.env['destinations'] = JSON.stringify([

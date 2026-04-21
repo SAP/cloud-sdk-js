@@ -3,7 +3,7 @@ import nock from 'nock';
 import {
   defaultDestination,
   mockDeleteRequest
-} from '@sap-cloud-sdk/test-util-shared';
+} from '@sap-cloud-sdk/test-util-internal';
 import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { DeleteRequestBuilder } from './delete-request-builder';
 

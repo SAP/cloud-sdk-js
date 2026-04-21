@@ -3,7 +3,7 @@ import {
   mockServiceToken,
   mockFetchDestinationCalls,
   providerServiceToken
-} from '@sap-cloud-sdk/test-util-shared';
+} from '@sap-cloud-sdk/test-util-internal';
 import { getDestinationFromDestinationService } from './destination-from-service';
 
 describe('getDestinationFromDestinationService', () => {

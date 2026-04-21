@@ -4,26 +4,26 @@ import axios from 'axios';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings
-} from '@sap-cloud-sdk/test-util-shared/environment-mocks';
+} from '@sap-cloud-sdk/test-util-internal/environment-mocks';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '@sap-cloud-sdk/test-util-shared/token-accessor-mocks';
+} from '@sap-cloud-sdk/test-util-internal/token-accessor-mocks';
 import {
   mockCertificateCall,
   mockFetchDestinationCalls
-} from '@sap-cloud-sdk/test-util-shared/destination-service-mocks';
+} from '@sap-cloud-sdk/test-util-internal/destination-service-mocks';
 import {
   providerServiceToken,
   providerUserToken,
   subscriberServiceToken,
   subscriberUserToken
-} from '@sap-cloud-sdk/test-util-shared/mocked-access-tokens';
+} from '@sap-cloud-sdk/test-util-internal/mocked-access-tokens';
 import {
   basicMultipleResponse,
   oauthClientCredentialsSingleResponse,
   onPremisePrincipalPropagationMultipleResponse
-} from '@sap-cloud-sdk/test-util-shared/example-destination-service-responses';
+} from '@sap-cloud-sdk/test-util-internal/example-destination-service-responses';
 import { getDestination } from './destination-accessor';
 import * as ProxyUtil from './http-proxy-util';
 import { alwaysProvider } from './destination-selection-strategies';

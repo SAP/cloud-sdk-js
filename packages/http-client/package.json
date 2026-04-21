@@ -46,7 +46,7 @@
     "axios": "^1.15.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-util-shared": "*",
+    "@sap-cloud-sdk/test-util-internal": "*",
     "https-proxy-agent": "^7.0.6",
     "jsonwebtoken": "^9.0.3",
     "nock": "^14.0.11",

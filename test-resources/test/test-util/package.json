@@ -1,5 +1,5 @@
 {
-  "name": "@sap-cloud-sdk/test-util-shared",
+  "name": "@sap-cloud-sdk/test-util-internal",
   "version": "4.6.0",
   "description": "Shared test utilities for SAP Cloud SDK packages",
   "private": true,

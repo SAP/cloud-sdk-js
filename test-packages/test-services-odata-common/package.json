@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/generator-common": "^4.6.0",
-    "@sap-cloud-sdk/test-util-shared": "*"
+    "@sap-cloud-sdk/test-util-internal": "*"
   },
   "peerDependencies": {
     "@sap-cloud-sdk/generator": "^4.0.0",

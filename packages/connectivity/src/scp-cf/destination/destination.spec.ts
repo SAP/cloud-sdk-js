@@ -2,7 +2,7 @@ import {
   basicMultipleResponse,
   certificateMultipleResponse,
   certificateSingleResponse
-} from '@sap-cloud-sdk/test-util-shared/example-destination-service-responses';
+} from '@sap-cloud-sdk/test-util-internal/example-destination-service-responses';
 import {
   noDestinationErrorMessage,
   parseDestination,

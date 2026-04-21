@@ -4,7 +4,7 @@ import moment from 'moment';
 import {
   defaultDestination,
   mockDeleteRequest
-} from '@sap-cloud-sdk/test-util-shared/request-mocker';
+} from '@sap-cloud-sdk/test-util-internal/request-mocker';
 import { testEntityApi, testEntityResourcePath } from '../../test/test-util';
 import { DeleteRequestBuilder } from './delete-request-builder';
 

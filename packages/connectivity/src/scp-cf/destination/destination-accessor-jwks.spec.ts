@@ -6,7 +6,7 @@ import {
   mockServiceToken,
   oauthMultipleResponse,
   providerServiceToken
-} from '@sap-cloud-sdk/test-util-shared';
+} from '@sap-cloud-sdk/test-util-internal';
 import { alwaysProvider } from './destination-selection-strategies';
 import { getDestination } from './destination-accessor';
 import type { DestinationFetchOptions } from './destination-accessor-types';

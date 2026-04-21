@@ -1,8 +1,8 @@
-jest.mock('fs', () => jest.requireActual('memfs').fs);
-jest.mock('fs/promises', () => jest.requireActual('memfs').fs.promises);
-jest.mock('node:fs', () => jest.requireActual('memfs').fs);
-jest.mock('node:fs/promises', () => jest.requireActual('memfs').fs.promises);
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
 
+mockFsWithMemfs(jest);
+
+// eslint-disable-next-line import/order
 import { join, resolve } from 'path';
 import { jest } from '@jest/globals';
 import { vol } from 'memfs';

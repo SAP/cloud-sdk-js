@@ -1,12 +1,6 @@
 // eslint-disable-next-line import/order
-import { mockFsFactory } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
-const mockFs = () => mockFsFactory(jest.requireActual('fs'));
-
-jest.mock('fs', () => mockFs());
-jest.mock('fs/promises', () => mockFs().promises);
-jest.mock('node:fs', () => mockFs());
-jest.mock('node:fs/promises', () => mockFs().promises);
-
+import { mockFsWithUnionfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+mockFsWithUnionfs(jest);
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { jest } from '@jest/globals';

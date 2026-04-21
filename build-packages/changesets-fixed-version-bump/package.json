@@ -20,7 +20,7 @@
     "semver": "^7.7.4"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-util-internal": "*",
+    "@sap-cloud-sdk/test-util-build-internal": "*",
     "@vercel/ncc": "^0.38.4",
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",

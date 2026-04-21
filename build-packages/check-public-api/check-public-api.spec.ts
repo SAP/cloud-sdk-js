@@ -1,7 +1,7 @@
 import path from 'path';
 import { describe, jest, beforeEach } from '@jest/globals';
 import { vol } from 'memfs';
-import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-build-internal';
 
 mockFsWithMemfs(jest);
 

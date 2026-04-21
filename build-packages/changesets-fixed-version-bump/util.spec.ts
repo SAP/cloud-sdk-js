@@ -2,7 +2,7 @@ import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { vol } from 'memfs';
 import { jest, describe, afterEach, it } from '@jest/globals';
-import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-build-internal';
 import { getNextVersion } from './util.js';
 
 mockFsWithMemfs(jest);
@@ -16,7 +16,7 @@ describe('getNextVersion', () => {
   afterEach(() => {
     vol.reset();
   });
-  const sharedFiles = {
+  const sharedMock = {
     'package.json':
       '{ "name": "sap-cloud-sdk", "version": "1.2.3", "workspaces": ["packages/connectivity"] }',
     packages: {
@@ -29,7 +29,7 @@ describe('getNextVersion', () => {
   it('should make a patch update', async () => {
     vol.fromNestedJSON(
       {
-        ...sharedFiles,
+        ...sharedMock,
         '.changeset': {
           'config.json': changesetConfig,
           'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---'
@@ -47,7 +47,7 @@ describe('getNextVersion', () => {
   it('should make a minor update', async () => {
     vol.fromNestedJSON(
       {
-        ...sharedFiles,
+        ...sharedMock,
         '.changeset': {
           'config.json': changesetConfig,
           'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': patch\n" + '---',
@@ -66,7 +66,7 @@ describe('getNextVersion', () => {
   it('should make a major update', async () => {
     vol.fromNestedJSON(
       {
-        ...sharedFiles,
+        ...sharedMock,
         '.changeset': {
           'config.json': changesetConfig,
           'alex.md': '---\n' + "'@sap-cloud-sdk/connectivity': major\n" + '---',
@@ -85,7 +85,7 @@ describe('getNextVersion', () => {
   it('should throw an error, when no changesets exist', async () => {
     vol.fromNestedJSON(
       {
-        ...sharedFiles,
+        ...sharedMock,
         '.changeset': { 'config.json': changesetConfig }
       },
       process.cwd()

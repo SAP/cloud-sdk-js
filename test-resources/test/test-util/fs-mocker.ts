@@ -10,19 +10,11 @@ import type { jest } from '@jest/globals';
  * - Writes: routed directly to memfs (the overlay layer).
  * - copyFile: bridges layers — reads source via unionfs, writes to memfs.
  *
- * Usage in spec files:
- *
- *   import { mockFsFactory } from '@sap-cloud-sdk/test-util';
- *   const mockFs = () => mockFsFactory(jest.requireActual('fs'));
- *   jest.mock('fs', () => mockFs());
- *   jest.mock('fs/promises', () => mockFs().promises);
- *   jest.mock('node:fs', () => mockFs());
- *   jest.mock('node:fs/promises', () => mockFs().promises);
  * @param realFs The real fs module to use as the base layer.
  * @returns A unionfs instance that combines memfs and the real fs.
  * @internal
  */
-export function mockFsFactory(realFs: typeof fs): IUnionFs {
+function mockFsFactory(realFs: typeof fs): IUnionFs {
   const memfs = createFsFromVolume(vol) as unknown as IFS;
 
   // unionfs handles reads: memfs (high priority) → realFs (fallback)
@@ -125,39 +117,22 @@ function overrideWriteOperations(ufs: IUnionFs, memfs: IFS): void {
   };
 }
 
+export function mockFsWithUnionfs(j: typeof jest): void {
+  const mockFs = () => mockFsFactory(j.requireActual('fs'));
+  j.mock('fs', () => mockFs());
+  j.mock('fs/promises', () => mockFs().promises);
+  j.mock('node:fs', () => mockFs());
+  j.mock('node:fs/promises', () => mockFs().promises);
+}
+
 /**
- * Mock all `fs` module variants with pure memfs using `jest.unstable_mockModule` (ESM).
- * Must be called before any dynamic `import()` of modules that use `fs`.
- * @param j - The jest object
+ * Jest helper to mock fs with memfs.
+ * @param j The jest object to use for mocking.
  * @internal
  */
 export function mockFsWithMemfs(j: typeof jest): void {
-  j.unstable_mockModule('fs', () =>
-    import('memfs').then(m => ({
-      ...m.fs,
-      default: m.fs,
-      __esModule: true
-    }))
-  );
-  j.unstable_mockModule('fs/promises', () =>
-    import('memfs').then(m => ({
-      ...m.fs.promises,
-      default: m.fs.promises,
-      __esModule: true
-    }))
-  );
-  j.unstable_mockModule('node:fs', () =>
-    import('memfs').then(m => ({
-      ...m.fs,
-      default: m.fs,
-      __esModule: true
-    }))
-  );
-  j.unstable_mockModule('node:fs/promises', () =>
-    import('memfs').then(m => ({
-      ...m.fs.promises,
-      default: m.fs.promises,
-      __esModule: true
-    }))
-  );
+  j.mock('fs', () => (j.requireActual('memfs') as any).fs);
+  j.mock('fs/promises', () => (j.requireActual('memfs') as any).fs.promises);
+  j.mock('node:fs', () => (j.requireActual('memfs') as any).fs);
+  j.mock('node:fs/promises', () => (j.requireActual('memfs') as any).fs.promises);
 }

@@ -1,10 +1,10 @@
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import { testService } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
-import { defaultDeSerializers } from '../../src';
 import {
   customStringPropertyValue,
   customTestDeSerializers
-} from '../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/test-util-internal';
+import { defaultDeSerializers } from '../../src';
 import type { CustomDeSerializers } from '../../src';
 import type { TestEntity } from '@sap-cloud-sdk/test-services-odata-v2/test-service';
 

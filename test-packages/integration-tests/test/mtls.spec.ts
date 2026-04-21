@@ -3,7 +3,7 @@ import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import axios from 'axios';
 import mock from 'mock-fs';
 import nock from 'nock';
-import { mockServiceBindings } from '../../../test-resources/test/test-util/environment-mocks';
+import { mockServiceBindings } from '@sap-cloud-sdk/test-util-internal/environment-mocks';
 import type {
   DestinationWithName,
   RegisterDestinationOptions

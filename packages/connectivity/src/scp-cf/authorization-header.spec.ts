@@ -2,7 +2,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultBasicCredentials,
   defaultDestination
-} from '../../../../test-resources/test/test-util/request-mocker';
+} from '@sap-cloud-sdk/test-util-internal/request-mocker';
 import { buildAuthorizationHeaders } from './authorization-header';
 import * as destinationImport from './destination/destination';
 import type { Destination } from './destination';

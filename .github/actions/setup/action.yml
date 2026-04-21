@@ -65,7 +65,11 @@ runs:
         registry-url: ${{ steps.resolve-registry-url.outputs.url }}
         cache: 'pnpm'
         package-manager-cache: ${{ inputs.package-manager-cache }}
-    - run: pnpm install ${{ inputs.pnpm-install-args }}
+    # Install dependencies without lifecycle scripts.
+    - run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
+    # Run lifecycle scripts after removing the registry token from the environment.
+    - run: pnpm rebuild
+      shell: bash

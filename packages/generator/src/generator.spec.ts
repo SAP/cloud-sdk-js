@@ -130,9 +130,7 @@ describe('generator', () => {
     });
 
     it('copies the additional files matching the glob.', async () => {
-      const sourceFiles = await readdir(
-        join('common', 'API_TEST_SRV')
-      );
+      const sourceFiles = await readdir(join('common', 'API_TEST_SRV'));
 
       expect(
         sourceFiles.find(file => file === 'some-test-markdown.md')
@@ -140,9 +138,7 @@ describe('generator', () => {
     });
 
     it('generates the options per service and writes to the given folder', async () => {
-      const clientFile = await readFile(
-        'someDir/test-service-options.json'
-      );
+      const clientFile = await readFile('someDir/test-service-options.json');
       expect(clientFile).toBeDefined();
     }, 10000);
 

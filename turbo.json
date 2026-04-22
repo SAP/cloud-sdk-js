@@ -11,6 +11,61 @@
     "compile": {
       "dependsOn": ["^compile"]
     },
+    "@sap-cloud-sdk/test-util-internal#compile": {
+      "dependsOn": [
+        "@sap-cloud-sdk/connectivity#compile",
+        "@sap-cloud-sdk/odata-common#compile",
+        "@sap-cloud-sdk/odata-v2#compile",
+        "@sap-cloud-sdk/odata-v4#compile"
+      ]
+    },
+    "@sap-cloud-sdk/util#compile": {
+      "dependsOn": []
+    },
+    "@sap-cloud-sdk/connectivity#compile": {
+      "dependsOn": [
+        "@sap-cloud-sdk/resilience#compile",
+        "@sap-cloud-sdk/util#compile"
+      ]
+    },
+    "@sap-cloud-sdk/http-client#compile": {
+      "dependsOn": [
+        "@sap-cloud-sdk/connectivity#compile",
+        "@sap-cloud-sdk/resilience#compile",
+        "@sap-cloud-sdk/util#compile"
+      ]
+    },
+    "@sap-cloud-sdk/odata-common#compile": {
+      "dependsOn": [
+        "@sap-cloud-sdk/connectivity#compile",
+        "@sap-cloud-sdk/http-client#compile",
+        "@sap-cloud-sdk/util#compile"
+      ]
+    },
+    "@sap-cloud-sdk/odata-v2#compile": {
+      "dependsOn": [
+        "@sap-cloud-sdk/connectivity#compile",
+        "@sap-cloud-sdk/http-client#compile",
+        "@sap-cloud-sdk/odata-common#compile",
+        "@sap-cloud-sdk/util#compile"
+      ]
+    },
+    "@sap-cloud-sdk/odata-v4#compile": {
+      "dependsOn": [
+        "@sap-cloud-sdk/connectivity#compile",
+        "@sap-cloud-sdk/http-client#compile",
+        "@sap-cloud-sdk/odata-common#compile",
+        "@sap-cloud-sdk/util#compile"
+      ]
+    },
+    "@sap-cloud-sdk/openapi#compile": {
+      "dependsOn": [
+        "@sap-cloud-sdk/connectivity#compile",
+        "@sap-cloud-sdk/http-client#compile",
+        "@sap-cloud-sdk/resilience#compile",
+        "@sap-cloud-sdk/util#compile"
+      ]
+    },
     "test": {
       "dependsOn": ["^compile", "^generate"]
     },

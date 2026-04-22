@@ -1,7 +1,11 @@
+// eslint-disable-next-line import/order
+import { mockFsWithUnionfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+mockFsWithUnionfs(jest);
 import { promises } from 'fs';
-import { resolve, join } from 'path';
+import { join } from 'path';
 import { EOL } from 'os';
-import mock from 'mock-fs';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { ModuleKind, ModuleResolutionKind, ScriptTarget } from 'typescript';
 import { globSync } from 'glob';
 import {
@@ -18,40 +22,41 @@ const { readFile, readdir } = promises;
 jest.setTimeout(300000);
 
 describe('compiler options', () => {
-  const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
   beforeEach(() => {
-    mock({
-      [pathRootNodeModules]: mock.load(pathRootNodeModules),
-      'config1/tsconfig.json': JSON.stringify({
-        compilerOptions: { moduleResolution: 'node' }
-      }),
-      'config2/tsconfig.json': JSON.stringify({
-        compilerOptions: { moduleResolution: 'classic' }
-      }),
-      'config3/tsconfig.json': JSON.stringify({
-        compilerOptions: { lib: ['es5'] }
-      }),
-      'config4/tsconfig.json': JSON.stringify({
-        compilerOptions: { target: 'es2019' }
-      }),
-      'config5/tsconfig.json': JSON.stringify({
-        compilerOptions: { module: 'AMD' }
-      }),
-      'config6/tsconfig.json': JSON.stringify({
-        exclude: ['def'],
-        include: ['abc']
-      }),
-      'config7/tsconfig.json': JSON.stringify({
-        compilerOptions: { moduleResolution: 'node16' }
-      }),
-      'config8/tsconfig.json': JSON.stringify({
-        compilerOptions: { moduleResolution: 'nodenext' }
-      })
-    });
+    vol.fromNestedJSON(
+      {
+        'config1/tsconfig.json': JSON.stringify({
+          compilerOptions: { moduleResolution: 'node' }
+        }),
+        'config2/tsconfig.json': JSON.stringify({
+          compilerOptions: { moduleResolution: 'classic' }
+        }),
+        'config3/tsconfig.json': JSON.stringify({
+          compilerOptions: { lib: ['es5'] }
+        }),
+        'config4/tsconfig.json': JSON.stringify({
+          compilerOptions: { target: 'es2019' }
+        }),
+        'config5/tsconfig.json': JSON.stringify({
+          compilerOptions: { module: 'AMD' }
+        }),
+        'config6/tsconfig.json': JSON.stringify({
+          exclude: ['def'],
+          include: ['abc']
+        }),
+        'config7/tsconfig.json': JSON.stringify({
+          compilerOptions: { moduleResolution: 'node16' }
+        }),
+        'config8/tsconfig.json': JSON.stringify({
+          compilerOptions: { moduleResolution: 'nodenext' }
+        })
+      },
+      process.cwd()
+    );
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   it('reads the include and exclude with defaults', async () => {
@@ -123,25 +128,24 @@ describe('compilation', () => {
   };
 
   beforeEach(async () => {
-    const rootNodeModules = resolve(__dirname, '../../../node_modules');
-    const packageNodeModules = resolve(__dirname, '../node_modules');
-    mock({
-      'test-src/file-1.ts': "export type someOtherType='A'|'B'",
-      'test-src/index.ts': "export * from './file-1'",
-      'test-src/sub-folder/file-2.ts': "export type someType= 'A' | 'B'",
-      'test-src/test-file.spec.ts': 'This should be excluded per default',
-      'test-src/sub-folder/index.ts': "export * from './file-2'",
-      'broken-src/file.ts': `const foo = 1;${EOL}const bar = 1;${EOL}   foo = 2;`,
-      [rootNodeModules]: mock.load(rootNodeModules),
-      [packageNodeModules]: mock.load(packageNodeModules)
-    });
+    vol.fromNestedJSON(
+      {
+        'test-src/file-1.ts': "export type someOtherType='A'|'B'",
+        'test-src/index.ts': "export * from './file-1'",
+        'test-src/sub-folder/file-2.ts': "export type someType= 'A' | 'B'",
+        'test-src/sub-folder/index.ts': "export * from './file-2'",
+        'test-src/test-file.spec.ts': 'This should be excluded per default',
+        'broken-src/file.ts': `const foo = 1;${EOL}const bar = 1;${EOL}   foo = 2;`
+      },
+      process.cwd()
+    );
     await transpileDirectory('test-src', {
       compilerOptions: compilerConfig('test-dist'),
       createFileOptions
     });
   });
 
-  function compilerConfig(outFolder): CompilerOptions {
+  function compilerConfig(outFolder: string): CompilerOptions {
     return {
       outDir: outFolder,
       target: ScriptTarget.ES2019,
@@ -155,7 +159,7 @@ describe('compilation', () => {
   }
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   it('compiles all files', async () => {

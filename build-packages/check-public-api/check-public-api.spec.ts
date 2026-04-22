@@ -1,14 +1,19 @@
 import path from 'path';
-import mock from 'mock-fs';
-import { jest } from '@jest/globals';
+import { describe, jest, beforeEach } from '@jest/globals';
+import { vol } from 'memfs';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-build-internal';
 
-jest.unstable_mockModule('@actions/core', () => ({
+mockFsWithMemfs(jest);
+
+const actionsCoreMock = {
   error: jest.fn(),
   info: jest.fn(),
   warning: jest.fn(),
   getInput: jest.fn(),
   setFailed: jest.fn()
-}));
+};
+
+jest.unstable_mockModule('@actions/core', () => actionsCoreMock);
 
 const {
   checkBarrelRecursive,
@@ -21,93 +26,108 @@ const {
   typeDescriptorPaths
   // eslint-disable-next-line import/no-useless-path-segments
 } = await import('./index.js');
-const { error } = await import('@actions/core');
 
 describe('check-public-api', () => {
-  beforeEach(async () => {
-    (error as jest.Mock).mockClear();
-  });
-
-  afterEach(() => {
-    mock.restore();
+  beforeEach(() => {
+    actionsCoreMock.error.mockReset();
+    vol.reset();
   });
 
   describe('exportAllInBarrel', () => {
-    it('checkIndexFileExists fails if index file is not in root', () => {
-      mock({
-        root: {
-          dir1: {
-            'index.ts': ''
+    it('checkIndexFileExists fails if index fi  le is not in root', async () => {
+      vol.fromNestedJSON(
+        {
+          root: {
+            dir1: {
+              'index.ts': ''
+            }
           }
-        }
-      });
-      checkIndexFileExists('root/index.ts');
-      expect(error).toHaveBeenCalledWith('No index.ts file found in root.');
+        },
+        process.cwd()
+      );
+      await checkIndexFileExists('root/index.ts');
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
+        'No index.ts file found in root.'
+      );
     });
 
     it('fails if internal.ts is not present in root', async () => {
-      mock({
-        src: {
-          file1: '',
-          dir2: {
-            file2: ''
+      vol.fromNestedJSON(
+        {
+          src: {
+            file1: '',
+            dir2: {
+              file2: ''
+            }
           }
-        }
-      });
+        },
+        process.cwd()
+      );
       await exportAllInBarrel('src', 'internal.ts');
-      expect(error).toHaveBeenCalledWith(
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
         "No 'internal.ts' file found in 'src'."
       );
     });
 
     it('fails if a file is not exported in barrel file', async () => {
-      mock({
-        dir1: {
-          file1: '',
-          'index.ts': "export * from './file1';",
-          dir2: {
-            file2: '',
-            file3: '',
-            'index.ts': "export * from './file2';export * from './file3';"
+      vol.fromNestedJSON(
+        {
+          dir1: {
+            file1: '',
+            'index.ts': "export * from './file1';",
+            dir2: {
+              file2: '',
+              file3: '',
+              'index.ts': "export * from './file2';export * from './file3';"
+            }
           }
-        }
-      });
+        },
+        process.cwd()
+      );
 
       await exportAllInBarrel('dir1', 'index.ts');
 
-      expect(error).toHaveBeenCalledWith(
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
         `'dir2' is not exported in '${path.normalize('dir1/index.ts')}'.`
       );
-      expect(error).toHaveBeenCalledWith("'index.ts' is not in sync.");
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
+        "'index.ts' is not in sync."
+      );
     });
 
     it('checkBarrelRecursive passes recursive check for barrel file exports', async () => {
-      mock({
-        dir1: {
-          file1: '',
-          'index.ts': "export * from './file1'; export * from './dir2';",
-          dir2: {
-            file2: '',
-            file3: '',
-            'index.ts': "export * from './file2';export * from './file3';"
+      vol.fromNestedJSON(
+        {
+          dir1: {
+            file1: '',
+            'index.ts': "export * from './file1'; export * from './dir2';",
+            dir2: {
+              file2: '',
+              file3: '',
+              'index.ts': "export * from './file2';export * from './file3';"
+            }
           }
-        }
-      });
+        },
+        process.cwd()
+      );
       await checkBarrelRecursive('dir1');
     });
 
     it('typeDescriptorPaths finds the .d.ts files and excludes index.d.ts', async () => {
-      mock({
-        dir1: {
-          'file1.d.ts': '',
-          'index.d.ts': '',
-          dir2: {
-            'file2.d.ts': '',
-            'file3.d.ts': '',
-            'index.d.ts': ''
+      vol.fromNestedJSON(
+        {
+          dir1: {
+            'file1.d.ts': '',
+            'index.d.ts': '',
+            dir2: {
+              'file2.d.ts': '',
+              'file3.d.ts': '',
+              'index.d.ts': ''
+            }
           }
-        }
-      });
+        },
+        process.cwd()
+      );
 
       expect(await typeDescriptorPaths('dir1')).toEqual([
         path.normalize('dir1/file1.d.ts'),
@@ -163,15 +183,18 @@ describe('check-public-api', () => {
 
   describe('parseIndexFile', () => {
     it('parses referenced star imports', async () => {
-      mock({
-        'index.ts': "export * from './common';export * from './subdir/ref';",
-        'common.ts':
-          "export { commonExport } from './local';export * from './crossref';",
-        'crossref.ts': "export { crossRefExport } from './local';",
-        subdir: {
-          'ref.ts': "export { subdirRefExport } from './local';"
-        }
-      });
+      vol.fromNestedJSON(
+        {
+          'index.ts': "export * from './common';export * from './subdir/ref';",
+          'common.ts':
+            "export { commonExport } from './local';export * from './crossref';",
+          'crossref.ts': "export { crossRefExport } from './local';",
+          subdir: {
+            'ref.ts': "export { subdirRefExport } from './local';"
+          }
+        },
+        process.cwd()
+      );
 
       await expect(parseIndexFile('index.ts', true)).resolves.toEqual([
         'commonExport',
@@ -181,22 +204,28 @@ describe('check-public-api', () => {
     });
 
     it('parses exports types correctly', async () => {
-      mock({
-        'index.ts':
-          "export * from './common';export type { namedExport } from './named';",
-        'common.ts': "export type { commonExport } from './local'",
-        'named.ts': "export type { namedExport } from './local'"
-      });
+      vol.fromNestedJSON(
+        {
+          'index.ts':
+            "export * from './common';export type { namedExport } from './named';",
+          'common.ts': "export type { commonExport } from './local'",
+          'named.ts': "export type { namedExport } from './local'"
+        },
+        process.cwd()
+      );
 
       const result = await parseIndexFile('index.ts', true);
       expect(result).toEqual(['namedExport', 'commonExport']);
     });
 
     it('ignores public re-exports', async () => {
-      mock({
-        'index.ts':
-          "export { ignoreme } from '@other/package';export { local } from './local';"
-      });
+      vol.fromNestedJSON(
+        {
+          'index.ts':
+            "export { ignoreme } from '@other/package';export { local } from './local';"
+        },
+        process.cwd()
+      );
 
       await expect(parseIndexFile('index.ts', true)).resolves.toEqual([
         'local'
@@ -204,13 +233,16 @@ describe('check-public-api', () => {
     });
 
     it('throws an error on internal re-exports', async () => {
-      mock({
-        'index.ts':
-          "export { internal } from '@other/package/internal';export { local } from './local';"
-      });
+      vol.fromNestedJSON(
+        {
+          'index.ts':
+            "export { internal } from '@other/package/internal';export { local } from './local';"
+        },
+        process.cwd()
+      );
 
       await parseIndexFile('index.ts', true);
-      expect(error).toHaveBeenCalledWith(
+      expect(actionsCoreMock.error).toHaveBeenCalledWith(
         "Re-exporting internal modules is not allowed. 'internal' exported in 'index.ts'."
       );
     });
@@ -243,9 +275,9 @@ export declare type MyType = {value:string}
 `;
 
 const dummyIndexFile = `export { o1 } from './bla';
-    
+
     export { o2,  o3 as o3$Some_thing   } from './bla';  // :-) This is a comment
-    export { o4     as  o4Something, 
+    export { o4     as  o4Something,
     /****
       * * This is a block comment **??? *
       * **/

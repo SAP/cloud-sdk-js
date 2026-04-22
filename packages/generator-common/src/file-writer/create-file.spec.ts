@@ -1,6 +1,10 @@
+// eslint-disable-next-line import/order
+import { mockFsWithUnionfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+mockFsWithUnionfs(jest);
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import mock from 'mock-fs';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   createFile,
@@ -10,7 +14,6 @@ import {
 import type { CreateFileOptions } from './create-file';
 
 describe('createFile', () => {
-  const pathRootNodeModules = resolve(__dirname, '../../../../node_modules');
   const pathFormattedPackageJson = resolve(
     __dirname,
     '../../test/package.json'
@@ -20,21 +23,23 @@ describe('createFile', () => {
     overwrite: true
   };
 
-  beforeEach(() => {
-    mock({
-      [pathRootNodeModules]: mock.load(pathRootNodeModules),
-      [pathFormattedPackageJson]: mock.load(pathFormattedPackageJson),
+  beforeEach(async () => {
+    const realFs = jest.requireActual('node:fs/promises');
+    const formattedPackageJsonContent = await realFs.readFile(
+      pathFormattedPackageJson,
+      'utf8'
+    );
+    vol.fromNestedJSON({
       [resolve(process.cwd(), 'some-dir', '.prettierrc')]: JSON.stringify({
         semi: false
       }),
-      directory: {
-        existingFile: 'already exists'
-      }
+      directory: { existingFile: 'already exists' },
+      [pathFormattedPackageJson]: formattedPackageJsonContent
     });
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   it('creates formatted content with copyright for non typescript files', async () => {

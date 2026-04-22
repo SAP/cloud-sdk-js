@@ -1,10 +1,10 @@
 /* eslint-disable jsdoc/require-jsdoc */
 import { join, resolve, parse, basename, dirname, posix, sep } from 'node:path';
-import { promises, existsSync } from 'node:fs';
+import { mkdtemp, rm, readFile, lstat, readdir } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
 import { flatten } from '@sap-cloud-sdk/util';
-import mock from 'mock-fs';
 // import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
 import {
   readCompilerOptions,
@@ -17,10 +17,7 @@ import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';
 
-const { readFile, lstat, readdir } = promises;
-
 const pathToTsConfigRoot = join(process.cwd(), 'tsconfig.json');
-const pathRootNodeModules = join(process.cwd(), 'node_modules');
 export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
 
@@ -35,7 +32,6 @@ function paths(pathToPackage: string): {
   pathToPackageJson: string;
   pathToTsConfig: string;
   pathToNodeModules: string;
-  pathCompiled: string;
 } {
   return {
     pathToSource: getPathWithPosixSeparator(join(pathToPackage, 'src')),
@@ -47,8 +43,7 @@ function paths(pathToPackage: string): {
     ),
     pathToNodeModules: getPathWithPosixSeparator(
       join(pathToPackage, 'node_modules')
-    ),
-    pathCompiled: 'dist'
+    )
   };
 }
 
@@ -56,28 +51,17 @@ function getPathWithPosixSeparator(filePath: string): string {
   return filePath.split(sep).join(posix.sep);
 }
 
-function mockFileSystem(pathToPackage: string) {
-  const { pathToSource, pathToTsConfig, pathToNodeModules, pathToPackageJson } =
-    paths(pathToPackage);
-  mock({
-    [pathToTsConfig]: mock.load(pathToTsConfig),
-    [pathToPackageJson]: mock.load(pathToPackageJson),
-    [pathToSource]: mock.load(pathToSource),
-    [pathRootNodeModules]: mock.load(pathRootNodeModules),
-    [pathToNodeModules]: mock.load(pathToNodeModules),
-    [pathToTsConfigRoot]: mock.load(pathToTsConfigRoot)
-  });
-}
-
 /**
  * Read the compiler options from the root and cwd tsconfig.json.
  * @param pathToPackage - Path to the package under investigation.
+ * @param pathCompiled - Path to the output directory for compiled files.
  * @returns The compiler options.
  */
 async function getCompilerOptions(
-  pathToPackage: string
+  pathToPackage: string,
+  pathCompiled: string
 ): Promise<CompilerOptions> {
-  const { pathToSource, pathToTsConfig, pathCompiled } = paths(pathToPackage);
+  const { pathToSource, pathToTsConfig } = paths(pathToPackage);
   const compilerOptions = await readCompilerOptions(pathToTsConfig);
   const compilerOptionsRoot = await readCompilerOptions(pathToTsConfigRoot);
   return {
@@ -150,11 +134,11 @@ function compareApisAndLog(
  * @param pathToPackage - Path to the package.
  */
 export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
+  info(`Check package: ${pathToPackage}`);
+  const { pathToSource, pathToTsConfig } = paths(pathToPackage);
+  const pathCompiled = await mkdtemp(join(tmpdir(), 'check-public-api-'));
   try {
-    info(`Check package: ${pathToPackage}`);
-    const { pathToSource, pathCompiled, pathToTsConfig } = paths(pathToPackage);
-    mockFileSystem(pathToPackage);
-    const opts = await getCompilerOptions(pathToPackage);
+    const opts = await getCompilerOptions(pathToPackage, pathCompiled);
     const includeExclude = await readIncludeExcludeWithDefaults(pathToTsConfig);
     await transpileDirectory(
       pathToSource,
@@ -180,7 +164,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     }
 
     const indexFilePath = join(pathToSource, 'index.ts');
-    checkIndexFileExists(indexFilePath);
+    await checkIndexFileExists(indexFilePath);
 
     const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
     const allExportedIndex = await parseIndexFile(
@@ -189,7 +173,6 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     );
 
     const setsAreEqual = compareApisAndLog(allExportedIndex, allExportedTypes);
-    mock.restore();
     if (!setsAreEqual) {
       process.exit(1);
     }
@@ -197,13 +180,18 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
       `The index.ts of package ${pathToPackage} is in sync with the type annotations.\n`
     );
   } finally {
-    mock.restore();
+    await rm(pathCompiled, { recursive: true, force: true });
   }
 }
 
-export function checkIndexFileExists(indexFilePath: string): void {
-  if (!existsSync(indexFilePath)) {
-    error('No index.ts file found in root.');
+export async function checkIndexFileExists(
+  indexFilePath: string
+): Promise<void> {
+  const isFile = await lstat(indexFilePath)
+    .then(stat => stat.isFile())
+    .catch(() => false);
+  if (!isFile) {
+    error(`No index.ts file found in ${dirname(indexFilePath)}.`);
   }
 }
 
@@ -353,7 +341,11 @@ export async function exportAllInBarrel(
   barrelFileName: string
 ): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
-  if (existsSync(barrelFilePath) && (await lstat(barrelFilePath)).isFile()) {
+  if (
+    await lstat(barrelFilePath)
+      .then(stat => stat.isFile())
+      .catch(() => false)
+  ) {
     const dirContents = (
       await glob('*', {
         ignore: [

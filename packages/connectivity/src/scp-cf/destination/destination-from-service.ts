@@ -33,7 +33,7 @@ import {
   addProxyConfigurationInternet,
   proxyStrategy
 } from './http-proxy-util';
-import { setForwardedAuthTokenIfNeeded } from './forward-auth-token';
+import { addForwardedAuthTokenIfNeeded } from './forward-auth-token';
 import type { SubscriberToken } from './get-subscriber-token';
 import type { Destination } from './destination-service-types';
 import type { AuthAndExchangeTokens } from './destination-service';
@@ -89,80 +89,63 @@ export class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
     options: DestinationFetchOptions
   ): Promise<Destination | null> {
-    // TODO: This is currently always skipped for tokens issued by XSUAA
-    // in the XSUAA case no exchange takes place
-    if (shouldExchangeToken(options) && options.jwt) {
-      // Exchange the IAS token to a XSUAA token using the destination service credentials
-      options.jwt = await jwtBearerToken(options.jwt, 'destination');
+    // Exchange the IAS token to a XSUAA token using the destination service credentials
+    if (shouldExchangeToken(options)) {
+      options.jwt = await jwtBearerToken(options.jwt!, 'destination');
     }
 
-    const subscriberToken = await getSubscriberToken(options);
-    const providerToken = await getProviderServiceToken(options);
-
-    const da = new DestinationFromServiceRetriever(
+    // Create retriever with subscriber and provider tokens
+    const retriever = new DestinationFromServiceRetriever(
       options,
-      subscriberToken,
-      providerToken
+      await getSubscriberToken(options),
+      await getProviderServiceToken(options)
     );
 
-    const destinationResult =
-      await da.searchDestinationWithSelectionStrategyAndCache();
-    if (!destinationResult) {
+    // Search destination with selection strategy and cache
+    const destinationSearchResult =
+      await retriever.searchDestinationWithSelectionStrategyAndCache();
+
+    // Immediately return null if no destination found
+    if (!destinationSearchResult) {
       return null;
     }
 
-    let { destination } = destinationResult;
+    const { origin, fromCache } = destinationSearchResult;
+    let { destination } = destinationSearchResult;
 
-    setForwardedAuthTokenIfNeeded(destination, options.jwt);
+    if (!fromCache) {
+      /* Destination NOT from cache */
 
-    if (destinationResult.fromCache) {
-      return da.addProxyConfiguration(destination);
+      // Fetch and add auth token if needed.
+      // Needed means `forwardAuthToken` is `false`
+      // AND authentication is one of the supported types
+      destination = await retriever.fetchAndAddAuthTokenIfNeeded(
+        destination,
+        origin
+      );
+
+      // Add trust store configuration if needed.
+      // Needed means `TrustStoreLocation` is defined
+      destination = await retriever.addTrustStoreConfigurationIfNeeded(
+        destination,
+        origin
+      );
+
+      // Cache the destination
+      await retriever.cacheDestination(destination, origin);
     }
 
-    if (!destination.forwardAuthToken) {
-      if (
-        destination.authentication === 'OAuth2UserTokenExchange' ||
-        destination.authentication === 'OAuth2JWTBearer' ||
-        destination.authentication === 'SAMLAssertion' ||
-        (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
-          !da.usesSystemUser(destination))
-      ) {
-        destination =
-          await da.fetchDestinationWithUserExchangeFlows(destinationResult);
-      }
+    // Add auth token based on the given `options.jwt` if needed
+    // Needed means `forwardAuthToken` is `true`
+    destination = addForwardedAuthTokenIfNeeded(destination, options.jwt);
 
-      if (destination.authentication === 'PrincipalPropagation') {
-        if (!this.isUserJwt(da.subscriberToken)) {
-          DestinationFromServiceRetriever.throwUserTokenMissing(destination);
-        }
-      }
+    // Add proxy configuration based on the proxy strategy
+    destination = await retriever.addProxyConfiguration(destination);
 
-      if (
-        destination.authentication === 'OAuth2Password' ||
-        destination.authentication === 'ClientCertificateAuthentication' ||
-        destination.authentication === 'OAuth2ClientCredentials' ||
-        da.usesSystemUser(destination)
-      ) {
-        destination =
-          await da.fetchDestinationWithNonUserExchangeFlows(destinationResult);
-      }
-
-      if (destination.authentication === 'OAuth2RefreshToken') {
-        destination =
-          await da.fetchDestinationWithRefreshTokenFlow(destinationResult);
-      }
-    }
-
-    const withTrustStore = await da.addTrustStoreConfiguration(
-      destination,
-      destinationResult.origin
-    );
-    await da.updateDestinationCache(withTrustStore, destinationResult.origin);
-
-    return da.addProxyConfiguration(withTrustStore);
+    return destination;
   }
 
-  private static throwUserTokenMissing(destination) {
+  private static throwUserTokenMissing(destination: Destination) {
     throw Error(
       `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
     );
@@ -247,9 +230,9 @@ export class DestinationFromServiceRetriever {
   }
 
   private async getAuthTokenForOAuth2ClientCredentials(
-    destinationResult: DestinationSearchResult
+    destination: Destination,
+    origin: DestinationOrigin
   ): Promise<AuthAndExchangeTokens> {
-    const { destination, origin } = destinationResult;
     // This covers the x-tenant case https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     const exchangeTenant = this.getExchangeTenant(destination);
     const authHeaderJwt =
@@ -285,9 +268,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private async getAuthTokenForOAuth2UserBasedTokenExchanges(
-    destinationResult: DestinationSearchResult
+    destination: Destination,
+    origin: DestinationOrigin
   ): Promise<AuthAndExchangeTokens> {
-    const { destination, origin } = destinationResult;
     const { destinationName } = this.options;
     if (!DestinationFromServiceRetriever.isUserJwt(this.subscriberToken)) {
       throw DestinationFromServiceRetriever.throwUserTokenMissing(destination);
@@ -341,9 +324,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private async getAuthTokenForOAuth2RefreshToken(
-    destinationResult: DestinationSearchResult
+    destination: Destination,
+    origin: DestinationOrigin
   ): Promise<AuthAndExchangeTokens> {
-    const { destination, origin } = destinationResult;
     const { refreshToken } = this.options;
     if (!refreshToken) {
       throw Error(
@@ -361,14 +344,18 @@ Possible alternatives for such technical user authentication are BasicAuthentica
    * @internal
    * This method calls the 'find destination by name' endpoint of the destination service using a client credentials grant.
    * For the find by name endpoint, the destination service will take care of OAuth flows and include the token in the destination.
-   * @param destinationResult - Result of the getDestinations call for which the exchange flow is triggered.
+   * @param destination - The destination for which the token should be fetched.
+   * @param origin - The origin of the destination, either 'subscriber' or 'provider'.
    * @returns Destination containing the auth token.
    */
   private async fetchDestinationWithNonUserExchangeFlows(
-    destinationResult: DestinationSearchResult
+    destination: Destination,
+    origin: DestinationOrigin
   ): Promise<Destination> {
-    const token =
-      await this.getAuthTokenForOAuth2ClientCredentials(destinationResult);
+    const token = await this.getAuthTokenForOAuth2ClientCredentials(
+      destination,
+      origin
+    );
 
     return fetchDestinationWithTokenRetrieval(
       getDestinationServiceCredentials().uri,
@@ -378,12 +365,13 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private async fetchDestinationWithUserExchangeFlows(
-    destinationResult: DestinationSearchResult
+    destination: Destination,
+    origin: DestinationOrigin
   ): Promise<Destination> {
-    const token =
-      await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
-        destinationResult
-      );
+    const token = await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
+      destination,
+      origin
+    );
 
     return fetchDestinationWithTokenRetrieval(
       getDestinationServiceCredentials().uri,
@@ -393,16 +381,60 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private async fetchDestinationWithRefreshTokenFlow(
-    destinationResult: DestinationSearchResult
+    destination: Destination,
+    origin: DestinationOrigin
   ): Promise<Destination> {
-    const token =
-      await this.getAuthTokenForOAuth2RefreshToken(destinationResult);
+    const token = await this.getAuthTokenForOAuth2RefreshToken(
+      destination,
+      origin
+    );
 
     return fetchDestinationWithTokenRetrieval(
       getDestinationServiceCredentials().uri,
       token,
       this.options
     );
+  }
+
+  private async fetchAndAddAuthTokenIfNeeded(
+    destination: Destination,
+    origin: DestinationOrigin
+  ): Promise<Destination> {
+    const { forwardAuthToken, authentication } = destination;
+    if (forwardAuthToken) {
+      return destination;
+    }
+
+    if (
+      authentication === 'OAuth2UserTokenExchange' ||
+      authentication === 'OAuth2JWTBearer' ||
+      authentication === 'SAMLAssertion' ||
+      (authentication === 'OAuth2SAMLBearerAssertion' &&
+        !this.usesSystemUser(destination))
+    ) {
+      return this.fetchDestinationWithUserExchangeFlows(destination, origin);
+    }
+
+    if (
+      authentication === 'OAuth2Password' ||
+      authentication === 'ClientCertificateAuthentication' ||
+      authentication === 'OAuth2ClientCredentials' ||
+      this.usesSystemUser(destination)
+    ) {
+      return this.fetchDestinationWithNonUserExchangeFlows(destination, origin);
+    }
+
+    if (authentication === 'OAuth2RefreshToken') {
+      return this.fetchDestinationWithRefreshTokenFlow(destination, origin);
+    }
+
+    if (authentication === 'PrincipalPropagation') {
+      if (!DestinationFromServiceRetriever.isUserJwt(this.subscriberToken)) {
+        DestinationFromServiceRetriever.throwUserTokenMissing(destination);
+      }
+    }
+
+    return destination;
   }
 
   private async addProxyConfiguration(
@@ -429,10 +461,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     }
   }
 
-  private async updateDestinationCache(
+  private async cacheDestination(
     destination: Destination,
     destinationOrigin: DestinationOrigin
-  ) {
+  ): Promise<void> {
     if (!this.options.useCache) {
       return;
     }
@@ -577,11 +609,11 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     );
   }
 
-  private async addTrustStoreConfiguration(
+  private async addTrustStoreConfigurationIfNeeded(
     destination: Destination,
     origin: DestinationOrigin
   ): Promise<Destination> {
-    const originalProperties = destination.originalProperties;
+    const { originalProperties } = destination;
     const trustStoreLocation =
       originalProperties?.TrustStoreLocation ||
       originalProperties?.destinationConfiguration?.TrustStoreLocation;
@@ -593,7 +625,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
           : this.subscriberToken!.serviceJwt!.encoded,
         trustStoreLocation
       );
-      destination.trustStoreCertificate = trustStoreCertificate;
+      return {
+        ...destination,
+        trustStoreCertificate
+      };
     }
     return destination;
   }

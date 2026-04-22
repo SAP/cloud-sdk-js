@@ -4,7 +4,7 @@ import nock from 'nock';
 import {
   defaultDestination,
   mockUpdateRequest
-} from '../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/test-util-internal';
 import {
   testEntityApi,
   testEntityMultiLinkApi,

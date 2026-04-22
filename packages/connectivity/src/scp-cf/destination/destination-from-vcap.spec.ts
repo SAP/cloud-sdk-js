@@ -2,7 +2,7 @@ import {
   mockServiceToken,
   providerUserToken,
   signedJwt
-} from '../../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/test-util-internal';
 import * as xsuaaService from '../xsuaa-service';
 import * as identityService from '../identity-service';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';

@@ -1053,6 +1053,15 @@ importers:
 
   test-packages/test-services-odata-common:
     dependencies:
+      '@sap-cloud-sdk/generator':
+        specifier: workspace:^
+        version: link:../../packages/generator
+      '@sap-cloud-sdk/generator-common':
+        specifier: workspace:^
+        version: link:../../packages/generator-common
+      '@sap-cloud-sdk/test-util-internal':
+        specifier: workspace:^
+        version: link:../../test-resources/test/test-util
       '@sap-cloud-sdk/util':
         specifier: workspace:^
         version: link:../../packages/util
@@ -1060,12 +1069,6 @@ importers:
         specifier: ^11.0.0
         version: 11.0.0
     devDependencies:
-      '@sap-cloud-sdk/generator-common':
-        specifier: workspace:^
-        version: link:../../packages/generator-common
-      '@sap-cloud-sdk/test-util-internal':
-        specifier: workspace:^
-        version: link:../../test-resources/test/test-util
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -1075,6 +1078,9 @@ importers:
 
   test-packages/test-services-odata-v2:
     dependencies:
+      '@sap-cloud-sdk/generator':
+        specifier: workspace:^
+        version: link:../../packages/generator
       bignumber.js:
         specifier: ^11.0.0
         version: 11.0.0
@@ -1094,6 +1100,9 @@ importers:
 
   test-packages/test-services-odata-v4:
     dependencies:
+      '@sap-cloud-sdk/generator':
+        specifier: workspace:^
+        version: link:../../packages/generator
       bignumber.js:
         specifier: ^11.0.0
         version: 11.0.0

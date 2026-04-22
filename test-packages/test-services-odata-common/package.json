@@ -24,12 +24,13 @@
     "bignumber.js": "^11.0.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator-common": "workspace:^",
-    "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "depcheck": "^1.4.7",
     "prettier": "^3.8.1"
   },
   "peerDependencies": {
-    "@sap-cloud-sdk/util": "workspace:^"
+    "@sap-cloud-sdk/test-util-internal": "workspace:^",
+    "@sap-cloud-sdk/util": "workspace:^",
+    "@sap-cloud-sdk/generator-common": "workspace:^",
+  	"@sap-cloud-sdk/generator": "workspace:^"
   }
 }

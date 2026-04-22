@@ -28,5 +28,8 @@
     "@sap-cloud-sdk/util": "workspace:^",
     "depcheck": "^1.4.7",
     "prettier": "^3.8.1"
+  },
+  "peerDependencies": {
+  	"@sap-cloud-sdk/generator": "workspace:^"
   }
 }

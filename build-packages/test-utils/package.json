@@ -1,0 +1,29 @@
+{
+  "name": "@sap-cloud-sdk/test-util-build-internal",
+  "version": "4.6.0",
+  "description": "Shared test utilities for SAP Cloud SDK packages",
+  "private": true,
+  "type": "module",
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "license": "Apache-2.0",
+  "main": "./lib/index.js",
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
+    "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
+    "check:dependencies": "depcheck .",
+    "all": "yarn && yarn lint && yarn compile"
+  },
+  "dependencies": {
+    "@jest/globals": "^30.3.0",
+    "memfs": "^4.57.1"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7",
+    "eslint": "^9.39.2",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.3"
+  }
+}

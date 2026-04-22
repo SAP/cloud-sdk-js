@@ -4,15 +4,15 @@ import {
 } from '@sap-cloud-sdk/connectivity/internal';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { mockFetchDestinationCalls } from '../../../../test-resources/test/test-util/destination-service-mocks';
+import { mockFetchDestinationCalls } from '@sap-cloud-sdk/test-util-internal/destination-service-mocks';
 import {
   destinationServiceUri,
   destinationBindingClientSecretMock,
   mockServiceBindings,
   providerXsuaaUrl
-} from '../../../../test-resources/test/test-util/environment-mocks';
-import { privateKey } from '../../../../test-resources/test/test-util/keys';
-import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
+} from '@sap-cloud-sdk/test-util-internal/environment-mocks';
+import { privateKey } from '@sap-cloud-sdk/test-util-internal/keys';
+import { mockClientCredentialsGrantCall } from '@sap-cloud-sdk/test-util-internal/xsuaa-service-mocks';
 import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';

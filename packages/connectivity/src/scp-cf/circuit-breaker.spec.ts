@@ -5,8 +5,8 @@ import {
   destinationServiceUri,
   providerXsuaaUrl,
   xsuaaBindingMock
-} from '../../../../test-resources/test/test-util/environment-mocks';
-import { privateKey } from '../../../../test-resources/test/test-util/keys';
+} from '@sap-cloud-sdk/test-util-internal/environment-mocks';
+import { privateKey } from '@sap-cloud-sdk/test-util-internal/keys';
 import { getClientCredentialsToken } from './xsuaa-service';
 import { fetchDestinationWithTokenRetrieval } from './destination';
 

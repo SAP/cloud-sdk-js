@@ -1,24 +1,23 @@
-import { decodeJwt } from '../jwt';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
   testTenants
-} from '../../../../../test-resources/test/test-util/environment-mocks';
+} from '@sap-cloud-sdk/test-util-internal/environment-mocks';
 import {
   expectAllMocksUsed,
   mockJwtBearerToken,
   mockServiceToken
-} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+} from '@sap-cloud-sdk/test-util-internal/token-accessor-mocks';
 import {
   mockFetchDestinationCalls,
   mockFetchDestinationCallsNotFound
-} from '../../../../../test-resources/test/test-util/destination-service-mocks';
+} from '@sap-cloud-sdk/test-util-internal/destination-service-mocks';
 import {
   onlyIssuerServiceToken,
   providerUserToken,
   subscriberServiceToken,
   subscriberUserToken
-} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
+} from '@sap-cloud-sdk/test-util-internal/mocked-access-tokens';
 import {
   basicMultipleResponse,
   certificateSingleResponse,
@@ -34,7 +33,8 @@ import {
   onPremiseBasicSingleResponse,
   onPremisePrincipalPropagationMultipleResponse,
   samlAssertionSingleResponse
-} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
+} from '@sap-cloud-sdk/test-util-internal/example-destination-service-responses';
+import { decodeJwt } from '../jwt';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { parseDestination } from './destination';
 import { getDestination } from './destination-accessor';

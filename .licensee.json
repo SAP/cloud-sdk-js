@@ -1,6 +1,6 @@
 {
   "licenses": {
-    "spdx": ["CC-BY-3.0"],
+    "spdx": ["CC-BY-3.0", "CC-BY-4.0"],
     "blueOak": "bronze"
   },
   "corrections": true,

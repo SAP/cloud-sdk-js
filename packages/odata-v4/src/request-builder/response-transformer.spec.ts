@@ -1,4 +1,4 @@
-import { createOriginalTestEntityDataV4_1 } from '../../../../test-resources/test/test-util/test-data';
+import { createOriginalTestEntityDataV4_1 } from '@sap-cloud-sdk/test-util-internal/test-data';
 import { defaultDeSerializers, edmToTs } from '../de-serializers';
 import { testEntityApi, createTestEntity } from '../../test/test-util';
 import {

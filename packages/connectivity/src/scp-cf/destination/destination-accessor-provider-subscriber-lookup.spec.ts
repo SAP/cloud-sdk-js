@@ -5,26 +5,26 @@ import {
   mockFetchDestinationCallsNotFound,
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall
-} from '../../../../../test-resources/test/test-util/destination-service-mocks';
+} from '@sap-cloud-sdk/test-util-internal/destination-service-mocks';
 import {
   destinationServiceUri,
   onlyIssuerXsuaaUrl,
   mockServiceBindings
-} from '../../../../../test-resources/test/test-util/environment-mocks';
+} from '@sap-cloud-sdk/test-util-internal/environment-mocks';
 import {
   basicMultipleResponse,
   certificateSingleResponse,
   destinationName,
   samlAssertionMultipleResponse,
   samlAssertionSingleResponse
-} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
+} from '@sap-cloud-sdk/test-util-internal/example-destination-service-responses';
 import {
   onlyIssuerServiceToken,
   providerServiceToken,
   subscriberServiceToken,
   subscriberUserToken
-} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
-import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+} from '@sap-cloud-sdk/test-util-internal/mocked-access-tokens';
+import { mockServiceToken } from '@sap-cloud-sdk/test-util-internal/token-accessor-mocks';
 import * as tokenAccessor from '../token-accessor';
 import { decodeJwt } from '../jwt';
 import { identityServicesCache } from '../environment-accessor';

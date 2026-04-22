@@ -1,7 +1,10 @@
+// eslint-disable-next-line import/order
+import { mockFsWithUnionfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+mockFsWithUnionfs(jest);
 import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
-import mock from 'mock-fs';
-import { readJSON } from '@sap-cloud-sdk/util';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import prettier from 'prettier';
 import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/internal';
 import { emptyDocument } from '../test/test-util';
@@ -16,34 +19,37 @@ const { readFile } = promises;
 
 describe('generator', () => {
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   describe('get input file paths', () => {
     beforeEach(() => {
-      mock({
-        root: {
-          inputDir: {
-            'test-service.txt': 'dummy text specification file',
-            'test-service.json': 'dummy json specification file',
-            'test-service.JSON': 'dummy JSON specification file',
-            'test-service.yaml': 'dummy yaml specification file',
-            'empty-dir': {},
-            'sub-dir': {
-              'test-service.YAML': 'dummy YAML specification file',
-              'test-service.yml': 'dummy yml specification file',
-              'test-service.YML': 'dummy YML specification file',
-              'test-service.xml': 'dummy xml specification file',
-              'test-service2.json': 'dummy json specification file'
-            }
-          },
-          outputDir: {}
-        }
-      });
+      vol.fromNestedJSON(
+        {
+          root: {
+            inputDir: {
+              'test-service.txt': 'dummy text specification file',
+              'test-service.json': 'dummy json specification file',
+              'test-service.JSON': 'dummy JSON specification file',
+              'test-service.yaml': 'dummy yaml specification file',
+              'empty-dir': { '.keep': '' },
+              'sub-dir': {
+                'test-service.YAML': 'dummy YAML specification file',
+                'test-service.yml': 'dummy yml specification file',
+                'test-service.YML': 'dummy YML specification file',
+                'test-service.xml': 'dummy xml specification file',
+                'test-service2.json': 'dummy json specification file'
+              }
+            },
+            outputDir: { '.keep': '' }
+          }
+        },
+        process.cwd()
+      );
     });
 
     afterEach(() => {
-      mock.restore();
+      vol.reset();
     });
 
     const input = 'root/inputDir';
@@ -95,7 +101,7 @@ describe('generator', () => {
     const prettierSpy = jest.spyOn(prettier, 'format');
 
     beforeEach(async () => {
-      mock.restore();
+      vol.reset();
       const inputFile = resolve(
         __dirname,
         '../../../test-resources/openapi-service-specs/specifications/test-service.json'
@@ -103,19 +109,20 @@ describe('generator', () => {
       const serviceSpec = await promises.readFile(inputFile, {
         encoding: 'utf8'
       });
-      const rootNodeModules = resolve(__dirname, '../../../node_modules');
-      mock({
-        '/prettier/config': JSON.stringify({ printWidth: 66 }),
-        root: {
-          inputDir: { 'mySpec.json': serviceSpec },
-          additionalFiles: {
-            'CHANGELOG.md': 'some content',
-            'OtherFile.txt': 'some content'
-          },
-          outputDir: {}
+      vol.fromNestedJSON(
+        {
+          '/prettier/config': JSON.stringify({ printWidth: 66 }),
+          root: {
+            inputDir: { 'mySpec.json': serviceSpec },
+            additionalFiles: {
+              'CHANGELOG.md': 'some content',
+              'OtherFile.txt': 'some content'
+            },
+            outputDir: { '.keep': '' }
+          }
         },
-        [rootNodeModules]: mock.load(rootNodeModules)
-      });
+        process.cwd()
+      );
 
       await generate({
         input: 'root/inputDir/*.json',
@@ -136,7 +143,7 @@ describe('generator', () => {
 
     afterEach(() => {
       jest.clearAllMocks();
-      mock.restore();
+      vol.reset();
     });
 
     it('reads custom prettier configuration', () => {
@@ -167,7 +174,9 @@ describe('generator', () => {
     });
 
     it('should create a package.json with the default version', async () => {
-      const packageJson = readJSON(resolve(outputPath, 'package.json'));
+      const packageJson = JSON.parse(
+        await readFile(resolve(outputPath, 'package.json'), 'utf8')
+      );
       expect(packageJson.version).toBe('1.0.0');
     });
 
@@ -199,27 +208,30 @@ describe('generator', () => {
 
   describe('optionsPerService', () => {
     beforeEach(() => {
-      mock({
-        inputDir: {
-          'spec.json': JSON.stringify({
-            ...emptyDocument,
-            paths: {
-              '/path': { get: { response: { type: 'string' } } }
-            },
-            components: {
-              schemas: { test: { type: 'string' } }
-            }
-          })
+      vol.fromNestedJSON(
+        {
+          inputDir: {
+            'spec.json': JSON.stringify({
+              ...emptyDocument,
+              paths: {
+                '/path': { get: { response: { type: 'string' } } }
+              },
+              components: {
+                schemas: { test: { type: 'string' } }
+              }
+            })
+          },
+          existingConfig:
+            '{ "inputDir/spec.json": {"directoryName": "customName" , "basePath": "/base/path/for/service" } }',
+          anotherConfig:
+            '{ "inputDir/spec2.json": {"directoryName": "customName" } }'
         },
-        existingConfig:
-          '{ "inputDir/spec.json": {"directoryName": "customName" , "basePath": "/base/path/for/service" } }',
-        anotherConfig:
-          '{ "inputDir/spec2.json": {"directoryName": "customName" } }'
-      });
+        process.cwd()
+      );
     });
 
     afterEach(() => {
-      mock.restore();
+      vol.reset();
     });
 
     it('writes options per service', async () => {
@@ -280,26 +292,27 @@ describe('generator', () => {
 
   describe('overwrite', () => {
     beforeEach(() => {
-      mock({
-        specs: {
-          'spec.json': JSON.stringify({
-            ...emptyDocument,
-            paths: {
-              '/path': { get: { response: { type: 'string' } } }
-            },
-            components: {
-              schemas: { test: { type: 'string' } }
-            }
-          })
+      vol.fromNestedJSON(
+        {
+          specs: {
+            'spec.json': JSON.stringify({
+              ...emptyDocument,
+              paths: {
+                '/path': { get: { response: { type: 'string' } } }
+              },
+              components: {
+                schemas: { test: { type: 'string' } }
+              }
+            })
+          },
+          out: { spec: { schema: { 'test.ts': 'some content' } } }
         },
-        out: {
-          spec: { schema: { 'test.ts': 'some content' } }
-        }
-      });
+        process.cwd()
+      );
     });
 
     afterEach(() => {
-      mock.restore();
+      vol.reset();
     });
 
     it('fails to overwrite by default', async () => {

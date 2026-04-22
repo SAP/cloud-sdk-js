@@ -51,8 +51,11 @@
     "safe-stable-stringify": "^2.5.0"
   },
   "devDependencies": {
-    "mock-fs": "^5.5.0",
+    "@jest/globals": "^30.3.0",
+    "@sap-cloud-sdk/test-util-internal": "*",
+    "memfs": "^4.57.1",
     "nock": "^14.0.11",
+    "prettier": "^3.8.1",
     "typescript": "~5.9.3"
   }
 }

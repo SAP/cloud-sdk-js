@@ -201,19 +201,14 @@ describe('Cache', () => {
   });
 
   describe('getOrInsertComputed', () => {
-    it('calls computeFn on cache miss and stores result', () => {
-      const compute = jest.fn().mockReturnValue({ entry: destinationOne });
-      const result = cacheOne.getOrInsertComputed('new', compute);
-      expect(result).toEqual(destinationOne);
-      expect(compute).toHaveBeenCalledTimes(1);
-    });
-
     it('returns cached value on subsequent calls without calling computeFn again', () => {
       const compute = jest.fn().mockReturnValue({ entry: destinationOne });
       cacheOne.getOrInsertComputed('cached', compute);
       const result = cacheOne.getOrInsertComputed('cached', compute);
       expect(result).toEqual(destinationOne);
       expect(compute).toHaveBeenCalledTimes(1);
+      const result2 = cacheOne.get('cached');
+      expect(result2).toEqual(destinationOne);
     });
 
     it('stores a custom expiration returned by computeFn', () => {

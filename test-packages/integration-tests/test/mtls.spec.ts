@@ -1,7 +1,12 @@
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+
+mockFsWithMemfs(jest);
+
+import { jest } from '@jest/globals';
 import { registerDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import axios from 'axios';
-import mock from 'mock-fs';
+import { vol } from 'memfs';
 import nock from 'nock';
 import { mockServiceBindings } from '@sap-cloud-sdk/test-util-internal/environment-mocks';
 import type {
@@ -12,19 +17,17 @@ import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 
 describe('mTLS on CloudFoundry', () => {
   beforeEach(() => {
-    mock({
-      'cf-crypto': {
-        'cf-cert': 'my-cert',
-        'cf-key': 'my-key'
-      }
-    });
+    vol.fromNestedJSON(
+      { 'cf-crypto': { 'cf-cert': 'my-cert', 'cf-key': 'my-key' } },
+      process.cwd()
+    );
 
     process.env.CF_INSTANCE_CERT = 'cf-crypto/cf-cert';
     process.env.CF_INSTANCE_KEY = 'cf-crypto/cf-key';
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
 
     delete process.env.CF_INSTANCE_CERT;
     delete process.env.CF_INSTANCE_KEY;

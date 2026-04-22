@@ -13,17 +13,18 @@
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",
-    "all": "yarn && yarn run lint && yarn run compile"
+    "all": "yarn && yarn lint && yarn compile"
   },
   "dependencies": {
     "@actions/core": "^3.0.0",
     "@actions/github": "^9.0.0"
   },
   "devDependencies": {
+    "@sap-cloud-sdk/test-util-build-internal": "*",
     "@vercel/ncc": "^0.38.4",
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",
-    "mock-fs": "^5.5.0",
+    "memfs": "^4.57.1",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3"
   }

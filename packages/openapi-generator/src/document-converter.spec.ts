@@ -1,4 +1,9 @@
-import mock from 'mock-fs';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+
+mockFsWithMemfs(jest);
+
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { convertDocToOpenApiV3, parseFileAsJson } from './document-converter';
 import type { OpenAPIV2, OpenAPIV3 } from 'openapi-types';
 
@@ -137,16 +142,14 @@ describe('document-converter', () => {
   });
 
   describe('parseFileAsJson', () => {
-    afterEach(() => mock.restore());
+    afterEach(() => vol.reset());
 
     it('does not throw error for JSON or YAML files', async () => {
       const jsonContent = { test: 'test' };
-      mock({
-        '/path/': {
-          'spec.json': JSON.stringify(jsonContent),
-          'spec.yaml': 'test: test',
-          'spec.yml': 'test: test'
-        }
+      vol.fromNestedJSON({
+        '/path/spec.json': JSON.stringify(jsonContent),
+        '/path/spec.yaml': 'test: test',
+        '/path/spec.yml': 'test: test'
       });
       expect(await parseFileAsJson('/path/spec.json')).toStrictEqual(
         jsonContent
@@ -160,11 +163,9 @@ describe('document-converter', () => {
     });
 
     it('throws an error for non JSON or YAML files', async () => {
-      mock({
-        '/path/': {
-          'no-extension': 'test',
-          'other-extension.test': 'test'
-        }
+      vol.fromNestedJSON({
+        '/path/no-extension': 'test',
+        '/path/other-extension.test': 'test'
       });
       await expect(() =>
         parseFileAsJson('/path/no-extension')

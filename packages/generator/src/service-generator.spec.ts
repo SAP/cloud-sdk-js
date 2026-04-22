@@ -1,5 +1,9 @@
+import { mockFsWithUnionfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+mockFsWithUnionfs(jest);
+// eslint-disable-next-line import/order
 import { resolve } from 'path';
-import mock from 'mock-fs';
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import { getRelPathWithPosixSeparator } from '@sap-cloud-sdk/generator-common/internal';
 import { createParsedOptions } from '../test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
@@ -27,9 +31,8 @@ describe('service-generator', () => {
         const optionsPerService: OptionsPerService = {
           [getRelPathWithPosixSeparator(pathSpec)]: serviceOptions
         };
-        mock({
-          [pathConfig]: JSON.stringify(optionsPerService),
-          [pathSpec]: mock.load(pathSpec)
+        vol.fromNestedJSON({
+          [pathConfig]: JSON.stringify(optionsPerService)
         });
 
         const serviceMetadata = await parseService(
@@ -49,7 +52,7 @@ describe('service-generator', () => {
         expect(serviceMetadata.serviceOptions.packageName).toEqual(
           serviceOptions.packageName
         );
-        mock.restore();
+        vol.reset();
       });
     });
 

@@ -9,7 +9,12 @@ jest.mock('path', () => {
   };
 });
 
-import mock from 'mock-fs';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+
+mockFsWithMemfs(jest);
+
+import { jest } from '@jest/globals';
+import { vol } from 'memfs';
 import {
   getOptionsPerService,
   getOriginalOptionsPerService,
@@ -26,15 +31,14 @@ describe('getOriginalOptionsPerService', () => {
   };
 
   beforeEach(() => {
-    mock({
-      path: {
-        'myConfig.json': JSON.stringify(config)
-      }
-    });
+    vol.fromNestedJSON(
+      { path: { 'myConfig.json': JSON.stringify(config) } },
+      process.cwd()
+    );
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   it('returns a config if an existent file path was given', async () => {
@@ -109,7 +113,7 @@ describe('getServiceOptions', () => {
 
 describe('getOptionsPerService', () => {
   afterEach(() => {
-    mock.restore();
+    vol.reset();
   });
 
   it('builds PerService config without options per service.', async () => {
@@ -131,11 +135,10 @@ describe('getOptionsPerService', () => {
       }
     };
 
-    mock({
-      path: {
-        'myConfig.json': JSON.stringify(config)
-      }
-    });
+    vol.fromNestedJSON(
+      { path: { 'myConfig.json': JSON.stringify(config) } },
+      process.cwd()
+    );
 
     await expect(
       getOptionsPerService(['/user/path/service'], {
@@ -157,11 +160,10 @@ describe('getOptionsPerService', () => {
       }
     };
 
-    mock({
-      path: {
-        'myPartialConfig.json': JSON.stringify(partialConfig)
-      }
-    });
+    vol.fromNestedJSON(
+      { path: { 'myPartialConfig.json': JSON.stringify(partialConfig) } },
+      process.cwd()
+    );
 
     await expect(
       getOptionsPerService(['/user/path/service'], {

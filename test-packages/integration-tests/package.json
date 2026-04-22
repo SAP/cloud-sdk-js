@@ -30,7 +30,7 @@
     "@sap-cloud-sdk/odata-v2": "^4.6.0",
     "@sap-cloud-sdk/openapi-generator": "^4.6.0",
     "@sap-cloud-sdk/test-util-internal": "*",
-    "bignumber.js": "^10.0.2",
+    "bignumber.js": "^11.0.0",
     "execa": "^5.0.0",
     "jsonwebtoken": "^9.0.3",
     "mock-fs": "^5.5.0",

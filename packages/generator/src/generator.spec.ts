@@ -2,7 +2,7 @@
 import { mockFsWithUnionfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
 mockFsWithUnionfs(jest);
 import { join, resolve } from 'path';
-import { readFile } from 'fs/promises';
+import { readFile, readdir } from 'fs/promises';
 import { jest } from '@jest/globals';
 import { transports } from 'winston';
 import { vol } from 'memfs';
@@ -47,6 +47,10 @@ describe('generator', () => {
         },
         process.cwd()
       );
+      vol.mkdirSync(pathTestServiceDir, { recursive: true });
+      vol.mkdirSync(join(pathTestServiceDir, 'sdk-metadata'), {
+        recursive: true
+      });
       vol.fromNestedJSON({ '.keep': '' }, pathTestServiceDir);
 
       const options = createOptions({
@@ -126,7 +130,7 @@ describe('generator', () => {
     });
 
     it('copies the additional files matching the glob.', async () => {
-      const sourceFiles = await promises.readdir(
+      const sourceFiles = await readdir(
         join('common', 'API_TEST_SRV')
       );
 
@@ -136,14 +140,14 @@ describe('generator', () => {
     });
 
     it('generates the options per service and writes to the given folder', async () => {
-      const clientFile = await promises.readFile(
+      const clientFile = await readFile(
         'someDir/test-service-options.json'
       );
       expect(clientFile).toBeDefined();
     }, 10000);
 
     it('generates the api hub metadata and writes to the input folder', async () => {
-      const sourceFiles = await promises.readdir(
+      const sourceFiles = await readdir(
         join(pathTestService, '../sdk-metadata')
       );
       const clientFile = sourceFiles.find(
@@ -477,10 +481,15 @@ describe('generator', () => {
       vol.fromNestedJSON(
         {
           common: { '.keep': '' },
+          logger: { API_TEST_SRV: { '.keep': '' } },
           '/prettier/config': JSON.stringify({ printWidth: 66 })
         },
         process.cwd()
       );
+      vol.mkdirSync(pathTestServiceDir, { recursive: true });
+      vol.mkdirSync(join(pathTestServiceDir, 'sdk-metadata'), {
+        recursive: true
+      });
       vol.fromNestedJSON({ '.keep': '' }, pathTestServiceDir);
     });
 

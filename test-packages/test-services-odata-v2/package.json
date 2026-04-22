@@ -30,6 +30,6 @@
     "prettier": "^3.8.1"
   },
   "peerDependencies": {
-  	"@sap-cloud-sdk/generator": "workspace:^"
+    "@sap-cloud-sdk/generator": "workspace:^"
   }
 }

@@ -31,6 +31,6 @@
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@sap-cloud-sdk/util": "workspace:^",
     "@sap-cloud-sdk/generator-common": "workspace:^",
-  	"@sap-cloud-sdk/generator": "workspace:^"
+    "@sap-cloud-sdk/generator": "workspace:^"
   }
 }

@@ -2,8 +2,8 @@
 
 import { promises } from 'fs';
 import { join, resolve } from 'path';
-import { generate } from '../../packages/generator/src';
-import type { GeneratorOptions } from '../../packages/generator/src';
+import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
+import { generate } from '@sap-cloud-sdk/generator/src';
 import {
   createFile,
   defaultPrettierConfig
@@ -14,15 +14,14 @@ const outDir = resolve(__dirname, 'common-service');
 export async function generateCommonEntity() {
   await promises.rm(outDir, { recursive: true, force: true });
 
-  const options: GeneratorOptions = {
-    input: resolve(__dirname, 'COMMON_SRV.edmx'),
-    outputDir: resolve(__dirname),
-    optionsPerService: resolve(__dirname, 'options-per-service.json'),
-    overwrite: true,
-    skipValidation: true,
-    packageJson: false
-  };
-  await generate(options);
+  await generate(
+    createOptions({
+      input: resolve(__dirname, 'COMMON_SRV.edmx'),
+      outputDir: resolve(__dirname),
+      optionsPerService: resolve(__dirname, 'options-per-service.json'),
+      overwrite: true
+    })
+  );
 
   await generateCommonTestEntity();
   await promises.rm(outDir, { recursive: true, force: true });

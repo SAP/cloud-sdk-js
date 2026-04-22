@@ -21,7 +21,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "bignumber.js": "^10.0.2"
+    "bignumber.js": "^11.0.0"
   },
   "devDependencies": {
     "@sap-cloud-sdk/generator-common": "workspace:^",

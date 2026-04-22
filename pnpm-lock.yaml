@@ -78,8 +78,8 @@ importers:
         specifier: ^8.0.0
         version: 8.0.0(typescript@5.9.3)
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -136,8 +136,8 @@ importers:
         specifier: ^9.39.2
         version: 9.39.4
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -192,8 +192,8 @@ importers:
         specifier: ^9.39.2
         version: 9.39.4
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -219,8 +219,8 @@ importers:
         specifier: ^13.0.6
         version: 13.0.6
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
     devDependencies:
       '@sap-cloud-sdk/test-util-build-internal':
         specifier: workspace:^
@@ -266,14 +266,14 @@ importers:
   build-packages/merge-and-write-changelogs:
     dependencies:
       '@actions/core':
-        specifier: ^1.11.1
-        version: 1.11.1
+        specifier: ^3.0.0
+        version: 3.0.0
       '@manypkg/get-packages':
         specifier: ^2.2.2
         version: 2.2.2
     devDependencies:
       '@vercel/ncc':
-        specifier: ^0.38.3
+        specifier: ^0.38.4
         version: 0.38.4
       depcheck:
         specifier: ^1.4.7
@@ -294,8 +294,8 @@ importers:
         specifier: ^30.3.0
         version: 30.3.0
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
     devDependencies:
       depcheck:
         specifier: ^1.4.7
@@ -347,8 +347,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       nock:
         specifier: ^14.0.11
         version: 14.0.11
@@ -450,8 +450,8 @@ importers:
         specifier: ^5.0.0
         version: 5.1.1
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -493,8 +493,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
@@ -548,8 +548,8 @@ importers:
         specifier: workspace:^
         version: link:../util
       bignumber.js:
-        specifier: ^10.0.2
-        version: 10.0.2
+        specifier: ^11.0.0
+        version: 11.0.0
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -588,8 +588,8 @@ importers:
         specifier: workspace:^
         version: link:../util
       bignumber.js:
-        specifier: ^10.0.2
-        version: 10.0.2
+        specifier: ^11.0.0
+        version: 11.0.0
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -628,8 +628,8 @@ importers:
         specifier: workspace:^
         version: link:../util
       bignumber.js:
-        specifier: ^10.0.2
-        version: 10.0.2
+        specifier: ^11.0.0
+        version: 11.0.0
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -730,8 +730,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -811,8 +811,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -851,8 +851,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       nock:
         specifier: ^14.0.11
         version: 14.0.11
@@ -911,8 +911,8 @@ importers:
         specifier: ^1.15.0
         version: 1.15.0
       bignumber.js:
-        specifier: ^10.0.2
-        version: 10.0.2
+        specifier: ^11.0.0
+        version: 11.0.0
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -932,8 +932,8 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -980,27 +980,21 @@ importers:
         specifier: ^1.15.0
         version: 1.15.0
     devDependencies:
-      '@jest/globals':
-        specifier: ^30.3.0
-        version: 30.3.0
       '@sap-cloud-sdk/generator':
-        specifier: workspace:^
-        version: link:../../packages/generator
+        specifier: ^4.6.0
+        version: 4.6.0
       '@sap-cloud-sdk/odata-common':
-        specifier: workspace:^
-        version: link:../../packages/odata-common
+        specifier: ^4.6.0
+        version: 4.6.0
       '@sap-cloud-sdk/odata-v2':
-        specifier: workspace:^
-        version: link:../../packages/odata-v2
+        specifier: ^4.6.0
+        version: 4.6.0
       '@sap-cloud-sdk/openapi-generator':
-        specifier: workspace:^
-        version: link:../../packages/openapi-generator
+        specifier: ^4.6.0
+        version: 4.6.0
       bignumber.js:
         specifier: ^10.0.2
         version: 10.0.2
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
       execa:
         specifier: ^5.0.0
         version: 5.1.1
@@ -1041,8 +1035,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/util
       bignumber.js:
-        specifier: ^10.0.2
-        version: 10.0.2
+        specifier: ^11.0.0
+        version: 11.0.0
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1066,8 +1060,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/util
       bignumber.js:
-        specifier: ^10.0.2
-        version: 10.0.2
+        specifier: ^11.0.0
+        version: 11.0.0
     devDependencies:
       '@sap-cloud-sdk/generator-common':
         specifier: workspace:^
@@ -1085,8 +1079,8 @@ importers:
   test-packages/test-services-odata-v2:
     dependencies:
       bignumber.js:
-        specifier: ^10.0.2
-        version: 10.0.2
+        specifier: ^11.0.0
+        version: 11.0.0
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1104,8 +1098,8 @@ importers:
   test-packages/test-services-odata-v4:
     dependencies:
       bignumber.js:
-        specifier: ^10.0.2
-        version: 10.0.2
+        specifier: ^11.0.0
+        version: 11.0.0
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1180,8 +1174,8 @@ importers:
         specifier: ^9.0.10
         version: 9.0.10
       bignumber.js:
-        specifier: ^10.0.2
-        version: 10.0.2
+        specifier: ^11.0.0
+        version: 11.0.0
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1205,8 +1199,8 @@ importers:
         specifier: ^30.3.0
         version: 30.3.0
       memfs:
-        specifier: ^4.57.1
-        version: 4.57.1(tslib@2.8.1)
+        specifier: ^4.57.2
+        version: 4.57.2(tslib@2.8.1)
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
@@ -1216,14 +1210,8 @@ importers:
 
 packages:
 
-  '@actions/core@1.11.1':
-    resolution: {integrity: sha512-hXJCSrkwfA46Vd9Z3q4cpEpHB1rL5NG04+/rbqW9d3+CSvtB1tYe8UTpAlixa1vj0m/ULglfEK2UKxMGxCxv5A==}
-
   '@actions/core@3.0.0':
     resolution: {integrity: sha512-zYt6cz+ivnTmiT/ksRVriMBOiuoUpDCJJlZ5KPl2/FRdvwU3f7MPh9qftvbkXJThragzUZieit2nyHUyw53Seg==}
-
-  '@actions/exec@1.1.1':
-    resolution: {integrity: sha512-+sCcHHbVdk93a0XT19ECtO/gIXoxvdsgQLzb2fE2/5sIZmWQuluYyjPQtrtTHdU1YzTZ7bAPN4sITq2xi1679w==}
 
   '@actions/exec@3.0.0':
     resolution: {integrity: sha512-6xH/puSoNBXb72VPlZVm7vQ+svQpFyA96qdDBvhB8eNZOE8LtPf9L4oAsfzK/crCL8YZ+19fKYVnM63Sl+Xzlw==}
@@ -1231,17 +1219,11 @@ packages:
   '@actions/github@9.1.0':
     resolution: {integrity: sha512-u0hDGQeCS+7VNoLA8hYG65RLdPLMaPGfka0sZ0up7P0AiShqfX6xcuXNteGkQ7X7Tod7AMNwHd4p7DS63i8zzA==}
 
-  '@actions/http-client@2.2.3':
-    resolution: {integrity: sha512-mx8hyJi/hjFvbPokCg4uRd4ZX78t+YyRPtnKWwIl+RzNaVuFpQHfmlGVfsKEJN8LwTCvL+DfVgAM04XaHkm6bA==}
-
   '@actions/http-client@3.0.2':
     resolution: {integrity: sha512-JP38FYYpyqvUsz+Igqlc/JG6YO9PaKuvqjM3iGvaLqFnJ7TFmcLyy2IDrY0bI0qCQug8E9K+elv5ZNfw62ZJzA==}
 
   '@actions/http-client@4.0.0':
     resolution: {integrity: sha512-QuwPsgVMsD6qaPD57GLZi9sqzAZCtiJT8kVBCDpLtxhL5MydQ4gS+DrejtZZPdIYyB1e95uCK9Luyds7ybHI3g==}
-
-  '@actions/io@1.1.3':
-    resolution: {integrity: sha512-wi9JjgKLYS7U/z8PPbco+PvTb/nRWjeoFlJ1Qer83k/3C5PHQi28hiVdeE2kHXmIL99mQFawx8qt/JPjZilJ8Q==}
 
   '@actions/io@3.0.2':
     resolution: {integrity: sha512-nRBchcMM+QK1pdjO7/idu86rbJI5YHUKCvKs0KxnSYbVe3F51UfGxuZX4Qy/fWlp6l7gWFwIkrOzN+oUK03kfw==}
@@ -1608,10 +1590,6 @@ packages:
   '@exodus/schemasafe@1.3.0':
     resolution: {integrity: sha512-5Aap/GaRupgNx/feGBwLLTVv8OQFfv3pq2lPRzPg9R+IOBnDgghTGW7l7EuVXOvg5cc/xSAlRW8rBrjIC3Nvqw==}
 
-  '@fastify/busboy@2.1.1':
-    resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
-    engines: {node: '>=14'}
-
   '@gerrit0/mini-shiki@3.23.0':
     resolution: {integrity: sha512-bEMORlG0cqdjVyCEuU0cDQbORWX+kYCeo0kV1lbxF5bt4r7SID2l9bqsxJEM0zndaxpOUT7riCyIVEuqq/Ynxg==}
 
@@ -1810,8 +1788,20 @@ packages:
     peerDependencies:
       tslib: '2'
 
+  '@jsonjoy.com/fs-core@4.57.2':
+    resolution: {integrity: sha512-SVjwklkpIV5wrynpYtuYnfYH1QF4/nDuLBX7VXdb+3miglcAgBVZb/5y0cOsehRV/9Vb+3UqhkMq3/NR3ztdkQ==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      tslib: '2'
+
   '@jsonjoy.com/fs-fsa@4.57.1':
     resolution: {integrity: sha512-ooEPvSW/HQDivPDPZMibHGKZf/QS4WRir1czGZmXmp3MsQqLECZEpN0JobrD8iV9BzsuwdIv+PxtWX9WpPLsIA==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      tslib: '2'
+
+  '@jsonjoy.com/fs-fsa@4.57.2':
+    resolution: {integrity: sha512-fhO8+iR2I+OCw668ISDJdn1aArc9zx033sWejIyzQ8RBeXa9bDSaUeA3ix0poYOfrj1KdOzytmYNv2/uLDfV6g==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
@@ -1822,8 +1812,20 @@ packages:
     peerDependencies:
       tslib: '2'
 
+  '@jsonjoy.com/fs-node-builtins@4.57.2':
+    resolution: {integrity: sha512-xhiegylRmhw43Ki2HO1ZBL7DQ5ja/qpRsL29VtQ2xuUHiuDGbgf2uD4p9Qd8hJI5P6RCtGYD50IXHXVq/Ocjcg==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      tslib: '2'
+
   '@jsonjoy.com/fs-node-to-fsa@4.57.1':
     resolution: {integrity: sha512-pqGHyWWzNck4jRfaGV39hkqpY5QjRUQ/nRbNT7FYbBa0xf4bDG+TE1Gt2KWZrSkrkZZDE3qZUjYMbjwSliX6pg==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      tslib: '2'
+
+  '@jsonjoy.com/fs-node-to-fsa@4.57.2':
+    resolution: {integrity: sha512-18LmWTSONhoAPW+IWRuf8w/+zRolPFGPeGwMxlAhhfY11EKzX+5XHDBPAw67dBF5dxDErHJbl40U+3IXSDRXSQ==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
@@ -1834,8 +1836,20 @@ packages:
     peerDependencies:
       tslib: '2'
 
+  '@jsonjoy.com/fs-node-utils@4.57.2':
+    resolution: {integrity: sha512-rsPSJgekz43IlNbLyAM/Ab+ouYLWGp5DDBfYBNNEqDaSpsbXfthBn29Q4muFA9L0F+Z3mKo+CWlgSCXrf+mOyQ==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      tslib: '2'
+
   '@jsonjoy.com/fs-node@4.57.1':
     resolution: {integrity: sha512-3YaKhP8gXEKN+2O49GLNfNb5l2gbnCFHyAaybbA2JkkbQP3dpdef7WcUaHAulg/c5Dg4VncHsA3NWAUSZMR5KQ==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      tslib: '2'
+
+  '@jsonjoy.com/fs-node@4.57.2':
+    resolution: {integrity: sha512-nX2AdL6cOFwLdju9G4/nbRnYevmCJbh7N7hvR3gGm97Cs60uEjyd0rpR+YBS7cTg175zzl22pGKXR5USaQMvKg==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
@@ -1846,8 +1860,20 @@ packages:
     peerDependencies:
       tslib: '2'
 
+  '@jsonjoy.com/fs-print@4.57.2':
+    resolution: {integrity: sha512-wK9NSow48i4DbDl9F1CQE5TqnyZOJ04elU3WFG5aJ76p+YxO/ulyBBQvKsessPxdo381Bc2pcEoyPujMOhcRqQ==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      tslib: '2'
+
   '@jsonjoy.com/fs-snapshot@4.57.1':
     resolution: {integrity: sha512-/oG8xBNFMbDXTq9J7vepSA1kerS5vpgd3p5QZSPd+nX59uwodGJftI51gDYyHRpP57P3WCQf7LHtBYPqwUg2Bg==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      tslib: '2'
+
+  '@jsonjoy.com/fs-snapshot@4.57.2':
+    resolution: {integrity: sha512-GdduDZuoP5V/QCgJkx9+BZ6SC0EZ/smXAdTS7PfMqgMTGXLlt/bH/FqMYaqB9JmLf05sJPtO0XRbAwwkEEPbVw==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
@@ -2011,6 +2037,41 @@ packages:
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
+  '@sap-cloud-sdk/connectivity@4.6.0':
+    resolution: {integrity: sha512-Pf+0O1s4eDNR/MZ+UcyOyPa/U8dl3xUHEbjY+BG7DHZtLZFYVfKg2dV63ZTzeHypqMRVQePCN8yIyIz296FWHg==}
+
+  '@sap-cloud-sdk/generator-common@4.6.0':
+    resolution: {integrity: sha512-+psigq8I8/2rLhyycTZ5WeUKZke3cEZCj4nym5qoB0u+h4apr88aQ6bgH+UNcjtSVT5rYYhwKZbp2bQT+LuijQ==}
+
+  '@sap-cloud-sdk/generator@4.6.0':
+    resolution: {integrity: sha512-DdZBLHxMDxy5kzLAAkprA/AcySt8WGKACHkd/6mozggmtdUXBU1zBPQOD5KzOzFNOOY/lWWwRlncG3Yy4JC7Sg==}
+    hasBin: true
+
+  '@sap-cloud-sdk/http-client@4.6.0':
+    resolution: {integrity: sha512-fBaJAnOsHGyIlRS4HA2XYxp9v3GjUWPACoGDRg01jjoq49r3KjIMi8FqycMwKTF9QnkX/4rlPtj2wnziHgG2bg==}
+
+  '@sap-cloud-sdk/odata-common@4.6.0':
+    resolution: {integrity: sha512-k1u5dorB10WP1OKALVSCBq52+y7j8DgJx/inikZRq1Rwo35xuoiFeIRNo0cllhfrzlKcJ74xCJ8JuTAac2FPaA==}
+
+  '@sap-cloud-sdk/odata-v2@4.6.0':
+    resolution: {integrity: sha512-6AgvadQ9l9dGEtbmeVNPVEloXl9WIwlsesqK3dmMyMaEYUjErv8DN9JqhXSr1OECcm02TAKo5e99s/LVlheQeQ==}
+
+  '@sap-cloud-sdk/odata-v4@4.6.0':
+    resolution: {integrity: sha512-409MC34qMOXD3FlU925B+ZMKb/BdxZ9TBMgycdedmgvcwLpofbAgOSfcD0nmAU2BIyF1xfKeKo2qK581DbATRQ==}
+
+  '@sap-cloud-sdk/openapi-generator@4.6.0':
+    resolution: {integrity: sha512-gtORE2UMB6lncWVO6eWTW5Qqwwhx4PiZ3TdGiLOENTcNJH5q6hmvIF1z+OjnGRPYZVcusjvbQXRHXcZkXrZK3w==}
+    hasBin: true
+
+  '@sap-cloud-sdk/openapi@4.6.0':
+    resolution: {integrity: sha512-If5eD5DWUA7nXUUvMYuG3p8+JjSR2+DZPnE88YdDR7+kIbblDuV2c4QbyjpT0oeA2sQ3S9iZVx8cZP8n5dmdHQ==}
+
+  '@sap-cloud-sdk/resilience@4.6.0':
+    resolution: {integrity: sha512-NMY683lNvJcE5dghVqUsBLM/voTLE6MMn5OmmB5BkG8qp5TZSuy/lhMZCVfGpBVnRLv6k19vWiBcueXxYg8bcQ==}
+
+  '@sap-cloud-sdk/util@4.6.0':
+    resolution: {integrity: sha512-z1gFjgzhAUhzPy1IkwWjfOrnPHh9KrEZbLlFBG5LbL3oBS3JMmKusW0162Hq4r+AVTR43akEoHxk07p247YQTw==}
+
   '@sap/cds-compiler@6.8.0':
     resolution: {integrity: sha512-yRoTZcH8DFiP4PcEuIHe42YAaNt51V736+6RRr+U4nbO91sz36L8be2djcE8n760t8IbqLxzZ/UkATiL0fjRmA==}
     engines: {node: '>=20'}
@@ -2132,6 +2193,9 @@ packages:
   '@ts-graphviz/core@2.0.7':
     resolution: {integrity: sha512-w071DSzP94YfN6XiWhOxnLpYT3uqtxJBDYdh6Jdjzt+Ce6DNspJsPQgpC7rbts/B8tEkq0LHoYuIF/O5Jh5rPg==}
     engines: {node: '>=18'}
+
+  '@ts-morph/common@0.28.1':
+    resolution: {integrity: sha512-W74iWf7ILp1ZKNYXY5qbddNaml7e9Sedv5lvU1V8lftlitkc9Pq1A+jlH23ltDgWYeZFFEqGCD1Ies9hqu3O+g==}
 
   '@ts-morph/common@0.29.0':
     resolution: {integrity: sha512-35oUmphHbJvQ/+UTwFNme/t2p3FoKiGJ5auTjjpNTop2dyREspirjMy82PLSC1pnDJ8ah1GU98hwpVt64YXQsg==}
@@ -2812,6 +2876,9 @@ packages:
 
   bignumber.js@10.0.2:
     resolution: {integrity: sha512-E8Wp9O06QA6lneJ4aRUXKYf/1GIomqUEmUMwtIOMtDxf1U52ffJY+y7JBk/8wRafA8qOIqLnXQGqonYXZdBnFQ==}
+
+  bignumber.js@11.0.0:
+    resolution: {integrity: sha512-pkOSwKRi2HLwEbmTNf7C0M9lw3Z5dXQ1irbanJvySh/nJQBcFsMxF+g5o2JEn5BPFmfAqYalrhOwoFdLJXohEg==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -4677,6 +4744,11 @@ packages:
     peerDependencies:
       tslib: '2'
 
+  memfs@4.57.2:
+    resolution: {integrity: sha512-2nWzSsJzrukurSDna4Z0WywuScK4Id3tSKejgu74u8KCdW4uNrseKRSIDg75C6Yw5ZRqBe0F0EtMNlTbUq8bAQ==}
+    peerDependencies:
+      tslib: '2'
+
   meow@9.0.0:
     resolution: {integrity: sha512-+obSblOQmRhcyBt62furQqRAQpNyWXo8BuQ5bN7dG8wmwQ+vwHKp/rCFD4CrTP8CsDQD1sjoZ94K417XEUk8IQ==}
     engines: {node: '>=10'}
@@ -5868,6 +5940,9 @@ packages:
       jest-util:
         optional: true
 
+  ts-morph@27.0.2:
+    resolution: {integrity: sha512-fhUhgeljcrdZ+9DZND1De1029PrE+cMkIP7ooqkLRTrRLTqcki2AstsyJm0vRNbTbVCNJ0idGlbBrfqc7/nA8w==}
+
   ts-morph@28.0.0:
     resolution: {integrity: sha512-Wp3tnZ2bzwxyTZMtgWVzXDfm7lB1Drz+y9DmmYH/L702PQhPyVrp3pkou3yIz4qjS14GY9kcpmLiOOMvl8oG1g==}
 
@@ -6013,10 +6088,6 @@ packages:
 
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
-
-  undici@5.29.0:
-    resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
-    engines: {node: '>=14.0'}
 
   undici@6.24.1:
     resolution: {integrity: sha512-sC+b0tB1whOCzbtlx20fx3WgCXwkW627p4EA9uM+/tNNPkSS+eSEld6pAs9nDv7WbY1UUljBMYPtu9BCOrCWKA==}
@@ -6248,19 +6319,10 @@ packages:
 
 snapshots:
 
-  '@actions/core@1.11.1':
-    dependencies:
-      '@actions/exec': 1.1.1
-      '@actions/http-client': 2.2.3
-
   '@actions/core@3.0.0':
     dependencies:
       '@actions/exec': 3.0.0
       '@actions/http-client': 4.0.0
-
-  '@actions/exec@1.1.1':
-    dependencies:
-      '@actions/io': 1.1.3
 
   '@actions/exec@3.0.0':
     dependencies:
@@ -6276,11 +6338,6 @@ snapshots:
       '@octokit/request-error': 7.1.0
       undici: 6.24.1
 
-  '@actions/http-client@2.2.3':
-    dependencies:
-      tunnel: 0.0.6
-      undici: 5.29.0
-
   '@actions/http-client@3.0.2':
     dependencies:
       tunnel: 0.0.6
@@ -6290,8 +6347,6 @@ snapshots:
     dependencies:
       tunnel: 0.0.6
       undici: 6.24.1
-
-  '@actions/io@1.1.3': {}
 
   '@actions/io@3.0.2': {}
 
@@ -6778,8 +6833,6 @@ snapshots:
 
   '@exodus/schemasafe@1.3.0': {}
 
-  '@fastify/busboy@2.1.1': {}
-
   '@gerrit0/mini-shiki@3.23.0':
     dependencies:
       '@shikijs/engine-oniguruma': 3.23.0
@@ -7072,6 +7125,13 @@ snapshots:
       thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
+  '@jsonjoy.com/fs-core@4.57.2(tslib@2.8.1)':
+    dependencies:
+      '@jsonjoy.com/fs-node-builtins': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.2(tslib@2.8.1)
+      thingies: 2.6.0(tslib@2.8.1)
+      tslib: 2.8.1
+
   '@jsonjoy.com/fs-fsa@4.57.1(tslib@2.8.1)':
     dependencies:
       '@jsonjoy.com/fs-core': 4.57.1(tslib@2.8.1)
@@ -7080,7 +7140,19 @@ snapshots:
       thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
+  '@jsonjoy.com/fs-fsa@4.57.2(tslib@2.8.1)':
+    dependencies:
+      '@jsonjoy.com/fs-core': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.2(tslib@2.8.1)
+      thingies: 2.6.0(tslib@2.8.1)
+      tslib: 2.8.1
+
   '@jsonjoy.com/fs-node-builtins@4.57.1(tslib@2.8.1)':
+    dependencies:
+      tslib: 2.8.1
+
+  '@jsonjoy.com/fs-node-builtins@4.57.2(tslib@2.8.1)':
     dependencies:
       tslib: 2.8.1
 
@@ -7091,9 +7163,21 @@ snapshots:
       '@jsonjoy.com/fs-node-utils': 4.57.1(tslib@2.8.1)
       tslib: 2.8.1
 
+  '@jsonjoy.com/fs-node-to-fsa@4.57.2(tslib@2.8.1)':
+    dependencies:
+      '@jsonjoy.com/fs-fsa': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.2(tslib@2.8.1)
+      tslib: 2.8.1
+
   '@jsonjoy.com/fs-node-utils@4.57.1(tslib@2.8.1)':
     dependencies:
       '@jsonjoy.com/fs-node-builtins': 4.57.1(tslib@2.8.1)
+      tslib: 2.8.1
+
+  '@jsonjoy.com/fs-node-utils@4.57.2(tslib@2.8.1)':
+    dependencies:
+      '@jsonjoy.com/fs-node-builtins': 4.57.2(tslib@2.8.1)
       tslib: 2.8.1
 
   '@jsonjoy.com/fs-node@4.57.1(tslib@2.8.1)':
@@ -7107,9 +7191,26 @@ snapshots:
       thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
+  '@jsonjoy.com/fs-node@4.57.2(tslib@2.8.1)':
+    dependencies:
+      '@jsonjoy.com/fs-core': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-print': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-snapshot': 4.57.2(tslib@2.8.1)
+      glob-to-regex.js: 1.2.0(tslib@2.8.1)
+      thingies: 2.6.0(tslib@2.8.1)
+      tslib: 2.8.1
+
   '@jsonjoy.com/fs-print@4.57.1(tslib@2.8.1)':
     dependencies:
       '@jsonjoy.com/fs-node-utils': 4.57.1(tslib@2.8.1)
+      tree-dump: 1.1.0(tslib@2.8.1)
+      tslib: 2.8.1
+
+  '@jsonjoy.com/fs-print@4.57.2(tslib@2.8.1)':
+    dependencies:
+      '@jsonjoy.com/fs-node-utils': 4.57.2(tslib@2.8.1)
       tree-dump: 1.1.0(tslib@2.8.1)
       tslib: 2.8.1
 
@@ -7117,6 +7218,14 @@ snapshots:
     dependencies:
       '@jsonjoy.com/buffers': 17.67.0(tslib@2.8.1)
       '@jsonjoy.com/fs-node-utils': 4.57.1(tslib@2.8.1)
+      '@jsonjoy.com/json-pack': 17.67.0(tslib@2.8.1)
+      '@jsonjoy.com/util': 17.67.0(tslib@2.8.1)
+      tslib: 2.8.1
+
+  '@jsonjoy.com/fs-snapshot@4.57.2(tslib@2.8.1)':
+    dependencies:
+      '@jsonjoy.com/buffers': 17.67.0(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.2(tslib@2.8.1)
       '@jsonjoy.com/json-pack': 17.67.0(tslib@2.8.1)
       '@jsonjoy.com/util': 17.67.0(tslib@2.8.1)
       tslib: 2.8.1
@@ -7362,6 +7471,142 @@ snapshots:
 
   '@rtsao/scc@1.1.0': {}
 
+  '@sap-cloud-sdk/connectivity@4.6.0':
+    dependencies:
+      '@sap-cloud-sdk/resilience': 4.6.0
+      '@sap-cloud-sdk/util': 4.6.0
+      '@sap/xsenv': 6.1.0
+      '@sap/xssec': 4.13.0
+      async-retry: 1.3.3
+      axios: 1.15.0
+      jks-js: 1.1.6
+      jsonwebtoken: 9.0.3
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  '@sap-cloud-sdk/generator-common@4.6.0':
+    dependencies:
+      '@sap-cloud-sdk/util': 4.6.0
+      fast-levenshtein: 3.0.0
+      fs-extra: 11.3.4
+      glob: 13.0.6
+      prettier: 3.8.1
+      typescript: 5.9.3
+      voca: 1.4.1
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - debug
+
+  '@sap-cloud-sdk/generator@4.6.0':
+    dependencies:
+      '@sap-cloud-sdk/generator-common': 4.6.0
+      '@sap-cloud-sdk/odata-common': 4.6.0
+      '@sap-cloud-sdk/odata-v2': 4.6.0
+      '@sap-cloud-sdk/odata-v4': 4.6.0
+      '@sap-cloud-sdk/util': 4.6.0
+      '@types/fs-extra': 11.0.4
+      fast-xml-parser: 5.5.9
+      fs-extra: 11.3.4
+      ts-morph: 27.0.2
+      typescript: 5.9.3
+      voca: 1.4.1
+      winston: 3.19.0
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  '@sap-cloud-sdk/http-client@4.6.0':
+    dependencies:
+      '@sap-cloud-sdk/connectivity': 4.6.0
+      '@sap-cloud-sdk/resilience': 4.6.0
+      '@sap-cloud-sdk/util': 4.6.0
+      axios: 1.15.0
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  '@sap-cloud-sdk/odata-common@4.6.0':
+    dependencies:
+      '@sap-cloud-sdk/connectivity': 4.6.0
+      '@sap-cloud-sdk/http-client': 4.6.0
+      '@sap-cloud-sdk/util': 4.6.0
+      bignumber.js: 10.0.2
+      moment: 2.30.1
+      voca: 1.4.1
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  '@sap-cloud-sdk/odata-v2@4.6.0':
+    dependencies:
+      '@sap-cloud-sdk/connectivity': 4.6.0
+      '@sap-cloud-sdk/http-client': 4.6.0
+      '@sap-cloud-sdk/odata-common': 4.6.0
+      '@sap-cloud-sdk/util': 4.6.0
+      bignumber.js: 10.0.2
+      moment: 2.30.1
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  '@sap-cloud-sdk/odata-v4@4.6.0':
+    dependencies:
+      '@sap-cloud-sdk/connectivity': 4.6.0
+      '@sap-cloud-sdk/http-client': 4.6.0
+      '@sap-cloud-sdk/odata-common': 4.6.0
+      '@sap-cloud-sdk/util': 4.6.0
+      bignumber.js: 10.0.2
+      moment: 2.30.1
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  '@sap-cloud-sdk/openapi-generator@4.6.0':
+    dependencies:
+      '@apidevtools/swagger-parser': 12.1.0(openapi-types@12.1.3)
+      '@sap-cloud-sdk/generator-common': 4.6.0
+      '@sap-cloud-sdk/openapi': 4.6.0
+      '@sap-cloud-sdk/util': 4.6.0
+      content-type: 1.0.5
+      js-yaml: 4.1.1
+      openapi-types: 12.1.3
+      swagger2openapi: 7.0.8
+    transitivePeerDependencies:
+      - debug
+      - encoding
+      - supports-color
+
+  '@sap-cloud-sdk/openapi@4.6.0':
+    dependencies:
+      '@sap-cloud-sdk/connectivity': 4.6.0
+      '@sap-cloud-sdk/http-client': 4.6.0
+      '@sap-cloud-sdk/resilience': 4.6.0
+      '@sap-cloud-sdk/util': 4.6.0
+      axios: 1.15.0
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  '@sap-cloud-sdk/resilience@4.6.0':
+    dependencies:
+      '@sap-cloud-sdk/util': 4.6.0
+      async-retry: 1.3.3
+      axios: 1.15.0
+      opossum: 9.0.0
+    transitivePeerDependencies:
+      - debug
+
+  '@sap-cloud-sdk/util@4.6.0':
+    dependencies:
+      axios: 1.15.0
+      logform: 2.7.0
+      voca: 1.4.1
+      winston: 3.19.0
+      winston-transport: 4.9.0
+    transitivePeerDependencies:
+      - debug
+
   '@sap/cds-compiler@6.8.0': {}
 
   '@sap/cds-dk@9.8.4(@eslint/js@10.0.1(eslint@9.39.4))(tar@7.5.13)':
@@ -7517,6 +7762,12 @@ snapshots:
     dependencies:
       '@ts-graphviz/ast': 2.0.7
       '@ts-graphviz/common': 2.1.5
+
+  '@ts-morph/common@0.28.1':
+    dependencies:
+      minimatch: 10.2.4
+      path-browserify: 1.0.1
+      tinyglobby: 0.2.15
 
   '@ts-morph/common@0.29.0':
     dependencies:
@@ -8206,6 +8457,8 @@ snapshots:
       prebuild-install: 7.1.3
 
   bignumber.js@10.0.2: {}
+
+  bignumber.js@11.0.0: {}
 
   binary-extensions@2.3.0: {}
 
@@ -10411,6 +10664,23 @@ snapshots:
       tree-dump: 1.1.0(tslib@2.8.1)
       tslib: 2.8.1
 
+  memfs@4.57.2(tslib@2.8.1):
+    dependencies:
+      '@jsonjoy.com/fs-core': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-fsa': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-to-fsa': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-print': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/fs-snapshot': 4.57.2(tslib@2.8.1)
+      '@jsonjoy.com/json-pack': 1.21.0(tslib@2.8.1)
+      '@jsonjoy.com/util': 1.9.0(tslib@2.8.1)
+      glob-to-regex.js: 1.2.0(tslib@2.8.1)
+      thingies: 2.6.0(tslib@2.8.1)
+      tree-dump: 1.1.0(tslib@2.8.1)
+      tslib: 2.8.1
+
   meow@9.0.0:
     dependencies:
       '@types/minimist': 1.2.5
@@ -11795,6 +12065,11 @@ snapshots:
       babel-jest: 30.3.0(@babel/core@7.29.0)
       jest-util: 30.3.0
 
+  ts-morph@27.0.2:
+    dependencies:
+      '@ts-morph/common': 0.28.1
+      code-block-writer: 13.0.3
+
   ts-morph@28.0.0:
     dependencies:
       '@ts-morph/common': 0.29.0
@@ -11962,10 +12237,6 @@ snapshots:
       which-boxed-primitive: 1.1.1
 
   undici-types@6.21.0: {}
-
-  undici@5.29.0:
-    dependencies:
-      '@fastify/busboy': 2.1.1
 
   undici@6.24.1: {}
 

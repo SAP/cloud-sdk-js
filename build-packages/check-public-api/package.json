@@ -21,14 +21,14 @@
     "@sap-cloud-sdk/generator-common": "workspace:^",
     "@sap-cloud-sdk/util": "workspace:^",
     "glob": "^13.0.6",
-    "memfs": "^4.57.1"
+    "memfs": "^4.57.2"
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
     "@vercel/ncc": "^0.38.4",
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",
-    "memfs": "^4.57.1",
+    "memfs": "^4.57.2",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3"
   }

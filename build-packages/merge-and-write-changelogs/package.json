@@ -14,14 +14,14 @@
     "all": "yarn && yarn run lint && yarn run compile"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
+    "@actions/core": "^3.0.0",
     "@manypkg/get-packages": "^2.2.2"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.3",
+    "@vercel/ncc": "^0.38.4",
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",
-    "prettier": "^3.5.2",
-    "typescript": "~5.7.3"
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.3"
   }
 }

@@ -43,7 +43,7 @@
     "build-packages/check-pr",
     "build-packages/check-public-api",
     "build-packages/get-changelog",
-    "build-packages/merge-changelogs",
+    "build-packages/merge-and-write-changelogs",
     "build-packages/test-utils"
   ],
   "tsd": {

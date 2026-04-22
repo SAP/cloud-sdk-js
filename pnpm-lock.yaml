@@ -1053,9 +1053,6 @@ importers:
 
   test-packages/test-services-odata-common:
     dependencies:
-      '@sap-cloud-sdk/generator':
-        specifier: workspace:^
-        version: link:../../packages/generator
       '@sap-cloud-sdk/util':
         specifier: workspace:^
         version: link:../../packages/util

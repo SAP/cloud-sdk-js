@@ -8,8 +8,8 @@ import {
 
 // TODO use fs-mock
 describe('odata negative tests', () => {
-  const pathToGenerator = resolve(
-    '../../node_modules/@sap-cloud-sdk/generator/dist/cli.js'
+  const pathToGenerator = require.resolve(
+    '@sap-cloud-sdk/generator/dist/cli.js'
   );
   const testDir = join(testOutputRootDir, 'odata-negative');
 

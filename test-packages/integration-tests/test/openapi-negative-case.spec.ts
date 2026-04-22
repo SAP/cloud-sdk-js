@@ -8,8 +8,8 @@ import {
 
 // TODO use fs-mock here
 describe('openapi negative tests', () => {
-  const pathToGenerator = resolve(
-    '../../node_modules/@sap-cloud-sdk/openapi-generator/dist/cli.js'
+  const pathToGenerator = require.resolve(
+    '@sap-cloud-sdk/openapi-generator/dist/cli.js'
   );
 
   const testDir = join(testOutputRootDir, 'openapi-negative');

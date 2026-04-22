@@ -26,10 +26,10 @@
     "axios": "^1.15.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator": "^4.6.0",
-    "@sap-cloud-sdk/odata-common": "^4.6.0",
-    "@sap-cloud-sdk/odata-v2": "^4.6.0",
-    "@sap-cloud-sdk/openapi-generator": "^4.6.0",
+    "@sap-cloud-sdk/generator": "workspace:^",
+    "@sap-cloud-sdk/odata-common": "workspace:^",
+    "@sap-cloud-sdk/odata-v2": "workspace:^",
+    "@sap-cloud-sdk/openapi-generator": "workspace:^",
     "@sap-cloud-sdk/test-util-internal": "*",
     "bignumber.js": "^10.0.2",
     "execa": "^5.0.0",

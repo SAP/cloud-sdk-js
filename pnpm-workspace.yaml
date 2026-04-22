@@ -35,9 +35,6 @@ packages:
 
 blockExoticSubdeps: true
 minimumReleaseAge: 5760
-allowBuilds:
- # Needed for e2e tests
- better-sqlite3: true
 minimumReleaseAgeExclude:
   # Add minimum age exceptions for audit issues here
   # - sample-package@0.1.0

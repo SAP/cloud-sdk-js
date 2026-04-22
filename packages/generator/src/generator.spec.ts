@@ -2,7 +2,7 @@
 import { mockFsWithUnionfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
 mockFsWithUnionfs(jest);
 import { join, resolve } from 'path';
-import { promises } from 'fs';
+import { readFile } from 'fs/promises';
 import { jest } from '@jest/globals';
 import { transports } from 'winston';
 import { vol } from 'memfs';
@@ -26,8 +26,6 @@ import {
   getInstallODataErrorMessage
 } from './generator';
 import type { SourceFile } from 'ts-morph';
-
-const { readFile } = promises;
 
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestServiceDir = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');

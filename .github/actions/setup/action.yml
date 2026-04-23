@@ -43,11 +43,12 @@ runs:
         REGISTRY_URL: ${{ inputs.registry-url }}
         REGISTRY_TOKEN: ${{ inputs.registry-token }}
         REPO: ${{ github.repository }}
+        ACTOR: ${{ github.actor }}
       shell: bash
       run: |
         if [[ -n "$REGISTRY_URL" ]]; then
           echo "url=$REGISTRY_URL" >> $GITHUB_OUTPUT
-        elif [[ "$REPO" == "SAP/ai-sdk-js" || "$REPO" == "SAP/cloud-sdk-js" ]]; then
+        elif [[ "$REPO" == "SAP/ai-sdk-js" || "$REPO" == "SAP/cloud-sdk-js" ]] && [[ "$ACTOR" != "dependabot[bot]" ]]; then
           if [[ -n "$REGISTRY_TOKEN" ]]; then
             echo "url=https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/" >> $GITHUB_OUTPUT
           else

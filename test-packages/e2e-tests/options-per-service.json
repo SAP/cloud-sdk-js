@@ -1,0 +1,7 @@
+{
+  "../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx": {
+    "packageName": "api_test_srv",
+    "directoryName": "API_TEST_SRV",
+    "basePath": "/sap/opu/odata/sap/API_TEST_SRV"
+  }
+}

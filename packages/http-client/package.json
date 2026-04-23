@@ -30,26 +30,28 @@
   },
   "scripts": {
     "compile": "tsc -b",
-    "prepublishOnly": "yarn compile && yarn readme",
-    "test": "yarn test:unit",
-    "test:unit": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
-    "coverage": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --coverage",
+    "prepublishOnly": "pnpm run compile && pnpm run readme",
+    "test": "pnpm run test:unit",
+    "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "coverage": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck .",
-    "readme": "ts-node ../../scripts/replace-common-readme.ts"
+    "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^4.6.0",
-    "@sap-cloud-sdk/resilience": "^4.6.0",
-    "@sap-cloud-sdk/util": "^4.6.0",
+    "@sap-cloud-sdk/connectivity": "workspace:^",
+    "@sap-cloud-sdk/resilience": "workspace:^",
+    "@sap-cloud-sdk/util": "workspace:^",
     "axios": "^1.15.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-util-internal": "*",
+    "@sap-cloud-sdk/test-util-internal": "workspace:^",
+    "depcheck": "^1.4.7",
     "https-proxy-agent": "^7.0.6",
     "jsonwebtoken": "^9.0.3",
     "nock": "^14.0.11",
+    "prettier": "^3.8.1",
     "typescript": "~5.9.3"
   }
 }

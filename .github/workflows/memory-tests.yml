@@ -9,33 +9,29 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
-          node-version: 22
-          cache: 'yarn'
-      - name: install root
-        run: yarn install --frozen-lockfile --ignore-engines
+          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - name: start e2e tests server
-        run: yarn workspace @sap-cloud-sdk/e2e-tests pretest:e2e
+        run: pnpm --filter @sap-cloud-sdk/e2e-tests run pretest:e2e
       - name: install test v2
         working-directory: test-packages/memory-tests/sdk-v2/
-        run: yarn install
+        run: pnpm install
       - name: generate v2 test client
         working-directory: test-packages/memory-tests/sdk-v2/
-        run: yarn generate-vdm
+        run: pnpm exec generate-odata-client
       - working-directory: test-packages/memory-tests/sdk-v2/
         run: node --inspect test-script.js && cat result.txt
       - name: install test canary
         working-directory: test-packages/memory-tests/sdk-canary/
-        run: yarn install
+        run: pnpm install
       - name: generate canary test client
         working-directory: test-packages/memory-tests/sdk-canary/
-        run: yarn generate-vdm
+        run: pnpm exec generate-odata-client
       - working-directory: test-packages/memory-tests/sdk-canary/
         run: node --inspect test-script.js && cat result.txt
       - name: compare v2 and canary
-        run: yarn ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v2/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
+        run: pnpm exec ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v2/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
       - name: Slack Notify
         if: failure() || cancelled()
         env:

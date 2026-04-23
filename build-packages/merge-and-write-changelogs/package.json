@@ -11,7 +11,7 @@
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",
-    "all": "yarn && yarn run lint && yarn run compile"
+    "all": "pnpm install && pnpm run lint && pnpm run compile"
   },
   "dependencies": {
     "@actions/core": "^3.0.0",

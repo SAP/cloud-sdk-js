@@ -16,18 +16,12 @@ jobs:
           owner: SAP
           repositories: cloud-sdk-js
           permission-contents: write
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
-          fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ steps.app-token.outputs.token }}
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version: 22
-          cache: 'yarn'
-      - name: Install Dependencies & Compile
-        run: yarn install --frozen-lockfile --ignore-engines
+          persist-credentials: true
+          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - name: Commit Changes if needed
         env:
           BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}

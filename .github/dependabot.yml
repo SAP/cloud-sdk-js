@@ -1,7 +1,15 @@
 version: 2
+registries:
+  sap-artifactory:
+    type: npm-registry
+    url: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/
+    token: ${{secrets.NPM_TOKEN_ARTIFACTORY}}
+    replaces-base: true
 updates:
   - package-ecosystem: npm
     target-branch: main
+    registries:
+      - sap-artifactory
     directory: '/'
     schedule:
       interval: daily

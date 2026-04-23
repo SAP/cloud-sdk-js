@@ -10,13 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
-          node-version: 22
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-engines
+          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - run: sudo apt-get install jq
       - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
       - name: Blackduck Scan
@@ -24,8 +20,8 @@ jobs:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}
           PROJECT_VERSION: ${{ env.project_version }}
           DETECT_TIMEOUT: 6000
-          DETECT_YARN_EXCLUDED_WORKSPACES: test-packages/**
-          DETECT_YARN_DEPENDENCY_TYPES_EXCLUDED: NON_PRODUCTION
+          # DETECT_PNPM_EXCLUDED_WORKSPACES: test-packages/**
+          DETECT_PNPM_DEPENDENCY_TYPES_EXCLUDED: NON_PRODUCTION
         uses: SAP/project-piper-action@43db6643d830b42717eda052300d87c22b0da73b
         with:
           command: detectExecuteScan

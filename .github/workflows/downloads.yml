@@ -16,5 +16,5 @@ jobs:
           node-version: 22
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-engines
-      - run: yarn ts-node scripts/npm-stats.ts
-        name: Download Stats
+      - name: Download Stats
+        run: yarn ts-node scripts/npm-stats.ts

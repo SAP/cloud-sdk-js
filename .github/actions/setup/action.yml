@@ -39,6 +39,10 @@ runs:
       with:
         version: ${{ inputs.pnpm-version }}
     - id: resolve-registry-url
+      env:
+        REGISTRY_URL: ${{ inputs.registry-url }}
+        REGISTRY_TOKEN: ${{ inputs.registry-token }}
+        REPO: ${{ github.repository }}
       shell: bash
       run: |
         if [[ -n "$REGISTRY_URL" ]]; then
@@ -53,10 +57,6 @@ runs:
         else
           echo "url=https://registry.npmjs.org" >> $GITHUB_OUTPUT
         fi
-      env:
-        REGISTRY_URL: ${{ inputs.registry-url }}
-        REGISTRY_TOKEN: ${{ inputs.registry-token }}
-        REPO: ${{ github.repository }}
     - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
       with:
         node-version: ${{ inputs.node-version }}
@@ -64,10 +64,10 @@ runs:
         cache: 'pnpm'
         package-manager-cache: ${{ inputs.package-manager-cache }}
     # Install dependencies without lifecycle scripts.
-    - run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
-      shell: bash
-      env:
+    - env:
         NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
-    # Run lifecycle scripts after removing the registry token from the environment.
-    - run: pnpm rebuild
       shell: bash
+      run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
+    # Run lifecycle scripts after removing the registry token from the environment.
+    - shell: bash
+      run: pnpm rebuild

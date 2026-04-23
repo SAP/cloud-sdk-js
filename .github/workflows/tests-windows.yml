@@ -20,7 +20,7 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --ignore-engines
       - run: yarn test:unit
-      - run: yarn test:integration
-        if: always()
+      - if: always()
+        run: yarn test:integration
       - run: yarn test:self
       - run: yarn test:type

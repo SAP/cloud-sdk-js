@@ -12,29 +12,28 @@ jobs:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
-      - run: pnpm --filter @sap-cloud-sdk/e2e-tests run pretest:e2e
-        name: start e2e tests server
-      - run: pnpm install
-        name: install test v2
+      - name: start e2e tests server
+        run: pnpm --filter @sap-cloud-sdk/e2e-tests run pretest:e2e
+      - name: install test v2
         working-directory: test-packages/memory-tests/sdk-v2/
-      - run: pnpm exec generate-odata-client
-        name: generate v2 test client
+        run: pnpm install
+      - name: generate v2 test client
         working-directory: test-packages/memory-tests/sdk-v2/
-      - run: node --inspect test-script.js && cat result.txt
-        working-directory: test-packages/memory-tests/sdk-v2/
-      - run: pnpm install
-        name: install test canary
+        run: pnpm exec generate-odata-client
+      - working-directory: test-packages/memory-tests/sdk-v2/
+        run: node --inspect test-script.js && cat result.txt
+      - name: install test canary
         working-directory: test-packages/memory-tests/sdk-canary/
-      - run: pnpm exec generate-odata-client
-        name: generate canary test client
+        run: pnpm install
+      - name: generate canary test client
         working-directory: test-packages/memory-tests/sdk-canary/
-      - run: node --inspect test-script.js && cat result.txt
-        working-directory: test-packages/memory-tests/sdk-canary/
-      - run: pnpm exec ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v2/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
-        name: compare v2 and canary
-      - if: failure() || cancelled()
-        name: Slack Notify
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
+        run: pnpm exec generate-odata-client
+      - working-directory: test-packages/memory-tests/sdk-canary/
+        run: node --inspect test-script.js && cat result.txt
+      - name: compare v2 and canary
+        run: pnpm exec ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v2/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
+      - name: Slack Notify
+        if: failure() || cancelled()
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot
@@ -44,3 +43,4 @@ jobs:
           SLACK_COLOR: ${{ job.status }}
           SLACK_MSG_AUTHOR: ' '
           SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3

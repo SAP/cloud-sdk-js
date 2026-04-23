@@ -16,7 +16,7 @@ jobs:
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - run: pnpm run test:unit
-      - run: pnpm run test:integration
-        if: always()
+      - if: always()
+        run: pnpm run test:integration
       - run: pnpm run test:self
       - run: pnpm run test:type

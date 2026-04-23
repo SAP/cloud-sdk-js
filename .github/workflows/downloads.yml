@@ -12,5 +12,5 @@ jobs:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
-      - run: pnpm exec ts-node scripts/npm-stats.ts
-        name: Download Stats
+      - name: Download Stats
+        run: pnpm exec ts-node scripts/npm-stats.ts

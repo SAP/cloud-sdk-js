@@ -15,12 +15,6 @@
   "tsd": {
     "directory": "test-packages/type-tests/test-new"
   },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^10.33.0"
-    }
-  },
   "scripts": {
     "postinstall": "pnpm run compile",
     "compile": "turbo run compile",

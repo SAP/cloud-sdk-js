@@ -1,7 +1,6 @@
 node_modules/
 dist/
 knowledge-base/api-reference/
-.yarn/
 coverage/
 CHANGELOG.md
 README.md

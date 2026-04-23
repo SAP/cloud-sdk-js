@@ -16,9 +16,8 @@ jobs:
         with:
           report-branch: fosstars-report
           token: ${{ secrets.GITHUB_TOKEN }}
-      - if: failure() || cancelled()
-        name: Slack Notify
-        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
+      - name: Slack Notify
+        if: failure() || cancelled()
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: SDK Pipeline Bot
@@ -28,3 +27,4 @@ jobs:
           SLACK_COLOR: ${{ job.status }}
           SLACK_MSG_AUTHOR: ' '
           SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3

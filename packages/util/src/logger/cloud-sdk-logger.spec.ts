@@ -4,7 +4,14 @@ mockFsWithMemfs(jest);
 
 // eslint-disable-next-line import/order
 import * as fs from 'fs';
-import { jest } from '@jest/globals';
+import {
+  expect,
+  it,
+  describe,
+  beforeEach,
+  afterEach,
+  jest
+} from '@jest/globals';
 import { transports } from 'winston';
 import { vol } from 'memfs';
 import {
@@ -32,7 +39,7 @@ import { getMessageOrStack } from './format';
 describe('Cloud SDK Logger', () => {
   const messageContext = 'my-module';
   const message = 'MESSAGE';
-  let logger;
+  let logger: ReturnType<typeof createLogger> | undefined;
 
   afterEach(() => {
     if (logger) {
@@ -306,21 +313,19 @@ describe('Cloud SDK Logger', () => {
       );
       expect(consoleSpy).not.toHaveBeenCalled();
 
-      logger.on('close', async () => {
-        const log = await fs.promises.readFile('test.log', {
-          encoding: 'utf-8'
-        });
-        expect(log).toMatch(
-          /logs error only in test.log because the level is less than info/
-        );
-        expect(log).toMatch(
-          /logs info only in test.log because the level is equal to info/
-        );
-        expect(log).not.toMatch(
-          /logs verbose nowhere because the level is higher than info/
-        );
-        vol.reset();
-      });
+      fileTransport.end();
+      await new Promise<void>(resolve => fileTransport.once('finish', resolve));
+      const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
+      expect(log).toMatch(
+        /logs error only in test.log because the level is less than info/
+      );
+      expect(log).toMatch(
+        /logs info only in test.log because the level is equal to info/
+      );
+      expect(log).not.toMatch(
+        /logs verbose nowhere because the level is higher than info/
+      );
+      vol.reset();
     });
     it('should accept an array with multiple transports', () => {
       const httpTransport = new transports.Http();

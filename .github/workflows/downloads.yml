@@ -9,12 +9,8 @@ jobs:
   downloads:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
-          node-version: 22
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-engines
-      - run: yarn ts-node scripts/npm-stats.ts
-        name: Download Stats
+          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
+      - name: Download Stats
+        run: pnpm exec ts-node scripts/npm-stats.ts

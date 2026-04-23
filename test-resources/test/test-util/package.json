@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.3.0",
-    "memfs": "^4.57.1",
+    "memfs": "^4.57.2",
     "typescript": "~5.9.3",
     "unionfs": "^4.6.0"
   }

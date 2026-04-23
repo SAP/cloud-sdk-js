@@ -41,6 +41,11 @@ Those that are checked by lint are marked by the following symbol: ✓.
 - [Functions](#functions)
   - [Use arrow functions for callbacks](#use-arrow-functions-for-callbacks)
   - [Use function declarations to reference functions by name](#use-function-declarations-to-reference-functions-by-name)
+- [GitHub Actions](#github-actions)
+  - [Map untrusted values to environment variables](#map-untrusted-values-to-environment-variables)
+  - [Pin actions to a full commit SHA](#pin-actions-to-a-full-commit-sha)
+  - [Declare minimum permissions](#declare-minimum-permissions)
+  - [Order step configuration keys](#order-step-configuration-keys)
 
 ## Naming
 
@@ -859,4 +864,167 @@ function fn(arr) {
   const accessorFn = foo => foo.bar;
   return arr.map(item => accessorFn(item));
 }
+```
+
+## GitHub Actions
+
+### Map untrusted values to environment variables
+
+Never interpolate GitHub context expressions directly inside a `run` script.
+Interpolated values are expanded before the shell sees them and can break the script or allow injection if the value contains special characters.
+Instead, pass them through `env` and reference the environment variable in the script.
+
+The following expression namespaces are user-controlled or contain arbitrary content and must always go through `env`:
+
+- `inputs.*` — action inputs provided by callers
+- `secrets.*` and `vars.*` — repository/organization secrets and variables
+- `github.event.*` — event payload fields (e.g. PR title/body, commit message, issue body)
+- `github.ref_name` — branch or tag name, which can contain special characters
+- `steps.<id>.outputs.*` and `needs.<job>.outputs.*` — step/job outputs derived from script execution or user content
+
+Only structural, non-user-controlled values such as `github.sha`, `github.run_id`, or static literals are safe to interpolate directly.
+
+❌ Examples of **incorrect** code:
+
+```yaml
+- run: echo "${{ inputs.message }}"
+
+- run: git log ${{ github.event.pull_request.base.sha }}..HEAD
+
+- run: curl -H "Authorization: Bearer ${{ secrets.TOKEN }}" https://api.example.com
+```
+
+✅ Examples of **correct** code:
+
+```yaml
+- env:
+    MESSAGE: ${{ inputs.message }}
+  run: echo "$MESSAGE"
+
+- env:
+    BASE_SHA: ${{ github.event.pull_request.base.sha }}
+  run: git log "$BASE_SHA"..HEAD
+
+- env:
+    TOKEN: ${{ secrets.TOKEN }}
+  run: curl -H "Authorization: Bearer $TOKEN" https://api.example.com
+```
+
+### Pin actions to a full commit SHA
+
+Always reference third-party actions by their full commit SHA rather than a mutable tag or branch name.
+Tags can be moved or deleted by the action author, which means a tag-pinned workflow can silently start running different code.
+A SHA is immutable and guarantees the exact code that was reviewed continues to run.
+
+❌ Examples of **incorrect** code:
+
+```yaml
+- uses: actions/checkout@v4
+- uses: actions/setup-node@main
+```
+
+✅ Examples of **correct** code:
+
+```yaml
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
+- uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # main
+```
+
+### Declare minimum permissions
+
+Declare `permissions` explicitly at the job level and grant only what the job actually needs.
+The default `GITHUB_TOKEN` grants broad read (and sometimes write) access across the repository.
+Limiting it reduces the blast radius if a step or action is compromised.
+
+When using `actions/create-github-app-token` to obtain a fine-grained app token, use its `permission-*` inputs to scope the token to exactly the permissions the job needs.
+
+❌ Examples of **incorrect** code:
+
+```yaml
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    # no permissions declared — inherits potentially broad defaults
+    steps:
+      - run: gh release create ...
+
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - id: app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          # no permission-* inputs — token gets all permissions the app was granted
+```
+
+✅ Examples of **correct** code:
+
+```yaml
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - run: gh release create ...
+
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - id: app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          permission-contents: write
+```
+
+### Order step configuration keys
+
+Within each step, keys must appear in the following order (if present):
+
+1. `name`
+2. `id`
+3. `if`
+4. `continue-on-error`
+5. `env`
+6. `working-directory`
+7. `shell`
+8. `uses`
+9. `run`
+
+All other keys (e.g. `with`) follow afterward in their original relative order.
+
+❌ Examples of **incorrect** code:
+
+```yaml
+- uses: actions/checkout@v4
+  id: checkout
+  name: Checkout
+  with:
+    fetch-depth: 0
+
+- run: echo "$FOO"
+  name: Say hello
+  env:
+    FOO: bar
+  shell: bash
+```
+
+✅ Examples of **correct** code:
+
+```yaml
+- name: Checkout
+  id: checkout
+  uses: actions/checkout@v4
+  with:
+    fetch-depth: 0
+
+- name: Say hello
+  env:
+    FOO: bar
+  shell: bash
+  run: echo "$FOO"
 ```

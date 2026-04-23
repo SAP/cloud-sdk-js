@@ -2,7 +2,7 @@
 import { mockFsWithUnionfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
 mockFsWithUnionfs(jest);
 import { join, resolve } from 'path';
-import { promises } from 'fs';
+import { readFile, readdir } from 'fs/promises';
 import { jest } from '@jest/globals';
 import { transports } from 'winston';
 import { vol } from 'memfs';
@@ -27,8 +27,6 @@ import {
 } from './generator';
 import type { SourceFile } from 'ts-morph';
 
-const { readFile } = promises;
-
 const pathTestResources = resolve(__dirname, '../../../test-resources');
 const pathTestServiceDir = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
 const pathTestService = join(pathTestServiceDir, 'API_TEST_SRV.edmx');
@@ -49,6 +47,10 @@ describe('generator', () => {
         },
         process.cwd()
       );
+      vol.mkdirSync(pathTestServiceDir, { recursive: true });
+      vol.mkdirSync(join(pathTestServiceDir, 'sdk-metadata'), {
+        recursive: true
+      });
       vol.fromNestedJSON({ '.keep': '' }, pathTestServiceDir);
 
       const options = createOptions({
@@ -128,9 +130,7 @@ describe('generator', () => {
     });
 
     it('copies the additional files matching the glob.', async () => {
-      const sourceFiles = await promises.readdir(
-        join('common', 'API_TEST_SRV')
-      );
+      const sourceFiles = await readdir(join('common', 'API_TEST_SRV'));
 
       expect(
         sourceFiles.find(file => file === 'some-test-markdown.md')
@@ -138,14 +138,12 @@ describe('generator', () => {
     });
 
     it('generates the options per service and writes to the given folder', async () => {
-      const clientFile = await promises.readFile(
-        'someDir/test-service-options.json'
-      );
+      const clientFile = await readFile('someDir/test-service-options.json');
       expect(clientFile).toBeDefined();
     }, 10000);
 
     it('generates the api hub metadata and writes to the input folder', async () => {
-      const sourceFiles = await promises.readdir(
+      const sourceFiles = await readdir(
         join(pathTestService, '../sdk-metadata')
       );
       const clientFile = sourceFiles.find(
@@ -479,10 +477,15 @@ describe('generator', () => {
       vol.fromNestedJSON(
         {
           common: { '.keep': '' },
+          logger: { API_TEST_SRV: { '.keep': '' } },
           '/prettier/config': JSON.stringify({ printWidth: 66 })
         },
         process.cwd()
       );
+      vol.mkdirSync(pathTestServiceDir, { recursive: true });
+      vol.mkdirSync(join(pathTestServiceDir, 'sdk-metadata'), {
+        recursive: true
+      });
       vol.fromNestedJSON({ '.keep': '' }, pathTestServiceDir);
     });
 

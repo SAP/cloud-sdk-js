@@ -7,14 +7,13 @@
   "private": true,
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "pretest:e2e": "yarn deploy && yarn start:service-server && yarn start:proxy-server",
-    "posttest:e2e": "yarn stop:service-server && yarn stop:service-server",
+    "pretest:e2e": "pnpm run start:service-server && pnpm run start:proxy-server",
+    "posttest:e2e": "pnpm run stop:service-server && pnpm run stop:proxy-server",
     "start:service-server": "pm2 start server.js || pm2 restart server.js",
     "stop:service-server": "pm2 stop server.js",
     "start:proxy-server": "pm2 start test/proxy/proxy-server.js || pm2 restart test/proxy/proxy-server.js",
     "stop:proxy-server": "pm2 stop test/proxy/proxy-server.js",
-    "deploy": "cds deploy --to sqlite",
-    "test": "yarn test:e2e",
+    "test": "pnpm run test:e2e",
     "test:e2e": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
@@ -25,15 +24,15 @@
     "@apidevtools/swagger-parser": "^12.1.0",
     "@cap-js/sqlite": "^2.2.0",
     "@jest/globals": "^30.3.0",
-    "@sap-cloud-sdk/connectivity": "^4.6.0",
-    "@sap-cloud-sdk/generator": "^4.6.0",
-    "@sap-cloud-sdk/http-client": "^4.6.0",
-    "@sap-cloud-sdk/odata-common": "^4.6.0",
-    "@sap-cloud-sdk/odata-v2": "^4.6.0",
-    "@sap-cloud-sdk/odata-v4": "^4.6.0",
-    "@sap-cloud-sdk/test-services-e2e": "^4.6.0",
-    "@sap-cloud-sdk/test-services-openapi": "^4.6.0",
-    "@sap-cloud-sdk/util": "^4.6.0",
+    "@sap-cloud-sdk/connectivity": "workspace:^",
+    "@sap-cloud-sdk/generator": "workspace:^",
+    "@sap-cloud-sdk/http-client": "workspace:^",
+    "@sap-cloud-sdk/odata-common": "workspace:^",
+    "@sap-cloud-sdk/odata-v2": "workspace:^",
+    "@sap-cloud-sdk/odata-v4": "workspace:^",
+    "@sap-cloud-sdk/test-services-e2e": "workspace:^",
+    "@sap-cloud-sdk/test-services-openapi": "workspace:^",
+    "@sap-cloud-sdk/util": "workspace:^",
     "@sap/cds": "^9.8.4",
     "@sap/cds-dk": "9.8.4",
     "axios": "^1.15.0",
@@ -44,7 +43,7 @@
     "fs-extra": "^11.3.4",
     "http-proxy-middleware": "^3.0.5",
     "json-schema-faker": "^0.6.0",
-    "memfs": "^4.57.1",
+    "memfs": "^4.57.2",
     "moment": "^2.30.1",
     "multer": "^2.1.1",
     "openapi-backend": "^5.16.1",
@@ -58,8 +57,10 @@
     "requires": {
       "db": {
         "kind": "sqlite",
+        "driver": "node",
         "credentials": {
-          "database": "db.sqlite"
+          "database": ":memory:",
+          "url": ":memory:"
         }
       }
     }

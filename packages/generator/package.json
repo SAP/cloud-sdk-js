@@ -49,7 +49,7 @@
     "@sap-cloud-sdk/odata-v4": "workspace:^",
     "@sap-cloud-sdk/util": "workspace:^",
     "@types/fs-extra": "^11.0.4",
-    "fast-xml-parser": "^5.5.9",
+    "fast-xml-parser": "^5.7.0",
     "fs-extra": "^11.3.4",
     "ts-morph": "^28.0.0",
     "typescript": "~5.9.3",

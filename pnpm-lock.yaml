@@ -336,6 +336,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.3
         version: 9.0.3
+      safe-stable-stringify:
+        specifier: ^2.5.0
+        version: 2.5.0
     devDependencies:
       '@jest/globals':
         specifier: ^30.3.0

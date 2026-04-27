@@ -169,8 +169,8 @@ describe('destination cache', () => {
         jwt: providerUserToken,
         isolationStrategy: 'tenant-user'
       });
-      const cacheKeys = Object.keys(
-        await (destinationCache.getCacheInstance() as any).cache.cache
+      const cacheKeys = Array.from(
+        (destinationCache.getCacheInstance() as any).cache.cache.keys()
       );
       expect(cacheKeys[0]).toBe(
         getDestinationCacheKey(
@@ -412,9 +412,7 @@ describe('destination cache', () => {
       expect(warn).toHaveBeenCalledWith(
         "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant ID is undefined in JWT."
       );
-      expect(
-        Object.keys(destinationCache.getCacheInstance()['cache'].cache).length
-      ).toBe(0);
+      expect(destinationCache.getCacheInstance()['cache'].cache.size).toBe(0);
     });
 
     it('ignores cache if isolation requires user JWT but the JWT is not provided', async () => {

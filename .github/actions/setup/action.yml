@@ -30,15 +30,18 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Checkout repository
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
         ref: ${{ inputs.ref }}
         token: ${{ inputs.token }}
         persist-credentials: ${{ inputs.persist-credentials }}
-    - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+    - name: Setup pnpm
+      uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       with:
         version: ${{ inputs.pnpm-version }}
-    - id: resolve-registry-url
+    - name: Resolve registry URL
+      id: resolve-registry-url
       env:
         REGISTRY_URL: ${{ inputs.registry-url }}
         REGISTRY_TOKEN: ${{ inputs.registry-token }}
@@ -63,11 +66,13 @@ runs:
         registry-url: ${{ steps.resolve-registry-url.outputs.url }}
         cache: 'pnpm'
         package-manager-cache: ${{ inputs.package-manager-cache }}
-    # Install dependencies without lifecycle scripts.
-    - env:
+    - name: Fetch dependencies
+      env:
         NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
       shell: bash
       run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
-    # Run lifecycle scripts after removing the registry token from the environment.
-    - shell: bash
+    - name: Run lifecycle scripts
+      shell: bash
+      if: ${{ !contains('--lockfile-only', inputs.pnpm-install-args) }}
+      continue-on-error: true
       run: pnpm rebuild

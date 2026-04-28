@@ -14,6 +14,9 @@ inputs:
   pnpm-install-args:
     description: 'Arguments to pass to pnpm install'
     default: '--frozen-lockfile'
+  skip-install:
+    description: 'Whether to skip installing and building node dependencies'
+    default: 'false'
   package-manager-cache:
     description: 'Whether to enable caching for pnpm. Set to false to disable caching.'
     default: 'true'
@@ -30,15 +33,18 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - name: Checkout repository
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
         ref: ${{ inputs.ref }}
         token: ${{ inputs.token }}
         persist-credentials: ${{ inputs.persist-credentials }}
-    - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+    - name: Setup pnpm
+      uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       with:
         version: ${{ inputs.pnpm-version }}
-    - id: resolve-registry-url
+    - name: Resolve registry URL
+      id: resolve-registry-url
       env:
         REGISTRY_URL: ${{ inputs.registry-url }}
         REGISTRY_TOKEN: ${{ inputs.registry-token }}
@@ -57,17 +63,20 @@ runs:
         else
           echo "url=https://registry.npmjs.org" >> $GITHUB_OUTPUT
         fi
-    - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+    - name: Setup Node.js
+      uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: ${{ steps.resolve-registry-url.outputs.url }}
         cache: 'pnpm'
         package-manager-cache: ${{ inputs.package-manager-cache }}
-    # Install dependencies without lifecycle scripts.
-    - env:
+    - name: Install dependencies
+      if: ${{ inputs.skip-install == 'false' }}
+      env:
         NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
       shell: bash
       run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
-    # Run lifecycle scripts after removing the registry token from the environment.
-    - shell: bash
+    - name: Run lifecycle scripts
+      if: ${{ inputs.skip-install == 'false' }}
+      shell: bash
       run: pnpm rebuild

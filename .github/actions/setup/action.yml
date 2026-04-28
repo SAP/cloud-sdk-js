@@ -14,6 +14,9 @@ inputs:
   pnpm-install-args:
     description: 'Arguments to pass to pnpm install'
     default: '--frozen-lockfile'
+  skip-install:
+    description: 'Whether to skip installing and building node dependencies'
+    default: 'false'
   package-manager-cache:
     description: 'Whether to enable caching for pnpm. Set to false to disable caching.'
     default: 'true'
@@ -60,19 +63,20 @@ runs:
         else
           echo "url=https://registry.npmjs.org" >> $GITHUB_OUTPUT
         fi
-    - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+    - name: Setup Node.js
+      uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: ${{ steps.resolve-registry-url.outputs.url }}
         cache: 'pnpm'
         package-manager-cache: ${{ inputs.package-manager-cache }}
     - name: Install dependencies
+      if: ${{ inputs.skip-install == 'false' }}
       env:
         NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
       shell: bash
       run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
     - name: Run lifecycle scripts
+      if: ${{ inputs.skip-install == 'false' }}
       shell: bash
-      if: ${{ !contains('--lockfile-only', inputs.pnpm-install-args) }}
-      continue-on-error: true
       run: pnpm rebuild

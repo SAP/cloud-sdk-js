@@ -47,8 +47,13 @@ runs:
       run: |
         if [[ -n "$REGISTRY_URL" ]]; then
           echo "url=$REGISTRY_URL" >> $GITHUB_OUTPUT
-        elif [[ -n "$REGISTRY_TOKEN" ]]; then
-          echo "url=https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/" >> $GITHUB_OUTPUT
+        elif [[ "$REPO" == "SAP/ai-sdk-js" || "$REPO" == "SAP/cloud-sdk-js" ]]; then
+          if [[ -n "$REGISTRY_TOKEN" ]]; then
+            echo "url=https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/" >> $GITHUB_OUTPUT
+          else
+            echo "::error::The input 'registry-token' is required when 'registry-url' is not provided."
+            exit 1
+          fi
         else
           echo "url=https://registry.npmjs.org" >> $GITHUB_OUTPUT
         fi

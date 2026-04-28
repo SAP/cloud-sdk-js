@@ -354,7 +354,7 @@ importers:
         version: 4.57.2(tslib@2.8.1)
       nock:
         specifier: ^14.0.11
-        version: 14.0.11
+        version: 14.0.13
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -390,7 +390,7 @@ importers:
         version: 62.9.0(eslint@9.39.4)
       eslint-plugin-prettier:
         specifier: ^5.5.5
-        version: 5.5.5(eslint-config-prettier@10.1.8(eslint@9.39.4))(eslint@9.39.4)(prettier@3.8.1)
+        version: 5.5.5(eslint-config-prettier@10.1.8(eslint@9.39.4))(eslint@9.39.4)(prettier@3.8.3)
       eslint-plugin-regex:
         specifier: ^1.10.0
         version: 1.10.0(eslint@9.39.4)
@@ -531,7 +531,7 @@ importers:
         version: 9.0.3
       nock:
         specifier: ^14.0.11
-        version: 14.0.11
+        version: 14.0.13
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -608,7 +608,7 @@ importers:
         version: link:../../test-resources/test/test-util
       nock:
         specifier: ^14.0.11
-        version: 14.0.11
+        version: 14.0.13
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -645,7 +645,7 @@ importers:
         version: link:../../test-resources/test/test-util
       nock:
         specifier: ^14.0.11
-        version: 14.0.11
+        version: 14.0.13
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -679,7 +679,7 @@ importers:
         version: 1.4.7
       nock:
         specifier: ^14.0.11
-        version: 14.0.11
+        version: 14.0.13
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -768,7 +768,7 @@ importers:
         version: 1.4.7
       nock:
         specifier: ^14.0.11
-        version: 14.0.11
+        version: 14.0.13
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -855,7 +855,7 @@ importers:
         version: 4.57.2(tslib@2.8.1)
       nock:
         specifier: ^14.0.11
-        version: 14.0.11
+        version: 14.0.13
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -1012,7 +1012,7 @@ importers:
         version: 2.30.1
       nock:
         specifier: ^14.0.11
-        version: 14.0.11
+        version: 14.0.13
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -1202,7 +1202,7 @@ importers:
         version: 2.30.1
       nock:
         specifier: ^14.0.11
-        version: 14.0.11
+        version: 14.0.13
     devDependencies:
       '@jest/globals':
         specifier: ^30.3.0
@@ -1941,8 +1941,8 @@ packages:
     resolution: {integrity: sha512-3lBouSuF7CqlseLB+FKES0K4FQ02JrbEoRtJhxnsyB1s5v4AP03gsoohN8jp7DcOImhaR9scYdztq3/sLfk/qQ==}
     engines: {node: '>=14.18.0'}
 
-  '@mswjs/interceptors@0.41.3':
-    resolution: {integrity: sha512-cXu86tF4VQVfwz8W1SPbhoRyHJkti6mjH/XJIxp40jhO4j2k1m4KYrEykxqWPkFF3vrK4rgQppBh//AwyGSXPA==}
+  '@mswjs/interceptors@0.41.5':
+    resolution: {integrity: sha512-Fa2HztoLlZxRN6wVC2KB7q0SvRTKjfP0328NVnSit03+0nzm62syxyT46KGbgq3Vr1A/mmLeQwu3GprB0lNTjw==}
     engines: {node: '>=18'}
 
   '@napi-rs/wasm-runtime@0.2.12':
@@ -2830,6 +2830,7 @@ packages:
   basic-ftp@5.2.0:
     resolution: {integrity: sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==}
     engines: {node: '>=10.0.0'}
+    deprecated: Security vulnerability fixed in 5.2.1, please upgrade
 
   bath-es5@3.0.3:
     resolution: {integrity: sha512-PdCioDToH3t84lP40kUFCKWCOCH389Dl1kbC8FGoqOwamxsmqxxnJSXdkTOsPoNHXjem4+sJ+bbNoQm5zeCqxg==}
@@ -4884,8 +4885,8 @@ packages:
     resolution: {integrity: sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==}
     engines: {node: '>= 0.4.0'}
 
-  nock@14.0.11:
-    resolution: {integrity: sha512-u5xUnYE+UOOBA6SpELJheMCtj2Laqx15Vl70QxKo43Wz/6nMHXS7PrEioXLjXAwhmawdEMNImwKCcPhBJWbKVw==}
+  nock@14.0.13:
+    resolution: {integrity: sha512-SCPsQmGVNY8h1rfS3aU0MzOGYY+wKIFukHEsoSIwPRCYocZkya7MFIlWIEYPWQZj+Gaksg6EyUaY255ZDqpQuA==}
     engines: {node: '>=18.20.0 <20 || >=20.12.1'}
 
   node-abi@3.89.0:
@@ -5249,6 +5250,11 @@ packages:
 
   prettier@3.8.1:
     resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
+    engines: {node: '>=14'}
+    hasBin: true
+
+  prettier@3.8.3:
+    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -7271,7 +7277,7 @@ snapshots:
       jju: 1.4.0
       js-yaml: 4.1.1
 
-  '@mswjs/interceptors@0.41.3':
+  '@mswjs/interceptors@0.41.5':
     dependencies:
       '@open-draft/deferred-promise': 2.2.0
       '@open-draft/logger': 0.3.0
@@ -9033,10 +9039,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-prettier@5.5.5(eslint-config-prettier@10.1.8(eslint@9.39.4))(eslint@9.39.4)(prettier@3.8.1):
+  eslint-plugin-prettier@5.5.5(eslint-config-prettier@10.1.8(eslint@9.39.4))(eslint@9.39.4)(prettier@3.8.3):
     dependencies:
       eslint: 9.39.4
-      prettier: 3.8.1
+      prettier: 3.8.3
       prettier-linter-helpers: 1.0.1
       synckit: 0.11.12
     optionalDependencies:
@@ -10647,9 +10653,9 @@ snapshots:
 
   netmask@2.0.2: {}
 
-  nock@14.0.11:
+  nock@14.0.13:
     dependencies:
-      '@mswjs/interceptors': 0.41.3
+      '@mswjs/interceptors': 0.41.5
       json-stringify-safe: 5.0.1
       propagate: 2.0.1
 
@@ -11110,6 +11116,8 @@ snapshots:
   prettier@2.8.8: {}
 
   prettier@3.8.1: {}
+
+  prettier@3.8.3: {}
 
   pretty-format@29.7.0:
     dependencies:

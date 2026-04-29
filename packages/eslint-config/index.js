@@ -6,11 +6,6 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: {
-      extends: 'tsconfig.json',
-      include: ['**/*.ts'],
-      exclude: ['**/*.d.ts', '**/dist/**/*', '**/node_modules/**/*']
-    },
     sourceType: 'module'
   },
   ignorePatterns: ['dist', 'node_modules'],
@@ -142,11 +137,22 @@ module.exports = {
         destructuredArrayIgnorePattern: '^_'
       }
     ],
+    'import-x/named': 'error',
+    'import-x/default': 'error',
+    'import-x/namespace': 'error',
     'import-x/no-absolute-path': 'error',
     'import-x/no-dynamic-require': 'error',
     'import-x/no-internal-modules': 'error',
     'import-x/no-self-import': 'error',
-    'import-x/order': [
+    'import-x/no-cycle': 'error',
+    'import-x/no-useless-path-segments': [
+      'error',
+      {
+        noUselessIndex: true
+      }
+    ],
+    'import-x/export': 'error',
+    'import-x/order':  [
       'error',
       {
         groups: [

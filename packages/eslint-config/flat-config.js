@@ -44,7 +44,7 @@ const flatConfig = [
     ignores: ['**/*.d.ts', '**/dist/**/*', '**/node_modules/**/*'],
     plugins: {
       '@typescript-eslint': tsEslint.plugin,
-      import: importEslint,
+      'import-x': importEslint,
       'unused-imports': unusedImports,
       jsdoc,
       local: { rules: localRules },
@@ -160,11 +160,22 @@ const flatConfig = [
           destructuredArrayIgnorePattern: '^_'
         }
       ],
-      'import/no-absolute-path': 'error',
-      'import/no-dynamic-require': 'error',
-      'import/no-internal-modules': 'error',
-      'import/no-self-import': 'error',
-      'import/order': [
+      'import-x/named': 'error',
+      'import-x/default': 'error',
+      'import-x/namespace': 'error',
+      'import-x/no-absolute-path': 'error',
+      'import-x/no-dynamic-require': 'error',
+      'import-x/no-internal-modules': 'error',
+      'import-x/no-self-import': 'error',
+      'import-x/no-cycle': 'error',
+      'import-x/no-useless-path-segments': [
+        'error',
+        {
+          noUselessIndex: true
+        }
+      ],
+      'import-x/export': 'error',
+      'import-x/order': [
         'error',
         {
           groups: [
@@ -179,7 +190,7 @@ const flatConfig = [
           ]
         }
       ],
-      'import/no-duplicates': 'error',
+      'import-x/no-duplicates': 'error',
       'unused-imports/no-unused-imports': 'error',
       'arrow-body-style': 'error',
       curly: 'error',
@@ -265,14 +276,14 @@ const flatConfig = [
       jsdoc: {
         ignoreInternal: true
       },
-      'import/resolver-next': [createTypeScriptImportResolver()]
+      'import-x/resolver-next': [createTypeScriptImportResolver()]
     }
   },
   {
     files: ['**/test/**/*', '**/*.test.ts', '**/*.spec.ts'],
     rules: {
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-      'import/no-internal-modules': 'off',
+      'import-x/no-internal-modules': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
       'jsdoc/require-jsdoc': 'off'
     }

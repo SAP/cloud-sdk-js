@@ -47,29 +47,7 @@ module.exports = defineConfig([
         ...globals.jest
       },
       parser: tsParser,
-      sourceType: 'module',
-      parserOptions: {
-        project: {
-          extends: 'tsconfig.json',
-          include: ['**/*.ts'],
-
-          exclude: [
-            '**/*.d.ts',
-            '**/dist/**/*',
-            '**/node_modules/**/*',
-            'test-packages/test-services*/**/*',
-            'test-packages/test-services-e2e/**/*',
-            'test-packages/memory-tests/sdk-v1/test-service/*',
-            'test-packages/memory-tests/sdk-canary/test-service/*',
-            'build-packages/check-pr/lib/**',
-            'build-packages/get-changelog/lib/**',
-            'packages/rest-generator/test/test-services/**/*',
-            'test-resources/cli/**/*',
-            '**/test-output/**',
-            '**/README.md'
-          ]
-        }
-      }
+      sourceType: 'module'
     },
     extends: compat.extends('@sap-cloud-sdk'),
     rules: {

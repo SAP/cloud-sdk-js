@@ -1,11 +1,33 @@
-/* eslint-disable @typescript-eslint/no-var-requires, import/no-internal-modules */
+/* eslint-disable @typescript-eslint/no-var-requires, import-x/no-internal-modules */
 const jsdoc = require('eslint-plugin-jsdoc');
-const regex = require('eslint-plugin-regex');
 const unusedImports = require('eslint-plugin-unused-imports');
-const importEslint = require('eslint-plugin-import');
+const importEslint = require('eslint-plugin-import-x');
+const { createTypeScriptImportResolver } = require('eslint-import-resolver-typescript');
 const tsEslint = require('typescript-eslint');
 const eslint = require('@eslint/js');
 const stylistic = require('@stylistic/eslint-plugin');
+
+const localRules = {
+  'no-uppercase-internal-tag': {
+    meta: { type: 'problem', schema: [] },
+    create(context) {
+      return {
+        Program() {
+          const comments = context.sourceCode.getAllComments();
+          for (const comment of comments) {
+            if (comment.value.includes('@Internal')) {
+              context.report({
+                loc: comment.loc,
+                message:
+                  'You are not allowed to use @Internal. Please use @internal.'
+              });
+            }
+          }
+        }
+      };
+    }
+  }
+};
 
 const flatConfig = [
   eslint.configs.recommended,
@@ -25,23 +47,11 @@ const flatConfig = [
       import: importEslint,
       'unused-imports': unusedImports,
       jsdoc,
-      regex,
+      local: { rules: localRules },
       '@stylistic': stylistic
     },
     rules: {
-      'regex/invalid': [
-        'error',
-        [
-          {
-            id: 'regexLowerCaseInternal',
-            // eslint-disable-next-line regex/invalid
-            regex: '\\@Internal',
-            message:
-              // eslint-disable-next-line regex/invalid
-              'You are not allowed to use @Internal. Please use @internal.'
-          }
-        ]
-      ],
+      'local/no-uppercase-internal-tag': 'error',
       '@stylistic/eol-last': 'error',
       '@stylistic/member-delimiter-style': [
         'error',
@@ -150,21 +160,10 @@ const flatConfig = [
           destructuredArrayIgnorePattern: '^_'
         }
       ],
-      'import/named': 'error',
-      'import/default': 'error',
-      'import/namespace': 'error',
       'import/no-absolute-path': 'error',
       'import/no-dynamic-require': 'error',
       'import/no-internal-modules': 'error',
       'import/no-self-import': 'error',
-      'import/no-cycle': 'error',
-      'import/no-useless-path-segments': [
-        'error',
-        {
-          noUselessIndex: true
-        }
-      ],
-      'import/export': 'error',
       'import/order': [
         'error',
         {
@@ -266,10 +265,7 @@ const flatConfig = [
       jsdoc: {
         ignoreInternal: true
       },
-      'import/resolver': {
-        typescript: true,
-        node: true
-      }
+      'import/resolver-next': [createTypeScriptImportResolver()]
     }
   },
   {

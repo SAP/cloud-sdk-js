@@ -37,7 +37,7 @@ or if you want to combine this configuration with others:
 }
 ```
 
-This configuration depends on plugins "eslint-plugin-import" and "eslint-plugin-unused-imports", which need to be installed in your project.
+This configuration depends on plugins "eslint-plugin-import-x" and "eslint-plugin-unused-imports", which need to be installed in your project.
 
 ESlint merges these shareable configs with your configuration.
 Any rule configured in your `.eslintrc.js` will overwrite the setting for this rule in shareable configs.

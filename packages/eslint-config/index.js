@@ -16,10 +16,9 @@ module.exports = {
   ignorePatterns: ['dist', 'node_modules'],
   plugins: [
     '@typescript-eslint',
-    'import',
+    'import-x',
     'unused-imports',
     'jsdoc',
-    'regex',
     '@stylistic'
   ],
   overrides: [
@@ -27,26 +26,14 @@ module.exports = {
       files: ['**/test/**/*', '**/*.spec.ts'],
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
-        'import/no-internal-modules': 'off',
+        'import-x/no-internal-modules': 'off',
         '@typescript-eslint/no-unused-expressions': 'off',
         'jsdoc/require-jsdoc': 'off',
-        'import/no-relative-parent-imports': 'off'
+        'import-x/no-relative-parent-imports': 'off'
       }
     }
   ],
   rules: {
-    'regex/invalid': [
-      'error',
-      [
-        {
-          id: 'regexLowerCaseInternal',
-          // eslint-disable-next-line regex/invalid
-          regex: '\\@Internal',
-          // eslint-disable-next-line regex/invalid
-          message: 'You are not allowed to use @Internal. Please use @internal.'
-        }
-      ]
-    ],
     '@stylistic/eol-last': 'error',
     '@stylistic/member-delimiter-style': [
       'error',
@@ -155,22 +142,11 @@ module.exports = {
         destructuredArrayIgnorePattern: '^_'
       }
     ],
-    'import/named': 'error',
-    'import/default': 'error',
-    'import/namespace': 'error',
-    'import/no-absolute-path': 'error',
-    'import/no-dynamic-require': 'error',
-    'import/no-internal-modules': 'error',
-    'import/no-self-import': 'error',
-    'import/no-cycle': 'error',
-    'import/no-useless-path-segments': [
-      'error',
-      {
-        noUselessIndex: true
-      }
-    ],
-    'import/export': 'error',
-    'import/order': [
+    'import-x/no-absolute-path': 'error',
+    'import-x/no-dynamic-require': 'error',
+    'import-x/no-internal-modules': 'error',
+    'import-x/no-self-import': 'error',
+    'import-x/order': [
       'error',
       {
         groups: [
@@ -185,7 +161,7 @@ module.exports = {
         ]
       }
     ],
-    'import/no-duplicates': 'error',
+    'import-x/no-duplicates': 'error',
     'unused-imports/no-unused-imports': 'error',
     'arrow-body-style': 'error',
     curly: 'error',
@@ -273,9 +249,8 @@ module.exports = {
     jsdoc: {
       ignoreInternal: true
     },
-    'import/resolver': {
-      typescript: true,
-      node: true
+    'import-x/resolver': {
+      'eslint-import-resolver-typescript': {}
     }
   }
 };

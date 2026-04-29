@@ -12,7 +12,34 @@ const compat = new FlatCompat({
   allConfig: js.configs.all
 });
 
+const localPlugin = {
+  rules: {
+    'no-uppercase-internal-tag': {
+      meta: { type: 'problem', schema: [] },
+      create(context) {
+        return {
+          Program() {
+            for (const comment of context.sourceCode.getAllComments()) {
+              if (comment.value.includes('@Internal')) {
+                context.report({
+                  loc: comment.loc,
+                  message:
+                    'You are not allowed to use @Internal. Please use @internal.'
+                });
+              }
+            }
+          }
+        };
+      }
+    }
+  }
+};
+
 module.exports = defineConfig([
+  {
+    plugins: { local: localPlugin },
+    rules: { 'local/no-uppercase-internal-tag': 'error' }
+  },
   {
     languageOptions: {
       globals: {
@@ -55,7 +82,7 @@ module.exports = defineConfig([
             'Enums are weird in TypeScript. Prefer union types or const objects instead.'
         }
       ],
-      'import/no-internal-modules': [
+      'import-x/no-internal-modules': [
         'error',
         {
           allow: ['@sap-cloud-sdk/**/internal', '@sap-cloud-sdk/**/internal.js']
@@ -85,7 +112,7 @@ module.exports = defineConfig([
   {
     files: ['**/test/**/*', '**/*.spec.ts'],
     rules: {
-      'import/no-internal-modules': 'off',
+      'import-x/no-internal-modules': 'off',
       'no-unused-expressions': 'off',
       'jsdoc/require-jsdoc': 'off'
     }
@@ -102,7 +129,7 @@ module.exports = defineConfig([
       'packages/connectivity/src/scp-cf/token-accessor.ts'
     ],
     rules: {
-      'import/no-internal-modules': [
+      'import-x/no-internal-modules': [
         'error',
         {
           allow: [

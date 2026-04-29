@@ -73627,7 +73627,7 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 
 // import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
 
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 
 
 const pathToTsConfigRoot = (0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)(process.cwd(), 'tsconfig.json');

@@ -30869,7 +30869,7 @@ const list_namespaceObject = /*#__PURE__*/JSON.parse('[{"name":"Model","notes":"
 ;// CONCATENATED MODULE: ./lib/build-packages/check-license/index.js
 
 
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 
 // Permissive FLOSS licenses are ok, see https://blueoakcouncil.org/list for details.
 const ALLOWED_STATUSES = new Set(['Model', 'Gold', 'Silver', 'Bronze']);

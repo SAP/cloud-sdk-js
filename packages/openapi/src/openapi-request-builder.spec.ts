@@ -13,7 +13,7 @@ import {
   providerXsuaaUrl,
   providerServiceToken,
   mockFetchDestinationCalls
-} from '../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/test-util-internal';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
 

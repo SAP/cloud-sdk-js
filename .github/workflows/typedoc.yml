@@ -12,11 +12,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v6
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
-          node-version: 22
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --ignore-engines
-      - run: yarn doc
+          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
+      - run: pnpm run doc

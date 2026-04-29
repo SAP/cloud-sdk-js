@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services-openapi",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "description": "Custom Services for testing",
   "files": [
     "**/*.js",
@@ -15,13 +15,16 @@
   },
   "scripts": {
     "generate": "ts-node generate-openapi-services.ts",
-    "check:dependencies": "depcheck .",
+    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/openapi'",
     "lint": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@sap-cloud-sdk/openapi-generator": "^4.5.1",
-    "@sap-cloud-sdk/util": "^4.5.1"
+    "depcheck": "^1.4.7",
+    "prettier": "^3.8.1",
+    "@sap-cloud-sdk/openapi": "workspace:^",
+    "@sap-cloud-sdk/openapi-generator": "workspace:^",
+    "@sap-cloud-sdk/util": "workspace:^"
   }
 }

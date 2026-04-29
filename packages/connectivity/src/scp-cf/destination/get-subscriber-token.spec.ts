@@ -5,7 +5,7 @@ import {
   onlyIssuerXsuaaUrl,
   subscriberServiceToken,
   subscriberUserToken
-} from '../../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/test-util-internal';
 import * as tokenAccessor from '../token-accessor';
 import { getJwtPair } from '../jwt';
 import { getSubscriberToken } from './get-subscriber-token';

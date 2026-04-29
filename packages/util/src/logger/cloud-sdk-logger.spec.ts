@@ -1,7 +1,19 @@
-import * as path from 'path';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
+
+mockFsWithMemfs(jest);
+
+// eslint-disable-next-line import/order
 import * as fs from 'fs';
+import {
+  expect,
+  it,
+  describe,
+  beforeEach,
+  afterEach,
+  jest
+} from '@jest/globals';
 import { transports } from 'winston';
-import mock from 'mock-fs';
+import { vol } from 'memfs';
 import {
   cloudSdkExceptionLogger,
   createLogger,
@@ -27,7 +39,7 @@ import { getMessageOrStack } from './format';
 describe('Cloud SDK Logger', () => {
   const messageContext = 'my-module';
   const message = 'MESSAGE';
-  let logger;
+  let logger: ReturnType<typeof createLogger> | undefined;
 
   afterEach(() => {
     if (logger) {
@@ -272,14 +284,7 @@ describe('Cloud SDK Logger', () => {
     });
     it('should replace all transports in all active loggers with the global transport', async () => {
       const consoleSpy = jest.spyOn(process.stdout, 'write');
-      const rootNodeModules = path.resolve(
-        __dirname,
-        '../../../../node_modules'
-      );
-      mock({
-        'test.log': 'content',
-        [rootNodeModules]: mock.load(rootNodeModules)
-      });
+      vol.fromNestedJSON({ 'test.log': 'content' }, process.cwd());
       const fileTransport = new transports.File({
         filename: 'test.log',
         level: 'info'
@@ -308,21 +313,19 @@ describe('Cloud SDK Logger', () => {
       );
       expect(consoleSpy).not.toHaveBeenCalled();
 
-      logger.on('close', async () => {
-        const log = await fs.promises.readFile('test.log', {
-          encoding: 'utf-8'
-        });
-        expect(log).toMatch(
-          /logs error only in test.log because the level is less than info/
-        );
-        expect(log).toMatch(
-          /logs info only in test.log because the level is equal to info/
-        );
-        expect(log).not.toMatch(
-          /logs verbose nowhere because the level is higher than info/
-        );
-        mock.restore();
-      });
+      fileTransport.end();
+      await new Promise<void>(resolve => fileTransport.once('finish', resolve));
+      const log = await fs.promises.readFile('test.log', { encoding: 'utf-8' });
+      expect(log).toMatch(
+        /logs error only in test.log because the level is less than info/
+      );
+      expect(log).toMatch(
+        /logs info only in test.log because the level is equal to info/
+      );
+      expect(log).not.toMatch(
+        /logs verbose nowhere because the level is higher than info/
+      );
+      vol.reset();
     });
     it('should accept an array with multiple transports', () => {
       const httpTransport = new transports.Http();

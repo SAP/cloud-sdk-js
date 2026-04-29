@@ -1,36 +1,36 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { decodeJwt } from '../jwt';
 import {
   mockFetchDestinationCalls,
   mockFetchDestinationCallsNotFound
-} from '../../../../../test-resources/test/test-util/destination-service-mocks';
+} from '@sap-cloud-sdk/test-util-internal/destination-service-mocks';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings,
   onlyIssuerXsuaaUrl,
   testTenants,
   uaaDomain
-} from '../../../../../test-resources/test/test-util/environment-mocks';
+} from '@sap-cloud-sdk/test-util-internal/environment-mocks';
 import {
   certificateSingleResponse,
   destinationName,
   oauthSingleResponse,
   onPremisePrincipalPropagationMultipleResponse,
   samlAssertionSingleResponse
-} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
+} from '@sap-cloud-sdk/test-util-internal/example-destination-service-responses';
 import {
   providerServiceToken,
   providerUserToken,
   providerUserPayload,
   subscriberServiceToken,
   subscriberUserToken
-} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
-import { TestCache } from '../../../../../test-resources/test/test-util/test-cache';
+} from '@sap-cloud-sdk/test-util-internal/mocked-access-tokens';
+import { TestCache } from '@sap-cloud-sdk/test-util-internal/test-cache';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
+} from '@sap-cloud-sdk/test-util-internal/token-accessor-mocks';
+import { decodeJwt } from '../jwt';
 import { destinationServiceCache } from './destination-service-cache';
 import {
   alwaysProvider,
@@ -169,8 +169,8 @@ describe('destination cache', () => {
         jwt: providerUserToken,
         isolationStrategy: 'tenant-user'
       });
-      const cacheKeys = Object.keys(
-        await (destinationCache.getCacheInstance() as any).cache.cache
+      const cacheKeys = Array.from(
+        (destinationCache.getCacheInstance() as any).cache.cache.keys()
       );
       expect(cacheKeys[0]).toBe(
         getDestinationCacheKey(
@@ -412,9 +412,7 @@ describe('destination cache', () => {
       expect(warn).toHaveBeenCalledWith(
         "Could not build destination cache key. Isolation strategy 'tenant' is used, but tenant ID is undefined in JWT."
       );
-      expect(
-        Object.keys(destinationCache.getCacheInstance()['cache'].cache).length
-      ).toBe(0);
+      expect(destinationCache.getCacheInstance()['cache'].cache.size).toBe(0);
     });
 
     it('ignores cache if isolation requires user JWT but the JWT is not provided', async () => {

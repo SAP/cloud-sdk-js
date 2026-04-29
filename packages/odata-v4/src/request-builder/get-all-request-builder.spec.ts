@@ -6,7 +6,7 @@ import {
   mockCountRequest,
   mockGetRequest,
   unmockDestinationsEnv
-} from '../../../../test-resources/test/test-util';
+} from '@sap-cloud-sdk/test-util-internal';
 import {
   createTestEntity,
   testEntityApi,

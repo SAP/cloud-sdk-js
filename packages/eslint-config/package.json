@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/eslint-config",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "description": "eslint config for the SAP Cloud SDK",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -26,7 +26,7 @@
     "directory": "packages/eslint-config"
   },
   "scripts": {
-    "readme": "ts-node ../../scripts/replace-common-readme.ts"
+    "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
     "@eslint/js": "^10.0.1",

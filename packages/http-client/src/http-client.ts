@@ -455,8 +455,8 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   'method'
 > {
   return {
-    httpAgent: new http.Agent(),
-    httpsAgent: new https.Agent(),
+    httpAgent: http.globalAgent,
+    httpsAgent: https.globalAgent,
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
     paramsSerializer: {
       serialize: (params = {}) =>

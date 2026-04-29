@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "rootDir": "../../",
+    "outDir": "./lib",
+    "tsBuildInfoFile": "./lib/.tsbuildinfo",
+    "composite": false,
+    "incremental": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "strict": true,
+    "target": "esnext",
+    "noUncheckedSideEffectImports": true,
+    "libReplacement": false,
+    "module": "NodeNext",
+    "types": ["node"]
+  },
+  "types": ["node"],
+  "include": ["*.ts"],
+  "exclude": []
+}

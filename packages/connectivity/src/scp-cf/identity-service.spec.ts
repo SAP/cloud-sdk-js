@@ -1,17 +1,22 @@
-import { signedJwt } from '../../../../test-resources/test/test-util';
+import { signedJwt } from '@sap-cloud-sdk/test-util-internal';
 import {
-  getIasToken,
+  fetchIasToken,
+  getIasAppTid,
   shouldExchangeToken,
   identityServicesCache
 } from './identity-service';
 import type { Service } from './environment-accessor';
 
+const mockGetClientCredentialsToken = jest.fn();
+const mockGetJwtBearerToken = jest.fn();
 const mockFetchClientCredentialsToken = jest.fn();
 const mockFetchJwtBearerToken = jest.fn();
 
 jest.mock('@sap/xssec', () => {
   const mockGetSafeUrlFromTokenIssuer = jest.fn();
   const mockIdentityService: any = jest.fn().mockImplementation(() => ({
+    getClientCredentialsToken: mockGetClientCredentialsToken,
+    getJwtBearerToken: mockGetJwtBearerToken,
     fetchClientCredentialsToken: mockFetchClientCredentialsToken,
     fetchJwtBearerToken: mockFetchJwtBearerToken
   }));
@@ -76,7 +81,7 @@ describe('shouldExchangeToken', () => {
   });
 });
 
-describe('getIasToken', () => {
+describe('fetchIasToken', () => {
   const mockIasService: Service = {
     name: 'my-identity-service',
     label: 'identity',
@@ -110,9 +115,9 @@ describe('getIasToken', () => {
   });
 
   it('fetches IAS token with mTLS authentication', async () => {
-    mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+    mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
-    const result = await getIasToken(mockIasService);
+    const result = await fetchIasToken(mockIasService);
 
     expect(result).toEqual({
       access_token: mockTokenResponse.access_token,
@@ -126,7 +131,7 @@ describe('getIasToken', () => {
       ias_apis: ['dummy'],
       scim_id: undefined
     });
-    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
+    expect(mockGetClientCredentialsToken).toHaveBeenCalledWith({
       token_format: 'jwt'
     });
   });
@@ -141,9 +146,9 @@ describe('getIasToken', () => {
       }
     };
 
-    mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+    mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
-    const result = await getIasToken(serviceWithSecret);
+    const result = await fetchIasToken(serviceWithSecret);
 
     expect(result).toEqual({
       access_token: mockTokenResponse.access_token,
@@ -157,46 +162,46 @@ describe('getIasToken', () => {
       ias_apis: ['dummy'],
       scim_id: undefined
     });
-    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
+    expect(mockGetClientCredentialsToken).toHaveBeenCalledWith({
       token_format: 'jwt'
     });
   });
 
   it('includes resource parameter for app2app flow', async () => {
-    mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+    mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
-    await getIasToken(mockIasService, {
+    await fetchIasToken(mockIasService, {
       resource: { name: 'my-app' }
     });
 
-    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
+    expect(mockGetClientCredentialsToken).toHaveBeenCalledWith({
       resource: 'urn:sap:identity:application:provider:name:my-app',
       token_format: 'jwt'
     });
   });
 
   it('includes appTid parameter for multi-tenant scenarios', async () => {
-    mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+    mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
-    await getIasToken(mockIasService, {
+    await fetchIasToken(mockIasService, {
       appTid: 'tenant-123'
     });
 
-    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
+    expect(mockGetClientCredentialsToken).toHaveBeenCalledWith({
       app_tid: 'tenant-123',
       token_format: 'jwt'
     });
   });
 
   it('includes both appName and appTid parameters', async () => {
-    mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+    mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
-    await getIasToken(mockIasService, {
+    await fetchIasToken(mockIasService, {
       resource: { name: 'my-app' },
       appTid: 'tenant-123'
     });
 
-    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
+    expect(mockGetClientCredentialsToken).toHaveBeenCalledWith({
       resource: 'urn:sap:identity:application:provider:name:my-app',
       app_tid: 'tenant-123',
       token_format: 'jwt'
@@ -204,24 +209,22 @@ describe('getIasToken', () => {
   });
 
   it('includes extraParams for additional OAuth2 parameters', async () => {
-    mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+    mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
-    await getIasToken(mockIasService, {
+    await fetchIasToken(mockIasService, {
       extraParams: { custom_param: 'custom_value' } as any
     });
 
-    expect(mockFetchClientCredentialsToken).toHaveBeenCalledWith({
+    expect(mockGetClientCredentialsToken).toHaveBeenCalledWith({
       token_format: 'jwt',
       custom_param: 'custom_value'
     });
   });
 
   it('handles token fetch errors gracefully', async () => {
-    mockFetchClientCredentialsToken.mockRejectedValue(
-      new Error('Network error')
-    );
+    mockGetClientCredentialsToken.mockRejectedValue(new Error('Network error'));
 
-    await expect(getIasToken(mockIasService)).rejects.toThrow(
+    await expect(fetchIasToken(mockIasService)).rejects.toThrow(
       'Could not fetch IAS client for service "my-identity-service" of type identity: Network error'
     );
   });
@@ -229,36 +232,36 @@ describe('getIasToken', () => {
   it('adds multi-tenant hint for 401 errors', async () => {
     const error: any = new Error('Unauthorized');
     error.response = { status: 401 };
-    mockFetchClientCredentialsToken.mockRejectedValue(error);
+    mockGetClientCredentialsToken.mockRejectedValue(error);
 
-    await expect(getIasToken(mockIasService)).rejects.toThrow(
+    await expect(fetchIasToken(mockIasService)).rejects.toThrow(
       /ensure that the service instance is declared as dependency to SaaS Provisioning Service or Subscription Manager/
     );
   });
 
   describe('authenticationType parameter', () => {
     it('uses OAuth2ClientCredentials (technical-user) by default', async () => {
-      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+      mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
-      await getIasToken(mockIasService, {});
+      await fetchIasToken(mockIasService, {});
 
-      expect(mockFetchClientCredentialsToken).toHaveBeenCalled();
-      expect(mockFetchJwtBearerToken).not.toHaveBeenCalled();
+      expect(mockGetClientCredentialsToken).toHaveBeenCalled();
+      expect(mockGetJwtBearerToken).not.toHaveBeenCalled();
     });
 
     it('uses client credentials for OAuth2ClientCredentials', async () => {
-      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+      mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
-      await getIasToken(mockIasService, {
+      await fetchIasToken(mockIasService, {
         authenticationType: 'OAuth2ClientCredentials'
       });
 
-      expect(mockFetchClientCredentialsToken).toHaveBeenCalled();
-      expect(mockFetchJwtBearerToken).not.toHaveBeenCalled();
+      expect(mockGetClientCredentialsToken).toHaveBeenCalled();
+      expect(mockGetJwtBearerToken).not.toHaveBeenCalled();
     });
 
     it('uses JWT bearer grant for OAuth2JWTBearer (business-user) with assertion', async () => {
-      mockFetchJwtBearerToken.mockResolvedValue(mockTokenResponse);
+      mockGetJwtBearerToken.mockResolvedValue(mockTokenResponse);
 
       const userAssertion = signedJwt({
         iss: 'https://tenant.accounts.ondemand.com',
@@ -266,22 +269,22 @@ describe('getIasToken', () => {
         app_tid: 'tenant-456'
       });
 
-      await getIasToken(mockIasService, {
+      await fetchIasToken(mockIasService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion: userAssertion
       });
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(userAssertion, {
+      expect(mockGetJwtBearerToken).toHaveBeenCalledWith(userAssertion, {
         token_format: 'jwt',
         app_tid: 'tenant-456',
         refresh_expiry: 0
       });
-      expect(mockFetchClientCredentialsToken).not.toHaveBeenCalled();
+      expect(mockGetClientCredentialsToken).not.toHaveBeenCalled();
     });
 
     it('throws error for OAuth2JWTBearer (business-user) without assertion', async () => {
       await expect(
-        getIasToken(mockIasService, {
+        fetchIasToken(mockIasService, {
           authenticationType: 'OAuth2JWTBearer'
         } as any)
       ).rejects.toThrow(
@@ -290,7 +293,7 @@ describe('getIasToken', () => {
     });
 
     it('supports OAuth2JWTBearer (business-user) with resource and appTid', async () => {
-      mockFetchJwtBearerToken.mockResolvedValue(mockTokenResponse);
+      mockGetJwtBearerToken.mockResolvedValue(mockTokenResponse);
 
       const userAssertion = signedJwt({
         iss: 'https://tenant.accounts.ondemand.com',
@@ -298,14 +301,14 @@ describe('getIasToken', () => {
         app_tid: 'tenant-456'
       });
 
-      await getIasToken(mockIasService, {
+      await fetchIasToken(mockIasService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion: userAssertion,
         resource: { name: 'my-app' },
         appTid: 'tenant-123'
       });
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(userAssertion, {
+      expect(mockGetJwtBearerToken).toHaveBeenCalledWith(userAssertion, {
         resource: 'urn:sap:identity:application:provider:name:my-app',
         app_tid: 'tenant-123',
         refresh_expiry: 0,
@@ -332,7 +335,7 @@ describe('getIasToken', () => {
     beforeEach(() => {
       jest.clearAllMocks();
       identityServicesCache.clear();
-      mockFetchJwtBearerToken.mockResolvedValue(mockTokenResponse);
+      mockGetJwtBearerToken.mockResolvedValue(mockTokenResponse);
     });
 
     it('uses provider IdentityService when JWT issuer matches provider URL', async () => {
@@ -341,12 +344,12 @@ describe('getIasToken', () => {
         user_uuid: 'user-123'
       });
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion
       });
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+      expect(mockGetJwtBearerToken).toHaveBeenCalledWith(assertion, {
         token_format: 'jwt',
         app_tid: null
       });
@@ -360,7 +363,7 @@ describe('getIasToken', () => {
 
       const { IdentityService } = jest.requireMock('@sap/xssec');
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion
       });
@@ -373,7 +376,7 @@ describe('getIasToken', () => {
         undefined
       );
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+      expect(mockGetJwtBearerToken).toHaveBeenCalledWith(assertion, {
         token_format: 'jwt',
         app_tid: null
       });
@@ -382,9 +385,9 @@ describe('getIasToken', () => {
     it('does not route for client credentials flow', async () => {
       const { IdentityService } = jest.requireMock('@sap/xssec');
 
-      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+      mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2ClientCredentials'
       });
 
@@ -404,14 +407,14 @@ describe('getIasToken', () => {
         user_uuid: 'user-123'
       });
 
-      const result = await getIasToken(providerService, {
+      const result = await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion
       });
 
       // Should succeed with fallback to provider credentials
       expect(result.access_token).toBeDefined();
-      expect(mockFetchJwtBearerToken).toHaveBeenCalled();
+      expect(mockGetJwtBearerToken).toHaveBeenCalled();
     });
 
     it('disables refresh tokens for JWT bearer exchanges with APP-to-APP flow', async () => {
@@ -420,13 +423,13 @@ describe('getIasToken', () => {
         user_uuid: 'user-123'
       });
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion,
         resource: { name: 'my-app' }
       });
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+      expect(mockGetJwtBearerToken).toHaveBeenCalledWith(assertion, {
         resource: 'urn:sap:identity:application:provider:name:my-app',
         refresh_expiry: 0,
         token_format: 'jwt',
@@ -434,7 +437,7 @@ describe('getIasToken', () => {
       });
     });
 
-    it('includes refresh_token when returned by fetchJwtBearerToken', async () => {
+    it('includes refresh_token when returned by getJwtBearerToken', async () => {
       const assertion = signedJwt({
         iss: subscriberUrl,
         user_uuid: 'user-123'
@@ -444,9 +447,9 @@ describe('getIasToken', () => {
         ...mockTokenResponse,
         refresh_token: 'test-refresh-token'
       };
-      mockFetchJwtBearerToken.mockResolvedValue(responseWithRefreshToken);
+      mockGetJwtBearerToken.mockResolvedValue(responseWithRefreshToken);
 
-      const result = await getIasToken(providerService, {
+      const result = await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion
       });
@@ -460,13 +463,13 @@ describe('getIasToken', () => {
         user_uuid: 'user-123'
       });
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion,
         appTid: 'some-tenant-id'
       });
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+      expect(mockGetJwtBearerToken).toHaveBeenCalledWith(assertion, {
         app_tid: 'some-tenant-id',
         refresh_expiry: 0,
         token_format: 'jwt'
@@ -480,12 +483,12 @@ describe('getIasToken', () => {
         app_tid: 'extracted-tenant-id'
       });
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion
       });
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+      expect(mockGetJwtBearerToken).toHaveBeenCalledWith(assertion, {
         app_tid: 'extracted-tenant-id',
         refresh_expiry: 0,
         token_format: 'jwt'
@@ -499,12 +502,12 @@ describe('getIasToken', () => {
         // No app_tid or zone_uuid
       });
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion
       });
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+      expect(mockGetJwtBearerToken).toHaveBeenCalledWith(assertion, {
         app_tid: null,
         token_format: 'jwt'
       });
@@ -517,13 +520,13 @@ describe('getIasToken', () => {
         app_tid: 'assertion-tenant-id'
       });
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion,
         appTid: 'explicit-tenant-id'
       });
 
-      expect(mockFetchJwtBearerToken).toHaveBeenCalledWith(assertion, {
+      expect(mockGetJwtBearerToken).toHaveBeenCalledWith(assertion, {
         app_tid: 'explicit-tenant-id',
         refresh_expiry: 0,
         token_format: 'jwt'
@@ -547,7 +550,7 @@ describe('getIasToken', () => {
       const { IdentityService } = jest.requireMock('@sap/xssec');
 
       // First call with subscriber1
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion: assertion1
       });
@@ -555,7 +558,7 @@ describe('getIasToken', () => {
       const callsAfterFirst = IdentityService.mock.calls.length;
 
       // Second call with same subscriber1 - should use cached instance
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion: assertion1
       });
@@ -564,7 +567,7 @@ describe('getIasToken', () => {
       expect(IdentityService.mock.calls.length).toBe(callsAfterFirst);
 
       // Third call with different subscriber2 - should create new instance
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion: assertion2
       });
@@ -593,7 +596,7 @@ describe('getIasToken', () => {
 
       const { IdentityService } = jest.requireMock('@sap/xssec');
 
-      await getIasToken(serviceWithSlash, {
+      await fetchIasToken(serviceWithSlash, {
         authenticationType: 'OAuth2JWTBearer',
         assertion
       });
@@ -605,14 +608,14 @@ describe('getIasToken', () => {
     it('routes to subscriber tenant for technical user with requestAs="current-tenant"', async () => {
       const { IdentityService } = jest.requireMock('@sap/xssec');
 
-      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+      mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
       const jwt = {
         iss: subscriberUrl,
         user_uuid: 'user-123'
       };
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2ClientCredentials',
         requestAs: 'current-tenant',
         jwt
@@ -630,14 +633,14 @@ describe('getIasToken', () => {
     it('routes to subscriber tenant for technical user when requestAs is undefined and jwt is provided', async () => {
       const { IdentityService } = jest.requireMock('@sap/xssec');
 
-      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+      mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
       const jwt = {
         iss: subscriberUrl,
         user_uuid: 'user-123'
       };
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2ClientCredentials',
         jwt
       });
@@ -654,14 +657,14 @@ describe('getIasToken', () => {
     it('does not route for technical user with requestAs="provider-tenant"', async () => {
       const { IdentityService } = jest.requireMock('@sap/xssec');
 
-      mockFetchClientCredentialsToken.mockResolvedValue(mockTokenResponse);
+      mockGetClientCredentialsToken.mockResolvedValue(mockTokenResponse);
 
       const jwt = {
         iss: subscriberUrl,
         user_uuid: 'user-123'
       };
 
-      await getIasToken(providerService, {
+      await fetchIasToken(providerService, {
         authenticationType: 'OAuth2ClientCredentials',
         requestAs: 'provider-tenant',
         jwt
@@ -675,5 +678,45 @@ describe('getIasToken', () => {
         undefined
       );
     });
+  });
+});
+
+describe('getIasAppTid', () => {
+  const mockService = {
+    name: 'identity',
+    label: 'identity',
+    tags: ['identity'],
+    credentials: {
+      clientid: 'client-id',
+      clientsecret: 'secret',
+      url: 'https://provider.accounts.ondemand.com',
+      app_tid: 'provider-tid'
+    }
+  };
+
+  it('returns credentials.app_tid for requestAs="provider-tenant"', () => {
+    expect(getIasAppTid({ requestAs: 'provider-tenant' }, mockService)).toBe(
+      'provider-tid'
+    );
+  });
+
+  it('returns jwt.app_tid for requestAs="current-tenant"', () => {
+    expect(
+      getIasAppTid({ requestAs: 'current-tenant' }, mockService, {
+        app_tid: 'subscriber-tid'
+      })
+    ).toBe('subscriber-tid');
+  });
+
+  it('returns jwt.app_tid when requestAs is not set', () => {
+    expect(getIasAppTid({}, mockService, { app_tid: 'subscriber-tid' })).toBe(
+      'subscriber-tid'
+    );
+  });
+
+  it('returns undefined for current-tenant when no jwt is provided', () => {
+    expect(
+      getIasAppTid({ requestAs: 'current-tenant' }, mockService)
+    ).toBeUndefined();
   });
 });

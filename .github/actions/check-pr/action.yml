@@ -5,5 +5,5 @@ inputs:
     description: 'Changed files in the .changeset directory on the current PR.'
     required: true
 runs:
-  using: 'node16'
+  using: 'node24'
   main: 'index.js'

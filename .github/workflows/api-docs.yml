@@ -18,26 +18,19 @@ jobs:
   generate-and-push-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-
-      - run: git fetch --depth=1
-
-      - uses: actions/setup-node@v6
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
-          node-version: 22
-          cache: 'yarn'
-
-      - run: yarn install --frozen-lockfile --ignore-engines
+          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
 
       - name: Generate API documentation
         run: |
-          yarn generate
-          yarn doc
+          pnpm run generate
+          pnpm run doc
 
-      - uses: actions/create-github-app-token@v3
-        id: app-token
+      - id: app-token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         with:
-          app-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
+          client-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
           private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
           owner: SAP
           repositories: cloud-sdk

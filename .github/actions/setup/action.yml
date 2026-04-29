@@ -1,0 +1,82 @@
+name: setup
+description: Setup repo, node and pnpm.
+inputs:
+  node-version:
+    description: 'Node.js version'
+    default: '22'
+  registry-url:
+    description: 'The registry URL to use for npm packages. Defaults to the SAP Artifactory mirror when npm-token is provided, otherwise npmjs.'
+  registry-token:
+    description: 'The auth token for the npm registry'
+  pnpm-version:
+    description: 'PNPM version'
+    default: '10'
+  pnpm-install-args:
+    description: 'Arguments to pass to pnpm install'
+    default: '--frozen-lockfile'
+  skip-install:
+    description: 'Whether to skip installing and building node dependencies'
+    default: 'false'
+  package-manager-cache:
+    description: 'Whether to enable caching for pnpm. Set to false to disable caching.'
+    default: 'true'
+  ref:
+    description: 'The GitHub ref to checkout'
+    default: ${{ github.ref }}
+  token:
+    description: 'The GitHub token to use for checkout'
+    default: ${{ github.token }}
+  persist-credentials:
+    description: 'Whether to configure the token or SSH key with the local git config'
+    default: false
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        ref: ${{ inputs.ref }}
+        token: ${{ inputs.token }}
+        persist-credentials: ${{ inputs.persist-credentials }}
+    - name: Setup pnpm
+      uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+      with:
+        version: ${{ inputs.pnpm-version }}
+    - name: Resolve registry URL
+      id: resolve-registry-url
+      env:
+        REGISTRY_URL: ${{ inputs.registry-url }}
+        REGISTRY_TOKEN: ${{ inputs.registry-token }}
+        REPO: ${{ github.repository }}
+      shell: bash
+      run: |
+        if [[ -n "$REGISTRY_URL" ]]; then
+          echo "url=$REGISTRY_URL" >> $GITHUB_OUTPUT
+        elif [[ "$REPO" == "SAP/ai-sdk-js" || "$REPO" == "SAP/cloud-sdk-js" ]]; then
+          if [[ -n "$REGISTRY_TOKEN" ]]; then
+            echo "url=https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/" >> $GITHUB_OUTPUT
+          else
+            echo "::error::The input 'registry-token' is required when 'registry-url' is not provided."
+            exit 1
+          fi
+        else
+          echo "url=https://registry.npmjs.org" >> $GITHUB_OUTPUT
+        fi
+    - name: Setup Node.js
+      uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: ${{ steps.resolve-registry-url.outputs.url }}
+        cache: 'pnpm'
+        package-manager-cache: ${{ inputs.package-manager-cache }}
+    - name: Install dependencies
+      if: ${{ inputs.skip-install == 'false' }}
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
+      shell: bash
+      run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
+    - name: Run lifecycle scripts
+      if: ${{ inputs.skip-install == 'false' }}
+      shell: bash
+      run: pnpm rebuild

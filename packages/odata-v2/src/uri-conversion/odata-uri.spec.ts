@@ -6,6 +6,7 @@ import {
   not,
   or
 } from '@sap-cloud-sdk/odata-common/internal';
+import { customTestDeSerializers } from '@sap-cloud-sdk/test-util-internal/custom-de-serializers';
 import {
   testFilterBoolean,
   testFilterGuid,
@@ -23,7 +24,6 @@ import {
   defaultDeSerializers,
   mergeDefaultDeSerializersWith
 } from '../de-serializers';
-import { customTestDeSerializers } from '../../../../test-resources/test/test-util/custom-de-serializers';
 import { createODataUri } from './odata-uri';
 
 const oDataUri = createODataUri(defaultDeSerializers);

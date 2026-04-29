@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator-common",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "description": "SAP Cloud SDK for JavaScript common functions of OData client generator and OpenAPI clint generator.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
@@ -30,28 +30,32 @@
   },
   "scripts": {
     "compile": "tsc -b",
-    "prepublishOnly": "yarn compile && yarn readme",
-    "test": "yarn test:unit",
-    "test:unit": "yarn node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "prepublishOnly": "pnpm run compile && pnpm run readme",
+    "test": "pnpm run test:unit",
+    "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck .",
-    "readme": "ts-node ../../scripts/replace-common-readme.ts"
+    "check:dependencies": "depcheck . --ignores=memfs",
+    "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^4.5.1",
+    "@sap-cloud-sdk/util": "workspace:^",
     "fast-levenshtein": "~3.0.0",
     "fs-extra": "^11.3.4",
     "glob": "^13.0.6",
-    "typescript": "~6.0.2",
     "prettier": "^3.8.1",
-    "yargs": "^17.7.2",
-    "voca": "^1.4.1"
+    "voca": "^1.4.1",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@jest/globals": "^30.3.0",
+    "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@types/fast-levenshtein": "^0.0.4",
+    "@types/fs-extra": "^11.0.4",
     "@types/yargs": "^17.0.33",
-    "mock-fs": "^5.5.0"
+    "depcheck": "^1.4.7",
+    "memfs": "^4.57.2",
+    "typescript": "~6.0.3"
   }
 }

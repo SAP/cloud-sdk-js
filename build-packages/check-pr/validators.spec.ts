@@ -1,5 +1,8 @@
-import mock from 'mock-fs';
 import { jest } from '@jest/globals';
+import { vol } from 'memfs';
+import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-build-internal';
+
+mockFsWithMemfs(jest);
 
 jest.unstable_mockModule('@actions/core', () => ({
   error: jest.fn(),
@@ -21,19 +24,20 @@ with multiple lines`;
 
 describe('check-pr', () => {
   beforeEach(() => {
-    mock({
-      '.github': {
-        'PULL_REQUEST_TEMPLATE.md': prTemplate
+    vol.fromNestedJSON(
+      {
+        '.github': { 'PULL_REQUEST_TEMPLATE.md': prTemplate },
+        'my-changeset.md': '[Fixed Issue] Something is fixed.'
       },
-      'my-changeset.md': '[Fixed Issue] Something is fixed.'
-    });
+      process.cwd()
+    );
 
     getInput.mockReturnValue('my-changeset.md');
     process.exitCode = 0;
   });
 
   afterEach(() => {
-    mock.restore();
+    vol.reset();
     setFailed.mockClear();
   });
 

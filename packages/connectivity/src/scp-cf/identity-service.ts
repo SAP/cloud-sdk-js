@@ -7,9 +7,11 @@ import {
   resolveServiceBinding,
   getIdentityServiceInstanceFromCredentials
 } from './environment-accessor';
+import type { CachingOptions } from './cache';
 import type {
   DestinationOptions,
   IasOptions,
+  IasOptionsTechnicalUser,
   IasResource
 } from './destination';
 import type { MiddlewareContext } from '@sap-cloud-sdk/resilience';
@@ -73,7 +75,8 @@ export function shouldExchangeToken(options: DestinationOptions): boolean {
 type IasParameters = {
   jwt?: JwtPayload;
   serviceCredentials: ServiceCredentials;
-} & IasOptions;
+} & IasOptions &
+  CachingOptions;
 
 /**
  * Make a client credentials request against the IAS OAuth2 endpoint.
@@ -83,14 +86,15 @@ type IasParameters = {
  * @returns Client credentials token response.
  * @internal
  */
-export async function getIasToken(
+export async function fetchIasToken(
   service: string | Service,
-  options: IasOptions & { jwt?: JwtPayload } = {}
+  options: IasOptions & CachingOptions & { jwt?: JwtPayload } = {}
 ): Promise<IasTokenResponse> {
   const resolvedService = resolveServiceBinding(service);
 
   const fnArgument: IasParameters = {
     serviceCredentials: resolvedService.credentials,
+    useCache: options.useCache,
     ...options
   };
 
@@ -219,13 +223,18 @@ async function getIasTokenImpl(arg: IasParameters): Promise<IasTokenResponse> {
   );
 
   const tokenOptions = transformIasOptionsToXssecArgs(arg);
+  const useCache = arg.useCache !== false;
 
   const response: IdentityService.TokenFetchResponse =
     arg.authenticationType === 'OAuth2JWTBearer'
       ? // JWT bearer grant for business user access
-        await identityService.fetchJwtBearerToken(arg.assertion, tokenOptions)
+        useCache
+        ? await identityService.getJwtBearerToken(arg.assertion, tokenOptions)
+        : await identityService.fetchJwtBearerToken(arg.assertion, tokenOptions)
       : // Technical user client credentials grant
-        await identityService.fetchClientCredentialsToken(tokenOptions);
+        useCache
+        ? await identityService.getClientCredentialsToken(tokenOptions)
+        : await identityService.fetchClientCredentialsToken(tokenOptions);
 
   const decodedJwt = new IdentityServiceToken(response.access_token);
 
@@ -248,4 +257,29 @@ async function getIasTokenImpl(arg: IasParameters): Promise<IasTokenResponse> {
       response as unknown as IdentityService.RefreshableTokenFetchResponse
     )?.refresh_token
   };
+}
+
+/**
+ * Resolves `app_tid` based on supplied IAS options and tenant context.
+ * @param iasOptions - IAS technical user options.
+ * @param service - Service binding for identity service.
+ * @param jwt - Optional JWT payload for current-tenant context.
+ * @returns The BTP app_tid based on `requestAs` configuration.
+ * @internal
+ */
+export function getIasAppTid(
+  iasOptions: IasOptionsTechnicalUser,
+  service: Service,
+  jwt?: JwtPayload
+): string | undefined {
+  const { requestAs } = iasOptions;
+  if (requestAs === 'provider-tenant') {
+    return service.credentials.app_tid;
+  }
+  if (requestAs === 'current-tenant' || !requestAs) {
+    return jwt?.app_tid;
+  }
+
+  requestAs satisfies never;
+  throw new Error(`Invalid requestAs value: ${requestAs}`);
 }

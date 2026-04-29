@@ -32,7 +32,7 @@
     "@sap-cloud-sdk/openapi-generator": "workspace:^",
     "@sap-cloud-sdk/test-util-internal": "*",
     "@jest/globals": "^30.3.0",
-    "bignumber.js": "^10.0.2",
+    "bignumber.js": "^11.0.0",
     "execa": "^5.0.0",
     "jsonwebtoken": "^9.0.3",
     "memfs": "^4.57.1",

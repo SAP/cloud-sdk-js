@@ -4,25 +4,25 @@ import https from 'node:https';
 import * as jks from 'jks-js';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { getProtocolOrDefault } from '../scp-cf/get-protocol';
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { Cache, hashCacheKey } from '../scp-cf/cache';
 import {
   addProxyConfigurationInternet,
   getProxyConfig,
   proxyStrategy
-  // eslint-disable-next-line import/no-internal-modules
+  // eslint-disable-next-line import-x/no-internal-modules
 } from '../scp-cf/destination/http-proxy-util';
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import type {
   Destination,
   DestinationCertificate,
   HttpDestination
-  // eslint-disable-next-line import/no-internal-modules
+  // eslint-disable-next-line import-x/no-internal-modules
 } from '../scp-cf/destination';
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import type { BasicProxyConfiguration } from '../scp-cf/connectivity-service-types';
 import type { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 

@@ -2,7 +2,7 @@ import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
 
 mockFsWithMemfs(jest);
 
-// eslint-disable-next-line import/order
+// eslint-disable-next-line import-x/order
 import { X509Certificate } from 'node:crypto';
 import { jest } from '@jest/globals';
 import { vol } from 'memfs';

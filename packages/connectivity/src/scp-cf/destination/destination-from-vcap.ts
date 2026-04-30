@@ -161,7 +161,7 @@ export async function searchServiceBindingForDestination(
     return destination;
   } catch (error) {
     logger.debug(
-      `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${error.message}`
+      `Could not retrieve destination from service binding. If you are not using SAP Extension Factory, this information probably does not concern you. ${(error as Error).message}`
     );
   }
   return null;

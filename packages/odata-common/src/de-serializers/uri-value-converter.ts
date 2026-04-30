@@ -33,7 +33,9 @@ export type UriConverter = (
  */
 export function createUriConverter(deSerializers: DeSerializers): UriConverter {
   return (value: any, edmType: EdmTypeShared<'any'>): string => {
-    const { serializeToUri, serialize } = deSerializers[edmType];
+    const { serializeToUri, serialize } = (
+      deSerializers as Record<string, any>
+    )[edmType];
     return serializeToUri ? serializeToUri(value, serialize) : serialize(value);
   };
 }

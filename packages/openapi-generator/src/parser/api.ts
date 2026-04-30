@@ -70,9 +70,11 @@ function getApiNameForOperation(
   document: OpenAPIV3.Document
 ): string {
   const originalApiName =
-    operation[apiNameExtension] ||
-    getPathItem(document, pathPattern)[apiNameExtension] ||
-    document[apiNameExtension] ||
+    (operation as Record<string, any>)[apiNameExtension] ||
+    (getPathItem(document, pathPattern) as Record<string, any>)[
+      apiNameExtension
+    ] ||
+    (document as Record<string, any>)[apiNameExtension] ||
     operation.tags?.[0] ||
     defaultApiName;
   return `${pascalCase(originalApiName.replace(/api$/i, ''))}Api`;
@@ -104,8 +106,11 @@ function getAllOperations(
   openApiDocument: OpenAPIV3.Document
 ): OperationInfo[] {
   return flat(
-    Object.entries(openApiDocument.paths).map(
-      ([pathPattern, pathItem]: [string, OpenAPIV3.PathItemObject]) =>
+    Object.entries(openApiDocument.paths)
+      .filter(
+        (entry): entry is [string, OpenAPIV3.PathItemObject] => !!entry[1]
+      )
+      .map(([pathPattern, pathItem]) =>
         methods
           .filter(method => pathItem[method])
           .map(method => ({
@@ -115,6 +120,6 @@ function getAllOperations(
             pathItemParameters: pathItem.parameters || [],
             method
           }))
-    )
+      )
   );
 }

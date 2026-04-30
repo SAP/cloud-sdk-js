@@ -7,7 +7,11 @@ import type {
 } from '@sap-cloud-sdk/odata-common/internal';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getExpandWrapped(selects, expands, entityConstructor) {
+function getExpandWrapped(
+  selects: any[],
+  _expands: any[],
+  _entityConstructor: any
+) {
   return getExpand(selects);
 }
 
@@ -20,5 +24,9 @@ function getExpandWrapped(selects, expands, entityConstructor) {
 export function createODataUri<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT
 ): ODataUri<DeSerializersT> {
-  return createODataUriBase(deSerializers, getExpandWrapped, getSelect);
+  return createODataUriBase(
+    deSerializers,
+    getExpandWrapped as any,
+    getSelect as any
+  );
 }

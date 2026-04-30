@@ -12,8 +12,8 @@ export class OrderLink<
   EntityT extends EntityBase,
   LinkedEntityApiT extends EntityApi<EntityBase, any>
 > {
-  readonly entityType: EntityT;
-  readonly linkedEntityType: EntityType<LinkedEntityApiT>;
+  readonly entityType!: EntityT;
+  readonly linkedEntityType!: EntityType<LinkedEntityApiT>;
 
   /**
    * Creates an instance of OrderLink.

@@ -5,7 +5,8 @@
     "outDir": "./dist",
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "composite": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["node", "jest"]
   },
   "include": ["./*.ts"],
   "exclude": ["dist/**/*", "node_modules/**/*"]

@@ -11,6 +11,7 @@ import {
 import { isHttpDestination } from './destination-service-types';
 import { addForwardedAuthTokenIfNeeded } from './forward-auth-token';
 import type { Destination } from './destination-service-types';
+import type { DestinationConfiguration } from './destination';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 
 const logger = createLogger({
@@ -37,14 +38,15 @@ export function getDestinationsFromEnv(): Destination[] {
     } catch (err) {
       throw new ErrorWithCause(
         'Error in parsing the destinations from the environment variable.',
-        err
+        err as Error
       );
     }
     validateDestinations(destinations);
-    return destinations.map(destination =>
-      isDestinationConfiguration(destination)
-        ? parseDestination(destination)
-        : sanitizeDestination(destination)
+    return destinations.map(
+      (destination: DestinationConfiguration | Destination) =>
+        isDestinationConfiguration(destination)
+          ? parseDestination(destination)
+          : sanitizeDestination(destination)
     );
   }
   return [];
@@ -121,7 +123,7 @@ export function searchEnvVariablesForDestination(
       }
     } catch (error) {
       logger.error(
-        `Error in reading the given destinations from the environment variable ${error.message}.`
+        `Error in reading the given destinations from the environment variable ${(error as Error).message}.`
       );
     }
   }

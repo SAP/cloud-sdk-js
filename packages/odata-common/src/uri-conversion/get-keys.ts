@@ -21,7 +21,7 @@ export function getEntityKeys<EntityT extends EntityBase>(
   return entityApi.entityConstructor._keys.reduce(
     (prev, curr) => ({
       ...prev,
-      [curr]: entity[camelCase(curr)]
+      [curr]: (entity as Record<string, any>)[camelCase(curr)]
     }),
     {}
   );

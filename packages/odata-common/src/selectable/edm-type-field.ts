@@ -54,7 +54,7 @@ export class EdmTypeField<
   extends Field<EntityT, NullableT, SelectableT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  readonly _entity: EntityT;
+  readonly _entity!: EntityT;
 
   /**
    * Creates an instance of EdmTypeField.

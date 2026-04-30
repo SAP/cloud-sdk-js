@@ -75,7 +75,7 @@ export async function serviceToken(
   } catch (err) {
     throw new ErrorWithCause(
       `Could not fetch client credentials token for service of type "${serviceBinding.label}".`,
-      err
+      err as Error
     );
   }
 }

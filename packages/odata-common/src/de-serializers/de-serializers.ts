@@ -138,7 +138,8 @@ export function createValueDeserializer<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT
 ): <EdmT>(value: any, edmType: EdmT) => DeserializedType<DeSerializersT, EdmT> {
   return (value, edmType) => {
-    const deserialize = deSerializers[edmType as any]?.deserialize;
+    const deserialize = (deSerializers as Record<string, any>)[edmType as any]
+      ?.deserialize;
     return deserialize ? deserialize(value) : value;
   };
 }
@@ -154,7 +155,8 @@ export function createValueSerializer<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT
 ): <EdmT>(value: any, edmType: EdmT, precision?: number) => any {
   return (value, edmType, precision) => {
-    const serialize = deSerializers[edmType as any]?.serialize;
+    const serialize = (deSerializers as Record<string, any>)[edmType as any]
+      ?.serialize;
     return serialize ? serialize(value, precision) : value;
   };
 }

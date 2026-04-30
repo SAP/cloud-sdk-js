@@ -29,7 +29,7 @@ export interface SwaggerMetadata {
   /**
    * @internal
    */
-  externalDocs?: { description: string; url; string };
+  externalDocs?: { description: string; url: string };
 }
 /**
  * @internal

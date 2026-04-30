@@ -28,9 +28,9 @@ export abstract class GetRequestBuilderBase<
   extends MethodRequestBuilder<RequestConfigT>
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  readonly _entity: EntityT;
-  readonly _entityConstructor: Constructable<EntityT>;
-  readonly _deSerializers: DeSerializersT;
+  readonly _entity!: EntityT;
+  readonly _entityConstructor!: Constructable<EntityT>;
+  readonly _deSerializers!: DeSerializersT;
 
   /**
    * Creates an instance of GetAllRequestBuilder.

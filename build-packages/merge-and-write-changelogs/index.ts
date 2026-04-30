@@ -106,7 +106,7 @@ function parseContent(
       summary,
       packageNames: [packageName],
       // TODO: add link to commit
-      commit: groups.commit ? `(${groups.commit})` : '',
+      commit: groups?.commit ? `(${groups.commit})` : '',
       type
     };
   });

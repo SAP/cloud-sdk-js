@@ -11,7 +11,8 @@
     "target": "esnext",
     "noUncheckedSideEffectImports": true,
     "libReplacement": false,
-    "module": "NodeNext"
+    "module": "NodeNext",
+    "types": ["node"]
   },
   "types": ["node"],
   "include": ["*.ts"],

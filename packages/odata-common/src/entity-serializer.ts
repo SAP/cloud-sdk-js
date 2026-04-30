@@ -90,7 +90,7 @@ export function entitySerializer(
       return serializeEntity(fieldValue, field._linkedEntityApi);
     }
     if (field instanceof Link) {
-      return fieldValue.map(linkedEntity =>
+      return fieldValue.map((linkedEntity: EntityBase) =>
         serializeEntity(linkedEntity, field._linkedEntityApi)
       );
     }
@@ -122,7 +122,7 @@ export function entitySerializer(
   ): Record<string, any> {
     return getFieldNames(entity, diff).reduce((serialized, key) => {
       const field = entityApi.schema[upperCaseSnakeCase(key)];
-      const fieldValue = entity[key];
+      const fieldValue = (entity as Record<string, any>)[key];
 
       const serializedValue = serializeField(field, fieldValue);
 

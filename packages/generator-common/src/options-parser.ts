@@ -197,7 +197,7 @@ function resolveFilePaths(filePaths: string[]): string[] {
  * @param options
  */
 export function resolveOptionsPerService<GeneratorOptionsT>(
-  arg: string,
+  arg: string | undefined,
   options: GeneratorOptionsT & { config?: string }
 ): string | undefined {
   if (typeof arg !== 'undefined') {
@@ -293,13 +293,14 @@ class OptionsParser<
   private addDefaults(
     parsedOptions: ParsedOptions<CliOptionsT>
   ): ParsedOptions<CliOptionsT> {
+    const mutableOptions = parsedOptions as Record<string, any>;
     Object.entries(this.options).forEach(([name, option]) => {
       if ('default' in option) {
-        parsedOptions[name] = parsedOptions[name] ?? option.default;
+        mutableOptions[name] = mutableOptions[name] ?? option.default;
       }
       if ('coerce' in option) {
-        parsedOptions[name] = option.coerce?.(
-          parsedOptions[name],
+        mutableOptions[name] = option.coerce?.(
+          mutableOptions[name],
           parsedOptions
         );
       }

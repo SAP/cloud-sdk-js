@@ -18,9 +18,9 @@ export class ODataGetByKeyRequestConfig<
   extends ODataRequestConfig
   implements WithKeys, WithSelection<EntityT, DeSerializersT>
 {
-  keys: Record<string, any>;
+  keys!: Record<string, any>;
   selects: Selectable<EntityT, DeSerializersT>[] = [];
-  expands: Expandable<
+  expands!: Expandable<
     EntityT,
     DeSerializersT,
     EntityApi<EntityBase, DeSerializersT>

@@ -22,6 +22,6 @@
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",
     "prettier": "^3.8.1",
-    "typescript": "~5.9.3"
+    "typescript": "~6.0.3"
   }
 }

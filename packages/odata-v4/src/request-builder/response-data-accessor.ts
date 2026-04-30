@@ -32,7 +32,7 @@ export function isCollectionResult(data: any): boolean {
   return Array.isArray(data.value);
 }
 
-function validateCollectionResult(data): void {
+function validateCollectionResult(data: any): void {
   if (!isCollectionResult(data)) {
     logger.warn(
       'The given response data does not have the standard OData v4 format for collections.'
@@ -63,11 +63,11 @@ export function getSingleResult(data: any): Record<string, any> {
   return isSingleResult(data) ? data : {};
 }
 
-function isSingleResult(data): boolean {
+function isSingleResult(data: any): boolean {
   return typeof data === 'object' && !Array.isArray(data);
 }
 
-function validateSingleResult(data): void {
+function validateSingleResult(data: any): void {
   if (!isSingleResult(data)) {
     logger.warn(
       'The given response data does not have the standard OData v4 format for single results.'

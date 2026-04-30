@@ -43,13 +43,19 @@ export class ODataActionRequestConfig<
   private buildHttpPayload(
     parameters: OperationParameters<ParametersT>
   ): Record<string, any> {
-    const payload = Object.keys(parameters).reduce((all, key) => {
-      const payloadElement: OperationParameter<ParametersT> = parameters[key];
-      if (typeof payloadElement.value !== 'undefined') {
-        all[payloadElement.originalName] = payloadElement.value;
-      }
-      return all;
-    }, {});
+    const payload = Object.keys(parameters).reduce(
+      (all, key) => {
+        const payloadElement: OperationParameter<ParametersT> = (
+          parameters as Record<string, any>
+        )[key];
+        if (typeof payloadElement.value !== 'undefined') {
+          (all as Record<string, any>)[payloadElement.originalName] =
+            payloadElement.value;
+        }
+        return all;
+      },
+      {} as Record<string, any>
+    );
 
     return payload;
   }

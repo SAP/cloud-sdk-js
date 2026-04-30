@@ -70,7 +70,7 @@ export function serializeFromMoment(momentInstance: moment.Moment): string {
   const timestamp = momentInstance.unix() * 1000;
 
   // For some reason isUtc() returns wrong values here, so we use the internal flag directly
-  if (momentInstance['_isUTC']) {
+  if ((momentInstance as any)['_isUTC']) {
     const offset = Math.abs(momentInstance.utcOffset());
     const operator = momentInstance.utcOffset() >= 0 ? '+' : '-';
     return `/Date(${timestamp}${operator}${leftPad(offset, 4)})/`;

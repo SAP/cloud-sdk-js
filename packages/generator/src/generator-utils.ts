@@ -166,7 +166,8 @@ export function getFallbackEdmTypeIfNeeded(edmType: string): EdmTypeShared {
  * @internal
  */
 export function edmToTsType(edmType: string): string {
-  const tsType = edmToTsTypeMapping[edmType];
+  const tsType =
+    edmToTsTypeMapping[edmType as Exclude<EdmTypeShared, 'Edm.Enum'>];
   if (!tsType) {
     throw new Error(
       `Could not determine TypeScript type for EDM type: '${edmType}'.`
@@ -178,7 +179,7 @@ export function edmToTsType(edmType: string): string {
  * @internal
  */
 export function edmToFieldType(edmType: string): string {
-  const fieldType = edmToFieldTypeMapping[edmType];
+  const fieldType = edmToFieldTypeMapping[edmType as EdmTypeShared];
   if (!fieldType) {
     throw new Error(
       `Could not determine field type for EDM type: '${edmType}'.`

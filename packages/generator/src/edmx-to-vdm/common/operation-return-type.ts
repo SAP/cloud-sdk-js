@@ -172,4 +172,4 @@ export function cannotDeserialize(returnType: VdmOperationReturnType): boolean {
 /**
  * @internal
  */
-export type ExtractResponse = (string) => string;
+export type ExtractResponse = (val: string) => string;

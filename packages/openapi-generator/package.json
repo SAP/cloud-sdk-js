@@ -55,9 +55,10 @@
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@types/content-type": "^1.1.9",
     "@types/js-yaml": "^4.0.9",
+    "@types/swagger2openapi": "^7.0.4",
     "depcheck": "^1.4.7",
     "memfs": "^4.57.2",
     "prettier": "^3.8.1",
-    "typescript": "~5.9.3"
+    "typescript": "~6.0.2"
   }
 }

@@ -14,7 +14,7 @@ const logger = createLogger({
  * @internal
  */
 export function getServiceBindings(service: string): Service[] {
-  return xsenv.filterServices({ label: service });
+  return xsenv.filterServices({ label: service }) as unknown as Service[];
 }
 
 /**
@@ -24,7 +24,9 @@ export function getServiceBindings(service: string): Service[] {
  * @returns The first found service.
  */
 export function getServiceBinding(service: string): Service | undefined {
-  const services: Service[] = xsenv.filterServices({ label: service });
+  const services: Service[] = xsenv.filterServices({
+    label: service
+  }) as unknown as Service[];
 
   if (!services.length) {
     logger.warn(
@@ -74,7 +76,9 @@ export function resolveServiceBinding(service: string | Service): Service {
 export function getServiceBindingByInstanceName(
   serviceInstanceName: string
 ): Service {
-  const service = xsenv.filterServices(serviceInstanceName);
+  const service = xsenv.filterServices(
+    serviceInstanceName
+  ) as unknown as Service[];
 
   if (!service.length) {
     throw Error(`Could not find service with name: '${serviceInstanceName}'.`);

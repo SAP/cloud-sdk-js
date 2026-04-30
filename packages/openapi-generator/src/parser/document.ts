@@ -63,9 +63,12 @@ async function sanitizeDiscriminatedSchemas(
   options: ParserOptions
 ) {
   const discriminatorSchemas = schemas
-    .filter(({ schema }) => isOneOfSchema(schema) && schema.discriminator)
+    .filter(
+      (s): s is OpenApiPersistedSchemaWithDiscriminator =>
+        isOneOfSchema(s.schema) && !!s.schema.discriminator
+    )
     // type is known because of the filter above
-    .map(({ schema, schemaName }: OpenApiPersistedSchemaWithDiscriminator) => ({
+    .map(({ schema, schemaName }) => ({
       children: Object.values(schema.discriminator.mapping),
       schemaName,
       propertyName: schema.discriminator.propertyName

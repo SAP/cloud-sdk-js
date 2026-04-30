@@ -54,7 +54,7 @@ export class EntityBuilder<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > {
-  protected _entity: EntityT;
+  protected _entity!: EntityT;
 
   constructor(readonly _entityApi: EntityApi<EntityT, DeSerializersT>) {
     if (!this._entity) {
@@ -96,7 +96,8 @@ export class EntityBuilder<
 
     const [entityEntries, customEntries] = partition(
       Object.entries(json),
-      ([key]) => typeof entityBuilder[key] === 'function'
+      ([key]) =>
+        typeof (entityBuilder as Record<string, unknown>)[key] === 'function'
     );
 
     entityEntries.forEach(([key, value]) => {
@@ -105,7 +106,7 @@ export class EntityBuilder<
           ? buildNavigationPropertyFromJson(key, value, this._entityApi)
           : value;
 
-      entityBuilder[key](propertyValue);
+      (entityBuilder as Record<string, any>)[key](propertyValue);
     });
 
     const customFields = customEntries.reduce(
@@ -120,17 +121,20 @@ export class EntityBuilder<
   private filterCustomFields(
     customFields: Record<string, any>
   ): Record<string, any> {
-    return Object.keys(customFields).reduce((validCfs, cf) => {
-      if (!this._entityApi.schema[upperCaseSnakeCase(cf)]) {
-        validCfs[cf] = customFields[cf];
-      }
-      logger.warn(
-        `Field name "${cf}" is already existing in "${toClassName(
-          this._entityApi.entityConstructor._entityName
-        )}" and thus cannot be defined as custom field. `
-      );
-      return validCfs;
-    }, {});
+    return Object.keys(customFields).reduce(
+      (validCfs: Record<string, any>, cf) => {
+        if (!this._entityApi.schema[upperCaseSnakeCase(cf)]) {
+          validCfs[cf] = customFields[cf];
+        }
+        logger.warn(
+          `Field name "${cf}" is already existing in "${toClassName(
+            this._entityApi.entityConstructor._entityName
+          )}" and thus cannot be defined as custom field. `
+        );
+        return validCfs;
+      },
+      {}
+    );
   }
 }
 

@@ -97,7 +97,7 @@ export function splitBatchResponse(response: HttpResponse): string[] {
     );
     return splitResponse(body, boundary);
   } catch (err) {
-    throw new ErrorWithCause('Could not parse batch response.', err);
+    throw new ErrorWithCause('Could not parse batch response.', err as Error);
   }
 }
 
@@ -114,7 +114,10 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
     const boundary = getBoundary(pickValueIgnoreCase(headers, 'content-type'));
     return splitResponse(changeSetResponse, boundary);
   } catch (err) {
-    throw new ErrorWithCause('Could not parse change set response.', err);
+    throw new ErrorWithCause(
+      'Could not parse change set response.',
+      err as Error
+    );
   }
 }
 

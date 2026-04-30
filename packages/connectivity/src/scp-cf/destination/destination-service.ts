@@ -4,7 +4,7 @@ import {
   propertyExists,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience } from '@sap-cloud-sdk/resilience';
 import asyncRetry from 'async-retry';
@@ -76,8 +76,8 @@ export async function fetchDestinations(
     headers
   )
     .then(response => {
-      const destinations: Destination[] = response.data.map(destination =>
-        parseDestination(destination)
+      const destinations: Destination[] = response.data.map(
+        (destination: DestinationJson) => parseDestination(destination)
       );
 
       if (options?.useCache) {
@@ -156,6 +156,7 @@ export async function fetchDestinationWithoutTokenRetrieval(
     };
   } catch (err) {
     if (
+      isAxiosError(err) &&
       err.response?.status === 404 &&
       err.response?.data?.ErrorMessage ===
         'Configuration with the specified name was not found'
@@ -166,8 +167,8 @@ export async function fetchDestinationWithoutTokenRetrieval(
       };
     }
     throw new ErrorWithCause(
-      `Failed to fetch destination.${errorMessageFromResponse(err)}`,
-      err
+      `Failed to fetch destination.${errorMessageFromResponse(err as AxiosError<{ ErrorMessage: string }>)}`,
+      err as Error
     );
   }
 }
@@ -323,12 +324,14 @@ function retryDestination(
           }
           return destination;
         } catch (error) {
-          const status = error?.response?.status;
-          if (status.toString().startsWith('4')) {
+          const status = isAxiosError(error)
+            ? error.response?.status
+            : undefined;
+          if (status?.toString().startsWith('4')) {
             bail(
               new ErrorWithCause(
                 `Request failed with status code ${status}`,
-                error
+                error as Error
               )
             );
             // We need to return something here but the actual value does not matter

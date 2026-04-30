@@ -48,13 +48,16 @@ export function getLevenshteinClosest<T>(
   objectsToCheck: T[],
   extractorFn: (x: T) => string
 ): T | undefined {
-  const distBelowThreshold = objectsToCheck.reduce((prev, obj) => {
-    const levenshteinDist = getLevenshteinDistance(name, extractorFn(obj));
-    if (levenshteinDist < distanceThreshold) {
-      return [...prev, { dist: levenshteinDist, obj }];
-    }
-    return prev;
-  }, []);
+  const distBelowThreshold = objectsToCheck.reduce(
+    (prev: { dist: number; obj: T }[], obj) => {
+      const levenshteinDist = getLevenshteinDistance(name, extractorFn(obj));
+      if (levenshteinDist < distanceThreshold) {
+        return [...prev, { dist: levenshteinDist, obj }];
+      }
+      return prev;
+    },
+    [] as { dist: number; obj: T }[]
+  );
   if (distBelowThreshold.length > 0) {
     return distBelowThreshold.sort((a, b) => (a.dist < b.dist ? -1 : 1))[0].obj;
   }

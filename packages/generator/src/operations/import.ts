@@ -57,7 +57,7 @@ function returnTypeImports(
           ...imports,
           ...returnTypeImport(returnType, options)
         ],
-        []
+        [] as ImportDeclarationStructure[]
       )
   );
 }

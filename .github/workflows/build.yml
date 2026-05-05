@@ -148,15 +148,15 @@ jobs:
         run: |
           lastCommitDate=$(git --no-pager log -n 1 "$REF_NAME" --pretty=format:"%at")
           curDate=$(date +%s)
-          dateDiff=$(expr $curDate - $lastCommitDate)
-          echo $lastCommitDate, $curDate, $dateDiff
+          dateDiff=$(( curDate - lastCommitDate ))
+          echo "$lastCommitDate, $curDate, $dateDiff"
 
           if [[ $dateDiff -gt 86400 ]]
           then
               echo "No new commit found on $REF within the last 24 hrs."
-              echo "skip-release=true" >> $GITHUB_OUTPUT
+              echo "skip-release=true" >> "$GITHUB_OUTPUT"
           else
-              echo "skip-release=false" >> $GITHUB_OUTPUT
+              echo "skip-release=false" >> "$GITHUB_OUTPUT"
           fi
 
   canary-release:
@@ -177,10 +177,10 @@ jobs:
           package-manager-cache: false
       - name: Canary Release
         run: |
-          date=`date +%Y%m%d%H%M%S`
+          date=$(date +%Y%m%d%H%M%S)
           rm -f .changeset/*.md
           cp canary-release-changeset.md .changeset
-          pnpm changeset pre enter ${date}
+          pnpm changeset pre enter "${date}"
           pnpm changeset version
           pnpm changeset pre exit
           pnpm changeset publish --tag canary

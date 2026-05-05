@@ -1,0 +1,21 @@
+rules:
+  # already following SAP policies
+  dependabot-cooldown:
+    disable: true
+  # requires more effort to fix
+  secrets-inherit:
+    ignore:
+     - bump.yml
+     - release-entry.yml
+  # requires more effort to fix
+  excessive-permissions:
+    disable: true
+  dangerous-triggers:
+    ignore:
+      - auto-dependabot-fix.yml
+  # allow unpinned references to own repositories
+  unpinned-uses:
+    config:
+      policies:
+        'sap/ai-sdk-js/*': any
+        'sap/cloud-sdk-js/*': any

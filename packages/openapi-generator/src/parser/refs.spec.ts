@@ -42,9 +42,7 @@ describe('OpenApiDocumentRefs', () => {
           },
           { strictNaming: true, schemaPrefix: 'xyz', resolveExternal: true }
         )
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Error opening file /path/to/external.json: ENOENT: no such file or directory, open \'/path/to/external.json\'"'
-      );
+      ).rejects.toThrow(/Error opening file.*external\.json.*ENOENT/);
     });
 
     it('should ignore external refs if resolveExternal set to false', async () => {

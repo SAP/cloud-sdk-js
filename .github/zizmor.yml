@@ -1,7 +1,8 @@
 rules:
   # already following SAP policies
   dependabot-cooldown:
-    disable: true
+    config:
+      days: 4
   # requires more effort to fix
   secrets-inherit:
     ignore:

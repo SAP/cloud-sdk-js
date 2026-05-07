@@ -177,7 +177,7 @@ jobs:
           package-manager-cache: false
       - name: Canary Release
         run: |
-          date=$(date +%Y%m%d%H%M%S)
+          date=`date +%Y%m%d%H%M%S`
           rm -f .changeset/*.md
           cp canary-release-changeset.md .changeset
           pnpm changeset pre enter "${date}"

@@ -1,4 +1,4 @@
-import { serviceToken, getIasToken } from '../token-accessor';
+import { serviceToken, getTokenFromIasService } from '../token-accessor';
 import { buildDestination, buildIasDestination } from './build-ias-destination';
 import type { Service } from '../environment-accessor';
 import type {
@@ -171,7 +171,7 @@ async function transformIasBindingToDestination(
     ...(options?.iasOptions || {})
   };
 
-  const { token } = await getIasToken(service, {
+  const { token } = await getTokenFromIasService(service, {
     jwt: options?.jwt,
     useCache: options?.useCache !== false,
     ...iasOptions

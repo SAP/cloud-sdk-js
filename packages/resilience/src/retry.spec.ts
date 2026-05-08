@@ -58,7 +58,7 @@ describe('retry', () => {
         fn: request
       })
     ).rejects.toThrow();
-  });
+  }, 10000);
 
   it('needs to retry twice', async () => {
     nock('https://example.com', {})

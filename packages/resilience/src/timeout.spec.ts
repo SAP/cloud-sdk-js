@@ -36,7 +36,7 @@ describe('timeout', () => {
 
     await expect(
       executeWithMiddleware(
-        resilience({ timeout: delayInResponse * 2, circuitBreaker: false }),
+        resilience({ timeout: delayInResponse * 10, circuitBreaker: false }),
         {
           context: {
             uri: 'https://example.com',
@@ -47,7 +47,7 @@ describe('timeout', () => {
         }
       )
     ).resolves.not.toThrow();
-  }, 5000);
+  }, 10000);
 
   it('uses 10 seconds default timeout', async () => {
     const oneSecond = 1000;

@@ -54,7 +54,7 @@ describe('combined resilience features', () => {
   it('needs to retry with delay above timeout and gets status code of the response with small delay', async () => {
     nock('https://example.com', {})
       .get('/retry')
-      .delay(300)
+      .delay(1000)
       .reply(HTTP_STATUS.NO_CONTENT)
       .get('/retry')
       .delay(50)
@@ -66,7 +66,7 @@ describe('combined resilience features', () => {
       url: '/retry'
     };
 
-    const response = await executeWithMiddleware([retry(2), timeout(200)], {
+    const response = await executeWithMiddleware([retry(2), timeout(500)], {
       context: {
         uri: 'https://example.com',
         tenantId: 'dummy-tenant'

@@ -7,6 +7,12 @@ const execFileAsync = promisify(execFile);
 
 const SHORT_SHA_AT_LINE_END_RE = /\(([0-9a-f]{7,12})\)$/;
 
+/**
+ * Gets the GitHub repository in the format "owner/repo" from the cwd's git configuration.
+ * Handles both HTTPS and SSH remote URLs.
+ * @returns The repository in "owner/repo" format.
+ * @throws If the remote URL cannot be parsed or if git command fails.
+ */
 async function getRepo(): Promise<string> {
   const { stdout } = await execFileAsync('git', [
     'remote',

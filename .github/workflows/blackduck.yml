@@ -14,7 +14,7 @@ jobs:
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - run: sudo apt-get install jq
-      - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> $GITHUB_ENV
+      - run: echo "project_version=$(cat package.json | jq '.version' | tr -d '"')" >> "$GITHUB_ENV"
       - name: Blackduck Scan
         env:
           PIPER_token: ${{ secrets.BLACKDUCK_TOKEN }}

@@ -17,6 +17,9 @@ inputs:
   skip-install:
     description: 'Whether to skip installing and building node dependencies'
     default: 'false'
+  skip-build:
+    description: 'Whether to skip building node dependencies'
+    default: 'false'
   package-manager-cache:
     description: 'Whether to enable caching for pnpm. Set to false to disable caching.'
     default: 'true'
@@ -77,6 +80,6 @@ runs:
       shell: bash
       run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
     - name: Run lifecycle scripts
-      if: ${{ inputs.skip-install == 'false' }}
+      if: ${{ inputs.skip-install == 'false' && inputs.skip-build == 'false' }}
       shell: bash
       run: pnpm rebuild

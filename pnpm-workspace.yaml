@@ -35,7 +35,7 @@ packages:
 
 blockExoticSubdeps: true
 minimumReleaseAge: 5760
-minimumReleaseAgeExclude:
+minimumReleaseAgeExclude: []
   # Add minimum age exceptions for audit issues here
   # - sample-package@0.1.0
 
@@ -45,3 +45,4 @@ allowBuilds:
   better-sqlite3: false
   puppeteer: false
   unrs-resolver: false
+shellEmulator: true

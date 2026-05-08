@@ -42,7 +42,7 @@ runs:
       env:
         REGISTRY_URL: ${{ inputs.registry-url }}
         REGISTRY_TOKEN: ${{ inputs.registry-token }}
-        IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork && 'true' || 'false' }}
+        IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.owner == 'sap' && 'true' || 'false' }}
       shell: bash
       run: |
         if [[ -n "$REGISTRY_URL" ]]; then

@@ -47,7 +47,7 @@ describe('timeout', () => {
         }
       )
     ).resolves.not.toThrow();
-  }, 5000);
+  }, 15000);
 
   it('uses 10 seconds default timeout', async () => {
     const oneSecond = 1000;

@@ -121,7 +121,7 @@ async function resolveIdentityService(
  * @param options - Options for IAS token retrieval. See {@link IasTokenOptions}.
  * @returns An {@link IasTokenResult} containing the access token, expiration, and optional refresh token.
  */
-export async function getTokenFromIasService(
+export async function getIasToken(
   service: ServiceCredentials | 'identity' | Service = 'identity',
   options?: IasTokenOptions
 ): Promise<IasTokenResult> {
@@ -170,7 +170,7 @@ export async function createDestinationFromIasService(
   options?: IasTokenOptions
 ): Promise<Destination> {
   const resolvedService = await resolveIdentityService(service);
-  const { token } = await getTokenFromIasService(resolvedService, options);
+  const { token } = await getIasToken(resolvedService, options);
 
   const iasOptions: IasOptions = {
     authenticationType: 'OAuth2ClientCredentials',

@@ -103,7 +103,7 @@ export async function fetchIasToken(
     IasTokenResponse,
     MiddlewareContext<IasParameters>
   >(resilience(), {
-    fn: getTokenFromIasServiceImpl,
+    fn: getIasTokenImpl,
     fnArgument,
     context: {
       uri: fnArgument.serviceCredentials.url,
@@ -207,9 +207,7 @@ function transformIasOptionsToXssecArgs(
  * @returns A promise resolving to the client credentials response.
  * @internal
  */
-async function getTokenFromIasServiceImpl(
-  arg: IasParameters
-): Promise<IasTokenResponse> {
+async function getIasTokenImpl(arg: IasParameters): Promise<IasTokenResponse> {
   const jwtForSubdomain =
     // For OAuth2JWTBearer authentication, subdomain will be extracted from the assertion
     arg.authenticationType === 'OAuth2JWTBearer'

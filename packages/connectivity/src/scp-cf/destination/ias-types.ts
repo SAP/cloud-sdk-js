@@ -107,7 +107,7 @@ export interface IasOptionsBusinessUser extends IasOptionsBase {
 export type IasOptions = IasOptionsTechnicalUser | IasOptionsBusinessUser;
 
 /**
- * Options for fetching an IAS token via {@link getTokenFromIasService}.
+ * Options for fetching an IAS token via {@link getIasToken}.
  */
 export type IasTokenOptions = IasOptions &
   CachingOptions & {
@@ -121,7 +121,7 @@ export type IasTokenOptions = IasOptions &
   };
 
 /**
- * Result of an IAS token request via {@link getTokenFromIasService}.
+ * Result of an IAS token request via {@link getIasToken}.
  * Contains the access token expiration information, and an optional refresh token (available for JWT bearer flows).
  */
 export interface IasTokenResult {

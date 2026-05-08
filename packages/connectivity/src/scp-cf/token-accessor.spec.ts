@@ -31,14 +31,14 @@ import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import {
   jwtBearerToken,
   serviceToken,
-  getTokenFromIasService,
+  getIasToken,
   createDestinationFromIasService
 } from './token-accessor';
 import { clearXsuaaServices } from './environment-accessor';
 import type { Service } from './environment-accessor';
 import type { ClientCredentialsResponse } from './xsuaa-service-types';
 
-// Mock fetchIasToken so getTokenFromIasService tests don't need to set up xssec internals
+// Mock fetchIasToken so getIasToken tests don't need to set up xssec internals
 jest.mock('./identity-service', () => ({
   ...jest.requireActual('./identity-service'),
   fetchIasToken: jest.fn(),
@@ -380,7 +380,7 @@ describe('token accessor', () => {
   });
 });
 
-describe('getTokenFromIasService()', () => {
+describe('getIasToken()', () => {
   const identityServiceMock = jest.requireMock('./identity-service');
   let mockFetchIasToken: jest.Mock;
   let mockGetIasAppTid: jest.Mock;
@@ -431,7 +431,7 @@ describe('getTokenFromIasService()', () => {
 
   describe('input types', () => {
     it('accepts a Service object', async () => {
-      const result = await getTokenFromIasService(mockService);
+      const result = await getIasToken(mockService);
 
       expect(mockFetchIasToken).toHaveBeenCalledWith(
         mockService,
@@ -443,7 +443,7 @@ describe('getTokenFromIasService()', () => {
     });
 
     it('accepts raw ServiceCredentials and wraps them in a Service', async () => {
-      await getTokenFromIasService(mockService.credentials);
+      await getIasToken(mockService.credentials);
 
       expect(mockFetchIasToken).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -458,7 +458,7 @@ describe('getTokenFromIasService()', () => {
 
     it('accepts a service type string and resolves the binding', async () => {
       // 'destination' is bound via mockServiceBindings()
-      await getTokenFromIasService('destination');
+      await getIasToken('destination');
 
       expect(mockFetchIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'destination' }),
@@ -469,7 +469,7 @@ describe('getTokenFromIasService()', () => {
 
   describe('return value', () => {
     it('returns an IasTokenResult with token, expiresIn, and no refreshToken by default', async () => {
-      const result = await getTokenFromIasService(mockService);
+      const result = await getIasToken(mockService);
 
       expect(result.token);
       expect(result.expiresIn).toBe(3600);
@@ -482,7 +482,7 @@ describe('getTokenFromIasService()', () => {
         refresh_token: 'my-refresh-token'
       });
 
-      const result = await getTokenFromIasService(mockService);
+      const result = await getIasToken(mockService);
 
       expect(result.token).toBe(rawAccessToken);
       expect(result.expiresIn).toBe(3600);
@@ -492,7 +492,7 @@ describe('getTokenFromIasService()', () => {
 
   describe('authenticationType', () => {
     it('defaults to OAuth2ClientCredentials', async () => {
-      await getTokenFromIasService(mockService);
+      await getIasToken(mockService);
 
       expect(mockFetchIasToken).toHaveBeenCalledWith(
         expect.anything(),
@@ -505,7 +505,7 @@ describe('getTokenFromIasService()', () => {
     it('passes OAuth2JWTBearer with assertion', async () => {
       const assertion = signedJwt({ user_uuid: 'user-1', app_tid: 'tid' });
 
-      await getTokenFromIasService(mockService, {
+      await getIasToken(mockService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion
       });
@@ -522,7 +522,7 @@ describe('getTokenFromIasService()', () => {
     it('does not resolve appTid for OAuth2JWTBearer', async () => {
       const assertion = signedJwt({ user_uuid: 'user-1', app_tid: 'tid' });
 
-      await getTokenFromIasService(mockService, {
+      await getIasToken(mockService, {
         authenticationType: 'OAuth2JWTBearer',
         assertion
       });
@@ -536,7 +536,7 @@ describe('getTokenFromIasService()', () => {
       const jwt = { app_tid: 'subscriber-tid', iss: 'https://sub.example.com' };
       mockGetIasAppTid.mockReturnValue('subscriber-tid');
 
-      await getTokenFromIasService(mockService, { jwt });
+      await getIasToken(mockService, { jwt });
 
       expect(mockGetIasAppTid).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -552,7 +552,7 @@ describe('getTokenFromIasService()', () => {
     });
 
     it('does not call getIasAppTid when appTid is explicitly provided', async () => {
-      await getTokenFromIasService(mockService, { appTid: 'explicit-tid' });
+      await getIasToken(mockService, { appTid: 'explicit-tid' });
 
       expect(mockGetIasAppTid).not.toHaveBeenCalled();
       expect(mockFetchIasToken).toHaveBeenCalledWith(
@@ -564,7 +564,7 @@ describe('getTokenFromIasService()', () => {
     it('passes jwt to fetchIasToken for subdomain routing', async () => {
       const jwt = { app_tid: 'subscriber-tid', iss: 'https://sub.example.com' };
 
-      await getTokenFromIasService(mockService, { jwt });
+      await getIasToken(mockService, { jwt });
 
       expect(mockFetchIasToken).toHaveBeenCalledWith(
         expect.anything(),
@@ -575,7 +575,7 @@ describe('getTokenFromIasService()', () => {
 
   describe('caching', () => {
     it('passes useCache: true by default', async () => {
-      await getTokenFromIasService(mockService);
+      await getIasToken(mockService);
 
       expect(mockFetchIasToken).toHaveBeenCalledWith(
         expect.anything(),
@@ -584,7 +584,7 @@ describe('getTokenFromIasService()', () => {
     });
 
     it('passes useCache: false when explicitly disabled', async () => {
-      await getTokenFromIasService(mockService, { useCache: false });
+      await getIasToken(mockService, { useCache: false });
 
       expect(mockFetchIasToken).toHaveBeenCalledWith(
         expect.anything(),
@@ -595,7 +595,7 @@ describe('getTokenFromIasService()', () => {
 
   describe('resource parameter', () => {
     it('passes resource (by name) to fetchIasToken', async () => {
-      await getTokenFromIasService(mockService, {
+      await getIasToken(mockService, {
         resource: { name: 'my-app' }
       });
 
@@ -606,7 +606,7 @@ describe('getTokenFromIasService()', () => {
     });
 
     it('passes resource (by providerClientId) to fetchIasToken', async () => {
-      await getTokenFromIasService(mockService, {
+      await getIasToken(mockService, {
         resource: {
           providerClientId: 'provider-client',
           providerTenantId: 'provider-tenant'
@@ -633,15 +633,13 @@ describe('getTokenFromIasService()', () => {
         )
       );
 
-      await expect(getTokenFromIasService(mockService)).rejects.toThrow(
+      await expect(getIasToken(mockService)).rejects.toThrow(
         'Could not fetch IAS client for service "my-ias"'
       );
     });
 
     it('throws when service string cannot be resolved', async () => {
-      await expect(
-        getTokenFromIasService('nonexistent-service')
-      ).rejects.toThrow(
+      await expect(getIasToken('nonexistent-service')).rejects.toThrow(
         "Could not find service binding of type 'nonexistent-service'."
       );
     });
@@ -746,7 +744,7 @@ describe('createDestinationFromIasService()', () => {
     expect(destination.authentication).toBe('OAuth2JWTBearer');
   });
 
-  it('delegates to getTokenFromIasService with the provided options', async () => {
+  it('delegates to getIasToken with the provided options', async () => {
     await createDestinationFromIasService(mockCredentials, {
       useCache: false,
       jwt: { app_tid: 'tenant-123' }

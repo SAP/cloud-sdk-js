@@ -1,6 +1,6 @@
 import { resolveServiceBinding } from '../environment-accessor/service-bindings';
 import { decodeJwt } from '../jwt';
-import { serviceToken, getTokenFromIasService } from '../token-accessor';
+import { serviceToken, getIasToken } from '../token-accessor';
 import {
   transformServiceBindingToClientCredentialsDestination,
   transformServiceBindingToDestination
@@ -8,7 +8,7 @@ import {
 
 jest.mock('../token-accessor', () => ({
   serviceToken: jest.fn(),
-  getTokenFromIasService: jest.fn()
+  getIasToken: jest.fn()
 }));
 
 jest.mock('../jwt', () => ({
@@ -123,7 +123,7 @@ const services = {
 describe('service binding to destination', () => {
   beforeAll(() => {
     (serviceToken as jest.Mock).mockResolvedValue('access-token');
-    (getTokenFromIasService as jest.Mock).mockResolvedValue({
+    (getIasToken as jest.Mock).mockResolvedValue({
       token: 'ias-access-token',
       expiresIn: 3600
     });
@@ -296,7 +296,7 @@ describe('service binding to destination', () => {
         ])
       })
     );
-    expect(getTokenFromIasService).toHaveBeenCalledWith(
+    expect(getIasToken).toHaveBeenCalledWith(
       expect.objectContaining({
         label: 'identity',
         name: 'my-identity-service'
@@ -328,7 +328,7 @@ describe('service binding to destination', () => {
         ])
       })
     );
-    expect(getTokenFromIasService).toHaveBeenCalledWith(
+    expect(getIasToken).toHaveBeenCalledWith(
       expect.objectContaining({
         label: 'identity'
       }),
@@ -351,7 +351,7 @@ describe('service binding to destination', () => {
         authentication: 'OAuth2ClientCredentials'
       })
     );
-    expect(getTokenFromIasService).toHaveBeenCalledWith(
+    expect(getIasToken).toHaveBeenCalledWith(
       expect.objectContaining({
         label: 'identity'
       }),
@@ -465,7 +465,7 @@ describe('service binding to destination', () => {
         authentication: 'OAuth2JWTBearer'
       })
     );
-    expect(getTokenFromIasService).toHaveBeenCalledWith(
+    expect(getIasToken).toHaveBeenCalledWith(
       expect.objectContaining({
         label: 'identity'
       }),
@@ -498,7 +498,7 @@ describe('service binding to destination', () => {
         authentication: 'OAuth2JWTBearer'
       })
     );
-    expect(getTokenFromIasService).toHaveBeenCalledWith(
+    expect(getIasToken).toHaveBeenCalledWith(
       expect.objectContaining({
         label: 'identity'
       }),
@@ -517,7 +517,7 @@ describe('service binding to destination', () => {
     beforeEach(() => {
       jest.clearAllMocks();
       // Re-apply mock after clearAllMocks
-      (getTokenFromIasService as jest.Mock).mockResolvedValue({
+      (getIasToken as jest.Mock).mockResolvedValue({
         token: 'ias-access-token',
         expiresIn: 3600
       });
@@ -545,7 +545,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({
           label: 'identity'
         }),
@@ -567,7 +567,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({
           label: 'identity'
         }),
@@ -586,7 +586,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({
           label: 'identity'
         }),
@@ -621,7 +621,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({
           label: 'identity'
         }),
@@ -640,19 +640,19 @@ describe('service binding to destination', () => {
     beforeEach(() => {
       jest.clearAllMocks();
       // Re-apply mock after clearAllMocks
-      (getTokenFromIasService as jest.Mock).mockResolvedValue({
+      (getIasToken as jest.Mock).mockResolvedValue({
         token: 'ias-access-token',
         expiresIn: 3600
       });
     });
 
-    it('passes useCache true by default to getTokenFromIasService', async () => {
+    it('passes useCache true by default to getIasToken', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         { jwt: { app_tid: 'tenant-123' } }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ useCache: true })
       );
@@ -664,7 +664,7 @@ describe('service binding to destination', () => {
         { jwt: { app_tid: 'tenant-123' }, useCache: false }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ useCache: false })
       );
@@ -676,13 +676,13 @@ describe('service binding to destination', () => {
         { jwt: { app_tid: 'tenant-123' }, useCache: true }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ useCache: true })
       );
     });
 
-    it('passes resource parameter to getTokenFromIasService', async () => {
+    it('passes resource parameter to getIasToken', async () => {
       const resource = { name: 'my-app' };
 
       await transformServiceBindingToDestination(
@@ -693,13 +693,13 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ resource })
       );
     });
 
-    it('passes different resource parameters to getTokenFromIasService', async () => {
+    it('passes different resource parameters to getIasToken', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         {
@@ -708,7 +708,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ resource: { name: 'app1' } })
       );
@@ -721,20 +721,20 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledTimes(2);
-      expect(getTokenFromIasService).toHaveBeenLastCalledWith(
+      expect(getIasToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenLastCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ resource: { name: 'app2' } })
       );
     });
 
-    it('passes jwt for tenant context to getTokenFromIasService', async () => {
+    it('passes jwt for tenant context to getIasToken', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         { jwt: { app_tid: 'tenant-123' } }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ jwt: { app_tid: 'tenant-123' } })
       );
@@ -744,14 +744,14 @@ describe('service binding to destination', () => {
         { jwt: { app_tid: 'tenant-456' } }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledTimes(2);
-      expect(getTokenFromIasService).toHaveBeenLastCalledWith(
+      expect(getIasToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenLastCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ jwt: { app_tid: 'tenant-456' } })
       );
     });
 
-    it('passes resource with providerClientId to getTokenFromIasService', async () => {
+    it('passes resource with providerClientId to getIasToken', async () => {
       const resource = { providerClientId: 'resource-client-123' };
 
       await transformServiceBindingToDestination(
@@ -762,13 +762,13 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ resource })
       );
     });
 
-    it('passes resource with providerClientId and providerTenantId to getTokenFromIasService', async () => {
+    it('passes resource with providerClientId and providerTenantId to getIasToken', async () => {
       const resource = {
         providerClientId: 'resource-client-123',
         providerTenantId: 'resource-tenant-456'
@@ -782,13 +782,13 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ resource })
       );
     });
 
-    it('passes OAuth2JWTBearer authenticationType to getTokenFromIasService', async () => {
+    it('passes OAuth2JWTBearer authenticationType to getIasToken', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity'),
         {
@@ -800,7 +800,7 @@ describe('service binding to destination', () => {
         }
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({
           authenticationType: 'OAuth2JWTBearer',
@@ -809,19 +809,19 @@ describe('service binding to destination', () => {
       );
     });
 
-    it('calls getTokenFromIasService without jwt when no jwt is provided', async () => {
+    it('calls getIasToken without jwt when no jwt is provided', async () => {
       await transformServiceBindingToDestination(
         resolveServiceBinding('identity')
       );
 
-      expect(getTokenFromIasService).toHaveBeenCalledTimes(1);
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledTimes(1);
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'identity' }),
         expect.objectContaining({ useCache: true })
       );
     });
 
-    it('passes different service bindings to getTokenFromIasService', async () => {
+    it('passes different service bindings to getIasToken', async () => {
       const iasService1 = {
         ...services.identity[0],
         name: 'ias-service-1',
@@ -846,7 +846,7 @@ describe('service binding to destination', () => {
         jwt: { app_tid: 'tenant-123' }
       });
 
-      expect(getTokenFromIasService).toHaveBeenCalledWith(
+      expect(getIasToken).toHaveBeenCalledWith(
         expect.objectContaining({ name: 'ias-service-1' }),
         expect.objectContaining({ jwt: { app_tid: 'tenant-123' } })
       );
@@ -855,8 +855,8 @@ describe('service binding to destination', () => {
         jwt: { app_tid: 'tenant-123' }
       });
 
-      expect(getTokenFromIasService).toHaveBeenCalledTimes(2);
-      expect(getTokenFromIasService).toHaveBeenLastCalledWith(
+      expect(getIasToken).toHaveBeenCalledTimes(2);
+      expect(getIasToken).toHaveBeenLastCalledWith(
         expect.objectContaining({ name: 'ias-service-2' }),
         expect.objectContaining({ jwt: { app_tid: 'tenant-123' } })
       );

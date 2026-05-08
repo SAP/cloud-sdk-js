@@ -7,6 +7,28 @@ const tsEslint = require('typescript-eslint');
 const eslint = require('@eslint/js');
 const stylistic = require('@stylistic/eslint-plugin');
 
+const localRules = {
+  'no-uppercase-internal-tag': {
+    meta: { type: 'problem', schema: [] },
+    create(context) {
+      return {
+        Program() {
+          const comments = context.sourceCode.getAllComments();
+          for (const comment of comments) {
+            if (comment.value.includes('@Internal')) {
+              context.report({
+                loc: comment.loc,
+                message:
+                  'You are not allowed to use @Internal. Please use @internal.'
+              });
+            }
+          }
+        }
+      };
+    }
+  }
+};
+
 const flatConfig = [
   eslint.configs.recommended,
   ...tsEslint.configs.recommended,
@@ -25,9 +47,11 @@ const flatConfig = [
       'import-x': importEslint,
       'unused-imports': unusedImports,
       jsdoc,
+      local: { rules: localRules },
       '@stylistic': stylistic
     },
     rules: {
+      'local/no-uppercase-internal-tag': 'error',
       '@stylistic/eol-last': 'error',
       '@stylistic/member-delimiter-style': [
         'error',

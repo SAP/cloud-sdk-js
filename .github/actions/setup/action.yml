@@ -77,8 +77,9 @@ runs:
       if: ${{ inputs.skip-install == 'false' }}
       env:
         NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
+        INPUTS_PNPM_INSTALL_ARGS: ${{ inputs.pnpm-install-args }}
       shell: bash
-      run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
+      run: pnpm install --ignore-scripts ${INPUTS_PNPM_INSTALL_ARGS}
     - name: Run lifecycle scripts
       if: ${{ inputs.skip-install == 'false' && inputs.skip-build == 'false' }}
       shell: bash

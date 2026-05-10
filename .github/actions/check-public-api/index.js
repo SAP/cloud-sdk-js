@@ -8813,7 +8813,7 @@ CombinedStream.prototype._emitError = function(err) {
 
 /***/ }),
 
-/***/ 471:
+/***/ 4544:
 /***/ ((module, exports, __nccwpck_require__) => {
 
 /* eslint-env browser */
@@ -8947,7 +8947,6 @@ function useColors() {
 
 	// Is webkit? http://stackoverflow.com/a/16459606/376773
 	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-	// eslint-disable-next-line no-return-assign
 	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
 		// Is firebug? http://stackoverflow.com/a/398120/376773
 		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
@@ -9037,7 +9036,7 @@ function save(namespaces) {
 function load() {
 	let r;
 	try {
-		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
+		r = exports.storage.getItem('debug');
 	} catch (error) {
 		// Swallow
 		// XXX (@Qix-) should we be logging these?
@@ -9073,7 +9072,7 @@ function localstorage() {
 	}
 }
 
-module.exports = __nccwpck_require__(1210)(exports);
+module.exports = __nccwpck_require__(1215)(exports);
 
 const {formatters} = module.exports;
 
@@ -9092,7 +9091,7 @@ formatters.j = function (v) {
 
 /***/ }),
 
-/***/ 1210:
+/***/ 1215:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 
@@ -9263,62 +9262,24 @@ function setup(env) {
 		createDebug.names = [];
 		createDebug.skips = [];
 
-		const split = (typeof namespaces === 'string' ? namespaces : '')
-			.trim()
-			.replace(/\s+/g, ',')
-			.split(',')
-			.filter(Boolean);
+		let i;
+		const split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+		const len = split.length;
 
-		for (const ns of split) {
-			if (ns[0] === '-') {
-				createDebug.skips.push(ns.slice(1));
+		for (i = 0; i < len; i++) {
+			if (!split[i]) {
+				// ignore empty strings
+				continue;
+			}
+
+			namespaces = split[i].replace(/\*/g, '.*?');
+
+			if (namespaces[0] === '-') {
+				createDebug.skips.push(new RegExp('^' + namespaces.slice(1) + '$'));
 			} else {
-				createDebug.names.push(ns);
+				createDebug.names.push(new RegExp('^' + namespaces + '$'));
 			}
 		}
-	}
-
-	/**
-	 * Checks if the given string matches a namespace template, honoring
-	 * asterisks as wildcards.
-	 *
-	 * @param {String} search
-	 * @param {String} template
-	 * @return {Boolean}
-	 */
-	function matchesTemplate(search, template) {
-		let searchIndex = 0;
-		let templateIndex = 0;
-		let starIndex = -1;
-		let matchIndex = 0;
-
-		while (searchIndex < search.length) {
-			if (templateIndex < template.length && (template[templateIndex] === search[searchIndex] || template[templateIndex] === '*')) {
-				// Match character or proceed with wildcard
-				if (template[templateIndex] === '*') {
-					starIndex = templateIndex;
-					matchIndex = searchIndex;
-					templateIndex++; // Skip the '*'
-				} else {
-					searchIndex++;
-					templateIndex++;
-				}
-			} else if (starIndex !== -1) { // eslint-disable-line no-negated-condition
-				// Backtrack to the last '*' and try to match more characters
-				templateIndex = starIndex + 1;
-				matchIndex++;
-				searchIndex = matchIndex;
-			} else {
-				return false; // No match
-			}
-		}
-
-		// Handle trailing '*' in template
-		while (templateIndex < template.length && template[templateIndex] === '*') {
-			templateIndex++;
-		}
-
-		return templateIndex === template.length;
 	}
 
 	/**
@@ -9329,8 +9290,8 @@ function setup(env) {
 	*/
 	function disable() {
 		const namespaces = [
-			...createDebug.names,
-			...createDebug.skips.map(namespace => '-' + namespace)
+			...createDebug.names.map(toNamespace),
+			...createDebug.skips.map(toNamespace).map(namespace => '-' + namespace)
 		].join(',');
 		createDebug.enable('');
 		return namespaces;
@@ -9344,19 +9305,39 @@ function setup(env) {
 	* @api public
 	*/
 	function enabled(name) {
-		for (const skip of createDebug.skips) {
-			if (matchesTemplate(name, skip)) {
+		if (name[name.length - 1] === '*') {
+			return true;
+		}
+
+		let i;
+		let len;
+
+		for (i = 0, len = createDebug.skips.length; i < len; i++) {
+			if (createDebug.skips[i].test(name)) {
 				return false;
 			}
 		}
 
-		for (const ns of createDebug.names) {
-			if (matchesTemplate(name, ns)) {
+		for (i = 0, len = createDebug.names.length; i < len; i++) {
+			if (createDebug.names[i].test(name)) {
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	/**
+	* Convert regexp to namespace
+	*
+	* @param {RegExp} regxep
+	* @return {String} namespace
+	* @api private
+	*/
+	function toNamespace(regexp) {
+		return regexp.toString()
+			.substring(2, regexp.toString().length - 2)
+			.replace(/\.\*\?$/, '*');
 	}
 
 	/**
@@ -9391,7 +9372,7 @@ module.exports = setup;
 
 /***/ }),
 
-/***/ 6675:
+/***/ 6724:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 /**
@@ -9400,15 +9381,15 @@ module.exports = setup;
  */
 
 if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
-	module.exports = __nccwpck_require__(471);
+	module.exports = __nccwpck_require__(4544);
 } else {
-	module.exports = __nccwpck_require__(7443);
+	module.exports = __nccwpck_require__(5842);
 }
 
 
 /***/ }),
 
-/***/ 7443:
+/***/ 5842:
 /***/ ((module, exports, __nccwpck_require__) => {
 
 /**
@@ -9650,7 +9631,7 @@ function init(debug) {
 	}
 }
 
-module.exports = __nccwpck_require__(1210)(exports);
+module.exports = __nccwpck_require__(1215)(exports);
 
 const {formatters} = module.exports;
 
@@ -12124,7 +12105,7 @@ module.exports = function name(fn) {
 
 /***/ }),
 
-/***/ 3586:
+/***/ 454:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 var debug;
@@ -12133,7 +12114,7 @@ module.exports = function () {
   if (!debug) {
     try {
       /* eslint global-require: off */
-      debug = __nccwpck_require__(6675)("follow-redirects");
+      debug = __nccwpck_require__(6724)("follow-redirects");
     }
     catch (error) { /* */ }
     if (typeof debug !== "function") {
@@ -12146,7 +12127,7 @@ module.exports = function () {
 
 /***/ }),
 
-/***/ 8541:
+/***/ 7689:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 var url = __nccwpck_require__(7016);
@@ -12155,7 +12136,7 @@ var http = __nccwpck_require__(8611);
 var https = __nccwpck_require__(5692);
 var Writable = (__nccwpck_require__(2203).Writable);
 var assert = __nccwpck_require__(2613);
-var debug = __nccwpck_require__(3586);
+var debug = __nccwpck_require__(454);
 
 // Preventive platform detection
 // istanbul ignore next
@@ -68669,7 +68650,7 @@ var https = __nccwpck_require__(5692);
 var http2 = __nccwpck_require__(5675);
 var util = __nccwpck_require__(9023);
 var path = __nccwpck_require__(6928);
-var followRedirects = __nccwpck_require__(8541);
+var followRedirects = __nccwpck_require__(7689);
 var zlib = __nccwpck_require__(3106);
 var stream = __nccwpck_require__(2203);
 var events = __nccwpck_require__(4434);

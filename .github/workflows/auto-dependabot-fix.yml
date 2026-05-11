@@ -5,7 +5,7 @@ on:
 
 jobs:
   building:
-    if: github.actor == 'dependabot[bot]' && !github.event.pull_request.head.repo.fork
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == github.event.pull_request.head.repo.full_name
     runs-on: ubuntu-latest
     steps:
       - id: app-token

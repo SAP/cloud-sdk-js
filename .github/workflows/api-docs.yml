@@ -42,20 +42,21 @@ jobs:
           GIT_USER: cloud-sdk-js
           BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
           BOT_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
+          FULL_VERSION: ${{ inputs.version }}
         run: |
           gh auth setup-git
           git config user.email "$BOT_EMAIL"
           git config user.name "$BOT_NAME"
 
           # Extract major version from input (e.g., v4.5.0 -> v4)
-          FULL_VERSION="${{ inputs.version }}"
-          MAJOR_VERSION=$(echo $FULL_VERSION | sed 's/\(v[0-9]*\).*/\1/')
+          # shellcheck disable=SC2001
+          MAJOR_VERSION=$(echo "$FULL_VERSION" | sed 's/\(v[0-9]*\).*/\1/')
 
           cd ..
           git clone --depth 1 https://github.com/SAP/cloud-sdk.git
 
           # Copy generated docs to versioned folder
-          rsync -avz --delete cloud-sdk-js/knowledge-base/api-reference/ cloud-sdk/static/api/${MAJOR_VERSION}/
+          rsync -avz --delete cloud-sdk-js/knowledge-base/api-reference/ "cloud-sdk/static/api/${MAJOR_VERSION}/"
 
           cd cloud-sdk
           git add -A

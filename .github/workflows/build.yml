@@ -107,7 +107,7 @@ jobs:
 
   dependabot:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == github.event.pull_request.head.repo.full_name }}
     needs: [tests, checks, e2e-tests]
     permissions:
       pull-requests: write
@@ -148,15 +148,15 @@ jobs:
         run: |
           lastCommitDate=$(git --no-pager log -n 1 "$REF_NAME" --pretty=format:"%at")
           curDate=$(date +%s)
-          dateDiff=$(expr $curDate - $lastCommitDate)
-          echo $lastCommitDate, $curDate, $dateDiff
+          dateDiff=$(( curDate - lastCommitDate ))
+          echo "$lastCommitDate, $curDate, $dateDiff"
 
           if [[ $dateDiff -gt 86400 ]]
           then
               echo "No new commit found on $REF within the last 24 hrs."
-              echo "skip-release=true" >> $GITHUB_OUTPUT
+              echo "skip-release=true" >> "$GITHUB_OUTPUT"
           else
-              echo "skip-release=false" >> $GITHUB_OUTPUT
+              echo "skip-release=false" >> "$GITHUB_OUTPUT"
           fi
 
   canary-release:
@@ -180,7 +180,7 @@ jobs:
           date=`date +%Y%m%d%H%M%S`
           rm -f .changeset/*.md
           cp canary-release-changeset.md .changeset
-          pnpm changeset pre enter ${date}
+          pnpm changeset pre enter "${date}"
           pnpm changeset version
           pnpm changeset pre exit
           pnpm changeset publish --tag canary
@@ -201,8 +201,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHANGELOG: ${{ steps.get-changelog.outputs.changelog }}
         run: |
-          gh release create "${{ github.ref_name }}" \
-            --title "${{ github.ref_name }}" \
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "${GITHUB_REF_NAME}" \
             --verify-tag \
             --notes "$CHANGELOG" \
             --draft

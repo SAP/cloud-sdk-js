@@ -39,6 +39,9 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
           path: ./cloud-sdk
+          persist-credentials: true
+      - name: Fetch full commit history (blobless)
+        run: git fetch --filter=blob:none --unshallow
       - name: Update release notes
         run: |
           npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"

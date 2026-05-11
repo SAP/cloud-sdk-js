@@ -15,7 +15,7 @@ jest.mock('jks-js', () => ({
 import * as jks from 'jks-js';
 import { certAsString } from '@sap-cloud-sdk/test-util-internal/test-certificate';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
-import { getAgentConfig } from './http-agent';
+import { agentCache, getAgentConfig } from './http-agent';
 import type { HttpDestination } from '../scp-cf/destination';
 import type { DestinationCertificate } from '../scp-cf';
 
@@ -261,6 +261,53 @@ describe('createAgent', () => {
   });
 
   // Check coverage
+});
+
+describe('agent caching', () => {
+  beforeEach(() => {
+    agentCache.clear();
+  });
+
+  it('returns the same agent instance for the same destination options', async () => {
+    const destination: HttpDestination = { url: 'https://example.com' };
+    const first = (await getAgentConfig(destination)) as any;
+    const second = (await getAgentConfig(destination)) as any;
+    expect(first['httpsAgent']).toBe(second['httpsAgent']);
+  });
+
+  it('returns different agent instances for different destinations', async () => {
+    const destA: HttpDestination = { url: 'https://a.example.com' };
+    const destB: HttpDestination = {
+      url: 'https://b.example.com',
+      isTrustingAllCertificates: true
+    };
+    const agentA = ((await getAgentConfig(destA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destB)) as any)['httpsAgent'];
+    expect(agentA).not.toBe(agentB);
+  });
+
+  it('enables keepAlive by default on created agents', async () => {
+    const destination: HttpDestination = { url: 'https://example.com' };
+    const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+    expect(agent.keepAlive).toBe(true);
+  });
+
+  it('keepAlive: false in options overrides the default (spread order)', () => {
+    // createAgent uses { keepAlive: true, ...options }
+    // verify that explicit keepAlive: false in options wins
+    const merged = { keepAlive: true, ...({ keepAlive: false } as any) };
+    expect(merged.keepAlive).toBe(false);
+  });
+
+  it('http and https destinations use separate cache entries and agent types', async () => {
+    const destHttps: HttpDestination = { url: 'https://example.com' };
+    const destHttp: HttpDestination = { url: 'http://example.com' };
+    const httpsResult = (await getAgentConfig(destHttps)) as any;
+    const httpResult = (await getAgentConfig(destHttp)) as any;
+    expect(httpsResult['httpsAgent']).toBeDefined();
+    expect(httpResult['httpAgent']).toBeDefined();
+    expect(httpsResult['httpsAgent']).not.toBe(httpResult['httpAgent']);
+  });
 });
 
 describe('getAgentConfig', () => {

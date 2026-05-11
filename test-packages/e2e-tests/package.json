@@ -16,7 +16,7 @@
     "test": "pnpm run test:e2e",
     "test:e2e": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
-    "lint:fix": "set TIMING=1 && eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
+    "lint:fix": "TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "check:dependencies": "depcheck . --ignores='express,@sap/cds,@cap-js/sqlite,memfs,@sap-cloud-sdk/odata-v2,bignumber.js'",
     "generate-edmx": "cds compile srv -s TestService -2 edmx > TestService.edmx"
   },
@@ -34,7 +34,7 @@
     "@sap-cloud-sdk/test-services-openapi": "workspace:^",
     "@sap-cloud-sdk/util": "workspace:^",
     "@sap/cds": "^9.8.4",
-    "@sap/cds-dk": "9.8.4",
+    "@sap/cds-dk": "9.9.0",
     "axios": "^1.15.0",
     "bignumber.js": "^11.0.0",
     "depcheck": "^1.4.7",
@@ -47,7 +47,7 @@
     "moment": "^2.30.1",
     "multer": "^2.1.1",
     "openapi-backend": "^5.16.1",
-    "pm2": "^6.0.14",
+    "pm2": "^7.0.1",
     "prettier": "^3.8.1"
   },
   "cds": {

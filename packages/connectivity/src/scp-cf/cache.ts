@@ -1,8 +1,12 @@
+import * as crypto from 'node:crypto';
+import { stringify } from 'safe-stable-stringify';
+
 interface CacheInterface<T> {
   hasKey(key: string): boolean;
   get(key: string | undefined): T | undefined;
   set(key: string | undefined, item: CacheEntry<T>): void;
   clear(): void;
+  getOrInsertComputed(key: string, computeFn: () => CacheEntry<T>): T;
 }
 
 /**
@@ -39,21 +43,25 @@ export class Cache<T> implements CacheInterface<T> {
   /**
    * Object that stores all cached entries.
    */
-  private cache: Record<string, CacheEntry<T>>;
+  private cache: Map<string, CacheEntry<T>>;
 
   /**
    * Creates an instance of Cache.
    * @param defaultValidityTime - The default validity time in milliseconds. Use 0 for unlimited cache duration.
+   * @param capacity - The maximum number of entries in the cache. Use Infinity for unlimited size. Items are evicted based on a least recently used (LRU) strategy.
    */
-  constructor(private defaultValidityTime: number) {
-    this.cache = {};
+  constructor(
+    private defaultValidityTime: number,
+    private capacity = Infinity
+  ) {
+    this.cache = new Map<string, CacheEntry<T>>();
   }
 
   /**
    * Clear all cached items.
    */
   clear(): void {
-    this.cache = {};
+    this.cache.clear();
   }
 
   /**
@@ -62,7 +70,7 @@ export class Cache<T> implements CacheInterface<T> {
    * @returns A boolean value that indicates whether the entry exists in cache.
    */
   hasKey(key: string): boolean {
-    return this.cache.hasOwnProperty(key);
+    return this.cache.has(key);
   }
 
   /**
@@ -71,9 +79,25 @@ export class Cache<T> implements CacheInterface<T> {
    * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
    */
   get(key: string | undefined): T | undefined {
-    return key && this.hasKey(key) && !isExpired(this.cache[key])
-      ? this.cache[key].entry
-      : undefined;
+    if (!key) {
+      return undefined;
+    }
+    const entry = this.cache.get(key);
+    if (!entry) {
+      return undefined;
+    }
+
+    if (isExpired(entry)) {
+      this.cache.delete(key);
+      return undefined;
+    }
+
+    // LRU cache: Move accessed entry to the end of the Map to mark it as recently used
+    if (this.capacity !== Infinity) {
+      this.cache.delete(key);
+      this.cache.set(key, entry);
+    }
+    return entry?.entry;
   }
 
   /**
@@ -82,10 +106,35 @@ export class Cache<T> implements CacheInterface<T> {
    * @param item - The entry to cache.
    */
   set(key: string | undefined, item: CacheEntry<T>): void {
-    if (key) {
-      const expires = item.expires ?? this.inferDefaultExpirationTime();
-      this.cache[key] = { entry: item.entry, expires };
+    if (!key) {
+      return;
     }
+    if (
+      this.cache.size >= this.capacity &&
+      this.cache.size &&
+      !this.cache.has(key)
+    ) {
+      // Evict the least recently used (LRU) entry
+      const lruKey = this.cache.keys().next().value;
+      this.cache.delete(lruKey!); // SAFETY: size > 0
+    }
+    if (this.capacity !== Infinity && this.cache.has(key)) {
+      // If the key already exists, delete it to update its position in the LRU order
+      this.cache.delete(key);
+    }
+
+    const expires = item.expires ?? this.inferDefaultExpirationTime();
+    this.cache.set(key, { entry: item.entry, expires });
+  }
+
+  getOrInsertComputed(key: string, computeFn: () => CacheEntry<T>): T {
+    const cachedEntry = this.get(key);
+    if (cachedEntry !== undefined) {
+      return cachedEntry;
+    }
+    const newEntry = computeFn();
+    this.set(key, newEntry);
+    return newEntry.entry;
   }
 
   private inferDefaultExpirationTime(): number | undefined {
@@ -96,6 +145,24 @@ export class Cache<T> implements CacheInterface<T> {
           .valueOf()
       : undefined;
   }
+}
+
+/**
+ * Hashes the given value to create a cache key.
+ * @internal
+ * @param value - The value to hash.
+ * @returns A hash of the given value using a cryptographic hash function.
+ */
+export function hashCacheKey(value: Record<string, unknown>): string {
+  const serialized = stringify(value);
+
+  // TODO: crypto.hash is available in Node.js v20.12.0 and later.
+  // Remove the fallback to crypto.createHash once Node.js 22 is the minimum supported version.
+  if (typeof crypto.hash === 'function') {
+    return crypto.hash('blake2s256', serialized, 'base64url');
+  }
+
+  return crypto.createHash('blake2s256').update(serialized).digest('base64url');
 }
 
 function isExpired<T>(item: CacheEntry<T>): boolean {

@@ -1,11 +1,13 @@
-import { readFile } from 'fs/promises';
-import http from 'http';
-import https from 'https';
+import { readFile } from 'node:fs/promises';
+import http from 'node:http';
+import https from 'node:https';
 import * as jks from 'jks-js';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 // eslint-disable-next-line import/no-internal-modules
 import { getProtocolOrDefault } from '../scp-cf/get-protocol';
+// eslint-disable-next-line import/no-internal-modules
+import { Cache, hashCacheKey } from '../scp-cf/cache';
 import {
   addProxyConfigurationInternet,
   getProxyConfig,
@@ -15,11 +17,13 @@ import {
 // eslint-disable-next-line import/no-internal-modules
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import type {
-  BasicProxyConfiguration,
   Destination,
   DestinationCertificate,
   HttpDestination
-} from '../scp-cf';
+  // eslint-disable-next-line import/no-internal-modules
+} from '../scp-cf/destination';
+// eslint-disable-next-line import/no-internal-modules
+import type { BasicProxyConfiguration } from '../scp-cf/connectivity-service-types';
 import type { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({
@@ -284,16 +288,39 @@ function validateFormat(certificate: DestinationCertificate) {
 }
 
 /**
+ * Cache for http(s) agents.
+ * Exported for testing purposes only.
  * @internal
+ */
+export const agentCache = new Cache<HttpAgentConfig | HttpsAgentConfig>(
+  3600000, // 1 hour
+  100 // max 100 LRU-cached agents
+);
+
+/**
+ * @internal
+ * Agents are cached for up to one hour, but can be evicted earlier if more than 100 agents are created.
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
  */
 function createAgent(
   destination: HttpDestination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
-  return getProtocolOrDefault(destination) === 'https'
-    ? { httpsAgent: new https.Agent(options) }
-    : { httpAgent: new http.Agent(options) };
+  const protocol = getProtocolOrDefault(destination);
+  const cacheKey = hashCacheKey({ protocol, options });
+
+  return agentCache.getOrInsertComputed(cacheKey, () => {
+    logger.debug(
+      `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || '<unknown>'}`
+    );
+    const optionsWithDefaults = { keepAlive: true, ...options };
+    const entry =
+      protocol === 'https'
+        ? { httpsAgent: new https.Agent(optionsWithDefaults) }
+        : { httpAgent: new http.Agent(optionsWithDefaults) };
+
+    return { entry };
+  });
 }
 
 /**

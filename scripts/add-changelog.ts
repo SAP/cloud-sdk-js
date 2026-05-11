@@ -1,9 +1,72 @@
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { getPackageVersion } from './get-package-version';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 
+const execFileAsync = promisify(execFile);
+
+const SHORT_SHA_AT_LINE_END_RE = /\(([0-9a-f]{7,12})\)$/;
+
+/**
+ * Gets the GitHub repository in the format "owner/repo" from the cwd's git configuration.
+ * Handles both HTTPS and SSH remote URLs.
+ * @returns The repository in "owner/repo" format.
+ * @throws If the remote URL cannot be parsed or if git command fails.
+ */
+async function getRepo(): Promise<string> {
+  const { stdout } = await execFileAsync('git', [
+    'remote',
+    'get-url',
+    'origin'
+  ]);
+  // Handles both https://github.com/owner/repo(.git) and git@github.com:owner/repo(.git)
+  const match = stdout.trim().match(/github\.com[:/](.+?)(?:\.git)?$/);
+  if (!match)
+    throw new Error(`Cannot parse repo from remote URL: ${stdout.trim()}`);
+  return match[1];
+}
+
+async function expandSha(shortSha: string): Promise<string> {
+  try {
+    const { stdout } = await execFileAsync('git', ['rev-parse', shortSha]);
+    return stdout.trim();
+  } catch {
+    return shortSha;
+  }
+}
+
+export async function embedCommitLinks(
+  markdown: string,
+  repo: string
+): Promise<string> {
+  const lines = markdown.split('\n');
+  return (
+    await Promise.all(
+      lines.map(async line => {
+        const match = line.match(SHORT_SHA_AT_LINE_END_RE);
+        if (!match || !line.trimStart().startsWith('- [')) {
+          return line;
+        }
+
+        const sha = match[1];
+        const full = await expandSha(sha);
+        const replacement =
+          full === sha
+            ? `(${sha})`
+            : `([${sha}](https://github.com/${repo}/commit/${full}))`;
+
+        return line.replace(SHORT_SHA_AT_LINE_END_RE, replacement);
+      })
+    )
+  ).join('\n');
+}
+
 async function getChangelogWithVersion(v?: string): Promise<string> {
   v = v || (await getPackageVersion());
-  const changelog = await readFile('CHANGELOG.md', { encoding: 'utf8' });
+  const [changelog, repo] = await Promise.all([
+    readFile('CHANGELOG.md', { encoding: 'utf8' }),
+    getRepo()
+  ]);
   const [, olderLogs] = changelog.split(`\n# ${v}`);
   if (!olderLogs) {
     throw new Error(`Can not find version ${v} in CHANGELOG.md`);
@@ -19,7 +82,7 @@ async function getChangelogWithVersion(v?: string): Promise<string> {
 
   const headerWithVersion = `\n## ${v} [Core Modules] - ${month} ${day}, ${year}`;
 
-  return [headerWithVersion, logs].join('\n');
+  return await embedCommitLinks([headerWithVersion, logs].join('\n'), repo);
 }
 
 async function getReleaseNotesFilePath(): Promise<string> {

@@ -41,7 +41,7 @@
     "execa": "^5.0.0",
     "express": "^4.22.1",
     "fs-extra": "^11.3.4",
-    "http-proxy-middleware": "^3.0.5",
+    "http-proxy-middleware": "^4.0.0",
     "json-schema-faker": "^0.6.0",
     "memfs": "^4.57.2",
     "moment": "^2.30.1",

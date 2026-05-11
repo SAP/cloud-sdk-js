@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/order
+// eslint-disable-next-line import-x/order
 import { mockFsWithUnionfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
 mockFsWithUnionfs(jest);
 import { promises } from 'fs';

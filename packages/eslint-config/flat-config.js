@@ -1,11 +1,33 @@
-/* eslint-disable @typescript-eslint/no-var-requires, import/no-internal-modules */
+/* eslint-disable @typescript-eslint/no-var-requires, import-x/no-internal-modules */
 const jsdoc = require('eslint-plugin-jsdoc');
-const regex = require('eslint-plugin-regex');
 const unusedImports = require('eslint-plugin-unused-imports');
-const importEslint = require('eslint-plugin-import');
+const importEslint = require('eslint-plugin-import-x');
+const { createTypeScriptImportResolver } = require('eslint-import-resolver-typescript');
 const tsEslint = require('typescript-eslint');
 const eslint = require('@eslint/js');
 const stylistic = require('@stylistic/eslint-plugin');
+
+const localRules = {
+  'no-uppercase-internal-tag': {
+    meta: { type: 'problem', schema: [] },
+    create(context) {
+      return {
+        Program() {
+          const comments = context.sourceCode.getAllComments();
+          for (const comment of comments) {
+            if (comment.value.includes('@Internal')) {
+              context.report({
+                loc: comment.loc,
+                message:
+                  'You are not allowed to use @Internal. Please use @internal.'
+              });
+            }
+          }
+        }
+      };
+    }
+  }
+};
 
 const flatConfig = [
   eslint.configs.recommended,
@@ -22,26 +44,14 @@ const flatConfig = [
     ignores: ['**/*.d.ts', '**/dist/**/*', '**/node_modules/**/*'],
     plugins: {
       '@typescript-eslint': tsEslint.plugin,
-      import: importEslint,
+      'import-x': importEslint,
       'unused-imports': unusedImports,
       jsdoc,
-      regex,
+      local: { rules: localRules },
       '@stylistic': stylistic
     },
     rules: {
-      'regex/invalid': [
-        'error',
-        [
-          {
-            id: 'regexLowerCaseInternal',
-            // eslint-disable-next-line regex/invalid
-            regex: '\\@Internal',
-            message:
-              // eslint-disable-next-line regex/invalid
-              'You are not allowed to use @Internal. Please use @internal.'
-          }
-        ]
-      ],
+      'local/no-uppercase-internal-tag': 'error',
       '@stylistic/eol-last': 'error',
       '@stylistic/member-delimiter-style': [
         'error',
@@ -150,22 +160,22 @@ const flatConfig = [
           destructuredArrayIgnorePattern: '^_'
         }
       ],
-      'import/named': 'error',
-      'import/default': 'error',
-      'import/namespace': 'error',
-      'import/no-absolute-path': 'error',
-      'import/no-dynamic-require': 'error',
-      'import/no-internal-modules': 'error',
-      'import/no-self-import': 'error',
-      'import/no-cycle': 'error',
-      'import/no-useless-path-segments': [
+      'import-x/named': 'error',
+      'import-x/default': 'error',
+      'import-x/namespace': 'error',
+      'import-x/no-absolute-path': 'error',
+      'import-x/no-dynamic-require': 'error',
+      'import-x/no-internal-modules': 'error',
+      'import-x/no-self-import': 'error',
+      'import-x/no-cycle': 'error',
+      'import-x/no-useless-path-segments': [
         'error',
         {
           noUselessIndex: true
         }
       ],
-      'import/export': 'error',
-      'import/order': [
+      'import-x/export': 'error',
+      'import-x/order': [
         'error',
         {
           groups: [
@@ -180,7 +190,7 @@ const flatConfig = [
           ]
         }
       ],
-      'import/no-duplicates': 'error',
+      'import-x/no-duplicates': 'error',
       'unused-imports/no-unused-imports': 'error',
       'arrow-body-style': 'error',
       curly: 'error',
@@ -266,17 +276,14 @@ const flatConfig = [
       jsdoc: {
         ignoreInternal: true
       },
-      'import/resolver': {
-        typescript: true,
-        node: true
-      }
+      'import-x/resolver-next': [createTypeScriptImportResolver()]
     }
   },
   {
     files: ['**/test/**/*', '**/*.test.ts', '**/*.spec.ts'],
     rules: {
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-      'import/no-internal-modules': 'off',
+      'import-x/no-internal-modules': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
       'jsdoc/require-jsdoc': 'off'
     }

@@ -1,6 +1,6 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
 import voca from 'voca';
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { matchEntity } from '../entity-api/match-entity';
 import {
   getGenericTypes,

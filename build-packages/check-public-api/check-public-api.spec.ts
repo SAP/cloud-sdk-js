@@ -24,7 +24,7 @@ const {
   parseExportedObjectsInFile,
   regexExportedIndex,
   typeDescriptorPaths
-  // eslint-disable-next-line import/no-useless-path-segments
+  // eslint-disable-next-line import-x/no-useless-path-segments
 } = await import('./index.js');
 
 describe('check-public-api', () => {

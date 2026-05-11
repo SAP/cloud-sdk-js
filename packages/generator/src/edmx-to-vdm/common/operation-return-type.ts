@@ -1,7 +1,7 @@
 import { first } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { isNullableProperty } from '../../generator-utils';
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { getApiName } from '../../generator-without-ts-morph/service';
 import {
   getTypeMappingActionFunction,

@@ -1,5 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { audiences, decodeJwt } from '../jwt/jwt';
 import { getServiceBindings } from './service-bindings';
 import type { JwtPayload } from '../jsonwebtoken-type';

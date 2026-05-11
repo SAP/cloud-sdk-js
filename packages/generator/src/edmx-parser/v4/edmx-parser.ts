@@ -7,7 +7,7 @@ import {
   parseEntityTypesBase
 } from '../common';
 import { forceArray } from '../../generator-utils';
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { stripNamespace } from '../../edmx-to-vdm/edmx-to-vdm-util';
 import type {
   EdmxComplexType,

@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { OneToManyLink } from '../selectable/one-to-many-link';
 import type { DeSerializers } from '../de-serializers';
 import type { EntityBase, EntityIdentifiable } from '../entity-base';

@@ -899,8 +899,8 @@ importers:
         specifier: ^9.8.4
         version: 9.9.1(@eslint/js@10.0.1(eslint@10.3.0))(tar@7.5.13)
       '@sap/cds-dk':
-        specifier: 9.9.0
-        version: 9.9.0(@eslint/js@10.0.1(eslint@10.3.0))(tar@7.5.13)
+        specifier: 9.9.1
+        version: 9.9.1(@eslint/js@10.0.1(eslint@10.3.0))(tar@7.5.13)
       axios:
         specifier: ^1.15.0
         version: 1.16.0
@@ -1989,8 +1989,8 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  '@sap/cds-dk@9.9.0':
-    resolution: {integrity: sha512-gl2BOLhkyw9yFlNnX4ukl6dNEYDX7hVg+7QFUqlFTxcBU+tdQlFT8szk3NK77DkJkj1Xe+LZLJSe0crTtA32mw==}
+  '@sap/cds-dk@9.9.1':
+    resolution: {integrity: sha512-cZoHI/ZhEVffmLo2k9Y/HMR5X+aGCpk60PwJJcZgoat8Kwk6dDl3mUDERhZORQUhp9FwOiyWmNujmNCV8YWWCg==}
     hasBin: true
 
   '@sap/cds-fiori@2.3.0':
@@ -6153,6 +6153,11 @@ packages:
     engines: {node: '>= 14.6'}
     hasBin: true
 
+  yaml@2.8.4:
+    resolution: {integrity: sha512-ml/JPOj9fOQK8RNnWojA67GbZ0ApXAUlN2UQclwv2eVgTgn7O9gg9o7paZWKMp4g0H3nTLtS9LVzhkpOFIKzog==}
+    engines: {node: '>= 14.6'}
+    hasBin: true
+
   yargs-parser@20.2.9:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
     engines: {node: '>=10'}
@@ -7252,7 +7257,7 @@ snapshots:
 
   '@sap/cds-compiler@6.9.0': {}
 
-  '@sap/cds-dk@9.9.0(@eslint/js@10.0.1(eslint@10.3.0))(tar@7.5.13)':
+  '@sap/cds-dk@9.9.1(@eslint/js@10.0.1(eslint@10.3.0))(tar@7.5.13)':
     dependencies:
       '@cap-js/asyncapi': 1.0.3(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.3.0))(tar@7.5.13))
       '@cap-js/openapi': 1.4.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.3.0))(tar@7.5.13))
@@ -7265,7 +7270,7 @@ snapshots:
       mustache: 4.2.0
       ws: 8.20.0
       xml-js: 1.6.11
-      yaml: 2.8.3
+      yaml: 2.8.4
     optionalDependencies:
       '@cap-js/sqlite': 2.4.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.3.0))(tar@7.5.13))
     transitivePeerDependencies:
@@ -12109,6 +12114,8 @@ snapshots:
   yaml@1.10.3: {}
 
   yaml@2.8.3: {}
+
+  yaml@2.8.4: {}
 
   yargs-parser@20.2.9: {}
 

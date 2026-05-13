@@ -329,7 +329,7 @@ importers:
         version: 1.16.0
       jks-js:
         specifier: ^1.1.6
-        version: 1.1.6
+        version: 1.1.7
       jsonwebtoken:
         specifier: ^9.0.3
         version: 9.0.3
@@ -4479,8 +4479,8 @@ packages:
   jju@1.4.0:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
 
-  jks-js@1.1.6:
-    resolution: {integrity: sha512-ZZR0n9/mwy4swJuZxCl/NiUfuiNao5SAU7m/TqVnxU6Gs3QrmFsbkUCQh9gb7xb1graX2iuQT3MUVyT8k5SKIQ==}
+  jks-js@1.1.7:
+    resolution: {integrity: sha512-BeiDRKsAi1NwEwgx2JB/9/0tar5BNGIv+foGm1G5GgiyR35s/iUnfd/BWqYd16mLDD8qTaAVBrIcOOuVqXJZNQ==}
 
   js-git@0.7.8:
     resolution: {integrity: sha512-+E5ZH/HeRnoc/LW0AmAyhU+mNcWBzAKE+30+IDMLSLbbK+Tdt02AdkOKq9u15rlJsDEGFqtgckc8ZM59LhhiUA==}
@@ -10278,7 +10278,7 @@ snapshots:
 
   jju@1.4.0: {}
 
-  jks-js@1.1.6:
+  jks-js@1.1.7:
     dependencies:
       node-forge: 1.4.0
       node-int64: 0.4.0

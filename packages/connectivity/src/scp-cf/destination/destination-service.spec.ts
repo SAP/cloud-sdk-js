@@ -355,6 +355,7 @@ describe('destination service', () => {
 
   describe('fetchDestinationByToken', () => {
     afterEach(() => {
+      jest.useRealTimers();
       jest.restoreAllMocks();
     });
 
@@ -619,7 +620,22 @@ describe('destination service', () => {
         }
       );
       expect(actual).toEqual(parseDestination(response));
-    });
+    }, 10000);
+
+    it('stops retrying after the configured number of attempts for 500 errors', async () => {
+      const mock = nock(destinationServiceUri)
+        .get('/destination-configuration/v1/destinations/HTTP-BASIC')
+        .times(3)
+        .reply(500);
+
+      await expect(
+        fetchDestinationWithTokenRetrieval(destinationServiceUri, jwt, {
+          destinationName: 'HTTP-BASIC',
+          retry: true
+        })
+      ).rejects.toThrow();
+      expect(mock.isDone()).toBe(true);
+    }, 15000);
 
     it('does no retry if request fails with 401 error', async () => {
       const response = {
@@ -688,7 +704,7 @@ describe('destination service', () => {
         }
       );
       expect(actual).toMatchObject(parseDestination(responseValidToken));
-    });
+    }, 10000);
 
     it('does a retry if auth tokens are failing but returns the destination with errors in the end', async () => {
       const response = {
@@ -723,7 +739,7 @@ describe('destination service', () => {
       );
       expect(actual.authTokens![0].error).toEqual('ERROR');
       expect(mock.isDone()).toBe(true);
-    }, 10000);
+    }, 15000);
 
     it('fetches a destination and returns 200 but authTokens are failing', async () => {
       const destinationName = 'FINAL-DESTINATION';

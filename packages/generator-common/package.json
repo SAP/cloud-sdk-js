@@ -42,10 +42,8 @@
   "dependencies": {
     "@sap-cloud-sdk/util": "workspace:^",
     "fast-levenshtein": "~3.0.0",
-    "fs-extra": "^11.3.4",
     "glob": "^13.0.6",
     "prettier": "^3.8.1",
-    "voca": "^1.4.1",
     "yargs": "^17.7.2"
   },
   "devDependencies": {

@@ -51,9 +51,10 @@ describe('Failure cases', () => {
         jwt: 'fails',
         cacheVerificationKeys: false
       })
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"JwtError: The given jwt payload does not encode valid JSON."'
-    );
+    ).rejects.toThrowErrorMatchingInlineSnapshot(`
+"JwtError: The given jwt payload does not encode valid JSON.
+Cause: Invalid JWT format."
+`);
   });
 
   it('throws an error if the subaccount/instance destinations call fails', async () => {

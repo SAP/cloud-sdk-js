@@ -1,5 +1,6 @@
 import { resolve } from 'path';
-import { writeFile, readFile, removeSync } from 'fs-extra';
+import { writeFile, readFile } from 'node:fs/promises';
+import { rmSync } from 'node:fs';
 import execa from 'execa';
 import { getApiSpecificUsage } from './generation-and-usage';
 import { entityCodeSample } from './code-samples';
@@ -110,6 +111,8 @@ describe('generation-and-usage', () => {
       'commonjs'
     ]);
     await expect(readFile(resolve(__dirname, jsFile))).resolves.toBeDefined();
-    [tsFile, jsFile].map(file => removeSync(resolve(__dirname, file)));
+    [tsFile, jsFile].map(file =>
+      rmSync(resolve(__dirname, file), { recursive: true, force: true })
+    );
   }, 60000);
 });

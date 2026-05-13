@@ -1,5 +1,4 @@
-import { first } from '@sap-cloud-sdk/util';
-import voca from 'voca';
+import { first, decapitalize } from '@sap-cloud-sdk/util';
 import { isNullableProperty } from '../../generator-utils';
 // eslint-disable-next-line import-x/no-internal-modules
 import { getApiName } from '../../generator-without-ts-morph/service';
@@ -134,9 +133,7 @@ function getEntityReturnType(
     ? {
         returnTypeCategory: 'entity',
         returnType: first(entities)!.className,
-        builderFunction: `${voca.decapitalize(
-          serviceName
-        )}(deSerializers).${getApiName(first(entities)!.className)}`,
+        builderFunction: `${decapitalize(serviceName)}(deSerializers).${getApiName(first(entities)!.className)}`,
         isNullable,
         isCollection
       }

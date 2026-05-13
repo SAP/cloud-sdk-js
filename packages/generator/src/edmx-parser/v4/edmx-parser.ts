@@ -1,4 +1,4 @@
-import voca from 'voca';
+import { capitalize } from '@sap-cloud-sdk/util';
 import {
   getMergedPropertyWithNamespace,
   getPropertyFromEntityContainer,
@@ -133,13 +133,11 @@ export function parseOperationImports(
   root: any,
   operationType: 'function' | 'action'
 ): EdmxOperationImport[] {
-  const operations = getPropertyFromEntityContainer(
-    root,
-    `${voca.capitalize(operationType)}Import`
-  );
+  const capType = capitalize(operationType);
+  const operations = getPropertyFromEntityContainer(root, `${capType}Import`);
   return operations.map(operation => ({
     ...operation,
-    operationName: operation[voca.capitalize(operationType)],
+    operationName: operation[capType],
     operationType
   }));
 }

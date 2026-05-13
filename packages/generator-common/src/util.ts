@@ -1,5 +1,4 @@
-import { codeBlock, createLogger } from '@sap-cloud-sdk/util';
-import voca from 'voca';
+import { codeBlock, createLogger, titleFormat } from '@sap-cloud-sdk/util';
 
 /**
  * @returns A copyright header
@@ -80,7 +79,7 @@ function transformUnscopedName(packageName: string) {
  * @internal
  */
 export function directoryToSpeakingModuleName(packageName: string): string {
-  return voca.titleCase(packageName.replace(/[-,_]/g, ' '));
+  return titleFormat(packageName.replace(/[-,_]/g, ' '));
 }
 
 /**

@@ -1,9 +1,9 @@
 import { createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
-import { decode } from 'jsonwebtoken';
+import { jwtDecode } from 'jwt-decode';
 import { Cache } from '../cache';
 import { getIssuerSubdomain } from '../subdomain-replacer';
 import type {
-  Jwt,
+  JwtHeader,
   JwtPayload,
   JwtWithPayloadObject
 } from '../jsonwebtoken-type';
@@ -136,7 +136,7 @@ function audiencesFromAud({ aud }: JwtPayload): string[] {
 }
 
 function audiencesFromScope({ scope }: JwtPayload): string[] {
-  return makeArray(scope).reduce(
+  return makeArray(scope).reduce<string[]>(
     (aud, s) => (s.includes('.') ? [...aud, s.split('.')[0]] : aud),
     []
   );
@@ -148,7 +148,20 @@ function audiencesFromScope({ scope }: JwtPayload): string[] {
  * @returns Decoded payload.
  */
 export function decodeJwt(token: string | JwtPayload): JwtPayload {
-  return typeof token === 'string' ? decodeJwtComplete(token).payload : token;
+  if (typeof token !== 'string') {
+    return token;
+  }
+  try {
+    validateJwtFormat(token);
+    return decodeJwtPart<JwtPayload>(token);
+  } catch (error) {
+    throw new Error(
+      'JwtError: The given jwt payload does not encode valid JSON.',
+      {
+        cause: error
+      }
+    );
+  }
 }
 
 /**
@@ -158,13 +171,21 @@ export function decodeJwt(token: string | JwtPayload): JwtPayload {
  * @internal
  */
 export function decodeJwtComplete(token: string): JwtWithPayloadObject {
-  const decodedToken = decode(token, { complete: true, json: true });
-  if (decodedToken !== null && isJwtWithPayloadObject(decodedToken)) {
-    return decodedToken;
+  try {
+    const signature = validateJwtFormat(token);
+    return {
+      header: decodeJwtPart<JwtHeader>(token, { header: true }),
+      payload: decodeJwtPart<JwtPayload>(token),
+      signature
+    };
+  } catch (error) {
+    throw new Error(
+      'JwtError: The given jwt payload does not encode valid JSON.',
+      {
+        cause: error
+      }
+    );
   }
-  throw new Error(
-    'JwtError: The given jwt payload does not encode valid JSON.'
-  );
 }
 
 /**
@@ -274,6 +295,40 @@ export function isUserToken(token: JwtPair | undefined): token is JwtPair {
   return !(keys.length === 1 && keys[0] === 'iss');
 }
 
-function isJwtWithPayloadObject(decoded: Jwt): decoded is JwtWithPayloadObject {
-  return typeof decoded.payload !== 'string';
+/**
+ * Validate the format of the given JWT and return the signature part if valid.
+ * @returns The signature part of the JWT if the format is valid.
+ * @throws An error if the JWT format is invalid.
+ * @internal
+ */
+function validateJwtFormat(token: string): string {
+  const [encodedHeader, encodedPayload, signature, ...rest] = token.split('.');
+
+  if (!encodedHeader || !encodedPayload || rest.length > 0) {
+    throw new Error('Invalid JWT format.');
+  }
+
+  return signature;
+}
+
+/**
+ * Decodes part of a JWT (header or payload) and ensures that the decoded value is an object.
+ * @param token - The JWT to decode.
+ * @param options - Options for decoding, e.g. whether to decode the header or payload.
+ * @param options.header - If true, decodes the header; otherwise, decodes the payload.
+ * @returns The decoded JWT part as an object.
+ * @throws An error if the decoded value is not an object.
+ * @internal
+ */
+function decodeJwtPart<T extends object>(
+  token: string,
+  options?: { header?: boolean }
+): T {
+  const decoded = jwtDecode<T>(token, options);
+
+  if (typeof decoded !== 'object' || decoded === null) {
+    throw new Error('Invalid JWT content.');
+  }
+
+  return decoded;
 }

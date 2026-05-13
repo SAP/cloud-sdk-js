@@ -321,18 +321,15 @@ importers:
       '@sap/xssec':
         specifier: ^4.13.0
         version: 4.13.0
-      async-retry:
-        specifier: ^1.3.3
-        version: 1.3.3
       axios:
         specifier: ^1.15.0
         version: 1.16.0
       jks-js:
         specifier: ^1.1.6
         version: 1.1.7
-      jsonwebtoken:
-        specifier: ^9.0.3
-        version: 9.0.3
+      jwt-decode:
+        specifier: ^4.0.0
+        version: 4.0.0
       safe-stable-stringify:
         specifier: ^2.5.0
         version: 2.5.0
@@ -412,24 +409,15 @@ importers:
       '@sap-cloud-sdk/util':
         specifier: workspace:^
         version: link:../util
-      '@types/fs-extra':
-        specifier: ^11.0.4
-        version: 11.0.4
       fast-xml-parser:
         specifier: ^5.5.9
         version: 5.7.3
-      fs-extra:
-        specifier: ^11.3.4
-        version: 11.3.5
       ts-morph:
         specifier: ^28.0.0
         version: 28.0.0
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
-      voca:
-        specifier: ^1.4.1
-        version: 1.4.1
       winston:
         specifier: ^3.19.0
         version: 3.19.0
@@ -461,18 +449,12 @@ importers:
       fast-levenshtein:
         specifier: ~3.0.0
         version: 3.0.0
-      fs-extra:
-        specifier: ^11.3.4
-        version: 11.3.5
       glob:
         specifier: ^13.0.6
         version: 13.0.6
       prettier:
         specifier: ^3.8.1
         version: 3.8.3
-      voca:
-        specifier: ^1.4.1
-        version: 1.4.1
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
@@ -550,9 +532,6 @@ importers:
       moment:
         specifier: ^2.30.1
         version: 2.30.1
-      voca:
-        specifier: ^1.4.1
-        version: 1.4.1
     devDependencies:
       '@sap-cloud-sdk/test-services-odata-common':
         specifier: workspace:^
@@ -825,9 +804,6 @@ importers:
       logform:
         specifier: ^2.7.0
         version: 2.7.0
-      voca:
-        specifier: ^1.4.1
-        version: 1.4.1
       winston:
         specifier: ^3.19.0
         version: 3.19.0
@@ -2210,9 +2186,6 @@ packages:
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
-  '@types/fs-extra@11.0.4':
-    resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
-
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
 
@@ -2239,9 +2212,6 @@ packages:
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
-
-  '@types/jsonfile@6.1.4':
-    resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
   '@types/jsonwebtoken@9.0.10':
     resolution: {integrity: sha512-asx5hIG9Qmf/1oStypjanR7iKTv0gXQ1Ov/jfrX6kS/EO0OFni8orbmGCn0672NHR3kXHwpAwR+B368ZGN/2rA==}
@@ -6081,9 +6051,6 @@ packages:
     resolution: {integrity: sha512-sfAcO2yeSU0CSPFI/DmZp3FsFE9T+8913nv1xWBOyzODv13fwkn6Vl7HqxGpkr9F608M+8SuFId3s+BlZqfXww==}
     engines: {node: '>=4.0'}
 
-  voca@1.4.1:
-    resolution: {integrity: sha512-NJC/BzESaHT1p4B5k4JykxedeltmNbau4cummStd4RjFojgq/kLew5TzYge9N2geeWyI2w8T30wUET5v+F7ZHA==}
-
   walkdir@0.4.1:
     resolution: {integrity: sha512-3eBwRyEln6E1MSzcxcVpQIhRG8Q1jLvEqRmCZqS3dsfXEDR/AhOF4d+jHg1qvDCpYaVRZjENPQyrVxAkQqxPgQ==}
     engines: {node: '>=6.0.0'}
@@ -7573,11 +7540,6 @@ snapshots:
 
   '@types/estree@1.0.8': {}
 
-  '@types/fs-extra@11.0.4':
-    dependencies:
-      '@types/jsonfile': 6.1.4
-      '@types/node': 22.19.15
-
   '@types/hast@3.0.4':
     dependencies:
       '@types/unist': 3.0.3
@@ -7607,10 +7569,6 @@ snapshots:
 
   '@types/json5@0.0.29':
     optional: true
-
-  '@types/jsonfile@6.1.4':
-    dependencies:
-      '@types/node': 22.19.15
 
   '@types/jsonwebtoken@9.0.10':
     dependencies:
@@ -12125,8 +12083,6 @@ snapshots:
       git-node-fs: 1.0.0(js-git@0.7.8)
       ini: 1.3.8
       js-git: 0.7.8
-
-  voca@1.4.1: {}
 
   walkdir@0.4.1: {}
 

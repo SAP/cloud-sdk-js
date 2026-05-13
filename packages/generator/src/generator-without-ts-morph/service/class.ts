@@ -1,5 +1,4 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
-import voca from 'voca';
+import { codeBlock, decapitalize } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import-x/no-internal-modules
 import { matchEntity } from '../entity-api/match-entity';
 import {
@@ -18,9 +17,7 @@ export function serviceBuilder(
   oDataVersion: ODataVersion
 ): string {
   return codeBlock`
-  export function ${voca.decapitalize(
-    serviceName
-  )}<${getGenericTypesWithDefault(oDataVersion)}>(
+  export function ${decapitalize(serviceName)}<${getGenericTypesWithDefault(oDataVersion)}>(
   deSerializers: Partial<DeSerializers<${getGenericTypes(
     oDataVersion
   )}>> = defaultDeSerializers as any
@@ -142,5 +139,5 @@ function getApiInitializer(entityClassName: string): string {
  * @returns apiName e.g. testEntityApi if the entity is called TestEntity.
  */
 export function getApiName(entityName: string): string {
-  return `${voca.decapitalize(entityName)}Api`;
+  return `${decapitalize(entityName)}Api`;
 }

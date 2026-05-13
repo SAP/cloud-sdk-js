@@ -1,5 +1,4 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
-import voca from 'voca';
+import { codeBlock, decapitalize } from '@sap-cloud-sdk/util';
 import { getApiName } from '../generator-without-ts-morph';
 import { getOperationParams } from './code-sample-util';
 import type { VdmOperation } from '../vdm-types';
@@ -14,11 +13,9 @@ export function entityCodeSample(
   directoryName: string
 ): MultiLineText {
   return codeBlock`
-import { ${voca.decapitalize(
-    serviceName
-  )} } from './generated/${directoryName}';
+import { ${decapitalize(serviceName)} } from './generated/${directoryName}';
 
-const { ${getApiName(entityName)} } = ${voca.decapitalize(serviceName)}();
+const { ${getApiName(entityName)} } = ${decapitalize(serviceName)}();
 const resultPromise = ${getApiName(
     entityName
   )}.requestBuilder().getAll().top(5).execute({ destinationName: 'myDestinationName' });

@@ -1,12 +1,10 @@
-import voca from 'voca';
+import { capitalize } from '@sap-cloud-sdk/util';
 import { reservedJsKeywords } from '@sap-cloud-sdk/generator-common/internal';
 
 const applyPrefixOnJSReservedWords =
   (prefix: string) =>
   (param: string): string =>
-    reservedJsKeywords.includes(param)
-      ? prefix + voca.capitalize(param)
-      : param;
+    reservedJsKeywords.includes(param) ? prefix + capitalize(param) : param;
 
 /**
  * @internal

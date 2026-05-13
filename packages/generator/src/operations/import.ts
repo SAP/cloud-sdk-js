@@ -1,5 +1,5 @@
 import { StructureKind } from 'ts-morph';
-import voca from 'voca';
+import { decapitalize } from '@sap-cloud-sdk/util';
 import {
   odataImportDeclarationTsMorph,
   propertyTypeImportNames,
@@ -121,7 +121,7 @@ export function operationDeclarations(
     : [
         {
           kind: StructureKind.ImportDeclaration,
-          namedImports: [voca.decapitalize(className)],
+          namedImports: [decapitalize(className)],
           moduleSpecifier: `./service${extension}`
         }
       ];

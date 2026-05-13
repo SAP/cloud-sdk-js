@@ -1,4 +1,9 @@
-import { existsSync, promises as fsPromises } from 'fs';
+import {
+  existsSync,
+  readdirSync,
+  rmSync,
+  promises as fsPromises
+} from 'node:fs';
 import { dirname, join, resolve } from 'path';
 import {
   copyFiles,
@@ -20,7 +25,6 @@ import {
   setLogLevel,
   splitInChunks
 } from '@sap-cloud-sdk/util';
-import { emptyDirSync } from 'fs-extra';
 import {
   IndentationText,
   ModuleKind,
@@ -178,7 +182,12 @@ export async function generateProject(
   const services = await parseServices(options);
 
   if (options.clearOutputDir) {
-    emptyDirSync(options.outputDir.toString());
+    for (const entry of readdirSync(options.outputDir.toString())) {
+      rmSync(join(options.outputDir.toString(), entry), {
+        recursive: true,
+        force: true
+      });
+    }
   }
 
   const project = new Project(

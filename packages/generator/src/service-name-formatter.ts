@@ -1,10 +1,11 @@
 import {
   camelCase,
   createLogger,
+  kebabCase,
+  pascalCase,
   UniqueNameGenerator,
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
-import voca from 'voca';
 import { stripPrefix } from './internal-prefix';
 import { applyPrefixOnJsConflictFunctionImports } from './name-formatting-strategies';
 import {
@@ -21,7 +22,7 @@ export class ServiceNameFormatter {
     let formattedName = name.replace(/\.|\//g, '_');
     formattedName = stripAPIUnderscore(formattedName);
     formattedName = stripUnderscoreSrv(formattedName);
-    formattedName = voca.kebabCase(formattedName);
+    formattedName = kebabCase(formattedName);
     return formattedName.endsWith('service')
       ? formattedName
       : `${formattedName}-service`;
@@ -151,7 +152,7 @@ If you are ok with this change execute the generator with the '--skipValidation'
   }
 
   originalToOperationName(originalName: string): string {
-    const transformedName = voca.camelCase(stripPrefix(originalName));
+    const transformedName = camelCase(stripPrefix(originalName));
     const newName =
       this.serviceWideNameGenerator.generateAndSaveUniqueName(transformedName);
 
@@ -197,7 +198,7 @@ If you are ok with this change execute the generator with the '--skipValidation'
     entitySetName: string,
     originalPropertyName: string
   ): string {
-    const transformedName = voca.camelCase(originalPropertyName);
+    const transformedName = camelCase(originalPropertyName);
 
     const generator = this.getOrInitGenerator(
       this.instancePropertyNameGenerators,
@@ -218,7 +219,7 @@ If you are ok with this change execute the generator with the '--skipValidation'
     originalFunctionImportName: string,
     originalParameterName: string
   ): string {
-    const transformedName = voca.camelCase(originalParameterName);
+    const transformedName = camelCase(originalParameterName);
 
     const generator = this.getOrInitGenerator(
       this.parameterNameGenerators,
@@ -241,7 +242,7 @@ If you are ok with this change execute the generator with the '--skipValidation'
     originalFunctionImportName: string,
     originalParameterName: string
   ): string {
-    const transformedName = voca.camelCase(originalParameterName);
+    const transformedName = camelCase(originalParameterName);
 
     const generator = this.getOrInitGenerator(
       this.parameterNameGenerators,
@@ -265,7 +266,7 @@ If you are ok with this change execute the generator with the '--skipValidation'
       transformedName = stripCollection(entitySetName);
     }
 
-    transformedName = stripAUnderscore(voca.titleCase(transformedName));
+    transformedName = pascalCase(stripAUnderscore(transformedName));
 
     const uniqueName =
       this.serviceWideNameGenerator.generateAndSaveUniqueNamesWithSuffixes(
@@ -287,9 +288,10 @@ If you are ok with this change execute the generator with the '--skipValidation'
     originalName: string,
     originalContainerTypeName: string
   ): string {
-    const transformedName = stripAUnderscore(
-      voca.titleCase(originalName)
-    ).replace('_', '');
+    const transformedName = pascalCase(stripAUnderscore(originalName)).replace(
+      '_',
+      ''
+    );
 
     const uniqueName = this.serviceWideNameGenerator.generateAndSaveUniqueName(
       transformedName,

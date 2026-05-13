@@ -1,4 +1,4 @@
-import voca from 'voca';
+import { titleCase } from '@sap-cloud-sdk/util';
 import { ODataRequest } from '../../request';
 import { BatchChangeSet } from './batch-change-set';
 import type { ODataRequestConfig, WithBatchReference } from '../../request';
@@ -55,7 +55,7 @@ export function serializeRequest(
     ...odataRequest.customHeaders()
   };
   const requestHeaders = Object.entries(headers).map(
-    ([key, value]) => `${voca.titleCase(key)}: ${value}`
+    ([key, value]) => `${titleCase(key)}: ${value}`
   );
 
   const method = request.requestConfig.method.toUpperCase();

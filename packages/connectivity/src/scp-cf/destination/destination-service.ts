@@ -7,7 +7,6 @@ import {
 import axios from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import { resilience } from '@sap-cloud-sdk/resilience';
-import asyncRetry from 'async-retry';
 import { decodeJwt, getTenantId, wrapJwtInHeader } from '../jwt';
 import { urlAndAgent } from '../../http-agent';
 import { buildAuthorizationHeaders } from '../authorization-header';
@@ -303,6 +302,58 @@ function errorMessageFromResponse(
     : '';
 }
 
+/**
+ * @internal
+ * Retries a function with exponential backoff.
+ * @param fn - The function to retry.
+ * @param options - Options for retrying.
+ * @param options.retries - The maximum number of retries. Default is 3.
+ * @param options.onRetry - A callback function that is called before each retry with the error and the current attempt number.
+ * @param options.randomize - Whether to randomize the backoff time by a factor of 1-2. Default is true.
+ * @returns The result of the function.
+ */
+const sleep = (ms: number): Promise<void> =>
+  new Promise(resolve => setTimeout(resolve, ms));
+
+async function withRetry<T>(
+  fn: (bail: (err: Error) => never, attempt: number) => Promise<T>,
+  options: {
+    retries?: number;
+    onRetry?: (err: Error, attempt: number) => void;
+    randomize?: boolean;
+  } = {}
+): Promise<T> {
+  const maxRetries = options.retries ?? 3;
+  const randomize = Number(options.randomize ?? true);
+
+  class BailError extends Error {
+    constructor(readonly cause: Error) {
+      super(cause.message);
+    }
+  }
+
+  for (let attempt = 0; attempt < maxRetries - 1; attempt++) {
+    try {
+      return await fn(err => {
+        throw new BailError(err);
+      }, attempt);
+    } catch (error) {
+      if (error instanceof BailError) {
+        throw error.cause;
+      }
+      options.onRetry?.(error as Error, attempt + 1);
+      // Exponential backoff with optional randomization (factor 1-2x)
+      const scalingFactor = 1 + randomize * Math.random();
+      const backoff = Math.round(scalingFactor * 1000 * 2 ** attempt);
+      await sleep(backoff);
+    }
+  }
+
+  return fn(err => {
+    throw new BailError(err);
+  }, maxRetries - 1);
+}
+
 function retryDestination(
   destinationName: string
 ): Middleware<
@@ -311,20 +362,21 @@ function retryDestination(
   MiddlewareContext<RawAxiosRequestConfig>
 > {
   return options => arg => {
-    let retryCount = 1;
-    return asyncRetry(
-      async bail => {
+    const maxRetries = 3;
+    return withRetry(
+      async (bail, attempt) => {
         try {
           const destination = await options.fn(arg);
-          if (retryCount < 3) {
-            retryCount++;
+          if (attempt < maxRetries - 1) {
             // this will throw if the destination does not contain valid auth headers and a second try is done to get a destination with valid tokens.
             await buildAuthorizationHeaders(parseDestination(destination.data));
           }
           return destination;
         } catch (error) {
-          const status = error?.response?.status;
-          if (status.toString().startsWith('4')) {
+          const status = axios.isAxiosError(error)
+            ? error.response?.status
+            : undefined;
+          if (status?.toString().startsWith('4')) {
             bail(
               new ErrorWithCause(
                 `Request failed with status code ${status}`,
@@ -338,7 +390,7 @@ function retryDestination(
         }
       },
       {
-        retries: 3,
+        retries: maxRetries,
         onRetry: (err: Error) =>
           logger.warn(
             `Failed to retrieve destination ${destinationName} - doing a retry. Original Error ${err.message}`

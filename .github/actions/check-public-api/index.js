@@ -63365,12 +63365,15 @@ exports.webEOL = '\r\n';
 // (e.g. accented uppercase Ü, Arabic-Indic digits ٣). Caseless letters (CJK, Arabic,
 // titlecase like Dž) are treated as lowercase so they are included in words rather than dropped.
 function charKind(c) {
-    if (/^\p{Lu}$/u.test(c))
+    if (/^\p{Lu}$/u.test(c)) {
         return 'upper';
-    if (/^\p{L}$/u.test(c))
-        return 'lower'; // covers Ll, Lt, Lm, Lo
-    if (/^\p{N}$/u.test(c))
+    }
+    if (/^\p{L}$/u.test(c)) {
+        return 'lower';
+    } // covers Ll, Lt, Lm, Lo
+    if (/^\p{N}$/u.test(c)) {
         return 'digit';
+    }
     return 'separator';
 }
 // Splits an identifier string into words, handling common case conventions:
@@ -63379,6 +63382,9 @@ function charKind(c) {
 //   field_name → ['field', 'name']
 //   Field13Name → ['Field', '13', 'Name']
 function words(str) {
+    if (!str) {
+        return [];
+    }
     const result = [];
     let word = '';
     let state = 'none';
@@ -63428,8 +63434,8 @@ function words(str) {
 // Applies transforms to the first Unicode code point and the remainder.
 // Uses codePointAt to correctly handle surrogate pairs (e.g. emoji, some CJK).
 function transformInitialLetter(str, headTransform, tailTransform = s => s) {
-    if (!str.length) {
-        return str;
+    if (!str?.length) {
+        return str ?? '';
     }
     // A surrogate pair occupies 2 UTF-16 code units; all BMP chars occupy 1.
     const firstCharLength = str.codePointAt(0) > 0xffff ? 2 : 1;
@@ -63490,7 +63496,7 @@ function titleFormat(str) {
  * @returns The transformed string.
  */
 function pascalCase(str) {
-    return words(str).map(capitalizeWord).join('');
+    return words(str).map(capitalize).join('');
 }
 /**
  * Convert a string to kebab case. This format is used e.g. for file names.

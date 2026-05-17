@@ -317,7 +317,7 @@ importers:
         version: link:../util
       '@sap/xsenv':
         specifier: ^6.2.0
-        version: 6.2.0
+        version: 6.2.1
       '@sap/xssec':
         specifier: ^4.13.0
         version: 4.13.0
@@ -2064,8 +2064,8 @@ packages:
       hdb:
         optional: true
 
-  '@sap/xsenv@6.2.0':
-    resolution: {integrity: sha512-8jrsX1OAM3YUqGU+4deggqvkxrBrHAPYEllBX0YJfWNffgxSZKHG75bRd/RV6hxPwulPL0DeHfd2eYJMeY5gdw==}
+  '@sap/xsenv@6.2.1':
+    resolution: {integrity: sha512-R1p7VdD3N3jvdkL8av4vLqF+cTQihTz9mCqqF+oa9rVZvgLaCb4ODyZ1dln5/fBgg1OSuch0ESxu3AqZrXVknw==}
     engines: {node: ^20.0.0  || ^22.0.0 || ^24.0.0}
 
   '@sap/xssec@4.13.0':
@@ -7399,7 +7399,7 @@ snapshots:
   '@sap/hdi-deploy@5.6.1(hdb@2.27.1)':
     dependencies:
       '@sap/hdi': 4.8.0(hdb@2.27.1)
-      '@sap/xsenv': 6.2.0
+      '@sap/xsenv': 6.2.1
       async: 3.2.6
       dotenv: 16.6.1
       handlebars: 4.7.9
@@ -7415,7 +7415,7 @@ snapshots:
     optionalDependencies:
       hdb: 2.27.1
 
-  '@sap/xsenv@6.2.0':
+  '@sap/xsenv@6.2.1':
     dependencies:
       debug: 4.4.3
       node-cache: 5.1.2

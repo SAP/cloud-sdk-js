@@ -155,7 +155,9 @@ describe('openapi-request-builder', () => {
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
       sanitizeDestination(destination),
       expect.objectContaining({
-        headers: { requestConfig: { 'content-type': 'application/octet-stream' } },
+        headers: {
+          requestConfig: { 'content-type': 'application/octet-stream' }
+        },
         data: blob
       }),
       expect.anything()

@@ -376,7 +376,16 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private getHeaders(): OriginOptions {
-    const options = { requestConfig: this.parameters?.headerParameters || {} };
+    const headerParameters = { ...(this.parameters?.headerParameters || {}) };
+    const body = this.parameters?.body;
+    if (
+      body instanceof Blob &&
+      body.type &&
+      !pickValueIgnoreCase(headerParameters, 'content-type')
+    ) {
+      headerParameters['content-type'] = body.type;
+    }
+    const options = { requestConfig: headerParameters };
     if (Object.keys(this.customHeaders).length) {
       return { custom: this.customHeaders, ...options };
     }

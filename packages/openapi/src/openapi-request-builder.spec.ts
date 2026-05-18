@@ -146,6 +146,55 @@ describe('openapi-request-builder', () => {
     );
   });
 
+  it('uses Blob content-type as content-type header when body is a Blob with a type', async () => {
+    const blob = new Blob(['<data>'], { type: 'application/octet-stream' });
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: blob
+    });
+    await requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      sanitizeDestination(destination),
+      expect.objectContaining({
+        headers: { requestConfig: { 'content-type': 'application/octet-stream' } },
+        data: blob
+      }),
+      expect.anything()
+    );
+  });
+
+  it('does not override explicit content-type header when body is a Blob', async () => {
+    const blob = new Blob(['<data>'], { type: 'application/octet-stream' });
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: blob,
+      headerParameters: { 'content-type': 'application/xml' }
+    });
+    await requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      sanitizeDestination(destination),
+      expect.objectContaining({
+        headers: { requestConfig: { 'content-type': 'application/xml' } },
+        data: blob
+      }),
+      expect.anything()
+    );
+  });
+
+  it('does not set content-type header when Blob has no type', async () => {
+    const blob = new Blob(['<data>']);
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: blob
+    });
+    await requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      sanitizeDestination(destination),
+      expect.objectContaining({
+        headers: { requestConfig: {} },
+        data: blob
+      }),
+      expect.anything()
+    );
+  });
+
   it('executes a request with multipart body using executeRaw', async () => {
     const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
       body: {

@@ -165,7 +165,7 @@ export async function getIasToken(
  * @param options - Options for IAS token retrieval and destination configuration. See {@link IasTokenOptions}.
  * @returns A promise that resolves to an HTTP destination.
  */
-export async function getIasDestination(
+export async function createDestinationFromIasService(
   service: ServiceCredentials | 'identity' | Service = 'identity',
   options?: IasTokenOptions
 ): Promise<Destination> {

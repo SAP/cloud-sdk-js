@@ -18,7 +18,7 @@ export {
   jwtBearerToken,
   serviceToken,
   getIasToken,
-  getIasDestination,
+  createDestinationFromIasService,
   isHttpDestination,
   assertHttpDestination,
   DestinationSelectionStrategies,

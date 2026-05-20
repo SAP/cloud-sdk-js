@@ -43,7 +43,7 @@ describe('check-pr', () => {
 
   describe('validateTitle', () => {
     it('should validate title with proper structure', async () => {
-      await validateTitle('chore: test');
+      await validateTitle('chore: Test');
       expect(setFailed).not.toHaveBeenCalled();
     });
 
@@ -65,6 +65,13 @@ describe('check-pr', () => {
       await validateTitle('chore:test');
       expect(setFailed).toHaveBeenCalledWith(
         'Space missing after conventional commit preamble.'
+      );
+    });
+
+    it('should invalidate title not starting with uppercase', async () => {
+      await validateTitle('chore: test');
+      expect(setFailed).toHaveBeenCalledWith(
+        'PR title must start with an uppercase letter.'
       );
     });
 
@@ -146,6 +153,15 @@ describe('check-pr', () => {
     it('should validate with matched changesets in double quotes', async () => {
       const fileContents = [
         '"@sap-cloud-sdk/generator": major',
+        '[Fixed Issue] Something is fixed.'
+      ];
+      validateChangesets('chore!', '', true, fileContents);
+      expect(setFailed).not.toHaveBeenCalled();
+    });
+
+    it('should validate with @sap-ai-sdk scope', async () => {
+      const fileContents = [
+        "'@sap-ai-sdk/core': major",
         '[Fixed Issue] Something is fixed.'
       ];
       validateChangesets('chore!', '', true, fileContents);

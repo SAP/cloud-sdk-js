@@ -62,6 +62,10 @@ export function validatePostamble(title: string | undefined): void {
     return setFailed('Space missing after conventional commit preamble.');
   }
 
+  if (title[1] !== title[1].toUpperCase()) {
+    return setFailed('PR title must start with an uppercase letter.');
+  }
+
   info('✓ Title: OK');
 }
 
@@ -85,7 +89,9 @@ function hasMatchingChangeset(
   if (allowedBumps.length) {
     return changedFileContents.some(fileContent =>
       allowedBumps.some(bump =>
-        new RegExp(`("|')@sap-cloud-sdk/.*("|'): ${bump}`).test(fileContent)
+        new RegExp(`("|')(@sap-cloud-sdk|@sap-ai-sdk)/.*("|'): ${bump}`).test(
+          fileContent
+        )
       )
     );
   }

@@ -89,7 +89,9 @@ function hasMatchingChangeset(
   if (allowedBumps.length) {
     return changedFileContents.some(fileContent =>
       allowedBumps.some(bump =>
-        new RegExp(`("|')(@sap-cloud-sdk|@sap-ai-sdk)/.*("|'): ${bump}`).test(fileContent)
+        new RegExp(`("|')(@sap-cloud-sdk|@sap-ai-sdk)/.*("|'): ${bump}`).test(
+          fileContent
+        )
       )
     );
   }

@@ -5,6 +5,9 @@ import { getInput, setFailed, info } from '@actions/core';
 import { messageTypes } from '../changeset-types.js';
 
 const validCommitTypes = ['feat', 'fix', 'chore'];
+const allAllowedChangeTypes = new Set(
+  messageTypes.flatMap(({ name, alternatives }) => [name, ...alternatives])
+);
 
 // Expected format: preamble(topic)!: Title text
 export async function validateTitle(title: string | undefined): Promise<void> {
@@ -116,10 +119,6 @@ export function validateChangesets(
   fileContents: string[]
 ): void {
   const allowedBumps = getAllowedBumps(commitType, isBreaking);
-  const allAllowedTypes = messageTypes.flatMap(({ name, alternatives }) => [
-    name,
-    ...alternatives
-  ]);
 
   if (!hasMatchingChangeset(allowedBumps, fileContents)) {
     return setFailed(
@@ -139,7 +138,7 @@ export function validateChangesets(
   }
 
   const allChangeTypesMatch = changeTypes.every(type =>
-    allAllowedTypes.includes(type.toLowerCase())
+    allAllowedChangeTypes.has(type.toLowerCase())
   );
 
   if (!allChangeTypesMatch) {

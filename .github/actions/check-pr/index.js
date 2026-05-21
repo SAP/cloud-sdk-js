@@ -36259,8 +36259,44 @@ function getOctokit(token, options, ...additionalPlugins) {
 const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
 ;// CONCATENATED MODULE: external "node:path"
 const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
-;// CONCATENATED MODULE: ./lib/validators.js
+;// CONCATENATED MODULE: ./lib/changeset-types.js
 /* eslint-disable jsdoc/require-jsdoc */
+const messageTypes = [
+    {
+        name: 'compat',
+        title: 'Compatibility Notes',
+        alternatives: ['compatibility', 'compatibility note', 'compat']
+    },
+    {
+        name: 'feat',
+        title: 'New Features',
+        alternatives: ['new', 'new functionality', 'feat']
+    },
+    {
+        name: 'fix',
+        title: 'Fixed Issues',
+        alternatives: ['bug', 'bug fix', 'fixed issue', 'fix', 'fix issue']
+    },
+    {
+        name: 'known-issue',
+        title: 'Known Issues',
+        alternatives: ['known issue']
+    },
+    {
+        name: 'impr',
+        title: 'Improvements',
+        alternatives: ['improvement', 'improv']
+    },
+    {
+        name: 'dep',
+        title: 'Updated Dependencies',
+        alternatives: ['dependency', 'dependency update']
+    }
+];
+
+;// CONCATENATED MODULE: ./lib/check-pr/validators.js
+/* eslint-disable jsdoc/require-jsdoc */
+
 
 
 
@@ -36327,13 +36363,10 @@ async function extractChangesetFileContents() {
 }
 function validateChangesets(preamble, commitType, isBreaking, fileContents) {
     const allowedBumps = getAllowedBumps(commitType, isBreaking);
-    const allowedChangeTypes = [
-        'Known Issue',
-        'Compatibility Note',
-        'New Functionality',
-        'Improvement',
-        'Fixed Issue'
-    ];
+    const allAllowedTypes = messageTypes.flatMap(({ name, alternatives }) => [
+        name,
+        ...alternatives
+    ]);
     if (!hasMatchingChangeset(allowedBumps, fileContents)) {
         return setFailed(`Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
             .map(bump => `'${bump}'`)
@@ -36346,11 +36379,9 @@ function validateChangesets(preamble, commitType, isBreaking, fileContents) {
     if (!preamble.startsWith('chore') && !changeTypes.length) {
         return setFailed('Missing change type in changeset.');
     }
-    const allChangeTypesMatch = changeTypes.every(type => allowedChangeTypes.includes(type));
+    const allChangeTypesMatch = changeTypes.every(type => allAllowedTypes.includes(type.toLowerCase()));
     if (!allChangeTypesMatch) {
-        return setFailed(`All change types must match one of the allowed change types ${allowedChangeTypes
-            .map(type => `'[${type}]'`)
-            .join(' or ')}.`);
+        return setFailed(`All change types must be one of: ${messageTypes.map(({ name }) => `'${name}'`).join(', ')} (or their aliases).`);
     }
     info('✓ Changesets: OK');
 }
@@ -36365,7 +36396,7 @@ async function validateBody(body) {
     info('✓ Body: OK');
 }
 
-;// CONCATENATED MODULE: ./lib/index.js
+;// CONCATENATED MODULE: ./lib/check-pr/index.js
 
 
 

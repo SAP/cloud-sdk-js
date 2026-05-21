@@ -124,12 +124,30 @@ describe('check-pr', () => {
     it('should fail if change type is wrong', async () => {
       const fileContents = [
         "'@sap-cloud-sdk/generator': major",
-        '[Fix] Something is fixed.'
+        '[Something] Something is fixed.'
       ];
       validateChangesets('chore!', '', true, fileContents);
       expect(setFailed).toHaveBeenCalledWith(
-        "All change types must match one of the allowed change types '[Known Issue]' or '[Compatibility Note]' or '[New Functionality]' or '[Improvement]' or '[Fixed Issue]'."
+        "All change types must be one of: 'compat', 'feat', 'fix', 'known-issue', 'impr', 'dep' (or their aliases)."
       );
+    });
+
+    it('should pass if shorthand change type is provided', async () => {
+      const fileContents = [
+        "'@sap-cloud-sdk/generator': major",
+        '[fix] Something is fixed.'
+      ];
+      validateChangesets('chore!', '', true, fileContents);
+      expect(setFailed).not.toHaveBeenCalled();
+    });
+
+    it('should pass if compat shorthand change type is provided', async () => {
+      const fileContents = [
+        "'@sap-cloud-sdk/generator': major",
+        '[compat] Something changed.'
+      ];
+      validateChangesets('chore!', '', true, fileContents);
+      expect(setFailed).not.toHaveBeenCalled();
     });
 
     it('should pass if correct change type is provided', async () => {

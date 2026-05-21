@@ -2,6 +2,7 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { getInput, setFailed, info } from '@actions/core';
+import { messageTypes } from '../changeset-types.js';
 
 const validCommitTypes = ['feat', 'fix', 'chore'];
 
@@ -115,13 +116,10 @@ export function validateChangesets(
   fileContents: string[]
 ): void {
   const allowedBumps = getAllowedBumps(commitType, isBreaking);
-  const allowedChangeTypes = [
-    'Known Issue',
-    'Compatibility Note',
-    'New Functionality',
-    'Improvement',
-    'Fixed Issue'
-  ];
+  const allAllowedTypes = messageTypes.flatMap(({ name, alternatives }) => [
+    name,
+    ...alternatives
+  ]);
 
   if (!hasMatchingChangeset(allowedBumps, fileContents)) {
     return setFailed(
@@ -141,14 +139,12 @@ export function validateChangesets(
   }
 
   const allChangeTypesMatch = changeTypes.every(type =>
-    allowedChangeTypes.includes(type)
+    allAllowedTypes.includes(type.toLowerCase())
   );
 
   if (!allChangeTypesMatch) {
     return setFailed(
-      `All change types must match one of the allowed change types ${allowedChangeTypes
-        .map(type => `'[${type}]'`)
-        .join(' or ')}.`
+      `All change types must be one of: ${messageTypes.map(({ name }) => `'${name}'`).join(', ')} (or their aliases).`
     );
   }
 

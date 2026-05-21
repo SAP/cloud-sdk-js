@@ -68446,8 +68446,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isValidUrl = isValidUrl;
 exports.checkUrlExists = checkUrlExists;
 const axios_1 = __importDefault(__nccwpck_require__(1373));
+/**
+ * Checks whether a string is a valid URL.
+ * @param url - String to check.
+ * @returns True if the string is a valid URL, false otherwise.
+ * @internal
+ */
+function isValidUrl(url) {
+    try {
+        new URL(url);
+        return true;
+    }
+    catch {
+        return false;
+    }
+}
 /**
  * Checks whether a URL is existing via a head request.
  * @param url - URL to be checked.

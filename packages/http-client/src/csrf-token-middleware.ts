@@ -1,3 +1,4 @@
+import { URL } from 'url';
 import {
   createLogger,
   ErrorWithCause,
@@ -8,7 +9,6 @@ import {
   pickValueIgnoreCase,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
-import { URL } from 'url';
 import axios from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import type {

@@ -36301,6 +36301,7 @@ const messageTypes = [
 
 
 const validCommitTypes = ['feat', 'fix', 'chore'];
+const allAllowedChangeTypes = new Set(messageTypes.flatMap(({ name, alternatives }) => [name, ...alternatives]));
 // Expected format: preamble(topic)!: Title text
 async function validateTitle(title) {
     if (!title || !title.includes(':')) {
@@ -36363,10 +36364,6 @@ async function extractChangesetFileContents() {
 }
 function validateChangesets(preamble, commitType, isBreaking, fileContents) {
     const allowedBumps = getAllowedBumps(commitType, isBreaking);
-    const allAllowedTypes = messageTypes.flatMap(({ name, alternatives }) => [
-        name,
-        ...alternatives
-    ]);
     if (!hasMatchingChangeset(allowedBumps, fileContents)) {
         return setFailed(`Preamble '${preamble}' requires a changeset file with bump ${allowedBumps
             .map(bump => `'${bump}'`)
@@ -36379,7 +36376,7 @@ function validateChangesets(preamble, commitType, isBreaking, fileContents) {
     if (!preamble.startsWith('chore') && !changeTypes.length) {
         return setFailed('Missing change type in changeset.');
     }
-    const allChangeTypesMatch = changeTypes.every(type => allAllowedTypes.includes(type.toLowerCase()));
+    const allChangeTypesMatch = changeTypes.every(type => allAllowedChangeTypes.has(type.toLowerCase()));
     if (!allChangeTypesMatch) {
         return setFailed(`All change types must be one of: ${messageTypes.map(({ name }) => `'${name}'`).join(', ')} (or their aliases).`);
     }

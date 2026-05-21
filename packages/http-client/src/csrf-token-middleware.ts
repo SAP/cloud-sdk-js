@@ -3,10 +3,12 @@ import {
   ErrorWithCause,
   first,
   flatten,
+  isValidUrl,
   pickIgnoreCase,
   pickValueIgnoreCase,
   removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
+import { URL } from 'url';
 import axios from 'axios';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import type {
@@ -166,6 +168,19 @@ function findCsrfHeader(
   return { 'x-csrf-token': csrfHeader, ...cookieHeader };
 }
 
+function isCrossHost(
+  csrfUrl: string | undefined,
+  requestUrl: string | undefined
+): boolean {
+  if (!csrfUrl || !requestUrl) {
+    return false;
+  }
+  if (!isValidUrl(csrfUrl) || !isValidUrl(requestUrl)) {
+    return false;
+  }
+  return new URL(csrfUrl).hostname !== new URL(requestUrl).hostname;
+}
+
 async function makeCsrfRequests(
   requestConfig: HttpRequestConfig,
   options: CsrfMiddlewareOptions & { context: HttpMiddlewareContext }
@@ -173,6 +188,14 @@ async function makeCsrfRequests(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, params, parameterEncoder, ...requestConfigWithoutData } =
     requestConfig;
+
+  // TODO: In v5, make cross-host CSRF token fetching opt-in instead of just warning.
+  if (isCrossHost(options.url, requestConfig.baseURL)) {
+    logger.warn(
+      `The CSRF token fetch URL (${options.url}) has a different host than the request URL (${requestConfig.baseURL}). Sensitive headers will be forwarded to the CSRF token endpoint.`
+    );
+  }
+
   const axiosConfig: HttpRequestConfigWithOrigin = {
     ...requestConfigWithoutData,
     method: options.method || 'head',

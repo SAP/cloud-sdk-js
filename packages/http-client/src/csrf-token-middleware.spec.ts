@@ -1,5 +1,6 @@
 import nock from 'nock';
 import axios from 'axios';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { circuitBreaker, timeout } from '@sap-cloud-sdk/resilience';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 import { csrf } from './csrf-token-middleware';
@@ -250,19 +251,42 @@ describe('CSRF middleware', () => {
     ).resolves.not.toThrow();
   });
 
-  it('fetches the token with custom method', async () => {
-    nock(host).get('/some/path/').reply(200, {}, csrfResponseHeaders);
+  it('logs a warning when the CSRF token URL has a different host than the request URL', async () => {
+    const csrfHost = 'http://other.example.com';
+    nock(csrfHost).head('/csrf').reply(200, {}, csrfResponseHeaders);
     nock(host).post('/some/path').reply(200, {});
-    await expect(
-      executeHttpRequest(
-        { url: host },
-        {
-          method: 'POST',
-          url: 'some/path',
-          middleware: [csrf({ method: 'GET' })]
-        },
-        { fetchCsrfToken: false }
-      )
-    ).resolves.not.toThrow();
+    const logger = createLogger('csrf-middleware');
+    const warnSpy = jest.spyOn(logger, 'warn');
+    await executeHttpRequest(
+      { url: host },
+      {
+        method: 'POST',
+        url: 'some/path',
+        middleware: [csrf({ url: `${csrfHost}/csrf` })]
+      },
+      { fetchCsrfToken: false }
+    );
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('different host')
+    );
+  });
+
+  it('does not log a warning when the CSRF token URL has the same host as the request URL', async () => {
+    nock(host).head('/alternative/path').reply(200, {}, csrfResponseHeaders);
+    nock(host).post('/some/path').reply(200, {});
+    const logger = createLogger('csrf-middleware');
+    const warnSpy = jest.spyOn(logger, 'warn');
+    await executeHttpRequest(
+      { url: host },
+      {
+        method: 'POST',
+        url: 'some/path',
+        middleware: [csrf({ url: `${host}/alternative/path` })]
+      },
+      { fetchCsrfToken: false }
+    );
+    expect(warnSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('different host')
+    );
   });
 });

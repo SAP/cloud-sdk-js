@@ -74,7 +74,10 @@ export interface DestinationAccessorOptions {
    * The value for `iss` is the issuer field of a JWT e.g. https://<your-subdomain>.localhost:8080/uaa/oauth/token.
    *
    * ATTENTION: If this property is used, no validation of the provided subdomain value is done.
-   * This is differs from how the `jwt` is handled.
+   * This differs from how the `jwt` is handled.
+   * Never pass a user-supplied or request-derived value directly to this field without verification.
+   * An unvalidated `iss` value controls which BTP tenant's destinations (including embedded credentials and
+   * OAuth tokens) are returned, enabling cross-tenant data access if an attacker can influence this value.
    * So be careful that the used value is not manipulated and breaks the tenant isolation of your application.
    */
   iss?: string;

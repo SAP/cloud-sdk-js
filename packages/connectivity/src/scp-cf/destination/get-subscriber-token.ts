@@ -76,8 +76,9 @@ async function retrieveServiceToken(
 
 function getJwtForServiceToken(iss?: string, decodedUserJwt?: JwtPayload) {
   if (iss) {
-    logger.debug(
-      'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
+    logger.warn(
+      'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.' +
+       'Passing a user-supplied value without verifying it may lead to unintended cross-tenant destination access.'
     );
 
     return { ext_attr: { zdn: getIssuerSubdomain({ iss }) } };

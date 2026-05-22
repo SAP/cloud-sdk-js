@@ -45,8 +45,8 @@ jobs:
           FULL_VERSION: ${{ inputs.version }}
         run: |
           gh auth setup-git
-          git config user.email "$BOT_EMAIL"
-          git config user.name "$BOT_NAME"
+          git config --global user.email "$BOT_EMAIL"
+          git config --global user.name "$BOT_NAME"
 
           # Extract major version from input (e.g., v4.5.0 -> v4)
           # shellcheck disable=SC2001

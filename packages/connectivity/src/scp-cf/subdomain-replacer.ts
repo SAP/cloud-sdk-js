@@ -1,5 +1,5 @@
 import { URL } from 'url';
-import { removeTrailingSlashes } from '@sap-cloud-sdk/util';
+import { isValidUrl, removeTrailingSlashes } from '@sap-cloud-sdk/util';
 import type { JwtPayload } from './jsonwebtoken-type';
 
 /**
@@ -27,15 +27,6 @@ function getHost(url: URL): string {
     throw new Error(`Failed to determine hostname: invalid host in "${url}".`);
   }
   return host;
-}
-
-function isValidUrl(url: string): boolean {
-  try {
-    new URL(url);
-    return true;
-  } catch {
-    return false;
-  }
 }
 
 /**

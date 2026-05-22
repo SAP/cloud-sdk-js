@@ -1,5 +1,24 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.7.0
+
+### Minor Changes
+
+- 9102f18: [New Functionality] Add `createDestinationFromIasService()` convenience function to build IAS-backed destinations.
+  This function aims to offer more convenience for obtaining IAS-backed destinations outside SAP BTP-environments.
+- d54ba5a: [Improvement] Cache custom http and https agents and enable the keep-alive option by default.
+- 9102f18: [New Functionality] Add `getIasToken()` convenience function to fetch IAS token.
+  This function aims to offer more convenience for obtaining IAS tokens outside SAP BTP-environments.
+- d54ba5a: [Improvement] Use node's global http/https agent unless a custom agent is required by the destination configuration.
+- 9102f18: [Compatibility Note] IAS tokens are now cached via `@sap/xssec`.
+  `@sap/xssec` uses an LRU cache limited to 100 items, previously this cache was unbound.
+
+### Patch Changes
+
+- df84426: [Fixed Issue] Avoid caching JWT if `forwardAuthToken` is set to `true`.
+  - @sap-cloud-sdk/resilience@4.7.0
+  - @sap-cloud-sdk/util@4.7.0
+
 ## 4.6.0
 
 ### Minor Changes

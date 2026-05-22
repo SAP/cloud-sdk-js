@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/e2e-tests",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "description": "End to end tests of the SAP Cloud SDK for JavaScript",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",

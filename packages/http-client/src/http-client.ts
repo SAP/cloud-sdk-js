@@ -1,5 +1,23 @@
 import * as http from 'http';
 import * as https from 'https';
+
+// 
+import { HttpRequestError } from './http-request-error';
+
+// FIND the catch block (looks roughly like this) and change it:
+// BEFORE:
+} catch (e) {
+  throw e;
+}
+
+// AFTER:
+} catch (e) {
+  if (isAxiosError(e) && e.response) {
+    throw new HttpRequestError(e);
+  }
+  throw e;
+}
+
 import {
   buildHeadersForDestination,
   getAgentConfig,

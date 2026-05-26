@@ -475,21 +475,23 @@ describe('parseTopLevelMediaType', () => {
     });
   });
 
-  it('throws error with malformed content type', async () => {
+  it('parses malformed content type leniently (strips bad params)', async () => {
     const schema = {
       type: 'object',
       properties: { file: { type: 'string', format: 'binary' } }
     };
     const encoding = { file: { contentType: 'image/png;;invalid' } };
-    const refs = await createTestRefs();
+    const result = parseTopLevelMediaType(
+      createMultipartFormContent(schema, encoding),
+      await createTestRefs(),
+      defaultOptions
+    );
 
-    expect(() =>
-      parseTopLevelMediaType(
-        createMultipartFormContent(schema, encoding),
-        refs,
-        defaultOptions
-      )
-    ).toThrow(/invalid content type.*image\/png;;invalid.*file/i);
+    expect(result?.encoding?.file).toEqual({
+      contentType: 'image/png;;invalid',
+      isImplicit: false,
+      parsedContentTypes: [{ type: 'image/png', parameters: {} }]
+    });
   });
 
   it('handles wildcard content types correctly', async () => {
@@ -509,7 +511,7 @@ describe('parseTopLevelMediaType', () => {
     });
   });
 
-  it('throws error with completely invalid content type format', async () => {
+  it('parses completely invalid content type leniently', async () => {
     const schema = {
       type: 'object',
       properties: { attachment: { type: 'string', format: 'binary' } }
@@ -517,17 +519,19 @@ describe('parseTopLevelMediaType', () => {
     const encoding = {
       attachment: { contentType: 'not-a-valid-content-type-at-all' }
     };
-    const refs = await createTestRefs();
-
-    expect(() =>
-      parseTopLevelMediaType(
-        createMultipartFormContent(schema, encoding),
-        refs,
-        defaultOptions
-      )
-    ).toThrow(
-      /invalid content type.*not-a-valid-content-type-at-all.*attachment/i
+    const result = parseTopLevelMediaType(
+      createMultipartFormContent(schema, encoding),
+      await createTestRefs(),
+      defaultOptions
     );
+
+    expect(result?.encoding?.attachment).toEqual({
+      contentType: 'not-a-valid-content-type-at-all',
+      isImplicit: false,
+      parsedContentTypes: [
+        { type: 'not-a-valid-content-type-at-all', parameters: {} }
+      ]
+    });
   });
 });
 

@@ -8,9 +8,13 @@ on:
     paths-ignore:
       - 'docs/**'
 
+permissions: {}
+
 jobs:
   tests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:

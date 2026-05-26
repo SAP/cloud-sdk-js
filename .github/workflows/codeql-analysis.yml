@@ -14,10 +14,15 @@ on:
   pull_request: ~
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
 
     strategy:
       fail-fast: false

@@ -14,8 +14,12 @@ on:
         required: true
         type: string
 
+permissions: {}
+
 jobs:
   generate-and-push-docs:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main

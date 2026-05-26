@@ -19,14 +19,24 @@ on:
         options:
           - 'With Tests and Checks'
           - 'Skip Tests and Checks (Force Release)'
+
+permissions: {}
+
 jobs:
   delegate_to_release_job:
     if: ${{ github.event_name == 'release' }}
+    permissions:
+      contents: read
+      id-token: write
     uses: ./.github/workflows/release.yml
     secrets: inherit
 
   delegate_to_canary_job:
     if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     uses: ./.github/workflows/build.yml
     secrets: inherit
     with:

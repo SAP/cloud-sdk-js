@@ -3,6 +3,8 @@ name: release
 on:
   workflow_call:
 
+permissions: {}
+
 jobs:
   stable-release:
     runs-on: ubuntu-latest
@@ -17,6 +19,8 @@ jobs:
           private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
           owner: SAP
           repositories: cloud-sdk
+          permission-contents: write
+          permission-pull-requests: write
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           ref: 'main'

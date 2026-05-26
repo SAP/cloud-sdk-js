@@ -8,9 +8,6 @@ rules:
     ignore:
      - bump.yml
      - release-entry.yml
-  # requires more effort to fix
-  excessive-permissions:
-    disable: true
   dangerous-triggers:
     ignore:
       - auto-dependabot-fix.yml

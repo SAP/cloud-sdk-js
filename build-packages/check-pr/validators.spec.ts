@@ -68,13 +68,6 @@ describe('check-pr', () => {
       );
     });
 
-    it('should invalidate title not starting with uppercase', async () => {
-      await validateTitle('chore: test');
-      expect(setFailed).toHaveBeenCalledWith(
-        'PR title must start with an uppercase letter.'
-      );
-    });
-
     it('should invalidate title with wrong commit type', async () => {
       await validateTitle('featt: test');
       expect(setFailed).toHaveBeenCalledWith(

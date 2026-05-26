@@ -62,10 +62,6 @@ export function validatePostamble(title: string | undefined): void {
     return setFailed('Space missing after conventional commit preamble.');
   }
 
-  if (title[1] !== title[1].toUpperCase()) {
-    return setFailed('PR title must start with an uppercase letter.');
-  }
-
   info('✓ Title: OK');
 }
 

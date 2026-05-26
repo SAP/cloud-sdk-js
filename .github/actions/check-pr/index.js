@@ -36296,9 +36296,6 @@ function validatePostamble(title) {
     if (title[0] !== ' ') {
         return setFailed('Space missing after conventional commit preamble.');
     }
-    if (title[1] !== title[1].toUpperCase()) {
-        return setFailed('PR title must start with an uppercase letter.');
-    }
     info('✓ Title: OK');
 }
 function getAllowedBumps(preamble, isBreaking) {

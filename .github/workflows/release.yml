@@ -2,6 +2,11 @@ name: release
 
 on:
   workflow_call:
+    secrets:
+      SAP_CLOUD_SDK_BOT_CLIENT_ID:
+        required: true
+      SAP_CLOUD_SDK_BOT_PRIVATE_KEY:
+        required: true
 
 permissions: {}
 

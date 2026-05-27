@@ -20,6 +20,13 @@ on:
         type: boolean
         required: false
         default: false
+    secrets:
+      NPM_TOKEN_ARTIFACTORY:
+        required: false
+      API_HUB_SANDBOX_TOKEN:
+        required: false
+      SLACK_WEBHOOK:
+        required: false
 
 permissions: {}
 

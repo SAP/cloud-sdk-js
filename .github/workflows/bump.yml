@@ -63,6 +63,9 @@ jobs:
     permissions:
       contents: read
     uses: ./.github/workflows/api-docs.yml
-    secrets: inherit
+    secrets:
+      NPM_TOKEN_ARTIFACTORY: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
+      SAP_CLOUD_SDK_BOT_CLIENT_ID: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
+      SAP_CLOUD_SDK_BOT_PRIVATE_KEY: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
     with:
       version: v${{ needs.bump.outputs.version }}

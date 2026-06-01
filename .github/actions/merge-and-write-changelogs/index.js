@@ -46242,12 +46242,8 @@ function getIDToken(aud) {
 //# sourceMappingURL=core.js.map
 // EXTERNAL MODULE: ../../node_modules/.pnpm/@manypkg+get-packages@2.2.2/node_modules/@manypkg/get-packages/dist/manypkg-get-packages.cjs.js
 var manypkg_get_packages_cjs = __nccwpck_require__(4344);
-;// CONCATENATED MODULE: ./lib/build-packages/merge-and-write-changelogs/index.js
+;// CONCATENATED MODULE: ./lib/build-packages/changeset-types.js
 /* eslint-disable jsdoc/require-jsdoc */
-
-
-
-
 const messageTypes = [
     {
         name: 'compat',
@@ -46265,6 +46261,11 @@ const messageTypes = [
         alternatives: ['bug', 'bug fix', 'fixed issue', 'fix', 'fix issue']
     },
     {
+        name: 'known-issue',
+        title: 'Known Issues',
+        alternatives: ['known issue']
+    },
+    {
         name: 'impr',
         title: 'Improvements',
         alternatives: ['improvement', 'improv']
@@ -46275,6 +46276,14 @@ const messageTypes = [
         alternatives: ['dependency', 'dependency update']
     }
 ];
+
+;// CONCATENATED MODULE: ./lib/build-packages/merge-and-write-changelogs/index.js
+/* eslint-disable jsdoc/require-jsdoc */
+
+
+
+
+
 function getPackageName(changelog) {
     return changelog.split('\n')[0].split('/')[1];
 }

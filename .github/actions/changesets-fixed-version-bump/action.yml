@@ -9,4 +9,4 @@ outputs:
 
 runs:
   using: 'node24'
-  main: 'index.js'
+  main: 'dist/index.js'

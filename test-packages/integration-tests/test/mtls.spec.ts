@@ -3,7 +3,7 @@ import { mockFsWithMemfs } from '@sap-cloud-sdk/test-util-internal/fs-mocker';
 mockFsWithMemfs(jest);
 
 import { jest } from '@jest/globals';
-import { registerDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf';
+import { registerDestination } from '@sap-cloud-sdk/connectivity';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import axios from 'axios';
 import { vol } from 'memfs';
@@ -11,9 +11,9 @@ import nock from 'nock';
 import { mockServiceBindings } from '@sap-cloud-sdk/test-util-internal/environment-mocks';
 import type {
   DestinationWithName,
-  RegisterDestinationOptions
-} from '@sap-cloud-sdk/connectivity/src/scp-cf';
-import type { HttpDestination } from '@sap-cloud-sdk/connectivity';
+  RegisterDestinationOptions,
+  HttpDestination
+} from '@sap-cloud-sdk/connectivity';
 
 describe('mTLS on CloudFoundry', () => {
   beforeEach(() => {

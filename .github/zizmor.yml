@@ -3,14 +3,6 @@ rules:
   dependabot-cooldown:
     config:
       days: 4
-  # requires more effort to fix
-  secrets-inherit:
-    ignore:
-     - bump.yml
-     - release-entry.yml
-  # requires more effort to fix
-  excessive-permissions:
-    disable: true
   dangerous-triggers:
     ignore:
       - auto-dependabot-fix.yml

@@ -19,16 +19,31 @@ on:
         options:
           - 'With Tests and Checks'
           - 'Skip Tests and Checks (Force Release)'
+
+permissions: {}
+
 jobs:
   delegate_to_release_job:
     if: ${{ github.event_name == 'release' }}
+    permissions:
+      contents: read
+      id-token: write
     uses: ./.github/workflows/release.yml
-    secrets: inherit
+    secrets:
+      SAP_CLOUD_SDK_BOT_CLIENT_ID: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
+      SAP_CLOUD_SDK_BOT_PRIVATE_KEY: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
 
   delegate_to_canary_job:
     if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     uses: ./.github/workflows/build.yml
-    secrets: inherit
+    secrets:
+      NPM_TOKEN_ARTIFACTORY: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
+      API_HUB_SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     with:
       canary-release-skip-checks: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'Skip Tests and Checks (Force Release)' }}
       is-workflow-call: true

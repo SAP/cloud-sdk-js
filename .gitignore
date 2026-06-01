@@ -2,6 +2,7 @@ node_modules
 .vscode
 build/**
 dist
+!.github/actions/*/dist
 .next/**
 build-packages/**/lib
 .DS_Store

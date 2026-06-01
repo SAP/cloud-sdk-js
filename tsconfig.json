@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "inlineSources": false,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "customConditions": ["workspace"]
   }
 }

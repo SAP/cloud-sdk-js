@@ -161,14 +161,14 @@ export async function createFile(
       encoding: 'utf8',
       flag: overwrite ? 'w' : 'wx'
     });
-  } catch (err) {
+  } catch (err: unknown) {
     const recommendation =
-      err.code === 'EEXIST' && !overwrite
+      (err as Record<string, unknown>).code === 'EEXIST' && !overwrite
         ? ' File already exists. If you want to allow overwriting files, enable the `overwrite` flag.'
         : '';
     throw new ErrorWithCause(
       `Could not write file "${fileName}".${recommendation}`,
-      err
+      err as Error
     );
   }
 }

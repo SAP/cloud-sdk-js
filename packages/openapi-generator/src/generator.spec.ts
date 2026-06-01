@@ -10,8 +10,8 @@ import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/internal';
 import { emptyDocument } from '../test/test-util';
 import { generate } from './generator';
 
-jest.mock('../../generator-common/internal', () => {
-  const actual = jest.requireActual('../../generator-common/internal');
+jest.mock('@sap-cloud-sdk/generator-common/internal', () => {
+  const actual = jest.requireActual('@sap-cloud-sdk/generator-common/internal');
   return { ...actual, getSdkVersion: async () => '1.2.3' };
 });
 

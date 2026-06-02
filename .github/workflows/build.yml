@@ -23,8 +23,6 @@ on:
     secrets:
       NPM_TOKEN_ARTIFACTORY:
         required: false
-      API_HUB_SANDBOX_TOKEN:
-        required: false
       SLACK_WEBHOOK:
         required: false
 
@@ -46,9 +44,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
-      - env:
-          SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
-        run: pnpm run test:unit
+      - run: pnpm run test:unit
       - run: pnpm run test:integration
       - run: pnpm run test:self
       - run: pnpm run test:build-packages

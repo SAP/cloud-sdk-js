@@ -42,7 +42,6 @@ jobs:
     uses: ./.github/workflows/build.yml
     secrets:
       NPM_TOKEN_ARTIFACTORY: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
-      API_HUB_SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     with:
       canary-release-skip-checks: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'Skip Tests and Checks (Force Release)' }}

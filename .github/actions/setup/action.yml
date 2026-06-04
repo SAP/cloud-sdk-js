@@ -31,7 +31,7 @@ inputs:
     default: ${{ github.token }}
   persist-credentials:
     description: 'Whether to configure the token or SSH key with the local git config'
-    default: false
+    default: 'false'
 
 runs:
   using: 'composite'

@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+permissions: {}
+
 jobs:
   create_fosstars_report:
     runs-on: ubuntu-latest

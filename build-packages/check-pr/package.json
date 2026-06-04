@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
-    "postcompile": "ncc build lib/index.js --out ../../.github/actions/check-pr/",
+    "postcompile": "ncc build lib/check-pr/index.js --out ../../.github/actions/check-pr/",
     "test": "pnpm run test:unit",
     "test:unit": "NODE_OPTIONS=--experimental-vm-modules pnpm exec jest",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",

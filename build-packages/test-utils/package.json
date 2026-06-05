@@ -9,6 +9,9 @@
   },
   "license": "Apache-2.0",
   "main": "./lib/index.js",
+  "bin": {
+    "build-action": "./lib/cli.js"
+  },
   "scripts": {
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
@@ -18,13 +21,14 @@
   },
   "dependencies": {
     "@jest/globals": "^30.3.0",
+    "esbuild": "0.28.0",
     "memfs": "^4.57.2"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
     "prettier": "^3.8.1",
-    "rolldown": "1.0.2",
     "typescript": "~5.9.3"
   }
 }

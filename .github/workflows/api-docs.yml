@@ -7,6 +7,13 @@ on:
         description: 'Version to generate docs for'
         required: true
         type: string
+    secrets:
+      NPM_TOKEN_ARTIFACTORY:
+        required: true
+      SAP_CLOUD_SDK_BOT_CLIENT_ID:
+        required: true
+      SAP_CLOUD_SDK_BOT_PRIVATE_KEY:
+        required: true
   workflow_dispatch:
     inputs:
       version:
@@ -14,8 +21,12 @@ on:
         required: true
         type: string
 
+permissions: {}
+
 jobs:
   generate-and-push-docs:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main

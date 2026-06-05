@@ -7,9 +7,13 @@ on:
         description: Mandatory, when bumping a major version. Semver compatible version string (X.Y.Z). Must not be set for patch and minor version releases.
         required: false
 
+permissions: {}
+
 jobs:
   bump:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       version: ${{ steps.bump.outputs.version }}
     steps:
@@ -56,7 +60,12 @@ jobs:
   generate-api-docs:
     name: Generate and Push API Documentation
     needs: [bump]
+    permissions:
+      contents: read
     uses: ./.github/workflows/api-docs.yml
-    secrets: inherit
+    secrets:
+      NPM_TOKEN_ARTIFACTORY: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
+      SAP_CLOUD_SDK_BOT_CLIENT_ID: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
+      SAP_CLOUD_SDK_BOT_PRIVATE_KEY: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
     with:
       version: v${{ needs.bump.outputs.version }}

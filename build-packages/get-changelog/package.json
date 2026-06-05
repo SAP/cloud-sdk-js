@@ -6,7 +6,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "compile": "tsc -p tsconfig.json && build-action get-changelog",
+    "compile": "tsc -p tsconfig.json",
+    "postcompile": "rolldown -c rolldown.config.ts",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",
@@ -20,6 +21,7 @@
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
     "prettier": "^3.8.1",
+    "rolldown": "1.0.2",
     "typescript": "~5.9.3"
   }
 }

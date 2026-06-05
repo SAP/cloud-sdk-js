@@ -6,7 +6,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "compile": "tsc -p tsconfig.json && build-action check-pr",
+    "compile": "tsc -p tsconfig.json",
+    "postcompile": "rolldown -c rolldown.config.ts",
     "test": "pnpm run test:unit",
     "test:unit": "NODE_OPTIONS=--experimental-vm-modules pnpm exec jest",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
@@ -24,6 +25,7 @@
     "eslint": "^10.2.1",
     "memfs": "^4.57.2",
     "prettier": "^3.8.1",
+    "rolldown": "1.0.2",
     "typescript": "~5.9.3"
   }
 }

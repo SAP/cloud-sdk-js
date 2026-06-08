@@ -7,6 +7,13 @@ on:
         description: 'Version to generate docs for'
         required: true
         type: string
+    secrets:
+      NPM_TOKEN_ARTIFACTORY:
+        required: true
+      SAP_CLOUD_SDK_BOT_CLIENT_ID:
+        required: true
+      SAP_CLOUD_SDK_BOT_PRIVATE_KEY:
+        required: true
   workflow_dispatch:
     inputs:
       version:
@@ -14,8 +21,12 @@ on:
         required: true
         type: string
 
+permissions: {}
+
 jobs:
   generate-and-push-docs:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
@@ -28,7 +39,7 @@ jobs:
           pnpm run doc
 
       - id: app-token
-        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
           client-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
           private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
@@ -42,20 +53,21 @@ jobs:
           GIT_USER: cloud-sdk-js
           BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
           BOT_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
+          FULL_VERSION: ${{ inputs.version }}
         run: |
           gh auth setup-git
-          git config user.email "$BOT_EMAIL"
-          git config user.name "$BOT_NAME"
+          git config --global user.email "$BOT_EMAIL"
+          git config --global user.name "$BOT_NAME"
 
           # Extract major version from input (e.g., v4.5.0 -> v4)
-          FULL_VERSION="${{ inputs.version }}"
-          MAJOR_VERSION=$(echo $FULL_VERSION | sed 's/\(v[0-9]*\).*/\1/')
+          # shellcheck disable=SC2001
+          MAJOR_VERSION=$(echo "$FULL_VERSION" | sed 's/\(v[0-9]*\).*/\1/')
 
           cd ..
           git clone --depth 1 https://github.com/SAP/cloud-sdk.git
 
           # Copy generated docs to versioned folder
-          rsync -avz --delete cloud-sdk-js/knowledge-base/api-reference/ cloud-sdk/static/api/${MAJOR_VERSION}/
+          rsync -avz --delete cloud-sdk-js/knowledge-base/api-reference/ "cloud-sdk/static/api/${MAJOR_VERSION}/"
 
           cd cloud-sdk
           git add -A

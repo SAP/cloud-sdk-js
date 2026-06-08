@@ -10,9 +10,9 @@ import {
   readCompilerOptions,
   readIncludeExcludeWithDefaults,
   transpileDirectory
-  // eslint-disable-next-line import/no-internal-modules
+  // eslint-disable-next-line import-x/no-internal-modules
 } from '@sap-cloud-sdk/generator-common/dist/compiler.js';
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer/create-file.js';
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';

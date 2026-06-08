@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-services-openapi",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "description": "Custom Services for testing",
   "files": [
     "**/*.js",

@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { info, setFailed } from '@actions/core';
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import bloakList from '@blueoak/list/index.json' with { type: 'json' };
 
 // Permissive FLOSS licenses are ok, see https://blueoakcouncil.org/list for details.

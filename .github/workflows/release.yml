@@ -2,6 +2,13 @@ name: release
 
 on:
   workflow_call:
+    secrets:
+      SAP_CLOUD_SDK_BOT_CLIENT_ID:
+        required: true
+      SAP_CLOUD_SDK_BOT_PRIVATE_KEY:
+        required: true
+
+permissions: {}
 
 jobs:
   stable-release:
@@ -11,12 +18,14 @@ jobs:
 
     steps:
       - id: app-token
-        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
           client-id: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
           private-key: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
           owner: SAP
           repositories: cloud-sdk
+          permission-contents: write
+          permission-pull-requests: write
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           ref: 'main'
@@ -33,12 +42,15 @@ jobs:
         run: |
           pnpm changeset publish
       - name: Checkout Docs
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           repository: SAP/cloud-sdk
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
           path: ./cloud-sdk
+          persist-credentials: true
+      - name: Fetch full commit history (blobless)
+        run: git fetch --filter=blob:none --unshallow
       - name: Update release notes
         run: |
           npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"

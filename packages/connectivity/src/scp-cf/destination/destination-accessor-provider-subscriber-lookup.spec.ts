@@ -287,7 +287,7 @@ describe('JWT type and selection strategies', () => {
         package: 'connectivity',
         messageContext: 'destination-accessor-service'
       });
-      const debugSpy = jest.spyOn(logger, 'debug');
+      const warnSpy = jest.spyOn(logger, 'warn');
 
       expect(
         await getDestinationFromDestinationService({
@@ -297,8 +297,9 @@ describe('JWT type and selection strategies', () => {
         })
       ).toMatchObject(parseDestination(certificateSingleResponse));
 
-      expect(debugSpy).toHaveBeenCalledWith(
-        'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.'
+      expect(warnSpy).toHaveBeenCalledWith(
+        'Using `iss` option instead of a full JWT to fetch a destination. No validation is performed.' +
+          'Passing a user-supplied value without verifying it may lead to unintended cross-tenant destination access.'
       );
     });
 

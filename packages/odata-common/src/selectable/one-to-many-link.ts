@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { FilterLink } from '../filter/filter-link';
 import { Link } from './link';
 import type { EntityBase } from '../entity-base';

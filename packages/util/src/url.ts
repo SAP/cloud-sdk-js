@@ -1,6 +1,21 @@
 import axios from 'axios';
 
 /**
+ * Checks whether a string is a valid URL.
+ * @param url - String to check.
+ * @returns True if the string is a valid URL, false otherwise.
+ * @internal
+ */
+export function isValidUrl(url: string): boolean {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Checks whether a URL is existing via a head request.
  * @param url - URL to be checked.
  * @returns Promise - resolves if the URL exists.

@@ -2,8 +2,12 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { getInput, setFailed, info } from '@actions/core';
+import { messageTypes } from '../changeset-types.js';
 
 const validCommitTypes = ['feat', 'fix', 'chore'];
+const allAllowedChangeTypes = new Set(
+  messageTypes.flatMap(({ name, alternatives }) => [name, ...alternatives])
+);
 
 // Expected format: preamble(topic)!: Title text
 export async function validateTitle(title: string | undefined): Promise<void> {
@@ -85,7 +89,9 @@ function hasMatchingChangeset(
   if (allowedBumps.length) {
     return changedFileContents.some(fileContent =>
       allowedBumps.some(bump =>
-        new RegExp(`("|')@sap-cloud-sdk/.*("|'): ${bump}`).test(fileContent)
+        new RegExp(`("|')(@sap-cloud-sdk|@sap-ai-sdk)/.*("|'): ${bump}`).test(
+          fileContent
+        )
       )
     );
   }
@@ -109,13 +115,6 @@ export function validateChangesets(
   fileContents: string[]
 ): void {
   const allowedBumps = getAllowedBumps(commitType, isBreaking);
-  const allowedChangeTypes = [
-    'Known Issue',
-    'Compatibility Note',
-    'New Functionality',
-    'Improvement',
-    'Fixed Issue'
-  ];
 
   if (!hasMatchingChangeset(allowedBumps, fileContents)) {
     return setFailed(
@@ -135,14 +134,12 @@ export function validateChangesets(
   }
 
   const allChangeTypesMatch = changeTypes.every(type =>
-    allowedChangeTypes.includes(type)
+    allAllowedChangeTypes.has(type.toLowerCase())
   );
 
   if (!allChangeTypesMatch) {
     return setFailed(
-      `All change types must match one of the allowed change types ${allowedChangeTypes
-        .map(type => `'[${type}]'`)
-        .join(' or ')}.`
+      `All change types must be one of: ${messageTypes.map(({ name }) => `'${name}'`).join(', ')} (or their aliases).`
     );
   }
 

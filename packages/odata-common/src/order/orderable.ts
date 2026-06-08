@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-internal-modules
+// eslint-disable-next-line import-x/no-internal-modules
 import { Link } from '../selectable/link';
 import { Order } from './order';
 import type { DeSerializers } from '../de-serializers';

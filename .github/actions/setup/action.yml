@@ -17,6 +17,9 @@ inputs:
   skip-install:
     description: 'Whether to skip installing and building node dependencies'
     default: 'false'
+  skip-build:
+    description: 'Whether to skip building node dependencies'
+    default: 'false'
   package-manager-cache:
     description: 'Whether to enable caching for pnpm. Set to false to disable caching.'
     default: 'true'
@@ -28,7 +31,7 @@ inputs:
     default: ${{ github.token }}
   persist-credentials:
     description: 'Whether to configure the token or SSH key with the local git config'
-    default: false
+    default: 'false'
 
 runs:
   using: 'composite'
@@ -48,12 +51,12 @@ runs:
       env:
         REGISTRY_URL: ${{ inputs.registry-url }}
         REGISTRY_TOKEN: ${{ inputs.registry-token }}
-        REPO: ${{ github.repository }}
+        IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.owner.login == 'sap' && 'false' || 'true' }}
       shell: bash
       run: |
         if [[ -n "$REGISTRY_URL" ]]; then
           echo "url=$REGISTRY_URL" >> $GITHUB_OUTPUT
-        elif [[ "$REPO" == "SAP/ai-sdk-js" || "$REPO" == "SAP/cloud-sdk-js" ]]; then
+        elif [[ "$IS_FORK" == "false" ]]; then
           if [[ -n "$REGISTRY_TOKEN" ]]; then
             echo "url=https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/" >> $GITHUB_OUTPUT
           else
@@ -74,9 +77,10 @@ runs:
       if: ${{ inputs.skip-install == 'false' }}
       env:
         NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
+        INPUTS_PNPM_INSTALL_ARGS: ${{ inputs.pnpm-install-args }}
       shell: bash
-      run: pnpm install --ignore-scripts ${{ inputs.pnpm-install-args }}
+      run: pnpm install --ignore-scripts ${INPUTS_PNPM_INSTALL_ARGS}
     - name: Run lifecycle scripts
-      if: ${{ inputs.skip-install == 'false' }}
+      if: ${{ inputs.skip-install == 'false' && inputs.skip-build == 'false' }}
       shell: bash
       run: pnpm rebuild

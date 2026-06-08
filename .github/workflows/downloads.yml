@@ -5,9 +5,13 @@ on:
   schedule:
     - cron: '0 0 * * 1'
 
+permissions: {}
+
 jobs:
   downloads:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:

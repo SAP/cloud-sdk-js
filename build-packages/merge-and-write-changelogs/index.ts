@@ -3,36 +3,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { setFailed, info } from '@actions/core';
 import { getPackages } from '@manypkg/get-packages';
-
-const messageTypes = [
-  {
-    name: 'compat',
-    title: 'Compatibility Notes',
-    alternatives: ['compatibility', 'compatibility note', 'compat']
-  },
-  {
-    name: 'feat',
-    title: 'New Features',
-    alternatives: ['new', 'new functionality', 'feat']
-  },
-  {
-    name: 'fix',
-    title: 'Fixed Issues',
-    alternatives: ['bug', 'bug fix', 'fixed issue', 'fix', 'fix issue']
-  },
-  {
-    name: 'impr',
-    title: 'Improvements',
-    alternatives: ['improvement', 'improv']
-  },
-  {
-    name: 'dep',
-    title: 'Updated Dependencies',
-    alternatives: ['dependency', 'dependency update']
-  }
-];
-
-type MessageType = (typeof messageTypes)[number];
+import { messageTypes, type MessageType } from '../changeset-types.js';
 
 interface Change {
   packageNames: string[];

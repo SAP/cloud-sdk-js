@@ -5,9 +5,13 @@ on:
   schedule:
     - cron: 0 21 * * *
 
+permissions: {}
+
 jobs:
   tests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
@@ -31,7 +35,7 @@ jobs:
       - working-directory: test-packages/memory-tests/sdk-canary/
         run: node --inspect test-script.js && cat result.txt
       - name: compare v2 and canary
-        run: pnpm exec ts-node scripts/compare-memory-usage.ts $(cat ./test-packages/memory-tests/sdk-v2/result.txt) $(cat ./test-packages/memory-tests/sdk-canary/result.txt)
+        run: pnpm exec ts-node scripts/compare-memory-usage.ts "$(cat ./test-packages/memory-tests/sdk-v2/result.txt)" "$(cat ./test-packages/memory-tests/sdk-canary/result.txt)"
       - name: Slack Notify
         if: failure() || cancelled()
         env:

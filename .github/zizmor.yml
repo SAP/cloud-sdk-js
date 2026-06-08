@@ -1,0 +1,14 @@
+rules:
+  # already following SAP policies
+  dependabot-cooldown:
+    config:
+      days: 4
+  dangerous-triggers:
+    ignore:
+      - auto-dependabot-fix.yml
+  # allow unpinned references to own repositories
+  unpinned-uses:
+    config:
+      policies:
+        'sap/ai-sdk-js/*': any
+        'sap/cloud-sdk-js/*': any

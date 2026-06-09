@@ -50,7 +50,7 @@ export const defaultDestination: HttpDestination = {
 
 export const defaultHost = defaultDestination.url;
 
-export function mockDestinationsEnv(...destinations) {
+export function mockDestinationsEnv(...destinations: any[]) {
   process.env.destinations = JSON.stringify([...destinations]);
 }
 
@@ -173,7 +173,7 @@ export function mockGetRequest<T extends EntityApi<EntityBase, any>>(
 }
 
 interface MockHeaderRequestParams {
-  request;
+  request: any;
   host?: string;
   responseHeaders?: Record<string, any>;
   path?: string;
@@ -210,7 +210,7 @@ export function mockHeaderRequest({
 }
 
 export function mockRequest(
-  requestConfig,
+  requestConfig: any,
   {
     host = defaultHost,
     destination = defaultDestination,

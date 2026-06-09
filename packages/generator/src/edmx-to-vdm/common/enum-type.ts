@@ -20,7 +20,7 @@ export function transformEnumTypesBase(
       ...formatted,
       [enumType.Name]: formatter.originalToEnumTypeName(enumType.Name)
     }),
-    {}
+    {} as Record<string, string>
   );
   return enumTypes.map(e => {
     e.UnderlyingType = e.UnderlyingType || 'Edm.Int32';

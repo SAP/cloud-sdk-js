@@ -4,6 +4,6 @@ export const customTestDeSerializers = {
   'Edm.String': {
     deserialize: () => customStringPropertyValue,
     serialize: (value: number) => value.toString(),
-    serializeToUri: (value: number, serialize) => `'URI(${serialize(value)})'`
+    serializeToUri: (value: number, serialize: (value: number) => string) => `'URI(${serialize(value)})'`
   }
 };

@@ -72,16 +72,16 @@ function parseEdmxFile(edmx: string, edmxPath: PathLike): EdmxMetadata {
   return parseMetadata(root, getODataVersion(parsedEdmx), edmxPath);
 }
 
-function getODataVersion(edmx): ODataVersion {
+function getODataVersion(edmx: Record<string, any>): ODataVersion {
   return edmx['edmx:Edmx'].Version === '4.0' ? 'v4' : 'v2';
 }
 
-function getRoot(edmx) {
+function getRoot(edmx: Record<string, any>): any[] {
   const schema = edmx['edmx:Edmx']['edmx:DataServices'].Schema;
   return forceArray(schema);
 }
 
-function parseLink(root): string | undefined {
+function parseLink(root: any[]): string | undefined {
   const links = getMergedPropertyWithNamespace(root, 'atom:link');
   const selfLink = links.find(link => link.rel === 'self');
   if (selfLink) {

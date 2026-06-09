@@ -32,10 +32,10 @@ export abstract class UpdateRequestBuilderBase<
   >
   implements EntityIdentifiable<EntityT, DeSerializersT>, WithBatchReference
 {
-  readonly _deSerializers: DeSerializersT;
+  readonly _deSerializers!: DeSerializersT;
   private ignored: Set<string>;
   private required: Set<string>;
-  private _batchReference: BatchReference;
+  private _batchReference!: BatchReference;
 
   /**
    * Creates an instance of UpdateRequestBuilder.

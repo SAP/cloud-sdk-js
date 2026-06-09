@@ -68,6 +68,8 @@
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.19.15",
+    "@types/sap__xsenv": "^3.3.2",
+    "@types/semver": "^7.7.1",
     "@types/voca": "^1.4.6",
     "axios": "^1.15.0",
     "depcheck": "^1.4.7",
@@ -86,7 +88,7 @@
     "ts-node": "^10.9.2",
     "turbo": "^2.9.6",
     "typedoc": "^0.28.18",
-    "typescript": "~5.9.3",
+    "typescript": "~6.0.3",
     "unionfs": "^4.6.0"
   }
 }

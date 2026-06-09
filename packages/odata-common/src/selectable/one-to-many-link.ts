@@ -32,10 +32,10 @@ export class OneToManyLink<
   DeSerializersT extends DeSerializers,
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > extends Link<EntityT, DeSerializersT, LinkedEntityApiT> {
-  _filters: FilterLink<EntityT, DeSerializersT, LinkedEntityApiT>;
+  _filters!: FilterLink<EntityT, DeSerializersT, LinkedEntityApiT>;
   _orderBy: Orderable<EntityType<LinkedEntityApiT>>[] = [];
-  _top: number;
-  _skip: number;
+  _top!: number;
+  _skip!: number;
 
   clone(): this {
     const clonedLink = super.clone();

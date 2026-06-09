@@ -51,9 +51,11 @@
   "devDependencies": {
     "@jest/globals": "^30.3.0",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
+    "@types/fast-levenshtein": "^0.0.4",
+    "@types/fs-extra": "^11.0.4",
     "@types/yargs": "^17.0.33",
     "depcheck": "^1.4.7",
     "memfs": "^4.57.2",
-    "typescript": "~5.9.3"
+    "typescript": "~6.0.3"
   }
 }

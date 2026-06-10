@@ -786,6 +786,29 @@ describe('openapi-request-builder', () => {
     expect((entryMap.get('fileField') as Blob).type).toBe('application/pdf');
   });
 
+  it('wraps Buffer response in Blob when execute() returns binary data', async () => {
+    const buffer = Buffer.from('binary content');
+    httpSpy.mockResolvedValueOnce({
+      data: buffer,
+      status: 200,
+      headers: {},
+      config: {} as any,
+      statusText: 'OK',
+      request: {}
+    } as any);
+    const result = await new OpenApiRequestBuilder<Blob>(
+      'get',
+      '/binary'
+    ).execute(destination);
+    expect(result).toBeInstanceOf(Blob);
+    expect(await result.arrayBuffer()).toEqual(
+      buffer.buffer.slice(
+        buffer.byteOffset,
+        buffer.byteOffset + buffer.byteLength
+      )
+    );
+  });
+
   describe('requestConfig', () => {
     it('should overwrite default request config with filtered custom request config', async () => {
       const requestBuilder = new OpenApiRequestBuilder('get', '/test');

@@ -339,6 +339,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   ): Promise<ResponseT> {
     const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {
+      if (response.data instanceof Buffer) {
+        return new Blob([response.data]) as ResponseT;
+      }
       return response.data;
     }
     throw new Error(

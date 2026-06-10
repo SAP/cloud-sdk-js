@@ -3,8 +3,12 @@ name: auto-lint-fix
 on:
   pull_request: ~
 
+permissions: {}
+
 jobs:
   linting:
+    permissions:
+      contents: read
     if: github.actor != 'dependabot[bot]' && github.repository == github.event.pull_request.head.repo.full_name
     runs-on: ubuntu-latest
     steps:

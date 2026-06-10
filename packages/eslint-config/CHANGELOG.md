@@ -1,5 +1,12 @@
 # @sap-cloud-sdk/eslint-config
 
+## 4.7.0
+
+### Minor Changes
+
+- 9cbf19d: [Compatibility Note] Replaced `eslint-plugin-import` with `eslint-plugin-import-x`.
+  Please ensure that you have `eslint-plugin-import-x` installed.
+
 ## 4.6.0
 
 ## 4.5.1

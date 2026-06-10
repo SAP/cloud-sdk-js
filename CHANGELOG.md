@@ -28,6 +28,33 @@
 
 -
  
+# 4.7.0
+## Compatibility Notes
+
+- [connectivity] IAS tokens are now cached via `@sap/xssec`.
+  `@sap/xssec` uses an LRU cache limited to 100 items, previously this cache was unbound. (9102f18)
+- [eslint-config] Replaced `eslint-plugin-import` with `eslint-plugin-import-x`.
+  Please ensure that you have `eslint-plugin-import-x` installed. (9cbf19d)
+
+## New Features
+
+- [connectivity] Add `createDestinationFromIasService()` convenience function to build IAS-backed destinations.
+  This function aims to offer more convenience for obtaining IAS-backed destinations outside SAP BTP-environments. (9102f18)
+- [connectivity] Add `getIasToken()` convenience function to fetch IAS token.
+  This function aims to offer more convenience for obtaining IAS tokens outside SAP BTP-environments. (9102f18)
+
+## Fixed Issues
+
+- [connectivity] Avoid caching JWT if `forwardAuthToken` is set to `true`.
+  - @sap-cloud-sdk/resilience@4.7.0
+  - @sap-cloud-sdk/util@4.7.0 (df84426)
+- [http-client] Warn when the CSRF token fetch URL has a different host than the request URL, as sensitive headers would be forwarded to the cross-host endpoint. (67e1c53)
+
+## Improvements
+
+- [connectivity, http-client] Cache custom http and https agents and enable the keep-alive option by default. (d54ba5a)
+- [connectivity, http-client] Use node's global http/https agent unless a custom agent is required by the destination configuration. (d54ba5a)
+
 # 4.6.0
 ## Compatibility Notes
 

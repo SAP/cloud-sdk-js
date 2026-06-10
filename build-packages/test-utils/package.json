@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-util-build-internal",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "description": "Shared test utilities for SAP Cloud SDK packages",
   "private": true,
   "type": "module",

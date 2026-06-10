@@ -43,7 +43,7 @@ describe('check-pr', () => {
 
   describe('validateTitle', () => {
     it('should validate title with proper structure', async () => {
-      await validateTitle('chore: test');
+      await validateTitle('chore: Test');
       expect(setFailed).not.toHaveBeenCalled();
     });
 
@@ -117,12 +117,30 @@ describe('check-pr', () => {
     it('should fail if change type is wrong', async () => {
       const fileContents = [
         "'@sap-cloud-sdk/generator': major",
-        '[Fix] Something is fixed.'
+        '[Something] Something is fixed.'
       ];
       validateChangesets('chore!', '', true, fileContents);
       expect(setFailed).toHaveBeenCalledWith(
-        "All change types must match one of the allowed change types '[Known Issue]' or '[Compatibility Note]' or '[New Functionality]' or '[Improvement]' or '[Fixed Issue]'."
+        "All change types must be one of: 'compat', 'feat', 'fix', 'known-issue', 'impr', 'dep' (or their aliases)."
       );
+    });
+
+    it('should pass if shorthand change type is provided', async () => {
+      const fileContents = [
+        "'@sap-cloud-sdk/generator': major",
+        '[fix] Something is fixed.'
+      ];
+      validateChangesets('chore!', '', true, fileContents);
+      expect(setFailed).not.toHaveBeenCalled();
+    });
+
+    it('should pass if compat shorthand change type is provided', async () => {
+      const fileContents = [
+        "'@sap-cloud-sdk/generator': major",
+        '[compat] Something changed.'
+      ];
+      validateChangesets('chore!', '', true, fileContents);
+      expect(setFailed).not.toHaveBeenCalled();
     });
 
     it('should pass if correct change type is provided', async () => {
@@ -146,6 +164,15 @@ describe('check-pr', () => {
     it('should validate with matched changesets in double quotes', async () => {
       const fileContents = [
         '"@sap-cloud-sdk/generator": major',
+        '[Fixed Issue] Something is fixed.'
+      ];
+      validateChangesets('chore!', '', true, fileContents);
+      expect(setFailed).not.toHaveBeenCalled();
+    });
+
+    it('should validate with @sap-ai-sdk scope', async () => {
+      const fileContents = [
+        "'@sap-ai-sdk/core': major",
         '[Fixed Issue] Something is fixed.'
       ];
       validateChangesets('chore!', '', true, fileContents);

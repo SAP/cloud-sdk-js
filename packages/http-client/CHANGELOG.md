@@ -1,5 +1,25 @@
 # @sap-cloud-sdk/http-client
 
+## 4.7.0
+
+### Minor Changes
+
+- d54ba5a: [Improvement] Cache custom http and https agents and enable the keep-alive option by default.
+- d54ba5a: [Improvement] Use node's global http/https agent unless a custom agent is required by the destination configuration.
+
+### Patch Changes
+
+- 67e1c53: [Fixed Issue] Warn when the CSRF token fetch URL has a different host than the request URL, as sensitive headers would be forwarded to the cross-host endpoint.
+- Updated dependencies [9102f18]
+- Updated dependencies [d54ba5a]
+- Updated dependencies [df84426]
+- Updated dependencies [9102f18]
+- Updated dependencies [d54ba5a]
+- Updated dependencies [9102f18]
+  - @sap-cloud-sdk/connectivity@4.7.0
+  - @sap-cloud-sdk/resilience@4.7.0
+  - @sap-cloud-sdk/util@4.7.0
+
 ## 4.6.0
 
 ### Patch Changes

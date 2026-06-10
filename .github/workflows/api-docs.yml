@@ -7,6 +7,13 @@ on:
         description: 'Version to generate docs for'
         required: true
         type: string
+    secrets:
+      NPM_TOKEN_ARTIFACTORY:
+        required: true
+      SAP_CLOUD_SDK_BOT_CLIENT_ID:
+        required: true
+      SAP_CLOUD_SDK_BOT_PRIVATE_KEY:
+        required: true
   workflow_dispatch:
     inputs:
       version:
@@ -14,8 +21,12 @@ on:
         required: true
         type: string
 
+permissions: {}
+
 jobs:
   generate-and-push-docs:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
@@ -45,8 +56,8 @@ jobs:
           FULL_VERSION: ${{ inputs.version }}
         run: |
           gh auth setup-git
-          git config user.email "$BOT_EMAIL"
-          git config user.name "$BOT_NAME"
+          git config --global user.email "$BOT_EMAIL"
+          git config --global user.name "$BOT_NAME"
 
           # Extract major version from input (e.g., v4.5.0 -> v4)
           # shellcheck disable=SC2001

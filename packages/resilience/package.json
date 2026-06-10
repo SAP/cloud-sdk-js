@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/resilience",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "description": "SAP Cloud SDK for JavaScript resilience",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",

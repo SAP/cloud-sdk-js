@@ -2973,11 +2973,11 @@ ${e.indent}`) : C[0] === `
 				let { anchors: r, maxAliasCount: s } = n, i = r.get(this.source);
 				if (!i || i.res === void 0) {
 					let o = "This should not happen: Alias anchor was not resolved?";
-					throw this.cstNode ? new p.YAMLReferenceError(this.cstNode, o) : new ReferenceError(o);
+					throw this.cstNode ? new p.YAMLReferenceError(this.cstNode, o) : /* @__PURE__ */ new ReferenceError(o);
 				}
 				if (s >= 0 && (i.count += 1, i.aliasCount === 0 && (i.aliasCount = xt(this.source, r)), i.count * i.aliasCount > s)) {
 					let o = "Excessive alias count indicates a resource exhaustion attack";
-					throw this.cstNode ? new p.YAMLReferenceError(this.cstNode, o) : new ReferenceError(o);
+					throw this.cstNode ? new p.YAMLReferenceError(this.cstNode, o) : /* @__PURE__ */ new ReferenceError(o);
 				}
 				return i.res;
 			}

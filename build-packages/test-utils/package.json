@@ -24,7 +24,7 @@
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
     "prettier": "^3.8.1",
-    "rolldown": "1.0.2",
+    "rolldown": "1.1.0",
     "typescript": "~5.9.3"
   }
 }

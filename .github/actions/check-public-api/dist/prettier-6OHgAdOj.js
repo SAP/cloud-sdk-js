@@ -2386,7 +2386,7 @@ async function loadConfigFromPackageYaml(file) {
 }
 async function loadYaml(file) {
 	const content = await read_file_default(file);
-	if (!parseYaml) ({__parsePrettierYamlConfig: parseYaml} = await import("./yaml-CPcqnRNs.js"));
+	if (!parseYaml) ({__parsePrettierYamlConfig: parseYaml} = await import("./yaml-CTY-PRL9.js"));
 	try {
 		return parseYaml(content);
 	} catch (error) {
@@ -15472,7 +15472,7 @@ ${codeblock}`, options8);
 			parsers: ["typescript"]
 		},
 		{
-			importPlugin: () => import("./yaml-CPcqnRNs.js"),
+			importPlugin: () => import("./yaml-CTY-PRL9.js"),
 			parsers: ["yaml"],
 			printers: ["yaml"]
 		}

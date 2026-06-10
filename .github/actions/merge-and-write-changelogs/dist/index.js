@@ -25340,12 +25340,12 @@ var require_manypkg_tools_cjs_prod = /* @__PURE__ */ __commonJSMin$1(((exports) 
 	function _interopDefault(e) {
 		return e && e.__esModule ? e : { "default": e };
 	}
-	var path__default = /* @__PURE__ */ _interopDefault(path$5);
-	var fsp__default = /* @__PURE__ */ _interopDefault(fsp$3);
-	var glob__default = /* @__PURE__ */ _interopDefault(glob);
-	var fs__default = /* @__PURE__ */ _interopDefault(fs$3);
-	var yaml__default = /* @__PURE__ */ _interopDefault(yaml);
-	var jju__default = /* @__PURE__ */ _interopDefault(jju);
+	var path__default = /*#__PURE__*/ _interopDefault(path$5);
+	var fsp__default = /*#__PURE__*/ _interopDefault(fsp$3);
+	var glob__default = /*#__PURE__*/ _interopDefault(glob);
+	var fs__default = /*#__PURE__*/ _interopDefault(fs$3);
+	var yaml__default = /*#__PURE__*/ _interopDefault(yaml);
+	var jju__default = /*#__PURE__*/ _interopDefault(jju);
 	/**
 	* A package.json access type.
 	*/
@@ -25817,12 +25817,12 @@ var require_manypkg_tools_cjs_dev = /* @__PURE__ */ __commonJSMin$1(((exports) =
 	function _interopDefault(e) {
 		return e && e.__esModule ? e : { "default": e };
 	}
-	var path__default = /* @__PURE__ */ _interopDefault(path$4);
-	var fsp__default = /* @__PURE__ */ _interopDefault(fsp$2);
-	var glob__default = /* @__PURE__ */ _interopDefault(glob);
-	var fs__default = /* @__PURE__ */ _interopDefault(fs$2);
-	var yaml__default = /* @__PURE__ */ _interopDefault(yaml);
-	var jju__default = /* @__PURE__ */ _interopDefault(jju);
+	var path__default = /*#__PURE__*/ _interopDefault(path$4);
+	var fsp__default = /*#__PURE__*/ _interopDefault(fsp$2);
+	var glob__default = /*#__PURE__*/ _interopDefault(glob);
+	var fs__default = /*#__PURE__*/ _interopDefault(fs$2);
+	var yaml__default = /*#__PURE__*/ _interopDefault(yaml);
+	var jju__default = /*#__PURE__*/ _interopDefault(jju);
 	/**
 	* A package.json access type.
 	*/
@@ -26298,9 +26298,9 @@ var require_manypkg_find_root_cjs_prod = /* @__PURE__ */ __commonJSMin$1(((expor
 	function _interopDefault(e) {
 		return e && e.__esModule ? e : { "default": e };
 	}
-	var path__default = /* @__PURE__ */ _interopDefault(path$3);
-	var fs__default = /* @__PURE__ */ _interopDefault(fs$1);
-	var fsp__default = /* @__PURE__ */ _interopDefault(fsp$1);
+	var path__default = /*#__PURE__*/ _interopDefault(path$3);
+	var fs__default = /*#__PURE__*/ _interopDefault(fs$1);
+	var fsp__default = /*#__PURE__*/ _interopDefault(fsp$1);
 	/**
 	* A default ordering for monorepo tool checks.
 	*
@@ -26433,9 +26433,9 @@ var require_manypkg_find_root_cjs_dev = /* @__PURE__ */ __commonJSMin$1(((export
 	function _interopDefault(e) {
 		return e && e.__esModule ? e : { "default": e };
 	}
-	var path__default = /* @__PURE__ */ _interopDefault(path$2);
-	var fs__default = /* @__PURE__ */ _interopDefault(fs);
-	var fsp__default = /* @__PURE__ */ _interopDefault(fsp);
+	var path__default = /*#__PURE__*/ _interopDefault(path$2);
+	var fs__default = /*#__PURE__*/ _interopDefault(fs);
+	var fsp__default = /*#__PURE__*/ _interopDefault(fsp);
 	/**
 	* A default ordering for monorepo tool checks.
 	*
@@ -26572,7 +26572,7 @@ var require_manypkg_get_packages_cjs_prod = /* @__PURE__ */ __commonJSMin$1(((ex
 	function _interopDefault(e) {
 		return e && e.__esModule ? e : { "default": e };
 	}
-	var path__default = /* @__PURE__ */ _interopDefault(path$1);
+	var path__default = /*#__PURE__*/ _interopDefault(path$1);
 	var PackageJsonMissingNameError = class extends Error {
 		constructor(directories) {
 			super(`The following package.jsons are missing the "name" field:\n${directories.join("\n")}`);
@@ -26627,7 +26627,7 @@ var require_manypkg_get_packages_cjs_dev = /* @__PURE__ */ __commonJSMin$1(((exp
 	function _interopDefault(e) {
 		return e && e.__esModule ? e : { "default": e };
 	}
-	var path__default = /* @__PURE__ */ _interopDefault(path);
+	var path__default = /*#__PURE__*/ _interopDefault(path);
 	var PackageJsonMissingNameError = class extends Error {
 		constructor(directories) {
 			super(`The following package.jsons are missing the "name" field:\n${directories.join("\n")}`);

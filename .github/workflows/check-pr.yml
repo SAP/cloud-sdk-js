@@ -15,6 +15,12 @@ jobs:
     permissions:
       contents: read
     steps:
+      - name: Collect changed files
+        id: changed-files
+        uses: step-security/changed-files@2e07db73e5ccdb319b9a6c7766bd46d39d304bad # v47.0.5
+        with:
+          files: |
+            .changeset/**
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
@@ -22,12 +28,6 @@ jobs:
             .github/actions/check-pr
             .github/PULL_REQUEST_TEMPLATE.md
             .changeset
-      - name: Collect changed files
-        id: changed-files
-        uses: step-security/changed-files@2e07db73e5ccdb319b9a6c7766bd46d39d304bad # v47.0.5
-        with:
-          files: |
-            .changeset/**
       - uses: ./.github/actions/check-pr
         with:
           changed-files: ${{ steps.changed-files.outputs.added_files }} ${{ steps.changed-files.outputs.modified_files }}

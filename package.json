@@ -12,6 +12,9 @@
     "sap-cloud-platform"
   ],
   "repository": "github:SAP/cloud-sdk-js",
+  "engines": {
+    "node": ">=22"
+  },
   "tsd": {
     "directory": "test-packages/type-tests/test-new"
   },

@@ -19,6 +19,7 @@ jobs:
         with:
           persist-credentials: false
           sparse-checkout: |
+            .github/actions/check-pr
             .github/PULL_REQUEST_TEMPLATE.md
             .changeset
       - name: Collect changed files

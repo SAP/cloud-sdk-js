@@ -1,4 +1,4 @@
-import { createLogger } from '@sap-cloud-sdk/util/dist/logger';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { executeWithMiddleware } from './middleware';
 import type { MiddlewareContext, MiddlewareOptions } from './middleware';
 

@@ -340,7 +340,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {
       if (response.data instanceof Buffer) {
-        return new Blob([response.data]) as ResponseT;
+        const contentType = pickValueIgnoreCase(
+          response.headers,
+          'content-type'
+        );
+        return new Blob(
+          [response.data],
+          contentType && { type: contentType }
+        ) as ResponseT;
       }
       return response.data;
     }

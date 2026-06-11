@@ -809,6 +809,60 @@ describe('openapi-request-builder', () => {
     );
   });
 
+  it('propagates response Content-Type to Blob when wrapping Buffer', async () => {
+    const buffer = Buffer.from('binary content');
+    httpSpy.mockResolvedValueOnce({
+      data: buffer,
+      status: 200,
+      headers: { 'content-type': 'application/pdf' },
+      config: {} as any,
+      statusText: 'OK',
+      request: {}
+    } as any);
+    const result = await new OpenApiRequestBuilder<Blob>(
+      'get',
+      '/binary'
+    ).execute(destination);
+    expect(result).toBeInstanceOf(Blob);
+    expect(result.type).toBe('application/pdf');
+  });
+
+  it('propagates response Content-Type case-insensitively when wrapping Buffer', async () => {
+    const buffer = Buffer.from('binary content');
+    httpSpy.mockResolvedValueOnce({
+      data: buffer,
+      status: 200,
+      headers: { 'Content-Type': 'image/png' },
+      config: {} as any,
+      statusText: 'OK',
+      request: {}
+    } as any);
+    const result = await new OpenApiRequestBuilder<Blob>(
+      'get',
+      '/binary'
+    ).execute(destination);
+    expect(result).toBeInstanceOf(Blob);
+    expect(result.type).toBe('image/png');
+  });
+
+  it('omits Blob type when response has no Content-Type header', async () => {
+    const buffer = Buffer.from('binary content');
+    httpSpy.mockResolvedValueOnce({
+      data: buffer,
+      status: 200,
+      headers: {},
+      config: {} as any,
+      statusText: 'OK',
+      request: {}
+    } as any);
+    const result = await new OpenApiRequestBuilder<Blob>(
+      'get',
+      '/binary'
+    ).execute(destination);
+    expect(result).toBeInstanceOf(Blob);
+    expect(result.type).toBe('');
+  });
+
   describe('requestConfig', () => {
     it('should overwrite default request config with filtered custom request config', async () => {
       const requestBuilder = new OpenApiRequestBuilder('get', '/test');

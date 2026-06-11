@@ -1,37 +1,40 @@
-import puppeteer from 'puppeteer';
-
-async function getVersionsDownloads(browser, packageName) {
-  const page = await browser.newPage();
-  await page.goto(`https://www.npmjs.com/package/${packageName}`);
-  // window as a global variable is not recognized by TypeScript, therefore ignore checks for this line
-  return await page.evaluate(
-    // @ts-ignore
-    () => window.__context__.context.versionsDownloads
+async function getVersionsDownloads(
+  packageName: string
+): Promise<Record<string, number>> {
+  const res = await fetch(
+    `https://api.npmjs.org/versions/${encodeURIComponent(packageName)}/last-week`
   );
+  if (!res.ok) {
+    throw new Error(`npm API error ${res.status} for ${packageName}`);
+  }
+  const data = (await res.json()) as { downloads: Record<string, number> };
+  return data.downloads;
 }
 
-async function aggregateStats(versionsDownloads) {
+function aggregateStats(
+  versionsDownloads: Record<string, number>
+): Record<string, number> {
   return Object.entries(versionsDownloads)
     .filter(([version]) => !version.includes('-'))
-    .reduce((majorVersions, [version, downloads]) => {
-      const [majorVersion] = version.split('.');
-      return {
-        ...majorVersions,
-        [majorVersion]: (majorVersions[majorVersion] ?? 0) + downloads
-      };
+    .reduce<Record<string, number>>((acc, [version, downloads]) => {
+      const major = version.split('.')[0];
+      acc[major] = (acc[major] ?? 0) + downloads;
+      return acc;
     }, {});
 }
 
-async function getStatsForPackage(page, packageName) {
-  const versionsDownloads = await getVersionsDownloads(page, packageName);
+async function getStatsForPackage(packageName: string) {
+  const versionsDownloads = await getVersionsDownloads(packageName);
   return {
     name: packageName,
-    downloads: await aggregateStats(versionsDownloads)
+    downloads: aggregateStats(versionsDownloads)
   };
 }
 
-function getAllStats(browser) {
-  return [
+async function getAllStats(): Promise<
+  { name: string; downloads: Record<string, number> }[]
+> {
+  const packages = [
     '@sap-cloud-sdk/util',
     '@sap-cloud-sdk/connectivity',
     '@sap-cloud-sdk/http-client',
@@ -46,15 +49,21 @@ function getAllStats(browser) {
     '@sap-cloud-sdk/odata-common',
     '@sap-cloud-sdk/resilience',
     '@sap/cds'
-  ].map(packageName => {
-    return getStatsForPackage(browser, packageName);
-  });
+  ];
+
+  const stats: { name: string; downloads: Record<string, number> }[] = [];
+  for (const packageName of packages) {
+    const packageInfo = await getStatsForPackage(packageName);
+    stats.push(packageInfo);
+    await new Promise(resolve => setTimeout(resolve, 100)); // avoid potential API rate limits
+  }
+  return stats;
 }
 
 async function main() {
-  const browser = await puppeteer.launch();
+  const stats = await getAllStats();
+
   // eslint-disable-next-line no-console
-  const stats = await Promise.all(getAllStats(browser));
   console.log(
     stats
       .map(
@@ -68,7 +77,6 @@ async function main() {
       )
       .join('\n\n')
   );
-  await browser.close();
 }
 
 main();

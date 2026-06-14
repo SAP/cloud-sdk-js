@@ -50,7 +50,7 @@
     "swagger2openapi": "^7.0.4"
   },
   "devDependencies": {
-    "@apidevtools/json-schema-ref-parser": "^14.1.1",
+    "@apidevtools/json-schema-ref-parser": "^15.3.5",
     "@jest/globals": "^30.3.0",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@types/content-type": "^1.1.9",

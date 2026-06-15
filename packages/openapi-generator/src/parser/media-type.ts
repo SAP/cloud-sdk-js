@@ -1,5 +1,5 @@
-import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { parse as parseContentType, type ParsedMediaType } from 'content-type';
+import { createLogger } from '@sap-cloud-sdk/util';
+import { parse as parseContentType, type ContentType } from 'content-type';
 import { parseSchema } from './schema';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiMediaTypeObject, OpenApiSchema } from '../openapi-types';
@@ -19,36 +19,16 @@ const allowedMediaTypes = [
 interface EncodingInfo {
   contentType: string;
   isImplicit: boolean;
-  parsedContentTypes: ParsedMediaType[];
+  parsedContentTypes: ContentType[];
 }
 
 type EncodingMap = Record<string, EncodingInfo>;
 
-/**
- * Parse content types from a comma-separated content type string.
- * @param contentType - Comma-separated content types from encoding object.
- * @param propName - Property name for error messages.
- * @returns Array of parsed content types.
- */
-function parseContentTypes(
-  contentType: string,
-  propName: string
-): ParsedMediaType[] {
+function parseContentTypes(contentType: string): ContentType[] {
   return contentType
     .split(',')
     .map(ct => ct.trim())
-    .map(ct => {
-      try {
-        return parseContentType(ct);
-      } catch (error: any) {
-        throw new ErrorWithCause(
-          `Invalid content type '${ct}' for property '${propName}' in OpenAPI specification. ` +
-            "Content types must follow the format 'type/subtype' (e.g., 'image/png', 'text/plain'). " +
-            'Please fix your OpenAPI document.',
-          error
-        );
-      }
-    });
+    .map(ct => parseContentType(ct));
 }
 
 /**
@@ -128,7 +108,7 @@ function inferMultipartFormEncodings(
         {
           contentType,
           isImplicit: true,
-          parsedContentTypes: parseContentTypes(contentType, propName)
+          parsedContentTypes: parseContentTypes(contentType)
         }
       ];
     })
@@ -158,10 +138,7 @@ function parseMultipartFormEncodings(
             {
               contentType: encodingObj.contentType!,
               isImplicit: false,
-              parsedContentTypes: parseContentTypes(
-                encodingObj.contentType!,
-                propName
-              )
+              parsedContentTypes: parseContentTypes(encodingObj.contentType!)
             }
           ])
       )

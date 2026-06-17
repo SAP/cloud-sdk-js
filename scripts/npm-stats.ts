@@ -17,7 +17,7 @@ function aggregateStats(
   return Object.entries(versionsDownloads)
     .filter(([version]) => !version.includes('-'))
     .reduce<Record<string, number>>((acc, [version, downloads]) => {
-      const major = version.split('.')[0];
+      const [major] = version.split('.');
       acc[major] = (acc[major] ?? 0) + downloads;
       return acc;
     }, {});

@@ -13095,7 +13095,7 @@ module.exports.wrap = wrap;
 
 /***/ }),
 
-/***/ 1515:
+/***/ 4504:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 
@@ -13113,7 +13113,19 @@ var mime = __nccwpck_require__(2574);
 var asynckit = __nccwpck_require__(8915);
 var setToStringTag = __nccwpck_require__(8362);
 var hasOwn = __nccwpck_require__(585);
-var populate = __nccwpck_require__(2260);
+var populate = __nccwpck_require__(3549);
+
+/**
+ * Escape CR, LF, and `"` in a multipart `name`/`filename` parameter, so a field
+ * name or filename can not break out of its header line to inject headers or
+ * smuggle additional parts. Matches the WHATWG HTML multipart/form-data encoding.
+ *
+ * @param {string} str - the parameter value to escape
+ * @returns {string} the escaped value
+ */
+function escapeHeaderParam(str) {
+  return String(str).replace(/\r/g, '%0D').replace(/\n/g, '%0A').replace(/"/g, '%22');
+}
 
 /**
  * Create readable "multipart/form-data" streams.
@@ -13280,7 +13292,7 @@ FormData.prototype._multiPartHeader = function (field, value, options) {
   var contents = '';
   var headers = {
     // add custom disposition as third element or keep it two elements if not
-    'Content-Disposition': ['form-data', 'name="' + field + '"'].concat(contentDisposition || []),
+    'Content-Disposition': ['form-data', 'name="' + escapeHeaderParam(field) + '"'].concat(contentDisposition || []),
     // if no content type. allow it to be empty array
     'Content-Type': [].concat(contentType || [])
   };
@@ -13334,7 +13346,7 @@ FormData.prototype._getContentDisposition = function (value, options) { // eslin
   }
 
   if (filename) {
-    return 'filename="' + filename + '"';
+    return 'filename="' + escapeHeaderParam(filename) + '"';
   }
 };
 
@@ -13596,7 +13608,7 @@ module.exports = FormData;
 
 /***/ }),
 
-/***/ 2260:
+/***/ 3549:
 /***/ ((module) => {
 
 
@@ -14542,7 +14554,7 @@ function omit(obj, ...keys) {
 
 /***/ }),
 
-/***/ 4504:
+/***/ 2123:
 /***/ (function(module, __unused_webpack_exports, __nccwpck_require__) {
 
 
@@ -69144,10 +69156,10 @@ globstar while`,t,d,e,u,m),this.matchOne(t.slice(d),e.slice(u),s))return this.de
 /*! Axios v1.17.0 Copyright (c) 2026 Matt Zabriskie and contributors */
 
 
-var FormData$1 = __nccwpck_require__(1515);
+var FormData$1 = __nccwpck_require__(4504);
 var crypto = __nccwpck_require__(6982);
 var url = __nccwpck_require__(7016);
-var HttpsProxyAgent = __nccwpck_require__(4504);
+var HttpsProxyAgent = __nccwpck_require__(2123);
 var http = __nccwpck_require__(8611);
 var https = __nccwpck_require__(5692);
 var http2 = __nccwpck_require__(5675);

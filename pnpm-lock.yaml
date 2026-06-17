@@ -124,8 +124,8 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.0
+        version: 0.44.0
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -152,8 +152,8 @@ importers:
         version: 15.0.0
     devDependencies:
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.0
+        version: 0.44.0
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -180,8 +180,8 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.0
+        version: 0.44.0
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -223,8 +223,8 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.0
+        version: 0.44.0
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -245,8 +245,8 @@ importers:
         version: 3.0.1
     devDependencies:
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.0
+        version: 0.44.0
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -270,8 +270,8 @@ importers:
         version: 2.2.2
     devDependencies:
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.0
+        version: 0.44.0
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -2643,8 +2643,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@vercel/ncc@0.38.4':
-    resolution: {integrity: sha512-8LwjnlP39s08C08J5NstzriPvW1SP8Zfpp1BvC2sI35kPeZnHfxVkCwu4/+Wodgnd60UtT1n8K8zw+Mp7J9JmQ==}
+  '@vercel/ncc@0.44.0':
+    resolution: {integrity: sha512-pHyI+bZokSgIscTKFSmpNk5vZzmOrb9RW0Vu4SRyqUvkJ0kgg3PzaZLLDVTFXhbUiCqg0/Eu8L4fKtgViA92kg==}
     hasBin: true
 
   '@vue/compiler-core@3.5.31':
@@ -8151,7 +8151,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.12.2':
     optional: true
 
-  '@vercel/ncc@0.38.4': {}
+  '@vercel/ncc@0.44.0': {}
 
   '@vue/compiler-core@3.5.31':
     dependencies:

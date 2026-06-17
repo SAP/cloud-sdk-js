@@ -44,7 +44,7 @@ export async function embedCommitLinks(
     await Promise.all(
       lines.map(async line => {
         const match = line.match(SHORT_SHA_AT_LINE_END_RE);
-        if (!match || !line.trimStart().startsWith('- [')) {
+        if (!match) {
           return line;
         }
 

@@ -917,8 +917,8 @@ importers:
         specifier: ^11.3.4
         version: 11.3.5
       http-proxy-middleware:
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: ^3.0.7
+        version: 3.0.7
       json-schema-faker:
         specifier: ^0.6.0
         version: 0.6.2
@@ -2044,27 +2044,27 @@ packages:
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
   '@sap/cds-compiler@6.9.0':
-    resolution: {integrity: sha512-UXQ5pomb+Fw48Ch1mJoN1JkDy0loZX8nZKXjy4qxY2s9FMwNOwKJP9wPomAVlYcuzq6u8Viqh5j70ty8ciGWGg==}
+    resolution: {integrity: sha512-UXQ5pomb+Fw48Ch1mJoN1JkDy0loZX8nZKXjy4qxY2s9FMwNOwKJP9wPomAVlYcuzq6u8Viqh5j70ty8ciGWGg==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-compiler/-/@sap/cds-compiler-6.9.0.tgz}
     engines: {node: '>=20'}
     hasBin: true
 
   '@sap/cds-dk@9.9.2':
-    resolution: {integrity: sha512-cngXMULAuueITOLymme51fBuUKRaqofXDzwyJtnEQ2BLZBz/t6s+rXZV7nY2xJyqU3y0rbB023R9218D25evuw==}
+    resolution: {integrity: sha512-cngXMULAuueITOLymme51fBuUKRaqofXDzwyJtnEQ2BLZBz/t6s+rXZV7nY2xJyqU3y0rbB023R9218D25evuw==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-dk/-/@sap/cds-dk-9.9.2.tgz}
     hasBin: true
 
   '@sap/cds-fiori@2.3.0':
-    resolution: {integrity: sha512-6oWov+DSpFrSTgxXR0dZhak6aZ/IVRZvaHERMi0EgSTzIJdlvZlpw3Kf18ePMcTrRrtEXwD4RIjKt8pbs0g2Hg==}
+    resolution: {integrity: sha512-6oWov+DSpFrSTgxXR0dZhak6aZ/IVRZvaHERMi0EgSTzIJdlvZlpw3Kf18ePMcTrRrtEXwD4RIjKt8pbs0g2Hg==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-fiori/-/@sap/cds-fiori-2.3.0.tgz}
     peerDependencies:
       '@sap/cds': '>=8'
 
   '@sap/cds-mtxs@3.9.3':
-    resolution: {integrity: sha512-NdL+ctu1YmxRMFFk8ip3PZHXxIrDv93gK+ZUE+e5B+9MNDvalQcav4QllqwiGJ/CJcfJROWGTt+a554A81dxow==}
+    resolution: {integrity: sha512-NdL+ctu1YmxRMFFk8ip3PZHXxIrDv93gK+ZUE+e5B+9MNDvalQcav4QllqwiGJ/CJcfJROWGTt+a554A81dxow==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-mtxs/-/@sap/cds-mtxs-3.9.3.tgz}
     hasBin: true
     peerDependencies:
       '@sap/cds': '>=9'
 
   '@sap/cds@9.9.1':
-    resolution: {integrity: sha512-GqdsBsRkZThhpOyzj8ihf/jDmf/2zprZFgaun6ZymUw4/ahzjK/bbdd6eQ8txDuv88pnUl2HPFjvUVq3O/6hCA==}
+    resolution: {integrity: sha512-GqdsBsRkZThhpOyzj8ihf/jDmf/2zprZFgaun6ZymUw4/ahzjK/bbdd6eQ8txDuv88pnUl2HPFjvUVq3O/6hCA==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds/-/@sap/cds-9.9.1.tgz}
     engines: {node: '>=20'}
     hasBin: true
     peerDependencies:
@@ -2103,7 +2103,7 @@ packages:
     engines: {node: ^20.0.0  || ^22.0.0 || ^24.0.0}
 
   '@sap/xssec@4.13.0':
-    resolution: {integrity: sha512-8e+bU+OyAIpAGXQanOopZa5YEK+yHKw84dhhihcCotF40MSNFbVHjQ4xM5hf4QndlqDGfXIuvXmoOMuDATa/gA==}
+    resolution: {integrity: sha512-8e+bU+OyAIpAGXQanOopZa5YEK+yHKw84dhhihcCotF40MSNFbVHjQ4xM5hf4QndlqDGfXIuvXmoOMuDATa/gA==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/xssec/-/@sap/xssec-4.13.0.tgz}
     engines: {node: '>=18'}
 
   '@shikijs/engine-oniguruma@3.23.0':
@@ -3467,6 +3467,10 @@ packages:
   error-ex@1.3.4:
     resolution: {integrity: sha512-sqQamAnR14VgCr1A618A3sGrygcpK+HEbenA/HiEAkkUwcZIIB/tgWqHFxWgOyDh4nB4JCRimh79dR5Ywc9MDQ==}
 
+  es-abstract-get@1.0.0:
+    resolution: {integrity: sha512-6PMWXpdhshVvFp+FoWYs1EvG1Nj0tvk0dZM+XcK0xMEM1czRVcP6ohqPWHy6qPagSpC8j4+p89WXlT+xXJs/fg==}
+    engines: {node: '>= 0.4'}
+
   es-abstract@1.24.2:
     resolution: {integrity: sha512-2FpH9Q5i2RRwyEP1AylXe6nYLR5OhaJTZwmlcP0dL/+JCbgg7yyEo/sEK6HeGZRf3dFpWwThaRHVApXSkW3xeg==}
     engines: {node: '>= 0.4'}
@@ -3491,8 +3495,8 @@ packages:
     resolution: {integrity: sha512-d9T8ucsEhh8Bi1woXCf+TIKDIROLG5WCkxg8geBCbvk22kzwC5G2OnXVMO6FUsvQlgUUXQ2itephWDLqDzbeCw==}
     engines: {node: '>= 0.4'}
 
-  es-to-primitive@1.3.0:
-    resolution: {integrity: sha512-w+5mJ3GuFL+NjVtJlvydShqE1eN3h3PbI7/5LAsYJP/2qtuMXjfL2LpHSRqo4b4eSF5K/DH1JXKUAHSB2UW50g==}
+  es-to-primitive@1.3.1:
+    resolution: {integrity: sha512-CxN9N56HYfd2m/acc/NOFrZQsN9kU4eh+2kk6A707Kz1krH8tKmfrs5RnftB8WNX80T0NS7vSQsDOlg23diR2g==}
     engines: {node: '>= 0.4'}
 
   es6-promise@3.3.1:
@@ -4098,9 +4102,9 @@ packages:
     resolution: {integrity: sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig==}
     engines: {node: '>= 14'}
 
-  http-proxy-middleware@3.0.5:
-    resolution: {integrity: sha512-GLZZm1X38BPY4lkXA01jhwxvDoOkkXqjgVyUzVxiEK4iuRu03PZoYHhHRwxnfhQMDuaxi3vVri0YgSro/1oWqg==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+  http-proxy-middleware@3.0.7:
+    resolution: {integrity: sha512-iwbQltVlx8bCrqePUM8C+hllHvdawVhQJaLrj1X7qllkvFQdXFsr16pW/mo9+JDVjN+QO2XUx9jd8SmoFkE5qw==}
+    engines: {node: ^14.18.0 || ^16.10.0 || >=18.0.0}
 
   http-proxy@1.18.1:
     resolution: {integrity: sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==}
@@ -8877,6 +8881,14 @@ snapshots:
     dependencies:
       is-arrayish: 0.2.1
 
+  es-abstract-get@1.0.0:
+    dependencies:
+      es-errors: 1.3.0
+      es-object-atoms: 1.1.2
+      is-callable: 1.2.7
+      object-inspect: 1.13.4
+    optional: true
+
   es-abstract@1.24.2:
     dependencies:
       array-buffer-byte-length: 1.0.2
@@ -8891,7 +8903,7 @@ snapshots:
       es-errors: 1.3.0
       es-object-atoms: 1.1.2
       es-set-tostringtag: 2.1.0
-      es-to-primitive: 1.3.0
+      es-to-primitive: 1.3.1
       function.prototype.name: 1.2.0
       get-intrinsic: 1.3.0
       get-proto: 1.0.1
@@ -8955,8 +8967,10 @@ snapshots:
       hasown: 2.0.4
     optional: true
 
-  es-to-primitive@1.3.0:
+  es-to-primitive@1.3.1:
     dependencies:
+      es-abstract-get: 1.0.0
+      es-errors: 1.3.0
       is-callable: 1.2.7
       is-date-object: 1.1.0
       is-symbol: 1.1.1
@@ -9711,7 +9725,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  http-proxy-middleware@3.0.5:
+  http-proxy-middleware@3.0.7:
     dependencies:
       '@types/http-proxy': 1.17.17
       debug: 4.4.3

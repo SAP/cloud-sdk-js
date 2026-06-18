@@ -289,21 +289,21 @@ function needsIgnoreDeprecationsTs6(
     moduleResolutionKind === ModuleResolutionKind.Classic
   ) {
     logger.warn(
-      `The selected module resolution kind ${ModuleResolutionKind[moduleResolutionKind]} is not deprecated with TypeScript 6.0`
+      `The selected module resolution kind ${ModuleResolutionKind[moduleResolutionKind]} is deprecated with TypeScript 6.0`
     );
     return true;
   }
 
   if (scriptTarget === ScriptTarget.ES3 || scriptTarget === ScriptTarget.ES5) {
     logger.warn(
-      `The selected script target ${ScriptTarget[scriptTarget]} is not deprecated with TypeScript 6.0`
+      `The selected script target ${ScriptTarget[scriptTarget]} is deprecated with TypeScript 6.0`
     );
     return true;
   }
 
   if (moduleKind === ModuleKind.AMD) {
     logger.warn(
-      `The selected module kind ${ModuleKind[moduleKind]} is not deprecated with TypeScript 6.0`
+      `The selected module kind ${ModuleKind[moduleKind]} is deprecated with TypeScript 6.0`
     );
     return true;
   }

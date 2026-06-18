@@ -34,7 +34,6 @@ packages:
   - 'build-packages/test-utils'
 allowBuilds:
   better-sqlite3: false
-  puppeteer: false
   unrs-resolver: false
 
 blockExoticSubdeps: true

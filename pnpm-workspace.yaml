@@ -40,7 +40,7 @@ blockExoticSubdeps: true
 minimumReleaseAge: 5760
 minimumReleaseAgeExclude: 
   - qs@6.15.2
-  - race-expansion@5.0.6
+  - brace-expansion@5.0.6
   - ws@8.21.0
   - form-data@4.0.6
   - tar@7.5.16

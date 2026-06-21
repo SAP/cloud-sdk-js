@@ -543,7 +543,7 @@ importers:
         version: link:../util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -583,7 +583,7 @@ importers:
         version: link:../util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -623,7 +623,7 @@ importers:
         version: link:../util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -903,7 +903,7 @@ importers:
         version: 1.17.0
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -988,7 +988,7 @@ importers:
         version: link:../../packages/openapi-generator
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
       execa:
         specifier: ^5.0.0
         version: 5.1.1
@@ -1030,7 +1030,7 @@ importers:
         version: link:../../packages/util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1061,7 +1061,7 @@ importers:
         version: link:../../packages/util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
     devDependencies:
       depcheck:
         specifier: ^1.4.7
@@ -1077,7 +1077,7 @@ importers:
         version: link:../../packages/generator
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1099,7 +1099,7 @@ importers:
         version: link:../../packages/generator
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1175,7 +1175,7 @@ importers:
         version: 9.0.10
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.3
+        version: 11.1.4
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -2938,8 +2938,8 @@ packages:
     resolution: {integrity: sha512-wqUv4Gm3toFpHDQmaKD4QhZm3g1DjUBI0yzS4UBl6lElUmXFYdTQmmEDpAFa5o8FiFiymURypEnfVHzILKaxqQ==}
     engines: {node: 20.x || 22.x || 23.x || 24.x || 25.x}
 
-  bignumber.js@11.1.3:
-    resolution: {integrity: sha512-+esZiNSo6VgFokTsYX6mYqNJfFd/IczzZCd4Z7cR8e+AQWhvIcj6nqQ1h9814D9u/TApU0jjTVmfWL0Pd1ZBdA==}
+  bignumber.js@11.1.4:
+    resolution: {integrity: sha512-AJ9dSeaUGj2xu7tEwmdqb51dqdb633xo4njI9K8ZFfcLrNr0XN8/EPkkZUNaF9fkCblGt2zVwZymesUdGynEkQ==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -8360,7 +8360,7 @@ snapshots:
       bindings: 1.5.0
       prebuild-install: 7.1.3
 
-  bignumber.js@11.1.3: {}
+  bignumber.js@11.1.4: {}
 
   binary-extensions@2.3.0: {}
 

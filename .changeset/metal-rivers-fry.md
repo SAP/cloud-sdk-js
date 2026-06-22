@@ -1,5 +1,5 @@
 ---
-"@sap-cloud-sdk/generator-common": patch
+"@sap-cloud-sdk/generator-common": minor
 ---
 
 [impr] Extended `parseScriptTarget` to include ES2023, ES2024, and ES2025 targets.

@@ -147,6 +147,8 @@ export class Cache<T> implements CacheInterface<T> {
   }
 }
 
+const hashAlgorithm = getCacheKeyHashAlgorithm();
+
 /**
  * Hashes the given value to create a cache key.
  * @internal
@@ -155,14 +157,27 @@ export class Cache<T> implements CacheInterface<T> {
  */
 export function hashCacheKey(value: Record<string, unknown>): string {
   const serialized = stringify(value);
+  const algorithm = hashAlgorithm;
 
-  // TODO: crypto.hash is available in Node.js v20.12.0 and later.
-  // Remove the fallback to crypto.createHash once Node.js 22 is the minimum supported version.
-  if (typeof crypto.hash === 'function') {
-    return crypto.hash('blake2s256', serialized, 'base64url');
+  return crypto.hash(algorithm, serialized, 'base64url');
+}
+
+function getCacheKeyHashAlgorithm(): string {
+  const availableHashes = crypto.getHashes();
+
+  if (availableHashes.includes('blake2s256')) {
+    return 'blake2s256';
+  }
+  if (availableHashes.includes('sha3-256')) {
+    return 'sha3-256';
+  }
+  if (availableHashes.includes('sha256')) {
+    return 'sha256';
   }
 
-  return crypto.createHash('blake2s256').update(serialized).digest('base64url');
+  throw new Error(
+    'No supported hash algorithm available for cache key generation. Expected blake2s256, sha3-256, or sha256.'
+  );
 }
 
 function isExpired<T>(item: CacheEntry<T>): boolean {

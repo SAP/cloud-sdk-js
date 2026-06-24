@@ -1,5 +1,4 @@
 import { isDestinationFetchOptions } from './destination-accessor-types';
-import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import type { DestinationFromServiceBindingOptions } from './destination-from-vcap';
 import type {
@@ -468,17 +467,43 @@ export function noDestinationErrorMessage(
 }
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
+ * Manual XOR between a destination and fetch options.
+ *
+ * `WithoutExclusive<T, U>` nevers every key of `T` that is NOT also in `U` — so the discriminators
+ * shared by both branches stay accessible, while exclusive keys (`url` vs `destinationName`/`service`)
+ * are correctly forbidden on the opposite branch.
+ *
+ * The standard `Xor<T,U>` from `@sap-cloud-sdk/util` over-nevers: it sets ALL keys of `T` to `never`
+ * in the opposite branch, which collapses internal unions inside `U` (notably the
+ * `service` / `destinationName` discriminator in {@link DestinationFromServiceBindingOptions}),
+ * causing `service` to disappear from completions/assignability — the bug this type fixes.
  */
-export type DestinationOrFetchOptions = Xor<
-  Destination,
-  DestinationFetchOptions & DestinationFromServiceBindingOptions
->;
+type WithoutExclusive<T, U> = {
+  [P in Exclude<keyof T, keyof U>]?: never;
+};
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
+ * Fetch-options side of the XOR.
+ *
+ * `DestinationFetchOptions` requires `destinationName: string`, but when looking up by
+ * `service` (via `DestinationFromServiceBindingOptions`) we don't have a name. Intersecting
+ * the two naively makes `destinationName: string & never = never`, killing the service branch.
+ * Stripping `destinationName` from `DestinationFetchOptions` and letting the inner discriminated
+ * union of `DestinationFromServiceBindingOptions` own that key fixes it.
  */
-export type HttpDestinationOrFetchOptions = Xor<
-  HttpDestination,
-  DestinationFetchOptions & DestinationFromServiceBindingOptions
->;
+type FetchOptionsLeaf = Omit<DestinationFetchOptions, 'destinationName'> &
+  DestinationFromServiceBindingOptions;
+
+/**
+ * Type that is either a {@link Destination} or (XOR) {@link DestinationFetchOptions} & {@link DestinationFromServiceBindingOptions}.
+ */
+export type DestinationOrFetchOptions =
+  | (WithoutExclusive<Destination, FetchOptionsLeaf> & FetchOptionsLeaf)
+  | (WithoutExclusive<FetchOptionsLeaf, Destination> & Destination);
+
+/**
+ * Type that is either an {@link HttpDestination} or (XOR) {@link DestinationFetchOptions} & {@link DestinationFromServiceBindingOptions}.
+ */
+export type HttpDestinationOrFetchOptions =
+  | (WithoutExclusive<HttpDestination, FetchOptionsLeaf> & FetchOptionsLeaf)
+  | (WithoutExclusive<FetchOptionsLeaf, HttpDestination> & HttpDestination);

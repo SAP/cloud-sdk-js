@@ -9,7 +9,7 @@ import * as events from "events";
 import "child_process";
 import "timers";
 var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
-var __require = /* @__PURE__ */ createRequire(import.meta.url);
+var __require = /* #__PURE__ */ (() => createRequire(import.meta.url))();
 //#endregion
 //#region ../../node_modules/.pnpm/@actions+core@3.0.1/node_modules/@actions/core/lib/utils.js
 /**
@@ -7948,7 +7948,7 @@ var require_readable = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	* @returns {Uint8Array}
 	*/
 	function chunksConcat(chunks, length) {
-		if (chunks.length === 0 || length === 0) return new Uint8Array(0);
+		if (chunks.length === 0 || length === 0) return /* @__PURE__ */ new Uint8Array(0);
 		if (chunks.length === 1) return new Uint8Array(chunks[0]);
 		const buffer = new Uint8Array(Buffer.allocUnsafeSlow(length).buffer);
 		let offset = 0;
@@ -17328,13 +17328,13 @@ var list_default = [
 ];
 //#endregion
 //#region index.ts
-const ALLOWED_STATUSES = new Set([
+const ALLOWED_STATUSES = /* @__PURE__ */ new Set([
 	"Model",
 	"Gold",
 	"Silver",
 	"Bronze"
 ]);
-const ADDITIONAL_ALLOWED = new Set([
+const ADDITIONAL_ALLOWED = /* @__PURE__ */ new Set([
 	"(BSD-3-Clause OR GPL-2.0)",
 	"CC-BY-3.0",
 	"CC-BY-4.0"

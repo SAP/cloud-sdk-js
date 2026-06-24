@@ -11,7 +11,7 @@ import * as events from "events";
 import "child_process";
 import "timers";
 var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
-var __require = /* @__PURE__ */ createRequire(import.meta.url);
+var __require = /* #__PURE__ */ (() => createRequire(import.meta.url))();
 //#endregion
 //#region ../../node_modules/.pnpm/@actions+core@3.0.1/node_modules/@actions/core/lib/utils.js
 /**
@@ -7965,7 +7965,7 @@ var require_readable = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	* @returns {Uint8Array}
 	*/
 	function chunksConcat(chunks, length) {
-		if (chunks.length === 0 || length === 0) return new Uint8Array(0);
+		if (chunks.length === 0 || length === 0) return /* @__PURE__ */ new Uint8Array(0);
 		if (chunks.length === 1) return new Uint8Array(chunks[0]);
 		const buffer = new Uint8Array(Buffer.allocUnsafeSlow(length).buffer);
 		let offset = 0;

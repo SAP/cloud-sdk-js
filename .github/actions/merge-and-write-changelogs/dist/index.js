@@ -13,7 +13,14 @@ var __defProp$1 = Object.defineProperty;
 var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames$1 = Object.getOwnPropertyNames;
 var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
-var __esmMin = (fn, res) => () => (fn && (res = fn(fn = 0)), res);
+var __esmMin = (fn, res, err) => () => {
+	if (err) throw err[0];
+	try {
+		return fn && (res = fn(fn = 0)), res;
+	} catch (e) {
+		throw err = [e], e;
+	}
+};
 var __commonJSMin$1 = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
 var __exportAll = (all, no_symbols) => {
 	let target = {};
@@ -35,7 +42,7 @@ var __copyProps$1 = (to, from, except, desc) => {
 	return to;
 };
 var __toCommonJS = (mod) => __hasOwnProp$1.call(mod, "module.exports") ? mod["module.exports"] : __copyProps$1(__defProp$1({}, "__esModule", { value: true }), mod);
-var __require = /* @__PURE__ */ createRequire(import.meta.url);
+var __require = /* #__PURE__ */ (() => createRequire(import.meta.url))();
 //#endregion
 //#region ../../node_modules/.pnpm/@actions+core@3.0.1/node_modules/@actions/core/lib/utils.js
 /**
@@ -7974,7 +7981,7 @@ var require_readable = /* @__PURE__ */ __commonJSMin$1(((exports, module) => {
 	* @returns {Uint8Array}
 	*/
 	function chunksConcat(chunks, length) {
-		if (chunks.length === 0 || length === 0) return new Uint8Array(0);
+		if (chunks.length === 0 || length === 0) return /* @__PURE__ */ new Uint8Array(0);
 		if (chunks.length === 1) return new Uint8Array(chunks[0]);
 		const buffer = new Uint8Array(Buffer.allocUnsafeSlow(length).buffer);
 		let offset = 0;
@@ -16661,7 +16668,7 @@ var require_to_regex_range = /* @__PURE__ */ __commonJSMin$1(((exports, module) 
 		let nines = 1;
 		let zeros = 1;
 		let stop = countNines(min, nines);
-		let stops = new Set([max]);
+		let stops = /* @__PURE__ */ new Set([max]);
 		while (min <= stop && stop <= max) {
 			stops.add(stop);
 			nines += 1;

@@ -147,37 +147,27 @@ export class Cache<T> implements CacheInterface<T> {
   }
 }
 
-const hashAlgorithm = getCacheKeyHashAlgorithm();
-
 /**
  * Hashes the given value to create a cache key.
  * @internal
  * @param value - The value to hash.
  * @returns A hash of the given value using a cryptographic hash function.
  */
-export function hashCacheKey(value: Record<string, unknown>): string {
-  const serialized = stringify(value);
-  const algorithm = hashAlgorithm;
+export async function hashCacheKey(
+  value: Record<string, unknown>
+): Promise<string> {
+  const stringifiedValue = stringify(value);
+  const encodedValue = new TextEncoder().encode(stringifiedValue);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encodedValue);
 
-  return crypto.hash(algorithm, serialized, 'base64url');
-}
-
-function getCacheKeyHashAlgorithm(): string {
-  const availableHashes = crypto.getHashes();
-
-  if (availableHashes.includes('blake2s256')) {
-    return 'blake2s256';
-  }
-  if (availableHashes.includes('sha3-256')) {
-    return 'sha3-256';
-  }
-  if (availableHashes.includes('sha256')) {
-    return 'sha256';
+  // TODO: Supported in Node.js 25 and later + browsers
+  if (typeof (hashBuffer as any).hex === 'function') {
+    return (hashBuffer as any).hex();
   }
 
-  throw new Error(
-    'No supported hash algorithm available for cache key generation. Expected blake2s256, sha3-256, or sha256.'
-  );
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(byte => byte.toString(16).padStart(2, '0'))
+    .join('');
 }
 
 function isExpired<T>(item: CacheEntry<T>): boolean {

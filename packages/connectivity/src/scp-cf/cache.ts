@@ -161,13 +161,14 @@ export async function hashCacheKey(
   const hashBuffer = await crypto.subtle.digest('SHA-256', encodedValue);
 
   // TODO: Supported in Node.js 25 and later + browsers
-  if (typeof (hashBuffer as any).hex === 'function') {
-    return (hashBuffer as any).hex();
+  if ((Uint8Array.prototype as any).toHex) {
+    // Use toHex if supported.
+    return (new Uint8Array(hashBuffer) as any).toHex(); // Convert ArrayBuffer to hex string.
   }
-
-  return Array.from(new Uint8Array(hashBuffer))
-    .map(byte => byte.toString(16).padStart(2, '0'))
-    .join('');
+  // If toHex() is not supported, fall back to an alternative implementation.
+  const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+  return hashHex;
 }
 
 function isExpired<T>(item: CacheEntry<T>): boolean {

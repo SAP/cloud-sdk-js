@@ -2,12 +2,12 @@
 
 import { promises } from 'fs';
 import { join, resolve } from 'path';
-import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
-import { generate } from '@sap-cloud-sdk/generator/src';
+import { createOptions } from '../../packages/generator/test/test-util/create-generator-options';
+import { generate } from '../../packages/generator/src';
 import {
   createFile,
   defaultPrettierConfig
-} from '@sap-cloud-sdk/generator-common/dist/file-writer';
+} from '@sap-cloud-sdk/generator-common/internal';
 
 const outDir = resolve(__dirname, 'common-service');
 

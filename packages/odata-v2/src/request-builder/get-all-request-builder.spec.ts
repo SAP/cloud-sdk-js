@@ -1,9 +1,9 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
-import { oDataTypedClientParameterEncoder } from '@sap-cloud-sdk/http-client/dist/http-client';
+import { oDataTypedClientParameterEncoder } from '@sap-cloud-sdk/http-client/internal';
 import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import { timeout } from '@sap-cloud-sdk/resilience';
-import { parseDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf/destination/destination';
+import { parseDestination } from '@sap-cloud-sdk/connectivity/internal';
 import {
   defaultDestination,
   mockCountRequest,

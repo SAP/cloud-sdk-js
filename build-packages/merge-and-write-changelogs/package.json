@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
-    "postcompile": "ncc build lib/build-packages/merge-and-write-changelogs/index.js --out ../../.github/actions/merge-and-write-changelogs/",
+    "postcompile": "rolldown -c rolldown.config.ts",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "check:dependencies": "depcheck --skip-missing=true .",
@@ -18,10 +18,11 @@
     "@manypkg/get-packages": "^2.2.2"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.4",
+    "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
     "prettier": "^3.8.1",
+    "rolldown": "1.1.2",
     "typescript": "~5.9.3"
   }
 }

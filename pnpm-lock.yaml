@@ -861,7 +861,7 @@ importers:
         version: 12.1.0(openapi-types@12.1.3)
       '@cap-js/sqlite':
         specifier: ^2.2.0
-        version: 2.4.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))
+        version: 2.4.0(@sap/cds@10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))
       '@jest/globals':
         specifier: ^30.3.0
         version: 30.4.1
@@ -893,8 +893,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/util
       '@sap/cds':
-        specifier: ^9.8.4
-        version: 9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
+        specifier: ^10.0.1
+        version: 10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
       '@sap/cds-dk':
         specifier: 9.9.2
         version: 9.9.2(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
@@ -2037,9 +2037,14 @@ packages:
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
-  '@sap/cds-compiler@6.9.0':
-    resolution: {integrity: sha512-UXQ5pomb+Fw48Ch1mJoN1JkDy0loZX8nZKXjy4qxY2s9FMwNOwKJP9wPomAVlYcuzq6u8Viqh5j70ty8ciGWGg==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-compiler/-/@sap/cds-compiler-6.9.0.tgz}
+  '@sap/cds-compiler@6.9.3':
+    resolution: {integrity: sha512-8fEeM6D059ruqLWoJqzFSNLkGoUCMnycx7Zv4OP4nA9zZeHzFC3nAe6s3ak2kASSiub1xAMMPzDE/9EnSXQKLw==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-compiler/-/@sap/cds-compiler-6.9.3.tgz}
     engines: {node: '>=20'}
+    hasBin: true
+
+  '@sap/cds-compiler@7.0.1':
+    resolution: {integrity: sha512-Qwk9jitwSSwPB9FTB/Q6gYPxFsJxswhfsO9Ux77HTxjIhse8O/Hlq2XzkpVSTyaAVr8Lo7wLfpytHwKQScZTwQ==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-compiler/-/@sap/cds-compiler-7.0.1.tgz}
+    engines: {node: '>=22'}
     hasBin: true
 
   '@sap/cds-dk@9.9.2':
@@ -2056,6 +2061,17 @@ packages:
     hasBin: true
     peerDependencies:
       '@sap/cds': '>=9'
+
+  '@sap/cds@10.0.1':
+    resolution: {integrity: sha512-63NCoACtozbKxnSyv0n+5oMqXFUEjnSFkey1ZzhE4ny8rl1L+N2HoNDuG7ydC1agBI3ndXUIFD56XsM2QcjQkg==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds/-/@sap/cds-10.0.1.tgz}
+    engines: {node: '>=22'}
+    hasBin: true
+    peerDependencies:
+      '@eslint/js': ^9 || ^10
+      tar: ^7.5.6
+    peerDependenciesMeta:
+      tar:
+        optional: true
 
   '@sap/cds@9.9.1':
     resolution: {integrity: sha512-GqdsBsRkZThhpOyzj8ihf/jDmf/2zprZFgaun6ZymUw4/ahzjK/bbdd6eQ8txDuv88pnUl2HPFjvUVq3O/6hCA==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds/-/@sap/cds-9.9.1.tgz}
@@ -6537,21 +6553,34 @@ snapshots:
     dependencies:
       '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
 
+  '@cap-js/db-service@2.11.0(@sap/cds@10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))':
+    dependencies:
+      '@sap/cds': 10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
+      generic-pool: 3.9.0
+
   '@cap-js/db-service@2.11.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))':
     dependencies:
       '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
       generic-pool: 3.9.0
+    optional: true
 
   '@cap-js/openapi@1.4.2(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))':
     dependencies:
       '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
       pluralize: 8.0.0
 
+  '@cap-js/sqlite@2.4.0(@sap/cds@10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))':
+    dependencies:
+      '@cap-js/db-service': 2.11.0(@sap/cds@10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))
+      '@sap/cds': 10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
+      better-sqlite3: 12.9.0
+
   '@cap-js/sqlite@2.4.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))':
     dependencies:
       '@cap-js/db-service': 2.11.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))
       '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
       better-sqlite3: 12.9.0
+    optional: true
 
   '@changesets/apply-release-plan@7.1.1':
     dependencies:
@@ -7358,7 +7387,9 @@ snapshots:
   '@rtsao/scc@1.1.0':
     optional: true
 
-  '@sap/cds-compiler@6.9.0': {}
+  '@sap/cds-compiler@6.9.3': {}
+
+  '@sap/cds-compiler@7.0.1': {}
 
   '@sap/cds-dk@9.9.2(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)':
     dependencies:
@@ -7385,6 +7416,10 @@ snapshots:
       - tar
       - utf-8-validate
 
+  '@sap/cds-fiori@2.3.0(@sap/cds@10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))':
+    dependencies:
+      '@sap/cds': 10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
+
   '@sap/cds-fiori@2.3.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))':
     dependencies:
       '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
@@ -7398,10 +7433,22 @@ snapshots:
       - hdb
       - supports-color
 
+  '@sap/cds@10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)':
+    dependencies:
+      '@eslint/js': 10.0.1(eslint@10.5.0)
+      '@sap/cds-compiler': 7.0.1
+      '@sap/cds-fiori': 2.3.0(@sap/cds@10.0.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))
+      express: 4.22.2
+      yaml: 2.9.0
+    optionalDependencies:
+      tar: 7.5.13
+    transitivePeerDependencies:
+      - supports-color
+
   '@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)':
     dependencies:
       '@eslint/js': 10.0.1(eslint@10.5.0)
-      '@sap/cds-compiler': 6.9.0
+      '@sap/cds-compiler': 6.9.3
       '@sap/cds-fiori': 2.3.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13))
       express: 4.22.2
       yaml: 2.9.0

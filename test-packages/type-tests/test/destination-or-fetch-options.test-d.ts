@@ -1,6 +1,7 @@
 import { expectAssignable, expectError } from 'tsd';
 import type {
   DestinationOrFetchOptions,
+  Destination,
   HttpDestination,
   HttpDestinationOrFetchOptions,
   Service

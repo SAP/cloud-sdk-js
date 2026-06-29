@@ -8,6 +8,7 @@ import type {
   DestinationCertificate,
   HttpDestination
 } from './destination-service-types';
+import type { WithoutExclusive } from '@sap-cloud-sdk/util';
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
@@ -465,22 +466,6 @@ export function noDestinationErrorMessage(
   }
   return 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
-
-/**
- * Manual XOR between a destination and fetch options.
- *
- * `WithoutExclusive<T, U>` nevers every key of `T` that is NOT also in `U` — so the discriminators
- * shared by both branches stay accessible, while exclusive keys (`url` vs `destinationName`/`service`)
- * are correctly forbidden on the opposite branch.
- *
- * The standard `Xor<T,U>` from `@sap-cloud-sdk/util` over-nevers: it sets ALL keys of `T` to `never`
- * in the opposite branch, which collapses internal unions inside `U` (notably the
- * `service` / `destinationName` discriminator in {@link DestinationFromServiceBindingOptions}),
- * causing `service` to disappear from completions/assignability — the bug this type fixes.
- */
-type WithoutExclusive<T, U> = {
-  [P in Exclude<keyof T, keyof U>]?: never;
-};
 
 /**
  * Fetch-options side of the XOR.

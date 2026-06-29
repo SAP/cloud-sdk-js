@@ -306,10 +306,10 @@ function createAgent(
   destination: HttpDestination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
-  const protocol = getProtocolOrDefault(destination);
-  const cacheKey = hashCacheKey({ protocol, options });
+  const cacheKey = hashCacheKey({destination, options});
 
   return agentCache.getOrInsertComputed(cacheKey, () => {
+    const protocol = getProtocolOrDefault(destination);
     logger.debug(
       `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || '<unknown>'}`
     );

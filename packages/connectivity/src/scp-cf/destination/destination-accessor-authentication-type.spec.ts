@@ -16,8 +16,12 @@ import {
   onlyIssuerServiceToken,
   providerUserToken,
   subscriberServiceToken,
+  subscriberUserPayload,
   subscriberUserToken
 } from '@sap-cloud-sdk/test-util-internal/mocked-access-tokens';
+import { signedJwtForVerification } from '@sap-cloud-sdk/test-util-internal/keys';
+import { agentCache, getAgentConfig } from '../../http-agent';
+import type { HttpDestination } from './destination-service-types';
 import {
   basicMultipleResponse,
   certificateSingleResponse,
@@ -492,6 +496,66 @@ describe('authentication types', () => {
         "No user token (JWT) has been provided. This is strictly necessary for 'PrincipalPropagation'."
       );
       expectAllMocksUsed(httpMocks);
+    });
+
+    it('produces different HTTP agents for the same destination resolved for two different users', async () => {
+      // Regression test for #6715: two PrincipalPropagation requests by
+      // different users must not share the same keep-alive socket. The user
+      // JWT is embedded in proxyConfiguration.headers['SAP-Connectivity-Authentication']
+      // by getDestination, so the agent cache key (hashed over the whole
+      // destination) yields distinct agents per user.
+      agentCache.clear();
+
+      const secondSubscriberUserToken = signedJwtForVerification({
+        ...subscriberUserPayload,
+        user_id: 'user-sub-2'
+      });
+
+      const httpMocksA = mockFetchDestinationCalls(
+        onPremisePrincipalPropagationMultipleResponse[0],
+        { serviceToken: subscriberServiceToken, mockWithTokenRetrievalCall: false }
+      );
+      const destinationA = await getDestination({
+        destinationName: 'OnPremise',
+        jwt: subscriberUserToken,
+        cacheVerificationKeys: false,
+        selectionStrategy: alwaysSubscriber
+      });
+      expectAllMocksUsed(httpMocksA);
+
+      const httpMocksB = mockFetchDestinationCalls(
+        onPremisePrincipalPropagationMultipleResponse[0],
+        { serviceToken: subscriberServiceToken, mockWithTokenRetrievalCall: false }
+      );
+      const destinationB = await getDestination({
+        destinationName: 'OnPremise',
+        jwt: secondSubscriberUserToken,
+        cacheVerificationKeys: false,
+        selectionStrategy: alwaysSubscriber
+      });
+      expectAllMocksUsed(httpMocksB);
+
+      const userAHeader =
+        destinationA?.proxyConfiguration?.headers?.[
+          'SAP-Connectivity-Authentication'
+        ];
+      const userBHeader =
+        destinationB?.proxyConfiguration?.headers?.[
+          'SAP-Connectivity-Authentication'
+        ];
+      expect(userAHeader).toBeDefined();
+      expect(userBHeader).toBeDefined();
+      expect(userAHeader).not.toEqual(userBHeader);
+
+      const agentA = ((await getAgentConfig(
+        destinationA as HttpDestination
+      )) as any)['httpsAgent'];
+      const agentB = ((await getAgentConfig(
+        destinationB as HttpDestination
+      )) as any)['httpsAgent'];
+      expect(agentA).toBeDefined();
+      expect(agentB).toBeDefined();
+      expect(agentA).not.toBe(agentB);
     });
   });
 

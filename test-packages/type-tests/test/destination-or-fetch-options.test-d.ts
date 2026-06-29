@@ -14,7 +14,7 @@ const mockService: Service = undefined as any;
 expectAssignable<DestinationOrFetchOptions>({
   url: 'https://example.com',
   name: 'my-dest'
-});
+} as Destination);
 
 // Fetch-options branch: destinationName surfaces.
 expectAssignable<DestinationOrFetchOptions>({ destinationName: 'foo' });

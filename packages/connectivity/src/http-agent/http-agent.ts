@@ -306,7 +306,7 @@ function createAgent(
   destination: HttpDestination,
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
-  const cacheKey = hashCacheKey({destination, options});
+  const cacheKey = hashCacheKey({ destination, options });
 
   return agentCache.getOrInsertComputed(cacheKey, () => {
     const protocol = getProtocolOrDefault(destination);

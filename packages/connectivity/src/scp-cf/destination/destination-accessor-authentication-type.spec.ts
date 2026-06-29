@@ -20,8 +20,6 @@ import {
   subscriberUserToken
 } from '@sap-cloud-sdk/test-util-internal/mocked-access-tokens';
 import { signedJwtForVerification } from '@sap-cloud-sdk/test-util-internal/keys';
-import { agentCache, getAgentConfig } from '../../http-agent';
-import type { HttpDestination } from './destination-service-types';
 import {
   basicMultipleResponse,
   certificateSingleResponse,
@@ -38,6 +36,7 @@ import {
   onPremisePrincipalPropagationMultipleResponse,
   samlAssertionSingleResponse
 } from '@sap-cloud-sdk/test-util-internal/example-destination-service-responses';
+import { agentCache, getAgentConfig } from '../../http-agent';
 import { decodeJwt } from '../jwt';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { parseDestination } from './destination';
@@ -47,6 +46,7 @@ import {
   alwaysProvider,
   alwaysSubscriber
 } from './destination-selection-strategies';
+import type { HttpDestination } from './destination-service-types';
 
 describe('authentication types', () => {
   beforeEach(() => {
@@ -513,7 +513,10 @@ describe('authentication types', () => {
 
       const httpMocksA = mockFetchDestinationCalls(
         onPremisePrincipalPropagationMultipleResponse[0],
-        { serviceToken: subscriberServiceToken, mockWithTokenRetrievalCall: false }
+        {
+          serviceToken: subscriberServiceToken,
+          mockWithTokenRetrievalCall: false
+        }
       );
       const destinationA = await getDestination({
         destinationName: 'OnPremise',
@@ -525,7 +528,10 @@ describe('authentication types', () => {
 
       const httpMocksB = mockFetchDestinationCalls(
         onPremisePrincipalPropagationMultipleResponse[0],
-        { serviceToken: subscriberServiceToken, mockWithTokenRetrievalCall: false }
+        {
+          serviceToken: subscriberServiceToken,
+          mockWithTokenRetrievalCall: false
+        }
       );
       const destinationB = await getDestination({
         destinationName: 'OnPremise',
@@ -547,12 +553,12 @@ describe('authentication types', () => {
       expect(userBHeader).toBeDefined();
       expect(userAHeader).not.toEqual(userBHeader);
 
-      const agentA = ((await getAgentConfig(
-        destinationA as HttpDestination
-      )) as any)['httpsAgent'];
-      const agentB = ((await getAgentConfig(
-        destinationB as HttpDestination
-      )) as any)['httpsAgent'];
+      const agentA = (
+        (await getAgentConfig(destinationA as HttpDestination)) as any
+      )['httpsAgent'];
+      const agentB = (
+        (await getAgentConfig(destinationB as HttpDestination)) as any
+      )['httpsAgent'];
       expect(agentA).toBeDefined();
       expect(agentB).toBeDefined();
       expect(agentA).not.toBe(agentB);

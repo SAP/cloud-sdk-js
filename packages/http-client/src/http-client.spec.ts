@@ -40,7 +40,8 @@ import {
   executeHttpRequest,
   oDataTypedClientParameterEncoder,
   executeHttpRequestWithOrigin,
-  buildHttpRequestConfigWithOrigin
+  buildHttpRequestConfigWithOrigin,
+  getAxiosConfigWithDefaultsWithoutMethod
 } from './http-client';
 import type {
   DestinationHttpRequestConfig,
@@ -1440,6 +1441,19 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       expect(buildHttpRequestConfigWithOrigin(requestConfig)).toStrictEqual(
         expected
       );
+    });
+  });
+
+  describe('getAxiosConfigWithDefaultsWithoutMethod', () => {
+    it('uses http agents with keepAlive enabled', () => {
+      const config = getAxiosConfigWithDefaultsWithoutMethod();
+      expect(config.httpAgent.options.keepAlive).toBe(true);
+      expect(config.httpsAgent.options.keepAlive).toBe(true);
+      expect(config.httpAgent.options.timeout).toBeUndefined();
+      expect(config.httpsAgent.options.timeout).toBeUndefined();
+      // Remove workaround if this test ever fails
+      expect((http.globalAgent as any).options.timeout).toBeTruthy();
+      expect((https.globalAgent as any).options.timeout).toBeTruthy();
     });
   });
 });

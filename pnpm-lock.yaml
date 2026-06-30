@@ -49,7 +49,7 @@ importers:
         version: 1.4.6
       axios:
         specifier: ^1.15.0
-        version: 1.18.0
+        version: 1.18.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -323,7 +323,7 @@ importers:
         version: 1.3.3
       axios:
         specifier: ^1.15.0
-        version: 1.18.0
+        version: 1.18.1
       jks-js:
         specifier: ^1.1.6
         version: 1.1.7
@@ -384,7 +384,7 @@ importers:
         version: 63.0.7(eslint@10.5.0)
       eslint-plugin-prettier:
         specifier: ^5.5.5
-        version: 5.5.6(eslint-config-prettier@10.1.8(eslint@10.5.0))(eslint@10.5.0)(prettier@3.8.4)
+        version: 5.5.6(eslint-config-prettier@10.1.8(eslint@10.5.0))(eslint@10.5.0)(prettier@3.8.5)
       eslint-plugin-unused-imports:
         specifier: ^4.4.1
         version: 4.4.1(@typescript-eslint/eslint-plugin@8.61.1(@typescript-eslint/parser@8.62.0(eslint@10.5.0)(typescript@5.9.3))(eslint@10.5.0)(typescript@5.9.3))(eslint@10.5.0)
@@ -506,7 +506,7 @@ importers:
         version: link:../util
       axios:
         specifier: ^1.15.0
-        version: 1.18.0
+        version: 1.18.1
     devDependencies:
       '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
@@ -660,7 +660,7 @@ importers:
         version: link:../util
       axios:
         specifier: ^1.15.0
-        version: 1.18.0
+        version: 1.18.1
     devDependencies:
       '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
@@ -743,7 +743,7 @@ importers:
         version: 1.3.3
       axios:
         specifier: ^1.15.0
-        version: 1.18.0
+        version: 1.18.1
       opossum:
         specifier: ^10.0.0
         version: 10.0.0
@@ -818,7 +818,7 @@ importers:
     dependencies:
       axios:
         specifier: ^1.15.0
-        version: 1.18.0
+        version: 1.18.1
       logform:
         specifier: ^2.7.0
         version: 2.7.0
@@ -900,7 +900,7 @@ importers:
         version: 9.9.2(@eslint/js@10.0.1(eslint@10.5.0))(tar@7.5.13)
       axios:
         specifier: ^1.15.0
-        version: 1.18.0
+        version: 1.18.1
       bignumber.js:
         specifier: ^11.0.0
         version: 11.1.4
@@ -969,7 +969,7 @@ importers:
         version: 4.13.0
       axios:
         specifier: ^1.15.0
-        version: 1.18.0
+        version: 1.18.1
     devDependencies:
       '@jest/globals':
         specifier: ^30.3.0
@@ -2820,8 +2820,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.18.0:
-    resolution: {integrity: sha512-E32NzpYKp++W7XRe52rHiXV2ehxmh3wbdgO7MHeFM+vqxLBYHzt0ElkiImtOBxtOmyp0yoC8C6uESVV84Y2/hw==}
+  axios@1.18.1:
+    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
 
   babel-jest@30.4.1:
     resolution: {integrity: sha512-fATAbM8piYxkiXQp3RBXmZHxZVNJZAVXXfyeyCN2Tida3+qJ8ea9UxhiJ2y4fLO90ZImKt6k9FlcH2+rLkJGhw==}
@@ -3437,8 +3437,8 @@ packages:
     resolution: {integrity: sha512-d9T8ucsEhh8Bi1woXCf+TIKDIROLG5WCkxg8geBCbvk22kzwC5G2OnXVMO6FUsvQlgUUXQ2itephWDLqDzbeCw==}
     engines: {node: '>= 0.4'}
 
-  es-to-primitive@1.3.1:
-    resolution: {integrity: sha512-CxN9N56HYfd2m/acc/NOFrZQsN9kU4eh+2kk6A707Kz1krH8tKmfrs5RnftB8WNX80T0NS7vSQsDOlg23diR2g==}
+  es-to-primitive@1.3.4:
+    resolution: {integrity: sha512-yPDz7wqpg1/mmHLmS3tcfTfbw5f1eryXvyghYBffGdERwe+mV7ZcWzTR8LR17Kvqt3qfPurjlonmnq3MKXIOXw==}
     engines: {node: '>= 0.4'}
 
   es6-promise@3.3.1:
@@ -5260,6 +5260,11 @@ packages:
 
   prettier@3.8.4:
     resolution: {integrity: sha512-N2MylSdi48+5N/6S5j+maeHbUSIzzZ5uOcX5Hm4QpV8Dkb1HFjfAKTKX6yNPJQD9AhcT3ifHNB66tWTTJDi11Q==}
+    engines: {node: '>=14'}
+    hasBin: true
+
+  prettier@3.8.5:
+    resolution: {integrity: sha512-zxcTTCedNGJM4R8sj/Cq/F0W/c4iE0afWBcBwMTRtw4WHYP9TWkYjdiH3npPRUYsXQCPR0hTU9yjovOu+E6EQA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -8251,7 +8256,7 @@ snapshots:
       possible-typed-array-names: 1.1.0
     optional: true
 
-  axios@1.18.0:
+  axios@1.18.1:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.6
@@ -8885,7 +8890,7 @@ snapshots:
       es-errors: 1.3.0
       es-object-atoms: 1.1.2
       es-set-tostringtag: 2.1.0
-      es-to-primitive: 1.3.1
+      es-to-primitive: 1.3.4
       function.prototype.name: 1.2.0
       get-intrinsic: 1.3.0
       get-proto: 1.0.1
@@ -8949,9 +8954,10 @@ snapshots:
       hasown: 2.0.4
     optional: true
 
-  es-to-primitive@1.3.1:
+  es-to-primitive@1.3.4:
     dependencies:
       es-abstract-get: 1.0.0
+      es-define-property: 1.0.1
       es-errors: 1.3.0
       is-callable: 1.2.7
       is-date-object: 1.1.0
@@ -9103,10 +9109,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-prettier@5.5.6(eslint-config-prettier@10.1.8(eslint@10.5.0))(eslint@10.5.0)(prettier@3.8.4):
+  eslint-plugin-prettier@5.5.6(eslint-config-prettier@10.1.8(eslint@10.5.0))(eslint@10.5.0)(prettier@3.8.5):
     dependencies:
       eslint: 10.5.0
-      prettier: 3.8.4
+      prettier: 3.8.5
       prettier-linter-helpers: 1.0.1
       synckit: 0.11.13
     optionalDependencies:
@@ -11220,6 +11226,8 @@ snapshots:
   prettier@2.8.8: {}
 
   prettier@3.8.4: {}
+
+  prettier@3.8.5: {}
 
   pretty-format@29.7.0:
     dependencies:

@@ -448,8 +448,8 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
 }
 
 // This does not use the global http.globalAgent and https.globalAgent, because these enable 5s timeouts by default.
-let defaultHttpAgent: http.Agent = new http.Agent({ keepAlive: true });
-let defaultHttpsAgent: https.Agent = new https.Agent({ keepAlive: true });
+const defaultHttpAgent: http.Agent = new http.Agent({ keepAlive: true });
+const defaultHttpsAgent: https.Agent = new https.Agent({ keepAlive: true });
 
 /**
  * @internal

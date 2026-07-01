@@ -20,6 +20,10 @@ import type { HttpDestination } from '../scp-cf/destination';
 import type { DestinationCertificate } from '../scp-cf';
 
 describe('createAgent', () => {
+  beforeEach(() => {
+    agentCache.clear();
+  });
+
   const baseDestination: HttpDestination = {
     url: 'https://destination.example.com',
     authentication: 'NoAuthentication'
@@ -286,6 +290,100 @@ describe('agent caching', () => {
     expect(agentA).not.toBe(agentB);
   });
 
+  it('returns different agent instances for OnPremise destinations with different cloudConnectorLocationId', async () => {
+    const destA: HttpDestination = {
+      url: 'https://connectivity.example.com',
+      proxyType: 'OnPremise',
+      cloudConnectorLocationId: 'LOCATION_A'
+    };
+    const destB: HttpDestination = {
+      url: 'https://connectivity.example.com',
+      proxyType: 'OnPremise',
+      cloudConnectorLocationId: 'LOCATION_B'
+    };
+    const agentA = ((await getAgentConfig(destA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destB)) as any)['httpsAgent'];
+    expect(agentA).not.toBe(agentB);
+  });
+
+  it('returns different agent instances for OnPremise PrincipalPropagation destinations with different user JWTs', async () => {
+    // PrincipalPropagation embeds the user JWT in proxyConfiguration.headers
+    // (see addProxyConfigurationOnPrem). Different users must not share a
+    // keep-alive socket — the Cloud Connector binds the tunnel to the first
+    // principal and rejects subsequent requests with a different JWT.
+    const base: HttpDestination = {
+      url: 'https://example.com',
+      proxyType: 'OnPremise',
+      authentication: 'PrincipalPropagation'
+    };
+    const destUserA: HttpDestination = {
+      ...base,
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': 'Bearer service-jwt',
+          'SAP-Connectivity-Authentication': 'Bearer jwt-user-a'
+        }
+      }
+    };
+    const destUserB: HttpDestination = {
+      ...base,
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': 'Bearer service-jwt',
+          'SAP-Connectivity-Authentication': 'Bearer jwt-user-b'
+        }
+      }
+    };
+    const agentA = ((await getAgentConfig(destUserA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destUserB)) as any)['httpsAgent'];
+    expect(agentA).not.toBe(agentB);
+  });
+
+  it('returns different agent instances for OnPremise PrincipalPropagation destinations with different user JWTs', async () => {
+    // PrincipalPropagation embeds the user JWT in proxyConfiguration.headers
+    // (see addProxyConfigurationOnPrem). Different users must not share a
+    // keep-alive socket — the Cloud Connector binds the tunnel to the first
+    // principal and rejects subsequent requests with a different JWT.
+    const base: HttpDestination = {
+      url: 'https://example.com',
+      proxyType: 'OnPremise',
+      authentication: 'PrincipalPropagation'
+    };
+    const destUserA: HttpDestination = {
+      ...base,
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': 'Bearer service-jwt',
+          'SAP-Connectivity-Authentication': 'Bearer jwt-user-a'
+        }
+      }
+    };
+    const destUserB: HttpDestination = {
+      ...base,
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': 'Bearer service-jwt',
+          'SAP-Connectivity-Authentication': 'Bearer jwt-user-b'
+        }
+      }
+    };
+    const agentA = ((await getAgentConfig(destUserA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destUserB)) as any)['httpsAgent'];
+    expect(agentA).not.toBe(agentB);
+  });
+
   it('enables keepAlive by default on created agents', async () => {
     const destination: HttpDestination = { url: 'https://example.com' };
     const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
@@ -311,6 +409,10 @@ describe('agent caching', () => {
 });
 
 describe('getAgentConfig', () => {
+  beforeEach(() => {
+    agentCache.clear();
+  });
+
   it('returns an object with key "httpsAgent" for destinations with protocol HTTPS', async () => {
     const destination: HttpDestination = {
       url: 'https://example.com'

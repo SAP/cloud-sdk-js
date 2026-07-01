@@ -66531,7 +66531,9 @@ function parseScriptTarget(input) {
         es2019: typescript_1.ScriptTarget.ES2019,
         es2020: typescript_1.ScriptTarget.ES2020,
         es2021: typescript_1.ScriptTarget.ES2021,
-        es2022: typescript_1.ScriptTarget.ES2022
+        es2022: typescript_1.ScriptTarget.ES2022,
+        es2023: typescript_1.ScriptTarget.ES2023,
+        es2024: typescript_1.ScriptTarget.ES2024
     };
     if (mapping[input.toLowerCase()]) {
         return mapping[input.toLowerCase()];
@@ -66543,11 +66545,17 @@ function parseModuleKind(input) {
     const mapping = {
         commonjs: typescript_1.ModuleKind.CommonJS,
         amd: typescript_1.ModuleKind.AMD,
+        umd: typescript_1.ModuleKind.UMD,
+        system: typescript_1.ModuleKind.System,
         es2015: typescript_1.ModuleKind.ES2015,
         es2020: typescript_1.ModuleKind.ES2020,
+        es2022: typescript_1.ModuleKind.ES2022,
         esnext: typescript_1.ModuleKind.ESNext,
         node16: typescript_1.ModuleKind.Node16,
-        nodenext: typescript_1.ModuleKind.NodeNext
+        node18: typescript_1.ModuleKind.Node18,
+        node20: typescript_1.ModuleKind.Node20,
+        nodenext: typescript_1.ModuleKind.NodeNext,
+        preserve: typescript_1.ModuleKind.Preserve
     };
     if (mapping[input.toLowerCase()]) {
         return mapping[input.toLowerCase()];

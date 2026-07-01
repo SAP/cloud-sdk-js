@@ -19,7 +19,20 @@ export function caps(oDataVersion: any): 'V2' | 'V4' {
 export type Without<T> = { [P in keyof T]?: never };
 
 /**
+ * Manual XOR between a destination and fetch options.
+ *
+ * `WithoutExclusive<T, U>` nevers every key of `T` that is NOT also in `U` — so the discriminators
+ * shared by both branches stay accessible, while exclusive keys are correctly forbidden
+ * on the opposite branch.
+ */
+export type WithoutExclusive<T, U> = {
+  [P in Exclude<keyof T, keyof U>]?: never;
+};
+
+/**
  * XOR of two types containing keys with different names.
  * If the two types show an overlap the type is `never`.
  */
-export type Xor<T, U> = (Without<T> & U) | (Without<U> & T);
+export type Xor<T, U> =
+  | (WithoutExclusive<T, U> & U)
+  | (WithoutExclusive<U, T> & T);

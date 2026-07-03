@@ -307,13 +307,13 @@ function createAgent(
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   const protocol = getProtocolOrDefault(destination);
-  const cacheKey = hashCacheKey({ protocol, options });
+  const cacheKey = hashCacheKey({ protocol, options, agentOptions: destination.agentOptions });
 
   return agentCache.getOrInsertComputed(cacheKey, () => {
     logger.debug(
       `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || '<unknown>'}`
     );
-    const optionsWithDefaults = { keepAlive: true, ...options };
+    const optionsWithDefaults = { ...destination.agentOptions, ...options };
     const entry =
       protocol === 'https'
         ? { httpsAgent: new https.Agent(optionsWithDefaults) }

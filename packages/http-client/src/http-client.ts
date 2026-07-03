@@ -447,6 +447,10 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
   };
 }
 
+// Module-level agents so they are shared across requests (no keepAlive by default).
+const defaultHttpAgent = new http.Agent();
+const defaultHttpsAgent = new https.Agent();
+
 /**
  * @internal
  */
@@ -455,8 +459,8 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   'method'
 > {
   return {
-    httpAgent: http.globalAgent,
-    httpsAgent: https.globalAgent,
+    httpAgent: defaultHttpAgent,
+    httpsAgent: defaultHttpsAgent,
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
     paramsSerializer: {
       serialize: (params = {}) =>

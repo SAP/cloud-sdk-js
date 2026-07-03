@@ -141,7 +141,7 @@ async function readTsConfig(
   pathToTsConfig: string
 ): Promise<Record<string, any>> {
   const fullPath =
-    parse(pathToTsConfig).base === 'tsconfig.json'
+    parse(pathToTsConfig).ext === '.json'
       ? pathToTsConfig
       : resolve(pathToTsConfig, 'tsconfig.json');
 
@@ -180,8 +180,25 @@ export async function readIncludeExcludeWithDefaults(
   };
 }
 
+async function readRawCompilerOptions(
+  pathToTsConfig: string
+): Promise<CompilerOptions> {
+  const tsConfig = await readTsConfig(pathToTsConfig);
+  const compilerOptions: CompilerOptions = tsConfig.compilerOptions || {};
+  const pathToBase = tsConfig.extends;
+  if (!pathToBase) {
+    return compilerOptions;
+  }
+  const dir = parse(pathToTsConfig).dir;
+  const bases = Array.isArray(pathToBase) ? pathToBase : [pathToBase];
+  const baseOptions = await Promise.all(
+    bases.map(base => readRawCompilerOptions(resolve(dir, base)))
+  );
+  return Object.assign({}, ...baseOptions, compilerOptions);
+}
+
 /**
- * Reads and parses the compiler options a tsconfig.json.
+ * Reads and parses the compiler options in a tsconfig.json.
  * @param pathToTsConfig - Folder containing or path to a tsconfig.json files
  * @returns Compiler options from the tsconfig.json
  * @internal
@@ -189,8 +206,7 @@ export async function readIncludeExcludeWithDefaults(
 export async function readCompilerOptions(
   pathToTsConfig: string
 ): Promise<CompilerOptions> {
-  const options: CompilerOptions =
-    (await readTsConfig(pathToTsConfig))['compilerOptions'] || {};
+  const options = await readRawCompilerOptions(pathToTsConfig);
 
   if (options.moduleResolution) {
     options.moduleResolution = parseModuleResolutionKind(
@@ -215,7 +231,7 @@ export async function readCompilerOptions(
 function parseModuleResolutionKind(input: string): ModuleResolutionKind {
   const moduleResolution = input.toLowerCase();
   if (moduleResolution === 'node') {
-    return ModuleResolutionKind.NodeJs;
+    return ModuleResolutionKind.Node10;
   }
   if (moduleResolution === 'node16') {
     return ModuleResolutionKind.Node16;

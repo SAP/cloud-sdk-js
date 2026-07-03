@@ -1452,7 +1452,9 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       const config = getAxiosConfigWithDefaultsWithoutMethod();
       expect(config.httpAgent.options.keepAlive).toBe(true);
       expect(config.httpsAgent.options.keepAlive).toBe(true);
-      expect(config.httpAgent.options.timeout).toBe(defaultAgentOptions.timeout);
+      expect(config.httpAgent.options.timeout).toBe(
+        defaultAgentOptions.timeout
+      );
       expect(config.httpsAgent.options.timeout).toBe(
         defaultAgentOptions.timeout
       );

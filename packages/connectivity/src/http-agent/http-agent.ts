@@ -307,7 +307,11 @@ function createAgent(
   options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   const protocol = getProtocolOrDefault(destination);
-  const cacheKey = hashCacheKey({ protocol, options, agentOptions: destination.agentOptions });
+  const cacheKey = hashCacheKey({
+    protocol,
+    options,
+    agentOptions: destination.agentOptions
+  });
 
   return agentCache.getOrInsertComputed(cacheKey, () => {
     logger.debug(

@@ -10,7 +10,8 @@ import {
   getAdditionalHeaders,
   getAdditionalQueryParameters,
   getProxyConfig,
-  resolveDestination
+  resolveDestination,
+  defaultAgentOptions
 } from '@sap-cloud-sdk/connectivity/internal';
 import { executeWithMiddleware } from '@sap-cloud-sdk/resilience/internal';
 import {
@@ -448,8 +449,8 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
 }
 
 // This does not use the global http.globalAgent and https.globalAgent, because these enable 5s timeouts by default.
-const defaultHttpAgent: http.Agent = new http.Agent({ keepAlive: true });
-const defaultHttpsAgent: https.Agent = new https.Agent({ keepAlive: true });
+const defaultHttpAgent: http.Agent = new http.Agent(defaultAgentOptions);
+const defaultHttpsAgent: https.Agent = new https.Agent(defaultAgentOptions);
 
 /**
  * @internal

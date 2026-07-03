@@ -12,7 +12,10 @@ import {
   circuitBreaker
 } from '@sap-cloud-sdk/resilience/internal';
 import { registerDestination } from '@sap-cloud-sdk/connectivity';
-import { registerDestinationCache } from '@sap-cloud-sdk/connectivity/internal';
+import {
+  defaultAgentOptions,
+  registerDestinationCache
+} from '@sap-cloud-sdk/connectivity/internal';
 import {
   basicMultipleResponse,
   connectivityProxyConfigMock,
@@ -1449,8 +1452,10 @@ If the parameters from multiple origins use the same key, the priority is 1. Cus
       const config = getAxiosConfigWithDefaultsWithoutMethod();
       expect(config.httpAgent.options.keepAlive).toBe(true);
       expect(config.httpsAgent.options.keepAlive).toBe(true);
-      expect(config.httpAgent.options.timeout).toBeUndefined();
-      expect(config.httpsAgent.options.timeout).toBeUndefined();
+      expect(config.httpAgent.options.timeout).toBe(defaultAgentOptions.timeout);
+      expect(config.httpsAgent.options.timeout).toBe(
+        defaultAgentOptions.timeout
+      );
       // Remove workaround if this test ever fails
       expect((http.globalAgent as any).options.timeout).toBeTruthy();
       expect((https.globalAgent as any).options.timeout).toBeTruthy();

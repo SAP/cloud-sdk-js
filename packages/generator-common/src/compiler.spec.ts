@@ -55,7 +55,7 @@ describe('compiler options', () => {
         }),
         'config9/tsconfig.json': JSON.stringify({
           extends: '../config9/base.json',
-          compilerOptions: { target: '2026', module: 'CommonJS' }
+          compilerOptions: { target: 'es2021', module: 'CommonJS' }
         }),
         'config10/base1.json': JSON.stringify({
           compilerOptions: { target: 'es2019', moduleResolution: 'nodenext' }
@@ -122,7 +122,7 @@ describe('compiler options', () => {
   it('inherits compiler options from a single extended config', async () => {
     await expect(readCompilerOptions('config9/tsconfig.json')).resolves.toEqual(
       {
-        target: ScriptTarget.ES2026,
+        target: ScriptTarget.ES2021,
         moduleResolution: ModuleResolutionKind.Node10,
         module: ModuleKind.CommonJS
       }

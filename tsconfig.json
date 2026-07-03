@@ -1,17 +1,8 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2021",
-    "module": "Node16",
-    "lib": ["esnext"],
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": false,
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "inlineSources": false,
-    "isolatedModules": true
-  }
+    "noEmit": true
+  },
+  "include": ["packages/**/*.ts", "test-util/**/*.ts"],
+  "exclude": ["dist/**/*", "node_modules/**/*"]
 }

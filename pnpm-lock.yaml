@@ -121,8 +121,8 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.1
+        version: 0.44.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -149,8 +149,8 @@ importers:
         version: 15.0.0
     devDependencies:
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.1
+        version: 0.44.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -177,8 +177,8 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.1
+        version: 0.44.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -220,8 +220,8 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.1
+        version: 0.44.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -242,8 +242,8 @@ importers:
         version: 3.0.1
     devDependencies:
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.1
+        version: 0.44.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -267,8 +267,8 @@ importers:
         version: 2.2.2
     devDependencies:
       '@vercel/ncc':
-        specifier: ^0.38.4
-        version: 0.38.4
+        specifier: ^0.44.1
+        version: 0.44.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -384,7 +384,7 @@ importers:
         version: 63.0.10(eslint@10.6.0)
       eslint-plugin-prettier:
         specifier: ^5.5.5
-        version: 5.5.6(eslint-config-prettier@10.1.8(eslint@10.6.0))(eslint@10.6.0)(prettier@3.9.1)
+        version: 5.5.6(eslint-config-prettier@10.1.8(eslint@10.6.0))(eslint@10.6.0)(prettier@3.9.4)
       eslint-plugin-unused-imports:
         specifier: ^4.4.1
         version: 4.4.1(@typescript-eslint/eslint-plugin@8.62.0(@typescript-eslint/parser@8.62.0(eslint@10.6.0)(typescript@5.9.3))(eslint@10.6.0)(typescript@5.9.3))(eslint@10.6.0)
@@ -861,7 +861,7 @@ importers:
         version: 12.1.0(openapi-types@12.1.3)
       '@cap-js/sqlite':
         specifier: ^2.2.0
-        version: 2.4.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))
+        version: 2.4.0(@sap/cds@10.0.2(@eslint/js@10.0.1(eslint@10.6.0)))
       '@jest/globals':
         specifier: ^30.3.0
         version: 30.4.1
@@ -894,7 +894,7 @@ importers:
         version: link:../../packages/util
       '@sap/cds':
         specifier: ^10.0.1
-        version: 10.0.3(@eslint/js@10.0.1(eslint@10.6.0))
+        version: 10.0.2(@eslint/js@10.0.1(eslint@10.6.0))
       '@sap/cds-dk':
         specifier: 9.9.2
         version: 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
@@ -1978,32 +1978,32 @@ packages:
     resolution: {integrity: sha512-SXsM27SGH3yTWKc2fKR4SYNxsmnvuBQ9dd6QHtEWmiZ/VqaOYPAIlS8+vMcn27YLtAEBGvNRSh3TPNvtjZgfqA==}
 
   '@sap/cds-compiler@6.9.3':
-    resolution: {integrity: sha512-8fEeM6D059ruqLWoJqzFSNLkGoUCMnycx7Zv4OP4nA9zZeHzFC3nAe6s3ak2kASSiub1xAMMPzDE/9EnSXQKLw==}
+    resolution: {integrity: sha512-8fEeM6D059ruqLWoJqzFSNLkGoUCMnycx7Zv4OP4nA9zZeHzFC3nAe6s3ak2kASSiub1xAMMPzDE/9EnSXQKLw==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-compiler/-/@sap/cds-compiler-6.9.3.tgz}
     engines: {node: '>=20'}
     hasBin: true
 
   '@sap/cds-compiler@7.0.1':
-    resolution: {integrity: sha512-Qwk9jitwSSwPB9FTB/Q6gYPxFsJxswhfsO9Ux77HTxjIhse8O/Hlq2XzkpVSTyaAVr8Lo7wLfpytHwKQScZTwQ==}
+    resolution: {integrity: sha512-Qwk9jitwSSwPB9FTB/Q6gYPxFsJxswhfsO9Ux77HTxjIhse8O/Hlq2XzkpVSTyaAVr8Lo7wLfpytHwKQScZTwQ==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-compiler/-/@sap/cds-compiler-7.0.1.tgz}
     engines: {node: '>=22'}
     hasBin: true
 
   '@sap/cds-dk@9.9.2':
-    resolution: {integrity: sha512-cngXMULAuueITOLymme51fBuUKRaqofXDzwyJtnEQ2BLZBz/t6s+rXZV7nY2xJyqU3y0rbB023R9218D25evuw==}
+    resolution: {integrity: sha512-cngXMULAuueITOLymme51fBuUKRaqofXDzwyJtnEQ2BLZBz/t6s+rXZV7nY2xJyqU3y0rbB023R9218D25evuw==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-dk/-/@sap/cds-dk-9.9.2.tgz}
     hasBin: true
 
   '@sap/cds-fiori@2.3.0':
-    resolution: {integrity: sha512-6oWov+DSpFrSTgxXR0dZhak6aZ/IVRZvaHERMi0EgSTzIJdlvZlpw3Kf18ePMcTrRrtEXwD4RIjKt8pbs0g2Hg==}
+    resolution: {integrity: sha512-6oWov+DSpFrSTgxXR0dZhak6aZ/IVRZvaHERMi0EgSTzIJdlvZlpw3Kf18ePMcTrRrtEXwD4RIjKt8pbs0g2Hg==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-fiori/-/@sap/cds-fiori-2.3.0.tgz}
     peerDependencies:
       '@sap/cds': '>=8'
 
   '@sap/cds-mtxs@3.9.4':
-    resolution: {integrity: sha512-A3FRCGCMNhml8MLpGv+OUHwDhAUgvAiE38qdTL87/KQ932CTNZ1frohQtT24iszoamB7NI8lp9RR3BFD6HR/FQ==}
+    resolution: {integrity: sha512-A3FRCGCMNhml8MLpGv+OUHwDhAUgvAiE38qdTL87/KQ932CTNZ1frohQtT24iszoamB7NI8lp9RR3BFD6HR/FQ==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-mtxs/-/@sap/cds-mtxs-3.9.4.tgz}
     hasBin: true
     peerDependencies:
       '@sap/cds': '>=9'
 
-  '@sap/cds@10.0.3':
-    resolution: {integrity: sha512-S9q8vcJXzIsO4KC49sb9JLIhY/k0MJTZcgEOzmhvoBW/lWLLR79Oci0xmyQqSxJwwzjavR9mW8I4wbMJQQMVAA==}
+  '@sap/cds@10.0.2':
+    resolution: {integrity: sha512-wLXppqETQWhW8zfUUQ/USAhLwJ/s0Wd/EblSzXiU8xIjQg+uZD3SkodywASsdy9S6sZJkwZ3jICebx9AihKaoA==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds/-/@sap/cds-10.0.2.tgz}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -2013,8 +2013,8 @@ packages:
       tar:
         optional: true
 
-  '@sap/cds@9.9.1':
-    resolution: {integrity: sha512-GqdsBsRkZThhpOyzj8ihf/jDmf/2zprZFgaun6ZymUw4/ahzjK/bbdd6eQ8txDuv88pnUl2HPFjvUVq3O/6hCA==}
+  '@sap/cds@9.9.2':
+    resolution: {integrity: sha512-8YmZVsTRaJX+MPeZuhkvvKIgIcmYVHUG98+c8trPNdaf5+eo051w/3y2NoPmXQjr/I7y1195k/TS7kjZlUWzBg==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds/-/@sap/cds-9.9.2.tgz}
     engines: {node: '>=20'}
     hasBin: true
     peerDependencies:
@@ -2053,7 +2053,7 @@ packages:
     engines: {node: ^20.0.0  || ^22.0.0 || ^24.0.0}
 
   '@sap/xssec@4.13.0':
-    resolution: {integrity: sha512-8e+bU+OyAIpAGXQanOopZa5YEK+yHKw84dhhihcCotF40MSNFbVHjQ4xM5hf4QndlqDGfXIuvXmoOMuDATa/gA==}
+    resolution: {integrity: sha512-8e+bU+OyAIpAGXQanOopZa5YEK+yHKw84dhhihcCotF40MSNFbVHjQ4xM5hf4QndlqDGfXIuvXmoOMuDATa/gA==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/xssec/-/@sap/xssec-4.13.0.tgz}
     engines: {node: '>=18'}
 
   '@shikijs/engine-oniguruma@3.23.0':
@@ -2454,8 +2454,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@vercel/ncc@0.38.4':
-    resolution: {integrity: sha512-8LwjnlP39s08C08J5NstzriPvW1SP8Zfpp1BvC2sI35kPeZnHfxVkCwu4/+Wodgnd60UtT1n8K8zw+Mp7J9JmQ==}
+  '@vercel/ncc@0.44.1':
+    resolution: {integrity: sha512-cUjIE5P2YY1n+Kt9rFIazMMpGoPn1Fic04rOmTkElMkiDP5oszGfERMpo2shVkFKDL7rVppdM2pqJKC59shQWQ==}
     hasBin: true
 
   '@vue/compiler-core@3.5.39':
@@ -4743,6 +4743,11 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
+  prettier@3.9.4:
+    resolution: {integrity: sha512-yWG/o/4oJfo036EKAfK6ACAoDOfHeRHx4tuxkfBZiauURiaSmYwlpOr5LQqKtIkRD2z1PLteme2WoxEnj4tHTg==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -5841,36 +5846,36 @@ snapshots:
 
   '@blueoak/list@15.0.0': {}
 
-  '@cap-js/asyncapi@1.1.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@cap-js/asyncapi@1.1.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
     dependencies:
-      '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.6.0))
+      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
 
-  '@cap-js/db-service@2.11.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@cap-js/db-service@2.11.0(@sap/cds@10.0.2(@eslint/js@10.0.1(eslint@10.6.0)))':
     dependencies:
-      '@sap/cds': 10.0.3(@eslint/js@10.0.1(eslint@10.6.0))
+      '@sap/cds': 10.0.2(@eslint/js@10.0.1(eslint@10.6.0))
       generic-pool: 3.9.0
 
-  '@cap-js/db-service@2.11.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@cap-js/db-service@2.11.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
     dependencies:
-      '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.6.0))
+      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
       generic-pool: 3.9.0
     optional: true
 
-  '@cap-js/openapi@1.5.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@cap-js/openapi@1.5.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
     dependencies:
-      '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.6.0))
+      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
       pluralize: 8.0.0
 
-  '@cap-js/sqlite@2.4.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@cap-js/sqlite@2.4.0(@sap/cds@10.0.2(@eslint/js@10.0.1(eslint@10.6.0)))':
     dependencies:
-      '@cap-js/db-service': 2.11.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))
-      '@sap/cds': 10.0.3(@eslint/js@10.0.1(eslint@10.6.0))
+      '@cap-js/db-service': 2.11.0(@sap/cds@10.0.2(@eslint/js@10.0.1(eslint@10.6.0)))
+      '@sap/cds': 10.0.2(@eslint/js@10.0.1(eslint@10.6.0))
       better-sqlite3: 12.11.1
 
-  '@cap-js/sqlite@2.4.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@cap-js/sqlite@2.4.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
     dependencies:
-      '@cap-js/db-service': 2.11.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))
-      '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.6.0))
+      '@cap-js/db-service': 2.11.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
+      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
       better-sqlite3: 12.11.1
     optional: true
 
@@ -6654,10 +6659,10 @@ snapshots:
 
   '@sap/cds-dk@9.9.2(@eslint/js@10.0.1(eslint@10.6.0))':
     dependencies:
-      '@cap-js/asyncapi': 1.1.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))
-      '@cap-js/openapi': 1.5.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))
-      '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.6.0))
-      '@sap/cds-mtxs': 3.9.4(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))(hdb@2.29.5)
+      '@cap-js/asyncapi': 1.1.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
+      '@cap-js/openapi': 1.5.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
+      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
+      '@sap/cds-mtxs': 3.9.4(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))(hdb@2.29.5)
       '@sap/hdi-deploy': 5.7.0(hdb@2.29.5)
       express: 4.22.2
       hdb: 2.29.5
@@ -6667,7 +6672,7 @@ snapshots:
       xml-js: 1.6.11
       yaml: 2.9.0
     optionalDependencies:
-      '@cap-js/sqlite': 2.4.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))
+      '@cap-js/sqlite': 2.4.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
     transitivePeerDependencies:
       - '@eslint/js'
       - '@sap/hana-client'
@@ -6677,38 +6682,38 @@ snapshots:
       - tar
       - utf-8-validate
 
-  '@sap/cds-fiori@2.3.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@sap/cds-fiori@2.3.0(@sap/cds@10.0.2(@eslint/js@10.0.1(eslint@10.6.0)))':
     dependencies:
-      '@sap/cds': 10.0.3(@eslint/js@10.0.1(eslint@10.6.0))
+      '@sap/cds': 10.0.2(@eslint/js@10.0.1(eslint@10.6.0))
 
-  '@sap/cds-fiori@2.3.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@sap/cds-fiori@2.3.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
     dependencies:
-      '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.6.0))
+      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
 
-  '@sap/cds-mtxs@3.9.4(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))(hdb@2.29.5)':
+  '@sap/cds-mtxs@3.9.4(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))(hdb@2.29.5)':
     dependencies:
-      '@sap/cds': 9.9.1(@eslint/js@10.0.1(eslint@10.6.0))
+      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
       '@sap/hdi-deploy': 5.7.0(hdb@2.29.5)
     transitivePeerDependencies:
       - '@sap/hana-client'
       - hdb
       - supports-color
 
-  '@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0))':
+  '@sap/cds@10.0.2(@eslint/js@10.0.1(eslint@10.6.0))':
     dependencies:
       '@eslint/js': 10.0.1(eslint@10.6.0)
       '@sap/cds-compiler': 7.0.1
-      '@sap/cds-fiori': 2.3.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))
+      '@sap/cds-fiori': 2.3.0(@sap/cds@10.0.2(@eslint/js@10.0.1(eslint@10.6.0)))
       express: 4.22.2
       yaml: 2.9.0
     transitivePeerDependencies:
       - supports-color
 
-  '@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0))':
+  '@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0))':
     dependencies:
       '@eslint/js': 10.0.1(eslint@10.6.0)
       '@sap/cds-compiler': 6.9.3
-      '@sap/cds-fiori': 2.3.0(@sap/cds@9.9.1(@eslint/js@10.0.1(eslint@10.6.0)))
+      '@sap/cds-fiori': 2.3.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
       express: 4.22.2
       yaml: 2.9.0
     transitivePeerDependencies:
@@ -7131,7 +7136,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.12.2':
     optional: true
 
-  '@vercel/ncc@0.38.4': {}
+  '@vercel/ncc@0.44.1': {}
 
   '@vue/compiler-core@3.5.39':
     dependencies:
@@ -7951,10 +7956,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-prettier@5.5.6(eslint-config-prettier@10.1.8(eslint@10.6.0))(eslint@10.6.0)(prettier@3.9.1):
+  eslint-plugin-prettier@5.5.6(eslint-config-prettier@10.1.8(eslint@10.6.0))(eslint@10.6.0)(prettier@3.9.4):
     dependencies:
       eslint: 10.6.0
-      prettier: 3.9.1
+      prettier: 3.9.4
       prettier-linter-helpers: 1.0.1
       synckit: 0.11.13
     optionalDependencies:
@@ -9724,6 +9729,8 @@ snapshots:
   prettier@2.8.8: {}
 
   prettier@3.9.1: {}
+
+  prettier@3.9.4: {}
 
   pretty-format@29.7.0:
     dependencies:

@@ -447,9 +447,9 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
   };
 }
 
-// Module-level agents so they are shared across requests (no keepAlive by default).
-const defaultHttpAgent = new http.Agent();
-const defaultHttpsAgent = new https.Agent();
+// Module-level agents shared across requests with socket pooling enabled.
+const defaultHttpAgent = new http.Agent({ keepAlive: true });
+const defaultHttpsAgent = new https.Agent({ keepAlive: true });
 
 /**
  * @internal

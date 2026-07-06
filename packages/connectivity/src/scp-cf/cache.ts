@@ -161,10 +161,10 @@ export async function hashCacheKey(
   const hashBuffer = await crypto.subtle.digest('SHA-256', encodedValue);
 
   // TODO: Supported in Node.js 25 and later + browsers
-  if ((Uint8Array.prototype as any).toHex) {
-    // Use toHex if supported.
-    return (new Uint8Array(hashBuffer) as any).toHex(); // Convert ArrayBuffer to hex string.
-  }
+  // if ((Uint8Array.prototype as any).toHex) {
+  //   // Use toHex if supported.
+  //   return (new Uint8Array(hashBuffer) as any).toHex(); // Convert ArrayBuffer to hex string.
+  // }
   // If toHex() is not supported, fall back to an alternative implementation.
   const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
   const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string

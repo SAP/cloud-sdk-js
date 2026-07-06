@@ -34,7 +34,7 @@ import {
   setLogLevel,
   unmuteLoggers
 } from './cloud-sdk-logger';
-import { getMessageOrStack } from './format';
+import { getMessageOrStack, exceptionFormat } from './format';
 
 describe('Cloud SDK Logger', () => {
   const messageContext = 'my-module';
@@ -190,6 +190,96 @@ describe('Cloud SDK Logger', () => {
           stack: 'stack'
         })
       ).toBe('msg');
+    });
+
+    describe('exception format sanitization', () => {
+      // Transform an info object through the exception format and return the
+      // actual serialized payload winston hands to the transport. `json()`
+      // writes the final JSON string to `info[Symbol.for('message')]`, which
+      // is what a Console transport prints to stdout.
+      const runFormat = (info: Record<string, unknown>): string => {
+        const transformed = exceptionFormat.transform({
+          level: 'error',
+          ...info
+        } as any);
+        if (!transformed) {
+          return '';
+        }
+        const messageSymbol = Symbol.for('message');
+        const serialized = (transformed as any)[messageSymbol];
+        return typeof serialized === 'string'
+          ? serialized
+          : JSON.stringify(transformed);
+      };
+
+      it('does not leak AxiosError enumerable fields (config/request/response)', () => {
+        const err = new Error('boom') as any;
+        err.name = 'AxiosError';
+        err.config = {
+          headers: {
+            Authorization: 'Bearer LEAKED_TOKEN',
+            cookie: 'session=LEAKED_COOKIE'
+          },
+          url: 'https://api.example.com'
+        };
+        err.request = { _header: 'Authorization: Bearer LEAKED_TOKEN\r\n' };
+        err.response = {
+          headers: { authorization: 'Bearer LEAKED_TOKEN' },
+          data: { secret: 'LEAKED_BODY' }
+        };
+        err.code = 'ERR_BAD_REQUEST';
+
+        const output = runFormat({
+          message: err.message,
+          name: err.name,
+          stack: err.stack,
+          ...err
+        });
+
+        expect(output).not.toContain('LEAKED_TOKEN');
+        expect(output).not.toContain('LEAKED_COOKIE');
+        expect(output).not.toContain('LEAKED_BODY');
+        expect(output).not.toContain('"config"');
+        expect(output).not.toContain('"request"');
+        expect(output).not.toContain('"response"');
+        expect(output).not.toContain('"code"');
+      });
+
+      it('drops error.cause so wrapped AxiosErrors do not leak', () => {
+        const inner = new Error('inner') as any;
+        inner.config = { headers: { Authorization: 'Bearer LEAKED_TOKEN' } };
+        const outer: any = new Error('outer');
+        outer.cause = inner;
+
+        const output = runFormat({
+          message: outer.message,
+          name: outer.name,
+          stack: outer.stack,
+          cause: outer.cause
+        });
+
+        expect(output).not.toContain('LEAKED_TOKEN');
+        expect(output).not.toContain('"cause"');
+      });
+
+      it('preserves name, message, and stack', () => {
+        const output = runFormat({
+          message: 'boom',
+          name: 'AxiosError',
+          stack: 'AxiosError: boom\n    at foo (bar.js:1:1)'
+        });
+
+        expect(output).toContain('"name":"AxiosError"');
+        expect(output).toContain('"message":"boom"');
+        expect(output).toContain('"stack":');
+        expect(output).toContain('bar.js:1:1');
+      });
+
+      it('is not overridden by setGlobalLogFormat', () => {
+        expect(cloudSdkExceptionLogger.format).toBe(exceptionFormat);
+        setGlobalLogFormat(logFormat.kibana);
+        expect(cloudSdkExceptionLogger.format).toBe(exceptionFormat);
+      });
     });
   });
 

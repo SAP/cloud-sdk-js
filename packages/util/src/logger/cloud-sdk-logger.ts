@@ -1,5 +1,5 @@
 import { Container, transports } from 'winston';
-import { kibana, local } from './format';
+import { exceptionFormat, kibana, local } from './format';
 import type { Format } from 'logform';
 import type { Logger, LoggerOptions as WinstonLoggerOptions } from 'winston';
 import type TransportStream from 'winston-transport';
@@ -56,10 +56,17 @@ export function unmuteLoggers(): void {
 
 /**
  * Default logger for the SAP Cloud SDK for unhandled exceptions.
+ *
+ * The exception logger uses a dedicated format that emits only `name`,
+ * `message`, and `stack`. Enumerable properties of the underlying error —
+ * including `AxiosError.config`, `.request`, `.response`, and any `cause`
+ * chain — are dropped before serialization so that headers such as
+ * `Authorization` cannot leak into stdout when an uncaught exception is
+ * handled. `setGlobalLogFormat` intentionally does not affect this format.
  */
 export const cloudSdkExceptionLogger = container.get(exceptionLoggerId, {
   defaultMeta: { logger: loggerReference, test: 'exception' },
-  format: container.options.format,
+  format: exceptionFormat,
   exceptionHandlers: [exceptionTransport]
 });
 
@@ -251,12 +258,18 @@ export function setLogFormat(
  * Change the global log format of the container which will set default format for all active loggers.
  * e.g., to set the global log format to `local` call `setGlobalLogLevel(logFormat.local)` or use a custom log format.
  * @param format - The log format to set the global log format to.
+ * @param includeExceptionLogger - Whether to include the exception logger in the global log format update.
  */
-export function setGlobalLogFormat(format: Format): void {
+export function setGlobalLogFormat(
+  format: Format,
+  includeExceptionLogger: boolean = false
+): void {
   container.options.format = format;
   // Update existing loggers' log level with global level.
-  container.loggers.forEach(logger => {
-    logger.format = format;
+  container.loggers.forEach((logger, id) => {
+    if (includeExceptionLogger || id !== exceptionLoggerId) {
+      logger.format = format;
+    }
   });
 }
 

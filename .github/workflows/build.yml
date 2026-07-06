@@ -105,6 +105,17 @@ jobs:
           SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
         uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
 
+  npm-install:
+    if: inputs.canary-release-skip-checks == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_artif-issues
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          skip-build: 'true'
+
   e2e-tests:
     if: inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest

@@ -101,11 +101,6 @@ export const hooks = {
   },
 
   afterAllResolved(lockfile, context) {
-    if (!shouldNormalizeTarballs([activeDefaultRegistry])) {
-      context.log('Skipping tarball normalization because the active registry is Artifactory.');
-      return lockfile;
-    }
-
     const normalizedCount = normalizeLockfile(lockfile, context.log);
 
     if (normalizedCount > 0) {

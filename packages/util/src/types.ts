@@ -34,5 +34,4 @@ export type WithoutExclusive<T, U> = {
  * If the two types show an overlap the type is `never`.
  */
 export type Xor<T, U> =
-  | (WithoutExclusive<T, U> & U)
-  | (WithoutExclusive<U, T> & T);
+  (WithoutExclusive<T, U> & U) | (WithoutExclusive<U, T> & T);

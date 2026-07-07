@@ -40,7 +40,7 @@ jobs:
       matrix:
         node-version: [22, 24]
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_artif-issues
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           node-version: ${{ matrix.node-version }}
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
@@ -68,7 +68,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_artif-issues
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - name: REUSE Compliance Check
@@ -111,7 +111,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_artif-issues
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           registry-url: 'https://registry.npmjs.org'
           skip-build: 'true'
@@ -122,7 +122,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_artif-issues
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - run: pnpm run test:e2e
@@ -164,7 +164,7 @@ jobs:
       REF_NAME: ${{ github.ref_name }}
       REF: ${{ github.ref }}
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_artif-issues
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - name: Check if latest commit is within 24 hrs
@@ -194,7 +194,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_artif-issues
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           persist-credentials: true
           node-version: 24 # Will install npm 11 needed for trusted publishing
@@ -217,7 +217,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_artif-issues
+      - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - name: Get Changelog

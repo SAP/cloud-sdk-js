@@ -44,9 +44,7 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
  * Primitive type of a parameter of a filter function.
  */
 export type FilterFunctionPrimitiveParameterType =
-  | number
-  | string
-  | moment.Moment;
+  number | string | moment.Moment;
 
 /**
  * Type of a parameter of a filter function. This can either be a primitive type, a reference to a field or another filter function.

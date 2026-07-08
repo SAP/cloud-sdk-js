@@ -49,6 +49,23 @@ describe('compiler options', () => {
         }),
         'config8/tsconfig.json': JSON.stringify({
           compilerOptions: { moduleResolution: 'nodenext' }
+        }),
+        'config9/base.json': JSON.stringify({
+          compilerOptions: { target: 'es2019', moduleResolution: 'node' }
+        }),
+        'config9/tsconfig.json': JSON.stringify({
+          extends: '../config9/base.json',
+          compilerOptions: { target: 'es2021', module: 'CommonJS' }
+        }),
+        'config10/base1.json': JSON.stringify({
+          compilerOptions: { target: 'es2019', moduleResolution: 'nodenext' }
+        }),
+        'config10/base2.json': JSON.stringify({
+          compilerOptions: { moduleResolution: 'node16' }
+        }),
+        'config10/tsconfig.json': JSON.stringify({
+          extends: ['../config10/base1.json', '../config10/base2.json'],
+          compilerOptions: { module: 'CommonJS' }
         })
       },
       process.cwd()
@@ -89,7 +106,7 @@ describe('compiler options', () => {
 
   it('parses the module resolution kind', async () => {
     await expect(readCompilerOptions('config1')).resolves.toEqual({
-      moduleResolution: ModuleResolutionKind.NodeJs
+      moduleResolution: ModuleResolutionKind.Node10
     });
     await expect(readCompilerOptions('config2')).resolves.toEqual({
       moduleResolution: ModuleResolutionKind.Classic
@@ -99,6 +116,26 @@ describe('compiler options', () => {
     });
     await expect(readCompilerOptions('config8')).resolves.toEqual({
       moduleResolution: ModuleResolutionKind.NodeNext
+    });
+  });
+
+  it('inherits compiler options from a single extended config', async () => {
+    await expect(readCompilerOptions('config9/tsconfig.json')).resolves.toEqual(
+      {
+        target: ScriptTarget.ES2021,
+        moduleResolution: ModuleResolutionKind.Node10,
+        module: ModuleKind.CommonJS
+      }
+    );
+  });
+
+  it('inherits compiler options from multiple extended configs, later overrides earlier', async () => {
+    await expect(
+      readCompilerOptions('config10/tsconfig.json')
+    ).resolves.toEqual({
+      target: ScriptTarget.ES2019,
+      moduleResolution: ModuleResolutionKind.Node16,
+      module: ModuleKind.CommonJS
     });
   });
 

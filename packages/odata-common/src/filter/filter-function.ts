@@ -87,8 +87,4 @@ export const numberReturnTypeMapping: Record<
  * @internal
  */
 export type FilterFunctionReturnType =
-  | 'boolean'
-  | 'int'
-  | 'double'
-  | 'decimal'
-  | 'string';
+  'boolean' | 'int' | 'double' | 'decimal' | 'string';

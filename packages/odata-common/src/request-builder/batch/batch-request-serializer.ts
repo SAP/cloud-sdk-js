@@ -79,8 +79,7 @@ type RequestBuildersWithBatchReference = Omit<MethodRequestBuilder, 'execute'> &
   WithBatchReference;
 
 type AllRequestBuilders =
-  | RequestBuildersWithBatchReference
-  | Omit<MethodRequestBuilder, 'execute'>;
+  RequestBuildersWithBatchReference | Omit<MethodRequestBuilder, 'execute'>;
 
 function isRequestBuilderWithBatchReference(
   request: AllRequestBuilders

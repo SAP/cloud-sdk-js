@@ -349,9 +349,11 @@ function retryDestination(
 }
 
 type DestinationCertificateJson = {
-  [Property in keyof DestinationCertificate as `${Capitalize<
-    string & Property
-  >}`]: DestinationCertificate[Property];
+  [
+    Property in keyof DestinationCertificate as `${Capitalize<
+      string & Property
+    >}`
+  ]: DestinationCertificate[Property];
 };
 
 async function callCertificateEndpoint(

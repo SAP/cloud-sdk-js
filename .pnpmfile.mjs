@@ -92,6 +92,10 @@ export const hooks = {
   },
 
   preResolution({ wantedLockfile, currentLockfile, registries }) {
+    // Resolve dependencies from Artifactory when available.
+    // Treat it as the primary source of truth, except for tarball URLs,
+    // which are normalized as this is a public repository and
+    // Artifactory is not always available.
     if (!shouldNormalizeTarballs(Object.values(registries ?? {}))) {
       return;
     }
@@ -101,6 +105,7 @@ export const hooks = {
   },
 
   afterAllResolved(lockfile, context) {
+    // Always normalize URLs in the lockfile to avoid conflicts.
     const normalizedCount = normalizeLockfile(lockfile, context.log);
 
     if (normalizedCount > 0) {

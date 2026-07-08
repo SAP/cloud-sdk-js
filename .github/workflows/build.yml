@@ -130,7 +130,7 @@ jobs:
   dependabot:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == github.event.pull_request.head.repo.full_name }}
-    needs: [tests, checks, e2e-tests]
+    needs: [tests, checks, e2e-tests, npm-install]
     permissions:
       pull-requests: write
       contents: write

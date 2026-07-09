@@ -153,16 +153,22 @@ export class Cache<T> implements CacheInterface<T> {
  * @param value - The value to hash.
  * @returns A hash of the given value using a cryptographic hash function.
  */
-export function hashCacheKey(value: Record<string, unknown>): string {
-  const serialized = stringify(value);
+export async function hashCacheKey(
+  value: Record<string, unknown>
+): Promise<string> {
+  const stringifiedValue = stringify(value);
+  const encodedValue = new TextEncoder().encode(stringifiedValue);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encodedValue);
 
-  // TODO: crypto.hash is available in Node.js v20.12.0 and later.
-  // Remove the fallback to crypto.createHash once Node.js 22 is the minimum supported version.
-  if (typeof crypto.hash === 'function') {
-    return crypto.hash('blake2s256', serialized, 'base64url');
-  }
-
-  return crypto.createHash('blake2s256').update(serialized).digest('base64url');
+  // TODO: Supported in Node.js 25 and later + browsers
+  // if ((Uint8Array.prototype as any).toHex) {
+  //   // Use toHex if supported.
+  //   return (new Uint8Array(hashBuffer) as any).toHex(); // Convert ArrayBuffer to hex string.
+  // }
+  // If toHex() is not supported, fall back to an alternative implementation.
+  const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+  return hashHex;
 }
 
 function isExpired<T>(item: CacheEntry<T>): boolean {

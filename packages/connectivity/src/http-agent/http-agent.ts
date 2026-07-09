@@ -310,10 +310,10 @@ export const defaultAgentOptions: https.AgentOptions | http.AgentOptions = {
  * Agents are cached for up to one hour, but can be evicted earlier if more than 100 agents are created.
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
  */
-function createAgent(
+async function createAgent(
   destination: HttpDestination,
   options: https.AgentOptions
-): HttpAgentConfig | HttpsAgentConfig {
+): Promise<HttpAgentConfig | HttpsAgentConfig> {
   const protocol = getProtocolOrDefault(destination);
   const cacheKey = hashCacheKey({
     protocol,

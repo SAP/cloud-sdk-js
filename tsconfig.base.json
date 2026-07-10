@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "target": "es2021",
     "module": "Node16",
@@ -13,7 +12,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "inlineSources": false,
-    "isolatedModules": true,
-    "customConditions": ["workspace"]
+    "isolatedModules": true
   }
 }

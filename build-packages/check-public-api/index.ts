@@ -14,7 +14,6 @@ import {
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';
 
-const pathToTsConfigRoot = join(process.cwd(), 'tsconfig.json');
 export const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
 export const regexExportedInternal = /\.\/([\w-]+)/g;
 
@@ -60,9 +59,7 @@ async function getCompilerOptions(
 ): Promise<CompilerOptions> {
   const { pathToSource, pathToTsConfig } = paths(pathToPackage);
   const compilerOptions = await readCompilerOptions(pathToTsConfig);
-  const compilerOptionsRoot = await readCompilerOptions(pathToTsConfigRoot);
   return {
-    ...compilerOptionsRoot,
     ...compilerOptions,
     stripInternal: true,
     rootDir: pathToSource,

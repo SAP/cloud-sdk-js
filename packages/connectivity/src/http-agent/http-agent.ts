@@ -325,7 +325,11 @@ async function createAgent(
     logger.debug(
       `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || '<unknown>'}`
     );
-    const optionsWithDefaults = { ...defaultAgentOptions, ...destination.agentOptions, ...options };
+    const optionsWithDefaults = {
+      ...defaultAgentOptions,
+      ...destination.agentOptions,
+      ...options
+    };
     const entry =
       protocol === 'https'
         ? { httpsAgent: new https.Agent(optionsWithDefaults) }

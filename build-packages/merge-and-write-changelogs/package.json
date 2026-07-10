@@ -18,10 +18,10 @@
     "@manypkg/get-packages": "^2.2.2"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.4",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "@vercel/ncc": "^0.44.1",
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
-    "prettier": "^3.8.1",
-    "typescript": "~6.0.3"
+    "prettier": "^3.8.1"
   }
 }

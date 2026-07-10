@@ -21,9 +21,9 @@
     "memfs": "^4.57.2"
   },
   "devDependencies": {
+    "@typescript/native": "npm:typescript@^7.0.2",
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
-    "prettier": "^3.8.1",
-    "typescript": "~6.0.3"
+    "prettier": "^3.8.1"
   }
 }

@@ -79,10 +79,7 @@ function getSupportedAlgorithms(available: Record<string, any>): string {
  * - `zstd` is experimental, requires Node.js v22.15.0 or higher, and can provide higher compression ratios and speed.
  */
 export type RequestCompressionAlgorithm =
-  | 'gzip'
-  | 'brotli'
-  | 'deflate'
-  | 'zstd';
+  'gzip' | 'brotli' | 'deflate' | 'zstd';
 
 /**
  * Options for different request compressors to configure their behavior (e.g., compression level).

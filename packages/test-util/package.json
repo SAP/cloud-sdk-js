@@ -48,11 +48,11 @@
     "@sap-cloud-sdk/util": "workspace:^"
   },
   "devDependencies": {
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@jest/globals": "^30.3.0",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "depcheck": "^1.4.7",
     "memfs": "^4.57.2",
-    "prettier": "^3.8.1",
-    "typescript": "~6.0.3"
+    "prettier": "^3.8.1"
   }
 }

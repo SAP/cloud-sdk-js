@@ -286,19 +286,21 @@ describe('agent caching', () => {
     expect(agentA).not.toBe(agentB);
   });
 
-  it('does not enable keepAlive by default on created agents', async () => {
+  it('enables keepAlive and sets 5s timeout by default on created agents', async () => {
     const destination: HttpDestination = { url: 'https://example.com' };
     const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
-    expect(agent.keepAlive).toBe(false);
+    expect(agent.keepAlive).toBe(true);
+    expect(agent.options.timeout).toBe(5000);
   });
 
-  it('enables keepAlive when set via agentOptions', async () => {
+  it('overrides default agentOptions when set via destination.agentOptions', async () => {
     const destination: HttpDestination = {
       url: 'https://example.com',
-      agentOptions: { keepAlive: true }
+      agentOptions: { keepAlive: false, timeout: 10000 }
     };
     const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
-    expect(agent.keepAlive).toBe(true);
+    expect(agent.keepAlive).toBe(false);
+    expect(agent.options.timeout).toBe(10000);
   });
 
   it('destinations with different agentOptions produce different cached agents', async () => {

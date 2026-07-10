@@ -302,7 +302,8 @@ export const agentCache = new Cache<HttpAgentConfig | HttpsAgentConfig>(
  * @internal
  */
 export const defaultAgentOptions: https.AgentOptions | http.AgentOptions = {
-  keepAlive: true
+  keepAlive: true,
+  timeout: 5000
 };
 
 /**

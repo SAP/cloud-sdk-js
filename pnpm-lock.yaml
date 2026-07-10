@@ -4,8 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-pnpmfileChecksum: sha256-pNNJ8g45BvuPh75mWXzfkFeWrKOrPh3VNOQYylOFYlE=
-
 importers:
 
   .:
@@ -545,7 +543,7 @@ importers:
         version: link:../util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -585,7 +583,7 @@ importers:
         version: link:../util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -625,7 +623,7 @@ importers:
         version: link:../util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -905,7 +903,7 @@ importers:
         version: 1.18.1
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -990,7 +988,7 @@ importers:
         version: link:../../packages/openapi-generator
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       execa:
         specifier: ^5.0.0
         version: 5.1.1
@@ -1032,7 +1030,7 @@ importers:
         version: link:../../packages/util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1063,7 +1061,7 @@ importers:
         version: link:../../packages/util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
     devDependencies:
       depcheck:
         specifier: ^1.4.7
@@ -1079,7 +1077,7 @@ importers:
         version: link:../../packages/generator
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1101,7 +1099,7 @@ importers:
         version: link:../../packages/generator
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1177,7 +1175,7 @@ importers:
         version: 9.0.10
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1977,12 +1975,12 @@ packages:
     resolution: {integrity: sha512-SXsM27SGH3yTWKc2fKR4SYNxsmnvuBQ9dd6QHtEWmiZ/VqaOYPAIlS8+vMcn27YLtAEBGvNRSh3TPNvtjZgfqA==}
 
   '@sap/cds-compiler@7.0.1':
-    resolution: {integrity: sha512-Qwk9jitwSSwPB9FTB/Q6gYPxFsJxswhfsO9Ux77HTxjIhse8O/Hlq2XzkpVSTyaAVr8Lo7wLfpytHwKQScZTwQ==}
+    resolution: {integrity: sha512-Qwk9jitwSSwPB9FTB/Q6gYPxFsJxswhfsO9Ux77HTxjIhse8O/Hlq2XzkpVSTyaAVr8Lo7wLfpytHwKQScZTwQ==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-compiler/-/@sap/cds-compiler-7.0.1.tgz}
     engines: {node: '>=22'}
     hasBin: true
 
   '@sap/cds-dk@10.0.3':
-    resolution: {integrity: sha512-8fUnq/wOd7wQsOLdTZiKROAFjeJ7zcHwGGXmVzvZvKmiH4xojc0jTo1YwMG257ivDcHF+5fjZfDHymk7eYeYPA==}
+    resolution: {integrity: sha512-8fUnq/wOd7wQsOLdTZiKROAFjeJ7zcHwGGXmVzvZvKmiH4xojc0jTo1YwMG257ivDcHF+5fjZfDHymk7eYeYPA==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-dk/-/@sap/cds-dk-10.0.3.tgz}
     hasBin: true
     bundledDependencies:
       - '@cap-js/asyncapi'
@@ -2092,12 +2090,12 @@ packages:
       - yaml
 
   '@sap/cds-fiori@2.3.0':
-    resolution: {integrity: sha512-6oWov+DSpFrSTgxXR0dZhak6aZ/IVRZvaHERMi0EgSTzIJdlvZlpw3Kf18ePMcTrRrtEXwD4RIjKt8pbs0g2Hg==}
+    resolution: {integrity: sha512-6oWov+DSpFrSTgxXR0dZhak6aZ/IVRZvaHERMi0EgSTzIJdlvZlpw3Kf18ePMcTrRrtEXwD4RIjKt8pbs0g2Hg==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds-fiori/-/@sap/cds-fiori-2.3.0.tgz}
     peerDependencies:
       '@sap/cds': '>=8'
 
   '@sap/cds@10.0.3':
-    resolution: {integrity: sha512-S9q8vcJXzIsO4KC49sb9JLIhY/k0MJTZcgEOzmhvoBW/lWLLR79Oci0xmyQqSxJwwzjavR9mW8I4wbMJQQMVAA==}
+    resolution: {integrity: sha512-S9q8vcJXzIsO4KC49sb9JLIhY/k0MJTZcgEOzmhvoBW/lWLLR79Oci0xmyQqSxJwwzjavR9mW8I4wbMJQQMVAA==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/cds/-/@sap/cds-10.0.3.tgz}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -2112,7 +2110,7 @@ packages:
     engines: {node: ^20.0.0  || ^22.0.0 || ^24.0.0}
 
   '@sap/xssec@4.13.0':
-    resolution: {integrity: sha512-8e+bU+OyAIpAGXQanOopZa5YEK+yHKw84dhhihcCotF40MSNFbVHjQ4xM5hf4QndlqDGfXIuvXmoOMuDATa/gA==}
+    resolution: {integrity: sha512-8e+bU+OyAIpAGXQanOopZa5YEK+yHKw84dhhihcCotF40MSNFbVHjQ4xM5hf4QndlqDGfXIuvXmoOMuDATa/gA==, tarball: https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/@sap/xssec/-/@sap/xssec-4.13.0.tgz}
     engines: {node: '>=18'}
 
   '@shikijs/engine-oniguruma@3.23.0':
@@ -2791,8 +2789,8 @@ packages:
     resolution: {integrity: sha512-dq9AtApgg5PGFtBzPFSBl3HZQjHok5gaQCM6zh2Yk0aSmDCs1CbnVI8/HgASQkNKsWFpseIO9beg5xxpYhbIfA==}
     engines: {node: 20.x || 22.x || 23.x || 24.x || 25.x || 26.x}
 
-  bignumber.js@11.1.4:
-    resolution: {integrity: sha512-AJ9dSeaUGj2xu7tEwmdqb51dqdb633xo4njI9K8ZFfcLrNr0XN8/EPkkZUNaF9fkCblGt2zVwZymesUdGynEkQ==}
+  bignumber.js@11.1.5:
+    resolution: {integrity: sha512-6WmzCNtUnfKpbozq+hOgWaZMMzORmYBwF1xZScyoIX3QRYWeKTtxxwDOW5tIz7C9BdjkIYHGTcelCLkXg0mndw==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -7411,7 +7409,7 @@ snapshots:
       prebuild-install: 7.1.3
     optional: true
 
-  bignumber.js@11.1.4: {}
+  bignumber.js@11.1.5: {}
 
   binary-extensions@2.3.0: {}
 

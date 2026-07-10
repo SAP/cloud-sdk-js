@@ -286,17 +286,35 @@ describe('agent caching', () => {
     expect(agentA).not.toBe(agentB);
   });
 
-  it('enables keepAlive by default on created agents', async () => {
+  it('enables keepAlive and sets 5s timeout by default on created agents', async () => {
     const destination: HttpDestination = { url: 'https://example.com' };
     const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
     expect(agent.keepAlive).toBe(true);
+    expect(agent.options.timeout).toBe(5000);
   });
 
-  it('keepAlive: false in options overrides the default (spread order)', () => {
-    // createAgent uses { keepAlive: true, ...options }
-    // verify that explicit keepAlive: false in options wins
-    const merged = { keepAlive: true, ...({ keepAlive: false } as any) };
-    expect(merged.keepAlive).toBe(false);
+  it('overrides default agentOptions when set via destination.agentOptions', async () => {
+    const destination: HttpDestination = {
+      url: 'https://example.com',
+      agentOptions: { keepAlive: false, timeout: 10000 }
+    };
+    const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+    expect(agent.keepAlive).toBe(false);
+    expect(agent.options.timeout).toBe(10000);
+  });
+
+  it('destinations with different agentOptions produce different cached agents', async () => {
+    const destA: HttpDestination = {
+      url: 'https://example.com',
+      agentOptions: { keepAlive: false }
+    };
+    const destB: HttpDestination = {
+      url: 'https://example.com',
+      agentOptions: { keepAlive: true }
+    };
+    const agentA = ((await getAgentConfig(destA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destB)) as any)['httpsAgent'];
+    expect(agentA).not.toBe(agentB);
   });
 
   it('http and https destinations use separate cache entries and agent types', async () => {

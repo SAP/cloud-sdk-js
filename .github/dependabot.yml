@@ -39,7 +39,16 @@ updates:
       - dependency-name: 'yargs'
         update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
-    directory: '/'
+    directories:
+      - '/'
+      - '/.github/actions/check-pr'
+      - '/.github/actions/commit-and-tag'
+      - '/.github/actions/changesets-fixed-version-bump'
+      - '/.github/actions/merge-and-write-changelogs'
+      - '/.github/actions/get-changelog'
+      - '/.github/actions/setup'
+      - '/.github/actions/check-public-api'
+      - '/.github/actions/check-license'
     schedule:
       interval: 'weekly'
       time: '01:00'

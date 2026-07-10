@@ -1,3 +1,4 @@
+import type https from 'node:https';
 import type { MtlsOptions } from '../../internal';
 import type { CachingOptions } from '../cache';
 import type { ProxyConfiguration } from '../connectivity-service-types';
@@ -176,6 +177,14 @@ export interface Destination {
    * This field is used to authenticate the destination using mTLS.
    */
   mtlsKeyPair?: MtlsOptions;
+
+  /**
+   * Options for the underlying http(s) agent used for requests against this destination.
+   * Use this to configure connection behavior such as `keepAlive`, `timeout`, etc.
+   * These options are merged with options derived from certificates and proxy configuration.
+   * @example { keepAlive: true, timeout: 5000 }
+   */
+  agentOptions?: https.AgentOptions;
 }
 
 /**
@@ -211,10 +220,7 @@ export interface DestinationAuthToken {
  * Represents the proxy type on a destination.
  */
 export type DestinationProxyType =
-  | 'OnPremise'
-  | 'Internet'
-  | 'PrivateLink'
-  | null;
+  'OnPremise' | 'Internet' | 'PrivateLink' | null;
 
 /**
  * Represents a certificate attached to a destination.

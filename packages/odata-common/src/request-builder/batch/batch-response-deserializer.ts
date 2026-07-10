@@ -70,7 +70,8 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
         this.deserializer
       ),
       isSuccess: (): this is
-        ReadResponse<DeSerializersT> | WriteResponses<DeSerializersT> => true,
+        | ReadResponse<DeSerializersT>
+        | WriteResponses<DeSerializersT> => true,
       isError: (): this is ErrorResponse => false,
       isReadResponse: (): this is ReadResponse<DeSerializersT> => true,
       isWriteResponses: (): this is WriteResponses<DeSerializersT> => false
@@ -82,7 +83,8 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
       ...responseData,
       responseType: 'ErrorResponse',
       isSuccess: (): this is
-        ReadResponse<DeSerializersT> | WriteResponses<DeSerializersT> => false,
+        | ReadResponse<DeSerializersT>
+        | WriteResponses<DeSerializersT> => false,
       isError: (): this is ErrorResponse => true,
       isReadResponse: (): this is ReadResponse<DeSerializersT> => false,
       isWriteResponses: (): this is WriteResponses<DeSerializersT> => false
@@ -112,7 +114,8 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
         this.deserializeChangeSetSubResponse(subResponseData)
       ),
       isSuccess: (): this is
-        ReadResponse<DeSerializersT> | WriteResponses<DeSerializersT> => true,
+        | ReadResponse<DeSerializersT>
+        | WriteResponses<DeSerializersT> => true,
       isError: (): this is ErrorResponse => false,
       isReadResponse: (): this is ReadResponse<DeSerializersT> => false,
       isWriteResponses: (): this is WriteResponses<DeSerializersT> => true
@@ -158,7 +161,9 @@ export function deserializeBatchResponse<DeSerializersT extends DeSerializers>(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ): (
-  ErrorResponse | ReadResponse<DeSerializersT> | WriteResponses<DeSerializersT>
+  | ErrorResponse
+  | ReadResponse<DeSerializersT>
+  | WriteResponses<DeSerializersT>
 )[] {
   return new BatchResponseDeserializer(
     entityToApi,

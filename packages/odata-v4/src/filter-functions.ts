@@ -30,7 +30,9 @@ import type { DeSerializers } from './de-serializers';
  */
 export function contains<EntityT extends Entity>(
   substr:
-    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('contains', 'boolean', substr, str);
@@ -44,7 +46,9 @@ export function contains<EntityT extends Entity>(
  */
 export function matchesPattern<EntityT extends Entity>(
   str:
-    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
   regex: string
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('matchesPattern', 'boolean', str, regex);

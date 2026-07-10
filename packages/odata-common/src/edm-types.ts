@@ -37,7 +37,10 @@ export type ExclusiveEdmTypeV2 = 'Edm.DateTime' | 'Edm.Time';
  * Exclusive EDM types for OData v4.
  */
 export type ExclusiveEdmTypeV4 =
-  'Edm.Date' | 'Edm.Duration' | 'Edm.TimeOfDay' | 'Edm.Enum'; // There is no `Edm.Enum` in terms of OData spec. We use it so the serialization/de-serialization of the `Edm.String` can be reused.
+  | 'Edm.Date'
+  | 'Edm.Duration'
+  | 'Edm.TimeOfDay'
+  | 'Edm.Enum'; // There is no `Edm.Enum` in terms of OData spec. We use it so the serialization/de-serialization of the `Edm.String` can be reused.
 
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of TypeScript.
 /**

@@ -28,7 +28,9 @@ export type FilterOperatorNumber = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
  * Union type of the filter operators for string, boolean and number types.
  */
 export type FilterOperator =
-  FilterOperatorString | FilterOperatorBoolean | FilterOperatorNumber;
+  | FilterOperatorString
+  | FilterOperatorBoolean
+  | FilterOperatorNumber;
 /**
  * @internal
  */

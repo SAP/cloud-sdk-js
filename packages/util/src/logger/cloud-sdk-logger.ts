@@ -358,7 +358,12 @@ export function resetCustomLogFormats(): void {
  * Npm log levels used for the SAP Cloud SDK logger.
  */
 export type LogLevel =
-  'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
+  | 'error'
+  | 'warn'
+  | 'info'
+  | 'verbose'
+  | 'debug'
+  | 'silly';
 
 /**
  * Configurable logger options.

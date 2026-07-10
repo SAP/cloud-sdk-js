@@ -109,7 +109,9 @@ type CollectionReturnType =
   | 'string[]';
 
 type FilterFunctionReturnType =
-  FilterFunctionReturnTypeBase | CollectionReturnType | 'datetimeoffset';
+  | FilterFunctionReturnTypeBase
+  | CollectionReturnType
+  | 'datetimeoffset';
 
 const returnTypeMapping = {
   datetimeoffset: 'Edm.DateTimeOffset',

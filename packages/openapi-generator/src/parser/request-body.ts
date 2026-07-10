@@ -9,7 +9,9 @@ import type { ParserOptions } from './options';
  */
 export function parseRequestBody(
   requestBody:
-    OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject | undefined,
+    | OpenAPIV3.ReferenceObject
+    | OpenAPIV3.RequestBodyObject
+    | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiRequestBody | undefined {

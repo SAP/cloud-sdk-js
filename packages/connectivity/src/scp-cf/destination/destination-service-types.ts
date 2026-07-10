@@ -220,7 +220,10 @@ export interface DestinationAuthToken {
  * Represents the proxy type on a destination.
  */
 export type DestinationProxyType =
-  'OnPremise' | 'Internet' | 'PrivateLink' | null;
+  | 'OnPremise'
+  | 'Internet'
+  | 'PrivateLink'
+  | null;
 
 /**
  * Represents a certificate attached to a destination.

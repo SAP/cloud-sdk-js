@@ -27,7 +27,9 @@ import type { Entity } from './entity';
  */
 export function substringOf<EntityT extends Entity>(
   substr:
-    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('substringof', 'boolean', substr, str);
@@ -42,11 +44,17 @@ export function substringOf<EntityT extends Entity>(
  */
 export function replace<EntityT extends Entity>(
   str:
-    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
   searchStr:
-    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
   replaceStr:
-    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('replace', 'string', str, searchStr, replaceStr);
 }
@@ -126,4 +134,6 @@ export type FilterFunctionsType = FilterFunctionsCommonType & {
  * @internal
  */
 export type FilterFunctionNames =
-  FilterFunctionNamesCommon | 'substringOf' | 'replace';
+  | FilterFunctionNamesCommon
+  | 'substringOf'
+  | 'replace';

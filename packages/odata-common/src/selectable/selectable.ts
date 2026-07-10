@@ -16,16 +16,18 @@ export type Selectable<
   DeSerializersT extends DeSerializers
 > =
   ODataVersionOf<EntityT> extends 'v2'
-    ? | SimpleTypeFields<EntityT>
-      | Link<EntityT, DeSerializersT, EntityApi<EntityBase, DeSerializersT>>
-      | ComplexTypeField<EntityT, DeSerializersT, any, boolean, boolean>
-      | CustomField<EntityT, any, boolean>
-      | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>
-      | AllFields<EntityT>
-    : ODataVersionOf<EntityT> extends 'v4'
-      ? | SimpleTypeFields<EntityT>
+    ?
+        | SimpleTypeFields<EntityT>
+        | Link<EntityT, DeSerializersT, EntityApi<EntityBase, DeSerializersT>>
         | ComplexTypeField<EntityT, DeSerializersT, any, boolean, boolean>
-        | CustomField<EntityT, DeSerializersT, boolean>
+        | CustomField<EntityT, any, boolean>
         | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>
         | AllFields<EntityT>
+    : ODataVersionOf<EntityT> extends 'v4'
+      ?
+          | SimpleTypeFields<EntityT>
+          | ComplexTypeField<EntityT, DeSerializersT, any, boolean, boolean>
+          | CustomField<EntityT, DeSerializersT, boolean>
+          | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>
+          | AllFields<EntityT>
       : never;

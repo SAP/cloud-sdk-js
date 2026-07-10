@@ -104,7 +104,8 @@ export function or<
   DeSerializersT extends DeSerializers
 >(
   first:
-    Filterable<EntityT, DeSerializersT> | Filterable<EntityT, DeSerializersT>[],
+    | Filterable<EntityT, DeSerializersT>
+    | Filterable<EntityT, DeSerializersT>[],
   ...rest: Filterable<EntityT, DeSerializersT>[]
 ): FilterList<EntityT, DeSerializersT> {
   return new FilterList([], transformVariadicArgumentToArray(first, rest));

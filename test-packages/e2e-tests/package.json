@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^12.1.0",
-    "@cap-js/sqlite": "^2.2.0",
+    "@cap-js/sqlite": "^3.0.2",
     "@jest/globals": "^30.3.0",
     "@sap-cloud-sdk/connectivity": "workspace:^",
     "@sap-cloud-sdk/generator": "workspace:^",

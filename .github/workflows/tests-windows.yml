@@ -16,7 +16,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_pnpm-fix-dbot
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - run: pnpm run test:unit

@@ -298,6 +298,15 @@ export const agentCache = new Cache<HttpAgentConfig | HttpsAgentConfig>(
 );
 
 /**
+ * Default options for the http(s) agents.
+ * @internal
+ */
+export const defaultAgentOptions: https.AgentOptions | http.AgentOptions = {
+  keepAlive: true,
+  timeout: 5000
+};
+
+/**
  * @internal
  * Agents are cached for up to one hour, but can be evicted earlier if more than 100 agents are created.
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
@@ -307,13 +316,21 @@ async function createAgent(
   options: https.AgentOptions
 ): Promise<HttpAgentConfig | HttpsAgentConfig> {
   const protocol = getProtocolOrDefault(destination);
-  const cacheKey = await hashCacheKey({ protocol, options });
+  const cacheKey = await hashCacheKey({
+    protocol,
+    options,
+    agentOptions: destination.agentOptions
+  });
 
   return agentCache.getOrInsertComputed(cacheKey, () => {
     logger.debug(
       `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || '<unknown>'}`
     );
-    const optionsWithDefaults = { keepAlive: true, ...options };
+    const optionsWithDefaults = {
+      ...defaultAgentOptions,
+      ...destination.agentOptions,
+      ...options
+    };
     const entry =
       protocol === 'https'
         ? { httpsAgent: new https.Agent(optionsWithDefaults) }

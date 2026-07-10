@@ -315,7 +315,7 @@ async function createAgent(
   options: https.AgentOptions
 ): Promise<HttpAgentConfig | HttpsAgentConfig> {
   const protocol = getProtocolOrDefault(destination);
-  const cacheKey = hashCacheKey({
+  const cacheKey = await hashCacheKey({
     protocol,
     options,
     agentOptions: destination.agentOptions

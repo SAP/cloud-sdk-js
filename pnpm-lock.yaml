@@ -1,209 +1,8 @@
----
-lockfileVersion: '9.0'
-
-importers:
-
-  .:
-    configDependencies: {}
-    packageManagerDependencies:
-      '@pnpm/exe':
-        specifier: 11.10.0
-        version: 11.10.0
-      pnpm:
-        specifier: 11.10.0
-        version: 11.10.0
-
-packages:
-
-  '@pnpm/exe@11.10.0':
-    resolution: {integrity: sha512-mrmfi2C7LpZkyq0voKKye6MzrK8/K7tYQRiSB/jqOiwnFtQxxcA3xGTY9cEsrGpNl2ClPecQofLuj+BO8AIsxw==}
-    hasBin: true
-
-  '@pnpm/linux-arm64@11.10.0':
-    resolution: {integrity: sha512-NbvDeUfs0SJuli9OPvgVvmnlbo2DvJ861XGXKrzgLu5AuTnLDLXgbZEEUd8mJ5I0YNrqOVXSWVfWEqiAazWzPA==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@pnpm/linux-x64@11.10.0':
-    resolution: {integrity: sha512-kdgb8BXZ/3XQ0x2cOmgLmsij7+SUIqd1bcV6OZhdGzQiDrOY6FAPrR+Y2Bp+NjrrhjzMHVm5pZrrmdeC67ymSQ==}
-    cpu: [x64]
-    os: [linux]
-
-  '@pnpm/linuxstatic-arm64@11.10.0':
-    resolution: {integrity: sha512-JE1WrSyKGvqGQgWzqrMXn//ehedpiRax3hi1oP+v6mhvcnlJD1lpfXsjSfIFl9weTWC5KVtFbxSNKbKWfP+v6g==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [musl]
-
-  '@pnpm/linuxstatic-x64@11.10.0':
-    resolution: {integrity: sha512-1TBZVRkWb78GnsusIfVgwz20MOOW0fyehW+qLL3MxE9vT0IedNWsAhe3KWXgEvtC4M7NtMt55uQQJm+1egwBkA==}
-    cpu: [x64]
-    os: [linux]
-    libc: [musl]
-
-  '@pnpm/macos-arm64@11.10.0':
-    resolution: {integrity: sha512-94AVpPixBqyNT6SHYvIKFb1bfaHR5vxBzZsiFJahNSlGkgyPrgzmcqDiloZ/Jl+zxJd8L5PU1ddP0Q9PZnRqlA==}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@pnpm/win-arm64@11.10.0':
-    resolution: {integrity: sha512-g2Ymnq+LgVyZaWsGBQSlpIcBCOOxyLky2UX+kTwGiIXnj6k/xXqZR0ZJLuxeiGNh/CVmhftOqokpyJNzyj8kng==}
-    cpu: [arm64]
-    os: [win32]
-
-  '@pnpm/win-x64@11.10.0':
-    resolution: {integrity: sha512-kCHYZudUEBjrEchgnJUnNHCdvLXpUZun2z0rMAeP5DymsaXwEVvVzGj220iR/NyhgDocJUmgtTKtwL/ejL785Q==}
-    cpu: [x64]
-    os: [win32]
-
-  '@reflink/reflink-darwin-arm64@0.1.19':
-    resolution: {integrity: sha512-ruy44Lpepdk1FqDz38vExBY/PVUsjxZA+chd9wozjUH9JjuDT/HEaQYA6wYN9mf041l0yLVar6BCZuWABJvHSA==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@reflink/reflink-darwin-x64@0.1.19':
-    resolution: {integrity: sha512-By85MSWrMZa+c26TcnAy8SDk0sTUkYlNnwknSchkhHpGXOtjNDUOxJE9oByBnGbeuIE1PiQsxDG3Ud+IVV9yuA==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@reflink/reflink-linux-arm64-gnu@0.1.19':
-    resolution: {integrity: sha512-7P+er8+rP9iNeN+bfmccM4hTAaLP6PQJPKWSA4iSk2bNvo6KU6RyPgYeHxXmzNKzPVRcypZQTpFgstHam6maVg==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-    libc: [glibc]
-
-  '@reflink/reflink-linux-arm64-musl@0.1.19':
-    resolution: {integrity: sha512-37iO/Dp6m5DDaC2sf3zPtx/hl9FV3Xze4xoYidrxxS9bgP3S8ALroxRK6xBG/1TtfXKTvolvp+IjrUU6ujIGmA==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-    libc: [musl]
-
-  '@reflink/reflink-linux-x64-gnu@0.1.19':
-    resolution: {integrity: sha512-jbI8jvuYCaA3MVUdu8vLoLAFqC+iNMpiSuLbxlAgg7x3K5bsS8nOpTRnkLF7vISJ+rVR8W+7ThXlXlUQ93ulkw==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-    libc: [glibc]
-
-  '@reflink/reflink-linux-x64-musl@0.1.19':
-    resolution: {integrity: sha512-e9FBWDe+lv7QKAwtKOt6A2W/fyy/aEEfr0g6j/hWzvQcrzHCsz07BNQYlNOjTfeytrtLU7k449H1PI95jA4OjQ==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-    libc: [musl]
-
-  '@reflink/reflink-win32-arm64-msvc@0.1.19':
-    resolution: {integrity: sha512-09PxnVIQcd+UOn4WAW73WU6PXL7DwGS6wPlkMhMg2zlHHG65F3vHepOw06HFCq+N42qkaNAc8AKIabWvtk6cIQ==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [win32]
-
-  '@reflink/reflink-win32-x64-msvc@0.1.19':
-    resolution: {integrity: sha512-E//yT4ni2SyhwP8JRjVGWr3cbnhWDiPLgnQ66qqaanjjnMiu3O/2tjCPQXlcGc/DEYofpDc9fvhv6tALQsMV9w==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [win32]
-
-  '@reflink/reflink@0.1.19':
-    resolution: {integrity: sha512-DmCG8GzysnCZ15bres3N5AHCmwBwYgp0As6xjhQ47rAUTUXxJiK+lLUxaGsX3hd/30qUpVElh05PbGuxRPgJwA==}
-    engines: {node: '>= 10'}
-
-  detect-libc@2.1.2:
-    resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
-    engines: {node: '>=8'}
-
-  pnpm@11.10.0:
-    resolution: {integrity: sha512-C3+LmAYAMZBMAX46QesYehbUDuuCm5XE+MsDaBdh/Eq1PdIZEVubRH9NzhoFohR2RGHn03AzkqnzL5URzoyGyA==}
-    engines: {node: '>=22.13'}
-    hasBin: true
-
-snapshots:
-
-  '@pnpm/exe@11.10.0':
-    dependencies:
-      '@reflink/reflink': 0.1.19
-      detect-libc: 2.1.2
-    optionalDependencies:
-      '@pnpm/linux-arm64': 11.10.0
-      '@pnpm/linux-x64': 11.10.0
-      '@pnpm/linuxstatic-arm64': 11.10.0
-      '@pnpm/linuxstatic-x64': 11.10.0
-      '@pnpm/macos-arm64': 11.10.0
-      '@pnpm/win-arm64': 11.10.0
-      '@pnpm/win-x64': 11.10.0
-
-  '@pnpm/linux-arm64@11.10.0':
-    optional: true
-
-  '@pnpm/linux-x64@11.10.0':
-    optional: true
-
-  '@pnpm/linuxstatic-arm64@11.10.0':
-    optional: true
-
-  '@pnpm/linuxstatic-x64@11.10.0':
-    optional: true
-
-  '@pnpm/macos-arm64@11.10.0':
-    optional: true
-
-  '@pnpm/win-arm64@11.10.0':
-    optional: true
-
-  '@pnpm/win-x64@11.10.0':
-    optional: true
-
-  '@reflink/reflink-darwin-arm64@0.1.19':
-    optional: true
-
-  '@reflink/reflink-darwin-x64@0.1.19':
-    optional: true
-
-  '@reflink/reflink-linux-arm64-gnu@0.1.19':
-    optional: true
-
-  '@reflink/reflink-linux-arm64-musl@0.1.19':
-    optional: true
-
-  '@reflink/reflink-linux-x64-gnu@0.1.19':
-    optional: true
-
-  '@reflink/reflink-linux-x64-musl@0.1.19':
-    optional: true
-
-  '@reflink/reflink-win32-arm64-msvc@0.1.19':
-    optional: true
-
-  '@reflink/reflink-win32-x64-msvc@0.1.19':
-    optional: true
-
-  '@reflink/reflink@0.1.19':
-    optionalDependencies:
-      '@reflink/reflink-darwin-arm64': 0.1.19
-      '@reflink/reflink-darwin-x64': 0.1.19
-      '@reflink/reflink-linux-arm64-gnu': 0.1.19
-      '@reflink/reflink-linux-arm64-musl': 0.1.19
-      '@reflink/reflink-linux-x64-gnu': 0.1.19
-      '@reflink/reflink-linux-x64-musl': 0.1.19
-      '@reflink/reflink-win32-arm64-msvc': 0.1.19
-      '@reflink/reflink-win32-x64-msvc': 0.1.19
-
-  detect-libc@2.1.2: {}
-
-  pnpm@11.10.0: {}
-
----
 lockfileVersion: '9.0'
 
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
-
-pnpmfileChecksum: sha256-pNNJ8g45BvuPh75mWXzfkFeWrKOrPh3VNOQYylOFYlE=
 
 importers:
 
@@ -744,7 +543,7 @@ importers:
         version: link:../util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -784,7 +583,7 @@ importers:
         version: link:../util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -824,7 +623,7 @@ importers:
         version: link:../util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1061,8 +860,8 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0(openapi-types@12.1.3)
       '@cap-js/sqlite':
-        specifier: ^2.2.0
-        version: 2.4.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))
+        specifier: ^3.0.2
+        version: 3.0.2(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))(better-sqlite3@12.11.1)(generic-pool@3.9.0)
       '@jest/globals':
         specifier: ^30.3.0
         version: 30.4.1
@@ -1097,14 +896,14 @@ importers:
         specifier: ^10.0.3
         version: 10.0.3(@eslint/js@10.0.1(eslint@10.6.0))
       '@sap/cds-dk':
-        specifier: 9.9.2
-        version: 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
+        specifier: 10.0.3
+        version: 10.0.3
       axios:
         specifier: ^1.15.0
         version: 1.18.1
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -1189,7 +988,7 @@ importers:
         version: link:../../packages/openapi-generator
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       execa:
         specifier: ^5.0.0
         version: 5.1.1
@@ -1231,7 +1030,7 @@ importers:
         version: link:../../packages/util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1262,7 +1061,7 @@ importers:
         version: link:../../packages/util
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
     devDependencies:
       depcheck:
         specifier: ^1.4.7
@@ -1278,7 +1077,7 @@ importers:
         version: link:../../packages/generator
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1300,7 +1099,7 @@ importers:
         version: link:../../packages/generator
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1376,7 +1175,7 @@ importers:
         version: 9.0.10
       bignumber.js:
         specifier: ^11.0.0
-        version: 11.1.4
+        version: 11.1.5
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1627,27 +1426,24 @@ packages:
   '@blueoak/list@15.0.0':
     resolution: {integrity: sha512-xW5Xb9Fr3WtYAOwavxxWL0CaJK/ReT+HKb5/R6dR1p9RVJ55MTdaxPdeTKY2ukhFchv2YHPMM8YuZyfyLqxedg==}
 
-  '@cap-js/asyncapi@1.1.0':
-    resolution: {integrity: sha512-ywO5NfGwoeEx6/jneOMpNMs4PFmuueet8HOEg13VAiXpu4W5juAZQ/Jv2xE0QcW9m1qiCmI1ymypmz7UI+YGbw==}
+  '@cap-js/db-service@3.0.1':
+    resolution: {integrity: sha512-sWy+EYyfY7YzJspKcGqln4gWNVffcRwd/vm47T+tMa85+LWtOsmJgdfH8i1KVCR3o8zaywmPwSflnnSOKoZJkg==}
     peerDependencies:
-      '@sap/cds': '>=7.6'
+      '@sap/cds': ^10
+      generic-pool: ^3.9.0
+    peerDependenciesMeta:
+      generic-pool:
+        optional: true
 
-  '@cap-js/db-service@2.11.0':
-    resolution: {integrity: sha512-sl33LcxZYAJgMCQZDw4lMGe4kWYq6685Xc6ze4qcoM+rd6aqiyVsSC6C7XH5yerXs7cVHhRC+Dgo8AsaapFzlQ==}
+  '@cap-js/sqlite@3.0.2':
+    resolution: {integrity: sha512-C+wiMzRxgmNF919ZcIjXPlAGlgunXUzPAldp5WMZ4fmb+komfADMmdUzYqS1LklnBXBkdxrKlP30giNTutPwpg==}
     peerDependencies:
-      '@sap/cds': '>=9.8'
-
-  '@cap-js/openapi@1.5.0':
-    resolution: {integrity: sha512-JDzENNC80vnP9W31Skz6PfgPnpaxNTgIP8CtDK3bJ0FCbr5sXshRqes1pc17kNMXDbJAtEshS0dN7GYBW2THWA==}
-    peerDependencies:
-      '@sap/cds': '>=7.6'
-
-  '@cap-js/sqlite@2.4.0':
-    resolution: {integrity: sha512-Ao+AzIN6BWHNpLbGxAzF79OezFNHzDG2srwiBABs0FYxIxEGkc2hg6ETo79pTTt66gcWtx7pWh/N9xk2M6SFBQ==}
-    peerDependencies:
-      '@sap/cds': '>=9.8'
+      '@sap/cds': ^10
+      better-sqlite3: ^12.0.0
       sql.js: ^1.13.0
     peerDependenciesMeta:
+      better-sqlite3:
+        optional: true
       sql.js:
         optional: true
 
@@ -2178,30 +1974,125 @@ packages:
   '@pm2/pm2-version-check@1.0.4':
     resolution: {integrity: sha512-SXsM27SGH3yTWKc2fKR4SYNxsmnvuBQ9dd6QHtEWmiZ/VqaOYPAIlS8+vMcn27YLtAEBGvNRSh3TPNvtjZgfqA==}
 
-  '@sap/cds-compiler@6.9.3':
-    resolution: {integrity: sha512-8fEeM6D059ruqLWoJqzFSNLkGoUCMnycx7Zv4OP4nA9zZeHzFC3nAe6s3ak2kASSiub1xAMMPzDE/9EnSXQKLw==}
-    engines: {node: '>=20'}
-    hasBin: true
-
   '@sap/cds-compiler@7.0.1':
     resolution: {integrity: sha512-Qwk9jitwSSwPB9FTB/Q6gYPxFsJxswhfsO9Ux77HTxjIhse8O/Hlq2XzkpVSTyaAVr8Lo7wLfpytHwKQScZTwQ==}
     engines: {node: '>=22'}
     hasBin: true
 
-  '@sap/cds-dk@9.9.2':
-    resolution: {integrity: sha512-cngXMULAuueITOLymme51fBuUKRaqofXDzwyJtnEQ2BLZBz/t6s+rXZV7nY2xJyqU3y0rbB023R9218D25evuw==}
+  '@sap/cds-dk@10.0.3':
+    resolution: {integrity: sha512-8fUnq/wOd7wQsOLdTZiKROAFjeJ7zcHwGGXmVzvZvKmiH4xojc0jTo1YwMG257ivDcHF+5fjZfDHymk7eYeYPA==}
     hasBin: true
+    bundledDependencies:
+      - '@cap-js/asyncapi'
+      - '@cap-js/openapi'
+      - '@eslint/js'
+      - '@sap/cds'
+      - '@sap/cds-compiler'
+      - '@sap/cds-fiori'
+      - '@sap/cds-mtxs'
+      - '@sap/hdi'
+      - '@sap/hdi-deploy'
+      - '@sap/xsenv'
+      - accepts
+      - assert-plus
+      - async
+      - body-parser
+      - braces
+      - bytes
+      - call-bind-apply-helpers
+      - call-bound
+      - clone
+      - content-disposition
+      - content-type
+      - cookie
+      - cookie-signature
+      - core-util-is
+      - debug
+      - depd
+      - dotenv
+      - dunder-proto
+      - ee-first
+      - encodeurl
+      - es-define-property
+      - es-errors
+      - es-object-atoms
+      - escape-html
+      - etag
+      - express
+      - extsprintf
+      - fill-range
+      - finalhandler
+      - forwarded
+      - fresh
+      - function-bind
+      - get-intrinsic
+      - get-proto
+      - gopd
+      - handlebars
+      - has-symbols
+      - hasown
+      - hdb
+      - http-errors
+      - iconv-lite
+      - inherits
+      - ipaddr.js
+      - is-number
+      - is-promise
+      - livereload-js
+      - lz4-wasm-nodejs
+      - math-intrinsics
+      - media-typer
+      - merge-descriptors
+      - micromatch
+      - mime-db
+      - mime-types
+      - minimist
+      - ms
+      - mustache
+      - negotiator
+      - neo-async
+      - node-cache
+      - object-inspect
+      - on-finished
+      - once
+      - parseurl
+      - path-to-regexp
+      - picomatch
+      - pluralize
+      - proxy-addr
+      - qs
+      - range-parser
+      - raw-body
+      - router
+      - safer-buffer
+      - sax
+      - semver
+      - send
+      - serve-static
+      - setprototypeof
+      - side-channel
+      - side-channel-list
+      - side-channel-map
+      - side-channel-weakmap
+      - source-map
+      - statuses
+      - to-regex-range
+      - toidentifier
+      - type-is
+      - uglify-js
+      - unpipe
+      - vary
+      - verror
+      - wordwrap
+      - wrappy
+      - ws
+      - xml-js
+      - yaml
 
   '@sap/cds-fiori@2.3.0':
     resolution: {integrity: sha512-6oWov+DSpFrSTgxXR0dZhak6aZ/IVRZvaHERMi0EgSTzIJdlvZlpw3Kf18ePMcTrRrtEXwD4RIjKt8pbs0g2Hg==}
     peerDependencies:
       '@sap/cds': '>=8'
-
-  '@sap/cds-mtxs@3.9.4':
-    resolution: {integrity: sha512-A3FRCGCMNhml8MLpGv+OUHwDhAUgvAiE38qdTL87/KQ932CTNZ1frohQtT24iszoamB7NI8lp9RR3BFD6HR/FQ==}
-    hasBin: true
-    peerDependencies:
-      '@sap/cds': '>=9'
 
   '@sap/cds@10.0.3':
     resolution: {integrity: sha512-S9q8vcJXzIsO4KC49sb9JLIhY/k0MJTZcgEOzmhvoBW/lWLLR79Oci0xmyQqSxJwwzjavR9mW8I4wbMJQQMVAA==}
@@ -2212,41 +2103,6 @@ packages:
       tar: ^7.5.6
     peerDependenciesMeta:
       tar:
-        optional: true
-
-  '@sap/cds@9.9.2':
-    resolution: {integrity: sha512-8YmZVsTRaJX+MPeZuhkvvKIgIcmYVHUG98+c8trPNdaf5+eo051w/3y2NoPmXQjr/I7y1195k/TS7kjZlUWzBg==}
-    engines: {node: '>=20'}
-    hasBin: true
-    peerDependencies:
-      '@eslint/js': ^9 || ^10
-      tar: ^7.5.6
-    peerDependenciesMeta:
-      tar:
-        optional: true
-
-  '@sap/hdi-deploy@5.7.0':
-    resolution: {integrity: sha512-ENBCtCBnJEKBlvC5mQT/G7OAteOENo7ygSeRJgVdz7AHikcHUxegtavXkJtFCJ/PSjpjytFKfGRmG8peUVAmNQ==}
-    engines: {node: '>=18.x'}
-    peerDependencies:
-      '@sap/hana-client': ^2 >= 2.6
-      hdb: ^2 || ^0
-    peerDependenciesMeta:
-      '@sap/hana-client':
-        optional: true
-      hdb:
-        optional: true
-
-  '@sap/hdi@4.8.1':
-    resolution: {integrity: sha512-LfRtIbtfvMl82a8CwpqPJRRB9hRSVUQyvxualYBEzyNu/phuw6bFGQA5LHVngHsms+y797Icm4tl4X+TEkTtlg==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@sap/hana-client': ^2 >= 2.5
-      hdb: ^2 || ^0
-    peerDependenciesMeta:
-      '@sap/hana-client':
-        optional: true
-      hdb:
         optional: true
 
   '@sap/xsenv@6.2.1':
@@ -2933,8 +2789,8 @@ packages:
     resolution: {integrity: sha512-dq9AtApgg5PGFtBzPFSBl3HZQjHok5gaQCM6zh2Yk0aSmDCs1CbnVI8/HgASQkNKsWFpseIO9beg5xxpYhbIfA==}
     engines: {node: 20.x || 22.x || 23.x || 24.x || 25.x || 26.x}
 
-  bignumber.js@11.1.4:
-    resolution: {integrity: sha512-AJ9dSeaUGj2xu7tEwmdqb51dqdb633xo4njI9K8ZFfcLrNr0XN8/EPkkZUNaF9fkCblGt2zVwZymesUdGynEkQ==}
+  bignumber.js@11.1.5:
+    resolution: {integrity: sha512-6WmzCNtUnfKpbozq+hOgWaZMMzORmYBwF1xZScyoIX3QRYWeKTtxxwDOW5tIz7C9BdjkIYHGTcelCLkXg0mndw==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -3356,10 +3212,6 @@ packages:
   dir-glob@3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
-
-  dotenv@16.6.1:
-    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
-    engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -3916,10 +3768,6 @@ packages:
     resolution: {integrity: sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==}
     engines: {node: '>= 0.4'}
 
-  hdb@2.29.5:
-    resolution: {integrity: sha512-3DFwpAdURCKz7mI4Ahsu12dVUCev4Epd+OfgR6L13K36c0yyU3Tf7i9Q1bZt9wN9sBczpmUf0hHnshqygtBIsw==}
-    engines: {node: '>= 18'}
-
   homedir-polyfill@1.0.3:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
     engines: {node: '>=0.10.0'}
@@ -3978,10 +3826,6 @@ packages:
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
-    engines: {node: '>=0.10.0'}
-
-  iconv-lite@0.7.0:
-    resolution: {integrity: sha512-cf6L2Ds3h57VVmkZe+Pn+5APsT7FpqJtEhhieDCvrE2MK5Qk9MyffgQyuxQTm6BChfeZNtcOLHp9IcWRVcIcBQ==}
     engines: {node: '>=0.10.0'}
 
   iconv-lite@0.7.2:
@@ -4391,9 +4235,6 @@ packages:
   linkify-it@5.0.1:
     resolution: {integrity: sha512-wVoTjP4Q6R0NW5hiZkVJaFZPWgtXfoGF+6LucL3/FtiNjmcHhYjEr5f1Kqjirc1nBW07J/ZuRFumqr2oqccEWg==}
 
-  livereload-js@4.0.2:
-    resolution: {integrity: sha512-Fy7VwgQNiOkynYyNBTo3v9hQUhcW5pFAheJN148+DTgpShjsy/22pLHKKwDK5v0kOsZsJBK+6q1PMgLvRmrwFQ==}
-
   locate-path@5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
     engines: {node: '>=8'}
@@ -4463,9 +4304,6 @@ packages:
 
   lunr@2.3.9:
     resolution: {integrity: sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==}
-
-  lz4-wasm-nodejs@0.9.2:
-    resolution: {integrity: sha512-hSwgJPS98q/Oe/89Y1OxzeA/UdnASG8GvldRyKa7aZyoAFCC8VPRtViBSava7wWC66WocjUwBpWau2rEmyFPsw==}
 
   madge@8.0.0:
     resolution: {integrity: sha512-9sSsi3TBPhmkTCIpVQF0SPiChj1L7Rq9kU2KDG1o6v2XH9cCw086MopjVCD+vuoL5v8S77DTbVopTO8OUiQpIw==}
@@ -4633,10 +4471,6 @@ packages:
     resolution: {integrity: sha512-ypMKuglUrZUD99Tk2bUQ+xNQj43lPEfAeX2o9cTteAmShXy2VHDJpuwu1o0xqoKCt9jLVAvwyFKdLTPXKAfJyA==}
     engines: {node: '>=10'}
 
-  mustache@4.2.0:
-    resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
-    hasBin: true
-
   nanoid@3.3.15:
     resolution: {integrity: sha512-y7Wygv/7mEOvxTuEQDB8StXdMRBWf1kR/tlhAzBRUFkB2jfcLOAxO/SHmOO2zgz1pVgK29/kyupn059/bCHdjA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -4668,8 +4502,8 @@ packages:
     resolution: {integrity: sha512-8r4KEc6nT1D/fdLD/R1BO1CPaVEL8o40u/guFRJlXabN7vr3RmMqyjsY5Krt0nMwhsOAwXQ/mtN5vy5Jh3aErg==}
     engines: {node: '>=18.20.0 <20 || >=20.12.1'}
 
-  node-abi@3.92.0:
-    resolution: {integrity: sha512-KdHvFWZjEKDf0cakgFjebl371GPsISX2oZHcuyKqM7DtogIsHrqKeLTo8wBHxaXRAQlY2PsPlZmfo+9ZCxEREQ==}
+  node-abi@3.94.0:
+    resolution: {integrity: sha512-W5ZNO5KRPB5TkYmGVD9F6YqhsglXJzE6etpbmT+f6EQElhiX/UTG551cnsRGvLG3fyZEg9HwaDmNmj5nwJ4z9g==}
     engines: {node: '>=10'}
 
   node-cache@5.1.2:
@@ -5175,10 +5009,6 @@ packages:
     resolution: {integrity: sha512-GjmndmKQBtlPil79RK72L7yc5kDXZPCQeH97bP8R8DcxtXQJO6vECExb3WP/m6+cxaV9h4ZxrSRvCkPG2v/VSw==}
     engines: {node: '>=18'}
     hasBin: true
-
-  sax@1.6.0:
-    resolution: {integrity: sha512-6R3J5M4AcbtLUdZmRv2SygeVaM7IhrLXu9BmnOGmmACak8fiUtOsYNWUS4uK7upbmHIBbLBeFeI//477BKLBzA==}
-    engines: {node: '>=11.0.0'}
 
   semver-compare@1.0.0:
     resolution: {integrity: sha512-YM3/ITh2MJ5MtzaM429anh+x2jiLVjqILF4m4oyQB18W7Ggea7BfqdH/wGMK7dDiMghv/6WG7znWMwUDzJiXow==}
@@ -5769,10 +5599,6 @@ packages:
       utf-8-validate:
         optional: true
 
-  xml-js@1.6.11:
-    resolution: {integrity: sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==}
-    hasBin: true
-
   xml-naming@0.1.0:
     resolution: {integrity: sha512-k8KO9hrMyNk6tUWqUfkTEZbezRRpONVOzUTnc97VnCvyj6Tf9lyUR9EDAIeiVLv56jsMcoXEwjW8Kv5yPY52lw==}
     engines: {node: '>=16.0.0'}
@@ -6079,38 +5905,20 @@ snapshots:
 
   '@blueoak/list@15.0.0': {}
 
-  '@cap-js/asyncapi@1.1.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
-    dependencies:
-      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
-
-  '@cap-js/db-service@2.11.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@cap-js/db-service@3.0.1(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))(generic-pool@3.9.0)':
     dependencies:
       '@sap/cds': 10.0.3(@eslint/js@10.0.1(eslint@10.6.0))
+    optionalDependencies:
       generic-pool: 3.9.0
 
-  '@cap-js/db-service@2.11.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
+  '@cap-js/sqlite@3.0.2(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))(better-sqlite3@12.11.1)(generic-pool@3.9.0)':
     dependencies:
-      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
-      generic-pool: 3.9.0
-    optional: true
-
-  '@cap-js/openapi@1.5.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
-    dependencies:
-      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
-      pluralize: 8.0.0
-
-  '@cap-js/sqlite@2.4.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))':
-    dependencies:
-      '@cap-js/db-service': 2.11.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))
+      '@cap-js/db-service': 3.0.1(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))(generic-pool@3.9.0)
       '@sap/cds': 10.0.3(@eslint/js@10.0.1(eslint@10.6.0))
+    optionalDependencies:
       better-sqlite3: 12.11.1
-
-  '@cap-js/sqlite@2.4.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
-    dependencies:
-      '@cap-js/db-service': 2.11.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
-      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
-      better-sqlite3: 12.11.1
-    optional: true
+    transitivePeerDependencies:
+      - generic-pool
 
   '@changesets/apply-release-plan@7.1.1':
     dependencies:
@@ -6886,51 +6694,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sap/cds-compiler@6.9.3': {}
-
   '@sap/cds-compiler@7.0.1': {}
 
-  '@sap/cds-dk@9.9.2(@eslint/js@10.0.1(eslint@10.6.0))':
-    dependencies:
-      '@cap-js/asyncapi': 1.1.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
-      '@cap-js/openapi': 1.5.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
-      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
-      '@sap/cds-mtxs': 3.9.4(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))(hdb@2.29.5)
-      '@sap/hdi-deploy': 5.7.0(hdb@2.29.5)
-      express: 4.22.2
-      hdb: 2.29.5
-      livereload-js: 4.0.2
-      mustache: 4.2.0
-      ws: 8.21.0
-      xml-js: 1.6.11
-      yaml: 2.9.0
-    optionalDependencies:
-      '@cap-js/sqlite': 2.4.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
-    transitivePeerDependencies:
-      - '@eslint/js'
-      - '@sap/hana-client'
-      - bufferutil
-      - sql.js
-      - supports-color
-      - tar
-      - utf-8-validate
+  '@sap/cds-dk@10.0.3': {}
 
   '@sap/cds-fiori@2.3.0(@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0)))':
     dependencies:
       '@sap/cds': 10.0.3(@eslint/js@10.0.1(eslint@10.6.0))
-
-  '@sap/cds-fiori@2.3.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))':
-    dependencies:
-      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
-
-  '@sap/cds-mtxs@3.9.4(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))(hdb@2.29.5)':
-    dependencies:
-      '@sap/cds': 9.9.2(@eslint/js@10.0.1(eslint@10.6.0))
-      '@sap/hdi-deploy': 5.7.0(hdb@2.29.5)
-    transitivePeerDependencies:
-      - '@sap/hana-client'
-      - hdb
-      - supports-color
 
   '@sap/cds@10.0.3(@eslint/js@10.0.1(eslint@10.6.0))':
     dependencies:
@@ -6941,35 +6711,6 @@ snapshots:
       yaml: 2.9.0
     transitivePeerDependencies:
       - supports-color
-
-  '@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0))':
-    dependencies:
-      '@eslint/js': 10.0.1(eslint@10.6.0)
-      '@sap/cds-compiler': 6.9.3
-      '@sap/cds-fiori': 2.3.0(@sap/cds@9.9.2(@eslint/js@10.0.1(eslint@10.6.0)))
-      express: 4.22.2
-      yaml: 2.9.0
-    transitivePeerDependencies:
-      - supports-color
-
-  '@sap/hdi-deploy@5.7.0(hdb@2.29.5)':
-    dependencies:
-      '@sap/hdi': 4.8.1(hdb@2.29.5)
-      '@sap/xsenv': 6.2.1
-      async: 3.2.6
-      dotenv: 16.6.1
-      handlebars: 4.7.9
-      micromatch: 4.0.8
-    optionalDependencies:
-      hdb: 2.29.5
-    transitivePeerDependencies:
-      - supports-color
-
-  '@sap/hdi@4.8.1(hdb@2.29.5)':
-    dependencies:
-      async: 3.2.6
-    optionalDependencies:
-      hdb: 2.29.5
 
   '@sap/xsenv@6.2.1':
     dependencies:
@@ -7666,14 +7407,16 @@ snapshots:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.3
+    optional: true
 
-  bignumber.js@11.1.4: {}
+  bignumber.js@11.1.5: {}
 
   binary-extensions@2.3.0: {}
 
   bindings@1.5.0:
     dependencies:
       file-uri-to-path: 1.0.0
+    optional: true
 
   bl@4.1.0:
     dependencies:
@@ -7800,7 +7543,8 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chownr@1.1.4: {}
+  chownr@1.1.4:
+    optional: true
 
   ci-info@4.4.0: {}
 
@@ -7944,6 +7688,7 @@ snapshots:
   decompress-response@6.0.0:
     dependencies:
       mimic-response: 3.1.0
+    optional: true
 
   dedent@1.7.2: {}
 
@@ -8015,7 +7760,8 @@ snapshots:
 
   detect-indent@6.1.0: {}
 
-  detect-libc@2.1.2: {}
+  detect-libc@2.1.2:
+    optional: true
 
   detect-newline@3.1.0: {}
 
@@ -8083,8 +7829,6 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  dotenv@16.6.1: {}
-
   dunder-proto@1.0.1:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -8114,6 +7858,7 @@ snapshots:
   end-of-stream@1.4.5:
     dependencies:
       once: 1.4.0
+    optional: true
 
   enhanced-resolve@5.24.1:
     dependencies:
@@ -8353,7 +8098,8 @@ snapshots:
 
   exit-x@0.2.2: {}
 
-  expand-template@2.0.3: {}
+  expand-template@2.0.3:
+    optional: true
 
   expand-tilde@2.0.2:
     dependencies:
@@ -8474,7 +8220,8 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-uri-to-path@1.0.0: {}
+  file-uri-to-path@1.0.0:
+    optional: true
 
   filing-cabinet@5.5.1:
     dependencies:
@@ -8559,7 +8306,8 @@ snapshots:
 
   fresh@0.5.2: {}
 
-  fs-constants@1.0.0: {}
+  fs-constants@1.0.0:
+    optional: true
 
   fs-extra@11.3.6:
     dependencies:
@@ -8588,7 +8336,8 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  generic-pool@3.9.0: {}
+  generic-pool@3.9.0:
+    optional: true
 
   gensync@1.0.0-beta.2: {}
 
@@ -8635,7 +8384,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  github-from-package@0.0.0: {}
+  github-from-package@0.0.0:
+    optional: true
 
   glob-parent@5.1.2:
     dependencies:
@@ -8731,12 +8481,6 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  hdb@2.29.5:
-    dependencies:
-      iconv-lite: 0.7.0
-    optionalDependencies:
-      lz4-wasm-nodejs: 0.9.2
-
   homedir-polyfill@1.0.3:
     dependencies:
       parse-passwd: 1.0.0
@@ -8808,10 +8552,6 @@ snapshots:
   hyperdyperid@1.2.0: {}
 
   iconv-lite@0.4.24:
-    dependencies:
-      safer-buffer: 2.1.2
-
-  iconv-lite@0.7.0:
     dependencies:
       safer-buffer: 2.1.2
 
@@ -9377,8 +9117,6 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
-  livereload-js@4.0.2: {}
-
   locate-path@5.0.0:
     dependencies:
       p-locate: 4.1.0
@@ -9438,9 +9176,6 @@ snapshots:
   lru-cache@7.18.3: {}
 
   lunr@2.3.9: {}
-
-  lz4-wasm-nodejs@0.9.2:
-    optional: true
 
   madge@8.0.0(typescript@5.9.3):
     dependencies:
@@ -9549,7 +9284,8 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  mimic-response@3.1.0: {}
+  mimic-response@3.1.0:
+    optional: true
 
   min-indent@1.0.1: {}
 
@@ -9579,7 +9315,8 @@ snapshots:
 
   minipass@7.1.3: {}
 
-  mkdirp-classic@0.5.3: {}
+  mkdirp-classic@0.5.3:
+    optional: true
 
   mkdirp@1.0.4: {}
 
@@ -9621,11 +9358,10 @@ snapshots:
       arrify: 2.0.1
       minimatch: 3.1.5
 
-  mustache@4.2.0: {}
-
   nanoid@3.3.15: {}
 
-  napi-build-utils@2.0.0: {}
+  napi-build-utils@2.0.0:
+    optional: true
 
   napi-postinstall@0.3.4: {}
 
@@ -9643,9 +9379,10 @@ snapshots:
       json-stringify-safe: 5.0.1
       propagate: 2.0.1
 
-  node-abi@3.92.0:
+  node-abi@3.94.0:
     dependencies:
       semver: 7.8.5
+    optional: true
 
   node-cache@5.1.2:
     dependencies:
@@ -9977,12 +9714,13 @@ snapshots:
       minimist: 1.2.8
       mkdirp-classic: 0.5.3
       napi-build-utils: 2.0.0
-      node-abi: 3.92.0
+      node-abi: 3.94.0
       pump: 3.0.4
       rc: 1.2.8
       simple-get: 4.0.1
       tar-fs: 2.1.5
       tunnel-agent: 0.6.0
+    optional: true
 
   precinct@12.3.2:
     dependencies:
@@ -10059,6 +9797,7 @@ snapshots:
     dependencies:
       end-of-stream: 1.4.5
       once: 1.4.0
+    optional: true
 
   punycode.js@2.3.1: {}
 
@@ -10203,8 +9942,6 @@ snapshots:
       commander: 12.1.0
       enhanced-resolve: 5.24.1
 
-  sax@1.6.0: {}
-
   semver-compare@1.0.0: {}
 
   semver@5.7.2: {}
@@ -10308,13 +10045,15 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  simple-concat@1.0.1: {}
+  simple-concat@1.0.1:
+    optional: true
 
   simple-get@4.0.1:
     dependencies:
       decompress-response: 6.0.0
       once: 1.4.0
       simple-concat: 1.0.1
+    optional: true
 
   slash@3.0.0: {}
 
@@ -10486,6 +10225,7 @@ snapshots:
       mkdirp-classic: 0.5.3
       pump: 3.0.4
       tar-stream: 2.2.0
+    optional: true
 
   tar-stream@2.2.0:
     dependencies:
@@ -10494,6 +10234,7 @@ snapshots:
       fs-constants: 1.0.0
       inherits: 2.0.4
       readable-stream: 3.6.2
+    optional: true
 
   term-size@2.2.1: {}
 
@@ -10612,6 +10353,7 @@ snapshots:
   tunnel-agent@0.6.0:
     dependencies:
       safe-buffer: 5.2.1
+    optional: true
 
   tunnel@0.0.6: {}
 
@@ -10831,10 +10573,6 @@ snapshots:
       signal-exit: 4.1.0
 
   ws@8.21.0: {}
-
-  xml-js@1.6.11:
-    dependencies:
-      sax: 1.6.0
 
   xml-naming@0.1.0: {}
 

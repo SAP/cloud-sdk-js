@@ -26,6 +26,7 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           persist-credentials: true
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
+          allow-unsafe-pr-checkout: true
       - name: Commit Changes if needed
         env:
           BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}

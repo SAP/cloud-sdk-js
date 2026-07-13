@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^12.1.0",
-    "@cap-js/sqlite": "^2.2.0",
+    "@cap-js/sqlite": "^3.0.2",
     "@jest/globals": "^30.3.0",
     "@sap-cloud-sdk/connectivity": "workspace:^",
     "@sap-cloud-sdk/generator": "workspace:^",
@@ -34,7 +34,7 @@
     "@sap-cloud-sdk/test-services-openapi": "workspace:^",
     "@sap-cloud-sdk/util": "workspace:^",
     "@sap/cds": "^10.0.3",
-    "@sap/cds-dk": "9.9.2",
+    "@sap/cds-dk": "10.0.3",
     "axios": "^1.15.0",
     "bignumber.js": "^11.0.0",
     "depcheck": "^1.4.7",

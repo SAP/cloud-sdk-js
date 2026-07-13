@@ -1,5 +1,4 @@
 import { isDestinationFetchOptions } from './destination-accessor-types';
-import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import type { DestinationFromServiceBindingOptions } from './destination-from-vcap';
 import type {
@@ -9,6 +8,7 @@ import type {
   DestinationCertificate,
   HttpDestination
 } from './destination-service-types';
+import type { WithoutExclusive } from '@sap-cloud-sdk/util';
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
@@ -469,17 +469,27 @@ export function noDestinationErrorMessage(
 }
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
+ * Fetch-options side of the XOR.
+ *
+ * `DestinationFetchOptions` requires `destinationName: string`, but when looking up by
+ * `service` (via `DestinationFromServiceBindingOptions`) we don't have a name. Intersecting
+ * the two naively makes `destinationName: string & never = never`, killing the service branch.
+ * Stripping `destinationName` from `DestinationFetchOptions` and letting the inner discriminated
+ * union of `DestinationFromServiceBindingOptions` own that key fixes it.
  */
-export type DestinationOrFetchOptions = Xor<
-  Destination,
-  DestinationFetchOptions & DestinationFromServiceBindingOptions
->;
+type FetchOptionsLeaf = Omit<DestinationFetchOptions, 'destinationName'> &
+  DestinationFromServiceBindingOptions;
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
+ * Type that is either a {@link Destination} or (XOR) {@link DestinationFetchOptions} & {@link DestinationFromServiceBindingOptions}.
  */
-export type HttpDestinationOrFetchOptions = Xor<
-  HttpDestination,
-  DestinationFetchOptions & DestinationFromServiceBindingOptions
->;
+export type DestinationOrFetchOptions =
+  | (WithoutExclusive<Destination, FetchOptionsLeaf> & FetchOptionsLeaf)
+  | (WithoutExclusive<FetchOptionsLeaf, Destination> & Destination);
+
+/**
+ * Type that is either an {@link HttpDestination} or (XOR) {@link DestinationFetchOptions} & {@link DestinationFromServiceBindingOptions}.
+ */
+export type HttpDestinationOrFetchOptions =
+  | (WithoutExclusive<HttpDestination, FetchOptionsLeaf> & FetchOptionsLeaf)
+  | (WithoutExclusive<FetchOptionsLeaf, HttpDestination> & HttpDestination);

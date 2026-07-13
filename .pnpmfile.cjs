@@ -82,7 +82,7 @@ function normalizeLockfile(lockfile, log) {
   return normalizedCount;
 }
 
-export const hooks = {
+const hooks = {
   updateConfig(config) {
     activeDefaultRegistry = normalizeRegistryUrl(
       config.registries?.default ?? config.registry
@@ -116,4 +116,8 @@ export const hooks = {
 
     return lockfile;
   }
+};
+
+module.exports = {
+  hooks
 };

@@ -7,11 +7,11 @@ export interface ResponseDataAccessor {
    * A function that extracts array data from the response object.
    * The data is extracted per default from `data.d.results`.
    */
-  getCollectionResult: (data) => any[];
+  getCollectionResult: (data: any) => any[];
   /**
    * Checks if the response is an array-like object.
    */
-  isCollectionResult: (data) => boolean;
+  isCollectionResult: (data: any) => boolean;
   /**
    * A function that extracts object data from the response object.
    * The data is extracted by default from `data.d.results`.
@@ -21,5 +21,5 @@ export interface ResponseDataAccessor {
    * Extract the collection data from the one-to-many link response.
    * If the data does not contain a collection, an empty array is returned.
    */
-  getLinkedCollectionResult: (data) => any[];
+  getLinkedCollectionResult: (data: any) => any[];
 }

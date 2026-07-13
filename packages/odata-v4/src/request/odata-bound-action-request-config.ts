@@ -21,7 +21,7 @@ export class ODataBoundActionRequestConfig<
   extends ODataActionRequestConfig<DeSerializersT, ParametersT>
   implements WithKeys
 {
-  keys: Record<string, any>;
+  keys!: Record<string, any>;
   constructor(
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     actionName: string,

@@ -88,7 +88,7 @@ export async function getOptionsPerService(
   }
 
   const optsPerService: OptionsPerService = inputPaths.reduce(
-    (previousOptions, inputPath) => {
+    (previousOptions: OptionsPerService, inputPath) => {
       const relativePath = getRelPathWithPosixSeparator(inputPath);
 
       const uniqueDirName = uniqueNameGenerator.generateAndSaveUniqueName(
@@ -102,7 +102,7 @@ export async function getOptionsPerService(
       );
       return previousOptions;
     },
-    {}
+    {} as OptionsPerService
   );
   return optsPerService;
 }
@@ -111,15 +111,18 @@ function getDirectoryNamesByPaths(
   inputPaths: string[],
   originalOptionsPerService: PartialOptionsPerService
 ): Record<string, string> {
-  return inputPaths.reduce((directoryNamesByPaths, inputPath) => {
-    const relativePath = getRelPathWithPosixSeparator(inputPath);
-    const directoryName =
-      originalOptionsPerService[relativePath]?.directoryName ||
-      parseDirectoryName(relativePath);
+  return inputPaths.reduce(
+    (directoryNamesByPaths: Record<string, string>, inputPath) => {
+      const relativePath = getRelPathWithPosixSeparator(inputPath);
+      const directoryName =
+        originalOptionsPerService[relativePath]?.directoryName ||
+        parseDirectoryName(relativePath);
 
-    directoryNamesByPaths[inputPath] = directoryName;
-    return directoryNamesByPaths;
-  }, {});
+      directoryNamesByPaths[inputPath] = directoryName;
+      return directoryNamesByPaths;
+    },
+    {}
+  );
 }
 
 /**
@@ -136,7 +139,7 @@ function getPathsByDirName(
   dirNamesByPaths: Record<string, string>
 ): Record<string, string[]> {
   return Object.entries(dirNamesByPaths).reduce(
-    (pathsByDirName, [inputPath, dirName]) => {
+    (pathsByDirName: Record<string, string[]>, [inputPath, dirName]) => {
       if (!pathsByDirName[dirName]) {
         pathsByDirName[dirName] = [];
       }

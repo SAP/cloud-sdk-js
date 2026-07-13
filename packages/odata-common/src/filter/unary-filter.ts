@@ -29,8 +29,9 @@ export function isUnaryFilter<
 >(
   filterable: Filterable<EntityT, DeSerializersT>
 ): filterable is UnaryFilter<EntityT, DeSerializersT> {
+  const f = filterable as unknown as Record<string, unknown>;
   return (
-    typeof filterable['singleOperand'] !== 'undefined' &&
-    typeof filterable['operator'] !== 'undefined'
+    typeof f['singleOperand'] !== 'undefined' &&
+    typeof f['operator'] !== 'undefined'
   );
 }

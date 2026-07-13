@@ -175,7 +175,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     } catch (error) {
       throw new ErrorWithCause(
         'Constructing headers for OData request failed!',
-        error
+        error as Error
       );
     }
   }
@@ -279,7 +279,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 }
 
-function constructError(error, requestMethod: string, url: string): Error {
+function constructError(error: any, requestMethod: string, url: string): Error {
   if (error.isAxiosError) {
     const defaultMessage = `${requestMethod} request to ${url} failed!`;
     const s4SpecificMessage = propertyExists(error, 'response', 'data', 'error')
@@ -292,7 +292,7 @@ function constructError(error, requestMethod: string, url: string): Error {
   return error;
 }
 
-function messageFromS4ErrorResponse(error): string {
+function messageFromS4ErrorResponse(error: any): string {
   return `${
     propertyExists(error.response.data.error, 'message', 'value')
       ? error.response.data.error.message.value

@@ -30,8 +30,8 @@ function communicationScenario(swagger: SwaggerMetadata): string | null {
 
   return (
     swagger['x-sap-ext-overview']
-      .find(x => x.name === 'Communication Scenario')
-      .values.map(x => x.text)
+      .find((x: any) => x.name === 'Communication Scenario')
+      .values.map((x: any) => x.text)
       .join(', ') || null
   );
 }

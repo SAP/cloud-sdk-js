@@ -26,8 +26,8 @@ export class Link<
   DeSerializersT extends DeSerializers,
   LinkedEntityApiT extends EntityApi<EntityBase, DeSerializersT>
 > implements EntityIdentifiable<EntityT, DeSerializersT> {
-  readonly _entity: EntityT;
-  readonly _deSerializers: DeSerializersT;
+  readonly _entity!: EntityT;
+  readonly _deSerializers!: DeSerializersT;
 
   /**
    * List of selectables on the linked entity.

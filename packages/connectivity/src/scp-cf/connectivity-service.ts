@@ -127,7 +127,7 @@ async function proxyAuthorizationHeader(
   } catch (error) {
     throw new ErrorWithCause(
       'Failed to add proxy authorization header - client credentials grant failed!',
-      error
+      error as Error
     );
   }
 }

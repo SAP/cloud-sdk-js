@@ -225,6 +225,16 @@ export async function readCompilerOptions(
     options.module = parseModuleKind(options.module as any);
   }
 
+  if (
+    needsIgnoreDeprecationsTs6(
+      options.moduleResolution,
+      options.target,
+      options.module
+    )
+  ) {
+    options.ignoreDeprecations = '6.0';
+  }
+
   return options;
 }
 
@@ -283,4 +293,35 @@ function parseModuleKind(input: string): ModuleKind {
     `The selected module kind ${input} is not found - Fallback commonJS used`
   );
   return ModuleKind.CommonJS;
+}
+
+function needsIgnoreDeprecationsTs6(
+  moduleResolutionKind: ModuleResolutionKind | undefined,
+  scriptTarget: ScriptTarget | undefined,
+  moduleKind: ModuleKind | undefined
+): boolean {
+  if (
+    moduleResolutionKind === ModuleResolutionKind.NodeJs ||
+    moduleResolutionKind === ModuleResolutionKind.Classic
+  ) {
+    logger.warn(
+      `The selected module resolution kind ${ModuleResolutionKind[moduleResolutionKind]} is deprecated with TypeScript 6.0`
+    );
+    return true;
+  }
+
+  if (scriptTarget === ScriptTarget.ES3 || scriptTarget === ScriptTarget.ES5) {
+    logger.warn(
+      `The selected script target ${ScriptTarget[scriptTarget]} is deprecated with TypeScript 6.0`
+    );
+    return true;
+  }
+
+  if (moduleKind === ModuleKind.AMD) {
+    logger.warn(
+      `The selected module kind ${ModuleKind[moduleKind]} is deprecated with TypeScript 6.0`
+    );
+    return true;
+  }
+  return false;
 }

@@ -23,9 +23,9 @@ export abstract class DeleteRequestBuilderBase<
   >
   implements EntityIdentifiable<EntityT, DeSerializersT>, WithBatchReference
 {
-  readonly _entity: EntityT;
-  readonly _deSerializers: DeSerializersT;
-  private _batchReference: BatchReference;
+  readonly _entity!: EntityT;
+  readonly _deSerializers!: DeSerializersT;
+  private _batchReference!: BatchReference;
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.

@@ -9,7 +9,8 @@
     "isolatedModules": true,
     "rootDir": "..",
     "outDir": "./lib",
-    "tsBuildInfoFile": "./lib/.tsbuildinfo"
+    "tsBuildInfoFile": "./lib/.tsbuildinfo",
+    "types": ["node", "jest"]
   },
   "include": ["*.ts"],
   "exclude": []

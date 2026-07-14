@@ -47,10 +47,19 @@ runs:
         token: ${{ inputs.token }}
         persist-credentials: ${{ inputs.persist-credentials }}
         allow-unsafe-pr-checkout: ${{ inputs.allow-unsafe-pr-checkout }}
+    - name: Detect pnpm version source
+      id: pnpm-version-source
+      shell: bash
+      run: |
+        if node -e "const p = require('./package.json'); process.exit((p.packageManager || p.devEngines?.packageManager) ? 0 : 1)"; then
+          echo "use_package_json=true" >> $GITHUB_OUTPUT
+        else
+          echo "use_package_json=false" >> $GITHUB_OUTPUT
+        fi
     - name: Setup pnpm
       uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
       with:
-        version: ${{ inputs.pnpm-version }}
+        version: ${{ case(steps.pnpm-version-source.outputs.use_package_json == 'true', '', inputs.pnpm-version) }}
     - name: Resolve registry URL
       id: resolve-registry-url
       env:

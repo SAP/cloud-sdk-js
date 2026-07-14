@@ -240,6 +240,9 @@ export async function readCompilerOptions(
 
 function parseModuleResolutionKind(input: string): ModuleResolutionKind {
   const moduleResolution = input.toLowerCase();
+  if (moduleResolution === 'bundler') {
+    return ModuleResolutionKind.Bundler;
+  }
   if (moduleResolution === 'node') {
     return ModuleResolutionKind.Node10;
   }
@@ -266,7 +269,8 @@ function parseScriptTarget(input: string): ScriptTarget {
     es2021: ScriptTarget.ES2021,
     es2022: ScriptTarget.ES2022,
     es2023: ScriptTarget.ES2023,
-    es2024: ScriptTarget.ES2024
+    es2024: ScriptTarget.ES2024,
+    es2025: ScriptTarget.ES2025,
   };
   if (mapping[input.toLowerCase()]) {
     return mapping[input.toLowerCase()];

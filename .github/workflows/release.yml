@@ -26,7 +26,7 @@ jobs:
           repositories: cloud-sdk
           permission-contents: write
           permission-pull-requests: write
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_rm-dev-en
         with:
           ref: 'main'
           persist-credentials: true

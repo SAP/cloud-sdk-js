@@ -13,7 +13,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: sap/cloud-sdk-js/.github/actions/setup@davidkna-sap_rm-dev-en
         with:
           registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - name: Download Stats

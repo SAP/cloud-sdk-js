@@ -45,15 +45,18 @@
     "fs-extra": "^11.3.4",
     "glob": "^13.0.6",
     "prettier": "^3.8.1",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "voca": "^1.4.1",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@jest/globals": "^30.3.0",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "@types/fast-levenshtein": "^0.0.4",
+    "@types/fs-extra": "^11.0.4",
     "@types/yargs": "^17.0.33",
     "depcheck": "^1.4.7",
-    "memfs": "^4.57.2",
-    "typescript": "~5.9.3"
+    "memfs": "^4.57.2"
   }
 }

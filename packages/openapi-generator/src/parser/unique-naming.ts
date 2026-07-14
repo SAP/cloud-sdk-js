@@ -125,7 +125,7 @@ function getNonConflictingNames(
       !isFormatted(name, format)
         ? correctNames
         : [...correctNames, name],
-    []
+    [] as string[]
   );
 }
 

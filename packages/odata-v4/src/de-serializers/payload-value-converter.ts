@@ -13,7 +13,7 @@ export function edmToTs(
   edmType: EdmTypeShared<'v4'>,
   deSerializers: DeSerializers
 ): any {
-  return deSerializers[edmType].deserialize(value);
+  return (deSerializers as Record<string, any>)[edmType].deserialize(value);
 }
 
 /**
@@ -24,5 +24,5 @@ export function tsToEdm(
   edmType: EdmTypeShared<'v4'>,
   deSerializers: DeSerializers
 ): any {
-  return deSerializers[edmType].serialize(value);
+  return (deSerializers as Record<string, any>)[edmType].serialize(value);
 }

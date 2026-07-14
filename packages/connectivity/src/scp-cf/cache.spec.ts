@@ -153,17 +153,19 @@ describe('Cache', () => {
   });
 
   describe('hashCacheKey', () => {
-    it('produces the same hash for plain objects with different key insertion order', () => {
-      expect(hashCacheKey({ a: 1, b: 2 })).toEqual(
-        hashCacheKey({ b: 2, a: 1 })
+    it('produces the same hash for plain objects with different key insertion order', async () => {
+      await expect(hashCacheKey({ a: 1, b: 2 })).resolves.toEqual(
+        await hashCacheKey({ b: 2, a: 1 })
       );
     });
 
-    it('produces different hashes for plain objects with different values', () => {
-      expect(hashCacheKey({ a: 1 })).not.toEqual(hashCacheKey({ a: 2 }));
+    it('produces different hashes for plain objects with different values', async () => {
+      await expect(hashCacheKey({ a: 1 })).resolves.not.toEqual(
+        await hashCacheKey({ a: 2 })
+      );
     });
 
-    it('produces the same hash for Maps with different insertion order', () => {
+    it('produces the same hash for Maps with different insertion order', async () => {
       const m1 = new Map([
         ['x', 1],
         ['y', 2]
@@ -172,16 +174,20 @@ describe('Cache', () => {
         ['y', 2],
         ['x', 1]
       ]);
-      expect(hashCacheKey({ m: m1 })).toEqual(hashCacheKey({ m: m2 }));
+      await expect(hashCacheKey({ m: m1 })).resolves.toEqual(
+        await hashCacheKey({ m: m2 })
+      );
     });
 
-    it('produces the same hash for Sets with different insertion order', () => {
+    it('produces the same hash for Sets with different insertion order', async () => {
       const s1 = new Set([1, 2, 3]);
       const s2 = new Set([3, 1, 2]);
-      expect(hashCacheKey({ s: s1 })).toEqual(hashCacheKey({ s: s2 }));
+      await expect(hashCacheKey({ s: s1 })).resolves.toEqual(
+        await hashCacheKey({ s: s2 })
+      );
     });
 
-    it('produces the same hash for class instances regardless of property insertion order', () => {
+    it('produces the same hash for class instances regardless of property insertion order', async () => {
       class Point {
         [key: string]: number;
       }
@@ -191,11 +197,14 @@ describe('Cache', () => {
       const p2 = new Point();
       p2.x = 1;
       p2.y = 2;
-      expect(hashCacheKey({ p: p1 })).toEqual(hashCacheKey({ p: p2 }));
+      await expect(hashCacheKey({ p: p1 })).resolves.toEqual(
+        await hashCacheKey({ p: p2 })
+      );
     });
-    it('preserves arrays as arrays (does not coerce to object)', () => {
-      expect(hashCacheKey({ arr: [1, 2, 3] })).not.toEqual(
-        hashCacheKey({ arr: { 0: 1, 1: 2, 2: 3 } })
+
+    it('preserves arrays as arrays (does not coerce to object)', async () => {
+      await expect(hashCacheKey({ arr: [1, 2, 3] })).resolves.not.toEqual(
+        await hashCacheKey({ arr: { 0: 1, 1: 2, 2: 3 } })
       );
     });
   });

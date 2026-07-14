@@ -15,8 +15,8 @@ export class FilterList<
   /**
    * Entity type of the entity tp be filtered.
    */
-  readonly _entity: EntityT;
-  _deSerializers: DeSerializersT;
+  readonly _entity!: EntityT;
+  _deSerializers!: DeSerializersT;
 
   /**
    * Creates an instance of FilterList.
@@ -41,12 +41,13 @@ export function isFilterList<
 >(
   filterable: Filterable<EntityT, DeSerializersT>
 ): filterable is FilterList<EntityT, DeSerializersT> {
+  const f = filterable as unknown as Record<string, unknown>;
   return (
-    typeof filterable['field'] === 'undefined' &&
-    typeof filterable['operator'] === 'undefined' &&
-    typeof filterable['value'] === 'undefined' &&
-    typeof filterable['functionName'] === 'undefined' &&
-    typeof filterable['link'] === 'undefined' &&
+    typeof f['field'] === 'undefined' &&
+    typeof f['operator'] === 'undefined' &&
+    typeof f['value'] === 'undefined' &&
+    typeof f['functionName'] === 'undefined' &&
+    typeof f['link'] === 'undefined' &&
     !('lambdaOperator' in filterable) &&
     !(filterable instanceof OneToManyLink)
   );

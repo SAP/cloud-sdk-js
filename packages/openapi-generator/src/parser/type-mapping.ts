@@ -53,7 +53,9 @@ export function getType(
   if (originalType === 'string' && format === 'binary') {
     return 'Blob';
   }
-  const type = originalType ? typeMapping[originalType] : 'any';
+  const type = originalType
+    ? (typeMapping as Record<string, string>)[originalType]
+    : 'any';
   if (!type) {
     logger.verbose(
       `Could not map type '${originalType}' to a native type. Using any.`

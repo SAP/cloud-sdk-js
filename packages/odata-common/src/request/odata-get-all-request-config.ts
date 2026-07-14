@@ -20,12 +20,12 @@ export class ODataGetAllRequestConfig<
   extends ODataRequestConfig
   implements WithGetAllRestrictions<EntityT, DeSerializersT>
 {
-  top: number;
-  skip: number;
-  filter: Filterable<EntityT, DeSerializersT>;
-  orderBy: Orderable<EntityT>[];
-  selects: Selectable<EntityT, DeSerializersT>[];
-  expands: Expandable<
+  top!: number;
+  skip!: number;
+  filter!: Filterable<EntityT, DeSerializersT>;
+  orderBy!: Orderable<EntityT>[];
+  selects!: Selectable<EntityT, DeSerializersT>[];
+  expands!: Expandable<
     EntityT,
     DeSerializersT,
     EntityApi<EntityBase, DeSerializersT>

@@ -68,7 +68,7 @@ async function retrieveServiceToken(
       );
     } catch (err) {
       logger.warn(
-        `Failed to fetch subscriber service token for destination. This is only relevant if you are using subscriber destinations. Failure caused by: ${err.message}`
+        `Failed to fetch subscriber service token for destination. This is only relevant if you are using subscriber destinations. Failure caused by: ${(err as Error).message}`
       );
     }
   }

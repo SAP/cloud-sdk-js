@@ -3,7 +3,7 @@ import { parse } from 'path';
 import { convert } from 'swagger2openapi';
 import { load } from 'js-yaml';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV2, OpenAPIV3 } from 'openapi-types';
 const { readFile } = promises;
 
 /**
@@ -21,7 +21,7 @@ export async function convertOpenApiSpec(
   } catch (err) {
     throw new ErrorWithCause(
       'Could not convert document to the format needed for parsing and generation.',
-      err
+      err as Error
     );
   }
 }
@@ -61,11 +61,11 @@ export async function convertDocToOpenApiV3(
 ): Promise<OpenAPIV3.Document> {
   // This is a hidden cast to OpenAPIV3.Document
   try {
-    return (await convert(openApiDocument, {})).openapi;
+    return (await convert(openApiDocument as OpenAPIV2.Document, {})).openapi;
   } catch (err) {
     throw new ErrorWithCause(
-      `Could not convert OpenAPI specification to OpenAPI version 3. ${err.message}`,
-      err
+      `Could not convert OpenAPI specification to OpenAPI version 3. ${(err as Error).message}`,
+      err as Error
     );
   }
 }

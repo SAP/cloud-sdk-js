@@ -163,7 +163,7 @@ export async function createFile(
     });
   } catch (err: unknown) {
     const recommendation =
-      (err as Record<string, unknown>).code === 'EEXIST' && !overwrite
+      (err as NodeJS.ErrnoException).code === 'EEXIST' && !overwrite
         ? ' File already exists. If you want to allow overwriting files, enable the `overwrite` flag.'
         : '';
     throw new ErrorWithCause(

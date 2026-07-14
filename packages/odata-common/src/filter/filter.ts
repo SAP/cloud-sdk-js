@@ -28,9 +28,7 @@ export type FilterOperatorNumber = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
  * Union type of the filter operators for string, boolean and number types.
  */
 export type FilterOperator =
-  | FilterOperatorString
-  | FilterOperatorBoolean
-  | FilterOperatorNumber;
+  FilterOperatorString | FilterOperatorBoolean | FilterOperatorNumber;
 /**
  * @internal
  */
@@ -57,9 +55,9 @@ export class Filter<
   /**
    * Entity type of the entity tp be filtered.
    */
-  readonly _entity: EntityT;
+  readonly _entity!: EntityT;
 
-  readonly _deSerializers: DeSerializersT;
+  readonly _deSerializers!: DeSerializersT;
 
   /**
    * Creates an instance of Filter.
@@ -89,9 +87,10 @@ export function isFilter<
 >(
   filterable: Filterable<EntityT, DeSerializersT>
 ): filterable is Filter<EntityT, DeSerializersT, FieldT> {
+  const f = filterable as unknown as Record<string, unknown>;
   return (
-    typeof filterable['field'] !== 'undefined' &&
-    typeof filterable['operator'] !== 'undefined' &&
-    typeof filterable['value'] !== 'undefined'
+    typeof f['field'] !== 'undefined' &&
+    typeof f['operator'] !== 'undefined' &&
+    typeof f['value'] !== 'undefined'
   );
 }

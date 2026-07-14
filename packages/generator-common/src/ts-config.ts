@@ -43,7 +43,7 @@ export async function readCustomTsConfig(configPath: string): Promise<string> {
   } catch (err) {
     throw new ErrorWithCause(
       `Could not read tsconfig.json at ${configPath}.`,
-      err
+      err as Error
     );
   }
 }

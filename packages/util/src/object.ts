@@ -50,11 +50,11 @@ export const pick = <T extends Record<string, unknown>>(
   keys: string[],
   obj: T
 ): Partial<T> => {
-  const result = {};
+  const result: Partial<T> = {};
   keys.forEach(key => {
     const value = obj[key];
     if (Object.keys(obj).includes(key)) {
-      result[key] = value;
+      (result as Record<string, unknown>)[key] = value;
     }
   });
   return result;
@@ -71,11 +71,11 @@ export const exclude = <T extends Record<string, unknown>>(
   keys: string[],
   obj: T
 ): Partial<T> => {
-  const result = {};
+  const result: Partial<T> = {};
   Object.keys(obj).forEach(key => {
     const value = obj[key];
     if (!keys.includes(key)) {
-      result[key] = value;
+      (result as Record<string, unknown>)[key] = value;
     }
   });
   return result;

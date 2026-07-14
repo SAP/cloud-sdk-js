@@ -1,5 +1,5 @@
 import CircuitBreaker from 'opossum';
-import type { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import type {
   MiddlewareContext,
   Middleware,
@@ -27,14 +27,16 @@ export const circuitBreakerDefaultOptions: CircuitBreakerOptions = {
   resetTimeout: 30000,
   cache: false
 };
-type ErrorFilter = (err) => boolean;
+type ErrorFilter = (err: unknown) => boolean;
 type KeyBuilder<ArgumentT, ContextT extends MiddlewareContext<ArgumentT>> = (
   context: ContextT
 ) => string;
 
-function httpErrorFilter(error: AxiosError): boolean {
+function httpErrorFilter(error: unknown): boolean {
   return (
-    !!error.response?.status && error.response.status.toString().startsWith('4')
+    isAxiosError(error) &&
+    !!error.response?.status &&
+    error.response.status.toString().startsWith('4')
   );
 }
 

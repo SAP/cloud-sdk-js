@@ -18,10 +18,10 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
-    "prettier": "^3.8.1",
-    "rolldown": "1.1.2",
-    "typescript": "~5.9.3"
+    "rolldown": "1.1.5",
+    "prettier": "^3.8.1"
   }
 }

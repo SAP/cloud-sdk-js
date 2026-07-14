@@ -28,7 +28,7 @@ export class ErrorWithCause extends Error {
   }
 
   private isAxiosError(err: Error | AxiosError): err is AxiosError {
-    return err['isAxiosError'] === true;
+    return 'isAxiosError' in err && err.isAxiosError === true;
   }
 
   private addStack(cause: Error) {
@@ -39,7 +39,9 @@ export class ErrorWithCause extends Error {
         try {
           response = `\n${JSON.stringify(cause.response?.data, null, 2)}`;
         } catch (error) {
-          logger.warn(`Failed to stringify response data: ${error.message}`);
+          logger.warn(
+            `Failed to stringify response data: ${(error as Error).message}`
+          );
           response = `\n${cause.response?.data}`;
         }
       }

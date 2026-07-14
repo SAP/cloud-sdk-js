@@ -52,13 +52,13 @@
     "fast-xml-parser": "^5.5.9",
     "fs-extra": "^11.3.4",
     "ts-morph": "^28.0.0",
-    "typescript": "~5.9.3",
     "voca": "^1.4.1",
     "winston": "^3.19.0"
   },
   "devDependencies": {
     "@jest/globals": "^30.3.0",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "depcheck": "^1.4.7",
     "execa": "^5.0.0",
     "memfs": "^4.57.2",

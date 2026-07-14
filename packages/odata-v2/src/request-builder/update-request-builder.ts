@@ -103,7 +103,9 @@ function warnIfNavigation<
   schema: Record<string, any>
 ): ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>> {
   const setNavigationProperties = Object.keys(entity).filter(
-    key => !isNullish(entity[key]) && isNavigationProperty(key, schema)
+    key =>
+      !isNullish((entity as Record<string, any>)[key]) &&
+      isNavigationProperty(key, schema)
   );
 
   if (setNavigationProperties.length) {

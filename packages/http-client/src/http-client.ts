@@ -103,9 +103,9 @@ export function execute(executeFn: ExecuteHttpRequestFn<HttpResponse>) {
 
     return executeWithMiddleware(requestConfig.middleware, {
       fnArgument: request,
-      fn: (req: typeof request) => {
+      fn: (req: HttpRequestConfig) => {
         logRequestInformation(request);
-        return executeFn(req);
+        return executeFn(req as HttpRequest);
       },
       context: {
         jwt: destination.jwt,
@@ -409,7 +409,7 @@ async function buildHeaders(
   try {
     return await buildHeadersForDestination(destination);
   } catch (error) {
-    throw new ErrorWithCause('Failed to build headers.', error);
+    throw new ErrorWithCause('Failed to build headers.', error as Error);
   }
 }
 

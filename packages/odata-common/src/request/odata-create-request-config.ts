@@ -16,12 +16,12 @@ export class ODataCreateRequestConfig<
   /**
    * Keys of the parent of the entity to create. Defined only when attempting to create child entities.
    */
-  parentKeys: Record<string, any>;
+  parentKeys!: Record<string, any>;
 
   /**
    * Field that links the parent entity class to the child entity class.
    */
-  childField: Link<EntityBase, DeSerializersT, EntityApi<EntityT, any>>;
+  childField!: Link<EntityBase, DeSerializersT, EntityApi<EntityT, any>>;
 
   /**
    * Creates an instance of ODataRequest.

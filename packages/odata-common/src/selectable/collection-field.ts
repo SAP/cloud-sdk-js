@@ -22,7 +22,7 @@ export class CollectionField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
-  readonly _deSerializers: DeSerializersT;
+  readonly _deSerializers!: DeSerializersT;
   /**
    * Creates an instance of CollectionField.
    * @param fieldName - Actual name of the field used in the OData request.

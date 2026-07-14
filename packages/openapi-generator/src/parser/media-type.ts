@@ -176,9 +176,7 @@ function parseMultipartFormEncodings(
  */
 export function parseTopLevelMediaType(
   bodyOrResponseObject:
-    | OpenAPIV3.RequestBodyObject
-    | OpenAPIV3.ResponseObject
-    | undefined,
+    OpenAPIV3.RequestBodyObject | OpenAPIV3.ResponseObject | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ):
@@ -213,9 +211,7 @@ export function parseTopLevelMediaType(
  */
 export function parseMediaType(
   bodyOrResponseObject:
-    | OpenAPIV3.RequestBodyObject
-    | OpenAPIV3.ResponseObject
-    | undefined,
+    OpenAPIV3.RequestBodyObject | OpenAPIV3.ResponseObject | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ):
@@ -259,9 +255,7 @@ export function parseMediaType(
  */
 export function getMediaTypes(
   bodyOrResponseObject:
-    | OpenAPIV3.RequestBodyObject
-    | OpenAPIV3.ResponseObject
-    | undefined
+    OpenAPIV3.RequestBodyObject | OpenAPIV3.ResponseObject | undefined
 ): string[] {
   return Object.keys(bodyOrResponseObject?.content || {});
 }
@@ -274,9 +268,7 @@ export function getMediaTypes(
  */
 function getMediaTypeObject(
   bodyOrResponseObject:
-    | OpenAPIV3.RequestBodyObject
-    | OpenAPIV3.ResponseObject
-    | undefined,
+    OpenAPIV3.RequestBodyObject | OpenAPIV3.ResponseObject | undefined,
   contentType: string[]
 ): OpenApiMediaTypeObject | undefined {
   if (bodyOrResponseObject?.content) {

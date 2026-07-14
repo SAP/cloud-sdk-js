@@ -15,8 +15,8 @@ export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
  * Parent class for all OData request configs like `getAll`, `delete` or `count`.
  */
 export abstract class ODataRequestConfig {
-  payload: Record<string, any> | string;
-  basePath: string;
+  payload!: Record<string, any> | string;
+  basePath!: string;
 
   readonly defaultHeaders: Record<string, any> = {
     'content-type': 'application/json',
@@ -134,10 +134,13 @@ export abstract class ODataRequestConfig {
   protected prependDollarToQueryParameters(
     params: Record<string, any>
   ): Record<string, any> {
-    return Object.entries(params).reduce((newParams, [key, value]) => {
-      newParams[`$${key}`] = value;
-      return newParams;
-    }, {});
+    return Object.entries(params).reduce(
+      (newParams: Record<string, any>, [key, value]) => {
+        newParams[`$${key}`] = value;
+        return newParams;
+      },
+      {}
+    );
   }
 
   /**

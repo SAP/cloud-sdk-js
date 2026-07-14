@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "include": [
     "./packages/util/**/*",
     "./packages/resilience/**/*",
@@ -15,7 +15,7 @@
     "./packages/test-util/**/*",
     "./packages/temporal-de-serializers/**/*"
   ],
-  "exclude": ["**/*.spec.ts"],
+  "exclude": ["**/*.spec.ts", "**/test/**/*"],
   "references": [
     {
       "path": "./packages/util"

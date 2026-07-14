@@ -83,9 +83,15 @@ export function filterFunction<EntityT extends Entity>(
     return new DateFilterFunction(functionName, parameters);
   }
   if (isCollectionReturnType(returnType)) {
-    const edmType = returnTypeMapping[returnType.replace('[]', '')];
+    const edmType = (returnTypeMapping as Record<string, string>)[
+      returnType.replace('[]', '')
+    ];
     if (edmType) {
-      return new CollectionFilterFunction(functionName, parameters, edmType);
+      return new CollectionFilterFunction(
+        functionName,
+        parameters,
+        edmType as any
+      );
     }
     throw new Error(
       `Cannot create filter function for unknown return type ${returnType}.`
@@ -109,9 +115,7 @@ type CollectionReturnType =
   | 'string[]';
 
 type FilterFunctionReturnType =
-  | FilterFunctionReturnTypeBase
-  | CollectionReturnType
-  | 'datetimeoffset';
+  FilterFunctionReturnTypeBase | CollectionReturnType | 'datetimeoffset';
 
 const returnTypeMapping = {
   datetimeoffset: 'Edm.DateTimeOffset',

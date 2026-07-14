@@ -8,7 +8,8 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "outDir": "./lib",
-    "tsBuildInfoFile": "./lib/.tsbuildinfo"
+    "tsBuildInfoFile": "./lib/.tsbuildinfo",
+    "types": ["node", "jest"]
   },
   "include": ["*.ts"],
   "exclude": []

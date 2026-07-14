@@ -346,7 +346,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
         );
         return new Blob(
           [response.data],
-          contentType && { type: contentType }
+          contentType ? { type: contentType } : undefined
         ) as ResponseT;
       }
       return response.data;

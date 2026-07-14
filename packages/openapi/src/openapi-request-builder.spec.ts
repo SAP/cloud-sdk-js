@@ -863,6 +863,24 @@ describe('openapi-request-builder', () => {
     expect(result.type).toBe('');
   });
 
+  it('does not throw when Content-Type is an empty string', async () => {
+    const buffer = Buffer.from('binary content');
+    httpSpy.mockResolvedValueOnce({
+      data: buffer,
+      status: 200,
+      headers: { 'content-type': '' },
+      config: {} as any,
+      statusText: 'OK',
+      request: {}
+    } as any);
+    const result = await new OpenApiRequestBuilder<Blob>(
+      'get',
+      '/binary'
+    ).execute(destination);
+    expect(result).toBeInstanceOf(Blob);
+    expect(result.type).toBe('');
+  });
+
   describe('requestConfig', () => {
     it('should overwrite default request config with filtered custom request config', async () => {
       const requestBuilder = new OpenApiRequestBuilder('get', '/test');

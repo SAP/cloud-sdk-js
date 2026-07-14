@@ -66684,7 +66684,7 @@ function parseScriptTarget(input) {
         es2022: typescript_1.ScriptTarget.ES2022,
         es2023: typescript_1.ScriptTarget.ES2023,
         es2024: typescript_1.ScriptTarget.ES2024,
-        es2025: typescript_1.ScriptTarget.ES2025,
+        es2025: typescript_1.ScriptTarget.ES2025
     };
     if (mapping[input.toLowerCase()]) {
         return mapping[input.toLowerCase()];

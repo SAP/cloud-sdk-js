@@ -55,3 +55,7 @@ updates:
       timezone: 'Europe/Berlin'
     cooldown:
       default-days: 4
+    groups:
+      codeql:
+        patterns:
+          - 'github/codeql-action/*'

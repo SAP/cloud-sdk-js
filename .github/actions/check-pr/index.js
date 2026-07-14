@@ -36531,8 +36531,14 @@ async function validateBody(body) {
 
 
 try {
-    validateTitle(github_context.payload.pull_request?.title);
-    validateBody(github_context.payload.pull_request?.body?.replace(/\r\n/g, '\n'));
+    const pr = github_context.payload.pull_request;
+    if (pr?.user?.login === 'dependabot[bot]') {
+        info('Skipping PR checks for dependabot.');
+    }
+    else {
+        validateTitle(pr?.title);
+        validateBody(pr?.body?.replace(/\r\n/g, '\n'));
+    }
 }
 catch (err) {
     setFailed(err);

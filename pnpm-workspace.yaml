@@ -34,12 +34,13 @@ packages:
   - 'build-packages/test-utils'
 allowBuilds:
   better-sqlite3: false
-  puppeteer: false
   unrs-resolver: false
 
 blockExoticSubdeps: true
 minimumReleaseAge: 5760
-minimumReleaseAgeExclude: []
+minimumReleaseAgeExclude:
+  - 'typescript@7.0.2'
+  - '@typescript/*'
   # Add minimum age exceptions for audit issues here
   # - sample-package@0.1.0
 shellEmulator: true

@@ -137,8 +137,9 @@ function audiencesFromAud({ aud }: JwtPayload): string[] {
 
 function audiencesFromScope({ scope }: JwtPayload): string[] {
   return makeArray(scope).reduce(
-    (aud, s) => (s.includes('.') ? [...aud, s.split('.')[0]] : aud),
-    []
+    (aud: string[], s: string) =>
+      s.includes('.') ? [...aud, s.split('.')[0]] : aud,
+    [] as string[]
   );
 }
 

@@ -18,13 +18,9 @@ import type { NumberFilterFunction } from './number-filter-function';
  */
 export function endsWith<EntityT extends EntityBase>(
   str:
-    | string
-    | Field<EntityT, boolean, boolean>
-    | StringFilterFunction<EntityT>,
+    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
   suffix:
-    | string
-    | Field<EntityT, boolean, boolean>
-    | StringFilterFunction<EntityT>
+    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('endswith', 'boolean', str, suffix);
 }
@@ -38,13 +34,9 @@ export function endsWith<EntityT extends EntityBase>(
  */
 export function startsWith<EntityT extends EntityBase>(
   str:
-    | string
-    | Field<EntityT, boolean, boolean>
-    | StringFilterFunction<EntityT>,
+    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
   prefix:
-    | string
-    | Field<EntityT, boolean, boolean>
-    | StringFilterFunction<EntityT>
+    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('startswith', 'boolean', str, prefix);
 }
@@ -70,13 +62,9 @@ export function length<EntityT extends EntityBase>(
  */
 export function indexOf<EntityT extends EntityBase>(
   str:
-    | string
-    | Field<EntityT, boolean, boolean>
-    | StringFilterFunction<EntityT>,
+    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
   substr:
-    | string
-    | Field<EntityT, boolean, boolean>
-    | StringFilterFunction<EntityT>
+    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('indexof', 'int', str, substr);
 }
@@ -91,17 +79,11 @@ export function indexOf<EntityT extends EntityBase>(
  */
 export function substring<EntityT extends EntityBase>(
   str:
-    | string
-    | Field<EntityT, boolean, boolean>
-    | StringFilterFunction<EntityT>,
+    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
   pos:
-    | number
-    | Field<EntityT, boolean, boolean>
-    | NumberFilterFunction<EntityT>,
+    number | Field<EntityT, boolean, boolean> | NumberFilterFunction<EntityT>,
   len?:
-    | number
-    | Field<EntityT, boolean, boolean>
-    | NumberFilterFunction<EntityT>
+    number | Field<EntityT, boolean, boolean> | NumberFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return typeof len === 'undefined'
     ? filterFunction('substring', 'string', str, pos)
@@ -153,13 +135,9 @@ export function trim<EntityT extends EntityBase>(
  */
 export function concat<EntityT extends EntityBase>(
   str1:
-    | string
-    | Field<EntityT, boolean, boolean>
-    | StringFilterFunction<EntityT>,
+    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>,
   str2:
-    | string
-    | Field<EntityT, boolean, boolean>
-    | StringFilterFunction<EntityT>
+    string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('concat', 'string', str1, str2);
 }
@@ -174,9 +152,7 @@ export function concat<EntityT extends EntityBase>(
  */
 export function round<EntityT extends EntityBase>(
   num:
-    | number
-    | Field<EntityT, boolean, boolean>
-    | NumberFilterFunction<EntityT>,
+    number | Field<EntityT, boolean, boolean> | NumberFilterFunction<EntityT>,
   returnType: 'double' | 'decimal' = 'double'
 ): NumberFilterFunction<EntityT> {
   return filterFunction('round', returnType, num);
@@ -191,9 +167,7 @@ export function round<EntityT extends EntityBase>(
  */
 export function floor<EntityT extends EntityBase>(
   num:
-    | number
-    | Field<EntityT, boolean, boolean>
-    | NumberFilterFunction<EntityT>,
+    number | Field<EntityT, boolean, boolean> | NumberFilterFunction<EntityT>,
   returnType: 'double' | 'decimal' = 'double'
 ): NumberFilterFunction<EntityT> {
   return filterFunction('floor', returnType, num);
@@ -208,9 +182,7 @@ export function floor<EntityT extends EntityBase>(
  */
 export function ceiling<EntityT extends EntityBase>(
   num:
-    | number
-    | Field<EntityT, boolean, boolean>
-    | NumberFilterFunction<EntityT>,
+    number | Field<EntityT, boolean, boolean> | NumberFilterFunction<EntityT>,
   returnType: 'double' | 'decimal' = 'double'
 ): NumberFilterFunction<EntityT> {
   return filterFunction('ceiling', returnType, num);

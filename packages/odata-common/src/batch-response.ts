@@ -6,15 +6,12 @@ import type { EntityApi } from './entity-api';
  * @internal
  */
 export type BatchResponse<DeSerializersT extends DeSerializers> =
-  | ErrorResponse
-  | ReadResponse<DeSerializersT>
-  | WriteResponses<DeSerializersT>;
+  ErrorResponse | ReadResponse<DeSerializersT> | WriteResponses<DeSerializersT>;
 
 interface BatchResponseTypeGuards<DeSerializersT extends DeSerializers> {
   isReadResponse: () => this is ReadResponse<DeSerializersT>;
   isSuccess: () => this is
-    | ReadResponse<DeSerializersT>
-    | WriteResponses<DeSerializersT>;
+    ReadResponse<DeSerializersT> | WriteResponses<DeSerializersT>;
   isError: () => this is ErrorResponse;
   isWriteResponses: () => this is WriteResponses<DeSerializersT>;
 }

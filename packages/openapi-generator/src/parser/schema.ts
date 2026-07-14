@@ -175,7 +175,7 @@ function parseObjectSchemaProperties(
         schemaProperties: { ...parseSchemaProperties(propSchema) }
       }
     ],
-    []
+    [] as OpenApiObjectSchemaProperty[]
   );
 }
 
@@ -336,8 +336,9 @@ export function parseSchemaProperties(
     'pattern'
   ];
   return schemaPropertyNames.reduce((properties, propertyName) => {
-    if (schema[propertyName]) {
-      return { ...properties, [propertyName]: schema[propertyName] };
+    const schemaAny = schema as Record<string, any>;
+    if (schemaAny[propertyName]) {
+      return { ...properties, [propertyName]: schemaAny[propertyName] };
     }
     return properties;
   }, {});

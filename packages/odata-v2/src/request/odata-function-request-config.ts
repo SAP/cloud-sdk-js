@@ -40,7 +40,9 @@ export class ODataFunctionRequestConfig<
 
   queryParameters(): Record<string, any> {
     return {
-      ...(Object.values(this.parameters)
+      ...(Object.values(
+        this.parameters as Record<string, OperationParameter<ParametersT>>
+      )
         .filter(
           (parameter: OperationParameter<ParametersT>) =>
             typeof parameter.value !== 'undefined'

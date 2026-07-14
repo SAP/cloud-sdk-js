@@ -21,8 +21,8 @@ container.options.format =
   process.env.NODE_ENV === 'production' ? logFormat.kibana : logFormat.local;
 
 const exceptionTransport = new transports.Console();
-const customLogLevels = {};
-const customLogFormats = {};
+const customLogLevels: Record<string, any> = {};
+const customLogFormats: Record<string, any> = {};
 const DEFAULT_LOGGER__MESSAGE_CONTEXT = '__DEFAULT_LOGGER__MESSAGE_CONTEXT';
 let silent = false;
 
@@ -358,12 +358,7 @@ export function resetCustomLogFormats(): void {
  * Npm log levels used for the SAP Cloud SDK logger.
  */
 export type LogLevel =
-  | 'error'
-  | 'warn'
-  | 'info'
-  | 'verbose'
-  | 'debug'
-  | 'silly';
+  'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
 
 /**
  * Configurable logger options.

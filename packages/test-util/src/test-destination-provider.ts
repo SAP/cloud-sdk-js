@@ -164,14 +164,19 @@ function readCredentialsOrFail(
   return [];
 }
 
-function mergeSystemsAndCredentials(systems, credentials) {
+function mergeSystemsAndCredentials(
+  systems: Record<string, any>[],
+  credentials: Record<string, any>[]
+) {
   return systems.map(system => ({
     ...system,
     ...credentials.find(({ alias }) => alias === system.alias)
   }));
 }
 
-function toDestinations(systemsAndCredentials): Destination[] {
+function toDestinations(
+  systemsAndCredentials: Record<string, any>[]
+): Destination[] {
   return systemsAndCredentials.map(sysAndCred => ({
     name: sysAndCred.alias,
     url: sysAndCred.uri,

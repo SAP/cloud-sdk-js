@@ -58,7 +58,7 @@ function collectRefsFromOperations(
           ]
         )
       ],
-      []
+      [] as OpenApiReferenceSchema[]
     )
   );
 }

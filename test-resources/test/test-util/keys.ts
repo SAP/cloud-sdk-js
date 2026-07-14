@@ -16,13 +16,13 @@ export const { publicKey, privateKey } = generateKeyPairSync('rsa', {
 const defaultJku = 'https://authentication.sap.hana.ondemand.com/token_keys';
 export { defaultJku as jku };
 
-export function signedJwt(payload, algorithm: Algorithm = 'RS512') {
+export function signedJwt(payload: any, algorithm: Algorithm = 'RS512') {
   return sign(payload, privateKey, {
     algorithm
   });
 }
 
-export function signedXsuaaJwt(payload, algorithm: Algorithm = 'RS512') {
+export function signedXsuaaJwt(payload: any, algorithm: Algorithm = 'RS512') {
   return sign(
     { ...payload, ext_attr: { ...payload.ext_attr, enhancer: 'XSUAA' } },
     privateKey,

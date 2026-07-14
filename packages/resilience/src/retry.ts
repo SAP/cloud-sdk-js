@@ -1,5 +1,6 @@
 import { ErrorWithCause, createLogger } from '@sap-cloud-sdk/util';
 import * as asyncRetry from 'async-retry';
+import { isAxiosError } from 'axios';
 import type {
   MiddlewareContext,
   Middleware,
@@ -40,7 +41,9 @@ export function retry<
             return await options.fn(arg);
           } catch (error) {
             // Don't retry on error statuses where a second attempt won't help
-            const status = error?.response?.status;
+            const status = isAxiosError(error)
+              ? error.response?.status
+              : undefined;
             if (!status) {
               logger.debug(
                 'HTTP request failed but error did not contain a response status field as expected. Rethrowing error.'
@@ -49,7 +52,7 @@ export function retry<
               bail(
                 new ErrorWithCause(
                   `Request failed with status code ${status}`,
-                  error
+                  error as Error
                 )
               );
               // We need to return something here but the actual value does not matter

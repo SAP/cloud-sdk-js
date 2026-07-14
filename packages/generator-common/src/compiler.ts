@@ -141,7 +141,7 @@ async function readTsConfig(
   pathToTsConfig: string
 ): Promise<Record<string, any>> {
   const fullPath =
-    parse(pathToTsConfig).base === 'tsconfig.json'
+    parse(pathToTsConfig).ext === '.json'
       ? pathToTsConfig
       : resolve(pathToTsConfig, 'tsconfig.json');
 
@@ -180,8 +180,25 @@ export async function readIncludeExcludeWithDefaults(
   };
 }
 
+async function readRawCompilerOptions(
+  pathToTsConfig: string
+): Promise<CompilerOptions> {
+  const tsConfig = await readTsConfig(pathToTsConfig);
+  const compilerOptions: CompilerOptions = tsConfig.compilerOptions || {};
+  const pathToBase = tsConfig.extends;
+  if (!pathToBase) {
+    return compilerOptions;
+  }
+  const dir = parse(pathToTsConfig).dir;
+  const bases = Array.isArray(pathToBase) ? pathToBase : [pathToBase];
+  const baseOptions = await Promise.all(
+    bases.map(base => readRawCompilerOptions(resolve(dir, base)))
+  );
+  return Object.assign({}, ...baseOptions, compilerOptions);
+}
+
 /**
- * Reads and parses the compiler options a tsconfig.json.
+ * Reads and parses the compiler options in a tsconfig.json.
  * @param pathToTsConfig - Folder containing or path to a tsconfig.json files
  * @returns Compiler options from the tsconfig.json
  * @internal
@@ -189,8 +206,7 @@ export async function readIncludeExcludeWithDefaults(
 export async function readCompilerOptions(
   pathToTsConfig: string
 ): Promise<CompilerOptions> {
-  const options: CompilerOptions =
-    (await readTsConfig(pathToTsConfig))['compilerOptions'] || {};
+  const options = await readRawCompilerOptions(pathToTsConfig);
 
   if (options.moduleResolution) {
     options.moduleResolution = parseModuleResolutionKind(
@@ -209,13 +225,23 @@ export async function readCompilerOptions(
     options.module = parseModuleKind(options.module as any);
   }
 
+  if (
+    needsIgnoreDeprecationsTs6(
+      options.moduleResolution,
+      options.target,
+      options.module
+    )
+  ) {
+    options.ignoreDeprecations = '6.0';
+  }
+
   return options;
 }
 
 function parseModuleResolutionKind(input: string): ModuleResolutionKind {
   const moduleResolution = input.toLowerCase();
   if (moduleResolution === 'node') {
-    return ModuleResolutionKind.NodeJs;
+    return ModuleResolutionKind.Node10;
   }
   if (moduleResolution === 'node16') {
     return ModuleResolutionKind.Node16;
@@ -267,4 +293,35 @@ function parseModuleKind(input: string): ModuleKind {
     `The selected module kind ${input} is not found - Fallback commonJS used`
   );
   return ModuleKind.CommonJS;
+}
+
+function needsIgnoreDeprecationsTs6(
+  moduleResolutionKind: ModuleResolutionKind | undefined,
+  scriptTarget: ScriptTarget | undefined,
+  moduleKind: ModuleKind | undefined
+): boolean {
+  if (
+    moduleResolutionKind === ModuleResolutionKind.NodeJs ||
+    moduleResolutionKind === ModuleResolutionKind.Classic
+  ) {
+    logger.warn(
+      `The selected module resolution kind ${ModuleResolutionKind[moduleResolutionKind]} is deprecated with TypeScript 6.0`
+    );
+    return true;
+  }
+
+  if (scriptTarget === ScriptTarget.ES3 || scriptTarget === ScriptTarget.ES5) {
+    logger.warn(
+      `The selected script target ${ScriptTarget[scriptTarget]} is deprecated with TypeScript 6.0`
+    );
+    return true;
+  }
+
+  if (moduleKind === ModuleKind.AMD) {
+    logger.warn(
+      `The selected module kind ${ModuleKind[moduleKind]} is deprecated with TypeScript 6.0`
+    );
+    return true;
+  }
+  return false;
 }

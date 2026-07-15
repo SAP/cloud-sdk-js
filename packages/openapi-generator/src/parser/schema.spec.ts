@@ -687,5 +687,163 @@ describe('schema parser', () => {
         );
       });
     });
+
+    describe('OpenAPI 3.1 features', () => {
+      it('parses a union type array as anyOf', async () => {
+        const schema = { type: ['string', 'number'] } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({
+          anyOf: [{ type: 'string' }, { type: 'number' }]
+        });
+      });
+
+      it('parses a nullable type array into an anyOf with null', async () => {
+        const schema = { type: ['string', 'null'] } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({
+          anyOf: [{ type: 'string' }, { type: 'null' }]
+        });
+      });
+
+      it('parses a standalone null type', async () => {
+        const schema = { type: 'null' } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({ type: 'null' });
+      });
+
+      it('derives property nullability from a null type array', async () => {
+        const schema = {
+          type: 'object',
+          properties: {
+            prop1: { type: ['string', 'null'] }
+          }
+        } as any;
+        const parsed = parseSchema(
+          schema,
+          await createTestRefs(),
+          defaultOptions
+        ) as OpenApiObjectSchema;
+        expect(parsed.properties[0].nullable).toBe(true);
+        // The property schema itself is denulled to avoid a double '| null'.
+        expect(parsed.properties[0].schema).toEqual({ type: 'string' });
+      });
+
+      it('parses a const string schema', async () => {
+        const schema = { const: 'fixed' } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({ const: "'fixed'" });
+      });
+
+      it('parses a const number schema', async () => {
+        const schema = { const: 42 } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({ const: '42' });
+      });
+
+      it('parses a prefixItems tuple schema without additional items', async () => {
+        const schema = {
+          type: 'array',
+          prefixItems: [{ type: 'string' }, { type: 'number' }]
+        } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({
+          prefixItems: [{ type: 'string' }, { type: 'number' }]
+        });
+      });
+
+      it('parses a prefixItems tuple schema with additional items', async () => {
+        const schema = {
+          type: 'array',
+          prefixItems: [{ type: 'string' }],
+          items: { type: 'number' }
+        } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({
+          prefixItems: [{ type: 'string' }],
+          additionalItems: { type: 'number' }
+        });
+      });
+
+      it('collects numeric exclusiveMinimum and exclusiveMaximum in schema properties', () => {
+        expect(
+          parseSchemaProperties({
+            type: 'number',
+            exclusiveMinimum: 0,
+            exclusiveMaximum: 100
+          } as any)
+        ).toEqual({ exclusiveMinimum: 0, exclusiveMaximum: 100 });
+      });
+
+      it('collects contentEncoding and contentMediaType in schema properties', () => {
+        expect(
+          parseSchemaProperties({
+            type: 'string',
+            contentEncoding: 'base64',
+            contentMediaType: 'image/png'
+          } as any)
+        ).toEqual({ contentEncoding: 'base64', contentMediaType: 'image/png' });
+      });
+
+      it('maps a content-encoded string to Blob', async () => {
+        const schema = {
+          type: 'string',
+          contentEncoding: 'base64'
+        } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({ type: 'Blob' });
+      });
+
+      it('collects the examples array in schema properties', () => {
+        expect(
+          parseSchemaProperties({
+            type: 'string',
+            examples: ['a', 'b']
+          } as any)
+        ).toEqual({ examples: ['a', 'b'] });
+      });
+
+      it('parses patternProperties into additional properties', async () => {
+        const schema = {
+          type: 'object',
+          patternProperties: {
+            '^S_': { type: 'string' }
+          }
+        } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({
+          properties: [],
+          additionalProperties: { type: 'string' }
+        });
+      });
+
+      it('keeps sibling description next to a $ref property (OpenAPI 3.1)', async () => {
+        const schema = {
+          type: 'object',
+          properties: {
+            prop: {
+              $ref: '#/components/schemas/PropertySchema',
+              description: 'Sibling Description'
+            }
+          }
+        } as any;
+        const parsed = parseSchema(
+          schema,
+          await createTestRefs({
+            schemas: { PropertySchema: { type: 'string' } }
+          }),
+          defaultOptions
+        ) as OpenApiObjectSchema;
+        expect(parsed.properties[0].description).toEqual('Sibling Description');
+      });
+    });
   });
 });

@@ -61,4 +61,21 @@ describe('collectRefs', () => {
       'Default: "test".'
     ]);
   });
+
+  it('creates documentation for OpenAPI 3.1 schema properties', () => {
+    const schemaProperties: OpenApiSchemaProperties = {
+      examples: ['a', 'b'],
+      exclusiveMinimum: 0,
+      exclusiveMaximum: 100,
+      contentEncoding: 'base64',
+      contentMediaType: 'image/png'
+    };
+    expect(getSchemaPropertiesDocumentation(schemaProperties)).toEqual([
+      '@example "a"\n@example "b"',
+      'Exclusive Minimum: 0.',
+      'Exclusive Maximum: 100.',
+      'Content Encoding: "base64".',
+      'Content Media Type: "image/png".'
+    ]);
+  });
 });

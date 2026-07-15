@@ -41,15 +41,26 @@ const typeMapping = {
 
 /**
  * Get the mapped TypeScript type for the given original OpenAPI type.
- * @param originalType - Original OpenAPI type, to get a mapping for.
+ *
+ * In OpenAPI 3.1 the `type` keyword may be an array of types (aligned with
+ * JSON Schema 2020-12), optionally including `"null"`. Such an array is mapped
+ * to a union of the individual TypeScript types.
+ * @param originalType - Original OpenAPI type, to get a mapping for. May be a
+ * single type or an array of types (3.1).
  * @param format - Optional format of the OpenAPI type.
  * @returns The mapped TypeScript type.
  * @internal
  */
 export function getType(
-  originalType: string | undefined,
+  originalType: string | string[] | undefined,
   format?: string
 ): string {
+  if (Array.isArray(originalType)) {
+    if (!originalType.length) {
+      return 'any';
+    }
+    return unique(originalType.map(type => getType(type, format))).join(' | ');
+  }
   if (originalType === 'string' && format === 'binary') {
     return 'Blob';
   }
@@ -63,4 +74,8 @@ export function getType(
     return 'any';
   }
   return type;
+}
+
+function unique(values: string[]): string[] {
+  return values.filter((value, index) => values.indexOf(value) === index);
 }

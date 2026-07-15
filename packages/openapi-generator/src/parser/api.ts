@@ -23,6 +23,12 @@ export function parseApis(
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiApi[] {
+  // OpenAPI 3.1 makes 'paths' optional (a document may contain only
+  // 'components' and/or 'webhooks'). Such a document yields no APIs.
+  if (!document.paths || !Object.keys(document.paths).length) {
+    return [];
+  }
+
   const operationsByApis = getOperationsByApis(document);
 
   return Object.entries(operationsByApis).map(

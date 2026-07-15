@@ -139,6 +139,26 @@ describe('document-converter', () => {
     it('does not change OpenAPI documents', async () => {
       expect(await convertDocToOpenApiV3(openApiDoc)).toStrictEqual(openApiDoc);
     });
+
+    it('passes OpenAPI 3.1 documents through untranslated', async () => {
+      const openApi31Doc = {
+        info: { title: 'Test Service', version: '1.0.0' },
+        openapi: '3.1.0',
+        paths: {},
+        components: {
+          schemas: {
+            NullableString: { type: ['string', 'null'] },
+            FixedValue: { const: 'fixed' }
+          }
+        }
+      } as any;
+      // The 3.1-specific keywords must survive unchanged; swagger2openapi would
+      // otherwise pass the doc through while mislabeling it, but here we skip it
+      // entirely and hand the document to the native 3.1-aware parser.
+      expect(await convertDocToOpenApiV3(openApi31Doc)).toStrictEqual(
+        openApi31Doc
+      );
+    });
   });
 
   describe('parseFileAsJson', () => {

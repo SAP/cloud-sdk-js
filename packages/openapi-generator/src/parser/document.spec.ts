@@ -261,6 +261,58 @@ describe('parseOpenApiDocument()', () => {
     ]);
   });
 
+  it('parses a nullable persisted schema declared via a null type array (OpenAPI 3.1)', async () => {
+    const input = {
+      ...emptyDocument,
+      openapi: '3.1.0',
+      paths: {},
+      components: {
+        schemas: {
+          NullableString: { type: ['string', 'null'] }
+        }
+      }
+    } as any;
+
+    const parsed = await parseOpenApiDocument(
+      input,
+      { directoryName: 'myService' } as ServiceOptions,
+      options
+    );
+
+    expect(parsed.schemas).toStrictEqual([
+      {
+        description: undefined,
+        schemaName: 'NullableString',
+        fileName: 'nullable-string',
+        nullable: true,
+        schema: { type: 'string' },
+        schemaProperties: {}
+      }
+    ]);
+  });
+
+  it('generates only schema models for a paths-less OpenAPI 3.1 document', async () => {
+    const input = {
+      ...emptyDocument,
+      openapi: '3.1.0',
+      components: {
+        schemas: {
+          SimpleSchema: { type: 'string' }
+        }
+      }
+    } as any;
+    delete input.paths;
+
+    const parsed = await parseOpenApiDocument(
+      input,
+      { directoryName: 'myService' } as ServiceOptions,
+      options
+    );
+
+    expect(parsed.apis).toEqual([]);
+    expect(parsed.schemas).toHaveLength(1);
+  });
+
   it("escapes 'index' as file name, but not as schema name", async () => {
     const input: OpenAPIV3.Document = {
       ...emptyDocument,

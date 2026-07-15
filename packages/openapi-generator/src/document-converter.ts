@@ -2,9 +2,10 @@ import { promises } from 'fs';
 import { parse } from 'path';
 import { convert } from 'swagger2openapi';
 import { load } from 'js-yaml';
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import type { OpenAPIV2, OpenAPIV3 } from 'openapi-types';
 const { readFile } = promises;
+const logger = createLogger('openapi-generator');
 
 /**
  * Convert an OpenAPI document to ensure smooth parsing and generation thereafter.
@@ -51,7 +52,10 @@ export async function parseFileAsJson(
 
 /**
  * Convert Swagger documents to OpenAPI documents.
- * If an OpenAPI document is passed it is not modified.
+ * If an OpenAPI 3.x document is passed it is returned unchanged, since
+ * `swagger2openapi` only converts Swagger 2.0 and would otherwise pass a 3.1
+ * document through untranslated while mislabeling it as 3.0. OpenAPI 3.1
+ * documents are handled natively by the downstream parser.
  * @param openApiDocument - OpenAPI version 2 (Swagger) or 3 document to be converted to version 3.
  * @returns A promise of an OpenAPI version 3 document.
  * @internal
@@ -59,6 +63,23 @@ export async function parseFileAsJson(
 export async function convertDocToOpenApiV3(
   openApiDocument: Record<string, any>
 ): Promise<OpenAPIV3.Document> {
+  const version =
+    typeof openApiDocument.openapi === 'string' ? openApiDocument.openapi : '';
+
+  // 'swagger2openapi' only meaningfully converts Swagger 2.0. For any OpenAPI
+  // 3.x input it short-circuits and returns the document unchanged, so there is
+  // no benefit in routing 3.x docs through it. 3.1 features are parsed natively
+  // downstream.
+  if (version.startsWith('3.')) {
+    if (version.startsWith('3.1')) {
+      logger.info(
+        `Detected OpenAPI ${version} specification. Parsing it as an OpenAPI 3.1 (JSON Schema 2020-12) document.`
+      );
+    }
+    // This is a hidden cast to OpenAPIV3.Document
+    return openApiDocument as OpenAPIV3.Document;
+  }
+
   // This is a hidden cast to OpenAPIV3.Document
   try {
     return (await convert(openApiDocument as OpenAPIV2.Document, {})).openapi;

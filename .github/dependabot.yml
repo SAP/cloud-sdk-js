@@ -6,6 +6,9 @@ registries:
     token: ${{secrets.NPM_TOKEN_ARTIFACTORY}}
     replaces-base: true
 updates:
+  # GitHub requires a unique combination of package-ecosystem, directory, and target-branch,
+  # so production and dev dependencies must share one block. We use 'widen' for all deps
+  # (ideally dev deps would use 'increase', but that would require a separate block).
   - package-ecosystem: npm
     target-branch: main
     registries:
@@ -19,8 +22,6 @@ updates:
     cooldown:
       default-days: 4
     versioning-strategy: widen
-    allow:
-      - dependency-type: production
     ignore:
       # execa v6 needs ESM, see https://github.com/sindresorhus/execa/releases/tag/v6.0.0, we'll stay on v5 until we can use ESM
       - dependency-name: 'execa'
@@ -28,22 +29,6 @@ updates:
       # yargs v18 needs ESM, see https://github.com/yargs/yargs/releases/tag/v18.0.0, we'll stay on v17 until we can use ESM
       - dependency-name: 'yargs'
         update-types: ['version-update:semver-major']
-  - package-ecosystem: npm
-    target-branch: main
-    registries:
-      - sap-artifactory
-    directory: '/'
-    schedule:
-      interval: daily
-      time: '01:00'
-      timezone: 'Europe/Berlin'
-    open-pull-requests-limit: 10
-    cooldown:
-      default-days: 4
-    versioning-strategy: increase
-    allow:
-      - dependency-type: development
-    ignore:
       # We only want to do major node updates on purpose, so don't create dependabot PRs for major versions
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']

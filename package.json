@@ -2,6 +2,12 @@
   "name": "sap-cloud-sdk",
   "version": "4.7.0",
   "private": true,
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "10.34.5"
+    }
+  },
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
@@ -86,7 +92,7 @@
     "semver": "^7.7.4",
     "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
-    "turbo": "^2.9.6",
+    "turbo": "^2.10.4",
     "typedoc": "^0.28.18",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "unionfs": "^4.6.0"

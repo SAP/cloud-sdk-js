@@ -7,7 +7,6 @@
     ".gitignore",
     "tsconfig.json"
   ],
-  "dangerouslyDisablePackageManagerCheck": true,
   "tasks": {
     "compile": {
       "dependsOn": ["^compile"]

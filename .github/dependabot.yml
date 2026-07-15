@@ -19,21 +19,14 @@ updates:
     cooldown:
       default-days: 4
     versioning-strategy: widen
+    allow:
+      - dependency-type: production
     ignore:
-      # We only want to do major node updates on purpose, so don't create dependabot PRs for major versions
-      - dependency-name: '@types/node'
-        update-types: ['version-update:semver-major']
       # chalk v5 needs ESM, see https://github.com/chalk/chalk/releases/tag/v5.0.0, we'll stay on v4 until we can use ESM
       - dependency-name: 'chalk'
         update-types: ['version-update:semver-major']
       # execa v6 needs ESM, see https://github.com/sindresorhus/execa/releases/tag/v6.0.0, we'll stay on v5 until we can use ESM
       - dependency-name: 'execa'
-        update-types: ['version-update:semver-major']
-      # @stylistic/eslint-plugin v4 needs ESM, see https://github.com/eslint-stylistic/eslint-stylistic/releases/tag/v4.0.0, we'll stay on v3 until we can use ESM
-      - dependency-name: '@stylistic/eslint-plugin'
-        update-types: ['version-update:semver-major']
-      # @manypkg/get-packages v3 needs ESM, see https://github.com/Thinkmill/manypkg/releases/tag/%40manypkg%2Fget-packages%403.0.0, we'll stay on v2 until we can use ESM
-      - dependency-name: '@manypkg/get-packages'
         update-types: ['version-update:semver-major']
       # yargs v18 needs ESM, see https://github.com/yargs/yargs/releases/tag/v18.0.0, we'll stay on v17 until we can use ESM
       - dependency-name: 'yargs'
@@ -53,6 +46,16 @@ updates:
     versioning-strategy: increase
     allow:
       - dependency-type: development
+    ignore:
+      # We only want to do major node updates on purpose, so don't create dependabot PRs for major versions
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+      # @stylistic/eslint-plugin v4 needs ESM, see https://github.com/eslint-stylistic/eslint-stylistic/releases/tag/v4.0.0, we'll stay on v3 until we can use ESM
+      - dependency-name: '@stylistic/eslint-plugin'
+        update-types: ['version-update:semver-major']
+      # @manypkg/get-packages v3 needs ESM, see https://github.com/Thinkmill/manypkg/releases/tag/%40manypkg%2Fget-packages%403.0.0, we'll stay on v2 until we can use ESM
+      - dependency-name: '@manypkg/get-packages'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
     directories:
       - '/'

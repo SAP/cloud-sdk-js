@@ -22,9 +22,6 @@ updates:
     allow:
       - dependency-type: production
     ignore:
-      # chalk v5 needs ESM, see https://github.com/chalk/chalk/releases/tag/v5.0.0, we'll stay on v4 until we can use ESM
-      - dependency-name: 'chalk'
-        update-types: ['version-update:semver-major']
       # execa v6 needs ESM, see https://github.com/sindresorhus/execa/releases/tag/v6.0.0, we'll stay on v5 until we can use ESM
       - dependency-name: 'execa'
         update-types: ['version-update:semver-major']

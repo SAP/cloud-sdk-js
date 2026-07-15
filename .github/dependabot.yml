@@ -56,6 +56,12 @@ updates:
       # @manypkg/get-packages v3 needs ESM, see https://github.com/Thinkmill/manypkg/releases/tag/%40manypkg%2Fget-packages%403.0.0, we'll stay on v2 until we can use ESM
       - dependency-name: '@manypkg/get-packages'
         update-types: ['version-update:semver-major']
+      # @apidevtools/json-schema-ref-parser v9 needs ESM, we'll stay on v8 until we can use ESM
+      - dependency-name: '@apidevtools/json-schema-ref-parser'
+        update-types: ['version-update:semver-major']
+      # https-proxy-agent v6 needs ESM, we'll stay on v5 until we can use ESM
+      - dependency-name: 'https-proxy-agent'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
     directories:
       - '/'

@@ -617,7 +617,7 @@ export function parseSchemaProperties(
     'contentEncoding',
     'contentMediaType'
   ];
-  return schemaPropertyNames.reduce((properties, propertyName) => {
+  const collected = schemaPropertyNames.reduce((properties, propertyName) => {
     const schemaAny = schema as Record<string, any>;
     const value = schemaAny[propertyName];
     // Numeric 'exclusiveMinimum'/'exclusiveMaximum' of '0' and empty 'examples'
@@ -631,7 +631,19 @@ export function parseSchemaProperties(
       return { ...properties, [propertyName]: value };
     }
     return properties;
-  }, {});
+  }, {} as Record<string, any>);
+
+  // OpenAPI 3.1: 'example' (singular) and 'examples' (array) are mutually
+  // exclusive. When both are present prefer 'examples' and drop 'example'.
+  if (collected.example !== undefined && collected.examples !== undefined) {
+    logger.warn(
+      "Schema defines both 'example' and 'examples'. In OpenAPI 3.1 these are mutually exclusive; 'example' will be ignored in favour of 'examples'."
+    );
+    const { example: _dropped, ...rest } = collected;
+    return rest;
+  }
+
+  return collected;
 }
 
 function getDiscriminatorMapping(

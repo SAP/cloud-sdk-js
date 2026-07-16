@@ -810,6 +810,27 @@ describe('schema parser', () => {
         ).toEqual({ examples: ['a', 'b'] });
       });
 
+      it('prefers examples over example when both are set (OpenAPI 3.1 mutual exclusivity)', () => {
+        const logger = createLogger('openapi-generator');
+        jest.spyOn(logger, 'warn');
+        expect(
+          parseSchemaProperties({
+            type: 'string',
+            example: 'singular',
+            examples: ['a', 'b']
+          } as any)
+        ).toEqual({ examples: ['a', 'b'] });
+        expect(logger.warn).toHaveBeenCalledWith(
+          expect.stringContaining("'example' will be ignored in favour of 'examples'")
+        );
+      });
+
+      it('keeps example when examples is absent', () => {
+        expect(
+          parseSchemaProperties({ type: 'string', example: 'only' } as any)
+        ).toEqual({ example: 'only' });
+      });
+
       it('parses patternProperties into additional properties', async () => {
         const schema = {
           type: 'object',

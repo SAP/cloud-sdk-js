@@ -76,6 +76,15 @@ function warnOnUnsupportedFeatures(document: OpenAPIV3.Document): void {
       `The document defines webhook(s) [${webhookNames.join(', ')}], which represent inbound requests to the API consumer. No client code is generated for webhooks.`
     );
   }
+
+  const pathItemNames = Object.keys(
+    (document as any).components?.pathItems || {}
+  );
+  if (pathItemNames.length) {
+    logger.warn(
+      `The document defines reusable path item(s) in components/pathItems [${pathItemNames.join(', ')}]. These are an OpenAPI 3.1 feature used as targets for $ref in webhooks or other path items. No client code is generated for them directly.`
+    );
+  }
   if (!document.paths || !Object.keys(document.paths).length) {
     logger.info(
       'The document does not define any paths. Only schema models will be generated.'

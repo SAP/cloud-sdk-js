@@ -1,6 +1,7 @@
 import { emptyDocument } from '../../test/test-util';
 import { parseOpenApiDocument } from './document';
 import * as api from './api';
+import { createLogger } from '@sap-cloud-sdk/util';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 import type { OpenAPIV3 } from 'openapi-types';
 
@@ -338,6 +339,57 @@ describe('parseOpenApiDocument()', () => {
     expect(parsedDocument.schemas).toEqual([
       expect.objectContaining({ fileName: 'index-1', schemaName: 'Index' })
     ]);
+  });
+
+  it('warns when components/pathItems are present (OpenAPI 3.1)', async () => {
+    const logger = createLogger('openapi-generator');
+    jest.spyOn(logger, 'warn');
+    const input = {
+      ...emptyDocument,
+      openapi: '3.1.0',
+      paths: {},
+      components: {
+        pathItems: {
+          '/shared-path': {
+            get: {
+              operationId: 'sharedGet',
+              responses: { '200': { description: 'ok' } }
+            }
+          }
+        }
+      }
+    } as any;
+
+    await parseOpenApiDocument(
+      input,
+      { directoryName: 'myService' } as ServiceOptions,
+      options
+    );
+
+    expect(logger.warn).toHaveBeenCalledWith(
+      expect.stringContaining('components/pathItems')
+    );
+  });
+
+  it('does not warn about components/pathItems when they are absent', async () => {
+    const logger = createLogger('openapi-generator');
+    jest.spyOn(logger, 'warn');
+    const input = {
+      ...emptyDocument,
+      openapi: '3.1.0',
+      paths: {},
+      components: { schemas: { Foo: { type: 'string' } } }
+    } as any;
+
+    await parseOpenApiDocument(
+      input,
+      { directoryName: 'myService' } as ServiceOptions,
+      options
+    );
+
+    expect(logger.warn).not.toHaveBeenCalledWith(
+      expect.stringContaining('components/pathItems')
+    );
   });
 
   function getDocument(

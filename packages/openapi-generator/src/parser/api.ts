@@ -112,7 +112,9 @@ function getAllOperations(
   openApiDocument: OpenAPIV3.Document | OpenAPIV3_1.Document
 ): OperationInfo[] {
   if (!openApiDocument.paths) {
-    throw new Error('document.paths must be set before calling getAllOperations.');
+    throw new Error(
+      'document.paths must be set before calling getAllOperations.'
+    );
   }
   return flat(
     Object.entries(openApiDocument.paths)

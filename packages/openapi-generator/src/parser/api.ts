@@ -23,9 +23,10 @@ export function parseApis(
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiApi[] {
-  // OpenAPI 3.1 makes 'paths' optional (a document may contain only
-  // 'components' and/or 'webhooks'). Such a document yields no APIs.
-  if (!document.paths || !Object.keys(document.paths).length) {
+  if (!document.paths) {
+    throw new Error('document.paths must be set before calling parseApis.');
+  }
+  if (!Object.keys(document.paths).length) {
     return [];
   }
 
@@ -61,11 +62,10 @@ function getPathItem(
   document: OpenAPIV3.Document | OpenAPIV3_1.Document,
   pathPattern: string
 ): OpenAPIV3.PathItemObject | OpenAPIV3_1.PathItemObject {
-  const pathItem = document.paths?.[pathPattern];
+  const pathItem = document.paths![pathPattern];
   if (!pathItem) {
-    // This should never happen
     throw new Error(
-      `Could not parse APIs. Path pattern '${pathPattern}' does not exist in the document.`
+      `Could not find path item for '${pathPattern}' in document.paths.`
     );
   }
   return pathItem;
@@ -90,13 +90,11 @@ function getOperationsByApis(
   document: OpenAPIV3.Document | OpenAPIV3_1.Document
 ): Record<string, OperationInfo[]> {
   const allOperations = getAllOperations(document);
-
   if (!allOperations.length) {
     throw new Error(
       'Could not parse APIs. The document does not contain any operations.'
     );
   }
-
   return allOperations.reduce(
     (apiMap, operationInfo) => {
       const apiName = getApiNameForOperation(operationInfo, document);
@@ -113,8 +111,11 @@ function getOperationsByApis(
 function getAllOperations(
   openApiDocument: OpenAPIV3.Document | OpenAPIV3_1.Document
 ): OperationInfo[] {
+  if (!openApiDocument.paths) {
+    throw new Error('document.paths must be set before calling getAllOperations.');
+  }
   return flat(
-    Object.entries(openApiDocument.paths || {})
+    Object.entries(openApiDocument.paths)
       .filter(
         (
           entry

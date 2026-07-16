@@ -374,7 +374,12 @@ describe('agent caching', () => {
     const destRefreshed: HttpDestination = {
       ...base,
       proxyConfiguration: proxyConfig(
-        signedJwt({ user_id: 'user-a', zid: 'tenant', iat: now + 60, exp: now + 120 })
+        signedJwt({
+          user_id: 'user-a',
+          zid: 'tenant',
+          iat: now + 60,
+          exp: now + 120
+        })
       )
     };
     const agentOld = ((await getAgentConfig(destOld)) as any)['httpsAgent'];

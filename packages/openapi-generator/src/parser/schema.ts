@@ -12,7 +12,7 @@ import type {
   OpenApiReferenceSchema,
   OpenApiSchema,
   OpenApiSchemaProperties,
-  OpenApiSpecSchema,
+  OpenApiV3xSchema,
   OpenApiTupleSchema
 } from '../openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
@@ -21,22 +21,13 @@ import type { ParserOptions } from './options';
 const logger = createLogger('openapi-generator');
 
 /**
- * A schema object as it may appear in the source document. Accepts both the
- * OpenAPI 3.0.x `OpenAPIV3.SchemaObject` shape and the JSON Schema 2020-12
- * aligned 3.1 shape (array `type`, `const`, `prefixItems`, etc.), modeled by
- * {@link OpenApiSpecSchema}.
- * @internal
- */
-export type InputSchemaObject = OpenApiSpecSchema;
-
-/**
  * Get the `type` keyword of a schema as an array of type strings.
  * In OpenAPI 3.0.x this is a single string, in 3.1 it may already be an array.
  * @param schema - The schema to read the type from.
  * @returns The declared types as an array. Empty if no type is declared.
  * @internal
  */
-export function getSchemaTypes(schema: OpenApiSpecSchema): string[] {
+export function getSchemaTypes(schema: OpenApiV3xSchema): string[] {
   const { type } = schema;
   if (type === undefined) {
     return [];
@@ -52,7 +43,7 @@ export function getSchemaTypes(schema: OpenApiSpecSchema): string[] {
  * @returns Whether the schema declares the given type.
  * @internal
  */
-export function hasType(schema: OpenApiSpecSchema, type: string): boolean {
+export function hasType(schema: OpenApiV3xSchema, type: string): boolean {
   return getSchemaTypes(schema).includes(type);
 }
 
@@ -64,7 +55,7 @@ export function hasType(schema: OpenApiSpecSchema, type: string): boolean {
  * @internal
  */
 export function isNullableSchema(
-  schema: OpenAPIV3.ReferenceObject | OpenApiSpecSchema
+  schema: OpenAPIV3.ReferenceObject | OpenApiV3xSchema
 ): boolean {
   if (isReferenceObject(schema)) {
     return false;
@@ -81,7 +72,7 @@ export function isNullableSchema(
  * @internal
  */
 export function parseSchema(
-  schema: InputSchemaObject | OpenAPIV3.ReferenceObject | undefined,
+  schema: OpenApiV3xSchema | OpenAPIV3.ReferenceObject | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiSchema {
@@ -195,7 +186,7 @@ export function parseSchema(
  * @param schema - The schema to check.
  * @returns Whether the schema has structural keywords.
  */
-function hasStructuralKeywords(schema: OpenApiSpecSchema): boolean {
+function hasStructuralKeywords(schema: OpenApiV3xSchema): boolean {
   return !!(
     schema.properties ||
     schema.additionalProperties ||
@@ -239,7 +230,7 @@ function parseReferenceSchema(
  * @param schema - Original schema with a `const` keyword.
  * @returns The parsed const schema.
  */
-function parseConstSchema(schema: OpenApiSpecSchema): OpenApiConstSchema {
+function parseConstSchema(schema: OpenApiV3xSchema): OpenApiConstSchema {
   return {
     const: serializeLiteralValue(schema.const)
   };
@@ -271,7 +262,7 @@ function serializeLiteralValue(value: any): string {
  * @returns The recursively parsed array schema.
  */
 function parseArraySchema(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiArraySchema {
@@ -294,7 +285,7 @@ function parseArraySchema(
  * @returns The recursively parsed tuple schema.
  */
 function parseTupleSchema(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiTupleSchema {
@@ -319,7 +310,7 @@ function parseTupleSchema(
  * @returns The recursively parsed object schema.
  */
 export function parseObjectSchema(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiObjectSchema {
@@ -358,14 +349,14 @@ export function parseObjectSchema(
  * @returns The parsed additional properties schema.
  */
 function parseAdditionalProperties(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiSchema {
   const patternPropertySchemas = Object.values(schema.patternProperties || {});
   const additionalPropertiesSchema =
     typeof schema.additionalProperties === 'object' &&
-    Object.keys(schema.additionalProperties).length
+      Object.keys(schema.additionalProperties).length
       ? [schema.additionalProperties]
       : [];
 
@@ -399,8 +390,8 @@ function parseAdditionalProperties(
  * @internal
  */
 export function stripNullability(
-  schema: OpenAPIV3.ReferenceObject | InputSchemaObject
-): OpenAPIV3.ReferenceObject | InputSchemaObject {
+  schema: OpenAPIV3.ReferenceObject | OpenApiV3xSchema
+): OpenAPIV3.ReferenceObject | OpenApiV3xSchema {
   if (isReferenceObject(schema)) {
     return schema;
   }
@@ -408,7 +399,7 @@ export function stripNullability(
   if (!schema.nullable && !types.includes('null')) {
     return schema;
   }
-  const { nullable: _, ...rest } = schema as OpenApiSpecSchema;
+  const { nullable: _, ...rest } = schema as OpenApiV3xSchema;
   const nonNullTypes = types.filter(type => type !== 'null');
   if (schema.type === undefined) {
     return rest;
@@ -427,7 +418,7 @@ export function stripNullability(
  * @returns The list of parsed property schemas.
  */
 function parseObjectSchemaProperties(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiObjectSchemaProperty[] {
@@ -442,7 +433,7 @@ function parseObjectSchemaProperties(
         // a '$ref'; prefer them when present.
         description: isReferenceObject(propSchema)
           ? (propSchema as OpenAPIV3.ReferenceObject & { description?: string })
-              .description
+            .description
           : propSchema.description,
         nullable: isNullableSchema(propSchema),
         name: propName,
@@ -461,7 +452,7 @@ function parseObjectSchemaProperties(
  * @returns The parsed enum schema.
  */
 function parseEnumSchema(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   options: ParserOptions
 ): OpenApiEnumSchema {
   const enumTypes = getSchemaTypes(schema).filter(t => t !== 'null');
@@ -502,7 +493,7 @@ function getEnumStringValue(input: string): string {
  * @returns The parsed schema based on the given key.
  */
 function parseXOfSchema(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   xOf: 'oneOf' | 'allOf' | 'anyOf',
   options: ParserOptions
@@ -538,7 +529,7 @@ function parseXOfSchema(
 }
 
 function parseDiscriminator(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   xOf: 'oneOf' | 'anyOf',
   options: ParserOptions
@@ -569,9 +560,9 @@ function parseDiscriminator(
  * @internal
  */
 export function normalizeSchema(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   xOf: 'oneOf' | 'allOf' | 'anyOf'
-): OpenApiSpecSchema {
+): OpenApiV3xSchema {
   if (schema.discriminator) {
     return schema;
   }
@@ -593,7 +584,7 @@ export function normalizeSchema(
  * @internal
  */
 export function parseSchemaProperties(
-  schema: OpenAPIV3.ReferenceObject | InputSchemaObject
+  schema: OpenAPIV3.ReferenceObject | OpenApiV3xSchema
 ): OpenApiSchemaProperties {
   if (isReferenceObject(schema)) {
     return {};
@@ -626,7 +617,7 @@ export function parseSchemaProperties(
       // those keywords.
       const isMeaningful =
         propertyName === 'exclusiveMaximum' ||
-        propertyName === 'exclusiveMinimum'
+          propertyName === 'exclusiveMinimum'
           ? value !== undefined
           : value;
       if (isMeaningful) {
@@ -651,7 +642,7 @@ export function parseSchemaProperties(
 }
 
 function getDiscriminatorMapping(
-  schema: OpenApiSpecSchema,
+  schema: OpenApiV3xSchema,
   xOf: 'oneOf' | 'anyOf'
 ): Record<string, string> {
   return (

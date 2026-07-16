@@ -4,11 +4,14 @@ mockFsWithMemfs(jest);
 
 import { jest } from '@jest/globals';
 import { vol } from 'memfs';
-import { convertDocToOpenApiV3, parseFileAsJson } from './document-converter';
+import {
+  convertToOpenApiV3xDocument,
+  parseFileAsJson
+} from './document-converter';
 import type { OpenAPIV2, OpenAPIV3 } from 'openapi-types';
 
 describe('document-converter', () => {
-  describe('convertDocToOpenApiV3', () => {
+  describe('convertToOpenApiV3xDocument', () => {
     const swaggerDoc: OpenAPIV2.Document = {
       info: { title: 'Test Service', version: '1.0.0' },
       swagger: '2.0',
@@ -133,11 +136,15 @@ describe('document-converter', () => {
     };
 
     it('converts Swagger documents to OpenAPI', async () => {
-      expect(await convertDocToOpenApiV3(swaggerDoc)).toStrictEqual(openApiDoc);
+      expect(await convertToOpenApiV3xDocument(swaggerDoc)).toStrictEqual(
+        openApiDoc
+      );
     });
 
     it('does not change OpenAPI documents', async () => {
-      expect(await convertDocToOpenApiV3(openApiDoc)).toStrictEqual(openApiDoc);
+      expect(await convertToOpenApiV3xDocument(openApiDoc)).toStrictEqual(
+        openApiDoc
+      );
     });
 
     it('passes OpenAPI 3.1 documents through untranslated', async () => {
@@ -155,7 +162,7 @@ describe('document-converter', () => {
       // The 3.1-specific keywords must survive unchanged; swagger2openapi would
       // otherwise pass the doc through while mislabeling it, but here we skip it
       // entirely and hand the document to the native 3.1-aware parser.
-      expect(await convertDocToOpenApiV3(openApi31Doc)).toStrictEqual(
+      expect(await convertToOpenApiV3xDocument(openApi31Doc)).toStrictEqual(
         openApi31Doc
       );
     });

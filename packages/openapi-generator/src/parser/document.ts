@@ -14,7 +14,7 @@ import {
 } from './schema';
 import { parseApis } from './api';
 import { createRefs } from './refs';
-import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 import type {
   OpenApiDocument,
@@ -35,7 +35,7 @@ const logger = createLogger('openapi-generator');
  * @internal
  */
 export async function parseOpenApiDocument(
-  fileContent: OpenAPIV3.Document,
+  fileContent: OpenAPIV3.Document | OpenAPIV3_1.Document,
   serviceOptions: ServiceOptions,
   options: ParserOptions
 ): Promise<OpenApiDocument> {
@@ -47,9 +47,9 @@ export async function parseOpenApiDocument(
   if (!clonedContent.paths) {
     clonedContent.paths = {};
   }
-  const document = (await SwaggerParser.parse(
-    clonedContent
-  )) as OpenAPIV3.Document;
+  // SwaggerParser.parse returns OpenAPI.Document (V2 | V3 | V3_1). We know the input is 3.x.
+  const document = (await SwaggerParser.parse(clonedContent)) as
+    OpenAPIV3.Document | OpenAPIV3_1.Document;
   const refs = await createRefs(document, options);
   const schemas = parseSchemas(document, refs, options);
   sanitizeDiscriminatedSchemas(schemas, refs, options);
@@ -68,7 +68,9 @@ export async function parseOpenApiDocument(
  * generated client, so their omission is explicit rather than silent.
  * @param document - The OpenAPI document to inspect.
  */
-function warnOnUnsupportedFeatures(document: OpenAPIV3.Document): void {
+function warnOnUnsupportedFeatures(
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document
+): void {
   const doc = document as Record<string, any>;
   const webhookNames = Object.keys(doc.webhooks || {});
   if (webhookNames.length) {
@@ -149,7 +151,7 @@ async function sanitizeDiscriminatedSchemas(
  * @internal
  */
 export function parseSchemas(
-  document: OpenAPIV3.Document,
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiPersistedSchema[] {

@@ -13,7 +13,7 @@ import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
  * regardless of the source document version.
  * @internal
  */
-export interface OpenApiSpecSchema {
+export interface OpenApiV3xSchema {
   /**
    * Allows reading arbitrary JSON Schema 2020-12 keywords that are not modeled
    * explicitly below.
@@ -61,12 +61,12 @@ export interface OpenApiSpecSchema {
    * Schema of the items of an array. In a tuple (`prefixItems`) schema this
    * governs additional items beyond the tuple; `false` disallows them.
    */
-  items?: OpenApiSpecSchema | OpenAPIV3.ReferenceObject | boolean;
+  items?: OpenApiV3xSchema | OpenAPIV3.ReferenceObject | boolean;
 
   /**
    * Positional tuple item schemas (JSON Schema 2020-12, 3.1).
    */
-  prefixItems?: (OpenApiSpecSchema | OpenAPIV3.ReferenceObject)[];
+  prefixItems?: (OpenApiV3xSchema | OpenAPIV3.ReferenceObject)[];
 
   /**
    * Denotes whether the items of an array have to be unique.
@@ -76,7 +76,7 @@ export interface OpenApiSpecSchema {
   /**
    * Properties of an object schema.
    */
-  properties?: Record<string, OpenApiSpecSchema | OpenAPIV3.ReferenceObject>;
+  properties?: Record<string, OpenApiV3xSchema | OpenAPIV3.ReferenceObject>;
 
   /**
    * Schemas for properties matching a regular expression (JSON Schema
@@ -84,14 +84,13 @@ export interface OpenApiSpecSchema {
    */
   patternProperties?: Record<
     string,
-    OpenApiSpecSchema | OpenAPIV3.ReferenceObject
+    OpenApiV3xSchema | OpenAPIV3.ReferenceObject
   >;
 
   /**
    * Schema for additional properties of an object.
    */
-  additionalProperties?:
-    boolean | OpenApiSpecSchema | OpenAPIV3.ReferenceObject;
+  additionalProperties?: boolean | OpenApiV3xSchema | OpenAPIV3.ReferenceObject;
 
   /**
    * List of required property names.
@@ -101,22 +100,22 @@ export interface OpenApiSpecSchema {
   /**
    * List of schemas of which exactly one has to match.
    */
-  oneOf?: (OpenApiSpecSchema | OpenAPIV3.ReferenceObject)[];
+  oneOf?: (OpenApiV3xSchema | OpenAPIV3.ReferenceObject)[];
 
   /**
    * List of schemas of which all have to match.
    */
-  allOf?: (OpenApiSpecSchema | OpenAPIV3.ReferenceObject)[];
+  allOf?: (OpenApiV3xSchema | OpenAPIV3.ReferenceObject)[];
 
   /**
    * List of schemas of which at least one has to match.
    */
-  anyOf?: (OpenApiSpecSchema | OpenAPIV3.ReferenceObject)[];
+  anyOf?: (OpenApiV3xSchema | OpenAPIV3.ReferenceObject)[];
 
   /**
    * Schema that must not match.
    */
-  not?: OpenApiSpecSchema | OpenAPIV3.ReferenceObject;
+  not?: OpenApiV3xSchema | OpenAPIV3.ReferenceObject;
 
   /**
    * Discriminator to distinguish between `oneOf`/`anyOf` schemas.

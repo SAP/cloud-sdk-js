@@ -157,7 +157,7 @@ exports.TestCaseApi = {
             stringProperty: {
                 contentType: 'text/plain',
                 isImplicit: true,
-                parsedContentTypes: [{ parameters: {}, type: 'text/plain' }]
+                parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
             }
         },
         headerParameters: { 'content-type': 'multipart/form-data' }
@@ -174,7 +174,7 @@ exports.TestCaseApi = {
             stringProperty: {
                 contentType: 'text/plain',
                 isImplicit: true,
-                parsedContentTypes: [{ parameters: {}, type: 'text/plain' }]
+                parsedContentTypes: [{ type: 'text/plain', parameters: {} }]
             }
         },
         headerParameters: {

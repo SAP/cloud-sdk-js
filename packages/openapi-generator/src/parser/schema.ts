@@ -356,7 +356,7 @@ function parseAdditionalProperties(
   const patternPropertySchemas = Object.values(schema.patternProperties || {});
   const additionalPropertiesSchema =
     typeof schema.additionalProperties === 'object' &&
-      Object.keys(schema.additionalProperties).length
+    Object.keys(schema.additionalProperties).length
       ? [schema.additionalProperties]
       : [];
 
@@ -433,7 +433,7 @@ function parseObjectSchemaProperties(
         // a '$ref'; prefer them when present.
         description: isReferenceObject(propSchema)
           ? (propSchema as OpenAPIV3.ReferenceObject & { description?: string })
-            .description
+              .description
           : propSchema.description,
         nullable: isNullableSchema(propSchema),
         name: propName,
@@ -617,7 +617,7 @@ export function parseSchemaProperties(
       // those keywords.
       const isMeaningful =
         propertyName === 'exclusiveMaximum' ||
-          propertyName === 'exclusiveMinimum'
+        propertyName === 'exclusiveMinimum'
           ? value !== undefined
           : value;
       if (isMeaningful) {

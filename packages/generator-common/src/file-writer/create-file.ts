@@ -161,7 +161,7 @@ export async function createFile(
       encoding: 'utf8',
       flag: overwrite ? 'w' : 'wx'
     });
-  } catch (err) {
+  } catch (err: unknown) {
     const recommendation =
       (err as NodeJS.ErrnoException).code === 'EEXIST' && !overwrite
         ? ' File already exists. If you want to allow overwriting files, enable the `overwrite` flag.'

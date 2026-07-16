@@ -24,6 +24,7 @@
     "@typescript/native": "npm:typescript@^7.0.2",
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "rolldown": "1.1.5"
   }
 }

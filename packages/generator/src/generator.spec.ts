@@ -8,8 +8,10 @@ import { transports } from 'winston';
 import { vol } from 'memfs';
 import prettier from 'prettier';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { getInputFilePaths } from '@sap-cloud-sdk/generator-common/dist/options-parser';
-import { getRelPathWithPosixSeparator } from '@sap-cloud-sdk/generator-common/internal';
+import {
+  getInputFilePaths,
+  getRelPathWithPosixSeparator
+} from '@sap-cloud-sdk/generator-common/internal';
 import {
   createOptions,
   createParsedOptions

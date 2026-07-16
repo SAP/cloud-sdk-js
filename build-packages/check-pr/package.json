@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
-    "postcompile": "ncc build lib/check-pr/index.js --out ../../.github/actions/check-pr/",
+    "postcompile": "rolldown -c rolldown.config.ts",
     "test": "pnpm run test:unit",
     "test:unit": "NODE_OPTIONS=--experimental-vm-modules pnpm exec jest",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
@@ -22,10 +22,10 @@
   "devDependencies": {
     "@typescript/native": "npm:typescript@^7.0.2",
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
-    "@vercel/ncc": "^0.44.1",
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
     "memfs": "^4.57.2",
+    "rolldown": "1.1.5",
     "prettier": "^3.8.1"
   }
 }

@@ -10,13 +10,13 @@ export const defaultTsConfig = (
 ): Record<string, any> => ({
   compilerOptions: {
     target: 'es2021',
-    module: generateESM ? 'nodenext' : 'commonjs',
+    module: generateESM ? 'nodenext' : 'node16',
     lib: ['esnext'],
     declaration: true,
     declarationMap: false,
     sourceMap: true,
     diagnostics: true,
-    moduleResolution: generateESM ? 'nodenext' : 'node',
+    moduleResolution: generateESM ? 'nodenext' : 'node16',
     esModuleInterop: true,
     inlineSources: false,
     strict: true

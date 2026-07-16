@@ -4,8 +4,9 @@
     "rootDir": "./",
     "outDir": "./dist",
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
-    "composite": true,
+    "composite": false,
     "noEmit": true,
+    "declaration": false,
     "types": ["node", "jest"]
   },
   "include": ["./*.ts"],

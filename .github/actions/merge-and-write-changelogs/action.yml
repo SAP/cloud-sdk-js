@@ -2,4 +2,4 @@ name: 'Merge Changelogs'
 description: 'Merges all public changelogs from changesets into a single changelog.'
 runs:
   using: 'node24'
-  main: 'index.js'
+  main: 'dist/index.js'

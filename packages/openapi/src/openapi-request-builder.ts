@@ -339,6 +339,16 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   ): Promise<ResponseT> {
     const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {
+      if (Buffer.isBuffer(response.data)) {
+        const contentType = pickValueIgnoreCase(
+          response.headers,
+          'content-type'
+        );
+        return new Blob(
+          [response.data],
+          contentType ? { type: contentType } : undefined
+        ) as ResponseT;
+      }
       return response.data;
     }
     throw new Error(

@@ -106,10 +106,12 @@ describe('compiler options', () => {
 
   it('parses the module resolution kind', async () => {
     await expect(readCompilerOptions('config1')).resolves.toEqual({
-      moduleResolution: ModuleResolutionKind.Node10
+      moduleResolution: ModuleResolutionKind.NodeJs,
+      ignoreDeprecations: '6.0'
     });
     await expect(readCompilerOptions('config2')).resolves.toEqual({
-      moduleResolution: ModuleResolutionKind.Classic
+      moduleResolution: ModuleResolutionKind.Classic,
+      ignoreDeprecations: '6.0'
     });
     await expect(readCompilerOptions('config7')).resolves.toEqual({
       moduleResolution: ModuleResolutionKind.Node16
@@ -122,6 +124,7 @@ describe('compiler options', () => {
   it('inherits compiler options from a single extended config', async () => {
     await expect(readCompilerOptions('config9/tsconfig.json')).resolves.toEqual(
       {
+        ignoreDeprecations: '6.0',
         target: ScriptTarget.ES2021,
         moduleResolution: ModuleResolutionKind.Node10,
         module: ModuleKind.CommonJS
@@ -147,7 +150,8 @@ describe('compiler options', () => {
 
   it('parses the module kind', async () => {
     await expect(readCompilerOptions('config5')).resolves.toEqual({
-      module: ModuleKind.AMD
+      module: ModuleKind.AMD,
+      ignoreDeprecations: '6.0'
     });
   });
 
@@ -191,6 +195,7 @@ describe('compilation', () => {
       sourceMap: true,
       moduleResolution: ModuleResolutionKind.NodeJs,
       module: ModuleKind.CommonJS,
+      ignoreDeprecations: '6.0',
       lib: ['lib.esnext.d.ts']
     };
   }

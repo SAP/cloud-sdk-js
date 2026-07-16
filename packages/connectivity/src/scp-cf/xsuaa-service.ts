@@ -34,7 +34,9 @@ export async function getClientCredentialsToken(
     serviceCredentials: resolveServiceBinding(service).credentials
   };
 
-  const xssecPromise = function (arg): Promise<ClientCredentialsResponse> {
+  const xssecPromise = function (
+    arg: XsuaaParameters
+  ): Promise<ClientCredentialsResponse> {
     const xsuaaService = getXsuaaInstanceFromServiceCredentials(
       arg.serviceCredentials
     );
@@ -94,7 +96,7 @@ export function getUserToken(
         tenant: arg.zoneId ? undefined : arg.subdomain,
         zid: arg.zoneId
       })
-      .then(token => token.access_token);
+      .then((token: ClientCredentialsResponse) => token.access_token);
   };
 
   return executeWithMiddleware<

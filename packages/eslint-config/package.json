@@ -41,6 +41,12 @@
     "typescript-eslint": "^8.58.0"
   },
   "peerDependencies": {
-    "eslint": ">=8.0.0"
+    "eslint": ">=8.0.0",
+    "typescript": "<7"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
   }
 }

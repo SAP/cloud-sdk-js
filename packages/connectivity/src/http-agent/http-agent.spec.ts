@@ -14,6 +14,7 @@ jest.mock('jks-js', () => ({
 }));
 import * as jks from 'jks-js';
 import { certAsString } from '@sap-cloud-sdk/test-util-internal/test-certificate';
+import { signedJwt } from '@sap-cloud-sdk/test-util-internal';
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import { agentCache, getAgentConfig } from './http-agent';
 import type { HttpDestination } from '../scp-cf/destination';
@@ -324,7 +325,7 @@ describe('agent caching', () => {
         protocol: 'http',
         headers: {
           'Proxy-Authorization': 'Bearer service-jwt',
-          'SAP-Connectivity-Authentication': 'Bearer jwt-user-a'
+          'SAP-Connectivity-Authentication': `Bearer ${signedJwt({ user_id: 'user-a', zid: 'tenant' })}`
         }
       }
     };
@@ -336,7 +337,7 @@ describe('agent caching', () => {
         protocol: 'http',
         headers: {
           'Proxy-Authorization': 'Bearer service-jwt',
-          'SAP-Connectivity-Authentication': 'Bearer jwt-user-b'
+          'SAP-Connectivity-Authentication': `Bearer ${signedJwt({ user_id: 'user-b', zid: 'tenant' })}`
         }
       }
     };
@@ -345,56 +346,93 @@ describe('agent caching', () => {
     expect(agentA).not.toBe(agentB);
   });
 
-  it('returns different agent instances for OnPremise PrincipalPropagation destinations with different user JWTs', async () => {
-    // PrincipalPropagation embeds the user JWT in proxyConfiguration.headers
-    // (see addProxyConfigurationOnPrem). Different users must not share a
-    // keep-alive socket — the Cloud Connector binds the tunnel to the first
-    // principal and rejects subsequent requests with a different JWT.
+  it('returns the same agent instance for the same user across token refresh', async () => {
+    // The cache key is derived from stable principal claims (user_id, zid), not
+    // the raw JWT, so a refreshed token (new exp/iat) for the same user must not
+    // create a new agent.
     const base: HttpDestination = {
       url: 'https://example.com',
       proxyType: 'OnPremise',
       authentication: 'PrincipalPropagation'
     };
-    const destUserA: HttpDestination = {
-      ...base,
-      proxyConfiguration: {
-        host: 'proxy.example.com',
-        port: 20003,
-        protocol: 'http',
-        headers: {
-          'Proxy-Authorization': 'Bearer service-jwt',
-          'SAP-Connectivity-Authentication': 'Bearer jwt-user-a'
-        }
+    const proxyConfig = (authJwt: string) => ({
+      host: 'proxy.example.com',
+      port: 20003,
+      protocol: 'http',
+      headers: {
+        'Proxy-Authorization': 'Bearer service-jwt',
+        'SAP-Connectivity-Authentication': `Bearer ${authJwt}`
       }
-    };
-    const destUserB: HttpDestination = {
+    });
+    const now = Math.floor(Date.now() / 1000);
+    const destOld: HttpDestination = {
       ...base,
-      proxyConfiguration: {
-        host: 'proxy.example.com',
-        port: 20003,
-        protocol: 'http',
-        headers: {
-          'Proxy-Authorization': 'Bearer service-jwt',
-          'SAP-Connectivity-Authentication': 'Bearer jwt-user-b'
-        }
-      }
+      proxyConfiguration: proxyConfig(
+        signedJwt({ user_id: 'user-a', zid: 'tenant', iat: now, exp: now + 60 })
+      )
     };
-    const agentA = ((await getAgentConfig(destUserA)) as any)['httpsAgent'];
-    const agentB = ((await getAgentConfig(destUserB)) as any)['httpsAgent'];
-    expect(agentA).not.toBe(agentB);
+    const destRefreshed: HttpDestination = {
+      ...base,
+      proxyConfiguration: proxyConfig(
+        signedJwt({ user_id: 'user-a', zid: 'tenant', iat: now + 60, exp: now + 120 })
+      )
+    };
+    const agentOld = ((await getAgentConfig(destOld)) as any)['httpsAgent'];
+    const agentRefreshed = ((await getAgentConfig(destRefreshed)) as any)[
+      'httpsAgent'
+    ];
+    expect(agentRefreshed).toBe(agentOld);
   });
 
-  it('enables keepAlive by default on created agents', async () => {
+  it('does not embed auth tokens in the agent cache key for direct destinations', async () => {
+    // Two direct destinations with identical protocol/TLS options but different
+    // auth tokens must share the same agent: tokens are not agent-defining.
+    const destA: HttpDestination = {
+      url: 'https://example.com',
+      authentication: 'BasicAuthentication',
+      username: 'a',
+      password: 'secret-a'
+    };
+    const destB: HttpDestination = {
+      url: 'https://example.com',
+      authentication: 'BasicAuthentication',
+      username: 'b',
+      password: 'secret-b'
+    };
+    const agentA = ((await getAgentConfig(destA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destB)) as any)['httpsAgent'];
+    expect(agentA).toBe(agentB);
+  });
+
+  it('enables keepAlive and sets 5s timeout by default on created agents', async () => {
     const destination: HttpDestination = { url: 'https://example.com' };
     const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
     expect(agent.keepAlive).toBe(true);
+    expect(agent.options.timeout).toBe(5000);
   });
 
-  it('keepAlive: false in options overrides the default (spread order)', () => {
-    // createAgent uses { keepAlive: true, ...options }
-    // verify that explicit keepAlive: false in options wins
-    const merged = { keepAlive: true, ...({ keepAlive: false } as any) };
-    expect(merged.keepAlive).toBe(false);
+  it('overrides default agentOptions when set via destination.agentOptions', async () => {
+    const destination: HttpDestination = {
+      url: 'https://example.com',
+      agentOptions: { keepAlive: false, timeout: 10000 }
+    };
+    const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+    expect(agent.keepAlive).toBe(false);
+    expect(agent.options.timeout).toBe(10000);
+  });
+
+  it('destinations with different agentOptions produce different cached agents', async () => {
+    const destA: HttpDestination = {
+      url: 'https://example.com',
+      agentOptions: { keepAlive: false }
+    };
+    const destB: HttpDestination = {
+      url: 'https://example.com',
+      agentOptions: { keepAlive: true }
+    };
+    const agentA = ((await getAgentConfig(destA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destB)) as any)['httpsAgent'];
+    expect(agentA).not.toBe(agentB);
   });
 
   it('http and https destinations use separate cache entries and agent types', async () => {

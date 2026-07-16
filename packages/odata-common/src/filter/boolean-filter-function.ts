@@ -31,9 +31,10 @@ export class BooleanFilterFunction<
 export function isBooleanFilterFunction<EntityT extends EntityBase>(
   filterable: Filterable<EntityT, any>
 ): filterable is BooleanFilterFunction<EntityT> {
+  const f = filterable as unknown as Record<string, unknown>;
   return (
-    typeof filterable['functionName'] !== 'undefined' &&
-    typeof filterable['parameters'] !== 'undefined' &&
-    filterable['edmType'] === 'Edm.Boolean'
+    typeof f['functionName'] !== 'undefined' &&
+    typeof f['parameters'] !== 'undefined' &&
+    f['edmType'] === 'Edm.Boolean'
   );
 }

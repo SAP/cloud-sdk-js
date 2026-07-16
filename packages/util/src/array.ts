@@ -106,7 +106,7 @@ export const flatten = (input: any[]): any[] => {
  */
 export function zip<T>(left: T[], right: T[]): T[] {
   const longerArr = left.length > right.length ? left : right;
-  return longerArr.reduce((zipped, _, i) => {
+  return longerArr.reduce<T[]>((zipped, _, i) => {
     const currentZipped: T[] = [];
     if (left.length > i) {
       currentZipped.push(left[i]);

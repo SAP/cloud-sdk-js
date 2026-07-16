@@ -1,5 +1,4 @@
 import { isDestinationFetchOptions } from './destination-accessor-types';
-import type { Xor } from '@sap-cloud-sdk/util';
 import type { DestinationFetchOptions } from './destination-accessor-types';
 import type { DestinationFromServiceBindingOptions } from './destination-from-vcap';
 import type {
@@ -9,6 +8,7 @@ import type {
   DestinationCertificate,
   HttpDestination
 } from './destination-service-types';
+import type { WithoutExclusive } from '@sap-cloud-sdk/util';
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
@@ -42,17 +42,17 @@ export function parseDestination(
   const destinationConfig = getDestinationConfig(destinationJson);
 
   const destination = Object.entries(destinationConfig).reduce(
-    (dest, [originalKey, value]) => {
+    (dest: Partial<Destination>, [originalKey, value]) => {
       if (originalKey in configMapping) {
-        dest[configMapping[originalKey]] = value;
+        dest[configMapping[originalKey] as keyof Destination] = value as any;
       }
       return dest;
     },
     {
       originalProperties: destinationJson,
-      authTokens: destinationJson['authTokens'] || [],
-      certificates: destinationJson['certificates'] || []
-    }
+      authTokens: (destinationJson as DestinationJson)['authTokens'] || [],
+      certificates: (destinationJson as DestinationJson)['certificates'] || []
+    } as unknown as Partial<Destination>
   );
 
   const additionalHeadersAndQueryParameters =
@@ -100,7 +100,8 @@ function getAdditionalProperties(
 export function getAdditionalHeadersAndQueryParameters(
   destinationConfig: DestinationConfiguration
 ): Pick<Destination, 'headers' | 'queryParameters'> {
-  const additionalProperties = {};
+  const additionalProperties: Pick<Destination, 'headers' | 'queryParameters'> =
+    {} as Pick<Destination, 'headers' | 'queryParameters'>;
 
   const additionalHeaders = getAdditionalHeaders(destinationConfig).headers;
   if (additionalHeaders && Object.keys(additionalHeaders).length) {
@@ -136,7 +137,7 @@ export function getAdditionalHeaders(
     'URL.headers.'
   );
 
-  const additionalProperties = {};
+  const additionalProperties: Pick<Destination, 'headers'> = {};
   if (Object.keys(additionalHeaders).length) {
     additionalProperties['headers'] = additionalHeaders;
   }
@@ -161,7 +162,7 @@ export function getAdditionalQueryParameters(
     'URL.queries.'
   );
 
-  const additionalProperties = {};
+  const additionalProperties: Pick<Destination, 'queryParameters'> = {};
   if (Object.keys(additionalQueryParameters).length) {
     additionalProperties['queryParameters'] = additionalQueryParameters;
   }
@@ -193,8 +194,8 @@ export function toDestinationNameUrl(
   }
 
   const text = ['name', 'url']
-    .filter(key => destination[key])
-    .map(key => `${key}: ${destination[key]}`);
+    .filter(key => destination[key as keyof typeof destination])
+    .map(key => `${key}: ${destination[key as keyof typeof destination]}`);
 
   return text.length > 0
     ? text.join(',')
@@ -243,8 +244,8 @@ function parseCertificates(
 ): Record<string, any> {
   return {
     ...destination,
-    certificates: (destination.certificates || []).map(certificate =>
-      parseCertificate(certificate)
+    certificates: (destination.certificates || []).map(
+      (certificate: Record<string, any>) => parseCertificate(certificate)
     )
   };
 }
@@ -264,8 +265,8 @@ function parseAuthTokens(
 ): Record<string, any> {
   return {
     ...destination,
-    authTokens: (destination.authTokens || []).map(token =>
-      parseAuthToken(token)
+    authTokens: (destination.authTokens || []).map(
+      (token: Record<string, any>) => parseAuthToken(token)
     )
   };
 }
@@ -468,17 +469,27 @@ export function noDestinationErrorMessage(
 }
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
+ * Fetch-options side of the XOR.
+ *
+ * `DestinationFetchOptions` requires `destinationName: string`, but when looking up by
+ * `service` (via `DestinationFromServiceBindingOptions`) we don't have a name. Intersecting
+ * the two naively makes `destinationName: string & never = never`, killing the service branch.
+ * Stripping `destinationName` from `DestinationFetchOptions` and letting the inner discriminated
+ * union of `DestinationFromServiceBindingOptions` own that key fixes it.
  */
-export type DestinationOrFetchOptions = Xor<
-  Destination,
-  DestinationFetchOptions & DestinationFromServiceBindingOptions
->;
+type FetchOptionsLeaf = Omit<DestinationFetchOptions, 'destinationName'> &
+  DestinationFromServiceBindingOptions;
 
 /**
- * Type that is either a {@link HttpDestination} or (XOR) {@link DestinationFetchOptions & DestinationFromServiceBindingOptions}.
+ * Type that is either a {@link Destination} or (XOR) {@link DestinationFetchOptions} & {@link DestinationFromServiceBindingOptions}.
  */
-export type HttpDestinationOrFetchOptions = Xor<
-  HttpDestination,
-  DestinationFetchOptions & DestinationFromServiceBindingOptions
->;
+export type DestinationOrFetchOptions =
+  | (WithoutExclusive<Destination, FetchOptionsLeaf> & FetchOptionsLeaf)
+  | (WithoutExclusive<FetchOptionsLeaf, Destination> & Destination);
+
+/**
+ * Type that is either an {@link HttpDestination} or (XOR) {@link DestinationFetchOptions} & {@link DestinationFromServiceBindingOptions}.
+ */
+export type HttpDestinationOrFetchOptions =
+  | (WithoutExclusive<HttpDestination, FetchOptionsLeaf> & FetchOptionsLeaf)
+  | (WithoutExclusive<FetchOptionsLeaf, HttpDestination> & HttpDestination);

@@ -21,7 +21,7 @@
       "types": "./dist/internal.d.ts",
       "default": "./dist/internal.js"
     },
-    "./INTERNAL_ONLY/scp-cf/token-accessor": {
+    "./scp-cf/token-accessor": {
       "workspace": {
         "types": "./src/scp-cf/token-accessor.ts",
         "default": "./src/scp-cf/token-accessor.ts"

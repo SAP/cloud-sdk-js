@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
 import execa from 'execa';
 import * as fs from 'fs-extra';
 import { generate } from '@sap-cloud-sdk/generator/internal';
-import { createOptions } from '@sap-cloud-sdk/generator/INTERNAL_ONLY/test/test-util/create-generator-options';
+import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 
 const pathToGenerator = path.resolve(

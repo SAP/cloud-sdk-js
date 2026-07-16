@@ -1,7 +1,7 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { emptyDocument } from '../../test/test-util';
 import { parseOpenApiDocument } from './document';
 import * as api from './api';
-import { createLogger } from '@sap-cloud-sdk/util';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
 import type { OpenAPIV3 } from 'openapi-types';
 

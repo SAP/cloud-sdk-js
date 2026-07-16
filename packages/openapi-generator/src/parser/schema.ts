@@ -103,7 +103,7 @@ export function parseSchema(
     if (!nonNullTypes.length && !hasStructuralKeywords(schema)) {
       return { type: 'null' };
     }
-    const { nullable, ...coreSchema } = schema;
+    const { nullable: _, ...coreSchema } = schema;
     return makeNullable(
       parseSchema(
         {
@@ -408,7 +408,7 @@ export function stripNullability(
   if (!schema.nullable && !types.includes('null')) {
     return schema;
   }
-  const { nullable, ...rest } = schema as OpenApiSpecSchema;
+  const { nullable: _, ...rest } = schema as OpenApiSpecSchema;
   const nonNullTypes = types.filter(type => type !== 'null');
   if (schema.type === undefined) {
     return rest;
@@ -464,7 +464,7 @@ function parseEnumSchema(
   schema: OpenApiSpecSchema,
   options: ParserOptions
 ): OpenApiEnumSchema {
-  const enumTypes = getSchemaTypes(schema).filter(type => type !== 'null');
+  const enumTypes = getSchemaTypes(schema).filter(t => t !== 'null');
   const type = enumTypes.length ? getType(enumTypes) : 'string';
   const nullable = isNullableSchema(schema);
   return {
@@ -617,21 +617,25 @@ export function parseSchemaProperties(
     'contentEncoding',
     'contentMediaType'
   ];
-  const collected = schemaPropertyNames.reduce((properties, propertyName) => {
-    const schemaAny = schema as Record<string, any>;
-    const value = schemaAny[propertyName];
-    // Numeric 'exclusiveMinimum'/'exclusiveMaximum' of '0' and empty 'examples'
-    // arrays are meaningful, so guard on 'undefined' rather than falsiness for
-    // those keywords.
-    const isMeaningful =
-      propertyName === 'exclusiveMaximum' || propertyName === 'exclusiveMinimum'
-        ? value !== undefined
-        : value;
-    if (isMeaningful) {
-      return { ...properties, [propertyName]: value };
-    }
-    return properties;
-  }, {} as Record<string, any>);
+  const collected = schemaPropertyNames.reduce(
+    (properties, propertyName) => {
+      const schemaAny = schema as Record<string, any>;
+      const value = schemaAny[propertyName];
+      // Numeric 'exclusiveMinimum'/'exclusiveMaximum' of '0' and empty 'examples'
+      // arrays are meaningful, so guard on 'undefined' rather than falsiness for
+      // those keywords.
+      const isMeaningful =
+        propertyName === 'exclusiveMaximum' ||
+        propertyName === 'exclusiveMinimum'
+          ? value !== undefined
+          : value;
+      if (isMeaningful) {
+        return { ...properties, [propertyName]: value };
+      }
+      return properties;
+    },
+    {} as Record<string, any>
+  );
 
   // OpenAPI 3.1: 'example' (singular) and 'examples' (array) are mutually
   // exclusive. When both are present prefer 'examples' and drop 'example'.

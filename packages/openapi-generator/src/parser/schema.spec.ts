@@ -821,7 +821,9 @@ describe('schema parser', () => {
           } as any)
         ).toEqual({ examples: ['a', 'b'] });
         expect(logger.warn).toHaveBeenCalledWith(
-          expect.stringContaining("'example' will be ignored in favour of 'examples'")
+          expect.stringContaining(
+            "'example' will be ignored in favour of 'examples'"
+          )
         );
       });
 

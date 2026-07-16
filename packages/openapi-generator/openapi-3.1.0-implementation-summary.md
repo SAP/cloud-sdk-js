@@ -33,18 +33,18 @@ existing OpenAPI 3.0.x behavior is preserved (backward compatible).
   accepts a `type` **array** and maps it to a deduplicated TypeScript union.
 - [`src/parser/schema.ts`](./src/parser/schema.ts) — the core rewrite:
 
-  | 3.1 feature | Handling |
-  |---|---|
-  | `type: ["string", "number"]` | union → `anyOf` |
-  | `type: [..., "null"]` | nullability via `isNullableSchema` / `stripNullability` (no double `\| null`) |
-  | `type: "null"` | standalone `null` type |
-  | `const` | serialized literal type |
-  | `prefixItems` (tuples) | tuple schema, with `items` as a rest element |
-  | numeric `exclusiveMinimum`/`exclusiveMaximum` | collected into schema properties |
-  | `contentEncoding` / `contentMediaType` | content-encoded strings map to `Blob`; also documented |
-  | `examples` (array) | collected into schema properties |
-  | `patternProperties` | merged into `Record<string, ...>` additional properties |
-  | `$ref` siblings (`description`) | preserved on properties |
+  | 3.1 feature                                   | Handling                                                                      |
+  | --------------------------------------------- | ----------------------------------------------------------------------------- |
+  | `type: ["string", "number"]`                  | union → `anyOf`                                                               |
+  | `type: [..., "null"]`                         | nullability via `isNullableSchema` / `stripNullability` (no double `\| null`) |
+  | `type: "null"`                                | standalone `null` type                                                        |
+  | `const`                                       | serialized literal type                                                       |
+  | `prefixItems` (tuples)                        | tuple schema, with `items` as a rest element                                  |
+  | numeric `exclusiveMinimum`/`exclusiveMaximum` | collected into schema properties                                              |
+  | `contentEncoding` / `contentMediaType`        | content-encoded strings map to `Blob`; also documented                        |
+  | `examples` (array)                            | collected into schema properties                                              |
+  | `patternProperties`                           | merged into `Record<string, ...>` additional properties                       |
+  | `$ref` siblings (`description`)               | preserved on properties                                                       |
 
 ## Serialization (gap §1.4, §1.5)
 
@@ -69,7 +69,7 @@ existing OpenAPI 3.0.x behavior is preserved (backward compatible).
 ## Design note: webhooks
 
 Webhooks produce a **warning** rather than generated client code. Webhooks model
-inbound requests to the API *consumer*, so emitting callable client methods for
+inbound requests to the API _consumer_, so emitting callable client methods for
 them would be semantically incorrect for a client SDK. If callable operations
 for webhooks are desired, `parseApis` can be extended to fold them in.
 

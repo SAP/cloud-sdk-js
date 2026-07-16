@@ -91,9 +91,7 @@ export interface OpenApiSpecSchema {
    * Schema for additional properties of an object.
    */
   additionalProperties?:
-    | boolean
-    | OpenApiSpecSchema
-    | OpenAPIV3.ReferenceObject;
+    boolean | OpenApiSpecSchema | OpenAPIV3.ReferenceObject;
 
   /**
    * List of required property names.

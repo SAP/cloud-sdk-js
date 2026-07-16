@@ -59,7 +59,7 @@ export function getType(
     if (!originalType.length) {
       return 'any';
     }
-    return unique(originalType.map(type => getType(type, format))).join(' | ');
+    return unique(originalType.map(t => getType(t))).join(' | ');
   }
   if (originalType === 'string' && format === 'binary') {
     return 'Blob';

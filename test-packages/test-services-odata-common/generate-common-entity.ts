@@ -2,8 +2,8 @@
 
 import { promises } from 'fs';
 import { join, resolve } from 'path';
-import { createOptions } from '../../packages/generator/test/test-util/create-generator-options';
-import { generate } from '../../packages/generator/src';
+import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
+import { generate } from '@sap-cloud-sdk/generator';
 import {
   createFile,
   defaultPrettierConfig

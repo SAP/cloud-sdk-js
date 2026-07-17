@@ -75327,7 +75327,9 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony export */   ZY: () => (/* binding */ exportAllInBarrel),
 /* harmony export */   aS: () => (/* binding */ parseTypeDefinitionFiles),
 /* harmony export */   ad: () => (/* binding */ parseBarrelFile),
+/* harmony export */   d6: () => (/* binding */ parseTypeDefinitionFilesExcluding),
 /* harmony export */   gw: () => (/* binding */ parseIndexFile),
+/* harmony export */   hx: () => (/* binding */ getSubpathExports),
 /* harmony export */   i8: () => (/* binding */ checkApiOfPackage),
 /* harmony export */   le: () => (/* binding */ checkBarrelRecursive),
 /* harmony export */   qc: () => (/* binding */ typeDescriptorPaths),
@@ -75420,6 +75422,32 @@ function compareApisAndLog(allExportedIndex, allExportedTypes) {
     (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__/* .info */ .pq)(`Public api: ${allExportedIndex.sort().join(',\n')}`);
     return setsAreEqual;
 }
+async function getSubpathExports(pathToPackage) {
+    const pkgJson = JSON.parse(await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.readFile)((0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)(pathToPackage, 'package.json'), 'utf-8'));
+    const exports = pkgJson.exports ?? {};
+    const result = [];
+    for (const [key, value] of Object.entries(exports)) {
+        if (key === '.' || !key.startsWith('./')) {
+            continue;
+        }
+        const subpath = key.slice(2);
+        if (subpath.includes('internal')) {
+            continue;
+        }
+        const typesPath = typeof value === 'object' && value !== null
+            ? value.types
+            : undefined;
+        if (typeof typesPath !== 'string') {
+            continue;
+        }
+        // './dist/realtime/index.d.ts' → 'src/realtime/index.ts'
+        const srcRelative = typesPath
+            .replace(/^\.\/dist\//, 'src/')
+            .replace(/\.d\.ts$/, '.ts');
+        result.push({ subpath, sourceFile: (0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)(pathToPackage, srcRelative) });
+    }
+    return result;
+}
 /**
  * Executes the public API check for a given package.
  * @param pathToPackage - Path to the package.
@@ -75447,9 +75475,21 @@ async function checkApiOfPackage(pathToPackage) {
         if (forceInternalExports) {
             await checkBarrelRecursive(pathToSource);
         }
+        const subpathExports = await getSubpathExports(pathToPackage);
+        for (const { subpath, sourceFile } of subpathExports) {
+            (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__/* .info */ .pq)(`Check subpath export: ./${subpath}`);
+            await checkIndexFileExists(sourceFile);
+            const subpathCompiled = (0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)(pathCompiled, subpath);
+            const exportedTypes = await parseTypeDefinitionFiles(subpathCompiled);
+            const exportedIndex = await parseIndexFile(sourceFile, forceInternalExports);
+            if (!compareApisAndLog(exportedIndex, exportedTypes)) {
+                process.exit(1);
+            }
+            (0,_actions_core__WEBPACK_IMPORTED_MODULE_4__/* .info */ .pq)(`The ./${subpath} entry of package ${pathToPackage} is in sync with the type annotations.\n`);
+        }
         const indexFilePath = (0,node_path__WEBPACK_IMPORTED_MODULE_0__.join)(pathToSource, 'index.ts');
         await checkIndexFileExists(indexFilePath);
-        const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
+        const allExportedTypes = await parseTypeDefinitionFilesExcluding(pathCompiled, subpathExports.map(s => s.subpath));
         const allExportedIndex = await parseIndexFile(indexFilePath, forceInternalExports);
         const setsAreEqual = compareApisAndLog(allExportedIndex, allExportedTypes);
         if (!setsAreEqual) {
@@ -75486,7 +75526,10 @@ async function typeDescriptorPaths(cwd) {
  * @returns Information on the exported objects.
  */
 async function parseTypeDefinitionFiles(pathCompiled) {
-    const typeDefinitionPaths = await typeDescriptorPaths(pathCompiled);
+    return parseTypeDefinitionFilesExcluding(pathCompiled, []);
+}
+async function parseTypeDefinitionFilesExcluding(pathCompiled, excludedSubpaths) {
+    const typeDefinitionPaths = (await typeDescriptorPaths(pathCompiled)).filter(p => !excludedSubpaths.some(sub => getPathWithPosixSeparator(p).includes(`/${sub}/`)));
     const result = await Promise.all(typeDefinitionPaths.map(async (pathTypeDefinition) => {
         const fileContent = await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_1__.readFile)(pathTypeDefinition, 'utf8');
         const types = parseExportedObjectsInFile(fileContent);
@@ -78804,12 +78847,14 @@ module.exports = {"version":"3.19.0"};
 /******/ var __webpack_exports__checkBarrelRecursive = __webpack_exports__.le;
 /******/ var __webpack_exports__checkIndexFileExists = __webpack_exports__.NV;
 /******/ var __webpack_exports__exportAllInBarrel = __webpack_exports__.ZY;
+/******/ var __webpack_exports__getSubpathExports = __webpack_exports__.hx;
 /******/ var __webpack_exports__parseBarrelFile = __webpack_exports__.ad;
 /******/ var __webpack_exports__parseExportedObjectsInFile = __webpack_exports__.IR;
 /******/ var __webpack_exports__parseIndexFile = __webpack_exports__.gw;
 /******/ var __webpack_exports__parseTypeDefinitionFiles = __webpack_exports__.aS;
+/******/ var __webpack_exports__parseTypeDefinitionFilesExcluding = __webpack_exports__.d6;
 /******/ var __webpack_exports__regexExportedIndex = __webpack_exports__.tk;
 /******/ var __webpack_exports__regexExportedInternal = __webpack_exports__.YG;
 /******/ var __webpack_exports__typeDescriptorPaths = __webpack_exports__.qc;
-/******/ export { __webpack_exports__checkApiOfPackage as checkApiOfPackage, __webpack_exports__checkBarrelRecursive as checkBarrelRecursive, __webpack_exports__checkIndexFileExists as checkIndexFileExists, __webpack_exports__exportAllInBarrel as exportAllInBarrel, __webpack_exports__parseBarrelFile as parseBarrelFile, __webpack_exports__parseExportedObjectsInFile as parseExportedObjectsInFile, __webpack_exports__parseIndexFile as parseIndexFile, __webpack_exports__parseTypeDefinitionFiles as parseTypeDefinitionFiles, __webpack_exports__regexExportedIndex as regexExportedIndex, __webpack_exports__regexExportedInternal as regexExportedInternal, __webpack_exports__typeDescriptorPaths as typeDescriptorPaths };
+/******/ export { __webpack_exports__checkApiOfPackage as checkApiOfPackage, __webpack_exports__checkBarrelRecursive as checkBarrelRecursive, __webpack_exports__checkIndexFileExists as checkIndexFileExists, __webpack_exports__exportAllInBarrel as exportAllInBarrel, __webpack_exports__getSubpathExports as getSubpathExports, __webpack_exports__parseBarrelFile as parseBarrelFile, __webpack_exports__parseExportedObjectsInFile as parseExportedObjectsInFile, __webpack_exports__parseIndexFile as parseIndexFile, __webpack_exports__parseTypeDefinitionFiles as parseTypeDefinitionFiles, __webpack_exports__parseTypeDefinitionFilesExcluding as parseTypeDefinitionFilesExcluding, __webpack_exports__regexExportedIndex as regexExportedIndex, __webpack_exports__regexExportedInternal as regexExportedInternal, __webpack_exports__typeDescriptorPaths as typeDescriptorPaths };
 /******/ 

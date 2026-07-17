@@ -23,7 +23,9 @@ const {
   parseIndexFile,
   parseExportedObjectsInFile,
   regexExportedIndex,
-  typeDescriptorPaths
+  typeDescriptorPaths,
+  getSubpathExports,
+  parseTypeDefinitionFilesExcluding
   // eslint-disable-next-line import-x/no-useless-path-segments
 } = await import('./index.js');
 
@@ -245,6 +247,88 @@ describe('check-public-api', () => {
       expect(actionsCoreMock.error).toHaveBeenCalledWith(
         "Re-exporting internal modules is not allowed. 'internal' exported in 'index.ts'."
       );
+    });
+  });
+
+  describe('getSubpathExports', () => {
+    it('returns subpath exports derived from types path', async () => {
+      vol.fromNestedJSON(
+        {
+          'package.json': JSON.stringify({
+            exports: {
+              '.': { types: './dist/index.d.ts', default: './dist/index.js' },
+              './realtime': {
+                types: './dist/realtime/index.d.ts',
+                default: './dist/realtime/index.js'
+              }
+            }
+          })
+        },
+        process.cwd()
+      );
+      const result = await getSubpathExports(process.cwd());
+      expect(result).toEqual([
+        {
+          subpath: 'realtime',
+          sourceFile: path.join(process.cwd(), 'src/realtime/index.ts')
+        }
+      ]);
+    });
+
+    it('skips subpaths containing "internal"', async () => {
+      vol.fromNestedJSON(
+        {
+          'package.json': JSON.stringify({
+            exports: {
+              '.': { types: './dist/index.d.ts', default: './dist/index.js' },
+              './internal': {
+                types: './dist/internal/index.d.ts',
+                default: './dist/internal/index.js'
+              }
+            }
+          })
+        },
+        process.cwd()
+      );
+      const result = await getSubpathExports(process.cwd());
+      expect(result).toEqual([]);
+    });
+
+    it('skips exports without a types field', async () => {
+      vol.fromNestedJSON(
+        {
+          'package.json': JSON.stringify({
+            exports: {
+              '.': { default: './dist/index.js' },
+              './sub': { default: './dist/sub/index.js' }
+            }
+          })
+        },
+        process.cwd()
+      );
+      const result = await getSubpathExports(process.cwd());
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('parseTypeDefinitionFilesExcluding', () => {
+    it('excludes .d.ts files under the given subpaths', async () => {
+      vol.fromNestedJSON(
+        {
+          dir1: {
+            'file1.d.ts': 'export declare const rootExport: string;',
+            realtime: {
+              'file2.d.ts': 'export declare const realtimeExport: string;'
+            }
+          }
+        },
+        process.cwd()
+      );
+      const result = await parseTypeDefinitionFilesExcluding(
+        path.join(process.cwd(), 'dir1'),
+        ['realtime']
+      );
+      expect(result.map(e => e.name)).toEqual(['rootExport']);
     });
   });
 });

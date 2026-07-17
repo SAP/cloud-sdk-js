@@ -205,7 +205,10 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
 
       const subpathCompiled = join(pathCompiled, subpath);
       const exportedTypes = await parseTypeDefinitionFiles(subpathCompiled);
-      const exportedIndex = await parseIndexFile(sourceFile, forceInternalExports);
+      const exportedIndex = await parseIndexFile(
+        sourceFile,
+        forceInternalExports
+      );
       if (!compareApisAndLog(exportedIndex, exportedTypes)) {
         process.exit(1);
       }

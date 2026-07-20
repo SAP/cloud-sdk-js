@@ -209,6 +209,18 @@ jobs:
           pnpm changeset version
           pnpm changeset pre exit
           pnpm changeset publish --tag canary
+      - name: Slack Notify
+        if: ${{ github.event_name == 'schedule' && (failure() || cancelled()) }}
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: Cloud SDK Pipeline Bot
+          SLACK_TITLE: 'Canary Release Failed: ${{ job.status }}'
+          SLACK_MESSAGE: 'Canary release failed for ${{ github.repository }} (ref: ${{ github.ref_name }}).'
+          MSG_MINIMAL: event,actions url
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MSG_AUTHOR: ' '
+          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
+        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0
 
   draft-github-release:
     if: startsWith(github.ref, 'refs/tags/v')

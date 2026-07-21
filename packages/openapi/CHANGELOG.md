@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/openapi
 
+## 4.8.0
+
+### Patch Changes
+
+- e568017: [Fixed Issue] Wrap `Buffer` responses in `Blob` when executing OpenAPI requests that return binary data.
+- Updated dependencies [34da40e]
+- Updated dependencies [a42a3a2]
+- Updated dependencies [32aab37]
+- Updated dependencies [24fe0c5]
+  - @sap-cloud-sdk/connectivity@4.8.0
+  - @sap-cloud-sdk/http-client@4.8.0
+  - @sap-cloud-sdk/resilience@4.8.0
+  - @sap-cloud-sdk/util@4.8.0
+
 ## 4.7.0
 
 ### Patch Changes

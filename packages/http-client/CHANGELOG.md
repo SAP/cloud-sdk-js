@@ -1,5 +1,21 @@
 # @sap-cloud-sdk/http-client
 
+## 4.8.0
+
+### Minor Changes
+
+- 32aab37: [feat] A new `agentOptions` property on `Destination` allows configuring the underlying HTTP(S) agent (e.g. `keepAlive`, `timeout`) without constructing an agent manually.
+
+### Patch Changes
+
+- Updated dependencies [34da40e]
+- Updated dependencies [a42a3a2]
+- Updated dependencies [32aab37]
+- Updated dependencies [24fe0c5]
+  - @sap-cloud-sdk/connectivity@4.8.0
+  - @sap-cloud-sdk/resilience@4.8.0
+  - @sap-cloud-sdk/util@4.8.0
+
 ## 4.7.0
 
 ### Minor Changes

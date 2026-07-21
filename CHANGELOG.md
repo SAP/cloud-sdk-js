@@ -28,6 +28,33 @@
 
 -
  
+# 4.8.0
+## Compatibility Notes
+
+- [generator, openapi-generator] Transpilation now includes inherited compiler options. (82a6d2d)
+- [generator, generator-common, openapi-generator] The project has been updated to `typescript` version 6.
+  Some options are deprecated in TypeScript 6, reference the [breaking changes page](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html#breaking-changes-and-deprecations-in-typescript-60) for more details. (b7cfc1b)
+
+## New Features
+
+- [connectivity, http-client] A new `agentOptions` property on `Destination` allows configuring the underlying HTTP(S) agent (e.g. `keepAlive`, `timeout`) without constructing an agent manually. (32aab37)
+
+## Fixed Issues
+
+- [connectivity] HTTP(S) agents are now cached per destination instead of per protocol and options, preventing unintended agent reuse across different destinations. (34da40e)
+- [connectivity] Refactor HTTP agent cache for better runtime compatibility. (a42a3a2)
+- [connectivity] Fix `DestinationOrFetchOptions` and `HttpDestinationOrFetchOptions` so the `service` key surfaces at the type level.
+  - @sap-cloud-sdk/resilience@4.8.0
+  - @sap-cloud-sdk/util@4.8.0 (24fe0c5)
+- [generator, openapi-generator] Transpilation now resolves `extends` inheritance in tsconfig files, merging base config options with child options taking precedence. (82a6d2d)
+- [openapi] Wrap `Buffer` responses in `Blob` when executing OpenAPI requests that return binary data. (e568017)
+
+## Improvements
+
+- [generator-common] Extend script target mapper to handle ES2023, ES2024, and ES2025 targets.
+  Extend module kind mapper to handle UMD, System, ES2022, Node18, Node20, and Preserve module kinds.
+  Extend module resolution mapping to handle Bundler. (9df742e)
+
 # 4.7.0
 ## Compatibility Notes
 

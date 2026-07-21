@@ -1,5 +1,24 @@
 # @sap-cloud-sdk/generator
 
+## 4.8.0
+
+### Minor Changes
+
+- 82a6d2d: [compat] Transpilation now includes inherited compiler options.
+- b7cfc1b: [Compatibility Note] The project has been updated to `typescript` version 6.
+  Some options are deprecated in TypeScript 6, reference the [breaking changes page](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html#breaking-changes-and-deprecations-in-typescript-60) for more details.
+- 82a6d2d: [fix] Transpilation now resolves `extends` inheritance in tsconfig files, merging base config options with child options taking precedence.
+
+### Patch Changes
+
+- Updated dependencies [b7cfc1b]
+- Updated dependencies [9df742e]
+  - @sap-cloud-sdk/generator-common@4.8.0
+  - @sap-cloud-sdk/odata-common@4.8.0
+  - @sap-cloud-sdk/odata-v2@4.8.0
+  - @sap-cloud-sdk/odata-v4@4.8.0
+  - @sap-cloud-sdk/util@4.8.0
+
 ## 4.7.0
 
 ### Patch Changes

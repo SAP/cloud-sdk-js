@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.8.0
+
+### Minor Changes
+
+- 32aab37: [feat] A new `agentOptions` property on `Destination` allows configuring the underlying HTTP(S) agent (e.g. `keepAlive`, `timeout`) without constructing an agent manually.
+
+### Patch Changes
+
+- 34da40e: [fix] HTTP(S) agents are now cached per destination instead of per protocol and options, preventing unintended agent reuse across different destinations.
+- a42a3a2: [fix] Refactor HTTP agent cache for better runtime compatibility.
+- 24fe0c5: [fix] Fix `DestinationOrFetchOptions` and `HttpDestinationOrFetchOptions` so the `service` key surfaces at the type level.
+  - @sap-cloud-sdk/resilience@4.8.0
+  - @sap-cloud-sdk/util@4.8.0
+
 ## 4.7.0
 
 ### Minor Changes

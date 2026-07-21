@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/generator-common
 
+## 4.8.0
+
+### Minor Changes
+
+- b7cfc1b: [Compatibility Note] The project has been updated to `typescript` version 6.
+  Some options are deprecated in TypeScript 6, reference the [breaking changes page](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html#breaking-changes-and-deprecations-in-typescript-60) for more details.
+- 9df742e: [impr] Extend script target mapper to handle ES2023, ES2024, and ES2025 targets.
+  Extend module kind mapper to handle UMD, System, ES2022, Node18, Node20, and Preserve module kinds.
+  Extend module resolution mapping to handle Bundler.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@4.8.0
+
 ## 4.7.0
 
 ### Patch Changes

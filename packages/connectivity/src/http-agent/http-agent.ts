@@ -4,26 +4,23 @@ import https from 'node:https';
 import * as jks from 'jks-js';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
-// eslint-disable-next-line import-x/no-internal-modules
+/* eslint-disable import-x/no-internal-modules */
 import { getProtocolOrDefault } from '../scp-cf/get-protocol';
-// eslint-disable-next-line import-x/no-internal-modules
+import { decodeJwt, getTenantId, userId as getUserId } from '../scp-cf/jwt/jwt';
 import { Cache, hashCacheKey } from '../scp-cf/cache';
 import {
   addProxyConfigurationInternet,
   getProxyConfig,
   proxyStrategy
-  // eslint-disable-next-line import-x/no-internal-modules
 } from '../scp-cf/destination/http-proxy-util';
-// eslint-disable-next-line import-x/no-internal-modules
 import { registerDestinationCache } from '../scp-cf/destination/register-destination-cache';
 import type {
   Destination,
   DestinationCertificate,
   HttpDestination
-  // eslint-disable-next-line import-x/no-internal-modules
 } from '../scp-cf/destination';
-// eslint-disable-next-line import-x/no-internal-modules
 import type { BasicProxyConfiguration } from '../scp-cf/connectivity-service-types';
+/* eslint-enable import-x/no-internal-modules */
 import type { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({
@@ -307,6 +304,124 @@ export const defaultAgentOptions: https.AgentOptions | http.AgentOptions = {
 };
 
 /**
+ * Builds a secret-free cache key input for the agent cache.
+ * For direct destinations the agent is fully defined by its protocol, TLS options and
+ * optional `agentOptions`. For the on-premise connectivity proxy all requests share the
+ * same proxy origin, so keep-alive sockets would otherwise be reused across Cloud
+ * Connector tunnels. To prevent this, the key is additionally scoped by the location ID,
+ * the proxy host/port and the propagated principal (derived from stable, non-secret JWT
+ * claims).
+ * @param destination - Destination to derive the cache key dimensions from.
+ * @param options - TLS/agent options that define the agent instance.
+ * @returns A plain object to be hashed into the agent cache key.
+ */
+function getAgentCacheKeyInput(
+  destination: HttpDestination,
+  options: https.AgentOptions
+): Record<string, unknown> | undefined {
+  const protocol = getProtocolOrDefault(destination);
+  const keyInput: Record<string, unknown> = {
+    protocol,
+    options,
+    agentOptions: destination.agentOptions
+  };
+
+  if (destination.proxyType === 'OnPremise') {
+    keyInput.cloudConnectorLocationId = destination.cloudConnectorLocationId;
+    keyInput.proxyHost = destination.proxyConfiguration?.host;
+    keyInput.proxyPort = destination.proxyConfiguration?.port;
+
+    const principal = getPrincipalCacheKey(destination);
+
+    // PrincipalPropagation binds the Cloud Connector tunnel to the propagated
+    // user. Without a stable userId we cannot derive a safe cache key and must
+    // skip caching to avoid reusing a tunnel across principals.
+    if (
+      destination.authentication === 'PrincipalPropagation' &&
+      !principal?.userId
+    ) {
+      return undefined;
+    }
+
+    // For all other OnPremise flows the principal is not strictly required, but
+    // we still scope by full available principal information for better cache isolation.
+    if (principal) {
+      keyInput.principal = principal;
+    }
+  }
+
+  return keyInput;
+}
+
+/**
+ * Derives a stable, non-secret identity scope for OnPremise destinations from
+ * the propagated JWT. The raw token must not be part of the cache key, because
+ * it is a secret and rotates on every refresh. `userId` and `tenantId` are
+ * stable claims that scope the cache entry to a principal.
+ * PrincipalPropagation flows require a `userId`; other flows include the
+ * principal only when a user token is present.
+ * @param destination - Destination carrying the propagated principal JWT.
+ * @returns A stable identity scope, or `undefined` if no usable token is present.
+ */
+function getPrincipalCacheKey(
+  destination: HttpDestination
+): { userId?: string; tenantId?: string } | undefined {
+  const authHeader =
+    destination.proxyConfiguration?.headers?.[
+      'SAP-Connectivity-Authentication'
+    ];
+  if (!authHeader) {
+    return undefined;
+  }
+
+  const encoded = authHeader.replace(/^Bearer /i, '');
+  try {
+    const decoded = decodeJwt(encoded);
+    const tenantId = getTenantId(decoded);
+    const userId = getUserId(decoded);
+
+    if (!tenantId && !userId) {
+      return undefined;
+    }
+
+    return { userId, tenantId };
+  } catch {
+    // A malformed token must not break agent creation; fall back to location/host scoping.
+    return undefined;
+  }
+}
+
+async function getAgentCacheKey(
+  destination: HttpDestination,
+  options: https.AgentOptions
+): Promise<string | undefined> {
+  const cacheKeyInput = getAgentCacheKeyInput(destination, options);
+  // If the cache key is undefined, avoid caching the agent.
+  if (!cacheKeyInput) {
+    return undefined;
+  }
+  return hashCacheKey(cacheKeyInput);
+}
+
+function createAgentImpl(
+  destination: HttpDestination,
+  options: https.AgentOptions
+): HttpAgentConfig | HttpsAgentConfig {
+  const protocol = getProtocolOrDefault(destination);
+  logger.debug(
+    `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || '<unknown>'}`
+  );
+  const optionsWithDefaults = {
+    ...defaultAgentOptions,
+    ...destination.agentOptions,
+    ...options
+  };
+  return protocol === 'https'
+    ? { httpsAgent: new https.Agent(optionsWithDefaults) }
+    : { httpAgent: new http.Agent(optionsWithDefaults) };
+}
+
+/**
  * @internal
  * Agents are cached for up to one hour, but can be evicted earlier if more than 100 agents are created.
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
@@ -315,29 +430,17 @@ async function createAgent(
   destination: HttpDestination,
   options: https.AgentOptions
 ): Promise<HttpAgentConfig | HttpsAgentConfig> {
-  const protocol = getProtocolOrDefault(destination);
-  const cacheKey = await hashCacheKey({
-    protocol,
-    options,
-    agentOptions: destination.agentOptions
-  });
+  const cacheKey = await getAgentCacheKey(destination, options);
 
-  return agentCache.getOrInsertComputed(cacheKey, () => {
-    logger.debug(
-      `Creating new ${protocol.toUpperCase()} agent for destination ${destination.name || '<unknown>'}`
+  if (!cacheKey) {
+    logger.info(
+      `Could not derive a cache key for destination ${destination.name || '<unknown>'}. Creating a new agent without caching.`
     );
-    const optionsWithDefaults = {
-      ...defaultAgentOptions,
-      ...destination.agentOptions,
-      ...options
-    };
-    const entry =
-      protocol === 'https'
-        ? { httpsAgent: new https.Agent(optionsWithDefaults) }
-        : { httpAgent: new http.Agent(optionsWithDefaults) };
-
-    return { entry };
-  });
+    return createAgentImpl(destination, options);
+  }
+  return agentCache.getOrInsertComputed(cacheKey, () => ({
+    entry: createAgentImpl(destination, options)
+  }));
 }
 
 /**

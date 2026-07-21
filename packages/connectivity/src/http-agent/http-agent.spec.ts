@@ -273,6 +273,23 @@ describe('agent caching', () => {
     agentCache.clear();
   });
 
+  const nonPrincipalPropagationBase: HttpDestination = {
+    url: 'https://example.com',
+    proxyType: 'OnPremise',
+    authentication: 'BasicAuthentication'
+  };
+  const onPremiseProxyConfig = (
+    authJwt: string
+  ): NonNullable<HttpDestination['proxyConfiguration']> => ({
+    host: 'proxy.example.com',
+    port: 20003,
+    protocol: 'http',
+    headers: {
+      'Proxy-Authorization': 'Bearer service-jwt',
+      'SAP-Connectivity-Authentication': `Bearer ${authJwt}`
+    }
+  });
+
   it('returns the same agent instance for the same destination options', async () => {
     const destination: HttpDestination = { url: 'https://example.com' };
     const first = (await getAgentConfig(destination)) as any;
@@ -355,7 +372,9 @@ describe('agent caching', () => {
       proxyType: 'OnPremise',
       authentication: 'PrincipalPropagation'
     };
-    const proxyConfig = (authJwt: string) => ({
+    const proxyConfig = (
+      authJwt: string
+    ): NonNullable<HttpDestination['proxyConfiguration']> => ({
       host: 'proxy.example.com',
       port: 20003,
       protocol: 'http',
@@ -387,6 +406,143 @@ describe('agent caching', () => {
       'httpsAgent'
     ];
     expect(agentRefreshed).toBe(agentOld);
+  });
+
+  it('does not cache OnPremise agents when principal propagation token is missing', async () => {
+    const destination: HttpDestination = {
+      url: 'https://example.com',
+      proxyType: 'OnPremise',
+      authentication: 'PrincipalPropagation',
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': 'Bearer service-jwt'
+        }
+      }
+    };
+
+    const first = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+    const second = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+
+    expect(second).not.toBe(first);
+  });
+
+  it('does not cache OnPremise agents when principal propagation token is malformed', async () => {
+    const destination: HttpDestination = {
+      url: 'https://example.com',
+      proxyType: 'OnPremise',
+      authentication: 'PrincipalPropagation',
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': 'Bearer service-jwt',
+          'SAP-Connectivity-Authentication': 'Bearer invalid.token.value'
+        }
+      }
+    };
+
+    const first = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+    const second = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+
+    expect(second).not.toBe(first);
+  });
+
+  it('caches OnPremise agents for non-PrincipalPropagation authentication', async () => {
+    const destination: HttpDestination = {
+      url: 'https://example.com',
+      proxyType: 'OnPremise',
+      authentication: 'BasicAuthentication',
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': 'Bearer service-jwt'
+        }
+      }
+    };
+
+    const first = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+    const second = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+
+    expect(second).toBe(first);
+  });
+
+  it('does not reuse cached OnPremise agents for non-PrincipalPropagation tokens of different users', async () => {
+    const destA: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: onPremiseProxyConfig(
+        signedJwt({ user_id: 'tech-user-a', zid: 'tenant-a' })
+      )
+    };
+    const destB: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: onPremiseProxyConfig(
+        signedJwt({ user_id: 'tech-user-b', zid: 'tenant-a' })
+      )
+    };
+
+    const agentA = ((await getAgentConfig(destA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destB)) as any)['httpsAgent'];
+
+    expect(agentB).not.toBe(agentA);
+  });
+
+  it('reuses cached OnPremise agents for non-PrincipalPropagation tokens of the same user across refresh', async () => {
+    const now = Math.floor(Date.now() / 1000);
+    const destOld: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: onPremiseProxyConfig(
+        signedJwt({
+          user_id: 'tech-user-a',
+          zid: 'tenant-a',
+          iat: now,
+          exp: now + 60
+        })
+      )
+    };
+    const destRefreshed: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: onPremiseProxyConfig(
+        signedJwt({
+          user_id: 'tech-user-a',
+          zid: 'tenant-a',
+          iat: now + 60,
+          exp: now + 120
+        })
+      )
+    };
+
+    const agentOld = ((await getAgentConfig(destOld)) as any)['httpsAgent'];
+    const agentRefreshed = ((await getAgentConfig(destRefreshed)) as any)[
+      'httpsAgent'
+    ];
+
+    expect(agentRefreshed).toBe(agentOld);
+  });
+
+  it('does not reuse cached OnPremise agents for non-PrincipalPropagation tokens of different tenants', async () => {
+    const destTenantA: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: onPremiseProxyConfig(
+        signedJwt({ user_id: 'tech-user-a', zid: 'tenant-a' })
+      )
+    };
+    const destTenantB: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: onPremiseProxyConfig(
+        signedJwt({ user_id: 'tech-user-a', zid: 'tenant-b' })
+      )
+    };
+
+    const agentA = ((await getAgentConfig(destTenantA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destTenantB)) as any)['httpsAgent'];
+
+    expect(agentB).not.toBe(agentA);
   });
 
   it('does not embed auth tokens in the agent cache key for direct destinations', async () => {

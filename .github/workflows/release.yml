@@ -55,16 +55,13 @@ jobs:
         run: |
           npx ts-node -e "import { addCurrentChangelog } from './scripts/add-changelog'; addCurrentChangelog()"
       - name: Open PR
+        working-directory: cloud-sdk
         env:
-          BOT_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
-          BOT_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
+          GIT_AUTHOR_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
+          GIT_AUTHOR_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
+          GIT_COMMITTER_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
+          GIT_COMMITTER_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
         run: |
-
-          git config user.email "$BOT_EMAIL"
-          git config user.name "$BOT_NAME"
-
-          cd cloud-sdk
-
           git checkout -b "update-release-notes"
           git commit -m "update release notes" -a
           git push -u origin update-release-notes

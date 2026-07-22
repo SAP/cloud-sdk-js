@@ -5,7 +5,7 @@ inputs:
     description: 'Node.js version'
     default: '22'
   registry-url:
-    description: 'The registry URL to use for npm packages. Defaults to the SAP Artifactory mirror when npm-token is provided, otherwise npmjs.'
+    description: 'The registry URL to use for npm packages. Defaults to npmjs.'
   registry-token:
     description: 'The auth token for the npm registry'
   pnpm-version:
@@ -55,19 +55,10 @@ runs:
       id: resolve-registry-url
       env:
         REGISTRY_URL: ${{ inputs.registry-url }}
-        REGISTRY_TOKEN: ${{ inputs.registry-token }}
-        IS_FORK: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.owner.login == 'sap' || github.event.pull_request.user.login == 'dependabot[bot]') && 'false' || 'true' }}
       shell: bash
       run: |
         if [[ -n "$REGISTRY_URL" ]]; then
           echo "url=$REGISTRY_URL" >> $GITHUB_OUTPUT
-        elif [[ "$IS_FORK" == "false" ]]; then
-          if [[ -n "$REGISTRY_TOKEN" ]]; then
-            echo "url=https://common.repositories.cloud.sap/artifactory/api/npm/build.releases.npm/" >> $GITHUB_OUTPUT
-          else
-            echo "::error::The input 'registry-token' is required when 'registry-url' is not provided."
-            exit 1
-          fi
         else
           echo "url=https://registry.npmjs.org" >> $GITHUB_OUTPUT
         fi
@@ -81,7 +72,7 @@ runs:
     - name: Install dependencies
       if: ${{ inputs.skip-install == 'false' }}
       env:
-        NODE_AUTH_TOKEN: ${{ inputs.registry-token }}
+        NODE_AUTH_TOKEN: ${{ inputs.registry-url != '' && inputs.registry-token || '' }}
         INPUTS_PNPM_INSTALL_ARGS: ${{ inputs.pnpm-install-args }}
       shell: bash
       run: pnpm install --ignore-scripts ${INPUTS_PNPM_INSTALL_ARGS}

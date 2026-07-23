@@ -4,8 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-pnpmfileChecksum: sha256-xXOo9dP7jJXicMXG8wHhJV7+oAfJQXLpAC1h+Nwtfsc=
-
 importers:
 
   .:
@@ -2007,12 +2005,12 @@ packages:
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
   '@sap/cds-compiler@7.0.1':
-    resolution: {integrity: sha512-Qwk9jitwSSwPB9FTB/Q6gYPxFsJxswhfsO9Ux77HTxjIhse8O/Hlq2XzkpVSTyaAVr8Lo7wLfpytHwKQScZTwQ==, tarball: https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-7.0.1.tgz}
+    resolution: {integrity: sha512-Qwk9jitwSSwPB9FTB/Q6gYPxFsJxswhfsO9Ux77HTxjIhse8O/Hlq2XzkpVSTyaAVr8Lo7wLfpytHwKQScZTwQ==}
     engines: {node: '>=22'}
     hasBin: true
 
   '@sap/cds-dk@10.0.5':
-    resolution: {integrity: sha512-jbh5lK3oSwA6xzqxQeZbKkphzV0i57HutIo2friTuolS2QYHX9WOaVAZySqovoPmT8acQtqj5ki7/nuJepGBRA==, tarball: https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-10.0.5.tgz}
+    resolution: {integrity: sha512-jbh5lK3oSwA6xzqxQeZbKkphzV0i57HutIo2friTuolS2QYHX9WOaVAZySqovoPmT8acQtqj5ki7/nuJepGBRA==}
     hasBin: true
     bundledDependencies:
       - '@cap-js/asyncapi'
@@ -2124,12 +2122,12 @@ packages:
       - yaml
 
   '@sap/cds-fiori@2.3.0':
-    resolution: {integrity: sha512-6oWov+DSpFrSTgxXR0dZhak6aZ/IVRZvaHERMi0EgSTzIJdlvZlpw3Kf18ePMcTrRrtEXwD4RIjKt8pbs0g2Hg==, tarball: https://registry.npmjs.org/@sap/cds-fiori/-/cds-fiori-2.3.0.tgz}
+    resolution: {integrity: sha512-6oWov+DSpFrSTgxXR0dZhak6aZ/IVRZvaHERMi0EgSTzIJdlvZlpw3Kf18ePMcTrRrtEXwD4RIjKt8pbs0g2Hg==}
     peerDependencies:
       '@sap/cds': '>=8'
 
   '@sap/cds@10.0.3':
-    resolution: {integrity: sha512-S9q8vcJXzIsO4KC49sb9JLIhY/k0MJTZcgEOzmhvoBW/lWLLR79Oci0xmyQqSxJwwzjavR9mW8I4wbMJQQMVAA==, tarball: https://registry.npmjs.org/@sap/cds/-/cds-10.0.3.tgz}
+    resolution: {integrity: sha512-S9q8vcJXzIsO4KC49sb9JLIhY/k0MJTZcgEOzmhvoBW/lWLLR79Oci0xmyQqSxJwwzjavR9mW8I4wbMJQQMVAA==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -2144,7 +2142,7 @@ packages:
     engines: {node: ^20.0.0  || ^22.0.0 || ^24.0.0}
 
   '@sap/xssec@4.13.3':
-    resolution: {integrity: sha512-op5wFTpJGJFdwFcEFRDX30yKbB2Kknk+LJqXDcrHyPNLqvSqerTWXFdFnylhiIhoAdGFSccC6NimUhqFxIrUsA==, tarball: https://registry.npmjs.org/@sap/xssec/-/xssec-4.13.3.tgz}
+    resolution: {integrity: sha512-op5wFTpJGJFdwFcEFRDX30yKbB2Kknk+LJqXDcrHyPNLqvSqerTWXFdFnylhiIhoAdGFSccC6NimUhqFxIrUsA==}
     engines: {node: '>=18'}
 
   '@shikijs/engine-oniguruma@3.23.0':

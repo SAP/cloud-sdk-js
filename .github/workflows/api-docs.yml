@@ -8,8 +8,6 @@ on:
         required: true
         type: string
     secrets:
-      NPM_TOKEN_ARTIFACTORY:
-        required: true
       SAP_CLOUD_SDK_BOT_CLIENT_ID:
         required: true
       SAP_CLOUD_SDK_BOT_PRIVATE_KEY:

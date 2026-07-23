@@ -30,7 +30,6 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           ref: 'main'
           persist-credentials: true
-          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
 
       - name: bump version
         id: bump

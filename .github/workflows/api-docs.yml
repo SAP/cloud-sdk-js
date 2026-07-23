@@ -30,8 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
-        with:
-          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
 
       - name: Generate API documentation
         run: |

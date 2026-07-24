@@ -12,8 +12,6 @@ import {
   transpileDirectory
   // eslint-disable-next-line import-x/no-internal-modules
 } from '@sap-cloud-sdk/generator-common/dist/compiler.js';
-// eslint-disable-next-line import-x/no-internal-modules
-import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer/create-file.js';
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';
 
@@ -181,7 +179,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
         // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
         createFileOptions: {
           overwrite: true,
-          prettierOptions: defaultPrettierConfig,
+          prettierOptions: {},
           usePrettier: false
         }
       },

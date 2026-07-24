@@ -1,6 +1,6 @@
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { getPackageVersion } from './get-package-version';
+import { getPackageVersion } from './get-package-version.ts';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 
 const execFileAsync = promisify(execFile);

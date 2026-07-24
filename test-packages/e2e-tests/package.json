@@ -38,7 +38,6 @@
     "axios": "^1.15.0",
     "bignumber.js": "^11.0.0",
     "depcheck": "^1.4.7",
-    "execa": "^5.0.0",
     "express": "^4.22.1",
     "fs-extra": "^11.3.4",
     "http-proxy-middleware": "^3.0.7",
@@ -48,7 +47,8 @@
     "multer": "^2.2.0",
     "openapi-backend": "^5.16.1",
     "pm2": "^7.0.1",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "tinyexec": "^1.2.4"
   },
   "cds": {
     "cdsc": {

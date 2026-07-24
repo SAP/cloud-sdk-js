@@ -5622,773 +5622,6 @@ module.exports.sync = (input, options) => {
 
 /***/ }),
 
-/***/ 8994:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-const path = __nccwpck_require__(6928);
-const childProcess = __nccwpck_require__(5317);
-const crossSpawn = __nccwpck_require__(1310);
-const stripFinalNewline = __nccwpck_require__(5434);
-const npmRunPath = __nccwpck_require__(428);
-const onetime = __nccwpck_require__(511);
-const makeError = __nccwpck_require__(8196);
-const normalizeStdio = __nccwpck_require__(5359);
-const {spawnedKill, spawnedCancel, setupTimeout, validateTimeout, setExitHandler} = __nccwpck_require__(3324);
-const {handleInput, getSpawnedResult, makeAllStream, validateInputSync} = __nccwpck_require__(2756);
-const {mergePromise, getSpawnedPromise} = __nccwpck_require__(35);
-const {joinCommand, parseCommand, getEscapedCommand} = __nccwpck_require__(5939);
-
-const DEFAULT_MAX_BUFFER = 1000 * 1000 * 100;
-
-const getEnv = ({env: envOption, extendEnv, preferLocal, localDir, execPath}) => {
-	const env = extendEnv ? {...process.env, ...envOption} : envOption;
-
-	if (preferLocal) {
-		return npmRunPath.env({env, cwd: localDir, execPath});
-	}
-
-	return env;
-};
-
-const handleArguments = (file, args, options = {}) => {
-	const parsed = crossSpawn._parse(file, args, options);
-	file = parsed.command;
-	args = parsed.args;
-	options = parsed.options;
-
-	options = {
-		maxBuffer: DEFAULT_MAX_BUFFER,
-		buffer: true,
-		stripFinalNewline: true,
-		extendEnv: true,
-		preferLocal: false,
-		localDir: options.cwd || process.cwd(),
-		execPath: process.execPath,
-		encoding: 'utf8',
-		reject: true,
-		cleanup: true,
-		all: false,
-		windowsHide: true,
-		...options
-	};
-
-	options.env = getEnv(options);
-
-	options.stdio = normalizeStdio(options);
-
-	if (process.platform === 'win32' && path.basename(file, '.exe') === 'cmd') {
-		// #116
-		args.unshift('/q');
-	}
-
-	return {file, args, options, parsed};
-};
-
-const handleOutput = (options, value, error) => {
-	if (typeof value !== 'string' && !Buffer.isBuffer(value)) {
-		// When `execa.sync()` errors, we normalize it to '' to mimic `execa()`
-		return error === undefined ? undefined : '';
-	}
-
-	if (options.stripFinalNewline) {
-		return stripFinalNewline(value);
-	}
-
-	return value;
-};
-
-const execa = (file, args, options) => {
-	const parsed = handleArguments(file, args, options);
-	const command = joinCommand(file, args);
-	const escapedCommand = getEscapedCommand(file, args);
-
-	validateTimeout(parsed.options);
-
-	let spawned;
-	try {
-		spawned = childProcess.spawn(parsed.file, parsed.args, parsed.options);
-	} catch (error) {
-		// Ensure the returned error is always both a promise and a child process
-		const dummySpawned = new childProcess.ChildProcess();
-		const errorPromise = Promise.reject(makeError({
-			error,
-			stdout: '',
-			stderr: '',
-			all: '',
-			command,
-			escapedCommand,
-			parsed,
-			timedOut: false,
-			isCanceled: false,
-			killed: false
-		}));
-		return mergePromise(dummySpawned, errorPromise);
-	}
-
-	const spawnedPromise = getSpawnedPromise(spawned);
-	const timedPromise = setupTimeout(spawned, parsed.options, spawnedPromise);
-	const processDone = setExitHandler(spawned, parsed.options, timedPromise);
-
-	const context = {isCanceled: false};
-
-	spawned.kill = spawnedKill.bind(null, spawned.kill.bind(spawned));
-	spawned.cancel = spawnedCancel.bind(null, spawned, context);
-
-	const handlePromise = async () => {
-		const [{error, exitCode, signal, timedOut}, stdoutResult, stderrResult, allResult] = await getSpawnedResult(spawned, parsed.options, processDone);
-		const stdout = handleOutput(parsed.options, stdoutResult);
-		const stderr = handleOutput(parsed.options, stderrResult);
-		const all = handleOutput(parsed.options, allResult);
-
-		if (error || exitCode !== 0 || signal !== null) {
-			const returnedError = makeError({
-				error,
-				exitCode,
-				signal,
-				stdout,
-				stderr,
-				all,
-				command,
-				escapedCommand,
-				parsed,
-				timedOut,
-				isCanceled: context.isCanceled,
-				killed: spawned.killed
-			});
-
-			if (!parsed.options.reject) {
-				return returnedError;
-			}
-
-			throw returnedError;
-		}
-
-		return {
-			command,
-			escapedCommand,
-			exitCode: 0,
-			stdout,
-			stderr,
-			all,
-			failed: false,
-			timedOut: false,
-			isCanceled: false,
-			killed: false
-		};
-	};
-
-	const handlePromiseOnce = onetime(handlePromise);
-
-	handleInput(spawned, parsed.options.input);
-
-	spawned.all = makeAllStream(spawned, parsed.options);
-
-	return mergePromise(spawned, handlePromiseOnce);
-};
-
-module.exports = execa;
-
-module.exports.sync = (file, args, options) => {
-	const parsed = handleArguments(file, args, options);
-	const command = joinCommand(file, args);
-	const escapedCommand = getEscapedCommand(file, args);
-
-	validateInputSync(parsed.options);
-
-	let result;
-	try {
-		result = childProcess.spawnSync(parsed.file, parsed.args, parsed.options);
-	} catch (error) {
-		throw makeError({
-			error,
-			stdout: '',
-			stderr: '',
-			all: '',
-			command,
-			escapedCommand,
-			parsed,
-			timedOut: false,
-			isCanceled: false,
-			killed: false
-		});
-	}
-
-	const stdout = handleOutput(parsed.options, result.stdout, result.error);
-	const stderr = handleOutput(parsed.options, result.stderr, result.error);
-
-	if (result.error || result.status !== 0 || result.signal !== null) {
-		const error = makeError({
-			stdout,
-			stderr,
-			error: result.error,
-			signal: result.signal,
-			exitCode: result.status,
-			command,
-			escapedCommand,
-			parsed,
-			timedOut: result.error && result.error.code === 'ETIMEDOUT',
-			isCanceled: false,
-			killed: result.signal !== null
-		});
-
-		if (!parsed.options.reject) {
-			return error;
-		}
-
-		throw error;
-	}
-
-	return {
-		command,
-		escapedCommand,
-		exitCode: 0,
-		stdout,
-		stderr,
-		failed: false,
-		timedOut: false,
-		isCanceled: false,
-		killed: false
-	};
-};
-
-module.exports.command = (command, options) => {
-	const [file, ...args] = parseCommand(command);
-	return execa(file, args, options);
-};
-
-module.exports.commandSync = (command, options) => {
-	const [file, ...args] = parseCommand(command);
-	return execa.sync(file, args, options);
-};
-
-module.exports.node = (scriptPath, args, options = {}) => {
-	if (args && !Array.isArray(args) && typeof args === 'object') {
-		options = args;
-		args = [];
-	}
-
-	const stdio = normalizeStdio.node(options);
-	const defaultExecArgv = process.execArgv.filter(arg => !arg.startsWith('--inspect'));
-
-	const {
-		nodePath = process.execPath,
-		nodeOptions = defaultExecArgv
-	} = options;
-
-	return execa(
-		nodePath,
-		[
-			...nodeOptions,
-			scriptPath,
-			...(Array.isArray(args) ? args : [])
-		],
-		{
-			...options,
-			stdin: undefined,
-			stdout: undefined,
-			stderr: undefined,
-			stdio,
-			shell: false
-		}
-	);
-};
-
-
-/***/ }),
-
-/***/ 5939:
-/***/ ((module) => {
-
-
-const normalizeArgs = (file, args = []) => {
-	if (!Array.isArray(args)) {
-		return [file];
-	}
-
-	return [file, ...args];
-};
-
-const NO_ESCAPE_REGEXP = /^[\w.-]+$/;
-const DOUBLE_QUOTES_REGEXP = /"/g;
-
-const escapeArg = arg => {
-	if (typeof arg !== 'string' || NO_ESCAPE_REGEXP.test(arg)) {
-		return arg;
-	}
-
-	return `"${arg.replace(DOUBLE_QUOTES_REGEXP, '\\"')}"`;
-};
-
-const joinCommand = (file, args) => {
-	return normalizeArgs(file, args).join(' ');
-};
-
-const getEscapedCommand = (file, args) => {
-	return normalizeArgs(file, args).map(arg => escapeArg(arg)).join(' ');
-};
-
-const SPACES_REGEXP = / +/g;
-
-// Handle `execa.command()`
-const parseCommand = command => {
-	const tokens = [];
-	for (const token of command.trim().split(SPACES_REGEXP)) {
-		// Allow spaces to be escaped by a backslash if not meant as a delimiter
-		const previousToken = tokens[tokens.length - 1];
-		if (previousToken && previousToken.endsWith('\\')) {
-			// Merge previous token with current one
-			tokens[tokens.length - 1] = `${previousToken.slice(0, -1)} ${token}`;
-		} else {
-			tokens.push(token);
-		}
-	}
-
-	return tokens;
-};
-
-module.exports = {
-	joinCommand,
-	getEscapedCommand,
-	parseCommand
-};
-
-
-/***/ }),
-
-/***/ 8196:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-const {signalsByName} = __nccwpck_require__(1511);
-
-const getErrorPrefix = ({timedOut, timeout, errorCode, signal, signalDescription, exitCode, isCanceled}) => {
-	if (timedOut) {
-		return `timed out after ${timeout} milliseconds`;
-	}
-
-	if (isCanceled) {
-		return 'was canceled';
-	}
-
-	if (errorCode !== undefined) {
-		return `failed with ${errorCode}`;
-	}
-
-	if (signal !== undefined) {
-		return `was killed with ${signal} (${signalDescription})`;
-	}
-
-	if (exitCode !== undefined) {
-		return `failed with exit code ${exitCode}`;
-	}
-
-	return 'failed';
-};
-
-const makeError = ({
-	stdout,
-	stderr,
-	all,
-	error,
-	signal,
-	exitCode,
-	command,
-	escapedCommand,
-	timedOut,
-	isCanceled,
-	killed,
-	parsed: {options: {timeout}}
-}) => {
-	// `signal` and `exitCode` emitted on `spawned.on('exit')` event can be `null`.
-	// We normalize them to `undefined`
-	exitCode = exitCode === null ? undefined : exitCode;
-	signal = signal === null ? undefined : signal;
-	const signalDescription = signal === undefined ? undefined : signalsByName[signal].description;
-
-	const errorCode = error && error.code;
-
-	const prefix = getErrorPrefix({timedOut, timeout, errorCode, signal, signalDescription, exitCode, isCanceled});
-	const execaMessage = `Command ${prefix}: ${command}`;
-	const isError = Object.prototype.toString.call(error) === '[object Error]';
-	const shortMessage = isError ? `${execaMessage}\n${error.message}` : execaMessage;
-	const message = [shortMessage, stderr, stdout].filter(Boolean).join('\n');
-
-	if (isError) {
-		error.originalMessage = error.message;
-		error.message = message;
-	} else {
-		error = new Error(message);
-	}
-
-	error.shortMessage = shortMessage;
-	error.command = command;
-	error.escapedCommand = escapedCommand;
-	error.exitCode = exitCode;
-	error.signal = signal;
-	error.signalDescription = signalDescription;
-	error.stdout = stdout;
-	error.stderr = stderr;
-
-	if (all !== undefined) {
-		error.all = all;
-	}
-
-	if ('bufferedData' in error) {
-		delete error.bufferedData;
-	}
-
-	error.failed = true;
-	error.timedOut = Boolean(timedOut);
-	error.isCanceled = isCanceled;
-	error.killed = killed && !timedOut;
-
-	return error;
-};
-
-module.exports = makeError;
-
-
-/***/ }),
-
-/***/ 3324:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-const os = __nccwpck_require__(857);
-const onExit = __nccwpck_require__(7461);
-
-const DEFAULT_FORCE_KILL_TIMEOUT = 1000 * 5;
-
-// Monkey-patches `childProcess.kill()` to add `forceKillAfterTimeout` behavior
-const spawnedKill = (kill, signal = 'SIGTERM', options = {}) => {
-	const killResult = kill(signal);
-	setKillTimeout(kill, signal, options, killResult);
-	return killResult;
-};
-
-const setKillTimeout = (kill, signal, options, killResult) => {
-	if (!shouldForceKill(signal, options, killResult)) {
-		return;
-	}
-
-	const timeout = getForceKillAfterTimeout(options);
-	const t = setTimeout(() => {
-		kill('SIGKILL');
-	}, timeout);
-
-	// Guarded because there's no `.unref()` when `execa` is used in the renderer
-	// process in Electron. This cannot be tested since we don't run tests in
-	// Electron.
-	// istanbul ignore else
-	if (t.unref) {
-		t.unref();
-	}
-};
-
-const shouldForceKill = (signal, {forceKillAfterTimeout}, killResult) => {
-	return isSigterm(signal) && forceKillAfterTimeout !== false && killResult;
-};
-
-const isSigterm = signal => {
-	return signal === os.constants.signals.SIGTERM ||
-		(typeof signal === 'string' && signal.toUpperCase() === 'SIGTERM');
-};
-
-const getForceKillAfterTimeout = ({forceKillAfterTimeout = true}) => {
-	if (forceKillAfterTimeout === true) {
-		return DEFAULT_FORCE_KILL_TIMEOUT;
-	}
-
-	if (!Number.isFinite(forceKillAfterTimeout) || forceKillAfterTimeout < 0) {
-		throw new TypeError(`Expected the \`forceKillAfterTimeout\` option to be a non-negative integer, got \`${forceKillAfterTimeout}\` (${typeof forceKillAfterTimeout})`);
-	}
-
-	return forceKillAfterTimeout;
-};
-
-// `childProcess.cancel()`
-const spawnedCancel = (spawned, context) => {
-	const killResult = spawned.kill();
-
-	if (killResult) {
-		context.isCanceled = true;
-	}
-};
-
-const timeoutKill = (spawned, signal, reject) => {
-	spawned.kill(signal);
-	reject(Object.assign(new Error('Timed out'), {timedOut: true, signal}));
-};
-
-// `timeout` option handling
-const setupTimeout = (spawned, {timeout, killSignal = 'SIGTERM'}, spawnedPromise) => {
-	if (timeout === 0 || timeout === undefined) {
-		return spawnedPromise;
-	}
-
-	let timeoutId;
-	const timeoutPromise = new Promise((resolve, reject) => {
-		timeoutId = setTimeout(() => {
-			timeoutKill(spawned, killSignal, reject);
-		}, timeout);
-	});
-
-	const safeSpawnedPromise = spawnedPromise.finally(() => {
-		clearTimeout(timeoutId);
-	});
-
-	return Promise.race([timeoutPromise, safeSpawnedPromise]);
-};
-
-const validateTimeout = ({timeout}) => {
-	if (timeout !== undefined && (!Number.isFinite(timeout) || timeout < 0)) {
-		throw new TypeError(`Expected the \`timeout\` option to be a non-negative integer, got \`${timeout}\` (${typeof timeout})`);
-	}
-};
-
-// `cleanup` option handling
-const setExitHandler = async (spawned, {cleanup, detached}, timedPromise) => {
-	if (!cleanup || detached) {
-		return timedPromise;
-	}
-
-	const removeExitHandler = onExit(() => {
-		spawned.kill();
-	});
-
-	return timedPromise.finally(() => {
-		removeExitHandler();
-	});
-};
-
-module.exports = {
-	spawnedKill,
-	spawnedCancel,
-	setupTimeout,
-	validateTimeout,
-	setExitHandler
-};
-
-
-/***/ }),
-
-/***/ 35:
-/***/ ((module) => {
-
-
-
-const nativePromisePrototype = (async () => {})().constructor.prototype;
-const descriptors = ['then', 'catch', 'finally'].map(property => [
-	property,
-	Reflect.getOwnPropertyDescriptor(nativePromisePrototype, property)
-]);
-
-// The return value is a mixin of `childProcess` and `Promise`
-const mergePromise = (spawned, promise) => {
-	for (const [property, descriptor] of descriptors) {
-		// Starting the main `promise` is deferred to avoid consuming streams
-		const value = typeof promise === 'function' ?
-			(...args) => Reflect.apply(descriptor.value, promise(), args) :
-			descriptor.value.bind(promise);
-
-		Reflect.defineProperty(spawned, property, {...descriptor, value});
-	}
-
-	return spawned;
-};
-
-// Use promises instead of `child_process` events
-const getSpawnedPromise = spawned => {
-	return new Promise((resolve, reject) => {
-		spawned.on('exit', (exitCode, signal) => {
-			resolve({exitCode, signal});
-		});
-
-		spawned.on('error', error => {
-			reject(error);
-		});
-
-		if (spawned.stdin) {
-			spawned.stdin.on('error', error => {
-				reject(error);
-			});
-		}
-	});
-};
-
-module.exports = {
-	mergePromise,
-	getSpawnedPromise
-};
-
-
-
-/***/ }),
-
-/***/ 5359:
-/***/ ((module) => {
-
-
-const aliases = ['stdin', 'stdout', 'stderr'];
-
-const hasAlias = options => aliases.some(alias => options[alias] !== undefined);
-
-const normalizeStdio = options => {
-	if (!options) {
-		return;
-	}
-
-	const {stdio} = options;
-
-	if (stdio === undefined) {
-		return aliases.map(alias => options[alias]);
-	}
-
-	if (hasAlias(options)) {
-		throw new Error(`It's not possible to provide \`stdio\` in combination with one of ${aliases.map(alias => `\`${alias}\``).join(', ')}`);
-	}
-
-	if (typeof stdio === 'string') {
-		return stdio;
-	}
-
-	if (!Array.isArray(stdio)) {
-		throw new TypeError(`Expected \`stdio\` to be of type \`string\` or \`Array\`, got \`${typeof stdio}\``);
-	}
-
-	const length = Math.max(stdio.length, aliases.length);
-	return Array.from({length}, (value, index) => stdio[index]);
-};
-
-module.exports = normalizeStdio;
-
-// `ipc` is pushed unless it is already present
-module.exports.node = options => {
-	const stdio = normalizeStdio(options);
-
-	if (stdio === 'ipc') {
-		return 'ipc';
-	}
-
-	if (stdio === undefined || typeof stdio === 'string') {
-		return [stdio, stdio, stdio, 'ipc'];
-	}
-
-	if (stdio.includes('ipc')) {
-		return stdio;
-	}
-
-	return [...stdio, 'ipc'];
-};
-
-
-/***/ }),
-
-/***/ 2756:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-const isStream = __nccwpck_require__(3402);
-const getStream = __nccwpck_require__(6718);
-const mergeStream = __nccwpck_require__(5905);
-
-// `input` option
-const handleInput = (spawned, input) => {
-	// Checking for stdin is workaround for https://github.com/nodejs/node/issues/26852
-	// @todo remove `|| spawned.stdin === undefined` once we drop support for Node.js <=12.2.0
-	if (input === undefined || spawned.stdin === undefined) {
-		return;
-	}
-
-	if (isStream(input)) {
-		input.pipe(spawned.stdin);
-	} else {
-		spawned.stdin.end(input);
-	}
-};
-
-// `all` interleaves `stdout` and `stderr`
-const makeAllStream = (spawned, {all}) => {
-	if (!all || (!spawned.stdout && !spawned.stderr)) {
-		return;
-	}
-
-	const mixed = mergeStream();
-
-	if (spawned.stdout) {
-		mixed.add(spawned.stdout);
-	}
-
-	if (spawned.stderr) {
-		mixed.add(spawned.stderr);
-	}
-
-	return mixed;
-};
-
-// On failure, `result.stdout|stderr|all` should contain the currently buffered stream
-const getBufferedData = async (stream, streamPromise) => {
-	if (!stream) {
-		return;
-	}
-
-	stream.destroy();
-
-	try {
-		return await streamPromise;
-	} catch (error) {
-		return error.bufferedData;
-	}
-};
-
-const getStreamPromise = (stream, {encoding, buffer, maxBuffer}) => {
-	if (!stream || !buffer) {
-		return;
-	}
-
-	if (encoding) {
-		return getStream(stream, {encoding, maxBuffer});
-	}
-
-	return getStream.buffer(stream, {maxBuffer});
-};
-
-// Retrieve result of child process: exit code, signal, error, streams (stdout/stderr/all)
-const getSpawnedResult = async ({stdout, stderr, all}, {encoding, buffer, maxBuffer}, processDone) => {
-	const stdoutPromise = getStreamPromise(stdout, {encoding, buffer, maxBuffer});
-	const stderrPromise = getStreamPromise(stderr, {encoding, buffer, maxBuffer});
-	const allPromise = getStreamPromise(all, {encoding, buffer, maxBuffer: maxBuffer * 2});
-
-	try {
-		return await Promise.all([processDone, stdoutPromise, stderrPromise, allPromise]);
-	} catch (error) {
-		return Promise.all([
-			{error, signal: error.signal, timedOut: error.timedOut},
-			getBufferedData(stdout, stdoutPromise),
-			getBufferedData(stderr, stderrPromise),
-			getBufferedData(all, allPromise)
-		]);
-	}
-};
-
-const validateInputSync = ({input}) => {
-	if (isStream(input)) {
-		throw new TypeError('The `input` option cannot be a stream in sync mode');
-	}
-};
-
-module.exports = {
-	handleInput,
-	makeAllStream,
-	getSpawnedResult,
-	validateInputSync
-};
-
-
-
-/***/ }),
-
 /***/ 7136:
 /***/ (function(__unused_webpack_module, exports) {
 
@@ -7844,7 +7077,7 @@ exports.isEmpty = isEmpty;
 
 
 const util = __nccwpck_require__(9023);
-const toRegexRange = __nccwpck_require__(3892);
+const toRegexRange = __nccwpck_require__(1511);
 
 const isObject = val => val !== null && typeof val === 'object' && !Array.isArray(val);
 
@@ -12347,133 +11580,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ 7127:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-const {PassThrough: PassThroughStream} = __nccwpck_require__(2203);
-
-module.exports = options => {
-	options = {...options};
-
-	const {array} = options;
-	let {encoding} = options;
-	const isBuffer = encoding === 'buffer';
-	let objectMode = false;
-
-	if (array) {
-		objectMode = !(encoding || isBuffer);
-	} else {
-		encoding = encoding || 'utf8';
-	}
-
-	if (isBuffer) {
-		encoding = null;
-	}
-
-	const stream = new PassThroughStream({objectMode});
-
-	if (encoding) {
-		stream.setEncoding(encoding);
-	}
-
-	let length = 0;
-	const chunks = [];
-
-	stream.on('data', chunk => {
-		chunks.push(chunk);
-
-		if (objectMode) {
-			length = chunks.length;
-		} else {
-			length += chunk.length;
-		}
-	});
-
-	stream.getBufferedValue = () => {
-		if (array) {
-			return chunks;
-		}
-
-		return isBuffer ? Buffer.concat(chunks, length) : chunks.join('');
-	};
-
-	stream.getBufferedLength = () => length;
-
-	return stream;
-};
-
-
-/***/ }),
-
-/***/ 6718:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-const {constants: BufferConstants} = __nccwpck_require__(181);
-const stream = __nccwpck_require__(2203);
-const {promisify} = __nccwpck_require__(9023);
-const bufferStream = __nccwpck_require__(7127);
-
-const streamPipelinePromisified = promisify(stream.pipeline);
-
-class MaxBufferError extends Error {
-	constructor() {
-		super('maxBuffer exceeded');
-		this.name = 'MaxBufferError';
-	}
-}
-
-async function getStream(inputStream, options) {
-	if (!inputStream) {
-		throw new Error('Expected a stream');
-	}
-
-	options = {
-		maxBuffer: Infinity,
-		...options
-	};
-
-	const {maxBuffer} = options;
-	const stream = bufferStream(options);
-
-	await new Promise((resolve, reject) => {
-		const rejectPromise = error => {
-			// Don't retrieve an oversized buffer.
-			if (error && stream.getBufferedLength() <= BufferConstants.MAX_LENGTH) {
-				error.bufferedData = stream.getBufferedValue();
-			}
-
-			reject(error);
-		};
-
-		(async () => {
-			try {
-				await streamPipelinePromisified(inputStream, stream);
-				resolve();
-			} catch (error) {
-				rejectPromise(error);
-			}
-		})();
-
-		stream.on('data', () => {
-			if (stream.getBufferedLength() > maxBuffer) {
-				rejectPromise(new MaxBufferError());
-			}
-		});
-	});
-
-	return stream.getBufferedValue();
-}
-
-module.exports = getStream;
-module.exports.buffer = (stream, options) => getStream(stream, {...options, encoding: 'buffer'});
-module.exports.array = (stream, options) => getStream(stream, {...options, array: true});
-module.exports.MaxBufferError = MaxBufferError;
-
-
-/***/ }),
-
 /***/ 3075:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -13863,428 +12969,6 @@ function patch (fs) {
 
 /***/ }),
 
-/***/ 6985:
-/***/ ((__unused_webpack_module, exports) => {
-
-Object.defineProperty(exports, "__esModule", ({value:true}));exports.SIGNALS=void 0;
-
-const SIGNALS=[
-{
-name:"SIGHUP",
-number:1,
-action:"terminate",
-description:"Terminal closed",
-standard:"posix"},
-
-{
-name:"SIGINT",
-number:2,
-action:"terminate",
-description:"User interruption with CTRL-C",
-standard:"ansi"},
-
-{
-name:"SIGQUIT",
-number:3,
-action:"core",
-description:"User interruption with CTRL-\\",
-standard:"posix"},
-
-{
-name:"SIGILL",
-number:4,
-action:"core",
-description:"Invalid machine instruction",
-standard:"ansi"},
-
-{
-name:"SIGTRAP",
-number:5,
-action:"core",
-description:"Debugger breakpoint",
-standard:"posix"},
-
-{
-name:"SIGABRT",
-number:6,
-action:"core",
-description:"Aborted",
-standard:"ansi"},
-
-{
-name:"SIGIOT",
-number:6,
-action:"core",
-description:"Aborted",
-standard:"bsd"},
-
-{
-name:"SIGBUS",
-number:7,
-action:"core",
-description:
-"Bus error due to misaligned, non-existing address or paging error",
-standard:"bsd"},
-
-{
-name:"SIGEMT",
-number:7,
-action:"terminate",
-description:"Command should be emulated but is not implemented",
-standard:"other"},
-
-{
-name:"SIGFPE",
-number:8,
-action:"core",
-description:"Floating point arithmetic error",
-standard:"ansi"},
-
-{
-name:"SIGKILL",
-number:9,
-action:"terminate",
-description:"Forced termination",
-standard:"posix",
-forced:true},
-
-{
-name:"SIGUSR1",
-number:10,
-action:"terminate",
-description:"Application-specific signal",
-standard:"posix"},
-
-{
-name:"SIGSEGV",
-number:11,
-action:"core",
-description:"Segmentation fault",
-standard:"ansi"},
-
-{
-name:"SIGUSR2",
-number:12,
-action:"terminate",
-description:"Application-specific signal",
-standard:"posix"},
-
-{
-name:"SIGPIPE",
-number:13,
-action:"terminate",
-description:"Broken pipe or socket",
-standard:"posix"},
-
-{
-name:"SIGALRM",
-number:14,
-action:"terminate",
-description:"Timeout or timer",
-standard:"posix"},
-
-{
-name:"SIGTERM",
-number:15,
-action:"terminate",
-description:"Termination",
-standard:"ansi"},
-
-{
-name:"SIGSTKFLT",
-number:16,
-action:"terminate",
-description:"Stack is empty or overflowed",
-standard:"other"},
-
-{
-name:"SIGCHLD",
-number:17,
-action:"ignore",
-description:"Child process terminated, paused or unpaused",
-standard:"posix"},
-
-{
-name:"SIGCLD",
-number:17,
-action:"ignore",
-description:"Child process terminated, paused or unpaused",
-standard:"other"},
-
-{
-name:"SIGCONT",
-number:18,
-action:"unpause",
-description:"Unpaused",
-standard:"posix",
-forced:true},
-
-{
-name:"SIGSTOP",
-number:19,
-action:"pause",
-description:"Paused",
-standard:"posix",
-forced:true},
-
-{
-name:"SIGTSTP",
-number:20,
-action:"pause",
-description:"Paused using CTRL-Z or \"suspend\"",
-standard:"posix"},
-
-{
-name:"SIGTTIN",
-number:21,
-action:"pause",
-description:"Background process cannot read terminal input",
-standard:"posix"},
-
-{
-name:"SIGBREAK",
-number:21,
-action:"terminate",
-description:"User interruption with CTRL-BREAK",
-standard:"other"},
-
-{
-name:"SIGTTOU",
-number:22,
-action:"pause",
-description:"Background process cannot write to terminal output",
-standard:"posix"},
-
-{
-name:"SIGURG",
-number:23,
-action:"ignore",
-description:"Socket received out-of-band data",
-standard:"bsd"},
-
-{
-name:"SIGXCPU",
-number:24,
-action:"core",
-description:"Process timed out",
-standard:"bsd"},
-
-{
-name:"SIGXFSZ",
-number:25,
-action:"core",
-description:"File too big",
-standard:"bsd"},
-
-{
-name:"SIGVTALRM",
-number:26,
-action:"terminate",
-description:"Timeout or timer",
-standard:"bsd"},
-
-{
-name:"SIGPROF",
-number:27,
-action:"terminate",
-description:"Timeout or timer",
-standard:"bsd"},
-
-{
-name:"SIGWINCH",
-number:28,
-action:"ignore",
-description:"Terminal window size changed",
-standard:"bsd"},
-
-{
-name:"SIGIO",
-number:29,
-action:"terminate",
-description:"I/O is available",
-standard:"other"},
-
-{
-name:"SIGPOLL",
-number:29,
-action:"terminate",
-description:"Watched event",
-standard:"other"},
-
-{
-name:"SIGINFO",
-number:29,
-action:"ignore",
-description:"Request for process information",
-standard:"other"},
-
-{
-name:"SIGPWR",
-number:30,
-action:"terminate",
-description:"Device running out of power",
-standard:"systemv"},
-
-{
-name:"SIGSYS",
-number:31,
-action:"core",
-description:"Invalid system call",
-standard:"other"},
-
-{
-name:"SIGUNUSED",
-number:31,
-action:"terminate",
-description:"Invalid system call",
-standard:"other"}];exports.SIGNALS=SIGNALS;
-//# sourceMappingURL=core.js.map
-
-/***/ }),
-
-/***/ 1511:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-Object.defineProperty(exports, "__esModule", ({value:true}));exports.signalsByNumber=exports.signalsByName=void 0;var _os=__nccwpck_require__(857);
-
-var _signals=__nccwpck_require__(2169);
-var _realtime=__nccwpck_require__(9979);
-
-
-
-const getSignalsByName=function(){
-const signals=(0,_signals.getSignals)();
-return signals.reduce(getSignalByName,{});
-};
-
-const getSignalByName=function(
-signalByNameMemo,
-{name,number,description,supported,action,forced,standard})
-{
-return{
-...signalByNameMemo,
-[name]:{name,number,description,supported,action,forced,standard}};
-
-};
-
-const signalsByName=getSignalsByName();exports.signalsByName=signalsByName;
-
-
-
-
-const getSignalsByNumber=function(){
-const signals=(0,_signals.getSignals)();
-const length=_realtime.SIGRTMAX+1;
-const signalsA=Array.from({length},(value,number)=>
-getSignalByNumber(number,signals));
-
-return Object.assign({},...signalsA);
-};
-
-const getSignalByNumber=function(number,signals){
-const signal=findSignalByNumber(number,signals);
-
-if(signal===undefined){
-return{};
-}
-
-const{name,description,supported,action,forced,standard}=signal;
-return{
-[number]:{
-name,
-number,
-description,
-supported,
-action,
-forced,
-standard}};
-
-
-};
-
-
-
-const findSignalByNumber=function(number,signals){
-const signal=signals.find(({name})=>_os.constants.signals[name]===number);
-
-if(signal!==undefined){
-return signal;
-}
-
-return signals.find(signalA=>signalA.number===number);
-};
-
-const signalsByNumber=getSignalsByNumber();exports.signalsByNumber=signalsByNumber;
-//# sourceMappingURL=main.js.map
-
-/***/ }),
-
-/***/ 9979:
-/***/ ((__unused_webpack_module, exports) => {
-
-Object.defineProperty(exports, "__esModule", ({value:true}));exports.SIGRTMAX=exports.getRealtimeSignals=void 0;
-const getRealtimeSignals=function(){
-const length=SIGRTMAX-SIGRTMIN+1;
-return Array.from({length},getRealtimeSignal);
-};exports.getRealtimeSignals=getRealtimeSignals;
-
-const getRealtimeSignal=function(value,index){
-return{
-name:`SIGRT${index+1}`,
-number:SIGRTMIN+index,
-action:"terminate",
-description:"Application-specific signal (realtime)",
-standard:"posix"};
-
-};
-
-const SIGRTMIN=34;
-const SIGRTMAX=64;exports.SIGRTMAX=SIGRTMAX;
-//# sourceMappingURL=realtime.js.map
-
-/***/ }),
-
-/***/ 2169:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-Object.defineProperty(exports, "__esModule", ({value:true}));exports.getSignals=void 0;var _os=__nccwpck_require__(857);
-
-var _core=__nccwpck_require__(6985);
-var _realtime=__nccwpck_require__(9979);
-
-
-
-const getSignals=function(){
-const realtimeSignals=(0,_realtime.getRealtimeSignals)();
-const signals=[..._core.SIGNALS,...realtimeSignals].map(normalizeSignal);
-return signals;
-};exports.getSignals=getSignals;
-
-
-
-
-
-
-
-const normalizeSignal=function({
-name,
-number:defaultNumber,
-description,
-action,
-forced=false,
-standard})
-{
-const{
-signals:{[name]:constantSignal}}=
-_os.constants;
-const supported=constantSignal!==undefined;
-const number=supported?constantSignal:defaultNumber;
-return{name,number,description,supported,action,forced,standard};
-};
-//# sourceMappingURL=signals.js.map
-
-/***/ }),
-
 /***/ 6279:
 /***/ ((module) => {
 
@@ -15133,41 +13817,6 @@ module.exports = function(num) {
   }
   return false;
 };
-
-
-/***/ }),
-
-/***/ 3402:
-/***/ ((module) => {
-
-
-
-const isStream = stream =>
-	stream !== null &&
-	typeof stream === 'object' &&
-	typeof stream.pipe === 'function';
-
-isStream.writable = stream =>
-	isStream(stream) &&
-	stream.writable !== false &&
-	typeof stream._write === 'function' &&
-	typeof stream._writableState === 'object';
-
-isStream.readable = stream =>
-	isStream(stream) &&
-	stream.readable !== false &&
-	typeof stream._read === 'function' &&
-	typeof stream._readableState === 'object';
-
-isStream.duplex = stream =>
-	isStream.writable(stream) &&
-	isStream.readable(stream);
-
-isStream.transform = stream =>
-	isStream.duplex(stream) &&
-	typeof stream._transform === 'function';
-
-module.exports = isStream;
 
 
 /***/ }),
@@ -23822,54 +22471,6 @@ module.exports.sync = (paths, options) => {
 
 /***/ }),
 
-/***/ 5905:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-
-const { PassThrough } = __nccwpck_require__(2203);
-
-module.exports = function (/*streams...*/) {
-  var sources = []
-  var output  = new PassThrough({objectMode: true})
-
-  output.setMaxListeners(0)
-
-  output.add = add
-  output.isEmpty = isEmpty
-
-  output.on('unpipe', remove)
-
-  Array.prototype.slice.call(arguments).forEach(add)
-
-  return output
-
-  function add (source) {
-    if (Array.isArray(source)) {
-      source.forEach(add)
-      return this
-    }
-
-    sources.push(source);
-    source.once('end', remove.bind(null, source))
-    source.once('error', output.emit.bind(output, 'error'))
-    source.pipe(output, {end: false})
-    return this
-  }
-
-  function isEmpty () {
-    return sources.length == 0;
-  }
-
-  function remove (source) {
-    sources = sources.filter(function (it) { return it !== source })
-    if (!sources.length && output.readable) { output.end() }
-  }
-}
-
-
-/***/ }),
-
 /***/ 7167:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -24498,131 +23099,6 @@ micromatch.braceExpand = (pattern, options) => {
 // exposed for tests
 micromatch.hasBraces = hasBraces;
 module.exports = micromatch;
-
-
-/***/ }),
-
-/***/ 2490:
-/***/ ((module) => {
-
-
-
-const mimicFn = (to, from) => {
-	for (const prop of Reflect.ownKeys(from)) {
-		Object.defineProperty(to, prop, Object.getOwnPropertyDescriptor(from, prop));
-	}
-
-	return to;
-};
-
-module.exports = mimicFn;
-// TODO: Remove this for the next major release
-module.exports["default"] = mimicFn;
-
-
-/***/ }),
-
-/***/ 428:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-const path = __nccwpck_require__(6928);
-const pathKey = __nccwpck_require__(6166);
-
-const npmRunPath = options => {
-	options = {
-		cwd: process.cwd(),
-		path: process.env[pathKey()],
-		execPath: process.execPath,
-		...options
-	};
-
-	let previous;
-	let cwdPath = path.resolve(options.cwd);
-	const result = [];
-
-	while (previous !== cwdPath) {
-		result.push(path.join(cwdPath, 'node_modules/.bin'));
-		previous = cwdPath;
-		cwdPath = path.resolve(cwdPath, '..');
-	}
-
-	// Ensure the running `node` binary is used
-	const execPathDir = path.resolve(options.cwd, options.execPath, '..');
-	result.push(execPathDir);
-
-	return result.concat(options.path).join(path.delimiter);
-};
-
-module.exports = npmRunPath;
-// TODO: Remove this for the next major release
-module.exports["default"] = npmRunPath;
-
-module.exports.env = options => {
-	options = {
-		env: process.env,
-		...options
-	};
-
-	const env = {...options.env};
-	const path = pathKey({env});
-
-	options.path = env[path];
-	env[path] = module.exports(options);
-
-	return env;
-};
-
-
-/***/ }),
-
-/***/ 511:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-const mimicFn = __nccwpck_require__(2490);
-
-const calledFunctions = new WeakMap();
-
-const onetime = (function_, options = {}) => {
-	if (typeof function_ !== 'function') {
-		throw new TypeError('Expected a function');
-	}
-
-	let returnValue;
-	let callCount = 0;
-	const functionName = function_.displayName || function_.name || '<anonymous>';
-
-	const onetime = function (...arguments_) {
-		calledFunctions.set(onetime, ++callCount);
-
-		if (callCount === 1) {
-			returnValue = function_.apply(this, arguments_);
-			function_ = null;
-		} else if (options.throw === true) {
-			throw new Error(`Function \`${functionName}\` can only be called once`);
-		}
-
-		return returnValue;
-	};
-
-	mimicFn(onetime, function_);
-	calledFunctions.set(onetime, callCount);
-
-	return onetime;
-};
-
-module.exports = onetime;
-// TODO: Remove this for the next major release
-module.exports["default"] = onetime;
-
-module.exports.callCount = function_ => {
-	if (!calledFunctions.has(function_)) {
-		throw new Error(`The given function \`${function_.name}\` is not wrapped by the \`onetime\` package`);
-	}
-
-	return calledFunctions.get(function_);
-};
 
 
 /***/ }),
@@ -30479,275 +28955,6 @@ module.exports = /^#!(.*)/;
 
 /***/ }),
 
-/***/ 7461:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-// Note: since nyc uses this module to output coverage, any lines
-// that are in the direct sync flow of nyc's outputCoverage are
-// ignored, since we can never get coverage for them.
-// grab a reference to node's real process object right away
-var process = global.process
-
-const processOk = function (process) {
-  return process &&
-    typeof process === 'object' &&
-    typeof process.removeListener === 'function' &&
-    typeof process.emit === 'function' &&
-    typeof process.reallyExit === 'function' &&
-    typeof process.listeners === 'function' &&
-    typeof process.kill === 'function' &&
-    typeof process.pid === 'number' &&
-    typeof process.on === 'function'
-}
-
-// some kind of non-node environment, just no-op
-/* istanbul ignore if */
-if (!processOk(process)) {
-  module.exports = function () {
-    return function () {}
-  }
-} else {
-  var assert = __nccwpck_require__(2613)
-  var signals = __nccwpck_require__(5484)
-  var isWin = /^win/i.test(process.platform)
-
-  var EE = __nccwpck_require__(4434)
-  /* istanbul ignore if */
-  if (typeof EE !== 'function') {
-    EE = EE.EventEmitter
-  }
-
-  var emitter
-  if (process.__signal_exit_emitter__) {
-    emitter = process.__signal_exit_emitter__
-  } else {
-    emitter = process.__signal_exit_emitter__ = new EE()
-    emitter.count = 0
-    emitter.emitted = {}
-  }
-
-  // Because this emitter is a global, we have to check to see if a
-  // previous version of this library failed to enable infinite listeners.
-  // I know what you're about to say.  But literally everything about
-  // signal-exit is a compromise with evil.  Get used to it.
-  if (!emitter.infinite) {
-    emitter.setMaxListeners(Infinity)
-    emitter.infinite = true
-  }
-
-  module.exports = function (cb, opts) {
-    /* istanbul ignore if */
-    if (!processOk(global.process)) {
-      return function () {}
-    }
-    assert.equal(typeof cb, 'function', 'a callback must be provided for exit handler')
-
-    if (loaded === false) {
-      load()
-    }
-
-    var ev = 'exit'
-    if (opts && opts.alwaysLast) {
-      ev = 'afterexit'
-    }
-
-    var remove = function () {
-      emitter.removeListener(ev, cb)
-      if (emitter.listeners('exit').length === 0 &&
-          emitter.listeners('afterexit').length === 0) {
-        unload()
-      }
-    }
-    emitter.on(ev, cb)
-
-    return remove
-  }
-
-  var unload = function unload () {
-    if (!loaded || !processOk(global.process)) {
-      return
-    }
-    loaded = false
-
-    signals.forEach(function (sig) {
-      try {
-        process.removeListener(sig, sigListeners[sig])
-      } catch (er) {}
-    })
-    process.emit = originalProcessEmit
-    process.reallyExit = originalProcessReallyExit
-    emitter.count -= 1
-  }
-  module.exports.unload = unload
-
-  var emit = function emit (event, code, signal) {
-    /* istanbul ignore if */
-    if (emitter.emitted[event]) {
-      return
-    }
-    emitter.emitted[event] = true
-    emitter.emit(event, code, signal)
-  }
-
-  // { <signal>: <listener fn>, ... }
-  var sigListeners = {}
-  signals.forEach(function (sig) {
-    sigListeners[sig] = function listener () {
-      /* istanbul ignore if */
-      if (!processOk(global.process)) {
-        return
-      }
-      // If there are no other listeners, an exit is coming!
-      // Simplest way: remove us and then re-send the signal.
-      // We know that this will kill the process, so we can
-      // safely emit now.
-      var listeners = process.listeners(sig)
-      if (listeners.length === emitter.count) {
-        unload()
-        emit('exit', null, sig)
-        /* istanbul ignore next */
-        emit('afterexit', null, sig)
-        /* istanbul ignore next */
-        if (isWin && sig === 'SIGHUP') {
-          // "SIGHUP" throws an `ENOSYS` error on Windows,
-          // so use a supported signal instead
-          sig = 'SIGINT'
-        }
-        /* istanbul ignore next */
-        process.kill(process.pid, sig)
-      }
-    }
-  })
-
-  module.exports.signals = function () {
-    return signals
-  }
-
-  var loaded = false
-
-  var load = function load () {
-    if (loaded || !processOk(global.process)) {
-      return
-    }
-    loaded = true
-
-    // This is the number of onSignalExit's that are in play.
-    // It's important so that we can count the correct number of
-    // listeners on signals, and don't wait for the other one to
-    // handle it instead of us.
-    emitter.count += 1
-
-    signals = signals.filter(function (sig) {
-      try {
-        process.on(sig, sigListeners[sig])
-        return true
-      } catch (er) {
-        return false
-      }
-    })
-
-    process.emit = processEmit
-    process.reallyExit = processReallyExit
-  }
-  module.exports.load = load
-
-  var originalProcessReallyExit = process.reallyExit
-  var processReallyExit = function processReallyExit (code) {
-    /* istanbul ignore if */
-    if (!processOk(global.process)) {
-      return
-    }
-    process.exitCode = code || /* istanbul ignore next */ 0
-    emit('exit', process.exitCode, null)
-    /* istanbul ignore next */
-    emit('afterexit', process.exitCode, null)
-    /* istanbul ignore next */
-    originalProcessReallyExit.call(process, process.exitCode)
-  }
-
-  var originalProcessEmit = process.emit
-  var processEmit = function processEmit (ev, arg) {
-    if (ev === 'exit' && processOk(global.process)) {
-      /* istanbul ignore else */
-      if (arg !== undefined) {
-        process.exitCode = arg
-      }
-      var ret = originalProcessEmit.apply(this, arguments)
-      /* istanbul ignore next */
-      emit('exit', process.exitCode, null)
-      /* istanbul ignore next */
-      emit('afterexit', process.exitCode, null)
-      /* istanbul ignore next */
-      return ret
-    } else {
-      return originalProcessEmit.apply(this, arguments)
-    }
-  }
-}
-
-
-/***/ }),
-
-/***/ 5484:
-/***/ ((module) => {
-
-// This is not the set of all possible signals.
-//
-// It IS, however, the set of all signals that trigger
-// an exit on either Linux or BSD systems.  Linux is a
-// superset of the signal names supported on BSD, and
-// the unknown signals just fail to register, so we can
-// catch that easily enough.
-//
-// Don't bother with SIGKILL.  It's uncatchable, which
-// means that we can't fire any callbacks anyway.
-//
-// If a user does happen to register a handler on a non-
-// fatal signal like SIGWINCH or something, and then
-// exit, it'll end up firing `process.emit('exit')`, so
-// the handler will be fired anyway.
-//
-// SIGBUS, SIGFPE, SIGSEGV and SIGILL, when not raised
-// artificially, inherently leave the process in a
-// state from which it is not safe to try and enter JS
-// listeners.
-module.exports = [
-  'SIGABRT',
-  'SIGALRM',
-  'SIGHUP',
-  'SIGINT',
-  'SIGTERM'
-]
-
-if (process.platform !== 'win32') {
-  module.exports.push(
-    'SIGVTALRM',
-    'SIGXCPU',
-    'SIGXFSZ',
-    'SIGUSR2',
-    'SIGTRAP',
-    'SIGSYS',
-    'SIGQUIT',
-    'SIGIOT'
-    // should detect profiler and enable/disable accordingly.
-    // see #21
-    // 'SIGPROF'
-  )
-}
-
-if (process.platform === 'linux') {
-  module.exports.push(
-    'SIGIO',
-    'SIGPOLL',
-    'SIGPWR',
-    'SIGSTKFLT',
-    'SIGUNUSED'
-  )
-}
-
-
-/***/ }),
-
 /***/ 1226:
 /***/ ((module) => {
 
@@ -30876,30 +29083,7 @@ module.exports = x => {
 
 /***/ }),
 
-/***/ 5434:
-/***/ ((module) => {
-
-
-
-module.exports = input => {
-	const LF = typeof input === 'string' ? '\n' : '\n'.charCodeAt();
-	const CR = typeof input === 'string' ? '\r' : '\r'.charCodeAt();
-
-	if (input[input.length - 1] === LF) {
-		input = input.slice(0, input.length - 1);
-	}
-
-	if (input[input.length - 1] === CR) {
-		input = input.slice(0, input.length - 1);
-	}
-
-	return input;
-};
-
-
-/***/ }),
-
-/***/ 3892:
+/***/ 1511:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 /*!
@@ -59240,13 +57424,6 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("assert");
 
 /***/ }),
 
-/***/ 181:
-/***/ ((module) => {
-
-module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("buffer");
-
-/***/ }),
-
 /***/ 5317:
 /***/ ((module) => {
 
@@ -59349,6 +57526,13 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:dns");
 /***/ ((module) => {
 
 module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:events");
+
+/***/ }),
+
+/***/ 1455:
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
 
 /***/ }),
 
@@ -60718,52 +58902,131 @@ if (process.platform === 'linux') {
 }
 //# sourceMappingURL=signals.js.map
 
-/***/ })
+/***/ }),
 
-/******/ });
-/************************************************************************/
-/******/ // The module cache
-/******/ var __webpack_module_cache__ = {};
-/******/ 
-/******/ // The require function
-/******/ function __nccwpck_require__(moduleId) {
-/******/ 	// Check if module is in cache
-/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 	if (cachedModule !== undefined) {
-/******/ 		return cachedModule.exports;
-/******/ 	}
-/******/ 	// Create a new module (and put it into the cache)
-/******/ 	var module = __webpack_module_cache__[moduleId] = {
-/******/ 		// no module.id needed
-/******/ 		// no module.loaded needed
-/******/ 		exports: {}
-/******/ 	};
-/******/ 
-/******/ 	// Execute the module function
-/******/ 	var threw = true;
-/******/ 	try {
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nccwpck_require__);
-/******/ 		threw = false;
-/******/ 	} finally {
-/******/ 		if(threw) delete __webpack_module_cache__[moduleId];
-/******/ 	}
-/******/ 
-/******/ 	// Return the exports of the module
-/******/ 	return module.exports;
-/******/ }
-/******/ 
-/************************************************************************/
-/******/ /* webpack/runtime/compat */
-/******/ 
-/******/ if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = new URL('.', import.meta.url).pathname.slice(import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0, -1) + "/";
-/******/ 
-/************************************************************************/
-var __webpack_exports__ = {};
+/***/ 3507:
+/***/ ((__webpack_module__, __unused_webpack___webpack_exports__, __nccwpck_require__) => {
 
-;// CONCATENATED MODULE: external "node:fs/promises"
-const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs/promises");
-// EXTERNAL MODULE: external "node:path"
-var external_node_path_ = __nccwpck_require__(6760);
+__nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+/* harmony import */ var node_fs_promises__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(1455);
+/* harmony import */ var node_path__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(6760);
+/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(8225);
+/* harmony import */ var tinyexec__WEBPACK_IMPORTED_MODULE_3__ = __nccwpck_require__(6359);
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_4__ = __nccwpck_require__(263);
+
+
+
+
+
+async function transformFile(filePath, transformFn) {
+    const file = await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_0__.readFile)(filePath, { encoding: 'utf8' });
+    await (0,node_fs_promises__WEBPACK_IMPORTED_MODULE_0__.writeFile)(filePath, await transformFn(file), { encoding: 'utf8' });
+}
+async function bump() {
+    const { version, bumpType } = await (0,_util_js__WEBPACK_IMPORTED_MODULE_4__/* .getNextVersion */ .Y)();
+    if (bumpType === 'major' && version !== (0,_actions_core__WEBPACK_IMPORTED_MODULE_2__/* .getInput */ .V4)('majorVersion')) {
+        throw new Error('Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input.');
+    }
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_2__/* .info */ .pq)(`bumping to version ${version}`);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_2__/* .setOutput */ .uH)('version', version);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_2__/* .info */ .pq)('updating root package.json');
+    await updateRootPackageJson(version);
+    (0,_actions_core__WEBPACK_IMPORTED_MODULE_2__/* .info */ .pq)('setting version');
+    // abstract from different package managers
+    await (0,tinyexec__WEBPACK_IMPORTED_MODULE_3__.x)('node', ['node_modules/@changesets/cli/bin.js', 'version'], {
+        throwOnError: true
+    });
+}
+async function updateRootPackageJson(version) {
+    await transformFile((0,node_path__WEBPACK_IMPORTED_MODULE_1__.resolve)('package.json'), packageJson => (0,_util_js__WEBPACK_IMPORTED_MODULE_4__/* .formatJson */ .I)({
+        ...JSON.parse(packageJson),
+        version: `${version}`
+    }));
+}
+await bump();
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
+/***/ 263:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
+
+
+// EXPORTS
+__nccwpck_require__.d(__webpack_exports__, {
+  I: () => (/* binding */ formatJson),
+  Y: () => (/* binding */ getNextVersion)
+});
+
+// EXTERNAL MODULE: external "node:console"
+var external_node_console_ = __nccwpck_require__(7540);
+// EXTERNAL MODULE: external "node:fs/promises"
+var promises_ = __nccwpck_require__(1455);
+// EXTERNAL MODULE: ../../node_modules/.pnpm/@changesets+get-release-plan@4.0.16/node_modules/@changesets/get-release-plan/dist/changesets-get-release-plan.cjs.js
+var changesets_get_release_plan_cjs = __nccwpck_require__(6683);
+// EXTERNAL MODULE: ../../node_modules/.pnpm/@changesets+get-release-plan@4.0.16/node_modules/@changesets/get-release-plan/dist/changesets-get-release-plan.cjs.default.js
+var changesets_get_release_plan_cjs_default = __nccwpck_require__(7520);
+;// CONCATENATED MODULE: ../../node_modules/.pnpm/@changesets+get-release-plan@4.0.16/node_modules/@changesets/get-release-plan/dist/changesets-get-release-plan.cjs.mjs
+
+
+
+// EXTERNAL MODULE: ../../node_modules/.pnpm/semver@7.8.5/node_modules/semver/index.js
+var semver = __nccwpck_require__(2497);
+;// CONCATENATED MODULE: ./lib/build-packages/changesets-fixed-version-bump/util.js
+/* eslint-disable jsdoc/require-jsdoc */
+
+
+
+
+async function getPackageVersion() {
+    const packageJson = await (0,promises_.readFile)('package.json', 'utf8');
+    return JSON.parse(packageJson).version;
+}
+const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
+async function getNextVersion() {
+    const currentVersion = await getPackageVersion();
+    (0,external_node_console_.info)(`Current version: ${currentVersion}`);
+    const bumpType = await getBumpType();
+    (0,external_node_console_.info)(`Bump type: ${bumpType}`);
+    if (bumpType === 'none' || !bumpType) {
+        throw new Error('No changesets to release');
+    }
+    const version = (0,semver.inc)(currentVersion, bumpType);
+    if (!version) {
+        throw new Error(`Invalid new version -- current version: ${currentVersion}, bump type: ${bumpType}`);
+    }
+    return { version, bumpType };
+}
+async function getBumpType() {
+    const releasePlan = await (0,changesets_get_release_plan_cjs_default._default)(process.cwd());
+    (0,external_node_console_.info)(`Release plan: ${JSON.stringify(releasePlan)}`);
+    const versionIncreases = releasePlan.releases
+        .map(({ type }) => bumpTypeOrder.indexOf(type))
+        .sort((a, b) => b - a);
+    return bumpTypeOrder[Math.min(...versionIncreases)];
+}
+function formatJson(json) {
+    return JSON.stringify(json, null, 2) + '\n';
+}
+
+
+/***/ }),
+
+/***/ 8225:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
+
+
+// EXPORTS
+__nccwpck_require__.d(__webpack_exports__, {
+  V4: () => (/* binding */ getInput),
+  pq: () => (/* binding */ info),
+  uH: () => (/* binding */ setOutput)
+});
+
+// UNUSED EXPORTS: ExitCode, addPath, debug, endGroup, error, exportVariable, getBooleanInput, getIDToken, getMultilineInput, getState, group, isDebug, markdownSummary, notice, platform, saveState, setCommandEcho, setFailed, setSecret, startGroup, summary, toPlatformPath, toPosixPath, toWin32Path, warning
+
 // EXTERNAL MODULE: external "os"
 var external_os_ = __nccwpck_require__(857);
 ;// CONCATENATED MODULE: ../../node_modules/.pnpm/@actions+core@3.0.1/node_modules/@actions/core/lib/utils.js
@@ -63709,85 +61972,555 @@ function getIDToken(aud) {
  */
 
 //# sourceMappingURL=core.js.map
-// EXTERNAL MODULE: ../../node_modules/.pnpm/execa@5.1.1/node_modules/execa/index.js
-var execa = __nccwpck_require__(8994);
-// EXTERNAL MODULE: external "node:console"
-var external_node_console_ = __nccwpck_require__(7540);
-// EXTERNAL MODULE: ../../node_modules/.pnpm/@changesets+get-release-plan@4.0.16/node_modules/@changesets/get-release-plan/dist/changesets-get-release-plan.cjs.js
-var changesets_get_release_plan_cjs = __nccwpck_require__(6683);
-// EXTERNAL MODULE: ../../node_modules/.pnpm/@changesets+get-release-plan@4.0.16/node_modules/@changesets/get-release-plan/dist/changesets-get-release-plan.cjs.default.js
-var changesets_get_release_plan_cjs_default = __nccwpck_require__(7520);
-;// CONCATENATED MODULE: ../../node_modules/.pnpm/@changesets+get-release-plan@4.0.16/node_modules/@changesets/get-release-plan/dist/changesets-get-release-plan.cjs.mjs
+
+/***/ }),
+
+/***/ 6359:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
+
+
+// EXPORTS
+__nccwpck_require__.d(__webpack_exports__, {
+  x: () => (/* binding */ R)
+});
+
+// UNUSED EXPORTS: ExecProcess, NonZeroExitError, exec, execSync, normalizeSpawnCommand, xSync
+
+;// CONCATENATED MODULE: external "node:child_process"
+const external_node_child_process_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:child_process");
+;// CONCATENATED MODULE: external "node:process"
+const external_node_process_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:process");
+// EXTERNAL MODULE: external "node:path"
+var external_node_path_ = __nccwpck_require__(6760);
+;// CONCATENATED MODULE: external "node:stream/promises"
+const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:stream/promises");
+// EXTERNAL MODULE: external "node:stream"
+var external_node_stream_ = __nccwpck_require__(7075);
+;// CONCATENATED MODULE: external "node:readline"
+const external_node_readline_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:readline");
+;// CONCATENATED MODULE: external "node:fs"
+const external_node_fs_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:fs");
+;// CONCATENATED MODULE: ../../node_modules/.pnpm/tinyexec@1.2.4/node_modules/tinyexec/dist/main.mjs
 
 
 
-// EXTERNAL MODULE: ../../node_modules/.pnpm/semver@7.8.5/node_modules/semver/index.js
-var semver = __nccwpck_require__(2497);
-;// CONCATENATED MODULE: ./lib/build-packages/changesets-fixed-version-bump/util.js
-/* eslint-disable jsdoc/require-jsdoc */
 
 
 
 
-async function getPackageVersion() {
-    const packageJson = await (0,promises_namespaceObject.readFile)('package.json', 'utf8');
-    return JSON.parse(packageJson).version;
+//#region src/env.ts
+const h = /^path$/i;
+const g = {
+	key: "PATH",
+	value: ""
+};
+function _(e) {
+	for (const t in e) {
+		if (!Object.prototype.hasOwnProperty.call(e, t) || !h.test(t)) continue;
+		const n = e[t];
+		if (!n) return g;
+		return {
+			key: t,
+			value: n
+		};
+	}
+	return g;
 }
-const bumpTypeOrder = ['major', 'minor', 'patch', 'none'];
-async function getNextVersion() {
-    const currentVersion = await getPackageVersion();
-    (0,external_node_console_.info)(`Current version: ${currentVersion}`);
-    const bumpType = await getBumpType();
-    (0,external_node_console_.info)(`Bump type: ${bumpType}`);
-    if (bumpType === 'none' || !bumpType) {
-        throw new Error('No changesets to release');
-    }
-    const version = (0,semver.inc)(currentVersion, bumpType);
-    if (!version) {
-        throw new Error(`Invalid new version -- current version: ${currentVersion}, bump type: ${bumpType}`);
-    }
-    return { version, bumpType };
+function v(e, t) {
+	const n = t.value.split(external_node_path_.delimiter);
+	const r = [];
+	let o = e;
+	let c;
+	do {
+		r.push((0,external_node_path_.resolve)(o, "node_modules", ".bin"));
+		c = o;
+		o = (0,external_node_path_.dirname)(o);
+	} while (o !== c);
+	r.push((0,external_node_path_.dirname)(process.execPath));
+	const l = r.concat(n).join(external_node_path_.delimiter);
+	return {
+		key: t.key,
+		value: l
+	};
 }
-async function getBumpType() {
-    const releasePlan = await (0,changesets_get_release_plan_cjs_default._default)(process.cwd());
-    (0,external_node_console_.info)(`Release plan: ${JSON.stringify(releasePlan)}`);
-    const versionIncreases = releasePlan.releases
-        .map(({ type }) => bumpTypeOrder.indexOf(type))
-        .sort((a, b) => b - a);
-    return bumpTypeOrder[Math.min(...versionIncreases)];
+function y(e, t, n = true) {
+	const r = {
+		...process.env,
+		...t
+	};
+	if (!n) return r;
+	const i = v(e, _(r));
+	r[i.key] = i.value;
+	return r;
 }
-function formatJson(json) {
-    return JSON.stringify(json, null, 2) + '\n';
+//#endregion
+//#region src/stream.ts
+const b = (e) => {
+	let t = e.length;
+	const n = new external_node_stream_.PassThrough();
+	const r = () => {
+		if (--t === 0) n.end();
+	};
+	for (const t of e) (0,promises_namespaceObject.pipeline)(t, n, { end: false }).then(r).catch(r);
+	return n;
+};
+//#endregion
+//#region src/normalize.ts
+const x = /([()\][%!^"`<>&|;, *?])/g;
+const S = /^#!\s*(.+)/;
+const C = /\.(?:com|exe)$/i;
+const w = /node_modules[\\/]\.bin[\\/][^\\/]+\.cmd$/i;
+const T = process.platform === "win32";
+const E = [
+	".EXE",
+	".CMD",
+	".BAT",
+	".COM"
+];
+/**
+* Normalizes the command and arguments to work cross-platform.
+* On Windows, this basically handles things like shebangs, calling
+* `node_modules/.bin` commands, and escaping meta characters.
+* On other platforms, it just returns the command and arguments as-is.
+*/
+function D(e, t = [], n = {}) {
+	if (n.shell === true || !T) return {
+		command: e,
+		args: t,
+		options: n
+	};
+	let i = O(e, n);
+	let a = null;
+	if (i !== null) {
+		const e = 150;
+		const t = Buffer.alloc(e);
+		let n = null;
+		try {
+			n = (0,external_node_fs_namespaceObject.openSync)(i, "r");
+			(0,external_node_fs_namespaceObject.readSync)(n, t, 0, e, 0);
+		} catch {} finally {
+			if (n !== null) (0,external_node_fs_namespaceObject.closeSync)(n);
+		}
+		const o = t.toString().match(S);
+		if (o !== null) {
+			const e = o[1].trim();
+			const t = e.indexOf(" ");
+			const n = t !== -1 ? e.slice(0, t) : e;
+			const i = t !== -1 ? e.slice(t + 1) : "";
+			const s = (0,external_node_path_.basename)(n);
+			a = s === "env" ? i || null : s;
+		}
+	}
+	if (a !== null && i !== null) {
+		t = [i, ...t];
+		e = a;
+		i = O(e, n);
+	}
+	if (i === null || !C.test(i)) {
+		const r = i !== null && w.test(i);
+		e = (0,external_node_path_.normalize)(e);
+		e = e.replace(x, "^$1");
+		t = t.map((e) => {
+			e = e.replace(/(?=(\\+?)?)\1"/g, "$1$1\\\"");
+			e = e.replace(/(?=(\\+?)?)\1$/, "$1$1");
+			e = `"${e}"`;
+			e = e.replace(x, "^$1");
+			if (r) e = e.replace(x, "^$1");
+			return e;
+		});
+		t = [
+			"/d",
+			"/s",
+			"/c",
+			`"${[e, ...t].join(" ")}"`
+		];
+		e = n.env?.comspec ?? "cmd.exe";
+		n = {
+			...n,
+			windowsVerbatimArguments: true
+		};
+	}
+	return {
+		command: e,
+		args: t,
+		options: n
+	};
 }
-
-;// CONCATENATED MODULE: ./lib/build-packages/changesets-fixed-version-bump/index.js
-
-
-
-
-
-async function transformFile(filePath, transformFn) {
-    const file = await (0,promises_namespaceObject.readFile)(filePath, { encoding: 'utf8' });
-    await (0,promises_namespaceObject.writeFile)(filePath, await transformFn(file), { encoding: 'utf8' });
+/**
+* Resolves the command to an absolute path if possible.
+* Handles things like traversing PATH and adding extensions from PATHEXT
+*/
+function O(e, t) {
+	const r = (t.cwd ?? (0,external_node_process_namespaceObject.cwd)()).toString();
+	const a = t.env ?? process.env;
+	const o = _(a).value;
+	const c = e.includes("/") || e.includes("\\") ? [""] : [r, ...o.split(external_node_path_.delimiter)];
+	const l = a.PATHEXT ? a.PATHEXT.split(external_node_path_.delimiter) : E;
+	if (e.includes(".") && l[0] !== "") l.unshift("");
+	for (const t of c) {
+		const n = (0,external_node_path_.resolve)(r, t.startsWith("\"") && t.endsWith("\"") && t.length > 1 ? t.slice(1, -1) : t, e);
+		for (const e of l) {
+			const t = n + e;
+			try {
+				if ((0,external_node_fs_namespaceObject.statSync)(t).isFile()) return t;
+			} catch {}
+		}
+	}
+	return null;
 }
-async function bump() {
-    const { version, bumpType } = await getNextVersion();
-    if (bumpType === 'major' && version !== getInput('majorVersion')) {
-        throw new Error('Cannot apply major version bump. If you want to bump a major version, you must set the "majorVersion" input.');
-    }
-    info(`bumping to version ${version}`);
-    setOutput('version', version);
-    info('updating root package.json');
-    await updateRootPackageJson(version);
-    info('setting version');
-    // abstract from different package managers
-    await (0,execa.command)('node_modules/@changesets/cli/bin.js version');
+//#endregion
+//#region src/non-zero-exit-error.ts
+var k = class extends Error {
+	result;
+	output;
+	get exitCode() {
+		if (this.result.exitCode !== null) return this.result.exitCode;
+	}
+	constructor(e, t) {
+		super(`Process exited with non-zero status (${e.exitCode})`);
+		this.result = e;
+		this.output = t;
+	}
+};
+//#endregion
+//#region src/main.ts
+const A = /\r?\n/;
+const j = {
+	timeout: void 0,
+	persist: false
+};
+const M = { timeout: void 0 };
+const N = { windowsHide: true };
+function P(e) {
+	const t = new AbortController();
+	for (const n of e) {
+		if (n.aborted) {
+			t.abort();
+			return n;
+		}
+		const e = () => {
+			t.abort(n.reason);
+		};
+		n.addEventListener("abort", e, { signal: t.signal });
+	}
+	return t.signal;
 }
-async function updateRootPackageJson(version) {
-    await transformFile((0,external_node_path_.resolve)('package.json'), packageJson => formatJson({
-        ...JSON.parse(packageJson),
-        version: `${version}`
-    }));
+async function F(e) {
+	let t = "";
+	try {
+		for await (const n of e) t += n.toString();
+	} catch {}
+	return t;
 }
-bump();
+var I = class {
+	_process;
+	_aborted = false;
+	_options;
+	_command;
+	_args;
+	_resolveClose;
+	_processClosed;
+	_thrownError;
+	get process() {
+		return this._process;
+	}
+	get pid() {
+		return this._process?.pid;
+	}
+	get exitCode() {
+		if (this._process && this._process.exitCode !== null) return this._process.exitCode;
+	}
+	constructor(e, t, n) {
+		this._options = {
+			...j,
+			...n
+		};
+		this._command = e;
+		this._args = t ?? [];
+		this._processClosed = new Promise((e) => {
+			this._resolveClose = e;
+		});
+	}
+	kill(e) {
+		return this._process?.kill(e) === true;
+	}
+	get aborted() {
+		return this._aborted;
+	}
+	get killed() {
+		return this._process?.killed === true;
+	}
+	pipe(e, t, n) {
+		return z(e, t, {
+			...n,
+			stdin: this
+		});
+	}
+	async *[Symbol.asyncIterator]() {
+		const e = this._process;
+		if (!e) return;
+		const t = [];
+		if (this._streamErr) t.push(this._streamErr);
+		if (this._streamOut) t.push(this._streamOut);
+		const n = b(t);
+		const r = external_node_readline_namespaceObject.createInterface({ input: n });
+		for await (const e of r) yield e.toString();
+		await this._processClosed;
+		e.removeAllListeners();
+		if (this._thrownError) throw this._thrownError;
+		if (this._options?.throwOnError && this.exitCode !== 0 && this.exitCode !== void 0) throw new k(this);
+	}
+	async _waitForOutput() {
+		const e = this._process;
+		if (!e) throw new Error("No process was started");
+		const [t, n] = await Promise.all([this._streamOut ? F(this._streamOut) : "", this._streamErr ? F(this._streamErr) : ""]);
+		await this._processClosed;
+		const { stdin: r } = this._options;
+		if (r && typeof r !== "string") await r;
+		e.removeAllListeners();
+		if (this._thrownError) throw this._thrownError;
+		const i = {
+			stderr: n,
+			stdout: t,
+			exitCode: this.exitCode
+		};
+		if (this._options.throwOnError && this.exitCode !== 0 && this.exitCode !== void 0) throw new k(this, i);
+		return i;
+	}
+	then(e, t) {
+		return this._waitForOutput().then(e, t);
+	}
+	_streamOut;
+	_streamErr;
+	spawn() {
+		const t = (0,external_node_process_namespaceObject.cwd)();
+		const r = this._options;
+		const i = {
+			...N,
+			...r.nodeOptions
+		};
+		const a = [];
+		this._resetState();
+		if (r.timeout !== void 0) a.push(AbortSignal.timeout(r.timeout));
+		if (r.signal !== void 0) a.push(r.signal);
+		if (r.persist === true) i.detached = true;
+		if (a.length > 0) i.signal = P(a);
+		i.env = y(t, i.env, r.nodePath);
+		const o = D(this._command, this._args, i);
+		const s = (0,external_node_child_process_namespaceObject.spawn)(o.command, o.args, o.options);
+		if (s.stderr) this._streamErr = s.stderr;
+		if (s.stdout) this._streamOut = s.stdout;
+		this._process = s;
+		s.once("error", this._onError);
+		s.once("close", this._onClose);
+		if (s.stdin) {
+			const { stdin: e } = r;
+			if (typeof e === "string") s.stdin.end(e);
+			else e?.process?.stdout?.pipe(s.stdin);
+		}
+	}
+	_resetState() {
+		this._aborted = false;
+		this._processClosed = new Promise((e) => {
+			this._resolveClose = e;
+		});
+		this._thrownError = void 0;
+	}
+	_onError = (e) => {
+		if (e.name === "AbortError" && (!(e.cause instanceof Error) || e.cause.name !== "TimeoutError")) {
+			this._aborted = true;
+			return;
+		}
+		this._thrownError = e;
+	};
+	_onClose = () => {
+		if (this._resolveClose) this._resolveClose();
+	};
+};
+function L(e, r, i) {
+	const a = {
+		...M,
+		...i
+	};
+	const o = n();
+	const s = {
+		windowsHide: true,
+		...a.nodeOptions
+	};
+	if (a.timeout !== void 0) s.timeout = a.timeout;
+	s.env = y(o, s.env, a.nodePath);
+	const c = D(e, r ?? [], s);
+	const l = t(c.command, c.args, c.options);
+	if (l.error) throw l.error;
+	const u = l.stdout?.toString() ?? "";
+	const d = l.stderr?.toString() ?? "";
+	const f = l.status ?? void 0;
+	const p = l.signal != null;
+	const m = {
+		stdout: u,
+		stderr: d,
+		get exitCode() {
+			return f;
+		},
+		get pid() {
+			return l.pid;
+		},
+		get killed() {
+			return p;
+		},
+		*[Symbol.iterator]() {
+			for (const e of [u, d]) {
+				if (!e) continue;
+				const t = e.split(A);
+				if (t[t.length - 1] === "") t.pop();
+				yield* t;
+			}
+		}
+	};
+	if (a.throwOnError && f !== 0 && f !== void 0) throw new k(m, m);
+	return m;
+}
+const R = (e, t, n) => {
+	const r = new I(e, t, n);
+	r.spawn();
+	return r;
+};
+const z = R;
+const B = (/* unused pure expression or super */ null && (L));
+//#endregion
 
+
+
+/***/ })
+
+/******/ });
+/************************************************************************/
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __nccwpck_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	if (cachedModule !== undefined) {
+/******/ 		return cachedModule.exports;
+/******/ 	}
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	var threw = true;
+/******/ 	try {
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nccwpck_require__);
+/******/ 		threw = false;
+/******/ 	} finally {
+/******/ 		if(threw) delete __webpack_module_cache__[moduleId];
+/******/ 	}
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
+/************************************************************************/
+/******/ /* webpack/runtime/async module */
+/******/ (() => {
+/******/ 	var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
+/******/ 	var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 	var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 	var resolveQueue = (queue) => {
+/******/ 		if(queue && queue.d < 1) {
+/******/ 			queue.d = 1;
+/******/ 			queue.forEach((fn) => (fn.r--));
+/******/ 			queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 		}
+/******/ 	}
+/******/ 	var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 		if(dep !== null && typeof dep === "object") {
+/******/ 			if(dep[webpackQueues]) return dep;
+/******/ 			if(dep.then) {
+/******/ 				var queue = [];
+/******/ 				queue.d = 0;
+/******/ 				dep.then((r) => {
+/******/ 					obj[webpackExports] = r;
+/******/ 					resolveQueue(queue);
+/******/ 				}, (e) => {
+/******/ 					obj[webpackError] = e;
+/******/ 					resolveQueue(queue);
+/******/ 				});
+/******/ 				var obj = {};
+/******/ 				obj[webpackQueues] = (fn) => (fn(queue));
+/******/ 				return obj;
+/******/ 			}
+/******/ 		}
+/******/ 		var ret = {};
+/******/ 		ret[webpackQueues] = x => {};
+/******/ 		ret[webpackExports] = dep;
+/******/ 		return ret;
+/******/ 	}));
+/******/ 	__nccwpck_require__.a = (module, body, hasAwait) => {
+/******/ 		var queue;
+/******/ 		hasAwait && ((queue = []).d = -1);
+/******/ 		var depQueues = new Set();
+/******/ 		var exports = module.exports;
+/******/ 		var currentDeps;
+/******/ 		var outerResolve;
+/******/ 		var reject;
+/******/ 		var promise = new Promise((resolve, rej) => {
+/******/ 			reject = rej;
+/******/ 			outerResolve = resolve;
+/******/ 		});
+/******/ 		promise[webpackExports] = exports;
+/******/ 		promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
+/******/ 		module.exports = promise;
+/******/ 		body((deps) => {
+/******/ 			currentDeps = wrapDeps(deps);
+/******/ 			var fn;
+/******/ 			var getResult = () => (currentDeps.map((d) => {
+/******/ 				if(d[webpackError]) throw d[webpackError];
+/******/ 				return d[webpackExports];
+/******/ 			}))
+/******/ 			var promise = new Promise((resolve) => {
+/******/ 				fn = () => (resolve(getResult));
+/******/ 				fn.r = 0;
+/******/ 				var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
+/******/ 				currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
+/******/ 			});
+/******/ 			return fn.r ? promise : getResult();
+/******/ 		}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
+/******/ 		queue && queue.d < 0 && (queue.d = 0);
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__nccwpck_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/compat */
+/******/ 
+/******/ if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = new URL('.', import.meta.url).pathname.slice(import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0, -1) + "/";
+/******/ 
+/************************************************************************/
+/******/ 
+/******/ // startup
+/******/ // Load entry module and return exports
+/******/ // This entry module used 'module' so it can't be inlined
+/******/ var __webpack_exports__ = __nccwpck_require__(3507);
+/******/ __webpack_exports__ = await __webpack_exports__;
+/******/ 

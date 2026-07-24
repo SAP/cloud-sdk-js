@@ -40,7 +40,7 @@ jobs:
       - env:
           NEXT_PACKAGE_VERSION: ${{ steps.bump.outputs.version }}
         run: |
-          pnpm ts-node ${{ github.workspace }}/scripts/update-documentation-md.ts
+          node ${{ github.workspace }}/scripts/update-documentation-md.ts
           pnpm generate
 
       - name: merge Changelogs

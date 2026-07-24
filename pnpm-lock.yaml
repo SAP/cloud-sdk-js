@@ -65,9 +65,6 @@ importers:
       eslint:
         specifier: ^10.2.1
         version: 10.7.0
-      execa:
-        specifier: ^5.0.0
-        version: 5.1.1
       glob:
         specifier: ^13.0.6
         version: 13.0.6
@@ -92,6 +89,9 @@ importers:
       semver:
         specifier: ^7.7.4
         version: 7.8.5
+      tinyexec:
+        specifier: ^1.2.4
+        version: 1.2.4
       ts-jest:
         specifier: ^29.4.9
         version: 29.4.11(@babel/core@7.29.7)(@jest/transform@30.4.1)(@jest/types@30.4.1)(@typescript/typescript6@6.0.2)(babel-jest@30.4.1(@babel/core@7.29.7))(jest-util@30.4.1)(jest@30.4.2(@types/node@22.20.1)(ts-node@10.9.2(@types/node@22.20.1)(@typescript/typescript6@6.0.2)))
@@ -119,12 +119,12 @@ importers:
       '@changesets/get-release-plan':
         specifier: ^4.0.11
         version: 4.0.16
-      execa:
-        specifier: ^5.0.0
-        version: 5.1.1
       semver:
         specifier: ^7.7.4
         version: 7.8.5
+      tinyexec:
+        specifier: ^1.2.4
+        version: 1.2.4
     devDependencies:
       '@sap-cloud-sdk/test-util-build-internal':
         specifier: workspace:^
@@ -458,15 +458,15 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      execa:
-        specifier: ^5.0.0
-        version: 5.1.1
       memfs:
         specifier: ^4.57.2
         version: 4.64.0(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
         version: 3.9.5
+      tinyexec:
+        specifier: ^1.2.4
+        version: 1.2.4
 
   packages/generator-common:
     dependencies:
@@ -934,9 +934,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      execa:
-        specifier: ^5.0.0
-        version: 5.1.1
       express:
         specifier: ^4.22.1
         version: 4.22.2
@@ -967,6 +964,9 @@ importers:
       prettier:
         specifier: ^3.8.1
         version: 3.9.5
+      tinyexec:
+        specifier: ^1.2.4
+        version: 1.2.4
 
   test-packages/integration-tests:
     dependencies:
@@ -1016,9 +1016,6 @@ importers:
       bignumber.js:
         specifier: ^11.0.0
         version: 11.1.5
-      execa:
-        specifier: ^5.0.0
-        version: 5.1.1
       jsonwebtoken:
         specifier: ^9.0.3
         version: 9.0.3
@@ -1034,6 +1031,9 @@ importers:
       prettier:
         specifier: ^3.8.1
         version: 3.9.5
+      tinyexec:
+        specifier: ^1.2.4
+        version: 1.2.4
       winston:
         specifier: ^3.19.0
         version: 3.19.0
@@ -5792,6 +5792,10 @@ packages:
     peerDependencies:
       tslib: ^2
 
+  tinyexec@1.2.4:
+    resolution: {integrity: sha512-SHf/r48b7vOrjve9PxJo3MN5v5yuyjHvdUcrQffT3WXMUfnGmHDVbC4k3sHJaJTgZCwpUplIaAo5ANtMyp3YHg==}
+    engines: {node: '>=18'}
+
   tinyglobby@0.2.17:
     resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
     engines: {node: '>=12.0.0'}
@@ -6858,7 +6862,7 @@ snapshots:
 
   '@jest/pattern@30.4.0':
     dependencies:
-      '@types/node': 26.1.1
+      '@types/node': 22.20.1
       jest-regex-util: 30.4.0
 
   '@jest/reporters@30.4.1':
@@ -6949,7 +6953,7 @@ snapshots:
       '@jest/schemas': 30.4.1
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 26.1.1
+      '@types/node': 22.20.1
       '@types/yargs': 17.0.35
       chalk: 4.1.2
 
@@ -10086,7 +10090,7 @@ snapshots:
   jest-util@30.4.1:
     dependencies:
       '@jest/types': 30.4.1
-      '@types/node': 26.1.1
+      '@types/node': 22.20.1
       chalk: 4.1.2
       ci-info: 4.4.0
       graceful-fs: 4.2.11
@@ -11543,6 +11547,8 @@ snapshots:
   thingies@2.6.0(tslib@2.8.1):
     dependencies:
       tslib: 2.8.1
+
+  tinyexec@1.2.4: {}
 
   tinyglobby@0.2.17:
     dependencies:

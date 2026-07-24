@@ -1,10 +1,19 @@
 import { resolve, join } from 'path';
 import { existsSync, promises } from 'fs';
-import execa from 'execa';
 import {
   testOutputRootDir,
   testResourcesDir
 } from '../../../test-resources/generator';
+
+const tinyexec = import('tinyexec');
+
+async function execGenerator(args: string[], cwd: string): Promise<void> {
+  const { x } = await tinyexec;
+  const result = await x('node', args, { nodeOptions: { cwd } });
+  if (result.exitCode) {
+    throw new Error(result.stderr || result.stdout);
+  }
+}
 
 // TODO use fs-mock
 describe('odata negative tests', () => {
@@ -28,8 +37,7 @@ describe('odata negative tests', () => {
 
   it('should fail on faulty edmx', async () => {
     await expect(
-      execa(
-        'node',
+      execGenerator(
         [
           pathToGenerator,
           '-i',
@@ -37,7 +45,7 @@ describe('odata negative tests', () => {
           '-o',
           join(testDir, 'faulty-edmx')
         ],
-        { cwd: __dirname }
+        __dirname
       )
     ).rejects.toThrow(
       'No types found for API_TEST_SRV.A_TestComplexTypeMISTAKE'
@@ -46,8 +54,7 @@ describe('odata negative tests', () => {
 
   it('should fail on faulty typescript files.', async () => {
     await expect(
-      execa(
-        'node',
+      execGenerator(
         [
           pathToGenerator,
           '-i',
@@ -67,7 +74,7 @@ describe('odata negative tests', () => {
           '--transpile',
           '--skipValidation'
         ],
-        { cwd: __dirname }
+        __dirname
       )
     ).rejects.toThrow("Cannot assign to 'foo' because it is a constant.");
   }, 150000);

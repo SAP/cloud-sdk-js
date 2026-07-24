@@ -1,7 +1,6 @@
 import * as path from 'path';
 import { resolve } from 'path';
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import execa from 'execa';
 import * as fs from 'fs-extra';
 import { generate } from '@sap-cloud-sdk/generator/internal';
 import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
@@ -11,6 +10,7 @@ const pathToGenerator = path.resolve(
   __dirname,
   '../../../packages/generator/src/cli.ts'
 );
+const tinyexec = import('tinyexec');
 
 describe('OData generator CLI', () => {
   const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
@@ -32,14 +32,20 @@ describe('OData generator CLI', () => {
   });
 
   it('should fail if mandatory parameters are not there', async () => {
-    await expect(() =>
-      execa.command(`npx ts-node ${pathToGenerator}`)
-    ).rejects.toThrow(/Missing required arguments: input, outputDir/);
+    const { x } = await tinyexec;
+    const result = await x('npx', ['ts-node', pathToGenerator]);
+    expect(result.exitCode).not.toBe(0);
+    expect(result.stderr || result.stdout).toMatch(
+      /Missing required arguments: input, outputDir/
+    );
   }, 60000);
 
   it('should read config', async () => {
+    const { x } = await tinyexec;
     await expect(
-      execa.command(`npx ts-node ${pathToGenerator} -c ${pathToConfig}`)
+      x('npx', ['ts-node', pathToGenerator, '-c', pathToConfig], {
+        throwOnError: true
+      })
     ).resolves.not.toThrow();
   }, 60000);
 

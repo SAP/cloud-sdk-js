@@ -1,10 +1,19 @@
 import { resolve, join } from 'path';
 import { existsSync, promises } from 'fs';
-import execa from 'execa';
 import {
   testOutputRootDir,
   testResourcesDir
 } from '../../../test-resources/generator';
+
+const tinyexec = import('tinyexec');
+
+async function execGenerator(args: string[], cwd: string): Promise<void> {
+  const { x } = await tinyexec;
+  const result = await x('node', args, { nodeOptions: { cwd } });
+  if (result.exitCode) {
+    throw new Error(result.stderr || result.stdout);
+  }
+}
 
 // TODO use fs-mock here
 describe('openapi negative tests', () => {
@@ -31,8 +40,7 @@ describe('openapi negative tests', () => {
     await promises.mkdir(output);
 
     await expect(
-      execa(
-        'node',
+      execGenerator(
         [
           pathToGenerator,
           '--input',
@@ -41,7 +49,7 @@ describe('openapi negative tests', () => {
           output,
           '--clearOutputDir'
         ],
-        { cwd: __dirname }
+        __dirname
       )
       // In the spec file the http method is not set
     ).rejects.toThrow(
@@ -53,8 +61,7 @@ describe('openapi negative tests', () => {
     const output = join(testDir, 'transpilation-failed-1');
     await promises.mkdir(output);
     await expect(
-      execa(
-        'node',
+      execGenerator(
         [
           pathToGenerator,
           '--input',
@@ -69,7 +76,7 @@ describe('openapi negative tests', () => {
           '--tsconfig',
           resolve(testResourcesDir, 'faulty-openapi-tsconfig', 'tsconfig.json')
         ],
-        { cwd: __dirname }
+        __dirname
       )
       // In the faulty tsconfig.json a non existing lib is included
     ).rejects.toThrow("typescript/lib/lib.non-exisiting-lib.d.ts' not found");
@@ -79,8 +86,7 @@ describe('openapi negative tests', () => {
     const output = join(testDir, 'transpilation-failed-2');
     await promises.mkdir(output);
     await expect(
-      execa(
-        'node',
+      execGenerator(
         [
           pathToGenerator,
           '-i',
@@ -96,7 +102,7 @@ describe('openapi negative tests', () => {
           '--include',
           resolve(testResourcesDir, 'faulty-typescript', 'faulty-typescript.ts')
         ],
-        { cwd: __dirname }
+        __dirname
       )
       // In the faulty tsconfig.json a non existing lib is included
     ).rejects.toThrow("Cannot assign to 'foo' because it is a constant.");

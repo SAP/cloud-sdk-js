@@ -1,9 +1,10 @@
 import { resolve } from 'path';
 import { writeFile, readFile, removeSync } from 'fs-extra';
-import execa from 'execa';
 import { getApiSpecificUsage } from './generation-and-usage';
 import { entityCodeSample } from './code-samples';
 import type { VdmServiceMetadata } from '../vdm-types';
+
+const tinyexec = import('tinyexec');
 
 describe('generation-and-usage', () => {
   const service = {
@@ -100,15 +101,20 @@ describe('generation-and-usage', () => {
     const tsFile = 'generic-get-all-code-sample.ts';
     const jsFile = tsFile.replace('.ts', '.js');
     await writeFile(resolve(__dirname, tsFile), codeSnippet);
-    await execa('npx', [
-      'tsc',
-      resolve(__dirname, tsFile),
-      '--esModuleInterop',
-      '--target',
-      'es2019',
-      '--module',
-      'commonjs'
-    ]);
+    const { x } = await tinyexec;
+    await x(
+      'npx',
+      [
+        'tsc',
+        resolve(__dirname, tsFile),
+        '--esModuleInterop',
+        '--target',
+        'es2019',
+        '--module',
+        'commonjs'
+      ],
+      { throwOnError: true }
+    );
     await expect(readFile(resolve(__dirname, jsFile))).resolves.toBeDefined();
     [tsFile, jsFile].map(file => removeSync(resolve(__dirname, file)));
   }, 60000);

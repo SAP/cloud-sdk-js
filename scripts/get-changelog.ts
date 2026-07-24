@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { getPackageVersion } from './get-package-version';
+import { getPackageVersion } from './get-package-version.ts';
 
 function openFile(filePath: string): string {
   return readFileSync(filePath, { encoding: 'utf8' });

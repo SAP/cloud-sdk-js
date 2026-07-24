@@ -1,16 +1,17 @@
 /* eslint-disable no-console */
-import { lstatSync, readdirSync, renameSync, readFileSync } from 'fs';
-import { resolve, basename, extname } from 'path';
-import execa from 'execa';
-import { transformFile } from './util';
-import { deflate } from 'zlib';
-import { promisify } from 'util';
+import { lstatSync, readdirSync, renameSync, readFileSync } from 'node:fs';
+import { resolve, basename, extname } from 'node:path';
+import { transformFile } from './util.ts';
+import { deflate } from 'node:zlib';
+import { promisify } from 'node:util';
+import { x } from 'tinyexec';
 
 const deflateP = promisify(deflate);
 
 const docPath = resolve(
   JSON.parse(readFileSync('tsconfig.typedoc.json', 'utf8')).typedocOptions.out
 );
+const scriptDir = import.meta.dirname;
 
 const isDirectory = (entryPath: string) => lstatSync(entryPath).isDirectory();
 type NestedArray<T> = (T | NestedArray<T>)[];
@@ -21,7 +22,7 @@ const flatten = <T>(arr: NestedArray<T>): T[] =>
       Array.isArray(curr) ? [...prev, ...flatten(curr)] : [...prev, curr],
     []
   );
-const inputDirAbsPath = (input: string) => resolve(__dirname, input);
+const inputDirAbsPath = (input: string) => resolve(scriptDir, input);
 
 const readDir = (input: string): NestedArray<string> => {
   const absPath = inputDirAbsPath(input);
@@ -177,11 +178,12 @@ function validateLogs(generationLogs: string) {
 }
 
 async function generateDocs() {
-  const generationLogs = await execa.command(
-    'typedoc --tsconfig tsconfig.typedoc.json',
+  const generationLogs = await x(
+    'typedoc',
+    ['--tsconfig', 'tsconfig.typedoc.json'],
     {
-      cwd: resolve(),
-      encoding: 'utf8'
+      nodeOptions: { cwd: resolve() },
+      throwOnError: true
     }
   );
   validateLogs(generationLogs.stdout);

@@ -1,7 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { getInput, info, setOutput } from '@actions/core';
-import { command } from 'execa';
+import { x } from 'tinyexec';
 import { formatJson, getNextVersion } from './util.js';
 
 async function transformFile(
@@ -27,7 +27,9 @@ async function bump() {
 
   info('setting version');
   // abstract from different package managers
-  await command('node_modules/@changesets/cli/bin.js version');
+  await x('node', ['node_modules/@changesets/cli/bin.js', 'version'], {
+    throwOnError: true
+  });
 }
 
 async function updateRootPackageJson(version: string) {
@@ -39,4 +41,4 @@ async function updateRootPackageJson(version: string) {
   );
 }
 
-bump();
+await bump();

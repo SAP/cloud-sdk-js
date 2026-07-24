@@ -21,8 +21,6 @@ on:
         required: false
         default: false
     secrets:
-      NPM_TOKEN_ARTIFACTORY:
-        required: false
       SLACK_WEBHOOK:
         required: false
 

@@ -41,7 +41,6 @@ jobs:
       id-token: write
     uses: ./.github/workflows/build.yml
     secrets:
-      NPM_TOKEN_ARTIFACTORY: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     with:
       canary-release-skip-checks: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'Skip Tests and Checks (Force Release)' }}

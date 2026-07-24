@@ -4,10 +4,11 @@ import { isReferenceObject } from '../schema-util';
 import { ensureUniqueNames } from './unique-naming';
 import { ensureValidSchemaNames } from './schema-naming';
 import type { OpenAPIV3 } from 'openapi-types';
-import type { $Refs } from '@apidevtools/json-schema-ref-parser';
 import type { SchemaNaming } from '../openapi-types';
 import type { SchemaRefMapping } from './parsing-info';
 import type { ParserOptions } from './options';
+
+type ResolvedOpenApiRefs = Awaited<ReturnType<typeof SwaggerParser.resolve>>;
 
 /**
  * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.
@@ -88,7 +89,7 @@ export class OpenApiDocumentRefs {
    * @param schemaRefMapping - Mapping between schema references and schema naming.
    */
   private constructor(
-    private refs: $Refs,
+    private refs: ResolvedOpenApiRefs,
     private schemaRefMapping: SchemaRefMapping
   ) {}
 

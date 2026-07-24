@@ -10,7 +10,6 @@
     "postcompile": "ncc build lib/build-packages/check-license/index.js --out ../../.github/actions/check-license/",
     "lint": "eslint && prettier --check **/*.ts",
     "lint:fix": "eslint --fix --quiet && prettier --write **/*.ts",
-    "check:dependencies": "depcheck --skip-missing=true .",
     "all": "pnpm install && pnpm run lint && pnpm run compile"
   },
   "dependencies": {
@@ -20,7 +19,6 @@
   "devDependencies": {
     "@typescript/native": "npm:typescript@^7.0.2",
     "@vercel/ncc": "^0.44.1",
-    "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
     "prettier": "^3.8.1"
   }

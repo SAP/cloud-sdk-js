@@ -15,7 +15,6 @@
   },
   "scripts": {
     "generate": "ts-node generate-common-entity.ts",
-    "check:dependencies": "depcheck .",
     "lint": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"
   },
@@ -24,7 +23,6 @@
     "bignumber.js": "^11.0.0"
   },
   "devDependencies": {
-    "depcheck": "^1.4.7",
     "prettier": "^3.8.1"
   },
   "peerDependencies": {

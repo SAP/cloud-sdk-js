@@ -36,7 +36,6 @@
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck . --ignores=memfs",
     "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
@@ -56,7 +55,6 @@
     "@types/fast-levenshtein": "^0.0.4",
     "@types/fs-extra": "^11.0.4",
     "@types/yargs": "^17.0.33",
-    "depcheck": "^1.4.7",
     "memfs": "^4.57.2"
   }
 }

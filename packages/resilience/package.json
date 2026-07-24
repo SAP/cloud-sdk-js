@@ -37,7 +37,6 @@
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "check:dependencies": "depcheck .",
     "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
@@ -50,7 +49,6 @@
     "@typescript/native": "npm:typescript@^7.0.2",
     "@types/async-retry": "^1.4.9",
     "@types/opossum": "^8.1.9",
-    "depcheck": "^1.4.7",
     "nock": "^14.0.11",
     "prettier": "^3.8.1"
   }

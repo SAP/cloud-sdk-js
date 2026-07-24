@@ -13,7 +13,6 @@
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
-    "check:dependencies": "depcheck .",
     "all": "yarn && yarn lint && yarn compile"
   },
   "dependencies": {
@@ -22,7 +21,6 @@
   },
   "devDependencies": {
     "@typescript/native": "npm:typescript@^7.0.2",
-    "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
     "prettier": "^3.8.1"
   }

@@ -75354,8 +75354,7 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_4__ = __nccwpck_require__(9098);
 /* harmony import */ var _sap_cloud_sdk_util__WEBPACK_IMPORTED_MODULE_5__ = __nccwpck_require__(7479);
 /* harmony import */ var _sap_cloud_sdk_generator_common_dist_compiler_js__WEBPACK_IMPORTED_MODULE_6__ = __nccwpck_require__(7875);
-/* harmony import */ var _sap_cloud_sdk_generator_common_dist_file_writer_create_file_js__WEBPACK_IMPORTED_MODULE_7__ = __nccwpck_require__(9888);
-/* harmony import */ var _manypkg_get_packages__WEBPACK_IMPORTED_MODULE_8__ = __nccwpck_require__(2088);
+/* harmony import */ var _manypkg_get_packages__WEBPACK_IMPORTED_MODULE_7__ = __nccwpck_require__(2088);
 /* eslint-disable jsdoc/require-jsdoc */
 
 
@@ -75364,8 +75363,6 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 
 
 // import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
-
-// eslint-disable-next-line import-x/no-internal-modules
 
 
 const regexExportedIndex = /export(?:type)?\{([\w,]+)\}from'\./g;
@@ -75476,7 +75473,7 @@ async function checkApiOfPackage(pathToPackage) {
             // We have things in our sources like  `#!/usr/bin/env node` in CLI `.js` files which is not working with parser of prettier.
             createFileOptions: {
                 overwrite: true,
-                prettierOptions: _sap_cloud_sdk_generator_common_dist_file_writer_create_file_js__WEBPACK_IMPORTED_MODULE_7__.defaultPrettierConfig,
+                prettierOptions: {},
                 usePrettier: false
             }
         }, {
@@ -75660,7 +75657,7 @@ function compareBarrels(dirContents, exportedFiles, barrelFilePath) {
     return missingBarrelExports.length || extraBarrelExports.length;
 }
 async function runCheckApi() {
-    const { packages } = await (0,_manypkg_get_packages__WEBPACK_IMPORTED_MODULE_8__.getPackages)(process.cwd());
+    const { packages } = await (0,_manypkg_get_packages__WEBPACK_IMPORTED_MODULE_7__.getPackages)(process.cwd());
     const excludedPackages = getListFromInput('excluded_packages');
     const packagesToCheck = packages.filter(pkg => pkg.relativeDir.startsWith('packages') &&
         !excludedPackages.some(excl => pkg.relativeDir.includes(excl)));

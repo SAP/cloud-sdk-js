@@ -1,4 +1,5 @@
 import SwaggerParser from '@apidevtools/swagger-parser';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   isAllOfSchema,
   isOneOfSchema,
@@ -7,11 +8,13 @@ import {
 import {
   parseObjectSchema,
   parseSchema,
-  parseSchemaProperties
+  parseSchemaProperties,
+  isNullableSchema,
+  stripNullability
 } from './schema';
 import { parseApis } from './api';
 import { createRefs } from './refs';
-import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 import type {
   OpenApiDocument,
@@ -20,6 +23,8 @@ import type {
 } from '../openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
 import type { ParserOptions } from './options';
+
+const logger = createLogger('openapi-generator');
 
 /**
  * Parse an OpenAPI document.
@@ -30,14 +35,21 @@ import type { ParserOptions } from './options';
  * @internal
  */
 export async function parseOpenApiDocument(
-  fileContent: OpenAPIV3.Document,
+  fileContent: OpenAPIV3.Document | OpenAPIV3_1.Document,
   serviceOptions: ServiceOptions,
   options: ParserOptions
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
-  const document = (await SwaggerParser.parse(
-    clonedContent
-  )) as OpenAPIV3.Document;
+  warnOnUnsupportedFeatures(clonedContent);
+  // OpenAPI 3.1 makes 'paths' optional, but the underlying validator still
+  // requires the key to be present. Inject an empty 'paths' object so a
+  // schemas-/webhooks-only document validates.
+  if (!clonedContent.paths) {
+    clonedContent.paths = {};
+  }
+  // SwaggerParser.parse returns OpenAPI.Document (V2 | V3 | V3_1). We know the input is 3.x.
+  const document = (await SwaggerParser.parse(clonedContent)) as
+    OpenAPIV3.Document | OpenAPIV3_1.Document;
   const refs = await createRefs(document, options);
   const schemas = parseSchemas(document, refs, options);
   sanitizeDiscriminatedSchemas(schemas, refs, options);
@@ -49,6 +61,37 @@ export async function parseOpenApiDocument(
     serviceName: serviceOptions.directoryName,
     schemas
   };
+}
+
+/**
+ * Warn about OpenAPI 3.1 top-level features that are not represented in the
+ * generated client, so their omission is explicit rather than silent.
+ * @param document - The OpenAPI document to inspect.
+ */
+function warnOnUnsupportedFeatures(
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document
+): void {
+  const doc = document as Record<string, any>;
+  const webhookNames = Object.keys(doc.webhooks || {});
+  if (webhookNames.length) {
+    logger.warn(
+      `The document defines webhook(s) [${webhookNames.join(', ')}], which represent inbound requests to the API consumer. No client code is generated for webhooks.`
+    );
+  }
+
+  const pathItemNames = Object.keys(
+    (document as any).components?.pathItems || {}
+  );
+  if (pathItemNames.length) {
+    logger.warn(
+      `The document defines reusable path item(s) in components/pathItems [${pathItemNames.join(', ')}]. These are an OpenAPI 3.1 feature used as targets for $ref in webhooks or other path items. No client code is generated for them directly.`
+    );
+  }
+  if (!document.paths || !Object.keys(document.paths).length) {
+    logger.info(
+      'The document does not define any paths. Only schema models will be generated.'
+    );
+  }
 }
 
 type OpenApiPersistedSchemaWithDiscriminator = OpenApiPersistedSchema & {
@@ -108,17 +151,19 @@ async function sanitizeDiscriminatedSchemas(
  * @internal
  */
 export function parseSchemas(
-  document: OpenAPIV3.Document,
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiPersistedSchema[] {
   return Object.entries(document.components?.schemas || {}).map(
     ([name, schema]) => ({
       ...refs.getSchemaNaming(`#/components/schemas/${name}`),
-      schema: parseSchema(schema, refs, options),
+      // Nullability is carried by the 'nullable' flag below (serialized as
+      // '| null'), so strip it from the schema to avoid emitting it twice.
+      schema: parseSchema(stripNullability(schema), refs, options),
       description: refs.resolveObject(schema).description,
       schemaProperties: parseSchemaProperties(schema),
-      nullable: 'nullable' in schema && schema.nullable ? true : false
+      nullable: isNullableSchema(schema)
     })
   );
 }

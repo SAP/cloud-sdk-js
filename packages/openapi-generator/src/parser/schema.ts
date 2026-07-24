@@ -4,18 +4,64 @@ import { getType } from './type-mapping';
 import type { OpenAPIV3 } from 'openapi-types';
 import type {
   OpenApiArraySchema,
+  OpenApiConstSchema,
   OpenApiDiscriminator,
   OpenApiEnumSchema,
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty,
   OpenApiReferenceSchema,
   OpenApiSchema,
-  OpenApiSchemaProperties
+  OpenApiSchemaProperties,
+  OpenApiV3xSchema,
+  OpenApiTupleSchema
 } from '../openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
 import type { ParserOptions } from './options';
 
 const logger = createLogger('openapi-generator');
+
+/**
+ * Get the `type` keyword of a schema as an array of type strings.
+ * In OpenAPI 3.0.x this is a single string, in 3.1 it may already be an array.
+ * @param schema - The schema to read the type from.
+ * @returns The declared types as an array. Empty if no type is declared.
+ * @internal
+ */
+export function getSchemaTypes(schema: OpenApiV3xSchema): string[] {
+  const { type } = schema;
+  if (type === undefined) {
+    return [];
+  }
+  return Array.isArray(type) ? type : [type];
+}
+
+/**
+ * Check whether a schema declares the given type. Handles both the single
+ * string (3.0) and array (3.1) forms of the `type` keyword.
+ * @param schema - The schema to check.
+ * @param type - The type to check for.
+ * @returns Whether the schema declares the given type.
+ * @internal
+ */
+export function hasType(schema: OpenApiV3xSchema, type: string): boolean {
+  return getSchemaTypes(schema).includes(type);
+}
+
+/**
+ * Check whether a schema is nullable. In OpenAPI 3.0.x this is expressed via
+ * `nullable: true`, in 3.1 via a `"null"` entry in the `type` array.
+ * @param schema - The schema to check.
+ * @returns Whether the schema is nullable.
+ * @internal
+ */
+export function isNullableSchema(
+  schema: OpenAPIV3.ReferenceObject | OpenApiV3xSchema
+): boolean {
+  if (isReferenceObject(schema)) {
+    return false;
+  }
+  return !!schema.nullable || hasType(schema, 'null');
+}
 
 /**
  * Parse the original schema or reference object to a serializable schema.
@@ -26,7 +72,7 @@ const logger = createLogger('openapi-generator');
  * @internal
  */
 export function parseSchema(
-  schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined,
+  schema: OpenApiV3xSchema | OpenAPIV3.ReferenceObject | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiSchema {
@@ -39,7 +85,49 @@ export function parseSchema(
     return parseReferenceSchema(schema, refs);
   }
 
-  if (schema.type === 'array') {
+  const types = getSchemaTypes(schema);
+
+  // OpenAPI 3.1: nullability expressed as '"null"' within the 'type' array.
+  if (types.includes('null')) {
+    const nonNullTypes = types.filter(type => type !== 'null');
+    // A schema that is only 'null'.
+    if (!nonNullTypes.length && !hasStructuralKeywords(schema)) {
+      return { type: 'null' };
+    }
+    const { nullable: _, ...coreSchema } = schema;
+    return makeNullable(
+      parseSchema(
+        {
+          ...coreSchema,
+          type: nonNullTypes.length === 1 ? nonNullTypes[0] : nonNullTypes
+        },
+        refs,
+        options
+      )
+    );
+  }
+
+  // OpenAPI 3.1: multiple types form a union.
+  if (types.length > 1) {
+    return {
+      anyOf: types.map(type => parseSchema({ ...schema, type }, refs, options))
+    };
+  }
+
+  // OpenAPI 3.1: 'const' represents a single fixed value.
+  if (schema.const !== undefined) {
+    return parseConstSchema(schema);
+  }
+
+  // OpenAPI 3.1: 'prefixItems' represents a tuple.
+  if (schema.prefixItems?.length) {
+    return parseTupleSchema(schema, refs, options);
+  }
+
+  if (
+    hasType(schema, 'array') ||
+    (schema.items && !hasType(schema, 'object'))
+  ) {
     return parseArraySchema(schema, refs, options);
   }
 
@@ -62,9 +150,10 @@ export function parseSchema(
   // An object schema should be parsed after allOf, anyOf, oneOf.
   // When object.properties are at the same level with anyOf, oneOf, allOf, they should be treated as part of allOf, etc.
   if (
-    schema.type === 'object' ||
+    hasType(schema, 'object') ||
     schema.properties ||
-    schema.additionalProperties
+    schema.additionalProperties ||
+    schema.patternProperties
   ) {
     return parseObjectSchema(schema, refs, options);
   }
@@ -75,9 +164,55 @@ export function parseSchema(
     };
   }
 
+  // OpenAPI 3.1 / JSON Schema 2020-12 expresses binary string content via
+  // 'contentEncoding'/'contentMediaType' instead of the 3.0 'format: binary'
+  // idiom. Map such content-encoded strings to 'Blob', consistent with the
+  // binary handling elsewhere.
+  if (
+    hasType(schema, 'string') &&
+    (schema.contentEncoding || schema.contentMediaType)
+  ) {
+    return { type: 'Blob' };
+  }
+
   return {
     type: getType(schema.type, schema.format)
   };
+}
+
+/**
+ * Check whether a schema defines structural keywords that carry meaning beyond
+ * its declared `type`.
+ * @param schema - The schema to check.
+ * @returns Whether the schema has structural keywords.
+ */
+function hasStructuralKeywords(schema: OpenApiV3xSchema): boolean {
+  return !!(
+    schema.properties ||
+    schema.additionalProperties ||
+    schema.patternProperties ||
+    schema.items ||
+    schema.prefixItems ||
+    schema.oneOf ||
+    schema.allOf ||
+    schema.anyOf ||
+    schema.not ||
+    schema.enum ||
+    schema.const !== undefined ||
+    schema.discriminator
+  );
+}
+
+/**
+ * Wrap a parsed schema so that it also allows `null`.
+ * @param schema - The parsed schema to make nullable.
+ * @returns A schema that additionally allows `null`.
+ */
+function makeNullable(schema: OpenApiSchema): OpenApiSchema {
+  if ('anyOf' in schema && Array.isArray(schema.anyOf)) {
+    return { ...schema, anyOf: [...schema.anyOf, { type: 'null' }] };
+  }
+  return { anyOf: [schema, { type: 'null' }] };
 }
 
 function parseReferenceSchema(
@@ -91,6 +226,35 @@ function parseReferenceSchema(
 }
 
 /**
+ * Parse a schema representing a single fixed value (`const`, OpenAPI 3.1).
+ * @param schema - Original schema with a `const` keyword.
+ * @returns The parsed const schema.
+ */
+function parseConstSchema(schema: OpenApiV3xSchema): OpenApiConstSchema {
+  return {
+    const: serializeLiteralValue(schema.const)
+  };
+}
+
+/**
+ * Serialize a literal value to its TypeScript literal type representation.
+ * @param value - The value to serialize.
+ * @returns The serialized literal type.
+ */
+function serializeLiteralValue(value: any): string {
+  if (typeof value === 'string') {
+    return getEnumStringValue(value);
+  }
+  if (value === null) {
+    return 'null';
+  }
+  if (typeof value === 'object') {
+    return JSON.stringify(value);
+  }
+  return String(value);
+}
+
+/**
  * Parse a schema to an array schema.
  * @param schema - Original schema representing an array.
  * @param refs - Object representing cross references throughout the document.
@@ -98,14 +262,43 @@ function parseReferenceSchema(
  * @returns The recursively parsed array schema.
  */
 function parseArraySchema(
-  schema: OpenAPIV3.ArraySchemaObject,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiArraySchema {
   return {
     uniqueItems: schema.uniqueItems,
-    items: parseSchema(schema.items, refs, options)
+    items: parseSchema(
+      typeof schema.items === 'object' ? schema.items : undefined,
+      refs,
+      options
+    )
   };
+}
+
+/**
+ * Parse a schema to a tuple schema, based on the JSON Schema 2020-12
+ * `prefixItems` keyword adopted by OpenAPI 3.1.
+ * @param schema - Original schema representing a tuple.
+ * @param refs - Object representing cross references throughout the document.
+ * @param options - Options that were set for service generation.
+ * @returns The recursively parsed tuple schema.
+ */
+function parseTupleSchema(
+  schema: OpenApiV3xSchema,
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
+): OpenApiTupleSchema {
+  const tuple: OpenApiTupleSchema = {
+    prefixItems: (schema.prefixItems || []).map(item =>
+      parseSchema(item, refs, options)
+    )
+  };
+  // 'items' governs additional entries beyond the tuple. 'false' disallows them.
+  if (typeof schema.items === 'object') {
+    tuple.additionalItems = parseSchema(schema.items, refs, options);
+  }
+  return tuple;
 }
 
 /**
@@ -117,7 +310,7 @@ function parseArraySchema(
  * @returns The recursively parsed object schema.
  */
 export function parseObjectSchema(
-  schema: OpenAPIV3.NonArraySchemaObject,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiObjectSchema {
@@ -126,7 +319,7 @@ export function parseObjectSchema(
   }
   const properties = parseObjectSchemaProperties(schema, refs, options);
 
-  if (schema.additionalProperties === false) {
+  if (schema.additionalProperties === false && !schema.patternProperties) {
     if (!properties.length) {
       throw new Error(
         'Could not parse object schema without neither properties nor additional properties.'
@@ -136,15 +329,84 @@ export function parseObjectSchema(
     return { properties };
   }
 
-  const additionalProperties =
-    typeof schema.additionalProperties === 'object' &&
-    Object.keys(schema.additionalProperties).length
-      ? parseSchema(schema.additionalProperties, refs, options)
-      : { type: 'any' };
+  const additionalProperties = parseAdditionalProperties(schema, refs, options);
 
   return {
     properties,
     additionalProperties
+  };
+}
+
+/**
+ * Parse the schema of additional properties of an object schema. In OpenAPI
+ * 3.1 the `patternProperties` keyword can also constrain arbitrary keys; since
+ * the generated `Record<string, ...>` type cannot express per-pattern value
+ * types, the pattern value schemas are merged into the additional properties
+ * type as a union.
+ * @param schema - Original schema representing an object.
+ * @param refs - Object representing cross references throughout the document.
+ * @param options - Options that were set for service generation.
+ * @returns The parsed additional properties schema.
+ */
+function parseAdditionalProperties(
+  schema: OpenApiV3xSchema,
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
+): OpenApiSchema {
+  const patternPropertySchemas = Object.values(schema.patternProperties || {});
+  const additionalPropertiesSchema =
+    typeof schema.additionalProperties === 'object' &&
+    Object.keys(schema.additionalProperties).length
+      ? [schema.additionalProperties]
+      : [];
+
+  // When 'additionalProperties: false' but 'patternProperties' exist, only the
+  // pattern value schemas govern additional keys.
+  const valueSchemas =
+    schema.additionalProperties === false
+      ? patternPropertySchemas
+      : [...patternPropertySchemas, ...additionalPropertiesSchema];
+
+  if (!valueSchemas.length) {
+    return { type: 'any' };
+  }
+  if (valueSchemas.length === 1) {
+    return parseSchema(valueSchemas[0], refs, options);
+  }
+  return {
+    anyOf: valueSchemas.map(valueSchema =>
+      parseSchema(valueSchema, refs, options)
+    )
+  };
+}
+
+/**
+ * Remove the nullability markers from a schema. Used where nullability is
+ * carried separately by a `nullable` flag (object properties and persisted
+ * schemas), to avoid emitting `| null` twice. Strips `nullable` and any
+ * `"null"` entry from the `type` array.
+ * @param schema - The schema or reference to strip nullability from.
+ * @returns The schema without nullability markers.
+ * @internal
+ */
+export function stripNullability(
+  schema: OpenAPIV3.ReferenceObject | OpenApiV3xSchema
+): OpenAPIV3.ReferenceObject | OpenApiV3xSchema {
+  if (isReferenceObject(schema)) {
+    return schema;
+  }
+  const types = getSchemaTypes(schema);
+  if (!schema.nullable && !types.includes('null')) {
+    return schema;
+  }
+  const { nullable: _, ...rest } = schema as OpenApiV3xSchema;
+  const nonNullTypes = types.filter(type => type !== 'null');
+  if (schema.type === undefined) {
+    return rest;
+  }
+  return {
+    ...rest,
+    type: nonNullTypes.length === 1 ? nonNullTypes[0] : nonNullTypes
   };
 }
 
@@ -156,7 +418,7 @@ export function parseObjectSchema(
  * @returns The list of parsed property schemas.
  */
 function parseObjectSchemaProperties(
-  schema: OpenAPIV3.NonArraySchemaObject,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiObjectSchemaProperty[] {
@@ -164,12 +426,16 @@ function parseObjectSchemaProperties(
     (props, [propName, propSchema]) => [
       ...props,
       {
-        schema: parseSchema(propSchema, refs, options),
+        // Nullability is carried by the 'nullable' flag below, so strip it
+        // from the schema itself to avoid emitting '| null' twice.
+        schema: parseSchema(stripNullability(propSchema), refs, options),
+        // OpenAPI 3.1 allows sibling annotations (e.g. 'description') next to
+        // a '$ref'; prefer them when present.
         description: isReferenceObject(propSchema)
-          ? undefined
+          ? (propSchema as OpenAPIV3.ReferenceObject & { description?: string })
+              .description
           : propSchema.description,
-        nullable:
-          (!isReferenceObject(propSchema) && propSchema.nullable) ?? false,
+        nullable: isNullableSchema(propSchema),
         name: propName,
         required: schema.required?.includes(propName) || false,
         schemaProperties: { ...parseSchemaProperties(propSchema) }
@@ -186,17 +452,19 @@ function parseObjectSchemaProperties(
  * @returns The parsed enum schema.
  */
 function parseEnumSchema(
-  schema: OpenAPIV3.NonArraySchemaObject,
+  schema: OpenApiV3xSchema,
   options: ParserOptions
 ): OpenApiEnumSchema {
-  const type = schema.type ? getType(schema.type) : 'string';
+  const enumTypes = getSchemaTypes(schema).filter(t => t !== 'null');
+  const type = enumTypes.length ? getType(enumTypes) : 'string';
+  const nullable = isNullableSchema(schema);
   return {
     type,
     enum: (schema.enum || []).map(entry => {
       if (type === 'string' && entry !== null) {
         return getEnumStringValue(String(entry));
       }
-      if (entry === null && !schema.nullable) {
+      if (entry === null && !nullable) {
         if (options.strictNaming) {
           throw new Error(
             'null was used as a parameter in an enum, although the schema was not declared as nullable'
@@ -225,7 +493,7 @@ function getEnumStringValue(input: string): string {
  * @returns The parsed schema based on the given key.
  */
 function parseXOfSchema(
-  schema: OpenAPIV3.NonArraySchemaObject,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   xOf: 'oneOf' | 'allOf' | 'anyOf',
   options: ParserOptions
@@ -261,7 +529,7 @@ function parseXOfSchema(
 }
 
 function parseDiscriminator(
-  schema: OpenAPIV3.NonArraySchemaObject,
+  schema: OpenApiV3xSchema,
   refs: OpenApiDocumentRefs,
   xOf: 'oneOf' | 'anyOf',
   options: ParserOptions
@@ -292,9 +560,9 @@ function parseDiscriminator(
  * @internal
  */
 export function normalizeSchema(
-  schema: OpenAPIV3.NonArraySchemaObject,
+  schema: OpenApiV3xSchema,
   xOf: 'oneOf' | 'allOf' | 'anyOf'
-): OpenAPIV3.NonArraySchemaObject {
+): OpenApiV3xSchema {
   if (schema.discriminator) {
     return schema;
   }
@@ -316,7 +584,7 @@ export function normalizeSchema(
  * @internal
  */
 export function parseSchemaProperties(
-  schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
+  schema: OpenAPIV3.ReferenceObject | OpenApiV3xSchema
 ): OpenApiSchemaProperties {
   if (isReferenceObject(schema)) {
     return {};
@@ -324,28 +592,57 @@ export function parseSchemaProperties(
   const schemaPropertyNames = [
     'deprecated',
     'example',
+    'examples',
     'format',
     'default',
     'multipleOf',
     'maximum',
     'minimum',
+    'exclusiveMaximum',
+    'exclusiveMinimum',
     'maxLength',
     'minLength',
     'minItems',
     'maxItems',
-    'pattern'
+    'pattern',
+    'contentEncoding',
+    'contentMediaType'
   ];
-  return schemaPropertyNames.reduce((properties, propertyName) => {
-    const schemaAny = schema as Record<string, any>;
-    if (schemaAny[propertyName]) {
-      return { ...properties, [propertyName]: schemaAny[propertyName] };
-    }
-    return properties;
-  }, {});
+  const collected = schemaPropertyNames.reduce(
+    (properties, propertyName) => {
+      const schemaAny = schema as Record<string, any>;
+      const value = schemaAny[propertyName];
+      // Numeric 'exclusiveMinimum'/'exclusiveMaximum' of '0' and empty 'examples'
+      // arrays are meaningful, so guard on 'undefined' rather than falsiness for
+      // those keywords.
+      const isMeaningful =
+        propertyName === 'exclusiveMaximum' ||
+        propertyName === 'exclusiveMinimum'
+          ? value !== undefined
+          : value;
+      if (isMeaningful) {
+        return { ...properties, [propertyName]: value };
+      }
+      return properties;
+    },
+    {} as Record<string, any>
+  );
+
+  // OpenAPI 3.1: 'example' (singular) and 'examples' (array) are mutually
+  // exclusive. When both are present prefer 'examples' and drop 'example'.
+  if (collected.example !== undefined && collected.examples !== undefined) {
+    logger.warn(
+      "Schema defines both 'example' and 'examples'. In OpenAPI 3.1 these are mutually exclusive; 'example' will be ignored in favour of 'examples'."
+    );
+    const { example: _dropped, ...rest } = collected;
+    return rest;
+  }
+
+  return collected;
 }
 
 function getDiscriminatorMapping(
-  schema: OpenAPIV3.NonArraySchemaObject,
+  schema: OpenApiV3xSchema,
   xOf: 'oneOf' | 'anyOf'
 ): Record<string, string> {
   return (
@@ -353,11 +650,13 @@ function getDiscriminatorMapping(
     (schema[xOf] || [])
       .filter(subSchema => isReferenceObject(subSchema))
       .reduce((mapping, subSchema) => {
-        const originalSchemaName = subSchema.$ref.split('/').reverse()[0];
+        const originalSchemaName = (subSchema as OpenAPIV3.ReferenceObject).$ref
+          .split('/')
+          .reverse()[0];
 
         return {
           ...mapping,
-          [originalSchemaName]: subSchema.$ref
+          [originalSchemaName]: (subSchema as OpenAPIV3.ReferenceObject).$ref
         };
       }, {})
   );

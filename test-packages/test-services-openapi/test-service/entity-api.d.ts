@@ -64,7 +64,7 @@ export declare const EntityApi: {
    * @param entityId - Key property of the entity
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
-  getEntityByKey: (entityId: string) => OpenApiRequestBuilder<any>;
+  getEntityByKey: (entityId: string) => OpenApiRequestBuilder<TestEntity[]>;
   /**
    * Count entities
    * @returns The request builder, use the `execute()` method to trigger the request.

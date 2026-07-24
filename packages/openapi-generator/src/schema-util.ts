@@ -4,6 +4,7 @@ import type {
   OpenApiAllOfSchema,
   OpenApiAnyOfSchema,
   OpenApiArraySchema,
+  OpenApiConstSchema,
   OpenApiEnumSchema,
   OpenApiNotSchema,
   OpenApiObjectSchema,
@@ -11,6 +12,7 @@ import type {
   OpenApiReferenceSchema,
   OpenApiSchema,
   OpenApiSchemaProperties,
+  OpenApiTupleSchema,
   SchemaNaming
 } from './openapi-types';
 import type { SchemaRefMapping } from './parser';
@@ -82,6 +84,26 @@ export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
  */
 export function isArraySchema(obj: any): obj is OpenApiArraySchema {
   return obj?.items;
+}
+
+/**
+ * Type guard to check whether an object is of type `OpenApiTupleSchema`.
+ * @param obj - Object to check.
+ * @returns `true` if the object is a tuple schema, `false` otherwise.
+ * @internal
+ */
+export function isTupleSchema(obj: any): obj is OpenApiTupleSchema {
+  return !!obj?.prefixItems;
+}
+
+/**
+ * Type guard to check whether an object is of type `OpenApiConstSchema`.
+ * @param obj - Object to check.
+ * @returns `true` if the object is a const schema, `false` otherwise.
+ * @internal
+ */
+export function isConstSchema(obj: any): obj is OpenApiConstSchema {
+  return obj?.const !== undefined;
 }
 
 /**
@@ -177,6 +199,11 @@ export function getSchemaPropertiesDocumentation(
     }
     if (propertyName === 'example') {
       return `@example ${JSON.stringify(schemaProperties?.example, null, 2)}`;
+    }
+    if (propertyName === 'examples') {
+      return (schemaProperties?.examples || [])
+        .map(example => `@example ${JSON.stringify(example, null, 2)}`)
+        .join('\n');
     }
     return `${titleFormat(propertyName)}: ${JSON.stringify(value, null, 2)}.`;
   });

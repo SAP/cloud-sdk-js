@@ -3,6 +3,8 @@ import { getType } from '../parser';
 import {
   isReferenceObject,
   isArraySchema,
+  isTupleSchema,
+  isConstSchema,
   isObjectSchema,
   isEnumSchema,
   isOneOfSchema,
@@ -16,7 +18,8 @@ import type {
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty,
   OpenApiOneOfSchema,
-  OpenApiAnyOfSchema
+  OpenApiAnyOfSchema,
+  OpenApiTupleSchema
 } from '../openapi-types';
 
 /**
@@ -28,6 +31,14 @@ import type {
 export function serializeSchema(schema: OpenApiSchema): string {
   if (isReferenceObject(schema)) {
     return schema.schemaName;
+  }
+
+  if (isConstSchema(schema)) {
+    return schema.const;
+  }
+
+  if (isTupleSchema(schema)) {
+    return serializeTupleSchema(schema);
   }
 
   if (isArraySchema(schema)) {
@@ -73,6 +84,20 @@ export function serializeSchema(schema: OpenApiSchema): string {
   }
 
   return getType(schema.type);
+}
+
+/**
+ * Serialize a tuple schema (OpenAPI 3.1 `prefixItems`) to a TypeScript tuple
+ * type. Additional items (governed by `items`) are appended as a rest element.
+ * @param schema - The parsed tuple schema.
+ * @returns The serialized TypeScript tuple type.
+ */
+function serializeTupleSchema(schema: OpenApiTupleSchema): string {
+  const prefix = schema.prefixItems.map(item => serializeSchema(item));
+  if (schema.additionalItems) {
+    prefix.push(`...${serializeSchema(schema.additionalItems)}[]`);
+  }
+  return `[${prefix.join(', ')}]`;
 }
 
 function serializeObjectSchema(schema: OpenApiObjectSchema): string {

@@ -27,4 +27,20 @@ describe('getType', () => {
   it('returns Blob when type is already Blob', () => {
     expect(getType('Blob')).toEqual('Blob');
   });
+
+  it('maps an array of types to a union (OpenAPI 3.1)', () => {
+    expect(getType(['string', 'number'])).toEqual('string | number');
+  });
+
+  it('maps a nullable type array to a union with null (OpenAPI 3.1)', () => {
+    expect(getType(['string', 'null'])).toEqual('string | null');
+  });
+
+  it('deduplicates repeated types in a type array', () => {
+    expect(getType(['string', 'string'])).toEqual('string');
+  });
+
+  it('returns any for an empty type array', () => {
+    expect(getType([])).toEqual('any');
+  });
 });

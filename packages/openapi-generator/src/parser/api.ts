@@ -6,12 +6,12 @@ import { nameOperations } from './operation-naming';
 import { ensureUniqueNames } from './unique-naming';
 import type { OperationInfo } from './parsing-info';
 import type { OpenApiApi } from '../openapi-types';
-import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
 import type { ParserOptions } from './options';
 
 /**
- * Collect and parse all APIs of an `OpenAPIV3.Document`.
+ * Collect and parse all APIs of an OpenAPIV3.Document or OpenAPIV3_1.Document.
  * @param document - The OpenAPI document to parse.
  * @param refs - Object representing cross references throughout the document.
  * @param options - Parser options.
@@ -19,10 +19,17 @@ import type { ParserOptions } from './options';
  * @internal
  */
 export function parseApis(
-  document: OpenAPIV3.Document,
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiApi[] {
+  if (!document.paths) {
+    throw new Error('document.paths must be set before calling parseApis.');
+  }
+  if (!Object.keys(document.paths).length) {
+    return [];
+  }
+
   const operationsByApis = getOperationsByApis(document);
 
   return Object.entries(operationsByApis).map(
@@ -52,14 +59,13 @@ export function parseApis(
 }
 
 function getPathItem(
-  document: OpenAPIV3.Document,
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document,
   pathPattern: string
-): OpenAPIV3.PathItemObject {
-  const pathItem = document.paths[pathPattern];
+): OpenAPIV3.PathItemObject | OpenAPIV3_1.PathItemObject {
+  const pathItem = document.paths![pathPattern];
   if (!pathItem) {
-    // This should never happen
     throw new Error(
-      `Could not parse APIs. Path pattern '${pathPattern}' does not exist in the document.`
+      `Could not find path item for '${pathPattern}' in document.paths.`
     );
   }
   return pathItem;
@@ -67,7 +73,7 @@ function getPathItem(
 
 function getApiNameForOperation(
   { operation, pathPattern }: OperationInfo,
-  document: OpenAPIV3.Document
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document
 ): string {
   const originalApiName =
     (operation as Record<string, any>)[apiNameExtension] ||
@@ -80,15 +86,15 @@ function getApiNameForOperation(
   return `${pascalCase(originalApiName.replace(/api$/i, ''))}Api`;
 }
 
-function getOperationsByApis(document: OpenAPIV3.Document) {
+function getOperationsByApis(
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document
+): Record<string, OperationInfo[]> {
   const allOperations = getAllOperations(document);
-
   if (!allOperations.length) {
     throw new Error(
       'Could not parse APIs. The document does not contain any operations.'
     );
   }
-
   return allOperations.reduce(
     (apiMap, operationInfo) => {
       const apiName = getApiNameForOperation(operationInfo, document);
@@ -103,12 +109,22 @@ function getOperationsByApis(document: OpenAPIV3.Document) {
 }
 
 function getAllOperations(
-  openApiDocument: OpenAPIV3.Document
+  openApiDocument: OpenAPIV3.Document | OpenAPIV3_1.Document
 ): OperationInfo[] {
+  if (!openApiDocument.paths) {
+    throw new Error(
+      'document.paths must be set before calling getAllOperations.'
+    );
+  }
   return flat(
     Object.entries(openApiDocument.paths)
       .filter(
-        (entry): entry is [string, OpenAPIV3.PathItemObject] => !!entry[1]
+        (
+          entry
+        ): entry is [
+          string,
+          OpenAPIV3.PathItemObject | OpenAPIV3_1.PathItemObject
+        ] => !!entry[1]
       )
       .map(([pathPattern, pathItem]) =>
         methods

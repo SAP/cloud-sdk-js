@@ -43,11 +43,13 @@ jobs:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           node-version: ${{ matrix.node-version }}
-      - run: pnpm run test:unit
-      - run: pnpm run test:integration
-      - run: pnpm run test:self
-      - run: pnpm run test:build-packages
-      - run: pnpm run test:type
+      - parallel:
+          - run: pnpm run test:unit
+          - run: pnpm run test:integration
+          - run: pnpm run test:self
+          - run: pnpm run test:build-packages
+          - name: Type Tests
+            run: pnpm run test:type
       - name: Slack Notify
         if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
         env:
@@ -68,27 +70,28 @@ jobs:
       contents: read
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
-      - name: REUSE Compliance Check
-        uses: fsfe/reuse-action@676e2d560c9a403aa252096d99fcab3e1132b0f5 # v6.0.0
-      - name: Static Code Check
-        run: pnpm run lint
-      - name: Test Service Version Check
-        run: pnpm run check:test-service
-      - name: Undeclared dependency Check
-        run: pnpm run check:dependencies
-      - name: Check public api
-        uses: ./.github/actions/check-public-api
-        with:
-          force_internal_exports: 'true'
-          excluded_packages: 'eslint-config, util, test-util'
-      - name: Self tests for tools
-        run: pnpm run test:self
-      - name: Circular dependency Check
-        run: pnpm run check:circular
-      - name: API Doc Check
-        run: pnpm run doc
-      - name: License Check
-        uses: ./.github/actions/check-license
+      - parallel:
+          - name: REUSE Compliance Check
+            uses: fsfe/reuse-action@676e2d560c9a403aa252096d99fcab3e1132b0f5 # v6.0.0
+          - name: Static Code Check
+            run: pnpm run lint
+          - name: Test Service Version Check
+            run: pnpm run check:test-service
+          - name: Undeclared dependency Check
+            run: pnpm run check:dependencies
+          - name: Check public api
+            uses: ./.github/actions/check-public-api
+            with:
+              force_internal_exports: 'true'
+              excluded_packages: 'eslint-config, util, test-util'
+          - name: Self tests for tools
+            run: pnpm run test:self
+          - name: Circular dependency Check
+            run: pnpm run check:circular
+          - name: API Doc Check
+            run: pnpm run doc
+          - name: License Check
+            uses: ./.github/actions/check-license
       - name: Slack Notify
         if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
         env:

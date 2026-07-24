@@ -1,7 +1,5 @@
 import https from 'https';
-import http from 'http';
 import { createPublicKey } from 'node:crypto';
-import { HttpsProxyAgent } from 'https-proxy-agent';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
@@ -887,21 +885,21 @@ sap-client:001`);
      * Expected: Axios requests should pass via the proxy and hence result in a redirect loop.
      * */
     xit('test axios proxy redirect', () => {
-      // A fake proxy server
-      http
-        .createServer(function (req, res) {
-          res.writeHead(302, { location: 'https://example.com' });
-          res.end();
-        })
-        .listen(8080);
-
-      axios({
-        method: 'get',
-        url: 'https://google.com',
-        httpsAgent: new HttpsProxyAgent('http://localhost:8080')
-      })
-        .then(r => console.log(r))
-        .catch(console.error);
+      // // A fake proxy server
+      // http
+      //   .createServer(function (req, res) {
+      //     res.writeHead(302, { location: 'https://example.com' });
+      //     res.end();
+      //   })
+      //   .listen(8080);
+      // const { HttpsProxyAgent } = await import('https-proxy-agent');
+      // return axios({
+      //   method: 'get',
+      //   url: 'https://google.com',
+      //   httpsAgent: new HttpsProxyAgent('http://localhost:8080')
+      // })
+      //   .then(r => console.log(r))
+      //   .catch(console.error);
     });
 
     it('passes auth tokens to final request when forwardAuthToken is enabled for NoAuthentication auth type', async () => {

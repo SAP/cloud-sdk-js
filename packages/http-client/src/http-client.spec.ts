@@ -1,5 +1,4 @@
 import https from 'https';
-import http from 'http';
 import { createPublicKey } from 'node:crypto';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';

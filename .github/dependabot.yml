@@ -33,9 +33,6 @@ updates:
       # @apidevtools/json-schema-ref-parser v9 needs ESM, we'll stay on v8 until we can use ESM
       - dependency-name: '@apidevtools/json-schema-ref-parser'
         update-types: ['version-update:semver-major']
-      # https-proxy-agent v6 needs ESM, we'll stay on v5 until we can use ESM
-      - dependency-name: 'https-proxy-agent'
-        update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
     directories:
       - '/'

@@ -88,7 +88,7 @@ importers:
         version: 4.64.0(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
       semver:
         specifier: ^7.7.4
         version: 7.8.5
@@ -146,7 +146,7 @@ importers:
         version: 4.64.0(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   build-packages/check-license:
     dependencies:
@@ -171,7 +171,7 @@ importers:
         version: 10.7.0
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   build-packages/check-pr:
     dependencies:
@@ -202,7 +202,7 @@ importers:
         version: 4.64.0(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   build-packages/check-public-api:
     dependencies:
@@ -242,7 +242,7 @@ importers:
         version: 10.7.0
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
       typescript:
         specifier: npm:@typescript/typescript6@^6.0.2
         version: '@typescript/typescript6@6.0.2'
@@ -267,7 +267,7 @@ importers:
         version: 10.7.0
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   build-packages/merge-and-write-changelogs:
     dependencies:
@@ -292,7 +292,7 @@ importers:
         version: 10.7.0
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   build-packages/test-utils:
     dependencies:
@@ -314,7 +314,7 @@ importers:
         version: 10.7.0
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/connectivity:
     dependencies:
@@ -369,7 +369,7 @@ importers:
         version: 14.0.16
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/eslint-config:
     dependencies:
@@ -399,7 +399,7 @@ importers:
         version: 63.2.0(eslint@10.7.0)
       eslint-plugin-prettier:
         specifier: ^5.5.5
-        version: 5.5.6(eslint-config-prettier@10.1.8(eslint@10.7.0))(eslint@10.7.0)(prettier@3.9.5)
+        version: 5.5.6(eslint-config-prettier@10.1.8(eslint@10.7.0))(eslint@10.7.0)(prettier@3.9.6)
       eslint-plugin-unused-imports:
         specifier: ^4.4.1
         version: 4.4.1(@typescript-eslint/eslint-plugin@8.64.0(@typescript-eslint/parser@8.65.0(eslint@10.7.0)(typescript@6.0.3))(eslint@10.7.0)(typescript@6.0.3))(eslint@10.7.0)
@@ -466,7 +466,7 @@ importers:
         version: 4.64.0(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/generator-common:
     dependencies:
@@ -484,7 +484,7 @@ importers:
         version: 13.0.6
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
       typescript:
         specifier: npm:@typescript/typescript6@^6.0.2
         version: '@typescript/typescript6@6.0.2'
@@ -555,7 +555,7 @@ importers:
         version: 14.0.16
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/odata-common:
     dependencies:
@@ -592,7 +592,7 @@ importers:
         version: 1.4.7
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/odata-v2:
     dependencies:
@@ -632,7 +632,7 @@ importers:
         version: 14.0.16
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/odata-v4:
     dependencies:
@@ -669,7 +669,7 @@ importers:
         version: 14.0.16
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/openapi:
     dependencies:
@@ -703,7 +703,7 @@ importers:
         version: 14.0.16
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/openapi-generator:
     dependencies:
@@ -758,7 +758,7 @@ importers:
         version: 4.64.0(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/resilience:
     dependencies:
@@ -792,7 +792,7 @@ importers:
         version: 14.0.16
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/temporal-de-serializers:
     dependencies:
@@ -811,7 +811,7 @@ importers:
         version: 1.4.7
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/test-util:
     dependencies:
@@ -839,7 +839,7 @@ importers:
         version: 4.64.0(tslib@2.8.1)
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   packages/util:
     dependencies:
@@ -879,7 +879,7 @@ importers:
         version: 14.0.16
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   test-packages/e2e-tests:
     devDependencies:
@@ -966,7 +966,7 @@ importers:
         version: 7.0.3
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   test-packages/integration-tests:
     dependencies:
@@ -1033,7 +1033,7 @@ importers:
         version: 14.0.16
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
       winston:
         specifier: ^3.19.0
         version: 3.19.0
@@ -1070,7 +1070,7 @@ importers:
         version: 1.4.7
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   test-packages/test-services-odata-common:
     dependencies:
@@ -1095,7 +1095,7 @@ importers:
         version: 1.4.7
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   test-packages/test-services-odata-v2:
     dependencies:
@@ -1117,7 +1117,7 @@ importers:
         version: 1.4.7
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   test-packages/test-services-odata-v4:
     dependencies:
@@ -1139,7 +1139,7 @@ importers:
         version: 1.4.7
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   test-packages/test-services-openapi:
     dependencies:
@@ -1157,7 +1157,7 @@ importers:
         version: 1.4.7
       prettier:
         specifier: ^3.8.1
-        version: 3.9.5
+        version: 3.9.6
 
   test-packages/type-tests:
     devDependencies:
@@ -5310,8 +5310,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.9.5:
-    resolution: {integrity: sha512-/FVl766LpUfB5vXgCYOYa0MeV/441Ia99AeICQIQFTY/Nw0roZwULcXpku5i1/m5kt/baz+s4Zogspd839HSMg==}
+  prettier@3.9.6:
+    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -9029,10 +9029,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-prettier@5.5.6(eslint-config-prettier@10.1.8(eslint@10.7.0))(eslint@10.7.0)(prettier@3.9.5):
+  eslint-plugin-prettier@5.5.6(eslint-config-prettier@10.1.8(eslint@10.7.0))(eslint@10.7.0)(prettier@3.9.6):
     dependencies:
       eslint: 10.7.0
-      prettier: 3.9.5
+      prettier: 3.9.6
       prettier-linter-helpers: 1.0.1
       synckit: 0.11.13
     optionalDependencies:
@@ -11049,7 +11049,7 @@ snapshots:
 
   prettier@2.8.8: {}
 
-  prettier@3.9.5: {}
+  prettier@3.9.6: {}
 
   pretty-format@29.7.0:
     dependencies:

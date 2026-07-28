@@ -49,7 +49,7 @@ export const breakfastTime: VdmProperty = {
   isCollection: false
 };
 
-export const brunchEntity: VdmEntity = {
+const brunchEntity: VdmEntity = {
   className: 'Brunch',
   description: 'Breakfast took a little longer.',
   entitySetName: 'BrunchSet',
@@ -248,39 +248,6 @@ export const complexMeal: VdmComplexType = {
       propertyNameAsParam: 'amount',
       jsType: 'number',
       staticPropertyName: 'AMOUNT',
-      isCollection: false
-    }
-  ],
-  namespace: ''
-};
-
-export const complexDesert: VdmComplexType = {
-  originalName: 'ComplexDesert',
-  typeName: 'ComplexDesert',
-  fieldType: 'ComplexDesertField',
-  properties: [
-    {
-      originalName: 'Amount',
-      description: 'Amount of the desert',
-      edmType: 'Edm.Int16',
-      fieldType: 'OrderableEdmTypeField',
-      nullable: false,
-      instancePropertyName: 'amount',
-      propertyNameAsParam: 'amount',
-      jsType: 'number',
-      staticPropertyName: 'AMOUNT',
-      isCollection: false
-    },
-    {
-      originalName: 'Name',
-      description: 'name of the desert',
-      edmType: 'Edm.String',
-      fieldType: 'OrderableEdmTypeField',
-      nullable: false,
-      instancePropertyName: 'name',
-      propertyNameAsParam: 'name',
-      jsType: 'string',
-      staticPropertyName: 'NAME',
       isCollection: false
     }
   ],

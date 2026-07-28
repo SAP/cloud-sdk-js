@@ -48,7 +48,7 @@ export const patchRequest = testEntityMultiLinkApi
       .build()
   );
 
-export const testEntity = testEntityApi
+const testEntity = testEntityApi
   .entityBuilder()
   .keyPropertyGuid(testEntityKeyPropGuid)
   .keyPropertyString(testEntityKeyPropString)

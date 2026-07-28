@@ -3,11 +3,16 @@ export default {
   ignore: [
     // Bundled GitHub Actions (compiled single-file bundles)
     '.github/actions/*/index.js',
-    // Generated test services
+    // Published package entrypoints — consumed by external packages, not imported in source
+    'packages/openapi-generator/internal.js',
+    'packages/openapi/internal.js',
+    'packages/temporal-de-serializers/internal.js',
+    // Generated test services and shared test utilities (generated, exports used by multiple packages)
     'test-packages/test-services-e2e/**',
     'test-packages/test-services-odata-v2/**',
     'test-packages/test-services-odata-v4/**',
     'test-packages/test-services-openapi/**',
+    'test-packages/test-services-odata-common/**',
     // Test resources (deliberately faulty/standalone files)
     'test-resources/**',
     // Knowledge base
@@ -59,14 +64,19 @@ export default {
       entry: ['madge-test/**/*.ts'],
       ignoreDependencies: ['tsd']
     },
-    // e2e-tests: cap-js/sqlite loaded dynamically by CDS at runtime
+    // e2e-tests: cap-js/sqlite loaded dynamically by CDS at runtime;
+    // odata-v2 and bignumber.js required at runtime by generated test output
     'test-packages/e2e-tests': {
       entry: ['test/**/*.ts', 'srv/**/*.js', 'test/proxy/**/*.js'],
-      ignoreDependencies: ['@cap-js/sqlite']
+      ignoreDependencies: ['@cap-js/sqlite', '@sap-cloud-sdk/odata-v2', 'bignumber.js']
     },
-    // integration-tests: test-util-internal is used at runtime via jest setup
+    // integration-tests: test-util-internal is used at runtime via jest setup;
+    // throw-exception-with-logger-script.ts is invoked as a subprocess, not imported
     'test-packages/integration-tests': {
-      ignoreDependencies: ['@sap-cloud-sdk/test-util-internal']
+      ignoreDependencies: ['@sap-cloud-sdk/test-util-internal'],
+      ignore: [
+        'test/throw-exception-with-logger-script.ts'
+      ]
     },
     'build-packages/check-public-api': {
       ignoreDependencies: ['memfs']

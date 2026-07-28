@@ -3256,7 +3256,7 @@ module.exports = colorspace;
 
 /***/ }),
 
-/***/ 5568:
+/***/ 2509:
 /***/ (function(module, __unused_webpack_exports, __nccwpck_require__) {
 
 
@@ -3264,8 +3264,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const events_1 = __nccwpck_require__(4434);
-const debug_1 = __importDefault(__nccwpck_require__(204));
-const promisify_1 = __importDefault(__nccwpck_require__(984));
+const debug_1 = __importDefault(__nccwpck_require__(9715));
+const promisify_1 = __importDefault(__nccwpck_require__(1365));
 const debug = debug_1.default('agent-base');
 function isAgent(v) {
     return Boolean(v) && typeof v.addRequest === 'function';
@@ -3465,7 +3465,7 @@ module.exports = createAgent;
 
 /***/ }),
 
-/***/ 984:
+/***/ 1365:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -5480,7 +5480,7 @@ CombinedStream.prototype._emitError = function(err) {
 
 /***/ }),
 
-/***/ 888:
+/***/ 5623:
 /***/ ((module, exports, __nccwpck_require__) => {
 
 /* eslint-env browser */
@@ -5740,7 +5740,7 @@ function localstorage() {
 	}
 }
 
-module.exports = __nccwpck_require__(8151)(exports);
+module.exports = __nccwpck_require__(7114)(exports);
 
 const {formatters} = module.exports;
 
@@ -5759,7 +5759,7 @@ formatters.j = function (v) {
 
 /***/ }),
 
-/***/ 8151:
+/***/ 7114:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 
@@ -6058,7 +6058,7 @@ module.exports = setup;
 
 /***/ }),
 
-/***/ 204:
+/***/ 9715:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 /**
@@ -6067,15 +6067,15 @@ module.exports = setup;
  */
 
 if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
-	module.exports = __nccwpck_require__(888);
+	module.exports = __nccwpck_require__(5623);
 } else {
-	module.exports = __nccwpck_require__(8650);
+	module.exports = __nccwpck_require__(7731);
 }
 
 
 /***/ }),
 
-/***/ 8650:
+/***/ 7731:
 /***/ ((module, exports, __nccwpck_require__) => {
 
 /**
@@ -6109,7 +6109,7 @@ exports.colors = [6, 2, 3, 4, 5, 1];
 try {
 	// Optional dependency (as in, doesn't need to be installed, NOT like optionalDependencies in package.json)
 	// eslint-disable-next-line import/no-extraneous-dependencies
-	const supportsColor = __nccwpck_require__(5819);
+	const supportsColor = __nccwpck_require__(8515);
 
 	if (supportsColor && (supportsColor.stderr || supportsColor).level >= 2) {
 		exports.colors = [
@@ -6317,7 +6317,7 @@ function init(debug) {
 	}
 }
 
-module.exports = __nccwpck_require__(8151)(exports);
+module.exports = __nccwpck_require__(7114)(exports);
 
 const {formatters} = module.exports;
 
@@ -7161,7 +7161,7 @@ module.exports = function name(fn) {
 
 /***/ }),
 
-/***/ 8091:
+/***/ 7218:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 var debug;
@@ -7170,7 +7170,7 @@ module.exports = function () {
   if (!debug) {
     try {
       /* eslint global-require: off */
-      debug = __nccwpck_require__(204)("follow-redirects");
+      debug = __nccwpck_require__(9715)("follow-redirects");
     }
     catch (error) { /* */ }
     if (typeof debug !== "function") {
@@ -7183,7 +7183,7 @@ module.exports = function () {
 
 /***/ }),
 
-/***/ 6116:
+/***/ 2173:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 var url = __nccwpck_require__(7016);
@@ -7192,7 +7192,7 @@ var http = __nccwpck_require__(8611);
 var https = __nccwpck_require__(5692);
 var Writable = (__nccwpck_require__(2203).Writable);
 var assert = __nccwpck_require__(2613);
-var debug = __nccwpck_require__(8091);
+var debug = __nccwpck_require__(7218);
 
 // Preventive platform detection
 // istanbul ignore next
@@ -9126,7 +9126,7 @@ module.exports = bind.call(call, $hasOwn);
 
 /***/ }),
 
-/***/ 820:
+/***/ 9697:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -9147,9 +9147,9 @@ const net_1 = __importDefault(__nccwpck_require__(9278));
 const tls_1 = __importDefault(__nccwpck_require__(4756));
 const url_1 = __importDefault(__nccwpck_require__(7016));
 const assert_1 = __importDefault(__nccwpck_require__(2613));
-const debug_1 = __importDefault(__nccwpck_require__(204));
-const agent_base_1 = __nccwpck_require__(5568);
-const parse_proxy_response_1 = __importDefault(__nccwpck_require__(6635));
+const debug_1 = __importDefault(__nccwpck_require__(9715));
+const agent_base_1 = __nccwpck_require__(2509);
+const parse_proxy_response_1 = __importDefault(__nccwpck_require__(3828));
 const debug = debug_1.default('https-proxy-agent:agent');
 /**
  * The `HttpsProxyAgent` implements an HTTP Agent subclass that connects to
@@ -9309,14 +9309,14 @@ function omit(obj, ...keys) {
 
 /***/ }),
 
-/***/ 3257:
+/***/ 4136:
 /***/ (function(module, __unused_webpack_exports, __nccwpck_require__) {
 
 
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const agent_1 = __importDefault(__nccwpck_require__(820));
+const agent_1 = __importDefault(__nccwpck_require__(9697));
 function createHttpsProxyAgent(opts) {
     return new agent_1.default(opts);
 }
@@ -9329,7 +9329,7 @@ module.exports = createHttpsProxyAgent;
 
 /***/ }),
 
-/***/ 6635:
+/***/ 3828:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -9337,7 +9337,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const debug_1 = __importDefault(__nccwpck_require__(204));
+const debug_1 = __importDefault(__nccwpck_require__(9715));
 const debug = debug_1.default('https-proxy-agent:parse-proxy-response');
 function parseProxyResponse(socket) {
     return new Promise((resolve, reject) => {
@@ -19696,7 +19696,7 @@ function simpleEnd(buf) {
 
 /***/ }),
 
-/***/ 5819:
+/***/ 8515:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 
@@ -19706,30 +19706,26 @@ const hasFlag = __nccwpck_require__(9319);
 
 const {env} = process;
 
-let flagForceColor;
+let forceColor;
 if (hasFlag('no-color') ||
 	hasFlag('no-colors') ||
 	hasFlag('color=false') ||
 	hasFlag('color=never')) {
-	flagForceColor = 0;
+	forceColor = 0;
 } else if (hasFlag('color') ||
 	hasFlag('colors') ||
 	hasFlag('color=true') ||
 	hasFlag('color=always')) {
-	flagForceColor = 1;
+	forceColor = 1;
 }
 
-function envForceColor() {
-	if ('FORCE_COLOR' in env) {
-		if (env.FORCE_COLOR === 'true') {
-			return 1;
-		}
-
-		if (env.FORCE_COLOR === 'false') {
-			return 0;
-		}
-
-		return env.FORCE_COLOR.length === 0 ? 1 : Math.min(Number.parseInt(env.FORCE_COLOR, 10), 3);
+if ('FORCE_COLOR' in env) {
+	if (env.FORCE_COLOR === 'true') {
+		forceColor = 1;
+	} else if (env.FORCE_COLOR === 'false') {
+		forceColor = 0;
+	} else {
+		forceColor = env.FORCE_COLOR.length === 0 ? 1 : Math.min(parseInt(env.FORCE_COLOR, 10), 3);
 	}
 }
 
@@ -19746,28 +19742,19 @@ function translateLevel(level) {
 	};
 }
 
-function supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
-	const noFlagForceColor = envForceColor();
-	if (noFlagForceColor !== undefined) {
-		flagForceColor = noFlagForceColor;
-	}
-
-	const forceColor = sniffFlags ? flagForceColor : noFlagForceColor;
-
+function supportsColor(haveStream, streamIsTTY) {
 	if (forceColor === 0) {
 		return 0;
 	}
 
-	if (sniffFlags) {
-		if (hasFlag('color=16m') ||
-			hasFlag('color=full') ||
-			hasFlag('color=truecolor')) {
-			return 3;
-		}
+	if (hasFlag('color=16m') ||
+		hasFlag('color=full') ||
+		hasFlag('color=truecolor')) {
+		return 3;
+	}
 
-		if (hasFlag('color=256')) {
-			return 2;
-		}
+	if (hasFlag('color=256')) {
+		return 2;
 	}
 
 	if (haveStream && !streamIsTTY && forceColor === undefined) {
@@ -19795,7 +19782,7 @@ function supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
 	}
 
 	if ('CI' in env) {
-		if (['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI', 'GITHUB_ACTIONS', 'BUILDKITE', 'DRONE'].some(sign => sign in env) || env.CI_NAME === 'codeship') {
+		if (['TRAVIS', 'CIRCLECI', 'APPVEYOR', 'GITLAB_CI', 'GITHUB_ACTIONS', 'BUILDKITE'].some(sign => sign in env) || env.CI_NAME === 'codeship') {
 			return 1;
 		}
 
@@ -19811,7 +19798,7 @@ function supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
 	}
 
 	if ('TERM_PROGRAM' in env) {
-		const version = Number.parseInt((env.TERM_PROGRAM_VERSION || '').split('.')[0], 10);
+		const version = parseInt((env.TERM_PROGRAM_VERSION || '').split('.')[0], 10);
 
 		switch (env.TERM_PROGRAM) {
 			case 'iTerm.app':
@@ -19837,19 +19824,15 @@ function supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
 	return min;
 }
 
-function getSupportLevel(stream, options = {}) {
-	const level = supportsColor(stream, {
-		streamIsTTY: stream && stream.isTTY,
-		...options
-	});
-
+function getSupportLevel(stream) {
+	const level = supportsColor(stream, stream && stream.isTTY);
 	return translateLevel(level);
 }
 
 module.exports = {
 	supportsColor: getSupportLevel,
-	stdout: getSupportLevel({isTTY: tty.isatty(1)}),
-	stderr: getSupportLevel({isTTY: tty.isatty(2)})
+	stdout: translateLevel(supportsColor(true, tty.isatty(1))),
+	stderr: translateLevel(supportsColor(true, tty.isatty(2)))
 };
 
 
@@ -58137,7 +58120,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isValidUrl = isValidUrl;
 exports.checkUrlExists = checkUrlExists;
-const axios_1 = __importDefault(__nccwpck_require__(2523));
+const axios_1 = __importDefault(__nccwpck_require__(3863));
 /**
  * Checks whether a string is a valid URL.
  * @param url - String to check.
@@ -67064,7 +67047,7 @@ exports.visitAsync = visitAsync;
 
 /***/ }),
 
-/***/ 2523:
+/***/ 3863:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 /*! Axios v1.18.1 Copyright (c) 2026 Matt Zabriskie and contributors */
@@ -67073,13 +67056,13 @@ exports.visitAsync = visitAsync;
 var FormData$1 = __nccwpck_require__(3544);
 var crypto = __nccwpck_require__(6982);
 var url = __nccwpck_require__(7016);
-var HttpsProxyAgent = __nccwpck_require__(3257);
+var HttpsProxyAgent = __nccwpck_require__(4136);
 var http = __nccwpck_require__(8611);
 var https = __nccwpck_require__(5692);
 var http2 = __nccwpck_require__(5675);
 var util = __nccwpck_require__(9023);
 var path = __nccwpck_require__(6928);
-var followRedirects = __nccwpck_require__(6116);
+var followRedirects = __nccwpck_require__(2173);
 var zlib = __nccwpck_require__(3106);
 var stream = __nccwpck_require__(2203);
 var events = __nccwpck_require__(4434);

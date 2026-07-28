@@ -1,16 +1,7 @@
 import { resolve } from 'path';
 import { createLogger, kibana, local } from '@sap-cloud-sdk/util';
+import { execNodeScript } from './test-util';
 import type { Logger } from 'winston';
-
-const tinyexec = import('tinyexec');
-
-async function execNodeScript(scriptPath: string): Promise<void> {
-  const { x } = await tinyexec;
-  const result = await x('ts-node', [scriptPath]);
-  if (result.exitCode) {
-    throw new Error(result.stderr || result.stdout);
-  }
-}
 
 describe('exception logger', () => {
   let logger: Logger;

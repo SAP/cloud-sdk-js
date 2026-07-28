@@ -1,11 +1,12 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "4.7.0",
+  "version": "4.8.0",
   "private": true,
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "10.34.5"
+      "version": "10.34.5",
+      "onFail": "warn"
     }
   },
   "sideEffects": false,

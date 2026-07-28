@@ -4,6 +4,7 @@
     "target": "es2021",
     "module": "Node16",
     "lib": ["esnext"],
+    "types": ["jest", "node"],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": false,

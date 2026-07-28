@@ -14,7 +14,5 @@ jobs:
       contents: read
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
-        with:
-          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       - name: Download Stats
         run: pnpm exec ts-node scripts/npm-stats.ts

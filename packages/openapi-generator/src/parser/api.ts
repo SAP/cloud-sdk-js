@@ -23,10 +23,7 @@ export function parseApis(
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiApi[] {
-  if (!document.paths) {
-    throw new Error('document.paths must be set before calling parseApis.');
-  }
-  if (!Object.keys(document.paths).length) {
+  if (!document.paths || !Object.keys(document.paths).length) {
     return [];
   }
 

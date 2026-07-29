@@ -4,7 +4,7 @@ async function execNode(args: string[]): Promise<void> {
   const { x } = await tinyexec;
   const result = await x('node', args, { nodeOptions: { cwd: __dirname } });
   if (result.exitCode) {
-    throw new Error(result.stderr || result.stdout);
+    throw new Error([result.stderr, result.stdout].filter(Boolean).join('\n'));
   }
 }
 

@@ -16,9 +16,9 @@ describe('exception logger', () => {
     process.env.NODE_ENV = 'development';
     await expect(
       execNodeScript(
-        resolve(__dirname, 'throw-exception-with-logger-script.ts')
+        resolve(__dirname, 'throw-exception-with-logger-script.mjs')
       )
-    ).rejects.toThrow(/Test Exception Logger\n\s*at Object/);
+    ).rejects.toThrow(/Test Exception Logger\n\s*at /);
     delete process.env.NODE_ENV;
   }, 15000);
 
@@ -26,16 +26,16 @@ describe('exception logger', () => {
     process.env.NODE_ENV = 'production';
     await expect(
       execNodeScript(
-        resolve(__dirname, 'throw-exception-with-logger-script.ts')
+        resolve(__dirname, 'throw-exception-with-logger-script.mjs')
       )
-    ).rejects.toThrow(/Test Exception Logger\\n\s*at Object/);
+    ).rejects.toThrow(/Test Exception Logger\\n\s*at /);
     delete process.env.NODE_ENV;
   }, 15000);
 
   it('should not log the stack multiple times', async () => {
     try {
       await execNodeScript(
-        resolve(__dirname, 'throw-exception-with-logger-script.ts')
+        resolve(__dirname, 'throw-exception-with-logger-script.mjs')
       );
     } catch (err) {
       expect(err).toBeInstanceOf(Error);

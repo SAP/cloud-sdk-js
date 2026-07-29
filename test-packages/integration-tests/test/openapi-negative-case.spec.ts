@@ -4,13 +4,10 @@ import {
   testOutputRootDir,
   testResourcesDir
 } from '../../../test-resources/generator';
-import { execGenerator } from './test-util';
+import { execOpenApiGenerator } from './test-util';
 
 // TODO use fs-mock here
 describe('openapi negative tests', () => {
-  const pathToGenerator =
-    require.resolve('@sap-cloud-sdk/openapi-generator/dist/cli.js');
-
   const testDir = join(testOutputRootDir, 'openapi-negative');
   beforeAll(async () => {
     if (!existsSync(testOutputRootDir)) {
@@ -31,8 +28,7 @@ describe('openapi negative tests', () => {
     await promises.mkdir(output);
 
     await expect(
-      execGenerator([
-        pathToGenerator,
+      execOpenApiGenerator([
         '--input',
         resolve(testResourcesDir, 'faulty-openapi'),
         '--outputDir',
@@ -49,8 +45,7 @@ describe('openapi negative tests', () => {
     const output = join(testDir, 'transpilation-failed-1');
     await promises.mkdir(output);
     await expect(
-      execGenerator([
-        pathToGenerator,
+      execOpenApiGenerator([
         '--input',
         resolve(
           testOutputRootDir,
@@ -71,8 +66,7 @@ describe('openapi negative tests', () => {
     const output = join(testDir, 'transpilation-failed-2');
     await promises.mkdir(output);
     await expect(
-      execGenerator([
-        pathToGenerator,
+      execOpenApiGenerator([
         '-i',
         resolve(
           testResourcesDir,

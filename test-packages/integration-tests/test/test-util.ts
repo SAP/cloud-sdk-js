@@ -1,4 +1,7 @@
 const tinyexec = import('tinyexec');
+const pathToGenerator = require.resolve('@sap-cloud-sdk/generator/dist/cli.js');
+const pathToOpenApiGenerator =
+  require.resolve('@sap-cloud-sdk/openapi-generator/dist/cli.js');
 
 async function execNode(args: string[]): Promise<void> {
   const { x } = await tinyexec;
@@ -9,7 +12,11 @@ async function execNode(args: string[]): Promise<void> {
 }
 
 export async function execGenerator(args: string[]): Promise<void> {
-  return execNode(args);
+  return execNode([pathToGenerator, ...args]);
+}
+
+export async function execOpenApiGenerator(args: string[]): Promise<void> {
+  return execNode([pathToOpenApiGenerator, ...args]);
 }
 
 export async function execNodeScript(scriptPath: string): Promise<void> {

@@ -8,8 +8,6 @@ import { execGenerator } from './test-util';
 
 // TODO use fs-mock
 describe('odata negative tests', () => {
-  const pathToGenerator =
-    require.resolve('@sap-cloud-sdk/generator/dist/cli.js');
   const testDir = join(testOutputRootDir, 'odata-negative');
 
   beforeAll(async () => {
@@ -29,7 +27,6 @@ describe('odata negative tests', () => {
   it('should fail on faulty edmx', async () => {
     await expect(
       execGenerator([
-        pathToGenerator,
         '-i',
         resolve(testResourcesDir, 'faulty-edmx'),
         '-o',
@@ -43,7 +40,6 @@ describe('odata negative tests', () => {
   it('should fail on faulty typescript files.', async () => {
     await expect(
       execGenerator([
-        pathToGenerator,
         '-i',
         resolve(testResourcesDir, '../../odata-service-specs/v2/API_TEST_SRV'),
         '-o',

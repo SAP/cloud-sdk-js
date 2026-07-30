@@ -957,7 +957,7 @@ importers:
         version: 2.2.0
       openapi-backend:
         specifier: ^5.16.1
-        version: 5.18.0
+        version: 5.19.0
       pm2:
         specifier: ^7.0.1
         version: 7.0.3
@@ -3376,8 +3376,8 @@ packages:
   deps-regex@0.2.0:
     resolution: {integrity: sha512-PwuBojGMQAYbWkMXOY9Pd/NWCDNHVH12pnS7WHqZkTSeMESe4hwnKKRp0yR87g37113x4JPbo/oIvXY+s/f56Q==}
 
-  dereference-json-schema@0.2.2:
-    resolution: {integrity: sha512-w8dUsJyrzH4Zsj8W/tKcjLsmcTKXfdNf+n3BBm1SAfnqpaCodgEUWqQGJ+pNb9NOqPwYMGvUnZZ8nQfeFjJlbQ==}
+  dereference-json-schema@0.2.3:
+    resolution: {integrity: sha512-CBVoEuf2tKhqnUhoKjvX4wo5NVxDSHxInqwExQfUNEK67aX+LPC27Vg+6CApi+KRebABJZAWhHBVoNpKfhMssg==}
 
   destroy@1.2.0:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
@@ -3806,8 +3806,8 @@ packages:
   fast-safe-stringify@2.1.1:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
 
-  fast-uri@3.1.2:
-    resolution: {integrity: sha512-rVjf7ArG3LTk+FS6Yw81V1DLuZl1bRbNrev6Tmd/9RaroeeRRJhAt7jg/6YFxbvAQXUCavSoZhPPj6oOx+5KjQ==}
+  fast-uri@3.1.4:
+    resolution: {integrity: sha512-8JnbkQ4juDyvYs4mgFGQqg4yCYtFDtUtmp2QIQq11ZZe5CFQ5wcqm1rqDgAh/QdMySuBnPzMUiJUNZG5N/AiQw==}
 
   fast-xml-builder@1.3.0:
     resolution: {integrity: sha512-F74cZEdCvuw9P41GAC3rod4X04jjWGM1JPEv/GWSqFTWLsdyMSBMBMlm9Hk3GLBgLBbdBNY8yee0pQh2RBVESQ==}
@@ -5044,8 +5044,8 @@ packages:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
 
-  openapi-backend@5.18.0:
-    resolution: {integrity: sha512-I3ipDN/JJxLch4ZyPv+Y7xskFcWiT5l0FnUvzNr/YWF4wh6BbcYjM5CGrll80w4ATeVX5/4SfrGmxF+NNUbiPQ==}
+  openapi-backend@5.19.0:
+    resolution: {integrity: sha512-d9NNN4TzBMESfCF6jlj9DFQrycQBS4cSIK73ERKiwG5og2z6SGzXVJBBt/Bhn3VABknbKlZzfZ/+nKUgEXLRXQ==}
     engines: {node: '>=20.0.0'}
 
   openapi-schema-validator@12.1.3:
@@ -7916,7 +7916,7 @@ snapshots:
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 3.1.2
+      fast-uri: 3.1.4
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
@@ -8548,7 +8548,7 @@ snapshots:
 
   deps-regex@0.2.0: {}
 
-  dereference-json-schema@0.2.2: {}
+  dereference-json-schema@0.2.3: {}
 
   destroy@1.2.0: {}
 
@@ -9119,7 +9119,7 @@ snapshots:
 
   fast-safe-stringify@2.1.1: {}
 
-  fast-uri@3.1.2: {}
+  fast-uri@3.1.4: {}
 
   fast-xml-builder@1.3.0:
     dependencies:
@@ -10662,13 +10662,13 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  openapi-backend@5.18.0:
+  openapi-backend@5.19.0:
     dependencies:
       '@apidevtools/json-schema-ref-parser': 11.9.3
       ajv: 8.20.0
       bath-es5: 3.0.3
       cookie: 1.1.1
-      dereference-json-schema: 0.2.2
+      dereference-json-schema: 0.2.3
       lodash: 4.18.1
       mock-json-schema: 1.1.2
       openapi-schema-validator: 12.1.3

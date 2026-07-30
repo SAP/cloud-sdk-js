@@ -1,7 +1,13 @@
+import { join, dirname } from 'node:path';
 const tinyexec = import('tinyexec');
-const pathToGenerator = require.resolve('@sap-cloud-sdk/generator/dist/cli.js');
-const pathToOpenApiGenerator =
-  require.resolve('@sap-cloud-sdk/openapi-generator/dist/cli.js');
+const pathToGenerator = join(
+  dirname(require.resolve('@sap-cloud-sdk/generator')),
+  'cli.js'
+);
+const pathToOpenApiGenerator = join(
+  dirname(require.resolve('@sap-cloud-sdk/openapi-generator')),
+  'cli.js'
+);
 
 async function execNode(args: string[]): Promise<void> {
   const { x } = await tinyexec;

@@ -375,7 +375,9 @@ export async function parseIndexFile(
     starFiles.map(async relativeFilePath => {
       const absolutePath = relativeFilePath.endsWith('.js')
         ? resolve(cwd, `${relativeFilePath.slice(0, -3)}.ts`)
-        : resolve(cwd, `${relativeFilePath}.ts`);
+        : relativeFilePath.endsWith('.ts')
+          ? resolve(cwd, relativeFilePath)
+          : resolve(cwd, `${relativeFilePath}.ts`);
 
       return parseIndexFile(absolutePath, forceInternalExports);
     })

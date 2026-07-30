@@ -1,5 +1,5 @@
-import { resolve } from 'path';
-import { writeFile, readFile, removeSync } from 'fs-extra';
+import { readFile, rm, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { getApiSpecificUsage } from './generation-and-usage';
 import { entityCodeSample } from './code-samples';
 import type { VdmServiceMetadata } from '../vdm-types';
@@ -116,6 +116,10 @@ describe('generation-and-usage', () => {
       { throwOnError: true }
     );
     await expect(readFile(resolve(__dirname, jsFile))).resolves.toBeDefined();
-    [tsFile, jsFile].map(file => removeSync(resolve(__dirname, file)));
+    await Promise.all(
+      [tsFile, jsFile].map(file =>
+        rm(resolve(__dirname, file), { recursive: true, force: true })
+      )
+    );
   }, 60000);
 });

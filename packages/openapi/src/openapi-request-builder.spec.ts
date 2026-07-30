@@ -1,4 +1,8 @@
 import nock from 'nock';
+jest.mock('@sap-cloud-sdk/resilience/internal', () => ({
+  __esModule: true,
+  ...jest.requireActual('@sap-cloud-sdk/resilience/internal')
+}));
 import * as httpClient from '@sap-cloud-sdk/http-client';
 import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import { parseDestination } from '@sap-cloud-sdk/connectivity/internal';

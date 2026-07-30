@@ -1,4 +1,4 @@
-import { resolve, join } from 'path';
+import { dirname, resolve, join } from 'path';
 import { existsSync, promises } from 'fs';
 import {
   testOutputRootDir,

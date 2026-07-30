@@ -74,6 +74,11 @@ export async function convertToOpenApiV3xDocument(
   logger.info(`Detected specification version ${version}.`);
 
   if (version.startsWith('3.')) {
+    if (version.startsWith('3.1')) {
+      logger.warn(
+        'OpenAPI 3.1 support is an experimental feature. Use with caution.'
+      );
+    }
     return openApiDocument as OpenAPIV3.Document | OpenAPIV3_1.Document;
   }
 

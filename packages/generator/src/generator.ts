@@ -1,5 +1,5 @@
-import { existsSync, promises as fsPromises } from 'fs';
-import { dirname, join, resolve } from 'path';
+import { mkdir, readdir, rm } from 'node:fs/promises';
+import { dirname, join, resolve } from 'node:path';
 import {
   copyFiles,
   createFile,
@@ -20,7 +20,6 @@ import {
   setLogLevel,
   splitInChunks
 } from '@sap-cloud-sdk/util';
-import { emptyDirSync } from 'fs-extra';
 import {
   IndentationText,
   ModuleKind,
@@ -53,8 +52,6 @@ import type {
   OptionsPerService
 } from '@sap-cloud-sdk/generator-common/internal';
 import type { VdmServiceMetadata } from './vdm-types';
-
-const { mkdir, readdir } = fsPromises;
 
 const logger = createLogger({
   package: 'generator',
@@ -89,7 +86,7 @@ async function generateWithParsedOptions(
 ): Promise<void> {
   const projectAndServices = await generateProject(options);
   if (!projectAndServices) {
-    throw Error('The project is undefined.');
+    throw new Error('The project is undefined.');
   }
   const { services } = projectAndServices;
 
@@ -181,7 +178,8 @@ export async function generateProject(
   const services = await parseServices(options);
 
   if (options.clearOutputDir) {
-    emptyDirSync(options.outputDir.toString());
+    await rm(options.outputDir.toString(), { recursive: true, force: true });
+    await mkdir(options.outputDir.toString(), { recursive: true });
   }
 
   const project = new Project(
@@ -313,9 +311,7 @@ export async function generateSourcesForService(
   const serviceDir = project.createDirectory(serviceDirPath);
   const createFileOptions = await getFileCreationOptions(options);
 
-  if (!existsSync(serviceDirPath)) {
-    await mkdir(serviceDirPath, { recursive: true });
-  }
+  await mkdir(serviceDirPath, { recursive: true });
   const filePromises: Promise<any>[] = [];
   logger.verbose(`[${service.originalFileName}] Generating entities ...`);
 
@@ -460,9 +456,7 @@ export async function generateSourcesForService(
     logger.verbose(`Generating sdk client metadata ${clientFileName}...`);
 
     const path = resolve(dirname(service.edmxPath.toString()), 'sdk-metadata');
-    if (!existsSync(path)) {
-      await mkdir(path);
-    }
+    await mkdir(path, { recursive: true });
 
     filePromises.push(
       createFile(

@@ -3,6 +3,7 @@
     "target": "es2021",
     "module": "Node16",
     "lib": ["esnext"],
+    "types": ["node"],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": false,
@@ -12,6 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "inlineSources": false,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "customConditions": ["workspace"]
   }
 }

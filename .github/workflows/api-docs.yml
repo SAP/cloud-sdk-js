@@ -8,8 +8,6 @@ on:
         required: true
         type: string
     secrets:
-      NPM_TOKEN_ARTIFACTORY:
-        required: true
       SAP_CLOUD_SDK_BOT_CLIENT_ID:
         required: true
       SAP_CLOUD_SDK_BOT_PRIVATE_KEY:
@@ -30,8 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
-        with:
-          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
 
       - name: Generate API documentation
         run: |

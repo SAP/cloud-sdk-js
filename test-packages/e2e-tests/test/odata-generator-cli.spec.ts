@@ -1,8 +1,8 @@
-import * as path from 'path';
-import { resolve } from 'path';
+import * as fs from 'node:fs/promises';
+import * as path from 'node:path';
+import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
 import execa from 'execa';
-import * as fs from 'fs-extra';
 import { generate } from '@sap-cloud-sdk/generator/internal';
 import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
@@ -21,14 +21,22 @@ describe('OData generator CLI', () => {
   );
   const outputDirGenerateAll = resolve(__dirname, '../generation-e2e-test');
 
-  beforeEach(() => {
-    fs.emptyDirSync(outputDirGenerateAll);
-    fs.emptyDirSync(outputDirVersionPackageJson);
+  beforeEach(async () => {
+    await Promise.all([
+      fs
+        .rm(outputDirGenerateAll, { recursive: true, force: true })
+        .then(() => fs.mkdir(outputDirGenerateAll, { recursive: true })),
+      fs
+        .rm(outputDirVersionPackageJson, { recursive: true, force: true })
+        .then(() => fs.mkdir(outputDirVersionPackageJson, { recursive: true }))
+    ]);
   });
 
-  afterEach(() => {
-    fs.removeSync(outputDirGenerateAll);
-    fs.removeSync(outputDirVersionPackageJson);
+  afterEach(async () => {
+    await Promise.all([
+      fs.rm(outputDirGenerateAll, { recursive: true, force: true }),
+      fs.rm(outputDirVersionPackageJson, { recursive: true, force: true })
+    ]);
   });
 
   it('should fail if mandatory parameters are not there', async () => {
@@ -52,9 +60,9 @@ describe('OData generator CLI', () => {
         packageJson: true
       })
     );
-    const services = fs.readdirSync(outputDirGenerateAll);
+    const services = await fs.readdir(outputDirGenerateAll);
     expect(services.length).toBeGreaterThan(0);
-    const entities = fs.readdirSync(
+    const entities = await fs.readdir(
       path.resolve(outputDirGenerateAll, services[0])
     );
     expect(entities).toContain('TestEntity.ts');

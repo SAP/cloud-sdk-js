@@ -5,15 +5,12 @@ import { tmpdir } from 'node:os';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
 import { flatten } from '@sap-cloud-sdk/util';
-// import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
 import {
+  defaultPrettierConfig,
   readCompilerOptions,
   readIncludeExcludeWithDefaults,
   transpileDirectory
-  // eslint-disable-next-line import-x/no-internal-modules
-} from '@sap-cloud-sdk/generator-common/dist/compiler.js';
-// eslint-disable-next-line import-x/no-internal-modules
-import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer/create-file.js';
+} from '@sap-cloud-sdk/generator-common/internal';
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';
 
@@ -126,6 +123,43 @@ function compareApisAndLog(
   return setsAreEqual;
 }
 
+export interface SubpathExport {
+  subpath: string;
+  sourceFile: string;
+}
+
+export async function getSubpathExports(
+  pathToPackage: string
+): Promise<SubpathExport[]> {
+  const pkgJson = JSON.parse(
+    await readFile(join(pathToPackage, 'package.json'), 'utf-8')
+  );
+  const exports: Record<string, unknown> = pkgJson.exports ?? {};
+  const result: SubpathExport[] = [];
+  for (const [key, value] of Object.entries(exports)) {
+    if (key === '.' || !key.startsWith('./')) {
+      continue;
+    }
+    const subpath = key.slice(2);
+    if (subpath.includes('internal')) {
+      continue;
+    }
+    const typesPath =
+      typeof value === 'object' && value !== null
+        ? (value as Record<string, unknown>).types
+        : undefined;
+    if (typeof typesPath !== 'string') {
+      continue;
+    }
+    // './dist/realtime/index.d.ts' → 'src/realtime/index.ts'
+    const srcRelative = typesPath
+      .replace(/^\.\/dist\//, 'src/')
+      .replace(/\.d\.ts$/, '.ts');
+    result.push({ subpath, sourceFile: join(pathToPackage, srcRelative) });
+  }
+  return result;
+}
+
 /**
  * Executes the public API check for a given package.
  * @param pathToPackage - Path to the package.
@@ -160,10 +194,33 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
       await checkBarrelRecursive(pathToSource);
     }
 
+    const subpathExports = await getSubpathExports(pathToPackage);
+
+    for (const { subpath, sourceFile } of subpathExports) {
+      info(`Check subpath export: ./${subpath}`);
+      await checkIndexFileExists(sourceFile);
+
+      const subpathCompiled = join(pathCompiled, subpath);
+      const exportedTypes = await parseTypeDefinitionFiles(subpathCompiled);
+      const exportedIndex = await parseIndexFile(
+        sourceFile,
+        forceInternalExports
+      );
+      if (!compareApisAndLog(exportedIndex, exportedTypes)) {
+        process.exit(1);
+      }
+      info(
+        `The ./${subpath} entry of package ${pathToPackage} is in sync with the type annotations.\n`
+      );
+    }
+
     const indexFilePath = join(pathToSource, 'index.ts');
     await checkIndexFileExists(indexFilePath);
 
-    const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
+    const allExportedTypes = await parseTypeDefinitionFilesExcluding(
+      pathCompiled,
+      subpathExports.map(s => s.subpath)
+    );
     const allExportedIndex = await parseIndexFile(
       indexFilePath,
       forceInternalExports
@@ -212,7 +269,19 @@ export async function typeDescriptorPaths(cwd: string): Promise<string[]> {
 export async function parseTypeDefinitionFiles(
   pathCompiled: string
 ): Promise<ExportedObject[]> {
-  const typeDefinitionPaths = await typeDescriptorPaths(pathCompiled);
+  return parseTypeDefinitionFilesExcluding(pathCompiled, []);
+}
+
+export async function parseTypeDefinitionFilesExcluding(
+  pathCompiled: string,
+  excludedSubpaths: string[]
+): Promise<ExportedObject[]> {
+  const typeDefinitionPaths = (await typeDescriptorPaths(pathCompiled)).filter(
+    p =>
+      !excludedSubpaths.some(sub =>
+        getPathWithPosixSeparator(p).includes(`/${sub}/`)
+      )
+  );
   const result = await Promise.all(
     typeDefinitionPaths.map(async pathTypeDefinition => {
       const fileContent = await readFile(pathTypeDefinition, 'utf8');
@@ -306,7 +375,9 @@ export async function parseIndexFile(
     starFiles.map(async relativeFilePath => {
       const absolutePath = relativeFilePath.endsWith('.js')
         ? resolve(cwd, `${relativeFilePath.slice(0, -3)}.ts`)
-        : resolve(cwd, `${relativeFilePath}.ts`);
+        : relativeFilePath.endsWith('.ts')
+          ? resolve(cwd, relativeFilePath)
+          : resolve(cwd, `${relativeFilePath}.ts`);
 
       return parseIndexFile(absolutePath, forceInternalExports);
     })

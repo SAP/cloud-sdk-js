@@ -9,6 +9,7 @@
     "isolatedModules": true,
     "outDir": "./lib",
     "tsBuildInfoFile": "./lib/.tsbuildinfo",
+    "customConditions": ["workspace"],
     "types": ["node", "jest"]
   },
   "include": ["*.ts"],

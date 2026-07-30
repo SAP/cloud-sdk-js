@@ -30,7 +30,6 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           ref: 'main'
           persist-credentials: true
-          registry-token: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
 
       - name: bump version
         id: bump
@@ -64,7 +63,6 @@ jobs:
       contents: read
     uses: ./.github/workflows/api-docs.yml
     secrets:
-      NPM_TOKEN_ARTIFACTORY: ${{ secrets.NPM_TOKEN_ARTIFACTORY }}
       SAP_CLOUD_SDK_BOT_CLIENT_ID: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
       SAP_CLOUD_SDK_BOT_PRIVATE_KEY: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
     with:

@@ -1,5 +1,5 @@
-import { resolve } from 'path';
-import { readFile } from 'fs-extra';
+import { resolve } from 'node:path';
+import { readFile } from 'node:fs/promises';
 
 /**
  * Get the current SDK version from the package json.

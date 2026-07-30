@@ -73330,7 +73330,9 @@ async function parseIndexFile(filePath, forceInternalExports) {
     const starFileExports = await Promise.all(starFiles.map(async (relativeFilePath) => {
         const absolutePath = relativeFilePath.endsWith('.js')
             ? (0,node_path__WEBPACK_IMPORTED_MODULE_0__.resolve)(cwd, `${relativeFilePath.slice(0, -3)}.ts`)
-            : (0,node_path__WEBPACK_IMPORTED_MODULE_0__.resolve)(cwd, `${relativeFilePath}.ts`);
+            : relativeFilePath.endsWith('.ts')
+                ? (0,node_path__WEBPACK_IMPORTED_MODULE_0__.resolve)(cwd, relativeFilePath)
+                : (0,node_path__WEBPACK_IMPORTED_MODULE_0__.resolve)(cwd, `${relativeFilePath}.ts`);
         return parseIndexFile(absolutePath, forceInternalExports);
     }));
     return [...localExports, ...starFileExports.flat()];

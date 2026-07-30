@@ -14,7 +14,7 @@
     "access": "restricted"
   },
   "scripts": {
-    "generate": "ts-node generate-common-entity.ts",
+    "generate": "NODE_OPTIONS='--conditions=workspace' ts-node generate-common-entity.ts",
     "check:dependencies": "depcheck .",
     "lint": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"

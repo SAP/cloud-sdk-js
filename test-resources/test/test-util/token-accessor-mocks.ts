@@ -1,5 +1,5 @@
 import nock from 'nock';
-import * as tokenAccessor from '@sap-cloud-sdk/connectivity/src/scp-cf/token-accessor';
+import * as tokenAccessor from '@sap-cloud-sdk/connectivity/scp-cf/token-accessor';
 import { decodeJwt } from '@sap-cloud-sdk/connectivity';
 import { isXsuaaToken } from '@sap-cloud-sdk/connectivity/internal';
 import { onlyIssuerXsuaaUrl, testTenants } from './environment-mocks';

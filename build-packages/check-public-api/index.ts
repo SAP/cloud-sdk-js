@@ -5,15 +5,12 @@ import { tmpdir } from 'node:os';
 import { glob } from 'glob';
 import { info, warning, error, getInput, setFailed } from '@actions/core';
 import { flatten } from '@sap-cloud-sdk/util';
-// import directly from the files to avoid importing non-esm compatible functionality (e.g. __dirname)
 import {
+  defaultPrettierConfig,
   readCompilerOptions,
   readIncludeExcludeWithDefaults,
   transpileDirectory
-  // eslint-disable-next-line import-x/no-internal-modules
-} from '@sap-cloud-sdk/generator-common/dist/compiler.js';
-// eslint-disable-next-line import-x/no-internal-modules
-import { defaultPrettierConfig } from '@sap-cloud-sdk/generator-common/dist/file-writer/create-file.js';
+} from '@sap-cloud-sdk/generator-common/internal';
 import { getPackages } from '@manypkg/get-packages';
 import type { CompilerOptions } from 'typescript';
 

@@ -12,6 +12,16 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./internal": {
+      "types": "./dist/internal.d.ts",
+      "default": "./dist/internal.js"
+    }
+  },
   "bin": {
     "openapi-generator": "./dist/cli.js"
   },
@@ -19,9 +29,7 @@
     "access": "public"
   },
   "files": [
-    "dist",
-    "internal.d.ts",
-    "internal.js"
+    "dist"
   ],
   "repository": {
     "type": "git",

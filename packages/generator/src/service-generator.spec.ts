@@ -9,8 +9,10 @@ import { createParsedOptions } from '../test/test-util/create-generator-options'
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { parseAllServices, parseService } from './service-generator';
 import type { VdmProperty } from './vdm-types';
-import type { OptionsPerService } from '@sap-cloud-sdk/generator-common/internal';
-import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/dist/options-per-service';
+import type {
+  OptionsPerService,
+  ServiceOptions
+} from '@sap-cloud-sdk/generator-common/internal';
 
 describe('service-generator', () => {
   describe('v2', () => {

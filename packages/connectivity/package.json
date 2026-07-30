@@ -12,6 +12,22 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./internal": {
+      "types": "./dist/internal.d.ts",
+      "default": "./dist/internal.js"
+    },
+    "./scp-cf/token-accessor": {
+      "workspace": {
+        "types": "./src/scp-cf/token-accessor.ts",
+        "default": "./src/scp-cf/token-accessor.ts"
+      }
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -19,9 +35,7 @@
     "dist/**/*.js",
     "dist/**/*.js.map",
     "dist/**/*.d.ts",
-    "dist/**/*.d.ts.map",
-    "internal.js",
-    "internal.d.ts"
+    "dist/**/*.d.ts.map"
   ],
   "repository": {
     "type": "git",

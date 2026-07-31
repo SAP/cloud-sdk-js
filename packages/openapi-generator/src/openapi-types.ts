@@ -232,7 +232,8 @@ const supportedMethods = {
   delete: 'delete',
   head: 'head',
   options: 'options',
-  trace: 'trace'
+  trace: 'trace',
+  query: 'query'
 } as const;
 
 /**

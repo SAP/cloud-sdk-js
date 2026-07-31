@@ -123,16 +123,22 @@ function getAllOperations(
           OpenAPIV3.PathItemObject | OpenAPIV3_1.PathItemObject
         ] => !!entry[1]
       )
-      .map(([pathPattern, pathItem]) =>
-        methods
-          .filter(method => pathItem[method])
+      .map(([pathPattern, pathItem]) => {
+        // Cast to a plain record for indexing: the openapi-types library does not
+        // declare `query` on PathItemObject (it's an OpenAPI 3.2 addition), so
+        // typed property access for our full Method union requires a bypass here.
+        const pathItemRecord = pathItem as Record<
+          string,
+          OpenAPIV3.OperationObject
+        >;
+        return methods
+          .filter(method => pathItemRecord[method])
           .map(method => ({
             pathPattern,
-            // We can assume that the operation exists as non existing operations where filtered before.
-            operation: pathItem[method]!,
+            operation: pathItemRecord[method]!,
             pathItemParameters: pathItem.parameters || [],
             method
-          }))
-      )
+          }));
+      })
   );
 }

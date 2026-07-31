@@ -58,10 +58,11 @@ export default {
       entry: ['madge-test/**/*.ts'],
       ignoreDependencies: ['tsd']
     },
-    // e2e-tests: cap-js/sqlite loaded dynamically by CDS at runtime
+    // e2e-tests: cap-js/sqlite loaded dynamically by CDS at runtime;
+    // odata-v2 and bignumber.js used only in generated test output (not in entry patterns)
     'test-packages/e2e-tests': {
       entry: ['test/**/*.ts', 'srv/**/*.js', 'test/proxy/**/*.js'],
-      ignoreDependencies: ['@cap-js/sqlite']
+      ignoreDependencies: ['@cap-js/sqlite', '@sap-cloud-sdk/odata-v2', 'bignumber.js']
     },
     // integration-tests: test-util-internal is used at runtime via jest setup;
     // throw-exception-with-logger-script.ts is invoked as a subprocess, not imported

@@ -1,4 +1,4 @@
-import { resolve, join } from 'path';
+import { dirname, resolve, join } from 'path';
 import { existsSync, promises } from 'fs';
 import execa from 'execa';
 import {
@@ -8,8 +8,10 @@ import {
 
 // TODO use fs-mock here
 describe('openapi negative tests', () => {
-  const pathToGenerator =
-    require.resolve('@sap-cloud-sdk/openapi-generator/dist/cli.js');
+  const pathToGenerator = join(
+    dirname(require.resolve('@sap-cloud-sdk/openapi-generator')),
+    'cli.js'
+  );
 
   const testDir = join(testOutputRootDir, 'openapi-negative');
   beforeAll(async () => {

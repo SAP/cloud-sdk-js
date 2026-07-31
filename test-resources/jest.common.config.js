@@ -1,6 +1,9 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  testEnvironmentOptions: {
+    customExportConditions: ['workspace']
+  },
   transform: {
     '^.+\\.tsx?$': 'ts-jest'
   },

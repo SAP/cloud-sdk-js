@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
-    "postcompile": "ncc build lib/build-packages/changesets-fixed-version-bump/index.js --out ../../.github/actions/changesets-fixed-version-bump/",
+    "postcompile": "rolldown -c rolldown.config.ts",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "all": "pnpm install && pnpm run lint && pnpm run compile"
@@ -21,9 +21,9 @@
   "devDependencies": {
     "@typescript/native": "npm:typescript@^7.0.2",
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
-    "@vercel/ncc": "^0.44.1",
     "eslint": "^10.2.1",
     "memfs": "^4.57.2",
+    "rolldown": "1.2.0",
     "prettier": "^3.8.1"
   }
 }

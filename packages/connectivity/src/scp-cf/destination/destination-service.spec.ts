@@ -1,5 +1,9 @@
 import * as jwt123 from 'jsonwebtoken';
 import nock from 'nock';
+jest.mock('@sap-cloud-sdk/resilience/internal', () => ({
+  __esModule: true,
+  ...jest.requireActual('@sap-cloud-sdk/resilience/internal')
+}));
 import * as resilienceMethods from '@sap-cloud-sdk/resilience/internal';
 import { circuitBreakers } from '@sap-cloud-sdk/resilience/internal';
 import axios from 'axios';

@@ -12,6 +12,16 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./internal": {
+      "types": "./dist/internal.d.ts",
+      "default": "./dist/internal.js"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -19,9 +29,7 @@
     "dist/**/*.js",
     "dist/**/*.js.map",
     "dist/**/*.d.ts",
-    "dist/**/*.d.ts.map",
-    "internal.js",
-    "internal.d.ts"
+    "dist/**/*.d.ts.map"
   ],
   "repository": {
     "type": "git",
@@ -41,7 +49,6 @@
   "dependencies": {
     "@sap-cloud-sdk/util": "workspace:^",
     "fast-levenshtein": "~3.0.0",
-    "fs-extra": "^11.3.4",
     "glob": "^13.0.6",
     "prettier": "^3.8.1",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
@@ -53,7 +60,6 @@
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@typescript/native": "npm:typescript@^7.0.2",
     "@types/fast-levenshtein": "^0.0.4",
-    "@types/fs-extra": "^11.0.4",
     "@types/yargs": "^17.0.33",
     "memfs": "^4.57.2"
   }

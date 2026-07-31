@@ -459,10 +459,16 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     httpsAgent: https.globalAgent,
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
     paramsSerializer: {
-      serialize: (params = {}) =>
-        Object.entries(params)
+      serialize: (params = {}) => {
+        // Sentinel key: request builder places raw query strings here to bypass encoding.
+        const rawKey = '__raw_query_string__';
+        if (rawKey in params) {
+          return String(params[rawKey]);
+        }
+        return Object.entries(params)
           .map(([key, value]) => `${key}=${value}`)
-          .join('&')
+          .join('&');
+      }
     }
   };
 }

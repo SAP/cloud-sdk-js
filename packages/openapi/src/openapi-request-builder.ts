@@ -394,7 +394,12 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private getParameters(): OriginOptions {
-    return { requestConfig: this.parameters?.queryParameters || {} };
+    const queryParameters = { ...(this.parameters?.queryParameters || {}) };
+    if (this.parameters?.queryString !== undefined) {
+      // Route raw query string through the sentinel key so the paramsSerializer emits it verbatim.
+      queryParameters['__raw_query_string__'] = this.parameters.queryString;
+    }
+    return { requestConfig: queryParameters };
   }
 
   private getBody(): any {
@@ -452,6 +457,10 @@ export interface OpenApiRequestParameters {
    * Request body typically used with "create" and "update" operations (POST, PUT, PATCH).
    */
   body?: any;
+  /**
+   * Raw query string carried verbatim (OpenAPI 3.2 `in: querystring`).
+   */
+  queryString?: string;
   /**
    * Encoding metadata for multipart/form-data properties.
    * @internal

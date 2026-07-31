@@ -4,6 +4,7 @@ jest.mock('@sap-cloud-sdk/resilience/internal', () => ({
   ...jest.requireActual('@sap-cloud-sdk/resilience/internal')
 }));
 import * as httpClient from '@sap-cloud-sdk/http-client';
+import { getAxiosConfigWithDefaultsWithoutMethod } from '@sap-cloud-sdk/http-client/internal';
 import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import { parseDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { retry, timeout } from '@sap-cloud-sdk/resilience';
@@ -893,6 +894,17 @@ describe('openapi-request-builder', () => {
       });
       const requestConfig = await requestBuilder['requestConfig']();
       expect(requestConfig['method']).toBe('merge');
+    });
+
+    it('emits a raw querystring parameter verbatim', async () => {
+      const builder = new OpenApiRequestBuilder('get', '/entity', {
+        queryString: 'a=1&b=2'
+      });
+      const config = await (builder as any).requestConfig();
+      const serialize =
+        getAxiosConfigWithDefaultsWithoutMethod().paramsSerializer!.serialize!;
+      // config.params is OriginOptions; .requestConfig is the flat params object passed to axios.
+      expect(serialize(config.params.requestConfig)).toEqual('a=1&b=2');
     });
   });
 });

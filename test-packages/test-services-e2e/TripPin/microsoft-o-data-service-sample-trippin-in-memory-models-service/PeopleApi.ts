@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 import { People } from './People';
 import { PeopleRequestBuilder } from './PeopleRequestBuilder';
 import { PhotosApi } from './PhotosApi';

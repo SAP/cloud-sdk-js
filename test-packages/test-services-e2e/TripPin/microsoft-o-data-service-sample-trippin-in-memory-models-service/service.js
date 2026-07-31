@@ -1,11 +1,11 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.microsoftODataServiceSampleTrippinInMemoryModelsService = microsoftODataServiceSampleTrippinInMemoryModelsService;
 /*
  * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.microsoftODataServiceSampleTrippinInMemoryModelsService = microsoftODataServiceSampleTrippinInMemoryModelsService;
 const PhotosApi_1 = require("./PhotosApi");
 const PeopleApi_1 = require("./PeopleApi");
 const AirlinesApi_1 = require("./AirlinesApi");

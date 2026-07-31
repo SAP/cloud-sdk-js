@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 import { TestEntityWithEnumKey } from './TestEntityWithEnumKey';
 import { TestEntityWithEnumKeyRequestBuilder } from './TestEntityWithEnumKeyRequestBuilder';
 import { TestEnumType } from './TestEnumType';

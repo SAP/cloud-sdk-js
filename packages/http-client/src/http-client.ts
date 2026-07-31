@@ -448,6 +448,14 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
 }
 
 /**
+ * Sentinel key used to carry a pre-formed raw query string through the params pipeline.
+ * The value under this key is emitted verbatim by the paramsSerializer and is exempt from
+ * URI encoding in encodeAllParameters.
+ * @internal
+ */
+export const RAW_QUERY_STRING_KEY = '__raw_query_string__';
+
+/**
  * @internal
  */
 export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
@@ -460,10 +468,8 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
     paramsSerializer: {
       serialize: (params = {}) => {
-        // Sentinel key: request builder places raw query strings here to bypass encoding.
-        const rawKey = '__raw_query_string__';
-        if (rawKey in params) {
-          return String(params[rawKey]);
+        if (RAW_QUERY_STRING_KEY in params) {
+          return String(params[RAW_QUERY_STRING_KEY]);
         }
         return Object.entries(params)
           .map(([key, value]) => `${key}=${value}`)
@@ -493,6 +499,8 @@ export function getDefaultHttpRequestOptions(): HttpRequestOptions {
 
 /**
  * Encoder for encoding all query parameters (key and value) using encodeURIComponent.
+ * The sentinel key {@link RAW_QUERY_STRING_KEY} is passed through verbatim because its value
+ * is an already-formed query string that must not be double-encoded.
  * @param parameter - Parameter to be encoded using encodeURIComponent.
  * @returns Encoded parameter object.
  */
@@ -500,9 +508,10 @@ export const encodeAllParameters: ParameterEncoder = function (
   parameter: Record<string, any>
 ): Record<string, any> {
   return Object.fromEntries(
-    Object.entries(parameter).map(([key, value]) => [
-      encodeURIComponent(key),
-      encodeURIComponent(value)
-    ])
+    Object.entries(parameter).map(([key, value]) =>
+      key === RAW_QUERY_STRING_KEY
+        ? [key, value] // raw query string — pass through as-is
+        : [encodeURIComponent(key), encodeURIComponent(value)]
+    )
   );
 };

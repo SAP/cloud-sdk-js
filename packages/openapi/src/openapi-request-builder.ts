@@ -14,7 +14,10 @@ import {
   noDestinationErrorMessage
 } from '@sap-cloud-sdk/connectivity/internal';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
-import { filterCustomRequestConfig } from '@sap-cloud-sdk/http-client/internal';
+import {
+  filterCustomRequestConfig,
+  RAW_QUERY_STRING_KEY
+} from '@sap-cloud-sdk/http-client/internal';
 import type {
   Method,
   HttpResponse,
@@ -397,7 +400,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     const queryParameters = { ...(this.parameters?.queryParameters || {}) };
     if (this.parameters?.queryString !== undefined) {
       // Route raw query string through the sentinel key so the paramsSerializer emits it verbatim.
-      queryParameters['__raw_query_string__'] = this.parameters.queryString;
+      queryParameters[RAW_QUERY_STRING_KEY] = this.parameters.queryString;
     }
     return { requestConfig: queryParameters };
   }

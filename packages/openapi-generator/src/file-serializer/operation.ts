@@ -63,7 +63,11 @@ function serializeOperationSignature(operation: OpenApiOperation): string {
     allOptionalHeaders && allOptionalQuery
   );
 
-  return [pathParams, requestBodyParam, queryParams, headerParams]
+  const queryStringParam = operation.queryStringParameter
+    ? `queryString${operation.queryStringParameter.required ? '' : '?'}: string`
+    : undefined;
+
+  return [pathParams, requestBodyParam, queryParams, queryStringParam, headerParams]
     .filter(params => params)
     .join(', ');
 }
@@ -149,6 +153,10 @@ function serializeParamsForRequestBuilder(
   }
   if (operation.queryParameters.length) {
     params.push('queryParameters');
+  }
+
+  if (operation.queryStringParameter) {
+    params.push('queryString');
   }
 
   if (params.length) {

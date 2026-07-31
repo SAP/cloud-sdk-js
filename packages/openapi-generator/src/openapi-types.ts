@@ -2,6 +2,128 @@ import type { OpenAPIV3 } from 'openapi-types';
 import type { ServiceOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 /**
+ * A schema object as it may appear in an OpenAPI 3.0.x or 3.1.0 document.
+ *
+ * OpenAPI 3.1 aligns the Schema Object with JSON Schema 2020-12. Compared to
+ * 3.0 this allows, amongst others, `type` to be an array (possibly containing
+ * `"null"`), numeric `exclusiveMinimum`/`exclusiveMaximum`, `const`,
+ * `prefixItems` (tuples), `contentEncoding`/`contentMediaType`, an `examples`
+ * array and `patternProperties`. This type is intentionally permissive (it
+ * carries an index signature) so the parser can read any of these keywords
+ * regardless of the source document version.
+ * @internal
+ */
+export interface OpenApiV3xSchema {
+  /**
+   * Allows reading arbitrary JSON Schema 2020-12 keywords that are not modeled
+   * explicitly below.
+   */
+  [key: string]: any;
+
+  /**
+   * Type of the schema. A single string in 3.0, possibly an array of types
+   * (optionally including `"null"`) in 3.1.
+   */
+  type?: string | string[];
+
+  /**
+   * Format hint for the schema type.
+   */
+  format?: string;
+
+  /**
+   * Title of the schema.
+   */
+  title?: string;
+
+  /**
+   * Description of the schema.
+   */
+  description?: string;
+
+  /**
+   * Denotes whether the schema is nullable. Only present in OpenAPI 3.0.x; in
+   * 3.1 nullability is expressed via `"null"` in the `type` array.
+   */
+  nullable?: boolean;
+
+  /**
+   * A single fixed value the schema must equal (JSON Schema 2020-12, 3.1).
+   */
+  const?: any;
+
+  /**
+   * Enumeration of allowed values.
+   */
+  enum?: any[];
+
+  /**
+   * Schema of the items of an array. In a tuple (`prefixItems`) schema this
+   * governs additional items beyond the tuple; `false` disallows them.
+   */
+  items?: OpenApiV3xSchema | OpenAPIV3.ReferenceObject | boolean;
+
+  /**
+   * Positional tuple item schemas (JSON Schema 2020-12, 3.1).
+   */
+  prefixItems?: (OpenApiV3xSchema | OpenAPIV3.ReferenceObject)[];
+
+  /**
+   * Denotes whether the items of an array have to be unique.
+   */
+  uniqueItems?: boolean;
+
+  /**
+   * Properties of an object schema.
+   */
+  properties?: Record<string, OpenApiV3xSchema | OpenAPIV3.ReferenceObject>;
+
+  /**
+   * Schemas for properties matching a regular expression (JSON Schema
+   * 2020-12, 3.1).
+   */
+  patternProperties?: Record<
+    string,
+    OpenApiV3xSchema | OpenAPIV3.ReferenceObject
+  >;
+
+  /**
+   * Schema for additional properties of an object.
+   */
+  additionalProperties?: boolean | OpenApiV3xSchema | OpenAPIV3.ReferenceObject;
+
+  /**
+   * List of required property names.
+   */
+  required?: string[];
+
+  /**
+   * List of schemas of which exactly one has to match.
+   */
+  oneOf?: (OpenApiV3xSchema | OpenAPIV3.ReferenceObject)[];
+
+  /**
+   * List of schemas of which all have to match.
+   */
+  allOf?: (OpenApiV3xSchema | OpenAPIV3.ReferenceObject)[];
+
+  /**
+   * List of schemas of which at least one has to match.
+   */
+  anyOf?: (OpenApiV3xSchema | OpenAPIV3.ReferenceObject)[];
+
+  /**
+   * Schema that must not match.
+   */
+  not?: OpenApiV3xSchema | OpenAPIV3.ReferenceObject;
+
+  /**
+   * Discriminator to distinguish between `oneOf`/`anyOf` schemas.
+   */
+  discriminator?: OpenAPIV3.DiscriminatorObject;
+}
+
+/**
  * Representation of an OpenAPI specification/document.
  * @internal
  */
@@ -195,7 +317,9 @@ export type OpenApiMediaTypeObject = OpenAPIV3.MediaTypeObject & {
 export type OpenApiSchema =
   | OpenApiReferenceSchema
   | OpenApiArraySchema
+  | OpenApiTupleSchema
   | OpenApiSimpleSchema
+  | OpenApiConstSchema
   | OpenApiObjectSchema
   | OpenApiEnumSchema
   | OpenApiOneOfSchema
@@ -283,6 +407,25 @@ export interface OpenApiArraySchema {
 }
 
 /**
+ * A schema representing a tuple, i.e. an array with positional item schemas.
+ * This corresponds to the JSON Schema 2020-12 `prefixItems` keyword adopted by
+ * OpenAPI 3.1.
+ * @internal
+ */
+export interface OpenApiTupleSchema {
+  /**
+   * Positional schemas for the leading elements of the tuple.
+   */
+  prefixItems: OpenApiSchema[];
+
+  /**
+   * Schema for elements beyond the positional ones. When `undefined`, no
+   * additional items are allowed (the array is a fixed-length tuple).
+   */
+  additionalItems?: OpenApiSchema;
+}
+
+/**
  * Any schema that is no other specific schema. This includes primitive types.
  * @internal
  */
@@ -291,6 +434,18 @@ export interface OpenApiSimpleSchema {
    * Type represented by the schema.
    */
   type: string;
+}
+
+/**
+ * Schema representing a single fixed value, corresponding to the JSON Schema
+ * 2020-12 `const` keyword adopted by OpenAPI 3.1.
+ * @internal
+ */
+export interface OpenApiConstSchema {
+  /**
+   * The serialized TypeScript literal type of the fixed value.
+   */
+  const: string;
 }
 
 /**
@@ -448,6 +603,18 @@ export interface OpenApiSchemaProperties {
   minimum?: number;
 
   /**
+   * Denotes an exclusive upper bound. A boolean modifier of `maximum` in
+   * OpenAPI 3.0.x, a numeric bound in OpenAPI 3.1.
+   */
+  exclusiveMaximum?: number | boolean;
+
+  /**
+   * Denotes an exclusive lower bound. A boolean modifier of `minimum` in
+   * OpenAPI 3.0.x, a numeric bound in OpenAPI 3.1.
+   */
+  exclusiveMinimum?: number | boolean;
+
+  /**
    * Denotes the maximum length of a string.
    */
   maxLength?: number;
@@ -481,4 +648,22 @@ export interface OpenApiSchemaProperties {
    * Example value for schema or schema property.
    */
   example?: any;
+
+  /**
+   * Example values for schema or schema property (JSON Schema 2020-12, 3.1).
+   * Supersedes the singular, deprecated `example`.
+   */
+  examples?: any[];
+
+  /**
+   * Denotes the encoding of string content, e.g. `base64` (JSON Schema
+   * 2020-12, 3.1).
+   */
+  contentEncoding?: string;
+
+  /**
+   * Denotes the media type of string content, e.g. `image/png` (JSON Schema
+   * 2020-12, 3.1).
+   */
+  contentMediaType?: string;
 }

@@ -188,6 +188,7 @@ export function parseSchema(
  * text). Text-based types — text/*, application/json, application/xml, and
  * structured-syntax suffixes like +json or +xml — are excluded because their
  * string values remain plain text and should stay typed as `string`.
+ * @internal
  */
 function isBinaryMediaType(mediaType: string | undefined): boolean {
   if (!mediaType) {

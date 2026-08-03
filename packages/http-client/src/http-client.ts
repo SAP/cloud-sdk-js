@@ -20,10 +20,10 @@ import {
   sanitizeRecord
 } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import type { AxiosRequestConfig } from 'axios';
 import { isHttpRequestConfigWithOrigin } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
 import { csrf } from './csrf-token-middleware';
+import type { AxiosRequestConfig } from 'axios';
 import type {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,

@@ -149,9 +149,11 @@ describe('generic http client', () => {
 
     it('re-attaches proxy headers on same-origin redirects', async () => {
       const actualProxy = await buildHttpRequest(proxyDestination);
-      const beforeRedirect = (actualProxy as DestinationHttpRequestConfig & {
-        beforeRedirect?: RedirectHook;
-      }).beforeRedirect;
+      const beforeRedirect = (
+        actualProxy as DestinationHttpRequestConfig & {
+          beforeRedirect?: RedirectHook;
+        }
+      ).beforeRedirect;
 
       const redirectOptions = {
         headers: {} as Record<string, string>,
@@ -175,9 +177,11 @@ describe('generic http client', () => {
 
     it('does not re-attach proxy headers on cross-origin redirects', async () => {
       const actualProxy = await buildHttpRequest(proxyDestination);
-      const beforeRedirect = (actualProxy as DestinationHttpRequestConfig & {
-        beforeRedirect?: RedirectHook;
-      }).beforeRedirect;
+      const beforeRedirect = (
+        actualProxy as DestinationHttpRequestConfig & {
+          beforeRedirect?: RedirectHook;
+        }
+      ).beforeRedirect;
 
       const redirectOptions = {
         headers: {} as Record<string, string>,
@@ -199,9 +203,11 @@ describe('generic http client', () => {
 
     it('uses the current request URL to determine redirect origin', async () => {
       const actualProxy = await buildHttpRequest(proxyDestination);
-      const beforeRedirect = (actualProxy as DestinationHttpRequestConfig & {
-        beforeRedirect?: RedirectHook;
-      }).beforeRedirect;
+      const beforeRedirect = (
+        actualProxy as DestinationHttpRequestConfig & {
+          beforeRedirect?: RedirectHook;
+        }
+      ).beforeRedirect;
 
       const redirectOptions = {
         headers: {} as Record<string, string>,
@@ -230,9 +236,11 @@ describe('generic http client', () => {
       });
 
       expect(
-        (actualHttp as DestinationHttpRequestConfig & {
-          beforeRedirect?: RedirectHook;
-        }).beforeRedirect
+        (
+          actualHttp as DestinationHttpRequestConfig & {
+            beforeRedirect?: RedirectHook;
+          }
+        ).beforeRedirect
       ).toBeUndefined();
     });
 

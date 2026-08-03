@@ -198,15 +198,12 @@ function isBinaryMediaType(mediaType: string | undefined): boolean {
   if (lower.startsWith('text/')) {
     return false;
   }
-  if (
+  return !(
     lower === 'application/json' ||
     lower === 'application/xml' ||
     lower.endsWith('+json') ||
     lower.endsWith('+xml')
-  ) {
-    return false;
-  }
-  return true;
+  );
 }
 
 /**

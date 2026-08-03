@@ -168,9 +168,12 @@ export function parseSchema(
   // 'contentEncoding'/'contentMediaType' instead of the 3.0 'format: binary'
   // idiom. Map such content-encoded strings to 'Blob', consistent with the
   // binary handling elsewhere.
+  // Note: contentMediaType alone only maps to Blob for binary media types.
+  // Text-based types (text/*, application/json, application/*+json, etc.) are
+  // plain strings whose content happens to follow a text format.
   if (
     hasType(schema, 'string') &&
-    (schema.contentEncoding || schema.contentMediaType)
+    (schema.contentEncoding || isBinaryMediaType(schema.contentMediaType))
   ) {
     return { type: 'Blob' };
   }
@@ -178,6 +181,31 @@ export function parseSchema(
   return {
     type: getType(schema.type, schema.format)
   };
+}
+
+/**
+ * Returns true for media types whose content is binary (not human-readable
+ * text). Text-based types — text/*, application/json, application/xml, and
+ * structured-syntax suffixes like +json or +xml — are excluded because their
+ * string values remain plain text and should stay typed as `string`.
+ */
+function isBinaryMediaType(mediaType: string | undefined): boolean {
+  if (!mediaType) {
+    return false;
+  }
+  const lower = mediaType.toLowerCase().split(';')[0].trim();
+  if (lower.startsWith('text/')) {
+    return false;
+  }
+  if (
+    lower === 'application/json' ||
+    lower === 'application/xml' ||
+    lower.endsWith('+json') ||
+    lower.endsWith('+xml')
+  ) {
+    return false;
+  }
+  return true;
 }
 
 /**

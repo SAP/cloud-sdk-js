@@ -8,7 +8,7 @@ import type { jest } from '@jest/globals';
  *
  * - Reads: unionfs tries memfs first, falls back to the real filesystem.
  * - Writes: routed directly to memfs (the overlay layer).
- * - copyFile: bridges layers — reads source via unionfs, writes to memfs.
+ * - copyFile: bridges layers - reads source via unionfs, writes to memfs.
  *
  * @param realFs The real fs module to use as the base layer.
  * @returns A unionfs instance that combines memfs and the real fs.

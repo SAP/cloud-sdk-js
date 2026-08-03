@@ -20,7 +20,7 @@ expectAssignable<DestinationOrFetchOptions>({
 // Fetch-options branch: destinationName surfaces.
 expectAssignable<DestinationOrFetchOptions>({ destinationName: 'foo' });
 
-// Fetch-options branch: `service` surfaces — regression guard for the Xor-pollution bug.
+// Fetch-options branch: `service` surfaces - regression guard for the Xor-pollution bug.
 expectAssignable<DestinationOrFetchOptions>({ service: mockService });
 
 // Fetch-options branch: destinationName + jwt.
@@ -50,7 +50,7 @@ expectAssignable<HttpDestinationOrFetchOptions>({
 // Fetch-options branch: destinationName.
 expectAssignable<HttpDestinationOrFetchOptions>({ destinationName: 'foo' });
 
-// Fetch-options branch: `service` — regression guard for the Xor-pollution bug.
+// Fetch-options branch: `service` - regression guard for the Xor-pollution bug.
 expectAssignable<HttpDestinationOrFetchOptions>({ service: mockService });
 
 // XOR: an HttpDestination cannot also carry fetch-options discriminators.

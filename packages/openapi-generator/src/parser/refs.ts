@@ -3,7 +3,7 @@ import SwaggerParser from '@apidevtools/swagger-parser';
 import { isReferenceObject } from '../schema-util';
 import { ensureUniqueNames } from './unique-naming';
 import { ensureValidSchemaNames } from './schema-naming';
-import type { OpenAPIV3 } from 'openapi-types';
+import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 import type { SchemaNaming } from '../openapi-types';
 import type { SchemaRefMapping } from './parsing-info';
 import type { ParserOptions } from './options';
@@ -18,7 +18,7 @@ type ResolvedOpenApiRefs = Awaited<ReturnType<typeof SwaggerParser.resolve>>;
  * @internal
  */
 export async function createRefs(
-  document: OpenAPIV3.Document,
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document,
   options: ParserOptions
 ): Promise<OpenApiDocumentRefs> {
   return OpenApiDocumentRefs.createRefs(document, options);
@@ -37,7 +37,7 @@ export class OpenApiDocumentRefs {
    * @returns A promise to the reference representation.
    */
   static async createRefs(
-    document: OpenAPIV3.Document,
+    document: OpenAPIV3.Document | OpenAPIV3_1.Document,
     options: ParserOptions
   ): Promise<OpenApiDocumentRefs> {
     return new OpenApiDocumentRefs(
@@ -55,7 +55,7 @@ export class OpenApiDocumentRefs {
    * @returns A mapping from schema references to schema naming objects.
    */
   private static parseSchemaRefMapping(
-    document: OpenAPIV3.Document,
+    document: OpenAPIV3.Document | OpenAPIV3_1.Document,
     options: ParserOptions
   ): SchemaRefMapping {
     const originalNames = Object.keys(document.components?.schemas || {});

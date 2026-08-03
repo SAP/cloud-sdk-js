@@ -31,7 +31,7 @@ import {
   schemaIndexFile
 } from './file-serializer';
 import { parseOpenApiDocument } from './parser';
-import { convertOpenApiSpec } from './document-converter';
+import { loadOpenApiSpec } from './document-converter';
 import { sdkMetadata } from './sdk-metadata';
 import { cliOptions } from './options';
 import type { GeneratorOptions, ParsedGeneratorOptions } from './options';
@@ -271,7 +271,7 @@ async function generateService(
   serviceOptions: ServiceOptions,
   tsConfig: string | undefined
 ): Promise<void> {
-  const openApiDocument = await convertOpenApiSpec(inputFilePath);
+  const openApiDocument = await loadOpenApiSpec(inputFilePath);
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceOptions,

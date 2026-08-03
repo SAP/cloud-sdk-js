@@ -6,10 +6,15 @@ import type { OpenAPIV3 } from 'openapi-types';
 
 const options = { strictNaming: true, schemaPrefix: '', resolveExternal: true };
 describe('parseApis', () => {
-  it('throws an error if there are APIs without paths', async () => {
+  it('returns no APIs for a document without paths (OpenAPI 3.1 schemas-only)', async () => {
+    const refs = await createTestRefs();
+    expect(parseApis(emptyDocument, refs, options)).toEqual([]);
+  });
+
+  it('throws an error if paths are present but contain no operations', async () => {
     const refs = await createTestRefs();
     expect(() =>
-      parseApis(emptyDocument, refs, options)
+      parseApis({ ...emptyDocument, paths: { '/x': {} } }, refs, options)
     ).toThrowErrorMatchingInlineSnapshot(
       '"Could not parse APIs. The document does not contain any operations."'
     );

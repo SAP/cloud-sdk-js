@@ -1,4 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { parse as parseContentType } from 'content-type';
 import { isReferenceObject } from '../schema-util';
 import { getType } from './type-mapping';
 import type { OpenAPIV3 } from 'openapi-types';
@@ -194,15 +195,20 @@ function isBinaryMediaType(mediaType: string | undefined): boolean {
   if (!mediaType) {
     return false;
   }
-  const lower = mediaType.toLowerCase().split(';')[0].trim();
-  if (lower.startsWith('text/')) {
+  let type: string;
+  try {
+    type = parseContentType(mediaType).type.toLowerCase();
+  } catch {
+    return false;
+  }
+  if (type.startsWith('text/')) {
     return false;
   }
   return !(
-    lower === 'application/json' ||
-    lower === 'application/xml' ||
-    lower.endsWith('+json') ||
-    lower.endsWith('+xml')
+    type === 'application/json' ||
+    type === 'application/xml' ||
+    type.endsWith('+json') ||
+    type.endsWith('+xml')
   );
 }
 

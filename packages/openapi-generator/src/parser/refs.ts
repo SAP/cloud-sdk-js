@@ -3,11 +3,12 @@ import SwaggerParser from '@apidevtools/swagger-parser';
 import { isReferenceObject } from '../schema-util';
 import { ensureUniqueNames } from './unique-naming';
 import { ensureValidSchemaNames } from './schema-naming';
-import type { OpenAPIV3 } from 'openapi-types';
-import type { $Refs } from '@apidevtools/json-schema-ref-parser';
+import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
 import type { SchemaNaming } from '../openapi-types';
 import type { SchemaRefMapping } from './parsing-info';
 import type { ParserOptions } from './options';
+
+type ResolvedOpenApiRefs = Awaited<ReturnType<typeof SwaggerParser.resolve>>;
 
 /**
  * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.
@@ -17,7 +18,7 @@ import type { ParserOptions } from './options';
  * @internal
  */
 export async function createRefs(
-  document: OpenAPIV3.Document,
+  document: OpenAPIV3.Document | OpenAPIV3_1.Document,
   options: ParserOptions
 ): Promise<OpenApiDocumentRefs> {
   return OpenApiDocumentRefs.createRefs(document, options);
@@ -36,7 +37,7 @@ export class OpenApiDocumentRefs {
    * @returns A promise to the reference representation.
    */
   static async createRefs(
-    document: OpenAPIV3.Document,
+    document: OpenAPIV3.Document | OpenAPIV3_1.Document,
     options: ParserOptions
   ): Promise<OpenApiDocumentRefs> {
     return new OpenApiDocumentRefs(
@@ -54,7 +55,7 @@ export class OpenApiDocumentRefs {
    * @returns A mapping from schema references to schema naming objects.
    */
   private static parseSchemaRefMapping(
-    document: OpenAPIV3.Document,
+    document: OpenAPIV3.Document | OpenAPIV3_1.Document,
     options: ParserOptions
   ): SchemaRefMapping {
     const originalNames = Object.keys(document.components?.schemas || {});
@@ -88,7 +89,7 @@ export class OpenApiDocumentRefs {
    * @param schemaRefMapping - Mapping between schema references and schema naming.
    */
   private constructor(
-    private refs: $Refs,
+    private refs: ResolvedOpenApiRefs,
     private schemaRefMapping: SchemaRefMapping
   ) {}
 

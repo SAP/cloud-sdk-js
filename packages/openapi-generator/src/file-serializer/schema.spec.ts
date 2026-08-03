@@ -322,3 +322,34 @@ it('serializeSchema serializes not schema', () => {
     })
   ).toEqual('any');
 });
+
+describe('serializeSchema for OpenAPI 3.1 schemas', () => {
+  it('serializes a const schema', () => {
+    expect(serializeSchema({ const: "'fixed'" })).toEqual("'fixed'");
+  });
+
+  it('serializes a tuple schema without additional items', () => {
+    expect(
+      serializeSchema({
+        prefixItems: [{ type: 'string' }, { type: 'number' }]
+      })
+    ).toEqual('[string, number]');
+  });
+
+  it('serializes a tuple schema with additional items as a rest element', () => {
+    expect(
+      serializeSchema({
+        prefixItems: [{ type: 'string' }],
+        additionalItems: { type: 'number' }
+      })
+    ).toEqual('[string, ...number[]]');
+  });
+
+  it('serializes a nullable union (anyOf with null)', () => {
+    expect(
+      serializeSchema({
+        anyOf: [{ type: 'string' }, { type: 'null' }]
+      })
+    ).toEqual('string | null');
+  });
+});

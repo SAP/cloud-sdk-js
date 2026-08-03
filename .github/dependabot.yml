@@ -24,9 +24,6 @@ updates:
       # @stylistic/eslint-plugin v4 needs ESM, see https://github.com/eslint-stylistic/eslint-stylistic/releases/tag/v4.0.0, we'll stay on v3 until we can use ESM
       - dependency-name: '@stylistic/eslint-plugin'
         update-types: ['version-update:semver-major']
-      # @apidevtools/json-schema-ref-parser v9 needs ESM, we'll stay on v8 until we can use ESM
-      - dependency-name: '@apidevtools/json-schema-ref-parser'
-        update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
     directories:
       - '/'

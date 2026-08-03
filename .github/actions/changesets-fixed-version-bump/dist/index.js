@@ -6,7 +6,7 @@ import os, { EOL } from "os";
 import * as crypto from "crypto";
 import * as fs$16 from "fs";
 import { constants, promises } from "fs";
-import * as path$63 from "path";
+import "path";
 import * as events from "events";
 import { PassThrough } from "node:stream";
 import { info } from "node:console";
@@ -1802,7 +1802,7 @@ var require_dispatcher_base = /* @__PURE__ */ __commonJSMin(((exports, module) =
 		get webSocketOptions() {
 			return {
 				maxFragments: this[kWebSocketOptions].maxFragments ?? 131072,
-				maxPayloadSize: this[kWebSocketOptions].maxPayloadSize ?? 128 * 1024 * 1024
+				maxPayloadSize: this[kWebSocketOptions].maxPayloadSize ?? 134217728
 			};
 		}
 		get destroyed() {
@@ -1854,7 +1854,7 @@ var require_dispatcher_base = /* @__PURE__ */ __commonJSMin(((exports, module) =
 			}
 			if (callback === void 0) return new Promise((resolve, reject) => {
 				this.destroy(err, (err, data) => {
-					return err ? reject(err) : resolve(data);
+					return err ? /* istanbul ignore next: should never error */ reject(err) : resolve(data);
 				});
 			});
 			if (typeof callback !== "function") throw new InvalidArgumentError("invalid callback");
@@ -2324,7 +2324,7 @@ var require_connect = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				assert$26(!httpSocket, "httpSocket can only be sent on TLS update");
 				port = port || 80;
 				socket = net$1.connect({
-					highWaterMark: 64 * 1024,
+					highWaterMark: 65536,
 					...options,
 					localAddress,
 					port,
@@ -3803,10 +3803,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				case "strict-origin-when-cross-origin":
 					if (request.origin && urlHasHttpsScheme(request.origin) && !urlHasHttpsScheme(requestCurrentURL(request))) serializedOrigin = null;
 					break;
-				case "same-origin":
-					if (!sameOrigin(request, requestCurrentURL(request))) serializedOrigin = null;
-					break;
-				default:
+				case "same-origin": if (!sameOrigin(request, requestCurrentURL(request))) serializedOrigin = null;
 			}
 			request.headersList.append("origin", serializedOrigin, true);
 		}
@@ -4088,9 +4085,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					case "value":
 						result = value;
 						break;
-					case "key+value":
-						result = [key, value];
-						break;
+					case "key+value": result = [key, value];
 				}
 				return {
 					value: result,
@@ -6876,7 +6871,7 @@ var require_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#region ../../node_modules/.pnpm/undici@6.27.0/node_modules/undici/lib/dispatcher/fixed-queue.js
 var require_fixed_queue = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const kSize = 2048;
-	const kMask = kSize - 1;
+	const kMask = 2047;
 	var FixedCircularBuffer = class {
 		constructor() {
 			this.bottom = 0;
@@ -7661,7 +7656,7 @@ var require_retry_handler = /* @__PURE__ */ __commonJSMin(((exports, module) => 
 			this.retryOpts = {
 				retry: retryFn ?? RetryHandler[kRetryHandlerDefaultRetry],
 				retryAfter: retryAfter ?? true,
-				maxTimeout: maxTimeout ?? 30 * 1e3,
+				maxTimeout: maxTimeout ?? 3e4,
 				minTimeout: minTimeout ?? 500,
 				timeoutFactor: timeoutFactor ?? 2,
 				maxRetries: maxRetries ?? 5,
@@ -7905,7 +7900,7 @@ var require_readable = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const kContentLength = Symbol("kContentLength");
 	const noop = () => {};
 	var BodyReadable = class extends Readable$2 {
-		constructor({ resume, abort, contentType = "", contentLength, highWaterMark = 64 * 1024 }) {
+		constructor({ resume, abort, contentType = "", contentLength, highWaterMark = 65536 }) {
 			super({
 				autoDestroy: true,
 				read: resume,
@@ -7984,7 +7979,7 @@ var require_readable = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			return this[kBody];
 		}
 		async dump(opts) {
-			let limit = Number.isFinite(opts?.limit) ? opts.limit : 128 * 1024;
+			let limit = Number.isFinite(opts?.limit) ? opts.limit : 131072;
 			const signal = opts?.signal;
 			if (signal != null && (typeof signal !== "object" || !("aborted" in signal))) throw new InvalidArgumentError("signal must be an AbortSignal");
 			signal?.throwIfAborted();
@@ -8123,7 +8118,7 @@ var require_util$5 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const assert$15 = __require("node:assert");
 	const { ResponseStatusCodeError } = require_errors();
 	const { chunksDecode } = require_readable();
-	const CHUNK_LIMIT = 128 * 1024;
+	const CHUNK_LIMIT = 131072;
 	async function getResolveErrorBodyCallback({ callback, body, contentType, statusCode, statusMessage, headers }) {
 		assert$15(body);
 		let chunks = [];
@@ -9622,7 +9617,7 @@ var require_dump = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { InvalidArgumentError, RequestAbortedError } = require_errors();
 	const DecoratorHandler = require_decorator_handler();
 	var DumpHandler = class extends DecoratorHandler {
-		#maxSize = 1024 * 1024;
+		#maxSize = 1048576;
 		#abort = null;
 		#dumped = false;
 		#aborted = false;
@@ -9672,7 +9667,7 @@ var require_dump = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			this.#handler.onComplete(trailers);
 		}
 	};
-	function createDumpInterceptor({ maxSize: defaultMaxSize } = { maxSize: 1024 * 1024 }) {
+	function createDumpInterceptor({ maxSize: defaultMaxSize } = { maxSize: 1048576 }) {
 		return (dispatch) => {
 			return function Intercept(opts, handler) {
 				const { dumpMaxSize = defaultMaxSize } = opts;
@@ -9843,9 +9838,7 @@ var require_dns = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					this.#handler.onError(err);
 					return;
 				case "ENOTFOUND": this.#state.deleteRecord(this.#origin);
-				default:
-					this.#handler.onError(err);
-					break;
+				default: this.#handler.onError(err);
 			}
 		}
 	};
@@ -15246,7 +15239,6 @@ var require_eventsource_stream = /* @__PURE__ */ __commonJSMin(((exports, module
 				default:
 					if (this.buffer[0] === BOM[0] && this.buffer[1] === BOM[1] && this.buffer[2] === BOM[2]) this.buffer = this.buffer.subarray(3);
 					this.checkBOM = false;
-					break;
 			}
 			while (this.pos < this.buffer.length) {
 				if (this.eventEndCheck) {
@@ -15312,9 +15304,7 @@ var require_eventsource_stream = /* @__PURE__ */ __commonJSMin(((exports, module
 				case "id":
 					if (isValidLastEventId(value)) event[field] = value;
 					break;
-				case "event":
-					if (value.length > 0) event[field] = value;
-					break;
+				case "event": if (value.length > 0) event[field] = value;
 			}
 		}
 		/**
@@ -16107,188 +16097,9 @@ var Summary = class {
 	}
 };
 new Summary();
-//#endregion
-//#region ../../node_modules/.pnpm/@actions+io@3.0.2/node_modules/@actions/io/lib/io-util.js
-var __awaiter$5 = function(thisArg, _arguments, P, generator) {
-	function adopt(value) {
-		return value instanceof P ? value : new P(function(resolve) {
-			resolve(value);
-		});
-	}
-	return new (P || (P = Promise))(function(resolve, reject) {
-		function fulfilled(value) {
-			try {
-				step(generator.next(value));
-			} catch (e) {
-				reject(e);
-			}
-		}
-		function rejected(value) {
-			try {
-				step(generator["throw"](value));
-			} catch (e) {
-				reject(e);
-			}
-		}
-		function step(result) {
-			result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-		}
-		step((generator = generator.apply(thisArg, _arguments || [])).next());
-	});
-};
 const { chmod, copyFile, lstat, mkdir, open, readdir, rename, rm, rmdir, stat, symlink, unlink } = fs$16.promises;
-const IS_WINDOWS$1 = process.platform === "win32";
+process.platform;
 fs$16.constants.O_RDONLY;
-/**
-* On OSX/Linux, true if path starts with '/'. On Windows, true for paths like:
-* \, \hello, \\hello\share, C:, and C:\hello (and corresponding alternate separator cases).
-*/
-function isRooted(p) {
-	p = normalizeSeparators(p);
-	if (!p) throw new Error("isRooted() parameter \"p\" cannot be empty");
-	if (IS_WINDOWS$1) return p.startsWith("\\") || /^[A-Z]:/i.test(p);
-	return p.startsWith("/");
-}
-/**
-* Best effort attempt to determine whether a file exists and is executable.
-* @param filePath    file path to check
-* @param extensions  additional file extensions to try
-* @return if file exists and is executable, returns the file path. otherwise empty string.
-*/
-function tryGetExecutablePath(filePath, extensions) {
-	return __awaiter$5(this, void 0, void 0, function* () {
-		let stats = void 0;
-		try {
-			stats = yield stat(filePath);
-		} catch (err) {
-			if (err.code !== "ENOENT") console.log(`Unexpected error attempting to determine if executable file exists '${filePath}': ${err}`);
-		}
-		if (stats && stats.isFile()) {
-			if (IS_WINDOWS$1) {
-				const upperExt = path$63.extname(filePath).toUpperCase();
-				if (extensions.some((validExt) => validExt.toUpperCase() === upperExt)) return filePath;
-			} else if (isUnixExecutable(stats)) return filePath;
-		}
-		const originalFilePath = filePath;
-		for (const extension of extensions) {
-			filePath = originalFilePath + extension;
-			stats = void 0;
-			try {
-				stats = yield stat(filePath);
-			} catch (err) {
-				if (err.code !== "ENOENT") console.log(`Unexpected error attempting to determine if executable file exists '${filePath}': ${err}`);
-			}
-			if (stats && stats.isFile()) {
-				if (IS_WINDOWS$1) {
-					try {
-						const directory = path$63.dirname(filePath);
-						const upperName = path$63.basename(filePath).toUpperCase();
-						for (const actualName of yield readdir(directory)) if (upperName === actualName.toUpperCase()) {
-							filePath = path$63.join(directory, actualName);
-							break;
-						}
-					} catch (err) {
-						console.log(`Unexpected error attempting to determine the actual case of the file '${filePath}': ${err}`);
-					}
-					return filePath;
-				} else if (isUnixExecutable(stats)) return filePath;
-			}
-		}
-		return "";
-	});
-}
-function normalizeSeparators(p) {
-	p = p || "";
-	if (IS_WINDOWS$1) {
-		p = p.replace(/\//g, "\\");
-		return p.replace(/\\\\+/g, "\\");
-	}
-	return p.replace(/\/\/+/g, "/");
-}
-function isUnixExecutable(stats) {
-	return (stats.mode & 1) > 0 || (stats.mode & 8) > 0 && process.getgid !== void 0 && stats.gid === process.getgid() || (stats.mode & 64) > 0 && process.getuid !== void 0 && stats.uid === process.getuid();
-}
-//#endregion
-//#region ../../node_modules/.pnpm/@actions+io@3.0.2/node_modules/@actions/io/lib/io.js
-var __awaiter$4 = function(thisArg, _arguments, P, generator) {
-	function adopt(value) {
-		return value instanceof P ? value : new P(function(resolve) {
-			resolve(value);
-		});
-	}
-	return new (P || (P = Promise))(function(resolve, reject) {
-		function fulfilled(value) {
-			try {
-				step(generator.next(value));
-			} catch (e) {
-				reject(e);
-			}
-		}
-		function rejected(value) {
-			try {
-				step(generator["throw"](value));
-			} catch (e) {
-				reject(e);
-			}
-		}
-		function step(result) {
-			result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-		}
-		step((generator = generator.apply(thisArg, _arguments || [])).next());
-	});
-};
-/**
-* Returns path of a tool had the tool actually been invoked.  Resolves via paths.
-* If you check and the tool does not exist, it will throw.
-*
-* @param     tool              name of the tool
-* @param     check             whether to check if tool exists
-* @returns   Promise<string>   path to tool
-*/
-function which(tool, check) {
-	return __awaiter$4(this, void 0, void 0, function* () {
-		if (!tool) throw new Error("parameter 'tool' is required");
-		if (check) {
-			const result = yield which(tool, false);
-			if (!result) if (IS_WINDOWS$1) throw new Error(`Unable to locate executable file: ${tool}. Please verify either the file path exists or the file can be found within a directory specified by the PATH environment variable. Also verify the file has a valid extension for an executable file.`);
-			else throw new Error(`Unable to locate executable file: ${tool}. Please verify either the file path exists or the file can be found within a directory specified by the PATH environment variable. Also check the file mode to verify the file is executable.`);
-			return result;
-		}
-		const matches = yield findInPath(tool);
-		if (matches && matches.length > 0) return matches[0];
-		return "";
-	});
-}
-/**
-* Returns a list of all occurrences of the given tool on the system path.
-*
-* @returns   Promise<string[]>  the paths of the tool
-*/
-function findInPath(tool) {
-	return __awaiter$4(this, void 0, void 0, function* () {
-		if (!tool) throw new Error("parameter 'tool' is required");
-		const extensions = [];
-		if (IS_WINDOWS$1 && process.env["PATHEXT"]) {
-			for (const extension of process.env["PATHEXT"].split(path$63.delimiter)) if (extension) extensions.push(extension);
-		}
-		if (isRooted(tool)) {
-			const filePath = yield tryGetExecutablePath(tool, extensions);
-			if (filePath) return [filePath];
-			return [];
-		}
-		if (tool.includes(path$63.sep)) return [];
-		const directories = [];
-		if (process.env.PATH) {
-			for (const p of process.env.PATH.split(path$63.delimiter)) if (p) directories.push(p);
-		}
-		const matches = [];
-		for (const directory of directories) {
-			const filePath = yield tryGetExecutablePath(path$63.join(directory, tool), extensions);
-			if (filePath) matches.push(filePath);
-		}
-		return matches;
-	});
-}
 process.platform;
 events.EventEmitter;
 events.EventEmitter;
@@ -16709,9 +16520,7 @@ var require_bld = /* @__PURE__ */ __commonJSMin(((exports) => {
 						case Object.prototype:
 							depth = 1;
 							break loop;
-						default:
-							depth++;
-							break;
+						default: depth++;
 					}
 					prototype = Object.getPrototypeOf(prototype);
 				}
@@ -16835,14 +16644,12 @@ var require_parse_options = /* @__PURE__ */ __commonJSMin(((exports, module) => 
 //#endregion
 //#region ../../node_modules/.pnpm/semver@7.8.5/node_modules/semver/internal/constants.js
 var require_constants$3 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const SEMVER_SPEC_VERSION = "2.0.0";
-	const MAX_LENGTH = 256;
-	const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 9007199254740991;
 	module.exports = {
-		MAX_LENGTH,
+		MAX_LENGTH: 256,
 		MAX_SAFE_COMPONENT_LENGTH: 16,
-		MAX_SAFE_BUILD_LENGTH: MAX_LENGTH - 6,
-		MAX_SAFE_INTEGER,
+		MAX_SAFE_BUILD_LENGTH: 250,
+		MAX_SAFE_INTEGER: Number.MAX_SAFE_INTEGER || 
+		/* istanbul ignore next */ 9007199254740991,
 		RELEASE_TYPES: [
 			"major",
 			"premajor",
@@ -16852,7 +16659,7 @@ var require_constants$3 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			"prepatch",
 			"prerelease"
 		],
-		SEMVER_SPEC_VERSION,
+		SEMVER_SPEC_VERSION: "2.0.0",
 		FLAG_INCLUDE_PRERELEASE: 1,
 		FLAG_LOOSE: 2
 	};
@@ -17929,9 +17736,7 @@ var require_changesets_assemble_release_plan_cjs = /* @__PURE__ */ __commonJSMin
 			case "minor":
 				highestReleaseType = "minor";
 				break;
-			case "patch":
-				if (highestReleaseType === "none") highestReleaseType = "patch";
-				break;
+			case "patch": if (highestReleaseType === "none") highestReleaseType = "patch";
 		}
 		return highestReleaseType;
 	}
@@ -18590,7 +18395,7 @@ var require_legacy_streams = /* @__PURE__ */ __commonJSMin(((exports, module) =>
 			this.paused = false;
 			this.flags = "r";
 			this.mode = 438;
-			this.bufferSize = 64 * 1024;
+			this.bufferSize = 65536;
 			options = options || {};
 			var keys = Object.keys(options);
 			for (var index = 0, length = keys.length; index < length; index++) {
@@ -19167,12 +18972,10 @@ var require_mkdirs$3 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 						else mkdirs(p, opts, callback, made);
 					});
 					break;
-				default:
-					xfs.stat(p, (er2, stat) => {
-						if (er2 || !stat.isDirectory()) callback(er, made);
-						else callback(null, made);
-					});
-					break;
+				default: xfs.stat(p, (er2, stat) => {
+					if (er2 || !stat.isDirectory()) callback(er, made);
+					else callback(null, made);
+				});
 			}
 		});
 	}
@@ -19362,7 +19165,7 @@ var require_copy_sync$3 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		return copyFileFallback(srcStat, src, dest, opts);
 	}
 	function copyFileFallback(srcStat, src, dest, opts) {
-		const BUF_LENGTH = 64 * 1024;
+		const BUF_LENGTH = 65536;
 		const _buff = require_buffer$1()(BUF_LENGTH);
 		const fdr = fs.openSync(src, "r");
 		const fdw = fs.openSync(dest, "w", srcStat.mode);
@@ -20382,7 +20185,7 @@ var require_move_sync$2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		else return moveFileSyncAcrossDevice(src, dest, overwrite);
 	}
 	function moveFileSyncAcrossDevice(src, dest, overwrite) {
-		const BUF_LENGTH = 64 * 1024;
+		const BUF_LENGTH = 65536;
 		const _buff = buffer(BUF_LENGTH);
 		const flags = overwrite ? "w" : "wx";
 		const fdr = fs.openSync(src, "r");
@@ -23114,7 +22917,8 @@ var require_which = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const getNotFoundError = (cmd) => Object.assign(/* @__PURE__ */ new Error(`not found: ${cmd}`), { code: "ENOENT" });
 	const getPathInfo = (cmd, opt) => {
 		const colon = opt.colon || COLON;
-		const pathEnv = cmd.match(/\//) || isWindows && cmd.match(/\\/) ? [""] : [...isWindows ? [process.cwd()] : [], ...(opt.path || process.env.PATH || "").split(colon)];
+		const pathEnv = cmd.match(/\//) || isWindows && cmd.match(/\\/) ? [""] : [...isWindows ? [process.cwd()] : [], ...(opt.path || process.env.PATH || 
+		/* istanbul ignore next: very unusual */ "").split(colon)];
 		const pathExtExe = isWindows ? opt.pathExt || process.env.PATHEXT || ".EXE;.CMD;.BAT;.COM" : "";
 		const pathExt = isWindows ? pathExtExe.split(colon) : [""];
 		if (isWindows) {
@@ -24247,12 +24051,10 @@ var require_mkdirs$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 						else mkdirs(p, opts, callback, made);
 					});
 					break;
-				default:
-					xfs.stat(p, (er2, stat) => {
-						if (er2 || !stat.isDirectory()) callback(er, made);
-						else callback(null, made);
-					});
-					break;
+				default: xfs.stat(p, (er2, stat) => {
+					if (er2 || !stat.isDirectory()) callback(er, made);
+					else callback(null, made);
+				});
 			}
 		});
 	}
@@ -24594,7 +24396,7 @@ var require_copy_sync$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		return copyFileFallback(srcStat, src, dest, opts);
 	}
 	function copyFileFallback(srcStat, src, dest, opts) {
-		const BUF_LENGTH = 64 * 1024;
+		const BUF_LENGTH = 65536;
 		const _buff = require_buffer()(BUF_LENGTH);
 		const fdr = fs.openSync(src, "r");
 		const fdw = fs.openSync(dest, "w", srcStat.mode);
@@ -25595,7 +25397,7 @@ var require_merge2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		const doEnd = options.end !== false;
 		const doPipeError = options.pipeError === true;
 		if (options.objectMode == null) options.objectMode = true;
-		if (options.highWaterMark == null) options.highWaterMark = 64 * 1024;
+		if (options.highWaterMark == null) options.highWaterMark = 65536;
 		const mergedStream = PassThrough$1(options);
 		function addStream() {
 			for (let i = 0, len = arguments.length; i < len; i++) streamsQueue.push(pauseStreams(arguments[i], options));
@@ -27050,7 +26852,7 @@ var require_constants$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	};
 	module.exports = {
 		DEFAULT_MAX_EXTGLOB_RECURSION,
-		MAX_LENGTH: 1024 * 64,
+		MAX_LENGTH: 65536,
 		POSIX_REGEX_SOURCE: {
 			__proto__: null,
 			alnum: "a-zA-Z0-9",
@@ -33078,9 +32880,6 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 						case jsx_syntax_1.JSXSyntax.JSXMemberExpression:
 							var expr = elementName;
 							qualifiedName = getQualifiedElementName(expr.object) + "." + getQualifiedElementName(expr.property);
-							break;
-						/* istanbul ignore next */
-						default: break;
 					}
 					return qualifiedName;
 				}
@@ -33146,7 +32945,6 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 								default:
 									valid = valid && !(numeric && !character_1.Character.isDecimalDigit(ch.charCodeAt(0)));
 									valid = valid && !(hex && !character_1.Character.isHexDigit(ch.charCodeAt(0)));
-									break;
 							}
 						}
 						if (valid && terminated && result.length > 2) {
@@ -34933,8 +34731,6 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 								expr.type = syntax_1.Syntax.AssignmentPattern;
 								delete expr.operator;
 								this.reinterpretExpressionAsPattern(expr.left);
-								break;
-							default: break;
 						}
 					};
 					Parser.prototype.parseGroupExpression = function() {
@@ -35312,10 +35108,7 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 							case syntax_1.Syntax.ArrayPattern:
 								for (var i = 0; i < param.elements.length; i++) if (param.elements[i] !== null) this.checkPatternParam(options, param.elements[i]);
 								break;
-							case syntax_1.Syntax.ObjectPattern:
-								for (var i = 0; i < param.properties.length; i++) this.checkPatternParam(options, param.properties[i].value);
-								break;
-							default: break;
+							case syntax_1.Syntax.ObjectPattern: for (var i = 0; i < param.properties.length; i++) this.checkPatternParam(options, param.properties[i].value);
 						}
 						options.simple = options.simple && param instanceof Node.Identifier;
 					};
@@ -35476,9 +35269,7 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 							case "let":
 								statement = this.isLexicalDeclaration() ? this.parseLexicalDeclaration({ inFor: false }) : this.parseStatement();
 								break;
-							default:
-								statement = this.parseStatement();
-								break;
+							default: statement = this.parseStatement();
 						}
 						else statement = this.parseStatement();
 						return statement;
@@ -36092,9 +35883,7 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 									case "with":
 										statement = this.parseWithStatement();
 										break;
-									default:
-										statement = this.parseExpressionStatement();
-										break;
+									default: statement = this.parseExpressionStatement();
 								}
 								break;
 							default: statement = this.throwUnexpectedToken(this.lookahead);
@@ -36330,7 +36119,6 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 							case 6:
 							case 4: return true;
 							case 7: return token.value === "[";
-							default: break;
 						}
 						return false;
 					};
@@ -36375,10 +36163,7 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 							case 7:
 								start = value === "[" || value === "(" || value === "{" || value === "+" || value === "-" || value === "!" || value === "~" || value === "++" || value === "--" || value === "/" || value === "/=";
 								break;
-							case 4:
-								start = value === "class" || value === "delete" || value === "function" || value === "let" || value === "new" || value === "super" || value === "this" || value === "typeof" || value === "void" || value === "yield";
-								break;
-							default: break;
+							case 4: start = value === "class" || value === "delete" || value === "function" || value === "let" || value === "new" || value === "super" || value === "this" || value === "typeof" || value === "void" || value === "yield";
 						}
 						return start;
 					};
@@ -37396,13 +37181,11 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 										str += ch;
 										this.tolerateUnexpectedToken();
 										break;
-									default:
-										if (ch && character_1.Character.isOctalDigit(ch.charCodeAt(0))) {
-											var octToDec = this.octalToDecimal(ch);
-											octal = octToDec.octal || octal;
-											str += String.fromCharCode(octToDec.code);
-										} else str += ch;
-										break;
+									default: if (ch && character_1.Character.isOctalDigit(ch.charCodeAt(0))) {
+										var octToDec = this.octalToDecimal(ch);
+										octal = octToDec.octal || octal;
+										str += String.fromCharCode(octToDec.code);
+									} else str += ch;
 								}
 								else {
 									++this.lineNumber;
@@ -37489,13 +37272,11 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 									case "v":
 										cooked += "\v";
 										break;
-									default:
-										if (ch === "0") {
-											if (character_1.Character.isDecimalDigit(this.source.charCodeAt(this.index))) this.throwUnexpectedToken(messages_1.Messages.TemplateOctalLiteral);
-											cooked += "\0";
-										} else if (character_1.Character.isOctalDigit(ch.charCodeAt(0))) this.throwUnexpectedToken(messages_1.Messages.TemplateOctalLiteral);
-										else cooked += ch;
-										break;
+									default: if (ch === "0") {
+										if (character_1.Character.isDecimalDigit(this.source.charCodeAt(this.index))) this.throwUnexpectedToken(messages_1.Messages.TemplateOctalLiteral);
+										cooked += "\0";
+									} else if (character_1.Character.isOctalDigit(ch.charCodeAt(0))) this.throwUnexpectedToken(messages_1.Messages.TemplateOctalLiteral);
+									else cooked += ch;
 								}
 								else {
 									++this.lineNumber;
@@ -38008,8 +37789,6 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 									var check = this.values[this.curly - 5];
 									regex = check ? !this.beforeFunctionExpression(check) : true;
 								}
-								break;
-							default: break;
 						}
 						return regex;
 					};
@@ -41735,9 +41514,7 @@ var require_truncate = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				version.minor = 0;
 				version.patch = 0;
 				break;
-			case "minor":
-				version.patch = 0;
-				break;
+			case "minor": version.patch = 0;
 		}
 		return version.format();
 	};
@@ -42139,7 +41916,8 @@ function formatJson(json) {
 //#endregion
 //#region index.ts
 async function transformFile(filePath, transformFn) {
-	await writeFile(filePath, await transformFn(await readFile(filePath, { encoding: "utf8" })), { encoding: "utf8" });
+	const file = await readFile(filePath, { encoding: "utf8" });
+	await writeFile(filePath, await transformFn(file), { encoding: "utf8" });
 }
 async function bump() {
 	const { version, bumpType } = await getNextVersion();

@@ -111,7 +111,7 @@ export const EntityApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   getEntityByKey: (entityId: string) =>
-    new OpenApiRequestBuilder<any>(
+    new OpenApiRequestBuilder<TestEntity[]>(
       'get',
       '/entities/{entityId}',
       {

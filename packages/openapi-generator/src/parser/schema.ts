@@ -1,4 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { parse as parseContentType } from 'content-type';
 import { isReferenceObject } from '../schema-util';
 import { getType } from './type-mapping';
 import type { OpenAPIV3 } from 'openapi-types';
@@ -168,9 +169,12 @@ export function parseSchema(
   // 'contentEncoding'/'contentMediaType' instead of the 3.0 'format: binary'
   // idiom. Map such content-encoded strings to 'Blob', consistent with the
   // binary handling elsewhere.
+  // Note: contentMediaType alone only maps to Blob for binary media types.
+  // Text-based types (text/*, application/json, application/*+json, etc.) are
+  // plain strings whose content happens to follow a text format.
   if (
     hasType(schema, 'string') &&
-    (schema.contentEncoding || schema.contentMediaType)
+    (schema.contentEncoding || isBinaryMediaType(schema.contentMediaType))
   ) {
     return { type: 'Blob' };
   }
@@ -178,6 +182,34 @@ export function parseSchema(
   return {
     type: getType(schema.type, schema.format)
   };
+}
+
+/**
+ * Returns true for media types whose content is binary (not human-readable
+ * text). Text-based types — text/*, application/json, application/xml, and
+ * structured-syntax suffixes like +json or +xml — are excluded because their
+ * string values remain plain text and should stay typed as `string`.
+ * @internal
+ */
+function isBinaryMediaType(mediaType: string | undefined): boolean {
+  if (!mediaType) {
+    return false;
+  }
+  let type: string;
+  try {
+    type = parseContentType(mediaType).type.toLowerCase();
+  } catch {
+    return false;
+  }
+  if (type.startsWith('text/')) {
+    return false;
+  }
+  return !(
+    type === 'application/json' ||
+    type === 'application/xml' ||
+    type.endsWith('+json') ||
+    type.endsWith('+xml')
+  );
 }
 
 /**

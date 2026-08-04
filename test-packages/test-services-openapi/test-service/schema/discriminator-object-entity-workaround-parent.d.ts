@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 import type { DiscriminatorObjectEntityWorkaroundChildA } from './discriminator-object-entity-workaround-child-a';
 import type { DiscriminatorObjectEntityWorkaroundChildB } from './discriminator-object-entity-workaround-child-b';
 /**

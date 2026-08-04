@@ -278,6 +278,11 @@ describe('agent caching', () => {
     proxyType: 'OnPremise',
     authentication: 'BasicAuthentication'
   };
+  // Valid connectivity service token: the subaccount scope is derived from its claims.
+  const serviceJwt = signedJwt({
+    clientid: 'connectivity-client',
+    zid: 'subaccount-a'
+  });
   const onPremiseProxyConfig = (
     authJwt: string
   ): NonNullable<HttpDestination['proxyConfiguration']> => ({
@@ -285,7 +290,7 @@ describe('agent caching', () => {
     port: 20003,
     protocol: 'http',
     headers: {
-      'Proxy-Authorization': 'Bearer service-jwt',
+      'Proxy-Authorization': `Bearer ${serviceJwt}`,
       'SAP-Connectivity-Authentication': `Bearer ${authJwt}`
     }
   });
@@ -309,15 +314,27 @@ describe('agent caching', () => {
   });
 
   it('returns different agent instances for OnPremise destinations with different cloudConnectorLocationId', async () => {
+    const proxyConfig = (): NonNullable<
+      HttpDestination['proxyConfiguration']
+    > => ({
+      host: 'proxy.example.com',
+      port: 20003,
+      protocol: 'http',
+      headers: {
+        'Proxy-Authorization': `Bearer ${serviceJwt}`
+      }
+    });
     const destA: HttpDestination = {
       url: 'https://connectivity.example.com',
       proxyType: 'OnPremise',
-      cloudConnectorLocationId: 'LOCATION_A'
+      cloudConnectorLocationId: 'LOCATION_A',
+      proxyConfiguration: proxyConfig()
     };
     const destB: HttpDestination = {
       url: 'https://connectivity.example.com',
       proxyType: 'OnPremise',
-      cloudConnectorLocationId: 'LOCATION_B'
+      cloudConnectorLocationId: 'LOCATION_B',
+      proxyConfiguration: proxyConfig()
     };
     const agentA = ((await getAgentConfig(destA)) as any)['httpsAgent'];
     const agentB = ((await getAgentConfig(destB)) as any)['httpsAgent'];
@@ -341,7 +358,7 @@ describe('agent caching', () => {
         port: 20003,
         protocol: 'http',
         headers: {
-          'Proxy-Authorization': 'Bearer service-jwt',
+          'Proxy-Authorization': `Bearer ${serviceJwt}`,
           'SAP-Connectivity-Authentication': `Bearer ${signedJwt({ user_id: 'user-a', zid: 'tenant' })}`
         }
       }
@@ -353,7 +370,7 @@ describe('agent caching', () => {
         port: 20003,
         protocol: 'http',
         headers: {
-          'Proxy-Authorization': 'Bearer service-jwt',
+          'Proxy-Authorization': `Bearer ${serviceJwt}`,
           'SAP-Connectivity-Authentication': `Bearer ${signedJwt({ user_id: 'user-b', zid: 'tenant' })}`
         }
       }
@@ -379,7 +396,7 @@ describe('agent caching', () => {
       port: 20003,
       protocol: 'http',
       headers: {
-        'Proxy-Authorization': 'Bearer service-jwt',
+        'Proxy-Authorization': `Bearer ${serviceJwt}`,
         'SAP-Connectivity-Authentication': `Bearer ${authJwt}`
       }
     });
@@ -418,7 +435,7 @@ describe('agent caching', () => {
         port: 20003,
         protocol: 'http',
         headers: {
-          'Proxy-Authorization': 'Bearer service-jwt'
+          'Proxy-Authorization': `Bearer ${serviceJwt}`
         }
       }
     };
@@ -439,7 +456,7 @@ describe('agent caching', () => {
         port: 20003,
         protocol: 'http',
         headers: {
-          'Proxy-Authorization': 'Bearer service-jwt',
+          'Proxy-Authorization': `Bearer ${serviceJwt}`,
           'SAP-Connectivity-Authentication': 'Bearer invalid.token.value'
         }
       }
@@ -461,7 +478,7 @@ describe('agent caching', () => {
         port: 20003,
         protocol: 'http',
         headers: {
-          'Proxy-Authorization': 'Bearer service-jwt'
+          'Proxy-Authorization': `Bearer ${serviceJwt}`
         }
       }
     };
@@ -545,6 +562,154 @@ describe('agent caching', () => {
     expect(agentB).not.toBe(agentA);
   });
 
+  it('does not cache OnPremise agents when the connectivity service token is malformed', async () => {
+    const destination: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': 'Bearer invalid.token.value'
+        }
+      }
+    };
+
+    const first = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+    const second = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+
+    expect(second).not.toBe(first);
+    // Uncached agents cannot share sockets across requests - keepAlive is pointless.
+    expect(first.keepAlive).toBe(false);
+  });
+
+  it('allows re-enabling keepAlive on uncached agents via agentOptions', async () => {
+    const destination: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      agentOptions: { keepAlive: true },
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': 'Bearer invalid.token.value'
+        }
+      }
+    };
+
+    const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+
+    expect(agent.keepAlive).toBe(true);
+  });
+
+  it('does not cache OnPremise agents when the connectivity service token is missing', async () => {
+    const destination: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {} as any
+      }
+    };
+
+    const first = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+    const second = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+
+    expect(second).not.toBe(first);
+  });
+
+  it('does not cache OnPremise agents when a propagated user token is malformed', async () => {
+    const destination: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: {
+        host: 'proxy.example.com',
+        port: 20003,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': `Bearer ${serviceJwt}`,
+          'SAP-Connectivity-Authentication': 'Bearer invalid.token.value'
+        }
+      }
+    };
+
+    const first = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+    const second = ((await getAgentConfig(destination)) as any)['httpsAgent'];
+
+    expect(second).not.toBe(first);
+  });
+
+  it('returns different agent instances for connectivity service tokens of different subaccounts', async () => {
+    const proxyConfig = (
+      token: string
+    ): NonNullable<HttpDestination['proxyConfiguration']> => ({
+      host: 'proxy.example.com',
+      port: 20003,
+      protocol: 'http',
+      headers: {
+        'Proxy-Authorization': `Bearer ${token}`
+      }
+    });
+    const destA: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: proxyConfig(
+        signedJwt({ clientid: 'connectivity-client', zid: 'subaccount-a' })
+      )
+    };
+    const destB: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: proxyConfig(
+        signedJwt({ clientid: 'connectivity-client', zid: 'subaccount-b' })
+      )
+    };
+    const agentA = ((await getAgentConfig(destA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destB)) as any)['httpsAgent'];
+    expect(agentA).not.toBe(agentB);
+  });
+
+  it('returns the same agent instance for the same subaccount across service token refresh', async () => {
+    // The cache key is derived from stable subaccount claims (zid, clientid),
+    // not the raw service token, so a refreshed token must not create a new agent.
+    const now = Math.floor(Date.now() / 1000);
+    const proxyConfig = (
+      token: string
+    ): NonNullable<HttpDestination['proxyConfiguration']> => ({
+      host: 'proxy.example.com',
+      port: 20003,
+      protocol: 'http',
+      headers: {
+        'Proxy-Authorization': `Bearer ${token}`
+      }
+    });
+    const destOld: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: proxyConfig(
+        signedJwt({
+          clientid: 'connectivity-client',
+          zid: 'subaccount-a',
+          iat: now,
+          exp: now + 60
+        })
+      )
+    };
+    const destRefreshed: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      proxyConfiguration: proxyConfig(
+        signedJwt({
+          clientid: 'connectivity-client',
+          zid: 'subaccount-a',
+          iat: now + 60,
+          exp: now + 120
+        })
+      )
+    };
+    const agentOld = ((await getAgentConfig(destOld)) as any)['httpsAgent'];
+    const agentRefreshed = ((await getAgentConfig(destRefreshed)) as any)[
+      'httpsAgent'
+    ];
+    expect(agentRefreshed).toBe(agentOld);
+  });
+
   it('does not embed auth tokens in the agent cache key for direct destinations', async () => {
     // Two direct destinations with identical protocol/TLS options but different
     // auth tokens must share the same agent: tokens are not agent-defining.
@@ -570,6 +735,45 @@ describe('agent caching', () => {
     const agent = ((await getAgentConfig(destination)) as any)['httpsAgent'];
     expect(agent.keepAlive).toBe(true);
     expect(agent.options.timeout).toBe(5000);
+  });
+
+  it('returns different agent instances for different target systems behind the same proxy', async () => {
+    // Sockets in the agent pool connect to the proxy. Without the target system
+    // in the key, keep-alive tunnels would be reused across systems.
+    const proxyConfig = (): NonNullable<
+      HttpDestination['proxyConfiguration']
+    > => ({
+      host: 'proxy.example.com',
+      port: 20003,
+      protocol: 'http',
+      headers: {
+        'Proxy-Authorization': `Bearer ${serviceJwt}`
+      }
+    });
+    const destA: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      url: 'https://system-a.example.com',
+      proxyConfiguration: proxyConfig()
+    };
+    const destB: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      url: 'https://system-b.example.com',
+      proxyConfiguration: proxyConfig()
+    };
+    const destAOtherPort: HttpDestination = {
+      ...nonPrincipalPropagationBase,
+      url: 'https://system-a.example.com:8443',
+      proxyConfiguration: proxyConfig()
+    };
+
+    const agentA = ((await getAgentConfig(destA)) as any)['httpsAgent'];
+    const agentB = ((await getAgentConfig(destB)) as any)['httpsAgent'];
+    const agentAOtherPort = ((await getAgentConfig(destAOtherPort)) as any)[
+      'httpsAgent'
+    ];
+
+    expect(agentB).not.toBe(agentA);
+    expect(agentAOtherPort).not.toBe(agentA);
   });
 
   it('overrides default agentOptions when set via destination.agentOptions', async () => {

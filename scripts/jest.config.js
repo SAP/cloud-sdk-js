@@ -1,6 +1,6 @@
 module.exports = {
   transform: {
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': '@swc/jest'
   },
   moduleFileExtensions: ['js', 'json', 'ts'],
   displayName: 'scripts'

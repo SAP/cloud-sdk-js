@@ -33,6 +33,7 @@ packages:
   - 'build-packages/merge-and-write-changelogs'
   - 'build-packages/test-utils'
 allowBuilds:
+  '@swc/core': true
   better-sqlite3: false
   unrs-resolver: false
 

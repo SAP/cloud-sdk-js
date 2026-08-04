@@ -1,11 +1,10 @@
 module.exports = {
-  preset: 'ts-jest',
   testEnvironment: 'node',
   testEnvironmentOptions: {
     customExportConditions: ['workspace']
   },
   transform: {
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': '@swc/jest'
   },
   moduleFileExtensions: ['js', 'json', 'ts'],
   globalSetup: '<rootDir>/../../test-resources/bootstrap-global.js',

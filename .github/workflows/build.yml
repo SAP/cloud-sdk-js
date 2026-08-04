@@ -41,6 +41,7 @@ jobs:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           node-version: ${{ matrix.node-version }}
+      - run: pnpm run generate
       - parallel:
           - run: pnpm run test:unit
           - run: pnpm run test:integration

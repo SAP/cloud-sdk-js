@@ -357,7 +357,7 @@ importers:
         version: 4.64.0(tslib@2.8.1)
       nock:
         specifier: ^14.0.11
-        version: 14.0.16
+        version: 14.0.17
       prettier:
         specifier: ^3.8.1
         version: 3.9.6
@@ -519,7 +519,7 @@ importers:
         version: 9.0.3
       nock:
         specifier: ^14.0.11
-        version: 14.0.16
+        version: 14.0.17
       prettier:
         specifier: ^3.8.1
         version: 3.9.6
@@ -593,7 +593,7 @@ importers:
         version: typescript@7.0.2
       nock:
         specifier: ^14.0.11
-        version: 14.0.16
+        version: 14.0.17
       prettier:
         specifier: ^3.8.1
         version: 3.9.6
@@ -630,7 +630,7 @@ importers:
         version: typescript@7.0.2
       nock:
         specifier: ^14.0.11
-        version: 14.0.16
+        version: 14.0.17
       prettier:
         specifier: ^3.8.1
         version: 3.9.6
@@ -661,7 +661,7 @@ importers:
         version: typescript@7.0.2
       nock:
         specifier: ^14.0.11
-        version: 14.0.16
+        version: 14.0.17
       prettier:
         specifier: ^3.8.1
         version: 3.9.6
@@ -738,7 +738,7 @@ importers:
         version: typescript@7.0.2
       nock:
         specifier: ^14.0.11
-        version: 14.0.16
+        version: 14.0.17
       prettier:
         specifier: ^3.8.1
         version: 3.9.6
@@ -816,7 +816,7 @@ importers:
         version: 4.64.0(tslib@2.8.1)
       nock:
         specifier: ^14.0.11
-        version: 14.0.16
+        version: 14.0.17
       prettier:
         specifier: ^3.8.1
         version: 3.9.6
@@ -828,7 +828,7 @@ importers:
         version: 12.1.0(openapi-types@12.1.3)
       '@cap-js/sqlite':
         specifier: ^3.0.2
-        version: 3.0.2(@sap/cds@10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))(better-sqlite3@12.11.1)(generic-pool@3.9.0)
+        version: 3.0.2(@sap/cds@10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))(better-sqlite3@12.11.1)(generic-pool@3.9.0)
       '@jest/globals':
         specifier: ^30.3.0
         version: 30.4.1
@@ -861,10 +861,10 @@ importers:
         version: link:../../packages/util
       '@sap/cds':
         specifier: ^10.0.3
-        version: 10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))
+        version: 10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))
       '@sap/cds-dk':
-        specifier: 10.0.5
-        version: 10.0.5
+        specifier: 10.0.6
+        version: 10.0.6
       axios:
         specifier: ^1.15.0
         version: 1.19.0
@@ -961,7 +961,7 @@ importers:
         version: 2.30.1
       nock:
         specifier: ^14.0.11
-        version: 14.0.16
+        version: 14.0.17
       prettier:
         specifier: ^3.8.1
         version: 3.9.6
@@ -1130,7 +1130,7 @@ importers:
         version: 2.30.1
       nock:
         specifier: ^14.0.11
-        version: 14.0.16
+        version: 14.0.17
     devDependencies:
       '@jest/globals':
         specifier: ^30.3.0
@@ -2265,8 +2265,8 @@ packages:
     engines: {node: '>=22'}
     hasBin: true
 
-  '@sap/cds-dk@10.0.5':
-    resolution: {integrity: sha512-jbh5lK3oSwA6xzqxQeZbKkphzV0i57HutIo2friTuolS2QYHX9WOaVAZySqovoPmT8acQtqj5ki7/nuJepGBRA==}
+  '@sap/cds-dk@10.0.6':
+    resolution: {integrity: sha512-rukYYrovNkpaRPgF6tI+tBHhel9WcpZRW2KFjVCVPCufrbTFqzz6PdCaQrb7tEctrRk5GBIL2bmN28s051Vt3w==}
     hasBin: true
     bundledDependencies:
       - '@cap-js/asyncapi'
@@ -2382,8 +2382,8 @@ packages:
     peerDependencies:
       '@sap/cds': '>=8'
 
-  '@sap/cds@10.0.4':
-    resolution: {integrity: sha512-+Il9ft2VELzzROI7QANDffMzeXdfZr1URF8H5kBm6zH0KcXhpRVZTohWXCwptfwIv4b57fPIOiRbLVK0L9GfFw==}
+  '@sap/cds@10.0.5':
+    resolution: {integrity: sha512-H5vTMVsznF4q24OVYkiWcReQezLOzKlVC3LBiHlrkg1D9x24V/OGWKCrCG+yd77hyIsrA2l2yxWE3RU4CElgmg==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -5115,8 +5115,8 @@ packages:
     resolution: {integrity: sha512-eonl3sLUha+S1GzTPxychyhnUzKyeQkZ7jLjKrBagJgPla13F+uQ71HgpFefyHgqrjEbCPkDArxYsjY8/+gLKA==}
     engines: {node: '>= 0.4.0'}
 
-  nock@14.0.16:
-    resolution: {integrity: sha512-8r4KEc6nT1D/fdLD/R1BO1CPaVEL8o40u/guFRJlXabN7vr3RmMqyjsY5Krt0nMwhsOAwXQ/mtN5vy5Jh3aErg==}
+  nock@14.0.17:
+    resolution: {integrity: sha512-EjRr1weMa4ALQX35AgZTEnP+weJJjlW1KGDiNM2IQC2069YDHas4f4B4UUYR+TTLyKWxJvOz2wObDKQs/LNreA==}
     engines: {node: '>=18.20.0 <20 || >=20.12.1'}
 
   node-abi@3.94.0:
@@ -6651,16 +6651,16 @@ snapshots:
 
   '@blueoak/list@15.0.0': {}
 
-  '@cap-js/db-service@3.0.1(@sap/cds@10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))(generic-pool@3.9.0)':
+  '@cap-js/db-service@3.0.1(@sap/cds@10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))(generic-pool@3.9.0)':
     dependencies:
-      '@sap/cds': 10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))
+      '@sap/cds': 10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))
     optionalDependencies:
       generic-pool: 3.9.0
 
-  '@cap-js/sqlite@3.0.2(@sap/cds@10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))(better-sqlite3@12.11.1)(generic-pool@3.9.0)':
+  '@cap-js/sqlite@3.0.2(@sap/cds@10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))(better-sqlite3@12.11.1)(generic-pool@3.9.0)':
     dependencies:
-      '@cap-js/db-service': 3.0.1(@sap/cds@10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))(generic-pool@3.9.0)
-      '@sap/cds': 10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))
+      '@cap-js/db-service': 3.0.1(@sap/cds@10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))(generic-pool@3.9.0)
+      '@sap/cds': 10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))
     optionalDependencies:
       better-sqlite3: 12.11.1
     transitivePeerDependencies:
@@ -7672,17 +7672,17 @@ snapshots:
 
   '@sap/cds-compiler@7.0.3': {}
 
-  '@sap/cds-dk@10.0.5': {}
+  '@sap/cds-dk@10.0.6': {}
 
-  '@sap/cds-fiori@2.3.0(@sap/cds@10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))':
+  '@sap/cds-fiori@2.3.0(@sap/cds@10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))':
     dependencies:
-      '@sap/cds': 10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))
+      '@sap/cds': 10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))
 
-  '@sap/cds@10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))':
+  '@sap/cds@10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0)))':
     dependencies:
       '@eslint/js': 10.0.1(eslint@10.8.0(jiti@2.7.0))
       '@sap/cds-compiler': 7.0.3
-      '@sap/cds-fiori': 2.3.0(@sap/cds@10.0.4(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))
+      '@sap/cds-fiori': 2.3.0(@sap/cds@10.0.5(@eslint/js@10.0.1(eslint@10.8.0(jiti@2.7.0))))
       express: 4.22.2
       yaml: 2.9.0
     transitivePeerDependencies:
@@ -10868,7 +10868,7 @@ snapshots:
 
   netmask@2.1.1: {}
 
-  nock@14.0.16:
+  nock@14.0.17:
     dependencies:
       '@mswjs/interceptors': 0.41.9
       json-stringify-safe: 5.0.1

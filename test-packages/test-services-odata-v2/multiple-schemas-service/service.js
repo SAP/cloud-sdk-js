@@ -1,11 +1,11 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.multipleSchemasService = multipleSchemasService;
 /*
  * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.multipleSchemasService = multipleSchemasService;
 const MultiSchemaTestEntityApi_1 = require("./MultiSchemaTestEntityApi");
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 const BatchRequest_1 = require("./BatchRequest");

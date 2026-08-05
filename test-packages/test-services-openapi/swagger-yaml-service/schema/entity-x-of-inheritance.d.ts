@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 import type { TestEntity } from './test-entity';
 /**
  * Composition of extended properties (inheritance) and schema-specific properties together with required attribute.

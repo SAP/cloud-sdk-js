@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 import { TestEntity3 } from './TestEntity3';
 import { TestEntity3RequestBuilder } from './TestEntity3RequestBuilder';
 import { TestComplexType2, TestComplexType2Field } from './TestComplexType2';

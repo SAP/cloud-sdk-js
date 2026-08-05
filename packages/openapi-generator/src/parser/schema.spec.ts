@@ -801,6 +801,46 @@ describe('schema parser', () => {
         ).toEqual({ type: 'Blob' });
       });
 
+      it('maps a binary contentMediaType string to Blob', async () => {
+        const schema = {
+          type: 'string',
+          contentMediaType: 'application/vnd.apache.parquet'
+        } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({ type: 'Blob' });
+      });
+
+      it('keeps a text contentMediaType string as string', async () => {
+        const schema = {
+          type: 'string',
+          contentMediaType: 'application/json'
+        } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({ type: 'string' });
+      });
+
+      it('keeps a text/plain contentMediaType string as string', async () => {
+        const schema = {
+          type: 'string',
+          contentMediaType: 'text/plain'
+        } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({ type: 'string' });
+      });
+
+      it('keeps an application/*+json contentMediaType string as string', async () => {
+        const schema = {
+          type: 'string',
+          contentMediaType: 'application/problem+json'
+        } as any;
+        expect(
+          parseSchema(schema, await createTestRefs(), defaultOptions)
+        ).toEqual({ type: 'string' });
+      });
+
       it('collects the examples array in schema properties', () => {
         expect(
           parseSchemaProperties({

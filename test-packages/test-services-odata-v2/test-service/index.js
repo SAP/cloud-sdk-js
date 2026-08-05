@@ -1,4 +1,9 @@
 "use strict";
+/*
+ * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -14,11 +19,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
- * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
 __exportStar(require("./TestEntity"), exports);
 __exportStar(require("./TestEntityMultiLink"), exports);
 __exportStar(require("./TestEntityOtherMultiLink"), exports);

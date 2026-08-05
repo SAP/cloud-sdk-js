@@ -77,7 +77,7 @@ jobs:
           - name: Static Code Check
             run: pnpm run lint
           - name: Undeclared dependency Check
-            run: pnpm run check:dependencies
+            run: pnpm run check:dependencies --reporter=github-actions
           - name: Check public api
             uses: ./.github/actions/check-public-api
             with:

@@ -4,8 +4,7 @@ import {
   getRelevantParameters,
   parsePathParameters,
   parsePathPattern,
-  parseOperation,
-  parseQueryStringParameter
+  parseOperation
 } from './operation';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiParameter } from '../openapi-types';

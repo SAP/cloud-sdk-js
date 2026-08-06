@@ -453,7 +453,7 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
  * URI encoding in encodeAllParameters.
  * @internal
  */
-export const RAW_QUERY_STRING_KEY = '__raw_query_string__';
+export const RAW_QUERY_STRING_KEY = Symbol('__raw_query_string__');
 
 /**
  * @internal
@@ -507,11 +507,15 @@ export function getDefaultHttpRequestOptions(): HttpRequestOptions {
 export const encodeAllParameters: ParameterEncoder = function (
   parameter: Record<string, any>
 ): Record<string, any> {
-  return Object.fromEntries(
-    Object.entries(parameter).map(([key, value]) =>
-      key === RAW_QUERY_STRING_KEY
-        ? [key, value] // raw query string — pass through as-is
-        : [encodeURIComponent(key), encodeURIComponent(value)]
-    )
+  const encoded: Record<string | symbol, any> = Object.fromEntries(
+    Object.entries(parameter).map(([key, value]) => [
+      encodeURIComponent(key),
+      encodeURIComponent(value)
+    ])
   );
+  // Symbol keys are invisible to Object.entries — carry the raw query string through explicitly.
+  if (RAW_QUERY_STRING_KEY in parameter) {
+    encoded[RAW_QUERY_STRING_KEY] = parameter[RAW_QUERY_STRING_KEY];
+  }
+  return encoded;
 };

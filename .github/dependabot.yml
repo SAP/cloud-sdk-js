@@ -15,9 +15,6 @@ updates:
       default-days: 4
     versioning-strategy: widen
     ignore:
-      # execa v6 needs ESM, see https://github.com/sindresorhus/execa/releases/tag/v6.0.0, we'll stay on v5 until we can use ESM
-      - dependency-name: 'execa'
-        update-types: ['version-update:semver-major']
       # yargs v18 needs ESM, see https://github.com/yargs/yargs/releases/tag/v18.0.0, we'll stay on v17 until we can use ESM
       - dependency-name: 'yargs'
         update-types: ['version-update:semver-major']

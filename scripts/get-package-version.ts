@@ -1,4 +1,4 @@
-import { PathLike } from 'node:fs';
+import type { PathLike } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 
 export async function getPackageVersion(

@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import { transformFile } from './util';
+import { transformFile } from './util.ts';
 import { exit } from 'node:process';
 
 async function updateDocumentationMd() {

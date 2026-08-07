@@ -39,8 +39,7 @@ allowBuilds:
 blockExoticSubdeps: true
 minimumReleaseAge: 5760
 minimumReleaseAgeExclude:
-  - 'typescript@7.0.2'
-  - '@typescript/*'
+  - '@sap-cloud-sdk/*'
   # Add minimum age exceptions for audit issues here
   # - sample-package@0.1.0
 shellEmulator: true

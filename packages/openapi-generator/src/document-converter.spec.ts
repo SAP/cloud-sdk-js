@@ -166,6 +166,23 @@ describe('document-converter', () => {
         openApi31Doc
       );
     });
+
+    it('downgrades OpenAPI 3.2 documents to 3.1.1 so the parser accepts them', async () => {
+      const openApi32Doc = {
+        info: { title: 'Test Service', version: '1.0.0' },
+        openapi: '3.2.0',
+        paths: {},
+        components: {
+          schemas: {
+            NullableString: { type: ['string', 'null'] }
+          }
+        }
+      } as any;
+      const result = await convertToOpenApiV3xDocument(openApi32Doc);
+      expect((result as any).openapi).toEqual('3.1.1');
+      // Everything except the version string must be preserved.
+      expect((result as any).components).toStrictEqual(openApi32Doc.components);
+    });
   });
 
   describe('parseFileAsJson', () => {

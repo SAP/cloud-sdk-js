@@ -81,4 +81,10 @@ describe('getOperationNameFromPatternAndMethod', () => {
       getOperationNameFromPatternAndMethod('/{placeholder}', 'get')
     ).toEqual('getByPlaceholder');
   });
+
+  it('parses the operation name from the pattern and method for query', () => {
+    expect(getOperationNameFromPatternAndMethod('/entity', 'query')).toEqual(
+      'queryEntity'
+    );
+  });
 });

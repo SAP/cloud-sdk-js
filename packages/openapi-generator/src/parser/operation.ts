@@ -6,7 +6,11 @@ import { parseResponses } from './responses';
 import { ensureUniqueNames } from './unique-naming';
 import type { OperationInfo } from './parsing-info';
 import type { OpenApiDocumentRefs } from './refs';
-import type { OpenApiOperation, OpenApiParameter } from '../openapi-types';
+import type {
+  OpenApiOperation,
+  OpenApiParameter,
+  OpenApiQueryStringParameter
+} from '../openapi-types';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { ParserOptions } from './options';
 
@@ -40,6 +44,8 @@ export function parseOperation(
     parameter => parameter.in === 'query'
   );
 
+  const queryStringParameter = parseQueryStringParameter(relevantParameters);
+
   const pathParameters = parsePathParameters(pathParams, refs, options);
 
   return {
@@ -50,6 +56,7 @@ export function parseOperation(
     queryParameters: parseParameters(queryParams, refs, options),
     headerParameters: parseParameters(headerParams, refs, options),
     pathParameters,
+    queryStringParameter,
     pathPattern: parsePathPattern(pathPattern, pathParameters),
     operationId: operation.operationId!,
     tags: operation.tags!
@@ -68,7 +75,10 @@ export function getRelevantParameters(
     // Filter cookie parameters
     .filter(
       param =>
-        param.in === 'path' || param.in === 'query' || param.in === 'header'
+        param.in === 'path' ||
+        param.in === 'query' ||
+        param.in === 'header' ||
+        (param.in as string) === 'querystring'
     );
   return filterDuplicatesRight(
     resolvedParameters,
@@ -166,4 +176,37 @@ export function parseParameters(
     schema: parseSchema(param.schema, refs, options),
     schemaProperties: {}
   }));
+}
+
+/**
+ * @internal
+ */
+export function parseQueryStringParameter(
+  parameters: OpenAPIV3.ParameterObject[]
+): OpenApiQueryStringParameter | undefined {
+  const queryStringParams = parameters.filter(
+    p => (p.in as string) === 'querystring'
+  );
+  if (!queryStringParams.length) {
+    return undefined;
+  }
+  if (queryStringParams.length > 1) {
+    throw new Error(
+      "An operation must not define more than one 'in: querystring' parameter."
+    );
+  }
+  const param = queryStringParams[0];
+  const content = (param as any).content as Record<string, unknown> | undefined;
+  const mediaType = content && Object.keys(content)[0];
+  if (!mediaType) {
+    throw new Error(
+      `The 'in: querystring' parameter '${param.name}' must define a 'content' entry.`
+    );
+  }
+  return {
+    originalName: param.name,
+    mediaType,
+    required: !!param.required,
+    description: param.description
+  };
 }

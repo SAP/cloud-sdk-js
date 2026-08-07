@@ -106,5 +106,6 @@ const nameMapping = {
   delete: 'delete',
   head: 'getHeadersFor',
   options: 'getOptionsFor',
-  trace: 'trace'
+  trace: 'trace',
+  query: 'query'
 } as const;

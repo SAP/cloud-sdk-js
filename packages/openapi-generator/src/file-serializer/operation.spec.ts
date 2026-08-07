@@ -648,6 +648,26 @@ getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {
     expect(operationDocumentation(operation)).toMatch(/My body description/);
   });
 
+  it('serializes an operation with an in: querystring parameter', () => {
+    const operation = {
+      operationId: 'getEntity',
+      method: 'get',
+      pathPattern: '/entity',
+      pathParameters: [],
+      queryParameters: [],
+      headerParameters: [],
+      response: { type: 'any' },
+      queryStringParameter: {
+        originalName: 'rawQuery',
+        mediaType: 'application/x-www-form-urlencoded',
+        required: false
+      }
+    } as any;
+    const serialized = serializeOperation(operation, 'TestApi');
+    expect(serialized).toContain('queryString?: string');
+    expect(serialized).toContain('queryString');
+  });
+
   it('creates the signature in order path parameter, body, queryParameter and returns last', () => {
     const operation = getOperation();
     operation.pathParameters = [

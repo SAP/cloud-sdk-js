@@ -3,7 +3,8 @@ import {
   parseParameters,
   getRelevantParameters,
   parsePathParameters,
-  parsePathPattern
+  parsePathPattern,
+  parseOperation
 } from './operation';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { OpenApiParameter } from '../openapi-types';
@@ -222,5 +223,44 @@ describe('parsePathTemplate', () => {
     ).toEqual(
       '/root/{pathParam}/{pathParam1}/path/{pathParam2}/sub-path/{pathParam3}'
     );
+  });
+});
+
+describe('parseOperation', () => {
+  it('parses an in: querystring parameter into queryStringParameter', async () => {
+    const refs = await createTestRefs();
+    const operation = parseOperation(
+      {
+        pathPattern: '/entity',
+        method: 'get',
+        pathItemParameters: [],
+        operation: {
+          operationId: 'getEntity',
+          parameters: [
+            {
+              name: 'rawQuery',
+              in: 'querystring',
+              required: true,
+              content: {
+                'application/x-www-form-urlencoded': {
+                  schema: { type: 'string' }
+                }
+              }
+            }
+          ],
+          responses: { 200: { description: 'ok' } }
+        }
+      } as any,
+      refs,
+      defaultOptions
+    );
+    expect(operation.queryStringParameter).toEqual({
+      originalName: 'rawQuery',
+      mediaType: 'application/x-www-form-urlencoded',
+      required: true,
+      description: undefined
+    });
+    // querystring must NOT leak into normal query parameters.
+    expect(operation.queryParameters).toEqual([]);
   });
 });

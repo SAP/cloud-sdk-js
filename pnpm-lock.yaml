@@ -939,7 +939,7 @@ importers:
         version: 3.0.7
       json-schema-faker:
         specifier: ^0.6.0
-        version: 0.6.2
+        version: 0.6.3
       memfs:
         specifier: ^4.57.2
         version: 4.67.0
@@ -4722,8 +4722,8 @@ packages:
   json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
 
-  json-schema-faker@0.6.2:
-    resolution: {integrity: sha512-jhOV/bIUxTPM3DiKaa9YDI9UIhO6md1wBnopuIleXATBCwBxnpEfUG0KZqWJS0nTc7nGeWu6ve4vL7Sk7l2BKA==}
+  json-schema-faker@0.6.3:
+    resolution: {integrity: sha512-rsH48E/b5KFpgvKlcFjplB+zwOZk2FhYCQwcM6y09ApZkVl3D7PhcRIrDhpfR+w1AhNOrv0bumJElBz4X++KBA==}
     hasBin: true
 
   json-schema-traverse@0.4.1:
@@ -10424,7 +10424,7 @@ snapshots:
 
   json-parse-even-better-errors@2.3.1: {}
 
-  json-schema-faker@0.6.2: {}
+  json-schema-faker@0.6.3: {}
 
   json-schema-traverse@0.4.1: {}
 

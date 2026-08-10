@@ -886,20 +886,22 @@ var require_tree = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			while (true) {
 				const code = key.charCodeAt(index);
 				if (code > 127) throw new TypeError("key must be ascii string");
-				if (node.code === code) if (length === ++index) {
-					node.value = value;
-					break;
-				} else if (node.middle !== null) node = node.middle;
-				else {
-					node.middle = new TstNode(key, value, index);
-					break;
-				}
-				else if (node.code < code) if (node.left !== null) node = node.left;
-				else {
-					node.left = new TstNode(key, value, index);
-					break;
-				}
-				else if (node.right !== null) node = node.right;
+				if (node.code === code) {
+					if (length === ++index) {
+						node.value = value;
+						break;
+					} else if (node.middle !== null) node = node.middle;
+					else {
+						node.middle = new TstNode(key, value, index);
+						break;
+					}
+				} else if (node.code < code) {
+					if (node.left !== null) node = node.left;
+					else {
+						node.left = new TstNode(key, value, index);
+						break;
+					}
+				} else if (node.right !== null) node = node.right;
 				else {
 					node.right = new TstNode(key, value, index);
 					break;
@@ -1574,15 +1576,16 @@ var require_request$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (Array.isArray(headers)) {
 				if (headers.length % 2 !== 0) throw new InvalidArgumentError("headers array must be even");
 				for (let i = 0; i < headers.length; i += 2) processHeader(this, headers[i], headers[i + 1]);
-			} else if (headers && typeof headers === "object") if (headers[Symbol.iterator]) for (const header of headers) {
-				if (!Array.isArray(header) || header.length !== 2) throw new InvalidArgumentError("headers must be in key-value pair format");
-				processHeader(this, header[0], header[1]);
-			}
-			else {
-				const keys = Object.keys(headers);
-				for (let i = 0; i < keys.length; ++i) processHeader(this, keys[i], headers[keys[i]]);
-			}
-			else if (headers != null) throw new InvalidArgumentError("headers must be an object or an array");
+			} else if (headers && typeof headers === "object") {
+				if (headers[Symbol.iterator]) for (const header of headers) {
+					if (!Array.isArray(header) || header.length !== 2) throw new InvalidArgumentError("headers must be in key-value pair format");
+					processHeader(this, header[0], header[1]);
+				}
+				else {
+					const keys = Object.keys(headers);
+					for (let i = 0; i < keys.length; ++i) processHeader(this, keys[i], headers[keys[i]]);
+				}
+			} else if (headers != null) throw new InvalidArgumentError("headers must be an object or an array");
 			validateHandler(handler, method, upgrade);
 			this.servername = servername || getServerName(this.host);
 			this[kHandler] = handler;
@@ -3936,8 +3939,10 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			const algorithm = item.algo;
 			const expectedValue = item.hash;
 			let actualValue = crypto.createHash(algorithm).update(bytes).digest("base64");
-			if (actualValue[actualValue.length - 1] === "=") if (actualValue[actualValue.length - 2] === "=") actualValue = actualValue.slice(0, -2);
-			else actualValue = actualValue.slice(0, -1);
+			if (actualValue[actualValue.length - 1] === "=") {
+				if (actualValue[actualValue.length - 2] === "=") actualValue = actualValue.slice(0, -2);
+				else actualValue = actualValue.slice(0, -1);
+			}
 			if (compareBase64Mixed(actualValue, expectedValue)) return true;
 		}
 		return false;
@@ -4380,12 +4385,14 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let temporaryValue = "";
 		while (position.position < input.length) {
 			temporaryValue += collectASequenceOfCodePoints((char) => char !== "\"" && char !== ",", input, position);
-			if (position.position < input.length) if (input.charCodeAt(position.position) === 34) {
-				temporaryValue += collectAnHTTPQuotedString(input, position);
-				if (position.position < input.length) continue;
-			} else {
-				assert$25(input.charCodeAt(position.position) === 44);
-				position.position++;
+			if (position.position < input.length) {
+				if (input.charCodeAt(position.position) === 34) {
+					temporaryValue += collectAnHTTPQuotedString(input, position);
+					if (position.position < input.length) continue;
+				} else {
+					assert$25(input.charCodeAt(position.position) === 44);
+					position.position++;
+				}
 			}
 			temporaryValue = removeChars(temporaryValue, true, true, (char) => char === 9 || char === 32);
 			values.push(temporaryValue);
@@ -4635,9 +4642,10 @@ var require_formdata = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 		[nodeUtil$2.inspect.custom](depth, options) {
 			const state = this[kState].reduce((a, b) => {
-				if (a[b.name]) if (Array.isArray(a[b.name])) a[b.name].push(b.value);
-				else a[b.name] = [a[b.name], b.value];
-				else a[b.name] = b.value;
+				if (a[b.name]) {
+					if (Array.isArray(a[b.name])) a[b.name].push(b.value);
+					else a[b.name] = [a[b.name], b.value];
+				} else a[b.name] = b.value;
 				return a;
 			}, { __proto__: null });
 			options.depth ??= depth;
@@ -5252,10 +5260,12 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					timers.clearTimeout(this.timeout);
 					this.timeout = null;
 				}
-				if (delay) if (type & USE_FAST_TIMER) this.timeout = timers.setFastTimeout(onParserTimeout, delay, new WeakRef(this));
-				else {
-					this.timeout = setTimeout(onParserTimeout, delay, new WeakRef(this));
-					this.timeout.unref();
+				if (delay) {
+					if (type & USE_FAST_TIMER) this.timeout = timers.setFastTimeout(onParserTimeout, delay, new WeakRef(this));
+					else {
+						this.timeout = setTimeout(onParserTimeout, delay, new WeakRef(this));
+						this.timeout.unref();
+					}
 				}
 				this.timeoutValue = delay;
 			} else if (this.timeout) {
@@ -5803,9 +5813,10 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		/* istanbul ignore else: assertion */
 		if (!body || bodyLength === 0) writeBuffer(abort, null, client, request, socket, contentLength, header, expectsPayload);
 		else if (util.isBuffer(body)) writeBuffer(abort, body, client, request, socket, contentLength, header, expectsPayload);
-		else if (util.isBlobLike(body)) if (typeof body.stream === "function") writeIterable(abort, body.stream(), client, request, socket, contentLength, header, expectsPayload);
-		else writeBlob(abort, body, client, request, socket, contentLength, header, expectsPayload);
-		else if (util.isStream(body)) writeStream(abort, body, client, request, socket, contentLength, header, expectsPayload);
+		else if (util.isBlobLike(body)) {
+			if (typeof body.stream === "function") writeIterable(abort, body.stream(), client, request, socket, contentLength, header, expectsPayload);
+			else writeBlob(abort, body, client, request, socket, contentLength, header, expectsPayload);
+		} else if (util.isStream(body)) writeStream(abort, body, client, request, socket, contentLength, header, expectsPayload);
 		else if (util.isIterable(body)) writeIterable(abort, body, client, request, socket, contentLength, header, expectsPayload);
 		else assert$22(false);
 		return true;
@@ -5867,12 +5878,13 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	}
 	function writeBuffer(abort, body, client, request, socket, contentLength, header, expectsPayload) {
 		try {
-			if (!body) if (contentLength === 0) socket.write(`${header}content-length: 0\r\n\r\n`, "latin1");
-			else {
-				assert$22(contentLength === null, "no body must not have content length");
-				socket.write(`${header}\r\n`, "latin1");
-			}
-			else if (util.isBuffer(body)) {
+			if (!body) {
+				if (contentLength === 0) socket.write(`${header}content-length: 0\r\n\r\n`, "latin1");
+				else {
+					assert$22(contentLength === null, "no body must not have content length");
+					socket.write(`${header}\r\n`, "latin1");
+				}
+			} else if (util.isBuffer(body)) {
 				assert$22(contentLength === body.byteLength, "buffer body must have content length");
 				socket.cork();
 				socket.write(`${header}content-length: ${contentLength}\r\n\r\n`, "latin1");
@@ -5988,11 +6000,14 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			socket[kWriting] = false;
 			if (socket[kError]) throw socket[kError];
 			if (socket.destroyed) return;
-			if (bytesWritten === 0) if (expectsPayload) socket.write(`${header}content-length: 0\r\n\r\n`, "latin1");
-			else socket.write(`${header}\r\n`, "latin1");
-			else if (contentLength === null) socket.write("\r\n0\r\n\r\n", "latin1");
-			if (contentLength !== null && bytesWritten !== contentLength) if (client[kStrictContentLength]) throw new RequestContentLengthMismatchError();
-			else process.emitWarning(new RequestContentLengthMismatchError());
+			if (bytesWritten === 0) {
+				if (expectsPayload) socket.write(`${header}content-length: 0\r\n\r\n`, "latin1");
+				else socket.write(`${header}\r\n`, "latin1");
+			} else if (contentLength === null) socket.write("\r\n0\r\n\r\n", "latin1");
+			if (contentLength !== null && bytesWritten !== contentLength) {
+				if (client[kStrictContentLength]) throw new RequestContentLengthMismatchError();
+				else process.emitWarning(new RequestContentLengthMismatchError());
+			}
 			if (socket[kParser].timeout && socket[kParser].timeoutType === TIMEOUT_HEADERS) {
 				// istanbul ignore else: only for jest
 				if (socket[kParser].timeout.refresh) socket[kParser].timeout.refresh();
@@ -6113,12 +6128,14 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	}
 	function resumeH2(client) {
 		const socket = client[kSocket];
-		if (socket?.destroyed === false) if (client[kSize] === 0 && client[kMaxConcurrentStreams] === 0) {
-			socket.unref();
-			client[kHTTP2Session].unref();
-		} else {
-			socket.ref();
-			client[kHTTP2Session].ref();
+		if (socket?.destroyed === false) {
+			if (client[kSize] === 0 && client[kMaxConcurrentStreams] === 0) {
+				socket.unref();
+				client[kHTTP2Session].unref();
+			} else {
+				socket.ref();
+				client[kHTTP2Session].ref();
+			}
 		}
 	}
 	function onHttp2SessionError(err) {
@@ -6302,9 +6319,10 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			/* istanbul ignore else: assertion */
 			if (!body || contentLength === 0) writeBuffer(abort, stream, null, client, request, client[kSocket], contentLength, expectsPayload);
 			else if (util.isBuffer(body)) writeBuffer(abort, stream, body, client, request, client[kSocket], contentLength, expectsPayload);
-			else if (util.isBlobLike(body)) if (typeof body.stream === "function") writeIterable(abort, stream, body.stream(), client, request, client[kSocket], contentLength, expectsPayload);
-			else writeBlob(abort, stream, body, client, request, client[kSocket], contentLength, expectsPayload);
-			else if (util.isStream(body)) writeStream(abort, client[kSocket], expectsPayload, stream, body, client, request, contentLength);
+			else if (util.isBlobLike(body)) {
+				if (typeof body.stream === "function") writeIterable(abort, stream, body.stream(), client, request, client[kSocket], contentLength, expectsPayload);
+				else writeBlob(abort, stream, body, client, request, client[kSocket], contentLength, expectsPayload);
+			} else if (util.isStream(body)) writeStream(abort, client[kSocket], expectsPayload, stream, body, client, request, contentLength);
 			else if (util.isIterable(body)) writeIterable(abort, stream, body, client, request, client[kSocket], contentLength, expectsPayload);
 			else assert$21(false);
 		}
@@ -7767,13 +7785,15 @@ var require_retry_handler = /* @__PURE__ */ __commonJSMin(((exports, module) => 
 		onHeaders(statusCode, rawHeaders, resume, statusMessage) {
 			const headers = parseHeaders(rawHeaders);
 			this.retryCount += 1;
-			if (statusCode >= 300) if (this.retryOpts.statusCodes.includes(statusCode) === false) return this.handler.onHeaders(statusCode, rawHeaders, resume, statusMessage);
-			else {
-				this.abort(new RequestRetryError("Request failed", statusCode, {
-					headers,
-					data: { count: this.retryCount }
-				}));
-				return false;
+			if (statusCode >= 300) {
+				if (this.retryOpts.statusCodes.includes(statusCode) === false) return this.handler.onHeaders(statusCode, rawHeaders, resume, statusMessage);
+				else {
+					this.abort(new RequestRetryError("Request failed", statusCode, {
+						headers,
+						data: { count: this.retryCount }
+					}));
+					return false;
+				}
 			}
 			if (this.resume != null) {
 				this.resume = null;
@@ -8240,17 +8260,19 @@ var require_api_request = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (util.isStream(body)) body.on("error", (err) => {
 				this.onError(err);
 			});
-			if (this.signal) if (this.signal.aborted) this.reason = this.signal.reason ?? new RequestAbortedError();
-			else this.removeAbortListener = util.addAbortListener(this.signal, () => {
-				this.reason = this.signal.reason ?? new RequestAbortedError();
-				if (this.res) util.destroy(this.res.on("error", util.nop), this.reason);
-				else if (this.abort) this.abort(this.reason);
-				if (this.removeAbortListener) {
-					this.res?.off("close", this.removeAbortListener);
-					this.removeAbortListener();
-					this.removeAbortListener = null;
-				}
-			});
+			if (this.signal) {
+				if (this.signal.aborted) this.reason = this.signal.reason ?? new RequestAbortedError();
+				else this.removeAbortListener = util.addAbortListener(this.signal, () => {
+					this.reason = this.signal.reason ?? new RequestAbortedError();
+					if (this.res) util.destroy(this.res.on("error", util.nop), this.reason);
+					else if (this.abort) this.abort(this.reason);
+					if (this.removeAbortListener) {
+						this.res?.off("close", this.removeAbortListener);
+						this.removeAbortListener();
+						this.removeAbortListener = null;
+					}
+				});
+			}
 		}
 		onConnect(abort, context) {
 			if (this.reason) {
@@ -8284,22 +8306,24 @@ var require_api_request = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (this.removeAbortListener) res.on("close", this.removeAbortListener);
 			this.callback = null;
 			this.res = res;
-			if (callback !== null) if (this.throwOnError && statusCode >= 400) this.runInAsyncScope(getResolveErrorBodyCallback, null, {
-				callback,
-				body: res,
-				contentType,
-				statusCode,
-				statusMessage,
-				headers
-			});
-			else this.runInAsyncScope(callback, null, null, {
-				statusCode,
-				headers,
-				trailers: this.trailers,
-				opaque,
-				body: res,
-				context
-			});
+			if (callback !== null) {
+				if (this.throwOnError && statusCode >= 400) this.runInAsyncScope(getResolveErrorBodyCallback, null, {
+					callback,
+					body: res,
+					contentType,
+					statusCode,
+					statusMessage,
+					headers
+				});
+				else this.runInAsyncScope(callback, null, null, {
+					statusCode,
+					headers,
+					trailers: this.trailers,
+					opaque,
+					body: res,
+					context
+				});
+			}
 		}
 		onData(chunk) {
 			return this.res.push(chunk);
@@ -9198,10 +9222,12 @@ var require_mock_interceptor = /* @__PURE__ */ __commonJSMin(((exports, module) 
 			if (typeof opts !== "object") throw new InvalidArgumentError("opts must be an object");
 			if (typeof opts.path === "undefined") throw new InvalidArgumentError("opts.path must be defined");
 			if (typeof opts.method === "undefined") opts.method = "GET";
-			if (typeof opts.path === "string") if (opts.query) opts.path = buildURL(opts.path, opts.query);
-			else {
-				const parsedURL = new URL(opts.path, "data://");
-				opts.path = parsedURL.pathname + parsedURL.search;
+			if (typeof opts.path === "string") {
+				if (opts.query) opts.path = buildURL(opts.path, opts.query);
+				else {
+					const parsedURL = new URL(opts.path, "data://");
+					opts.path = parsedURL.pathname + parsedURL.search;
+				}
 			}
 			if (typeof opts.method === "string") opts.method = opts.method.toUpperCase();
 			this[kDispatchKey] = buildKey(opts);
@@ -9492,9 +9518,10 @@ var require_mock_agent = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			this[kIsMockActive] = true;
 		}
 		enableNetConnect(matcher) {
-			if (typeof matcher === "string" || typeof matcher === "function" || matcher instanceof RegExp) if (Array.isArray(this[kNetConnect])) this[kNetConnect].push(matcher);
-			else this[kNetConnect] = [matcher];
-			else if (typeof matcher === "undefined") this[kNetConnect] = true;
+			if (typeof matcher === "string" || typeof matcher === "function" || matcher instanceof RegExp) {
+				if (Array.isArray(this[kNetConnect])) this[kNetConnect].push(matcher);
+				else this[kNetConnect] = [matcher];
+			} else if (typeof matcher === "undefined") this[kNetConnect] = true;
 			else throw new InvalidArgumentError("Unsupported matcher. Must be one of String|Function|RegExp.");
 		}
 		disableNetConnect() {
@@ -9797,12 +9824,14 @@ var require_dns = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			const { records, offset } = hostnameRecords;
 			let family;
 			if (this.dualStack) {
-				if (affinity == null) if (offset == null || offset === maxInt) {
-					hostnameRecords.offset = 0;
-					affinity = 4;
-				} else {
-					hostnameRecords.offset++;
-					affinity = (hostnameRecords.offset & 1) === 1 ? 6 : 4;
+				if (affinity == null) {
+					if (offset == null || offset === maxInt) {
+						hostnameRecords.offset = 0;
+						affinity = 4;
+					} else {
+						hostnameRecords.offset++;
+						affinity = (hostnameRecords.offset & 1) === 1 ? 6 : 4;
+					}
 				}
 				if (records[affinity] != null && records[affinity].ips.length > 0) family = records[affinity];
 				else family = records[affinity === 4 ? 6 : 4];
@@ -11298,8 +11327,10 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		assert$7(!request.body || request.body.stream);
 		if (request.window === "client") request.window = request.client?.globalObject?.constructor?.name === "Window" ? request.client : "no-window";
 		if (request.origin === "client") request.origin = request.client.origin;
-		if (request.policyContainer === "client") if (request.client != null) request.policyContainer = clonePolicyContainer(request.client.policyContainer);
-		else request.policyContainer = makePolicyContainer();
+		if (request.policyContainer === "client") {
+			if (request.client != null) request.policyContainer = clonePolicyContainer(request.client.policyContainer);
+			else request.policyContainer = makePolicyContainer();
+		}
 		if (!request.headersList.contains("accept", true)) request.headersList.append("accept", "*/*", true);
 		if (!request.headersList.contains("accept-language", true)) request.headersList.append("accept-language", "*", true);
 		if (request.priority === null) {}
@@ -11568,8 +11599,10 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (!httpRequest.headersList.contains("cache-control", true)) httpRequest.headersList.append("cache-control", "no-cache", true);
 		}
 		if (httpRequest.headersList.contains("range", true)) httpRequest.headersList.append("accept-encoding", "identity", true);
-		if (!httpRequest.headersList.contains("accept-encoding", true)) if (urlHasHttpsScheme(requestCurrentURL(httpRequest))) httpRequest.headersList.append("accept-encoding", "br, gzip, deflate", true);
-		else httpRequest.headersList.append("accept-encoding", "gzip, deflate", true);
+		if (!httpRequest.headersList.contains("accept-encoding", true)) {
+			if (urlHasHttpsScheme(requestCurrentURL(httpRequest))) httpRequest.headersList.append("accept-encoding", "br, gzip, deflate", true);
+			else httpRequest.headersList.append("accept-encoding", "gzip, deflate", true);
+		}
 		httpRequest.headersList.delete("host", true);
 		if (includeCredentials) {}
 		httpRequest.cache = "no-store";
@@ -14023,8 +14056,10 @@ var require_util$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			failWebsocketConnection(ws, "Received invalid UTF-8 in text frame.");
 			return;
 		}
-		else if (type === opcodes.BINARY) if (ws[kBinaryType] === "blob") dataForEvent = new Blob([data]);
-		else dataForEvent = toArrayBuffer(data);
+		else if (type === opcodes.BINARY) {
+			if (ws[kBinaryType] === "blob") dataForEvent = new Blob([data]);
+			else dataForEvent = toArrayBuffer(data);
+		}
 		fireEvent("message", ws, createFastMessageEvent, {
 			origin: ws[kWebSocketURL].origin,
 			data: dataForEvent
@@ -15585,13 +15620,15 @@ var require_eventsource = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			};
 			fetchParams.processResponseEndOfBody = processEventSourceEndOfBody;
 			fetchParams.processResponse = (response) => {
-				if (isNetworkError(response)) if (response.aborted) {
-					this.close();
-					this.dispatchEvent(new Event("error"));
-					return;
-				} else {
-					this.#reconnect();
-					return;
+				if (isNetworkError(response)) {
+					if (response.aborted) {
+						this.close();
+						this.dispatchEvent(new Event("error"));
+						return;
+					} else {
+						this.#reconnect();
+						return;
+					}
 				}
 				const contentType = response.headersList.get("content-type", true);
 				const mimeType = contentType !== null ? parseMIMEType(contentType) : "failure";
@@ -16372,8 +16409,10 @@ var require_which = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (ii === pathExt.length) return resolve(step(i + 1));
 			const ext = pathExt[ii];
 			isexe(p + ext, { pathExt: pathExtExe }, (er, is) => {
-				if (!er && is) if (opt.all) found.push(p + ext);
-				else return resolve(p + ext);
+				if (!er && is) {
+					if (opt.all) found.push(p + ext);
+					else return resolve(p + ext);
+				}
 				return resolve(subStep(p, i, ii + 1));
 			});
 		});
@@ -16391,8 +16430,10 @@ var require_which = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			for (let j = 0; j < pathExt.length; j++) {
 				const cur = p + pathExt[j];
 				try {
-					if (isexe.sync(cur, { pathExt: pathExtExe })) if (opt.all) found.push(cur);
-					else return cur;
+					if (isexe.sync(cur, { pathExt: pathExtExe })) {
+						if (opt.all) found.push(cur);
+						else return cur;
+					}
 				} catch (ex) {}
 			}
 		}
@@ -18202,9 +18243,10 @@ var require_semver$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = class SemVer {
 		constructor(version, options) {
 			options = parseOptions(options);
-			if (version instanceof SemVer) if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) return version;
-			else version = version.version;
-			else if (typeof version !== "string") throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`);
+			if (version instanceof SemVer) {
+				if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) return version;
+				else version = version.version;
+			} else if (typeof version !== "string") throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`);
 			if (version.length > MAX_LENGTH) throw new TypeError(`version is longer than ${MAX_LENGTH} characters`);
 			debug("SemVer", version, options);
 			this.options = options;
@@ -18461,8 +18503,10 @@ var require_comparator = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 		constructor(comp, options) {
 			options = parseOptions(options);
-			if (comp instanceof Comparator) if (comp.loose === !!options.loose) return comp;
-			else comp = comp.value;
+			if (comp instanceof Comparator) {
+				if (comp.loose === !!options.loose) return comp;
+				else comp = comp.value;
+			}
 			comp = comp.trim().split(/\s+/).join(" ");
 			debug("comparator", comp, options);
 			this.options = options;
@@ -18528,8 +18572,10 @@ var require_range = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = class Range {
 		constructor(range, options) {
 			options = parseOptions(options);
-			if (range instanceof Range) if (range.loose === !!options.loose && range.includePrerelease === !!options.includePrerelease) return range;
-			else return new Range(range.raw, options);
+			if (range instanceof Range) {
+				if (range.loose === !!options.loose && range.includePrerelease === !!options.includePrerelease) return range;
+				else return new Range(range.raw, options);
+			}
 			if (range instanceof Comparator) {
 				this.raw = range.value;
 				this.set = [[range]];
@@ -18699,18 +18745,21 @@ var require_range = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			let ret;
 			if (isX(M)) ret = "";
 			else if (isX(m)) ret = `>=${M}.0.0${z} <${+M + 1}.0.0-0`;
-			else if (isX(p)) if (M === "0") ret = `>=${M}.${m}.0${z} <${M}.${+m + 1}.0-0`;
-			else ret = `>=${M}.${m}.0${z} <${+M + 1}.0.0-0`;
-			else if (pr) {
+			else if (isX(p)) {
+				if (M === "0") ret = `>=${M}.${m}.0${z} <${M}.${+m + 1}.0-0`;
+				else ret = `>=${M}.${m}.0${z} <${+M + 1}.0.0-0`;
+			} else if (pr) {
 				debug("replaceCaret pr", pr);
-				if (M === "0") if (m === "0") ret = `>=${M}.${m}.${p}-${pr} <${M}.${m}.${+p + 1}-0`;
-				else ret = `>=${M}.${m}.${p}-${pr} <${M}.${+m + 1}.0-0`;
-				else ret = `>=${M}.${m}.${p}-${pr} <${+M + 1}.0.0-0`;
+				if (M === "0") {
+					if (m === "0") ret = `>=${M}.${m}.${p}-${pr} <${M}.${m}.${+p + 1}-0`;
+					else ret = `>=${M}.${m}.${p}-${pr} <${M}.${+m + 1}.0-0`;
+				} else ret = `>=${M}.${m}.${p}-${pr} <${+M + 1}.0.0-0`;
 			} else {
 				debug("no pr");
-				if (M === "0") if (m === "0") ret = `>=${M}.${m}.${p} <${M}.${m}.${+p + 1}-0`;
-				else ret = `>=${M}.${m}.${p} <${M}.${+m + 1}.0-0`;
-				else ret = `>=${M}.${m}.${p} <${+M + 1}.0.0-0`;
+				if (M === "0") {
+					if (m === "0") ret = `>=${M}.${m}.${p} <${M}.${m}.${+p + 1}-0`;
+					else ret = `>=${M}.${m}.${p} <${M}.${+m + 1}.0-0`;
+				} else ret = `>=${M}.${m}.${p} <${+M + 1}.0.0-0`;
 			}
 			debug("caret return", ret);
 			return ret;
@@ -18732,9 +18781,10 @@ var require_range = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			const anyX = xp;
 			if (gtlt === "=" && anyX) gtlt = "";
 			pr = options.includePrerelease ? "-0" : "";
-			if (xM) if (gtlt === ">" || gtlt === "<") ret = "<0.0.0-0";
-			else ret = "*";
-			else if (gtlt && anyX) {
+			if (xM) {
+				if (gtlt === ">" || gtlt === "<") ret = "<0.0.0-0";
+				else ret = "*";
+			} else if (gtlt && anyX) {
 				if (xm) m = 0;
 				p = 0;
 				if (gtlt === ">") {
@@ -19287,8 +19337,10 @@ var require_changesets_assemble_release_plan_cjs = /* @__PURE__ */ __commonJSMin
 					case "~":
 						versionRange = `${versionRange}${dependencyRelease.oldVersion}`;
 						break;
-					default: if (!validRange__default["default"](versionRange)) if (path__default["default"].posix.normalize(versionRange) === path__default["default"].relative(rootDir, dependencyPackage.dir).replace(/\\/g, "/")) versionRange = dependencyRelease.oldVersion;
-					else continue;
+					default: if (!validRange__default["default"](versionRange)) {
+						if (path__default["default"].posix.normalize(versionRange) === path__default["default"].relative(rootDir, dependencyPackage.dir).replace(/\\/g, "/")) versionRange = dependencyRelease.oldVersion;
+						else continue;
+					}
 				}
 			}
 			dependencyVersionRanges.push({
@@ -22493,8 +22545,10 @@ function requireOmap() {
 			let pairHasKey = false;
 			if (_toString.call(pair) !== "[object Object]") return false;
 			let pairKey;
-			for (pairKey in pair) if (_hasOwnProperty.call(pair, pairKey)) if (!pairHasKey) pairHasKey = true;
-			else return false;
+			for (pairKey in pair) if (_hasOwnProperty.call(pair, pairKey)) {
+				if (!pairHasKey) pairHasKey = true;
+				else return false;
+			}
 			if (!pairHasKey) return false;
 			if (_hasOwnProperty.call(objectKeys, pairKey)) return false;
 			Object.defineProperty(objectKeys, pairKey, { value: true });
@@ -22838,9 +22892,10 @@ function requireLoader() {
 		if (typeof keyNode === "object" && _class(keyNode) === "[object Object]") keyNode = "[object Object]";
 		keyNode = String(keyNode);
 		if (_result === null) _result = {};
-		if (keyTag === "tag:yaml.org,2002:merge") if (Array.isArray(valueNode)) for (let index = 0, quantity = valueNode.length; index < quantity; index += 1) mergeMappings(state, _result, valueNode[index], overridableKeys);
-		else mergeMappings(state, _result, valueNode, overridableKeys);
-		else {
+		if (keyTag === "tag:yaml.org,2002:merge") {
+			if (Array.isArray(valueNode)) for (let index = 0, quantity = valueNode.length; index < quantity; index += 1) mergeMappings(state, _result, valueNode[index], overridableKeys);
+			else mergeMappings(state, _result, valueNode, overridableKeys);
+		} else {
 			if (!state.json && !_hasOwnProperty.call(overridableKeys, keyNode) && _hasOwnProperty.call(_result, keyNode)) {
 				state.line = startLine || state.line;
 				state.lineStart = startLineStart || state.lineStart;
@@ -23125,14 +23180,16 @@ function requireLoader() {
 		state.result = "";
 		while (ch !== 0) {
 			ch = state.input.charCodeAt(++state.position);
-			if (ch === 43 || ch === 45) if (CHOMPING_CLIP === chomping) chomping = ch === 43 ? CHOMPING_KEEP : CHOMPING_STRIP;
-			else throwError(state, "repeat of a chomping mode identifier");
-			else if ((tmp = fromDecimalCode(ch)) >= 0) if (tmp === 0) throwError(state, "bad explicit indentation width of a block scalar; it cannot be less than one");
-			else if (!detectedIndent) {
-				textIndent = nodeIndent + tmp - 1;
-				detectedIndent = true;
-			} else throwError(state, "repeat of an indentation width identifier");
-			else break;
+			if (ch === 43 || ch === 45) {
+				if (CHOMPING_CLIP === chomping) chomping = ch === 43 ? CHOMPING_KEEP : CHOMPING_STRIP;
+				else throwError(state, "repeat of a chomping mode identifier");
+			} else if ((tmp = fromDecimalCode(ch)) >= 0) {
+				if (tmp === 0) throwError(state, "bad explicit indentation width of a block scalar; it cannot be less than one");
+				else if (!detectedIndent) {
+					textIndent = nodeIndent + tmp - 1;
+					detectedIndent = true;
+				} else throwError(state, "repeat of an indentation width identifier");
+			} else break;
 		}
 		if (isWhiteSpace(ch)) {
 			do
@@ -23163,16 +23220,17 @@ function requireLoader() {
 				}
 				break;
 			}
-			if (folding) if (isWhiteSpace(ch)) {
-				atMoreIndented = true;
-				state.result += common2.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
-			} else if (atMoreIndented) {
-				atMoreIndented = false;
-				state.result += common2.repeat("\n", emptyLines + 1);
-			} else if (emptyLines === 0) {
-				if (didReadContent) state.result += " ";
-			} else state.result += common2.repeat("\n", emptyLines);
-			else state.result += common2.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
+			if (folding) {
+				if (isWhiteSpace(ch)) {
+					atMoreIndented = true;
+					state.result += common2.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
+				} else if (atMoreIndented) {
+					atMoreIndented = false;
+					state.result += common2.repeat("\n", emptyLines + 1);
+				} else if (emptyLines === 0) {
+					if (didReadContent) state.result += " ";
+				} else state.result += common2.repeat("\n", emptyLines);
+			} else state.result += common2.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
 			didReadContent = true;
 			detectedIndent = true;
 			emptyLines = 0;
@@ -23301,8 +23359,10 @@ function requireLoader() {
 					_keyLineStart = state.lineStart;
 					_keyPos = state.position;
 				}
-				if (composeNode(state, nodeIndent, CONTEXT_BLOCK_OUT, true, allowCompact)) if (atExplicitKey) keyNode = state.result;
-				else valueNode = state.result;
+				if (composeNode(state, nodeIndent, CONTEXT_BLOCK_OUT, true, allowCompact)) {
+					if (atExplicitKey) keyNode = state.result;
+					else valueNode = state.result;
+				}
 				if (!atExplicitKey) {
 					storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, _keyLine, _keyLineStart, _keyPos);
 					keyTag = keyNode = valueNode = null;
@@ -23350,12 +23410,14 @@ function requireLoader() {
 			} else throwError(state, "unexpected end of the stream within a verbatim tag");
 		} else {
 			while (ch !== 0 && !isWsOrEol(ch)) {
-				if (ch === 33) if (!isNamed) {
-					tagHandle = state.input.slice(_position - 1, state.position + 1);
-					if (!PATTERN_TAG_HANDLE.test(tagHandle)) throwError(state, "named tag handle cannot contain such characters");
-					isNamed = true;
-					_position = state.position + 1;
-				} else throwError(state, "tag suffix cannot contain exclamation marks");
+				if (ch === 33) {
+					if (!isNamed) {
+						tagHandle = state.input.slice(_position - 1, state.position + 1);
+						if (!PATTERN_TAG_HANDLE.test(tagHandle)) throwError(state, "named tag handle cannot contain such characters");
+						isNamed = true;
+						_position = state.position + 1;
+					} else throwError(state, "tag suffix cannot contain exclamation marks");
+				}
 				ch = state.input.charCodeAt(++state.position);
 			}
 			tagName = state.input.slice(_position, state.position);
@@ -23459,21 +23521,22 @@ function requireLoader() {
 			if (CONTEXT_FLOW_IN === nodeContext || CONTEXT_FLOW_OUT === nodeContext) flowIndent = parentIndent;
 			else flowIndent = parentIndent + 1;
 			blockIndent = state.position - state.lineStart;
-			if (indentStatus === 1) if (allowBlockCollections && (readBlockSequence(state, blockIndent) || readBlockMapping(state, blockIndent, flowIndent)) || readFlowCollection(state, flowIndent)) hasContent = true;
-			else {
-				const ch = state.input.charCodeAt(state.position);
-				if (propertyStart !== null && allowBlockStyles && !allowBlockCollections && ch !== 124 && ch !== 62 && tryReadBlockMappingFromProperty(state, propertyStart, propertyStart.position - propertyStart.lineStart, flowIndent)) hasContent = true;
-				else if (allowBlockScalars && readBlockScalar(state, flowIndent) || readSingleQuotedScalar(state, flowIndent) || readDoubleQuotedScalar(state, flowIndent)) hasContent = true;
-				else if (readAlias(state)) {
-					hasContent = true;
-					if (state.tag !== null || state.anchor !== null) throwError(state, "alias node should not have any properties");
-				} else if (readPlainScalar(state, flowIndent, CONTEXT_FLOW_IN === nodeContext)) {
-					hasContent = true;
-					if (state.tag === null) state.tag = "?";
+			if (indentStatus === 1) {
+				if (allowBlockCollections && (readBlockSequence(state, blockIndent) || readBlockMapping(state, blockIndent, flowIndent)) || readFlowCollection(state, flowIndent)) hasContent = true;
+				else {
+					const ch = state.input.charCodeAt(state.position);
+					if (propertyStart !== null && allowBlockStyles && !allowBlockCollections && ch !== 124 && ch !== 62 && tryReadBlockMappingFromProperty(state, propertyStart, propertyStart.position - propertyStart.lineStart, flowIndent)) hasContent = true;
+					else if (allowBlockScalars && readBlockScalar(state, flowIndent) || readSingleQuotedScalar(state, flowIndent) || readDoubleQuotedScalar(state, flowIndent)) hasContent = true;
+					else if (readAlias(state)) {
+						hasContent = true;
+						if (state.tag !== null || state.anchor !== null) throwError(state, "alias node should not have any properties");
+					} else if (readPlainScalar(state, flowIndent, CONTEXT_FLOW_IN === nodeContext)) {
+						hasContent = true;
+						if (state.tag === null) state.tag = "?";
+					}
+					if (state.anchor !== null) storeAnchor(state, state.anchor, state.result);
 				}
-				if (state.anchor !== null) storeAnchor(state, state.anchor, state.result);
-			}
-			else if (indentStatus === 0) hasContent = allowBlockCollections && readBlockSequence(state, blockIndent);
+			} else if (indentStatus === 0) hasContent = allowBlockCollections && readBlockSequence(state, blockIndent);
 		}
 		if (state.tag === null) {
 			if (state.anchor !== null) storeAnchor(state, state.anchor, state.result);
@@ -23980,8 +24043,10 @@ function requireDumper() {
 			if (state.replacer) objectValue = state.replacer.call(object, objectKey, objectValue);
 			if (!writeNode(state, level + 1, objectKey, true, true, true)) continue;
 			const explicitPair = state.tag !== null && state.tag !== "?" || state.dump && state.dump.length > 1024;
-			if (explicitPair) if (state.dump && CHAR_LINE_FEED === state.dump.charCodeAt(0)) pairBuffer += "?";
-			else pairBuffer += "? ";
+			if (explicitPair) {
+				if (state.dump && CHAR_LINE_FEED === state.dump.charCodeAt(0)) pairBuffer += "?";
+				else pairBuffer += "? ";
+			}
 			pairBuffer += state.dump;
 			if (explicitPair) pairBuffer += generateNextLine(state, level);
 			if (!writeNode(state, level + 1, objectValue, true, explicitPair)) continue;
@@ -23998,9 +24063,10 @@ function requireDumper() {
 		for (let index = 0, length = typeList.length; index < length; index += 1) {
 			const type2 = typeList[index];
 			if ((type2.instanceOf || type2.predicate) && (!type2.instanceOf || typeof object === "object" && object instanceof type2.instanceOf) && (!type2.predicate || type2.predicate(object))) {
-				if (explicit) if (type2.multi && type2.representName) state.tag = type2.representName(object);
-				else state.tag = type2.tag;
-				else state.tag = "?";
+				if (explicit) {
+					if (type2.multi && type2.representName) state.tag = type2.representName(object);
+					else state.tag = type2.tag;
+				} else state.tag = "?";
 				if (type2.represent) {
 					const style = state.styleMap[type2.tag] || type2.defaultStyle;
 					let _result;
@@ -24032,22 +24098,24 @@ function requireDumper() {
 		if (duplicate && state.usedDuplicates[duplicateIndex]) state.dump = "*ref_" + duplicateIndex;
 		else {
 			if (objectOrArray && duplicate && !state.usedDuplicates[duplicateIndex]) state.usedDuplicates[duplicateIndex] = true;
-			if (type2 === "[object Object]") if (block && Object.keys(state.dump).length !== 0) {
-				writeBlockMapping(state, level, state.dump, compact);
-				if (duplicate) state.dump = "&ref_" + duplicateIndex + state.dump;
-			} else {
-				writeFlowMapping(state, level, state.dump);
-				if (duplicate) state.dump = "&ref_" + duplicateIndex + " " + state.dump;
-			}
-			else if (type2 === "[object Array]") if (block && state.dump.length !== 0) {
-				if (state.noArrayIndent && !isblockseq && level > 0) writeBlockSequence(state, level - 1, state.dump, compact);
-				else writeBlockSequence(state, level, state.dump, compact);
-				if (duplicate) state.dump = "&ref_" + duplicateIndex + state.dump;
-			} else {
-				writeFlowSequence(state, level, state.dump);
-				if (duplicate) state.dump = "&ref_" + duplicateIndex + " " + state.dump;
-			}
-			else if (type2 === "[object String]") {
+			if (type2 === "[object Object]") {
+				if (block && Object.keys(state.dump).length !== 0) {
+					writeBlockMapping(state, level, state.dump, compact);
+					if (duplicate) state.dump = "&ref_" + duplicateIndex + state.dump;
+				} else {
+					writeFlowMapping(state, level, state.dump);
+					if (duplicate) state.dump = "&ref_" + duplicateIndex + " " + state.dump;
+				}
+			} else if (type2 === "[object Array]") {
+				if (block && state.dump.length !== 0) {
+					if (state.noArrayIndent && !isblockseq && level > 0) writeBlockSequence(state, level - 1, state.dump, compact);
+					else writeBlockSequence(state, level, state.dump, compact);
+					if (duplicate) state.dump = "&ref_" + duplicateIndex + state.dump;
+				} else {
+					writeFlowSequence(state, level, state.dump);
+					if (duplicate) state.dump = "&ref_" + duplicateIndex + " " + state.dump;
+				}
+			} else if (type2 === "[object String]") {
 				if (state.tag !== "?") writeScalar(state, state.dump, level, iskey, inblock);
 			} else if (type2 === "[object Undefined]") return false;
 			else {
@@ -28732,10 +28800,12 @@ var require_parse = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				}
 				return esc ? m : `\\${m}`;
 			});
-			if (backslashes === true) if (opts.unescape === true) output = output.replace(/\\/g, "");
-			else output = output.replace(/\\+/g, (m) => {
-				return m.length % 2 === 0 ? "\\\\" : m ? "\\" : "";
-			});
+			if (backslashes === true) {
+				if (opts.unescape === true) output = output.replace(/\\/g, "");
+				else output = output.replace(/\\+/g, (m) => {
+					return m.length % 2 === 0 ? "\\\\" : m ? "\\" : "";
+				});
+			}
 			if (output === input && opts.contains === true) {
 				state.output = input;
 				return state;
@@ -29497,8 +29567,10 @@ var require_picomatch$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			output = format ? format(input) : input;
 			match = output === glob;
 		}
-		if (match === false || opts.capture === true) if (opts.matchBase === true || opts.basename === true) match = picomatch.matchBase(input, regex, options, posix);
-		else match = regex.exec(output);
+		if (match === false || opts.capture === true) {
+			if (opts.matchBase === true || opts.basename === true) match = picomatch.matchBase(input, regex, options, posix);
+			else match = regex.exec(output);
+		}
 		return {
 			isMatch: Boolean(match),
 			match,
@@ -30977,15 +31049,16 @@ var require_queue = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			current.value = value;
 			current.callback = done || noop;
 			current.errorHandler = errorHandler;
-			if (_running >= _concurrency || self.paused) if (queueTail) {
-				queueTail.next = current;
-				queueTail = current;
+			if (_running >= _concurrency || self.paused) {
+				if (queueTail) {
+					queueTail.next = current;
+					queueTail = current;
+				} else {
+					queueHead = current;
+					queueTail = current;
+					self.saturated();
+				}
 			} else {
-				queueHead = current;
-				queueTail = current;
-				self.saturated();
-			}
-			else {
 				_running++;
 				worker.call(context, current.value, current.worked);
 			}
@@ -30997,15 +31070,16 @@ var require_queue = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			current.value = value;
 			current.callback = done || noop;
 			current.errorHandler = errorHandler;
-			if (_running >= _concurrency || self.paused) if (queueHead) {
-				current.next = queueHead;
-				queueHead = current;
+			if (_running >= _concurrency || self.paused) {
+				if (queueHead) {
+					current.next = queueHead;
+					queueHead = current;
+				} else {
+					queueHead = current;
+					queueTail = current;
+					self.saturated();
+				}
 			} else {
-				queueHead = current;
-				queueTail = current;
-				self.saturated();
-			}
-			else {
 				_running++;
 				worker.call(context, current.value, current.worked);
 			}
@@ -31013,14 +31087,15 @@ var require_queue = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		function release(holder) {
 			if (holder) cache.release(holder);
 			var next = queueHead;
-			if (next && _running <= _concurrency) if (!self.paused) {
-				if (queueTail === queueHead) queueTail = null;
-				queueHead = next.next;
-				next.next = null;
-				worker.call(context, next.value, next.worked);
-				if (queueTail === null) self.empty();
-			} else _running--;
-			else if (--_running === 0) self.drain();
+			if (next && _running <= _concurrency) {
+				if (!self.paused) {
+					if (queueTail === queueHead) queueTail = null;
+					queueHead = next.next;
+					next.next = null;
+					worker.call(context, next.value, next.worked);
+					if (queueTail === null) self.empty();
+				} else _running--;
+			} else if (--_running === 0) self.drain();
 		}
 		function kill() {
 			queueHead = null;
@@ -32660,12 +32735,13 @@ var require_pify = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		const P = options.promiseModule;
 		return new P((resolve, reject) => {
 			if (options.multiArgs) args.push((...result) => {
-				if (options.errorFirst) if (result[0]) reject(result);
-				else {
-					result.shift();
-					resolve(result);
-				}
-				else resolve(result);
+				if (options.errorFirst) {
+					if (result[0]) reject(result);
+					else {
+						result.shift();
+						resolve(result);
+					}
+				} else resolve(result);
 			});
 			else if (options.errorFirst) args.push((error, result) => {
 				if (error) reject(error);
@@ -33418,8 +33494,10 @@ var require_omap = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			pair = object[index];
 			pairHasKey = false;
 			if (_toString.call(pair) !== "[object Object]") return false;
-			for (pairKey in pair) if (_hasOwnProperty.call(pair, pairKey)) if (!pairHasKey) pairHasKey = true;
-			else return false;
+			for (pairKey in pair) if (_hasOwnProperty.call(pair, pairKey)) {
+				if (!pairHasKey) pairHasKey = true;
+				else return false;
+			}
 			if (!pairHasKey) return false;
 			if (_hasOwnProperty.call(objectKeys, pairKey)) return false;
 			Object.defineProperty(objectKeys, pairKey, { value: true });
@@ -36312,10 +36390,12 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 						}
 						var init = null;
 						if (kind === "const") {
-							if (!this.matchKeyword("in") && !this.matchContextualKeyword("of")) if (this.match("=")) {
-								this.nextToken();
-								init = this.isolateCoverGrammar(this.parseAssignmentExpression);
-							} else this.throwError(messages_1.Messages.DeclarationMissingInitializer, "const");
+							if (!this.matchKeyword("in") && !this.matchContextualKeyword("of")) {
+								if (this.match("=")) {
+									this.nextToken();
+									init = this.isolateCoverGrammar(this.parseAssignmentExpression);
+								} else this.throwError(messages_1.Messages.DeclarationMissingInitializer, "const");
+							}
 						} else if (!options.inFor && id.type !== syntax_1.Syntax.Identifier || this.match("=")) {
 							this.expect("=");
 							init = this.isolateCoverGrammar(this.parseAssignmentExpression);
@@ -37801,17 +37881,19 @@ var require_esprima = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 									var comment = this.skipMultiLineComment();
 									if (this.trackComment) comments = comments.concat(comment);
 								} else break;
-							} else if (start && ch === 45) if (this.source.charCodeAt(this.index + 1) === 45 && this.source.charCodeAt(this.index + 2) === 62) {
-								this.index += 3;
-								var comment = this.skipSingleLineComment(3);
-								if (this.trackComment) comments = comments.concat(comment);
+							} else if (start && ch === 45) {
+								if (this.source.charCodeAt(this.index + 1) === 45 && this.source.charCodeAt(this.index + 2) === 62) {
+									this.index += 3;
+									var comment = this.skipSingleLineComment(3);
+									if (this.trackComment) comments = comments.concat(comment);
+								} else break;
+							} else if (ch === 60 && !this.isModule) {
+								if (this.source.slice(this.index + 1, this.index + 4) === "!--") {
+									this.index += 4;
+									var comment = this.skipSingleLineComment(4);
+									if (this.trackComment) comments = comments.concat(comment);
+								} else break;
 							} else break;
-							else if (ch === 60 && !this.isModule) if (this.source.slice(this.index + 1, this.index + 4) === "!--") {
-								this.index += 4;
-								var comment = this.skipSingleLineComment(4);
-								if (this.trackComment) comments = comments.concat(comment);
-							} else break;
-							else break;
 						}
 						return comments;
 					};
@@ -39108,9 +39190,10 @@ var require_loader = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		if (typeof keyNode === "object" && _class(keyNode) === "[object Object]") keyNode = "[object Object]";
 		keyNode = String(keyNode);
 		if (_result === null) _result = {};
-		if (keyTag === "tag:yaml.org,2002:merge") if (Array.isArray(valueNode)) for (index = 0, quantity = valueNode.length; index < quantity; index += 1) mergeMappings(state, _result, valueNode[index], overridableKeys);
-		else mergeMappings(state, _result, valueNode, overridableKeys);
-		else {
+		if (keyTag === "tag:yaml.org,2002:merge") {
+			if (Array.isArray(valueNode)) for (index = 0, quantity = valueNode.length; index < quantity; index += 1) mergeMappings(state, _result, valueNode[index], overridableKeys);
+			else mergeMappings(state, _result, valueNode, overridableKeys);
+		} else {
 			if (!state.json && !_hasOwnProperty.call(overridableKeys, keyNode) && _hasOwnProperty.call(_result, keyNode)) {
 				state.line = startLine || state.line;
 				state.position = startPos || state.position;
@@ -39351,14 +39434,16 @@ var require_loader = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		state.result = "";
 		while (ch !== 0) {
 			ch = state.input.charCodeAt(++state.position);
-			if (ch === 43 || ch === 45) if (CHOMPING_CLIP === chomping) chomping = ch === 43 ? CHOMPING_KEEP : CHOMPING_STRIP;
-			else throwError(state, "repeat of a chomping mode identifier");
-			else if ((tmp = fromDecimalCode(ch)) >= 0) if (tmp === 0) throwError(state, "bad explicit indentation width of a block scalar; it cannot be less than one");
-			else if (!detectedIndent) {
-				textIndent = nodeIndent + tmp - 1;
-				detectedIndent = true;
-			} else throwError(state, "repeat of an indentation width identifier");
-			else break;
+			if (ch === 43 || ch === 45) {
+				if (CHOMPING_CLIP === chomping) chomping = ch === 43 ? CHOMPING_KEEP : CHOMPING_STRIP;
+				else throwError(state, "repeat of a chomping mode identifier");
+			} else if ((tmp = fromDecimalCode(ch)) >= 0) {
+				if (tmp === 0) throwError(state, "bad explicit indentation width of a block scalar; it cannot be less than one");
+				else if (!detectedIndent) {
+					textIndent = nodeIndent + tmp - 1;
+					detectedIndent = true;
+				} else throwError(state, "repeat of an indentation width identifier");
+			} else break;
 		}
 		if (is_WHITE_SPACE(ch)) {
 			do
@@ -39388,16 +39473,17 @@ var require_loader = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				}
 				break;
 			}
-			if (folding) if (is_WHITE_SPACE(ch)) {
-				atMoreIndented = true;
-				state.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
-			} else if (atMoreIndented) {
-				atMoreIndented = false;
-				state.result += common.repeat("\n", emptyLines + 1);
-			} else if (emptyLines === 0) {
-				if (didReadContent) state.result += " ";
-			} else state.result += common.repeat("\n", emptyLines);
-			else state.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
+			if (folding) {
+				if (is_WHITE_SPACE(ch)) {
+					atMoreIndented = true;
+					state.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
+				} else if (atMoreIndented) {
+					atMoreIndented = false;
+					state.result += common.repeat("\n", emptyLines + 1);
+				} else if (emptyLines === 0) {
+					if (didReadContent) state.result += " ";
+				} else state.result += common.repeat("\n", emptyLines);
+			} else state.result += common.repeat("\n", didReadContent ? 1 + emptyLines : emptyLines);
 			didReadContent = true;
 			detectedIndent = true;
 			emptyLines = 0;
@@ -39464,37 +39550,40 @@ var require_loader = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				} else throwError(state, "incomplete explicit mapping pair; a key node is missed; or followed by a non-tabulated empty line");
 				state.position += 1;
 				ch = following;
-			} else if (composeNode(state, flowIndent, CONTEXT_FLOW_OUT, false, true)) if (state.line === _line) {
-				ch = state.input.charCodeAt(state.position);
-				while (is_WHITE_SPACE(ch)) ch = state.input.charCodeAt(++state.position);
-				if (ch === 58) {
-					ch = state.input.charCodeAt(++state.position);
-					if (!is_WS_OR_EOL(ch)) throwError(state, "a whitespace character is expected after the key-value separator within a block mapping");
-					if (atExplicitKey) {
-						storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null);
-						keyTag = keyNode = valueNode = null;
+			} else if (composeNode(state, flowIndent, CONTEXT_FLOW_OUT, false, true)) {
+				if (state.line === _line) {
+					ch = state.input.charCodeAt(state.position);
+					while (is_WHITE_SPACE(ch)) ch = state.input.charCodeAt(++state.position);
+					if (ch === 58) {
+						ch = state.input.charCodeAt(++state.position);
+						if (!is_WS_OR_EOL(ch)) throwError(state, "a whitespace character is expected after the key-value separator within a block mapping");
+						if (atExplicitKey) {
+							storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null);
+							keyTag = keyNode = valueNode = null;
+						}
+						detected = true;
+						atExplicitKey = false;
+						allowCompact = false;
+						keyTag = state.tag;
+						keyNode = state.result;
+					} else if (detected) throwError(state, "can not read an implicit mapping pair; a colon is missed");
+					else {
+						state.tag = _tag;
+						state.anchor = _anchor;
+						return true;
 					}
-					detected = true;
-					atExplicitKey = false;
-					allowCompact = false;
-					keyTag = state.tag;
-					keyNode = state.result;
-				} else if (detected) throwError(state, "can not read an implicit mapping pair; a colon is missed");
+				} else if (detected) throwError(state, "can not read a block mapping entry; a multiline key may not be an implicit key");
 				else {
 					state.tag = _tag;
 					state.anchor = _anchor;
 					return true;
 				}
-			} else if (detected) throwError(state, "can not read a block mapping entry; a multiline key may not be an implicit key");
-			else {
-				state.tag = _tag;
-				state.anchor = _anchor;
-				return true;
-			}
-			else break;
+			} else break;
 			if (state.line === _line || state.lineIndent > nodeIndent) {
-				if (composeNode(state, nodeIndent, CONTEXT_BLOCK_OUT, true, allowCompact)) if (atExplicitKey) keyNode = state.result;
-				else valueNode = state.result;
+				if (composeNode(state, nodeIndent, CONTEXT_BLOCK_OUT, true, allowCompact)) {
+					if (atExplicitKey) keyNode = state.result;
+					else valueNode = state.result;
+				}
 				if (!atExplicitKey) {
 					storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, _line, _pos);
 					keyTag = keyNode = valueNode = null;
@@ -39538,12 +39627,14 @@ var require_loader = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			} else throwError(state, "unexpected end of the stream within a verbatim tag");
 		} else {
 			while (ch !== 0 && !is_WS_OR_EOL(ch)) {
-				if (ch === 33) if (!isNamed) {
-					tagHandle = state.input.slice(_position - 1, state.position + 1);
-					if (!PATTERN_TAG_HANDLE.test(tagHandle)) throwError(state, "named tag handle cannot contain such characters");
-					isNamed = true;
-					_position = state.position + 1;
-				} else throwError(state, "tag suffix cannot contain exclamation marks");
+				if (ch === 33) {
+					if (!isNamed) {
+						tagHandle = state.input.slice(_position - 1, state.position + 1);
+						if (!PATTERN_TAG_HANDLE.test(tagHandle)) throwError(state, "named tag handle cannot contain such characters");
+						isNamed = true;
+						_position = state.position + 1;
+					} else throwError(state, "tag suffix cannot contain exclamation marks");
+				}
 				ch = state.input.charCodeAt(++state.position);
 			}
 			tagName = state.input.slice(_position, state.position);
@@ -39609,40 +39700,43 @@ var require_loader = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (CONTEXT_FLOW_IN === nodeContext || CONTEXT_FLOW_OUT === nodeContext) flowIndent = parentIndent;
 			else flowIndent = parentIndent + 1;
 			blockIndent = state.position - state.lineStart;
-			if (indentStatus === 1) if (allowBlockCollections && (readBlockSequence(state, blockIndent) || readBlockMapping(state, blockIndent, flowIndent)) || readFlowCollection(state, flowIndent)) hasContent = true;
-			else {
-				if (allowBlockScalars && readBlockScalar(state, flowIndent) || readSingleQuotedScalar(state, flowIndent) || readDoubleQuotedScalar(state, flowIndent)) hasContent = true;
-				else if (readAlias(state)) {
-					hasContent = true;
-					if (state.tag !== null || state.anchor !== null) throwError(state, "alias node should not have any properties");
-				} else if (readPlainScalar(state, flowIndent, CONTEXT_FLOW_IN === nodeContext)) {
-					hasContent = true;
-					if (state.tag === null) state.tag = "?";
-				}
-				if (state.anchor !== null) state.anchorMap[state.anchor] = state.result;
-			}
-			else if (indentStatus === 0) hasContent = allowBlockCollections && readBlockSequence(state, blockIndent);
-		}
-		if (state.tag !== null && state.tag !== "!") if (state.tag === "?") {
-			if (state.result !== null && state.kind !== "scalar") throwError(state, "unacceptable node kind for !<?> tag; it should be \"scalar\", not \"" + state.kind + "\"");
-			for (typeIndex = 0, typeQuantity = state.implicitTypes.length; typeIndex < typeQuantity; typeIndex += 1) {
-				type = state.implicitTypes[typeIndex];
-				if (type.resolve(state.result)) {
-					state.result = type.construct(state.result);
-					state.tag = type.tag;
+			if (indentStatus === 1) {
+				if (allowBlockCollections && (readBlockSequence(state, blockIndent) || readBlockMapping(state, blockIndent, flowIndent)) || readFlowCollection(state, flowIndent)) hasContent = true;
+				else {
+					if (allowBlockScalars && readBlockScalar(state, flowIndent) || readSingleQuotedScalar(state, flowIndent) || readDoubleQuotedScalar(state, flowIndent)) hasContent = true;
+					else if (readAlias(state)) {
+						hasContent = true;
+						if (state.tag !== null || state.anchor !== null) throwError(state, "alias node should not have any properties");
+					} else if (readPlainScalar(state, flowIndent, CONTEXT_FLOW_IN === nodeContext)) {
+						hasContent = true;
+						if (state.tag === null) state.tag = "?";
+					}
 					if (state.anchor !== null) state.anchorMap[state.anchor] = state.result;
-					break;
 				}
-			}
-		} else if (_hasOwnProperty.call(state.typeMap[state.kind || "fallback"], state.tag)) {
-			type = state.typeMap[state.kind || "fallback"][state.tag];
-			if (state.result !== null && type.kind !== state.kind) throwError(state, "unacceptable node kind for !<" + state.tag + "> tag; it should be \"" + type.kind + "\", not \"" + state.kind + "\"");
-			if (!type.resolve(state.result)) throwError(state, "cannot resolve a node with !<" + state.tag + "> explicit tag");
-			else {
-				state.result = type.construct(state.result);
-				if (state.anchor !== null) state.anchorMap[state.anchor] = state.result;
-			}
-		} else throwError(state, "unknown tag !<" + state.tag + ">");
+			} else if (indentStatus === 0) hasContent = allowBlockCollections && readBlockSequence(state, blockIndent);
+		}
+		if (state.tag !== null && state.tag !== "!") {
+			if (state.tag === "?") {
+				if (state.result !== null && state.kind !== "scalar") throwError(state, "unacceptable node kind for !<?> tag; it should be \"scalar\", not \"" + state.kind + "\"");
+				for (typeIndex = 0, typeQuantity = state.implicitTypes.length; typeIndex < typeQuantity; typeIndex += 1) {
+					type = state.implicitTypes[typeIndex];
+					if (type.resolve(state.result)) {
+						state.result = type.construct(state.result);
+						state.tag = type.tag;
+						if (state.anchor !== null) state.anchorMap[state.anchor] = state.result;
+						break;
+					}
+				}
+			} else if (_hasOwnProperty.call(state.typeMap[state.kind || "fallback"], state.tag)) {
+				type = state.typeMap[state.kind || "fallback"][state.tag];
+				if (state.result !== null && type.kind !== state.kind) throwError(state, "unacceptable node kind for !<" + state.tag + "> tag; it should be \"" + type.kind + "\", not \"" + state.kind + "\"");
+				if (!type.resolve(state.result)) throwError(state, "cannot resolve a node with !<" + state.tag + "> explicit tag");
+				else {
+					state.result = type.construct(state.result);
+					if (state.anchor !== null) state.anchorMap[state.anchor] = state.result;
+				}
+			} else throwError(state, "unknown tag !<" + state.tag + ">");
+		}
 		if (state.listener !== null) state.listener("close", state);
 		return state.tag !== null || state.anchor !== null || hasContent;
 	}
@@ -40084,8 +40178,10 @@ var require_dumper = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			objectValue = object[objectKey];
 			if (!writeNode(state, level + 1, objectKey, true, true, true)) continue;
 			explicitPair = state.tag !== null && state.tag !== "?" || state.dump && state.dump.length > 1024;
-			if (explicitPair) if (state.dump && CHAR_LINE_FEED === state.dump.charCodeAt(0)) pairBuffer += "?";
-			else pairBuffer += "? ";
+			if (explicitPair) {
+				if (state.dump && CHAR_LINE_FEED === state.dump.charCodeAt(0)) pairBuffer += "?";
+				else pairBuffer += "? ";
+			}
 			pairBuffer += state.dump;
 			if (explicitPair) pairBuffer += generateNextLine(state, level);
 			if (!writeNode(state, level + 1, objectValue, true, explicitPair)) continue;
@@ -40130,14 +40226,15 @@ var require_dumper = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		if (duplicate && state.usedDuplicates[duplicateIndex]) state.dump = "*ref_" + duplicateIndex;
 		else {
 			if (objectOrArray && duplicate && !state.usedDuplicates[duplicateIndex]) state.usedDuplicates[duplicateIndex] = true;
-			if (type === "[object Object]") if (block && Object.keys(state.dump).length !== 0) {
-				writeBlockMapping(state, level, state.dump, compact);
-				if (duplicate) state.dump = "&ref_" + duplicateIndex + state.dump;
-			} else {
-				writeFlowMapping(state, level, state.dump);
-				if (duplicate) state.dump = "&ref_" + duplicateIndex + " " + state.dump;
-			}
-			else if (type === "[object Array]") {
+			if (type === "[object Object]") {
+				if (block && Object.keys(state.dump).length !== 0) {
+					writeBlockMapping(state, level, state.dump, compact);
+					if (duplicate) state.dump = "&ref_" + duplicateIndex + state.dump;
+				} else {
+					writeFlowMapping(state, level, state.dump);
+					if (duplicate) state.dump = "&ref_" + duplicateIndex + " " + state.dump;
+				}
+			} else if (type === "[object Array]") {
 				var arrayLevel = state.noArrayIndent && level > 0 ? level - 1 : level;
 				if (block && state.dump.length !== 0) {
 					writeBlockSequence(state, arrayLevel, state.dump, compact);
@@ -41500,8 +41597,10 @@ var require_changesets_git_cjs = /* @__PURE__ */ __commonJSMin(((exports) => {
 				};
 			}));
 			let commitsWithMissingParents = [];
-			for (const info of commitInfos) if (info.commitSha) if (info.parentSha) map.set(info.path, info.commitSha);
-			else commitsWithMissingParents.push(info);
+			for (const info of commitInfos) if (info.commitSha) {
+				if (info.parentSha) map.set(info.path, info.commitSha);
+				else commitsWithMissingParents.push(info);
+			}
 			if (commitsWithMissingParents.length === 0) break;
 			if (await isRepoShallow({ cwd })) {
 				await deepenCloneBy({
@@ -42017,40 +42116,44 @@ var require_changesets_config_cjs = /* @__PURE__ */ __commonJSMin(((exports) => 
 		if (json.baseBranch !== void 0 && typeof json.baseBranch !== "string") messages.push(`The \`baseBranch\` option is set as ${JSON.stringify(json.baseBranch, null, 2)} but the \`baseBranch\` option can only be set as a string`);
 		if (json.changedFilePatterns !== void 0 && (!isArray(json.changedFilePatterns) || !json.changedFilePatterns.every((pattern) => typeof pattern === "string"))) messages.push(`The \`changedFilePatterns\` option is set as ${JSON.stringify(json.changedFilePatterns, null, 2)} but the \`changedFilePatterns\` option can only be set as an array of strings`);
 		let fixed = [];
-		if (json.fixed !== void 0) if (!havePackageGroupsCorrectShape(json.fixed)) messages.push(`The \`fixed\` option is set as ${JSON.stringify(json.fixed, null, 2)} when the only valid values are undefined or an array of arrays of package names`);
-		else {
-			let foundPkgNames = /* @__PURE__ */ new Set();
-			let duplicatedPkgNames = /* @__PURE__ */ new Set();
-			for (let fixedGroup of json.fixed) {
-				messages.push(...getUnmatchedPatterns(fixedGroup, pkgNames).map((pkgOrGlob) => `The package or glob expression "${pkgOrGlob}" specified in the \`fixed\` option does not match any package in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch`));
-				let expandedFixedGroup = micromatch__default["default"](pkgNames, fixedGroup);
-				fixed.push(expandedFixedGroup);
-				for (let fixedPkgName of expandedFixedGroup) {
-					if (foundPkgNames.has(fixedPkgName)) duplicatedPkgNames.add(fixedPkgName);
-					foundPkgNames.add(fixedPkgName);
+		if (json.fixed !== void 0) {
+			if (!havePackageGroupsCorrectShape(json.fixed)) messages.push(`The \`fixed\` option is set as ${JSON.stringify(json.fixed, null, 2)} when the only valid values are undefined or an array of arrays of package names`);
+			else {
+				let foundPkgNames = /* @__PURE__ */ new Set();
+				let duplicatedPkgNames = /* @__PURE__ */ new Set();
+				for (let fixedGroup of json.fixed) {
+					messages.push(...getUnmatchedPatterns(fixedGroup, pkgNames).map((pkgOrGlob) => `The package or glob expression "${pkgOrGlob}" specified in the \`fixed\` option does not match any package in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch`));
+					let expandedFixedGroup = micromatch__default["default"](pkgNames, fixedGroup);
+					fixed.push(expandedFixedGroup);
+					for (let fixedPkgName of expandedFixedGroup) {
+						if (foundPkgNames.has(fixedPkgName)) duplicatedPkgNames.add(fixedPkgName);
+						foundPkgNames.add(fixedPkgName);
+					}
 				}
+				if (duplicatedPkgNames.size) duplicatedPkgNames.forEach((pkgName) => {
+					messages.push(`The package "${pkgName}" is defined in multiple sets of fixed packages. Packages can only be defined in a single set of fixed packages. If you are using glob expressions, make sure that they are valid according to https://www.npmjs.com/package/micromatch`);
+				});
 			}
-			if (duplicatedPkgNames.size) duplicatedPkgNames.forEach((pkgName) => {
-				messages.push(`The package "${pkgName}" is defined in multiple sets of fixed packages. Packages can only be defined in a single set of fixed packages. If you are using glob expressions, make sure that they are valid according to https://www.npmjs.com/package/micromatch`);
-			});
 		}
 		let linked = [];
-		if (json.linked !== void 0) if (!havePackageGroupsCorrectShape(json.linked)) messages.push(`The \`linked\` option is set as ${JSON.stringify(json.linked, null, 2)} when the only valid values are undefined or an array of arrays of package names`);
-		else {
-			let foundPkgNames = /* @__PURE__ */ new Set();
-			let duplicatedPkgNames = /* @__PURE__ */ new Set();
-			for (let linkedGroup of json.linked) {
-				messages.push(...getUnmatchedPatterns(linkedGroup, pkgNames).map((pkgOrGlob) => `The package or glob expression "${pkgOrGlob}" specified in the \`linked\` option does not match any package in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch`));
-				let expandedLinkedGroup = micromatch__default["default"](pkgNames, linkedGroup);
-				linked.push(expandedLinkedGroup);
-				for (let linkedPkgName of expandedLinkedGroup) {
-					if (foundPkgNames.has(linkedPkgName)) duplicatedPkgNames.add(linkedPkgName);
-					foundPkgNames.add(linkedPkgName);
+		if (json.linked !== void 0) {
+			if (!havePackageGroupsCorrectShape(json.linked)) messages.push(`The \`linked\` option is set as ${JSON.stringify(json.linked, null, 2)} when the only valid values are undefined or an array of arrays of package names`);
+			else {
+				let foundPkgNames = /* @__PURE__ */ new Set();
+				let duplicatedPkgNames = /* @__PURE__ */ new Set();
+				for (let linkedGroup of json.linked) {
+					messages.push(...getUnmatchedPatterns(linkedGroup, pkgNames).map((pkgOrGlob) => `The package or glob expression "${pkgOrGlob}" specified in the \`linked\` option does not match any package in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch`));
+					let expandedLinkedGroup = micromatch__default["default"](pkgNames, linkedGroup);
+					linked.push(expandedLinkedGroup);
+					for (let linkedPkgName of expandedLinkedGroup) {
+						if (foundPkgNames.has(linkedPkgName)) duplicatedPkgNames.add(linkedPkgName);
+						foundPkgNames.add(linkedPkgName);
+					}
 				}
+				if (duplicatedPkgNames.size) duplicatedPkgNames.forEach((pkgName) => {
+					messages.push(`The package "${pkgName}" is defined in multiple sets of linked packages. Packages can only be defined in a single set of linked packages. If you are using glob expressions, make sure that they are valid according to https://www.npmjs.com/package/micromatch`);
+				});
 			}
-			if (duplicatedPkgNames.size) duplicatedPkgNames.forEach((pkgName) => {
-				messages.push(`The package "${pkgName}" is defined in multiple sets of linked packages. Packages can only be defined in a single set of linked packages. If you are using glob expressions, make sure that they are valid according to https://www.npmjs.com/package/micromatch`);
-			});
 		}
 		const allFixedPackages = new Set(flatten(fixed));
 		const allLinkedPackages = new Set(flatten(linked));
@@ -42058,10 +42161,12 @@ var require_changesets_config_cjs = /* @__PURE__ */ __commonJSMin(((exports) => 
 			if (allLinkedPackages.has(pkgName)) messages.push(`The package "${pkgName}" can be found in both fixed and linked groups. A package can only be either fixed or linked.`);
 		});
 		if (json.updateInternalDependencies !== void 0 && !["patch", "minor"].includes(json.updateInternalDependencies)) messages.push(`The \`updateInternalDependencies\` option is set as ${JSON.stringify(json.updateInternalDependencies, null, 2)} but can only be 'patch' or 'minor'`);
-		if (json.privatePackages !== void 0 && json.privatePackages !== false) if (typeof json.privatePackages !== "object") messages.push(`The \`privatePackages\` option is set as ${JSON.stringify(json.privatePackages, null, 2)} when the only valid values are undefined, false, or an object with optional boolean \`version\` and \`tag\` properties`);
-		else {
-			if (json.privatePackages.version !== void 0 && typeof json.privatePackages.version !== "boolean") messages.push(`The \`privatePackages.version\` option is set as ${JSON.stringify(json.privatePackages.version, null, 2)} but the only valid values are undefined or a boolean`);
-			if (json.privatePackages.tag !== void 0 && typeof json.privatePackages.tag !== "boolean") messages.push(`The \`privatePackages.tag\` option is set as ${JSON.stringify(json.privatePackages.tag, null, 2)} but the only valid values are undefined or a boolean`);
+		if (json.privatePackages !== void 0 && json.privatePackages !== false) {
+			if (typeof json.privatePackages !== "object") messages.push(`The \`privatePackages\` option is set as ${JSON.stringify(json.privatePackages, null, 2)} when the only valid values are undefined, false, or an object with optional boolean \`version\` and \`tag\` properties`);
+			else {
+				if (json.privatePackages.version !== void 0 && typeof json.privatePackages.version !== "boolean") messages.push(`The \`privatePackages.version\` option is set as ${JSON.stringify(json.privatePackages.version, null, 2)} but the only valid values are undefined or a boolean`);
+				if (json.privatePackages.tag !== void 0 && typeof json.privatePackages.tag !== "boolean") messages.push(`The \`privatePackages.tag\` option is set as ${JSON.stringify(json.privatePackages.tag, null, 2)} but the only valid values are undefined or a boolean`);
+			}
 		}
 		const privatePackages = json.privatePackages === false ? {
 			tag: false,
@@ -42073,8 +42178,10 @@ var require_changesets_config_cjs = /* @__PURE__ */ __commonJSMin(((exports) => 
 			version: true,
 			tag: false
 		};
-		if (json.ignore) if (!(isArray(json.ignore) && json.ignore.every((pkgName) => typeof pkgName === "string"))) messages.push(`The \`ignore\` option is set as ${JSON.stringify(json.ignore, null, 2)} when the only valid values are undefined or an array of package names`);
-		else messages.push(...getUnmatchedPatterns(json.ignore, pkgNames).map((pkgOrGlob) => `The package or glob expression "${pkgOrGlob}" is specified in the \`ignore\` option but it is not found in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch`));
+		if (json.ignore) {
+			if (!(isArray(json.ignore) && json.ignore.every((pkgName) => typeof pkgName === "string"))) messages.push(`The \`ignore\` option is set as ${JSON.stringify(json.ignore, null, 2)} when the only valid values are undefined or an array of package names`);
+			else messages.push(...getUnmatchedPatterns(json.ignore, pkgNames).map((pkgOrGlob) => `The package or glob expression "${pkgOrGlob}" is specified in the \`ignore\` option but it is not found in the project. You may have misspelled the package name or provided an invalid glob expression. Note that glob expressions must be defined according to https://www.npmjs.com/package/micromatch`));
+		}
 		const ignore = isArray(json.ignore) ? json.ignore : [];
 		if (ignore.length || !privatePackages.version) {
 			const dependentsGraph = getDependentsGraph.getDependentsGraph(packages, {
@@ -42779,11 +42886,15 @@ var require_subset = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const minimumVersion = [new Comparator(">=0.0.0")];
 	const simpleSubset = (sub, dom, options) => {
 		if (sub === dom) return true;
-		if (sub.length === 1 && sub[0].semver === ANY) if (dom.length === 1 && dom[0].semver === ANY) return true;
-		else if (options.includePrerelease) sub = minimumVersionWithPreRelease;
-		else sub = minimumVersion;
-		if (dom.length === 1 && dom[0].semver === ANY) if (options.includePrerelease) return true;
-		else dom = minimumVersion;
+		if (sub.length === 1 && sub[0].semver === ANY) {
+			if (dom.length === 1 && dom[0].semver === ANY) return true;
+			else if (options.includePrerelease) sub = minimumVersionWithPreRelease;
+			else sub = minimumVersion;
+		}
+		if (dom.length === 1 && dom[0].semver === ANY) {
+			if (options.includePrerelease) return true;
+			else dom = minimumVersion;
+		}
 		const eqSet = /* @__PURE__ */ new Set();
 		let gt, lt;
 		for (const c of sub) if (c.operator === ">" || c.operator === ">=") gt = higherGT(gt, c, options);

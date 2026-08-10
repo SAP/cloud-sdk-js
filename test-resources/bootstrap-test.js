@@ -2,6 +2,6 @@
 const util = require('@sap-cloud-sdk/util');
 util.muteLoggers();
 
-if (typeof $jsDebugIsRegistered !== 'undefined') {
+if (typeof $jsDebugIsRegistered !== 'undefined' || process.env.CI === 'true') {
   jest.setTimeout(5 * 60 * 1000);
 }

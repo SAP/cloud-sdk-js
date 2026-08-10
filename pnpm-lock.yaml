@@ -49,7 +49,7 @@ importers:
         version: 3.3.2
       '@types/semver':
         specifier: ^7.7.1
-        version: 7.7.1
+        version: 7.8.0
       '@types/voca':
         specifier: ^1.4.6
         version: 1.4.6
@@ -2447,8 +2447,8 @@ packages:
   '@types/sap__xsenv@3.3.2':
     resolution: {integrity: sha512-yK6uL5yvXcMFkGjg+lWA3etJM6rQUFV3rstd118V3q0udMe5wcg+qB0poVTjKLZs4aX+n1DVrqukdRgVdwiK7g==}
 
-  '@types/semver@7.7.1':
-    resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
+  '@types/semver@7.8.0':
+    resolution: {integrity: sha512-1mAINjtQCXXeLkJ9ehXkwOcBpqtLxiVtKhpUf83DdRNdQKV0iXZpaHYqRr7nj+wvxuJzoAmAwXI+sCNMv1CzLQ==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -7703,7 +7703,7 @@ snapshots:
 
   '@types/sap__xsenv@3.3.2': {}
 
-  '@types/semver@7.7.1': {}
+  '@types/semver@7.8.0': {}
 
   '@types/stack-utils@2.0.3': {}
 

@@ -1,5 +1,5 @@
 {
-  "extends": ["github>sap/ai-sdk-js:.github/renovate.jsonc"],
+  "extends": ["github>sap/ai-sdk-js//.github/renovate.jsonc"],
   "packageRules": [
     {
       // These packages require ESM in their next major version, stay on current major until we support ESM

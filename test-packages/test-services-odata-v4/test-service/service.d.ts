@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 import { TestEntityApi } from './TestEntityApi';
 import { TestEntityWithEnumKeyApi } from './TestEntityWithEnumKeyApi';
 import { TestEntityWithNoKeysApi } from './TestEntityWithNoKeysApi';

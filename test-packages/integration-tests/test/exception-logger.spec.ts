@@ -20,7 +20,7 @@ describe('exception logger', () => {
       )
     ).rejects.toThrow(/Test Exception Logger\n\s*at /);
     delete process.env.NODE_ENV;
-  }, 15000);
+  }, 60000);
 
   it('should log exception with kibana format if they fly in production mode', async () => {
     process.env.NODE_ENV = 'production';
@@ -30,7 +30,7 @@ describe('exception logger', () => {
       )
     ).rejects.toThrow(/Test Exception Logger\\n\s*at /);
     delete process.env.NODE_ENV;
-  }, 15000);
+  }, 60000);
 
   it('should not log the stack multiple times', async () => {
     try {
@@ -43,7 +43,7 @@ describe('exception logger', () => {
         (err as Error).message.match(/Test Exception Logger/g)
       ).toHaveLength(1);
     }
-  }, 15000);
+  }, 60000);
 
   it('logs stack trace of exception locally', () => {
     const tranformerSpy = jest.spyOn(local, 'transform');

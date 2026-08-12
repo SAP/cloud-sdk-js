@@ -15,7 +15,7 @@ import "timers";
 import { spawn } from "node:child_process";
 import { cwd } from "node:process";
 import { pipeline } from "node:stream/promises";
-import u from "node:readline";
+import readline from "node:readline";
 import { closeSync, openSync, readSync, statSync } from "node:fs";
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -16271,201 +16271,212 @@ function info$2(message) {
 	process.stdout.write(message + os$5.EOL);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/tinyexec@1.2.4/node_modules/tinyexec/dist/main.mjs
-const h = /^path$/i;
-const g = {
+//#region ../../node_modules/.pnpm/tinyexec@1.3.0/node_modules/tinyexec/dist/main.mjs
+const isPathLikePattern = /^path$/i;
+const defaultEnvPathInfo = {
 	key: "PATH",
 	value: ""
 };
-function _(e) {
-	for (const t in e) {
-		if (!Object.prototype.hasOwnProperty.call(e, t) || !h.test(t)) continue;
-		const n = e[t];
-		if (!n) return g;
+function getPathFromEnv(env) {
+	for (const key in env) {
+		if (!Object.prototype.hasOwnProperty.call(env, key) || !isPathLikePattern.test(key)) continue;
+		const value = env[key];
+		if (!value) return defaultEnvPathInfo;
 		return {
-			key: t,
-			value: n
+			key,
+			value
 		};
 	}
-	return g;
+	return defaultEnvPathInfo;
 }
-function v(e, t) {
-	const n = t.value.split(delimiter);
-	const r = [];
-	let o = e;
-	let c;
+function addNodeBinToPath(cwd, path) {
+	const parts = path.value.split(delimiter);
+	const nodeBinPaths = [];
+	let currentPath = cwd;
+	let lastPath;
 	do {
-		r.push(resolve(o, "node_modules", ".bin"));
-		c = o;
-		o = dirname(o);
-	} while (o !== c);
-	r.push(dirname(process.execPath));
-	const l = r.concat(n).join(delimiter);
+		nodeBinPaths.push(resolve(currentPath, "node_modules", ".bin"));
+		lastPath = currentPath;
+		currentPath = dirname(currentPath);
+	} while (currentPath !== lastPath);
+	nodeBinPaths.push(dirname(process.execPath));
+	const newPath = nodeBinPaths.concat(parts).join(delimiter);
 	return {
-		key: t.key,
-		value: l
+		key: path.key,
+		value: newPath
 	};
 }
-function y(e, t, n = true) {
-	const r = {
+function computeEnv(cwd, env, nodePath = true) {
+	const envWithDefault = {
 		...process.env,
-		...t
+		...env
 	};
-	if (!n) return r;
-	const i = v(e, _(r));
-	r[i.key] = i.value;
-	return r;
+	if (!nodePath) return envWithDefault;
+	const envPathInfo = addNodeBinToPath(cwd, getPathFromEnv(envWithDefault));
+	envWithDefault[envPathInfo.key] = envPathInfo.value;
+	return envWithDefault;
 }
-const b = (e) => {
-	let t = e.length;
-	const n = new PassThrough();
-	const r = () => {
-		if (--t === 0) n.end();
+const combineStreams = (streams) => {
+	let streamCount = streams.length;
+	const combined = new PassThrough();
+	const maybeEmitEnd = () => {
+		if (--streamCount === 0) combined.end();
 	};
-	for (const t of e) pipeline(t, n, { end: false }).then(r).catch(r);
-	return n;
+	for (const stream of streams) pipeline(stream, combined, { end: false }).then(maybeEmitEnd).catch(maybeEmitEnd);
+	return combined;
 };
-const x = /([()\][%!^"`<>&|;, *?])/g;
-const S = /^#!\s*(.+)/;
-const C = /\.(?:com|exe)$/i;
-const w = /node_modules[\\/]\.bin[\\/][^\\/]+\.cmd$/i;
-const T = process.platform === "win32";
-const E = [
+const metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
+const shebangRegExp = /^#!\s*(.+)/;
+const isWindowsExecutableRegExp = /\.(?:com|exe)$/i;
+const isNodeModulesCmdRegExp = /node_modules[\\/]\.bin[\\/][^\\/]+\.cmd$/i;
+const isWindows = process.platform === "win32";
+const defaultPathExt = [
 	".EXE",
 	".CMD",
 	".BAT",
 	".COM"
 ];
+const noPathExt = [""];
 /**
 * Normalizes the command and arguments to work cross-platform.
 * On Windows, this basically handles things like shebangs, calling
 * `node_modules/.bin` commands, and escaping meta characters.
 * On other platforms, it just returns the command and arguments as-is.
 */
-function D(e, t = [], n = {}) {
-	if (n.shell === true || !T) return {
-		command: e,
-		args: t,
-		options: n
+function normalizeSpawnCommand(command, args = [], options = {}) {
+	if (options.shell === true || !isWindows) return {
+		command,
+		args,
+		options
 	};
-	let i = O(e, n);
-	let a = null;
-	if (i !== null) {
-		const e = 150;
-		const t = Buffer.alloc(e);
-		let n = null;
+	let file = resolveCommand(command, options);
+	let shebang = null;
+	if (file !== null) {
+		const size = 150;
+		const buffer = Buffer.alloc(size);
+		let fd = null;
 		try {
-			n = openSync(i, "r");
-			readSync(n, t, 0, e, 0);
+			fd = openSync(file, "r");
+			readSync(fd, buffer, 0, size, 0);
 		} catch {} finally {
-			if (n !== null) closeSync(n);
+			if (fd !== null) closeSync(fd);
 		}
-		const o = t.toString().match(S);
-		if (o !== null) {
-			const e = o[1].trim();
-			const t = e.indexOf(" ");
-			const n = t !== -1 ? e.slice(0, t) : e;
-			const i = t !== -1 ? e.slice(t + 1) : "";
-			const s = basename(n);
-			a = s === "env" ? i || null : s;
+		const match = buffer.toString().match(shebangRegExp);
+		if (match !== null) {
+			const line = match[1].trim();
+			const separatorIndex = line.indexOf(" ");
+			const path = separatorIndex !== -1 ? line.slice(0, separatorIndex) : line;
+			const argument = separatorIndex !== -1 ? line.slice(separatorIndex + 1) : "";
+			const binary = basename(path);
+			shebang = binary === "env" ? argument || null : binary;
 		}
 	}
-	if (a !== null && i !== null) {
-		t = [i, ...t];
-		e = a;
-		i = O(e, n);
+	if (shebang !== null && file !== null) {
+		args = [file, ...args];
+		command = shebang;
+		file = resolveCommand(command, options);
 	}
-	if (i === null || !C.test(i)) {
-		const r = i !== null && w.test(i);
-		e = normalize(e);
-		e = e.replace(x, "^$1");
-		t = t.map((e) => {
-			e = e.replace(/(?=(\\+?)?)\1"/g, "$1$1\\\"");
-			e = e.replace(/(?=(\\+?)?)\1$/, "$1$1");
-			e = `"${e}"`;
-			e = e.replace(x, "^$1");
-			if (r) e = e.replace(x, "^$1");
-			return e;
+	if (file === null || !isWindowsExecutableRegExp.test(file)) {
+		const needsDoubleEscapeMetaChars = file !== null && isNodeModulesCmdRegExp.test(file);
+		command = normalize(command);
+		command = command.replace(metaCharsRegExp, "^$1");
+		args = args.map((arg) => {
+			arg = arg.replace(/(?=(\\+?)?)\1"/g, "$1$1\\\"");
+			arg = arg.replace(/(?=(\\+?)?)\1$/, "$1$1");
+			arg = `"${arg}"`;
+			arg = arg.replace(metaCharsRegExp, "^$1");
+			if (needsDoubleEscapeMetaChars) arg = arg.replace(metaCharsRegExp, "^$1");
+			return arg;
 		});
-		t = [
+		args = [
 			"/d",
 			"/s",
 			"/c",
-			`"${[e, ...t].join(" ")}"`
+			`"${[command, ...args].join(" ")}"`
 		];
-		e = n.env?.comspec ?? "cmd.exe";
-		n = {
-			...n,
+		command = options.env?.comspec ?? "cmd.exe";
+		options = {
+			...options,
 			windowsVerbatimArguments: true
 		};
 	}
 	return {
-		command: e,
-		args: t,
-		options: n
+		command,
+		args,
+		options
 	};
 }
 /**
 * Resolves the command to an absolute path if possible.
 * Handles things like traversing PATH and adding extensions from PATHEXT
 */
-function O(e, t) {
-	const r = (t.cwd ?? cwd()).toString();
-	const a = t.env ?? process.env;
-	const o = _(a).value;
-	const c = e.includes("/") || e.includes("\\") ? [""] : [r, ...o.split(delimiter)];
-	const l = a.PATHEXT ? a.PATHEXT.split(delimiter) : E;
-	if (e.includes(".") && l[0] !== "") l.unshift("");
-	for (const t of c) {
-		const n = resolve(r, t.startsWith("\"") && t.endsWith("\"") && t.length > 1 ? t.slice(1, -1) : t, e);
-		for (const e of l) {
-			const t = n + e;
+function resolveCommand(command, options) {
+	const cwd$3 = (options.cwd ?? cwd()).toString();
+	const env = options.env ?? process.env;
+	const PATH = getPathFromEnv(env).value;
+	const pathEnv = command.includes("/") || command.includes("\\") ? [""] : [cwd$3, ...PATH.split(delimiter)];
+	let pathExt = env.PATHEXT ? env.PATHEXT.split(delimiter) : defaultPathExt;
+	if (command.includes(".") && pathExt[0] !== "") pathExt = ["", ...pathExt];
+	for (const extensions of [pathExt, noPathExt]) for (const path of pathEnv) {
+		const dest = resolve(cwd$3, path.startsWith("\"") && path.endsWith("\"") && path.length > 1 ? path.slice(1, -1) : path, command);
+		for (const ext of extensions) {
+			const destWithExt = dest + ext;
 			try {
-				if (statSync(t).isFile()) return t;
+				if (statSync(destWithExt).isFile()) return destWithExt;
 			} catch {}
 		}
 	}
 	return null;
 }
-var k = class extends Error {
+var NonZeroExitError = class extends Error {
 	result;
 	output;
-	get exitCode() {
-		if (this.result.exitCode !== null) return this.result.exitCode;
+	exitCode;
+	get signalCode() {
+		return this.result.signalCode;
 	}
-	constructor(e, t) {
-		super(`Process exited with non-zero status (${e.exitCode})`);
-		this.result = e;
-		this.output = t;
+	constructor(result, output, command, args) {
+		let target = "The process";
+		if (command) target = `The command \`${args?.length ? `${command} ${args.map((a) => /[ "'`()]/.test(a) ? JSON.stringify(a) : a).join(" ")}` : command}\``;
+		const exitCode = result.exitCode ?? 1;
+		super(result.signalCode !== null ? `${target} was killed by the signal ${result.signalCode}` : `${target} exited with a non-zero status (${exitCode})`);
+		this.result = result;
+		this.output = output;
+		this.exitCode = exitCode;
+		Object.defineProperty(this, "result", {
+			enumerable: false,
+			writable: false,
+			configurable: false
+		});
 	}
 };
-const j = {
+const defaultOptions = {
 	timeout: void 0,
 	persist: false
 };
-const N = { windowsHide: true };
-function P(e) {
-	const t = new AbortController();
-	for (const n of e) {
-		if (n.aborted) {
-			t.abort();
-			return n;
+const defaultNodeOptions = { windowsHide: true };
+function combineSignals(signals) {
+	const controller = new AbortController();
+	for (const signal of signals) {
+		if (signal.aborted) {
+			controller.abort();
+			return signal;
 		}
-		const e = () => {
-			t.abort(n.reason);
+		const onAbort = () => {
+			controller.abort(signal.reason);
 		};
-		n.addEventListener("abort", e, { signal: t.signal });
+		signal.addEventListener("abort", onAbort, { signal: controller.signal });
 	}
-	return t.signal;
+	return controller.signal;
 }
-async function F(e) {
-	let t = "";
+async function readStream(stream) {
+	let output = "";
 	try {
-		for await (const n of e) t += n.toString();
+		for await (const chunk of stream) output += chunk.toString();
 	} catch {}
-	return t;
+	return output;
 }
-var I = class {
+var ExecProcess = class {
 	_process;
 	_aborted = false;
 	_options;
@@ -16483,19 +16494,22 @@ var I = class {
 	get exitCode() {
 		if (this._process && this._process.exitCode !== null) return this._process.exitCode;
 	}
-	constructor(e, t, n) {
+	get signalCode() {
+		return this._process?.signalCode ?? null;
+	}
+	constructor(command, args, options) {
 		this._options = {
-			...j,
-			...n
+			...defaultOptions,
+			...options
 		};
-		this._command = e;
-		this._args = t ?? [];
-		this._processClosed = new Promise((e) => {
-			this._resolveClose = e;
+		this._command = command;
+		this._args = args ?? [];
+		this._processClosed = new Promise((resolve) => {
+			this._resolveClose = resolve;
 		});
 	}
-	kill(e) {
-		return this._process?.kill(e) === true;
+	kill(signal) {
+		return this._process?.kill(signal) === true;
 	}
 	get aborted() {
 		return this._aborted;
@@ -16503,99 +16517,99 @@ var I = class {
 	get killed() {
 		return this._process?.killed === true;
 	}
-	pipe(e, t, n) {
-		return z(e, t, {
-			...n,
+	pipe(command, args, options) {
+		return exec(command, args, {
+			...options,
 			stdin: this
 		});
 	}
 	async *[Symbol.asyncIterator]() {
-		const e = this._process;
-		if (!e) return;
-		const t = [];
-		if (this._streamErr) t.push(this._streamErr);
-		if (this._streamOut) t.push(this._streamOut);
-		const n = b(t);
-		const r = u.createInterface({ input: n });
-		for await (const e of r) yield e.toString();
+		const proc = this._process;
+		if (!proc) return;
+		const streams = [];
+		if (this._streamErr) streams.push(this._streamErr);
+		if (this._streamOut) streams.push(this._streamOut);
+		const streamCombined = combineStreams(streams);
+		const rl = readline.createInterface({ input: streamCombined });
+		for await (const chunk of rl) yield chunk.toString();
 		await this._processClosed;
-		e.removeAllListeners();
+		proc.removeAllListeners();
 		if (this._thrownError) throw this._thrownError;
-		if (this._options?.throwOnError && this.exitCode !== 0 && this.exitCode !== void 0) throw new k(this);
+		if (this._options?.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, void 0, this._command, this._args);
 	}
 	async _waitForOutput() {
-		const e = this._process;
-		if (!e) throw new Error("No process was started");
-		const [t, n] = await Promise.all([this._streamOut ? F(this._streamOut) : "", this._streamErr ? F(this._streamErr) : ""]);
+		const proc = this._process;
+		if (!proc) throw new Error("No process was started");
+		const [stdout, stderr] = await Promise.all([this._streamOut ? readStream(this._streamOut) : "", this._streamErr ? readStream(this._streamErr) : ""]);
 		await this._processClosed;
-		const { stdin: r } = this._options;
-		if (r && typeof r !== "string") await r;
-		e.removeAllListeners();
+		const { stdin } = this._options;
+		if (stdin && typeof stdin !== "string") await stdin;
+		proc.removeAllListeners();
 		if (this._thrownError) throw this._thrownError;
-		const i = {
-			stderr: n,
-			stdout: t,
+		const result = {
+			stderr,
+			stdout,
 			exitCode: this.exitCode
 		};
-		if (this._options.throwOnError && this.exitCode !== 0 && this.exitCode !== void 0) throw new k(this, i);
-		return i;
+		if (this._options.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, result, this._command, this._args);
+		return result;
 	}
-	then(e, t) {
-		return this._waitForOutput().then(e, t);
+	then(onfulfilled, onrejected) {
+		return this._waitForOutput().then(onfulfilled, onrejected);
 	}
 	_streamOut;
 	_streamErr;
 	spawn() {
-		const t = cwd();
-		const r = this._options;
-		const i = {
-			...N,
-			...r.nodeOptions
+		const cwd$1 = cwd();
+		const options = this._options;
+		const nodeOptions = {
+			...defaultNodeOptions,
+			...options.nodeOptions
 		};
-		const a = [];
+		const signals = [];
 		this._resetState();
-		if (r.timeout !== void 0) a.push(AbortSignal.timeout(r.timeout));
-		if (r.signal !== void 0) a.push(r.signal);
-		if (r.persist === true) i.detached = true;
-		if (a.length > 0) i.signal = P(a);
-		i.env = y(t, i.env, r.nodePath);
-		const o = D(this._command, this._args, i);
-		const s = spawn(o.command, o.args, o.options);
-		if (s.stderr) this._streamErr = s.stderr;
-		if (s.stdout) this._streamOut = s.stdout;
-		this._process = s;
-		s.once("error", this._onError);
-		s.once("close", this._onClose);
-		if (s.stdin) {
-			const { stdin: e } = r;
-			if (typeof e === "string") s.stdin.end(e);
-			else e?.process?.stdout?.pipe(s.stdin);
+		if (options.timeout !== void 0) signals.push(AbortSignal.timeout(options.timeout));
+		if (options.signal !== void 0) signals.push(options.signal);
+		if (options.persist === true) nodeOptions.detached = true;
+		if (signals.length > 0) nodeOptions.signal = combineSignals(signals);
+		nodeOptions.env = computeEnv(cwd$1, nodeOptions.env, options.nodePath);
+		const crossResult = normalizeSpawnCommand(this._command, this._args, nodeOptions);
+		const handle = spawn(crossResult.command, crossResult.args, crossResult.options);
+		if (handle.stderr) this._streamErr = handle.stderr;
+		if (handle.stdout) this._streamOut = handle.stdout;
+		this._process = handle;
+		handle.once("error", this._onError);
+		handle.once("close", this._onClose);
+		if (handle.stdin) {
+			const { stdin } = options;
+			if (typeof stdin === "string") handle.stdin.end(stdin);
+			else stdin?.process?.stdout?.pipe(handle.stdin);
 		}
 	}
 	_resetState() {
 		this._aborted = false;
-		this._processClosed = new Promise((e) => {
-			this._resolveClose = e;
+		this._processClosed = new Promise((resolve) => {
+			this._resolveClose = resolve;
 		});
 		this._thrownError = void 0;
 	}
-	_onError = (e) => {
-		if (e.name === "AbortError" && (!(e.cause instanceof Error) || e.cause.name !== "TimeoutError")) {
+	_onError = (err) => {
+		if (err.name === "AbortError" && (!(err.cause instanceof Error) || err.cause.name !== "TimeoutError")) {
 			this._aborted = true;
 			return;
 		}
-		this._thrownError = e;
+		this._thrownError = err;
 	};
 	_onClose = () => {
 		if (this._resolveClose) this._resolveClose();
 	};
 };
-const R = (e, t, n) => {
-	const r = new I(e, t, n);
-	r.spawn();
-	return r;
+const x = (command, args, userOptions) => {
+	const proc = new ExecProcess(command, args, userOptions);
+	proc.spawn();
+	return proc;
 };
-const z = R;
+const exec = x;
 //#endregion
 //#region ../../node_modules/.pnpm/extendable-error@0.1.7/node_modules/extendable-error/bld/index.js
 var require_bld = /* @__PURE__ */ __commonJSMin(((exports) => {
@@ -42119,7 +42133,7 @@ async function bump() {
 	info$2("updating root package.json");
 	await updateRootPackageJson(version);
 	info$2("setting version");
-	await R("node", ["node_modules/@changesets/cli/bin.js", "version"], { throwOnError: true });
+	await x("node", ["node_modules/@changesets/cli/bin.js", "version"], { throwOnError: true });
 }
 async function updateRootPackageJson(version) {
 	await transformFile(resolve("package.json"), (packageJson) => formatJson({

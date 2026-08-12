@@ -1,6 +1,6 @@
-import { parse, resolve } from 'path';
-import { promises } from 'fs';
-import { EOL } from 'os';
+import { parse, resolve } from 'node:path';
+import { promises } from 'node:fs';
+import { EOL } from 'node:os';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   createProgram,

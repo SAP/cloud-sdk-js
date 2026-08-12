@@ -174,10 +174,8 @@ export async function readIncludeExcludeWithDefaults(
     );
   }
   return {
-    include:
-      configFile.config.include || defaultIncludeExclude.include,
-    exclude:
-      configFile.config.exclude || defaultIncludeExclude.exclude
+    include: configFile.config.include || defaultIncludeExclude.include,
+    exclude: configFile.config.exclude || defaultIncludeExclude.exclude
   };
 }
 

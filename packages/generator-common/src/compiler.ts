@@ -9,7 +9,7 @@ import {
   ModuleKind,
   ModuleResolutionKind,
   parseJsonConfigFileContent,
-  readConfigFile,
+  readConfigFile as readTsConfigFile,
   ScriptTarget,
   sys
 } from 'typescript';
@@ -141,7 +141,7 @@ function findPositions(
   return response;
 }
 
-function resolveTsConfigPath(pathToTsConfig: string): string {
+function findTsConfigFile(pathToTsConfig: string): string {
   return parse(pathToTsConfig).ext === '.json'
     ? pathToTsConfig
     : resolve(pathToTsConfig, 'tsconfig.json');
@@ -166,8 +166,8 @@ const defaultIncludeExclude: IncludeExclude = {
 export async function readIncludeExcludeWithDefaults(
   pathToTsConfig: string
 ): Promise<IncludeExclude | undefined> {
-  const fullPath = resolveTsConfigPath(pathToTsConfig);
-  const configFile = readConfigFile(fullPath, sys.readFile);
+  const fullPath = findTsConfigFile(pathToTsConfig);
+  const configFile = readTsConfigFile(fullPath, sys.readFile);
   if (configFile.error) {
     throw new Error(
       `Failed to read tsconfig at ${fullPath}: ${flattenDiagnosticMessageText(configFile.error.messageText, EOL)}`
@@ -188,8 +188,8 @@ export async function readIncludeExcludeWithDefaults(
 export async function readCompilerOptions(
   pathToTsConfig: string
 ): Promise<CompilerOptions> {
-  const fullPath = resolveTsConfigPath(pathToTsConfig);
-  const configFile = readConfigFile(fullPath, sys.readFile);
+  const fullPath = findTsConfigFile(pathToTsConfig);
+  const configFile = readTsConfigFile(fullPath, sys.readFile);
   if (configFile.error) {
     throw new Error(
       `Failed to read tsconfig at ${fullPath}: ${flattenDiagnosticMessageText(configFile.error.messageText, EOL)}`

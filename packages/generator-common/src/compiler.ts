@@ -196,11 +196,21 @@ export async function readCompilerOptions(
     );
   }
 
-  const { options } = parseJsonConfigFileContent(
+  const { options, errors: parseErrors } = parseJsonConfigFileContent(
     configFile.config,
     sys,
     parse(fullPath).dir
   );
+
+  // parseJsonConfigFileContent also resolves the file list. It reports TS18003 ("no inputs
+  // found") when the output directory doesn't exist yet, which is normal — we only need
+  // the compiler options here, not the file list.
+  const relevantErrors = parseErrors.filter(e => e.code !== 18003);
+  if (relevantErrors.length) {
+    throw new Error(
+      `Failed to parse compiler options in ${fullPath}:${EOL}${relevantErrors.map(e => flattenDiagnosticMessageText(e.messageText, EOL)).join(EOL)}`
+    );
+  }
 
   if (
     needsIgnoreDeprecationsTs6(

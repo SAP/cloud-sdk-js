@@ -338,7 +338,7 @@ importers:
         version: link:../util
       '@sap/xsenv':
         specifier: ^6.2.0
-        version: 6.2.1
+        version: 6.2.2
       '@sap/xssec':
         specifier: ^4.13.0
         version: 4.15.0
@@ -2219,8 +2219,8 @@ packages:
       tar:
         optional: true
 
-  '@sap/xsenv@6.2.1':
-    resolution: {integrity: sha512-R1p7VdD3N3jvdkL8av4vLqF+cTQihTz9mCqqF+oa9rVZvgLaCb4ODyZ1dln5/fBgg1OSuch0ESxu3AqZrXVknw==}
+  '@sap/xsenv@6.2.2':
+    resolution: {integrity: sha512-SGn+yaVKeXND/rQaQhqTZC+M6g5ASW1YnqAdQiZqNL74E1T1kUsDHttgOjQNkLObMZ0fsxgQxRPMnuVcAgIODg==}
     engines: {node: ^20.0.0  || ^22.0.0 || ^24.0.0}
 
   '@sap/xssec@4.15.0':
@@ -7394,7 +7394,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sap/xsenv@6.2.1':
+  '@sap/xsenv@6.2.2':
     dependencies:
       debug: 4.4.3
       node-cache: 5.1.2

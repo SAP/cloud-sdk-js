@@ -14,7 +14,7 @@
     "@sap-cloud-sdk/odata-v4": "canary",
     "@sap-cloud-sdk/generator": "canary",
     "typescript": "4.6.3",
-    "ts-node": "10.0.0",
+    "ts-node": "10.9.2",
     "node-memwatch-new": "0.0.3"
   }
 }

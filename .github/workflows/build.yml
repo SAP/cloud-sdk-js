@@ -156,7 +156,6 @@ jobs:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
           persist-credentials: true
-          node-version: 26 # Will install npm 11 needed for trusted publishing
           package-manager-cache: false
       - name: Canary Release
         run: |

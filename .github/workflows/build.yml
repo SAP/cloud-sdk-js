@@ -113,31 +113,6 @@ jobs:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
       - run: pnpm run test:e2e
 
-  dependabot:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == github.event.pull_request.head.repo.full_name }}
-    needs: [tests, checks, e2e-tests]
-    permissions:
-      pull-requests: write
-      contents: write
-    steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
-        with:
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
-      - name: Approve a PR
-        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: gh pr review --approve "$PR_URL"
-      - name: Enable auto-merge for Dependabot PRs
-        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: gh pr merge --auto --squash "$PR_URL"
   canary-release-pre-check:
     if: inputs.is-workflow-call && inputs.canary-release-skip-checks == false
     runs-on: ubuntu-latest

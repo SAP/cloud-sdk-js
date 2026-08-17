@@ -56,6 +56,8 @@ import type {
 } from '@sap-cloud-sdk/connectivity';
 
 describe('generic http client', () => {
+  type RedirectHook = NonNullable<axios.AxiosRequestConfig['beforeRedirect']>;
+
   const httpsDestination: HttpDestination = {
     name: 'httpsDestination',
     url: 'https://example.com',
@@ -143,6 +145,111 @@ describe('generic http client', () => {
 
       expect(actualProxy).toMatchObject(expectedProxy);
       expect(actualProxy.httpAgent).toBeDefined();
+    });
+
+    it('re-attaches proxy headers on same-origin redirects', async () => {
+      const actualProxy = await buildHttpRequest(proxyDestination);
+      const beforeRedirect = (
+        actualProxy as DestinationHttpRequestConfig & {
+          beforeRedirect?: RedirectHook;
+        }
+      ).beforeRedirect;
+
+      const redirectOptions = {
+        headers: {} as Record<string, string>,
+        href: 'http://example.com/some/path/'
+      };
+
+      beforeRedirect?.(
+        redirectOptions,
+        { headers: {}, statusCode: 307 },
+        {
+          headers: {},
+          method: 'GET',
+          url: 'http://example.com/some/path'
+        }
+      );
+
+      expect(redirectOptions.headers).toEqual({
+        'Proxy-Authorization': proxyAuthorization
+      });
+    });
+
+    it('does not re-attach proxy headers on cross-origin redirects', async () => {
+      const actualProxy = await buildHttpRequest(proxyDestination);
+      const beforeRedirect = (
+        actualProxy as DestinationHttpRequestConfig & {
+          beforeRedirect?: RedirectHook;
+        }
+      ).beforeRedirect;
+
+      const redirectOptions = {
+        headers: {} as Record<string, string>,
+        href: 'http://other.example.com/some/path/'
+      };
+
+      beforeRedirect?.(
+        redirectOptions,
+        { headers: {}, statusCode: 307 },
+        {
+          headers: {},
+          method: 'GET',
+          url: 'http://example.com/some/path'
+        }
+      );
+
+      expect(redirectOptions.headers).toEqual({});
+    });
+
+    it('uses the current request URL to determine redirect origin', async () => {
+      const actualProxy = await buildHttpRequest(proxyDestination);
+      const beforeRedirect = (
+        actualProxy as DestinationHttpRequestConfig & {
+          beforeRedirect?: RedirectHook;
+        }
+      ).beforeRedirect;
+
+      const redirectOptions = {
+        headers: {} as Record<string, string>,
+        href: 'http://service.example.com/some/path/'
+      };
+
+      beforeRedirect?.(
+        redirectOptions,
+        { headers: {}, statusCode: 307 },
+        {
+          headers: {},
+          method: 'GET',
+          url: 'http://service.example.com/some/path'
+        }
+      );
+
+      expect(redirectOptions.headers).toEqual({
+        'Proxy-Authorization': proxyAuthorization
+      });
+    });
+
+    it('does not add a redirect hook without proxy headers', async () => {
+      const actualHttp = await buildHttpRequest({
+        url: 'http://example.com',
+        authentication: 'NoAuthentication'
+      });
+
+      expect(
+        (
+          actualHttp as DestinationHttpRequestConfig & {
+            beforeRedirect?: RedirectHook;
+          }
+        ).beforeRedirect
+      ).toBeUndefined();
+    });
+
+    it('keeps proxy headers on non-redirect requests', async () => {
+      const actualProxy = await buildHttpRequest(proxyDestination);
+
+      expect(actualProxy.headers).toMatchObject({
+        'Proxy-Authorization': proxyAuthorization
+      });
     });
 
     it('throws useful error messages when finding the destination fails', async () => {

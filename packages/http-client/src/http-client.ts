@@ -412,7 +412,7 @@ function getProxyHeadersBeforeRedirect(
 ): AxiosRequestConfig['beforeRedirect'] {
   const proxyHeaders = destination.proxyConfiguration?.headers;
 
-  if !Object.keys(proxyHeaders || {}).length) {
+  if (!Object.keys(proxyHeaders || {}).length) {
     return undefined;
   }
 

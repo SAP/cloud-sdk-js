@@ -25,6 +25,6 @@
     "depcheck": "^1.4.7",
     "eslint": "^10.2.1",
     "prettier": "^3.8.1",
-    "rolldown": "1.2.3"
+    "rolldown": "1.2.4"
   }
 }

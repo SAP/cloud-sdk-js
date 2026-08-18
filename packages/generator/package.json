@@ -26,7 +26,8 @@
         "types": "./test/test-util/create-generator-options.ts",
         "default": "./test/test-util/create-generator-options.ts"
       }
-    }
+    },
+    "./package.json": "./package.json"
   },
   "bin": {
     "generate-odata-client": "./dist/cli.js"

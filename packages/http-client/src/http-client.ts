@@ -412,12 +412,12 @@ function getProxyHeadersBeforeRedirect(
 ): AxiosRequestConfig['beforeRedirect'] {
   const proxyHeaders = destination.proxyConfiguration?.headers;
 
-  if (!proxyHeaders) {
+  if (!proxyHeaders || !Object.keys(proxyHeaders).length) {
     return undefined;
   }
 
-  return (options, _responseDetails, requestDetails) => {
-    if (!isSameOriginRedirect(options.href, requestDetails.url)) {
+  return options => {
+    if (!isSameOriginRedirect(options.href, destination.url)) {
       return;
     }
 

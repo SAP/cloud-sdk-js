@@ -20,6 +20,16 @@
       "matchPackageNames": ["typescript"],
       "matchUpdateTypes": ["major"],
       "enabled": false
+    },
+    {
+      // Ignore TypeScript updates in generated OpenAPI test-service fixtures.
+      "matchFileNames": [
+        "test-packages/test-services-openapi/test-service/package.json",
+        "test-packages/test-services-openapi/swagger-yaml-service/package.json",
+        "test-packages/test-services-openapi/no-schema-service/package.json"
+      ],
+      "matchPackageNames": ["typescript"],
+      "enabled": false
     }
   ]
 }

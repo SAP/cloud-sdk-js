@@ -201,7 +201,7 @@ describe('generic http client', () => {
       expect(redirectOptions.headers).toEqual({});
     });
 
-    it('uses the current request URL to determine redirect origin', async () => {
+    it('does not re-attach proxy headers on subsequent same-origin redirects after a cross-origin hop', async () => {
       const actualProxy = await buildHttpRequest(proxyDestination);
       const beforeRedirect = (
         actualProxy as DestinationHttpRequestConfig & {
@@ -209,30 +209,65 @@ describe('generic http client', () => {
         }
       ).beforeRedirect;
 
-      const redirectOptions = {
+      const firstRedirectOptions = {
         headers: {} as Record<string, string>,
-        href: 'http://service.example.com/some/path/'
+        href: 'http://attacker.example.com/some/path/'
       };
 
       beforeRedirect?.(
-        redirectOptions,
+        firstRedirectOptions,
         { headers: {}, statusCode: 307 },
         {
           headers: {},
           method: 'GET',
-          url: 'http://service.example.com/some/path'
+          url: 'http://example.com/some/path'
         }
       );
 
-      expect(redirectOptions.headers).toEqual({
-        'Proxy-Authorization': proxyAuthorization
-      });
+      const secondRedirectOptions = {
+        headers: {} as Record<string, string>,
+        href: 'http://attacker.example.com/other-path/'
+      };
+
+      beforeRedirect?.(
+        secondRedirectOptions,
+        { headers: {}, statusCode: 307 },
+        {
+          headers: {},
+          method: 'GET',
+          url: 'http://attacker.example.com/some/path'
+        }
+      );
+
+      expect(firstRedirectOptions.headers).toEqual({});
+      expect(secondRedirectOptions.headers).toEqual({});
     });
 
     it('does not add a redirect hook without proxy headers', async () => {
       const actualHttp = await buildHttpRequest({
         url: 'http://example.com',
         authentication: 'NoAuthentication'
+      });
+
+      expect(
+        (
+          actualHttp as DestinationHttpRequestConfig & {
+            beforeRedirect?: RedirectHook;
+          }
+        ).beforeRedirect
+      ).toBeUndefined();
+    });
+
+    it('does not add a redirect hook for empty proxy headers', async () => {
+      const actualHttp = await buildHttpRequest({
+        url: 'http://example.com',
+        authentication: 'NoAuthentication',
+        proxyConfiguration: {
+          host: 'proxy.host',
+          port: 1234,
+          protocol: 'http',
+          headers: {}
+        }
       });
 
       expect(

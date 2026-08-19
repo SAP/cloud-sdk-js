@@ -2,9 +2,33 @@
   "extends": ["github>sap/ai-sdk-js//.github/renovate.jsonc"],
   "packageRules": [
     {
+      // Keep the v2 memory test fixture on its current major version.
+      "matchFileNames": ["test-packages/memory-tests/sdk-v2/package.json"],
+      "matchPackageNames": ["@sap-cloud-sdk/odata-v4", "@sap-cloud-sdk/generator"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
       // These packages require ESM in their next major version, stay on current major until we support ESM
       "matchPackageNames": ["execa", "yargs", "@stylistic/eslint-plugin"],
       "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      // TS7 does not have a stable API yet
+      "matchFileNames": ["packages/eslint-config/package.json"],
+      "matchPackageNames": ["typescript"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      // Ignore TypeScript updates in generated OpenAPI test-service fixtures.
+      "matchFileNames": [
+        "test-packages/test-services-openapi/test-service/package.json",
+        "test-packages/test-services-openapi/swagger-yaml-service/package.json",
+        "test-packages/test-services-openapi/no-schema-service/package.json"
+      ],
+      "matchPackageNames": ["typescript"],
       "enabled": false
     }
   ]

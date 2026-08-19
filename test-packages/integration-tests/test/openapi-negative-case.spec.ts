@@ -74,7 +74,7 @@ describe('openapi negative tests', () => {
         { cwd: __dirname }
       )
       // In the faulty tsconfig.json a non existing lib is included
-    ).rejects.toThrow("typescript/lib/lib.non-existing-lib.d.ts' not found");
+    ).rejects.toThrow("Argument for '--lib' option must be:");
   }, 120000);
 
   it('should fail on transpilation on faulty ts source file- this also checks that --include is done before transpile', async () => {

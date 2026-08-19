@@ -97,6 +97,5 @@
     "typedoc": "^0.28.18",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "unionfs": "^4.6.0"
-  },
-  "dependencies": {}
+  }
 }

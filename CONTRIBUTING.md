@@ -6,8 +6,8 @@ Please make sure, that you are familiar with our [style guide](./STYLEGUIDE.md).
 
 ## Project Structure
 
-This project contains multiple packages, that are managed using [turborepo](https://github.com/vercel/turborepo) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/). Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
-All dependencies that are used in more than one of the packages are hoisted into the root project. Dependencies, that occur only once and binaries will be placed in the node_modules of that specific package. Some of the packages are interdependent, therefore `yarn install` won't work from within those packages. Run `yarn install` in the root directory instead.
+This project contains multiple packages, that are managed using [turborepo](https://github.com/vercel/turborepo) and [pnpm workspaces](https://pnpm.io/workspaces). Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
+All dependencies that are used in more than one of the packages are hoisted into the root project. Dependencies, that occur only once and binaries will be placed in the node_modules of that specific package. Some of the packages are interdependent, therefore `pnpm install` won't work from within those packages. Run `pnpm install` in the root directory instead.
 
 ## Testing
 
@@ -16,7 +16,7 @@ All (new) functionality shall be covered by tests.
 In order to run all tests, execute:
 
 ```bash
-$ yarn test
+$ pnpm test
 ```
 
 This will run unit tests for all our packages as well as integration tests and type tests. You can run those individually as described in the following.
@@ -27,23 +27,29 @@ Unit tests shall test specific modules of a package, units that are tested for b
 You can run all unit tests by executing:
 
 ```bash
-$ yarn test:unit
+$ pnpm test:unit
 ```
 
 To run unit tests for a specific package add the workspace name to the command. For the core package this would be:
 
 ```bash
-$ yarn @sap-cloud-sdk/core run test
+$ pnpm --filter @sap-cloud-sdk/core test
 ```
 
 ### Integration Tests
 
 Integration tests shall test how modules behave in combination. The integration tests are located in [`test-packages/integration-tests`](./test-packages/integration-tests).
 
+Some tests invoke the generator CLIs as child processes, so the packages must be compiled before running integration tests:
+
+```bash
+$ pnpm compile
+```
+
 To run the integration tests, execute:
 
 ```bash
-$ yarn test:integration
+$ pnpm test:integration
 ```
 
 ### Type Tests
@@ -54,7 +60,7 @@ The type tests are located at [`test-packages/type-tests`](./test-packages/type-
 To run the integration tests, execute:
 
 ```bash
-$ yarn test:type
+$ pnpm test:type
 ```
 
 ### Test Services
@@ -72,7 +78,7 @@ This is used in the integration tests and type tests.
 If you need to extend the existing services, run the following to regenerate the OData clients.
 
 ```bash
-$ yarn generate
+$ pnpm generate
 ```
 
 ### End to End (E2E) tests
@@ -83,8 +89,7 @@ These are also called E2E tests but are not meant here.
 
 The E2E tests are based on a locally running server providing an OData interface using [CAP](https://cap.cloud.sap/docs/) and a REST interface using OpenAPI.
 This server is used by the E2E tests located at [test-packages/e2e-tests](./test-packages/e2e-tests).
-**Attention** The imports in the E2E tests use the root packages e.g. `@sap-cloud-sdk/core` to mimic the way a customer would use it.
-So if you made code changes in one of the packages you need to run `yarn compile` to make the changes take effect.
+**Attention** The imports in the E2E tests use the root packages e.g. `@sap-cloud-sdk/connectivity` to mimic the way a customer would use it, so the packages must be compiled before running the tests. Run `pnpm compile` after any code changes to make them take effect.
 
 For manual E2E to a real remote system we have also some tests against the [TripPin service](https://www.odata.org/blog/trippin-new-odata-v4-sample-service/) which is the standard OData V4 sample service.
 Since the remote service is not really stable we commented out the tests under [test-packages/e2e-tests/test/TripPin](./test-packages/e2e-tests/test/TripPin) but for manual testing they can be useful.
@@ -94,26 +99,23 @@ Since the remote service is not really stable we commented out the tests under [
 To perform all available checks, run:
 
 ```bash
-$ yarn checks
+$ pnpm checks
 ```
-
-> **Warning**
-> Please note the plural s which is needed because yarn has its own (legacy) 'check' command which is not recommended to be used.
 
 Individual checks can be run with individual scripts:
 
 ```bash
-$ yarn check:MY_CHECK
+$ pnpm check:CHECK
 ```
 
-Where `MY_CHECK` can be any of the checks defined in the top level [`package.json`](./package.json) file.
+Where `CHECK` can be any of the checks defined in the top level [`package.json`](./package.json) file.
 
 ## Linting
 
 To fix all linting issues, run:
 
 ```bash
-$ yarn lint:fix
+$ pnpm lint:fix
 ```
 
 ## How to contribute

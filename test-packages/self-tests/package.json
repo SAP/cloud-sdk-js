@@ -12,7 +12,7 @@
     "lint:fix": "TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"
   },
   "devDependencies": {
-    "tsd": "^0.33.0",
-    "madge": "^8.0.0"
+    "tsd": "0.33.0",
+    "madge": "8.0.0"
   }
 }

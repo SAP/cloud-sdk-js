@@ -52,7 +52,7 @@
     "@sap-cloud-sdk/odata-common": "workspace:^"
   },
   "devDependencies": {
-    "@typescript/native": "npm:typescript@^7.0.2",
-    "prettier": "^3.8.1"
+    "@typescript/native": "npm:typescript@7.0.2",
+    "prettier": "3.9.6"
   }
 }

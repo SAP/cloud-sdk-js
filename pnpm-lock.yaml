@@ -9,16 +9,16 @@ importers:
   .:
     devDependencies:
       '@changesets/cli':
-        specifier: ^3.0.0
+        specifier: 3.0.0
         version: 3.0.0
       '@eslint/eslintrc':
-        specifier: ^3.3.5
+        specifier: 3.3.6
         version: 3.3.6(supports-color@8.1.1)
       '@eslint/js':
-        specifier: ^10.0.1
+        specifier: 10.0.1
         version: 10.0.1(eslint@10.8.1(jiti@2.7.0)(supports-color@8.1.1))
       '@jest/globals':
-        specifier: ^30.3.0
+        specifier: 30.4.1
         version: 30.4.1(supports-color@8.1.1)
       '@sap-cloud-sdk/connectivity':
         specifier: workspace:^
@@ -36,82 +36,82 @@ importers:
         specifier: workspace:^
         version: link:packages/util
       '@types/jest':
-        specifier: ^30.0.0
+        specifier: 30.0.0
         version: 30.0.0
       '@types/jsonwebtoken':
-        specifier: ^9.0.10
+        specifier: 9.0.10
         version: 9.0.10
       '@types/node':
-        specifier: ^22.19.15
+        specifier: 22.20.1
         version: 22.20.1
       '@types/sap__xsenv':
-        specifier: ^3.3.2
+        specifier: 3.3.2
         version: 3.3.2
       '@types/semver':
-        specifier: ^7.7.1
+        specifier: 7.8.0
         version: 7.8.0
       '@types/voca':
-        specifier: ^1.4.6
+        specifier: 1.4.6
         version: 1.4.6
       '@typescript-eslint/parser':
-        specifier: ^8.58.0
+        specifier: 8.67.0
         version: 8.67.0(@typescript/typescript6@6.0.2)(eslint@10.8.1(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       axios:
-        specifier: ^1.15.0
+        specifier: 1.19.0
         version: 1.19.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       eslint:
-        specifier: ^10.2.1
+        specifier: 10.8.1
         version: 10.8.1(jiti@2.7.0)(supports-color@8.1.1)
       glob:
-        specifier: ^13.0.6
+        specifier: 13.0.6
         version: 13.0.6
       globals:
-        specifier: ^17.4.0
+        specifier: 17.11.0
         version: 17.11.0
       jest:
-        specifier: ^30.3.0
+        specifier: 30.4.2
         version: 30.4.2(@types/node@22.20.1)(supports-color@8.1.1)(ts-node@10.9.2(@types/node@22.20.1)(@typescript/typescript6@6.0.2))
       jest-junit:
-        specifier: ^17.0.0
+        specifier: 17.0.0
         version: 17.0.0
       knip:
         specifier: 6.32.2
         version: 6.32.2
       madge:
-        specifier: ^8.0.0
+        specifier: 8.0.0
         version: 8.0.0(@typescript/typescript6@6.0.2)(supports-color@8.1.1)
       memfs:
-        specifier: ^4.57.2
+        specifier: 4.68.1
         version: 4.68.1
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       semver:
-        specifier: ^7.7.4
+        specifier: 7.8.5
         version: 7.8.5
       tinyexec:
-        specifier: ^1.3.0
+        specifier: 1.3.0
         version: 1.3.0
       ts-jest:
-        specifier: ^29.4.9
+        specifier: 29.4.12
         version: 29.4.12(@babel/core@7.29.7(supports-color@8.1.1))(@jest/transform@30.4.1(supports-color@8.1.1))(@jest/types@30.4.1)(@typescript/typescript6@6.0.2)(babel-jest@30.4.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(jest-util@30.4.1)(jest@30.4.2(@types/node@22.20.1)(supports-color@8.1.1)(ts-node@10.9.2(@types/node@22.20.1)(@typescript/typescript6@6.0.2)))
       ts-node:
-        specifier: ^10.9.2
+        specifier: 10.9.2
         version: 10.9.2(@types/node@22.20.1)(@typescript/typescript6@6.0.2)
       turbo:
-        specifier: ^2.10.9
+        specifier: 2.10.9
         version: 2.10.9
       typedoc:
-        specifier: ^0.28.18
+        specifier: 0.28.20
         version: 0.28.20(@typescript/typescript6@6.0.2)
       typescript:
-        specifier: npm:@typescript/typescript6@^6.0.2
+        specifier: npm:@typescript/typescript6@6.0.2
         version: '@typescript/typescript6@6.0.2'
       unionfs:
-        specifier: ^4.6.0
+        specifier: 4.6.0
         version: 4.6.0
 
   build-packages/changesets-fixed-version-bump:
@@ -133,16 +133,16 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       eslint:
-        specifier: ^10.2.1
+        specifier: 10.8.1
         version: 10.8.1(jiti@2.7.0)(supports-color@8.1.1)
       memfs:
-        specifier: ^4.57.2
+        specifier: 4.68.1
         version: 4.68.1
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       rolldown:
         specifier: 1.2.4
@@ -161,13 +161,13 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       eslint:
-        specifier: ^10.2.1
+        specifier: 10.8.1
         version: 10.8.1(jiti@2.7.0)(supports-color@8.1.1)
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       rolldown:
         specifier: 1.2.4
@@ -186,16 +186,16 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       eslint:
-        specifier: ^10.2.1
+        specifier: 10.8.1
         version: 10.8.1(jiti@2.7.0)(supports-color@8.1.1)
       memfs:
-        specifier: ^4.57.2
+        specifier: 4.68.1
         version: 4.68.1
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       rolldown:
         specifier: 1.2.4
@@ -226,19 +226,19 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       eslint:
-        specifier: ^10.2.1
+        specifier: 10.8.1
         version: 10.8.1(jiti@2.7.0)(supports-color@8.1.1)
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       rolldown:
         specifier: 1.2.4
         version: 1.2.4
       typescript:
-        specifier: npm:@typescript/typescript6@^6.0.2
+        specifier: npm:@typescript/typescript6@6.0.2
         version: '@typescript/typescript6@6.0.2'
 
   build-packages/get-changelog:
@@ -251,13 +251,13 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       eslint:
-        specifier: ^10.2.1
+        specifier: 10.8.1
         version: 10.8.1(jiti@2.7.0)(supports-color@8.1.1)
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       rolldown:
         specifier: 1.2.4
@@ -276,13 +276,13 @@ importers:
         specifier: workspace:^
         version: link:../test-utils
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       eslint:
-        specifier: ^10.2.1
+        specifier: 10.8.1
         version: 10.8.1(jiti@2.7.0)(supports-color@8.1.1)
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       rolldown:
         specifier: 1.2.4
@@ -298,13 +298,13 @@ importers:
         version: 4.68.1
     devDependencies:
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       eslint:
-        specifier: ^10.2.1
+        specifier: 10.8.1
         version: 10.8.1(jiti@2.7.0)(supports-color@8.1.1)
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       rolldown:
         specifier: 1.2.4
@@ -341,25 +341,25 @@ importers:
         version: 2.5.0
     devDependencies:
       '@jest/globals':
-        specifier: ^30.3.0
+        specifier: 30.4.1
         version: 30.4.1(supports-color@8.1.1)
       '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@types/async-retry':
-        specifier: ^1.4.9
+        specifier: 1.4.9
         version: 1.4.9
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       memfs:
-        specifier: ^4.57.2
+        specifier: 4.68.1
         version: 4.68.1
       nock:
-        specifier: ^14.0.11
+        specifier: 14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/eslint-config:
@@ -432,22 +432,22 @@ importers:
         version: 3.19.0
     devDependencies:
       '@jest/globals':
-        specifier: ^30.3.0
+        specifier: 30.4.1
         version: 30.4.1(supports-color@8.1.1)
       '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       memfs:
-        specifier: ^4.57.2
+        specifier: 4.68.1
         version: 4.68.1
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       tinyexec:
-        specifier: ^1.3.0
+        specifier: 1.3.0
         version: 1.3.0
 
   packages/generator-common:
@@ -475,22 +475,22 @@ importers:
         version: 17.7.3
     devDependencies:
       '@jest/globals':
-        specifier: ^30.3.0
+        specifier: 30.4.1
         version: 30.4.1(supports-color@8.1.1)
       '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@types/fast-levenshtein':
-        specifier: ^0.0.4
+        specifier: 0.0.4
         version: 0.0.4
       '@types/yargs':
-        specifier: ^17.0.33
+        specifier: 17.0.35
         version: 17.0.35
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       memfs:
-        specifier: ^4.57.2
+        specifier: 4.68.1
         version: 4.68.1
 
   packages/http-client:
@@ -512,16 +512,16 @@ importers:
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       jsonwebtoken:
-        specifier: ^9.0.3
+        specifier: 9.0.3
         version: 9.0.3
       nock:
-        specifier: ^14.0.11
+        specifier: 14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/odata-common:
@@ -552,10 +552,10 @@ importers:
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/odata-v2:
@@ -589,13 +589,13 @@ importers:
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       nock:
-        specifier: ^14.0.11
+        specifier: 14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/odata-v4:
@@ -626,13 +626,13 @@ importers:
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       nock:
-        specifier: ^14.0.11
+        specifier: 14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/openapi:
@@ -657,13 +657,13 @@ importers:
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       nock:
-        specifier: ^14.0.11
+        specifier: 14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/openapi-generator:
@@ -694,22 +694,22 @@ importers:
         version: 7.0.8
     devDependencies:
       '@jest/globals':
-        specifier: ^30.3.0
+        specifier: 30.4.1
         version: 30.4.1(supports-color@8.1.1)
       '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@types/swagger2openapi':
-        specifier: ^7.0.4
+        specifier: 7.0.4
         version: 7.0.4
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       memfs:
-        specifier: ^4.57.2
+        specifier: 4.68.1
         version: 4.68.1
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/resilience:
@@ -728,19 +728,19 @@ importers:
         version: 10.0.0
     devDependencies:
       '@types/async-retry':
-        specifier: ^1.4.9
+        specifier: 1.4.9
         version: 1.4.9
       '@types/opossum':
-        specifier: ^8.1.9
+        specifier: 8.1.9
         version: 8.1.9
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       nock:
-        specifier: ^14.0.11
+        specifier: 14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/temporal-de-serializers:
@@ -753,10 +753,10 @@ importers:
         version: link:../odata-common
     devDependencies:
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/test-util:
@@ -769,19 +769,19 @@ importers:
         version: link:../util
     devDependencies:
       '@jest/globals':
-        specifier: ^30.3.0
+        specifier: 30.4.1
         version: 30.4.1(supports-color@8.1.1)
       '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       memfs:
-        specifier: ^4.57.2
+        specifier: 4.68.1
         version: 4.68.1
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   packages/util:
@@ -803,34 +803,34 @@ importers:
         version: 4.9.0
     devDependencies:
       '@jest/globals':
-        specifier: ^30.3.0
+        specifier: 30.4.1
         version: 30.4.1(supports-color@8.1.1)
       '@sap-cloud-sdk/test-util-internal':
         specifier: workspace:^
         version: link:../../test-resources/test/test-util
       '@typescript/native':
-        specifier: npm:typescript@^7.0.2
+        specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       memfs:
-        specifier: ^4.57.2
+        specifier: 4.68.1
         version: 4.68.1
       nock:
-        specifier: ^14.0.11
+        specifier: 14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   test-packages/e2e-tests:
     devDependencies:
       '@apidevtools/swagger-parser':
-        specifier: ^12.1.0
+        specifier: 12.1.0
         version: 12.1.0(openapi-types@12.1.3)
       '@cap-js/sqlite':
-        specifier: ^3.0.2
+        specifier: 3.0.2
         version: 3.0.2(@sap/cds@10.0.5(@eslint/js@10.0.1(eslint@10.8.1(jiti@2.7.0)(supports-color@8.1.1)))(supports-color@8.1.1))(better-sqlite3@12.11.1)(generic-pool@3.9.0)
       '@jest/globals':
-        specifier: ^30.3.0
+        specifier: 30.4.1
         version: 30.4.1(supports-color@8.1.1)
       '@sap-cloud-sdk/connectivity':
         specifier: workspace:^
@@ -860,43 +860,43 @@ importers:
         specifier: workspace:^
         version: link:../../packages/util
       '@sap/cds':
-        specifier: ^10.0.3
+        specifier: 10.0.5
         version: 10.0.5(@eslint/js@10.0.1(eslint@10.8.1(jiti@2.7.0)(supports-color@8.1.1)))(supports-color@8.1.1)
       '@sap/cds-dk':
         specifier: 10.0.7
         version: 10.0.7
       axios:
-        specifier: ^1.15.0
+        specifier: 1.19.0
         version: 1.19.0(debug@4.3.7(supports-color@8.1.1))(supports-color@8.1.1)
       bignumber.js:
-        specifier: ^11.0.0
+        specifier: 11.1.5
         version: 11.1.5
       express:
-        specifier: ^5.0.0
+        specifier: 5.2.1
         version: 5.2.1(supports-color@8.1.1)
       http-proxy-middleware:
-        specifier: ^3.0.7
+        specifier: 3.0.7
         version: 3.0.7(supports-color@8.1.1)
       json-schema-faker:
-        specifier: ^0.6.0
+        specifier: 0.6.3
         version: 0.6.3
       moment:
-        specifier: ^2.30.1
+        specifier: 2.30.1
         version: 2.30.1
       multer:
-        specifier: ^2.2.0
+        specifier: 2.2.0
         version: 2.2.0
       openapi-backend:
-        specifier: ^5.16.1
+        specifier: 5.20.0
         version: 5.20.0
       pm2:
-        specifier: ^7.0.1
+        specifier: 7.0.3
         version: 7.0.3(supports-color@8.1.1)
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       tinyexec:
-        specifier: ^1.3.0
+        specifier: 1.3.0
         version: 1.3.0
 
   test-packages/integration-tests:
@@ -930,7 +930,7 @@ importers:
         version: 1.19.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
     devDependencies:
       '@jest/globals':
-        specifier: ^30.3.0
+        specifier: 30.4.1
         version: 30.4.1(supports-color@8.1.1)
       '@sap-cloud-sdk/generator':
         specifier: workspace:^
@@ -945,37 +945,37 @@ importers:
         specifier: workspace:^
         version: link:../../packages/openapi-generator
       bignumber.js:
-        specifier: ^11.0.0
+        specifier: 11.1.5
         version: 11.1.5
       jsonwebtoken:
-        specifier: ^9.0.3
+        specifier: 9.0.3
         version: 9.0.3
       memfs:
-        specifier: ^4.57.1
+        specifier: 4.68.1
         version: 4.68.1
       moment:
-        specifier: ^2.30.1
+        specifier: 2.30.1
         version: 2.30.1
       nock:
-        specifier: ^14.0.11
+        specifier: 14.0.17
         version: 14.0.17
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
       tinyexec:
-        specifier: ^1.3.0
+        specifier: 1.3.0
         version: 1.3.0
       winston:
-        specifier: ^3.19.0
+        specifier: 3.19.0
         version: 3.19.0
 
   test-packages/self-tests:
     devDependencies:
       madge:
-        specifier: ^8.0.0
+        specifier: 8.0.0
         version: 8.0.0(@typescript/typescript6@6.0.2)(supports-color@8.1.1)
       tsd:
-        specifier: ^0.33.0
+        specifier: 0.33.0
         version: 0.33.0
 
   test-packages/test-services-e2e:
@@ -997,7 +997,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/generator
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   test-packages/test-services-odata-common:
@@ -1019,7 +1019,7 @@ importers:
         version: 11.1.5
     devDependencies:
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   test-packages/test-services-odata-v2:
@@ -1038,7 +1038,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/util
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   test-packages/test-services-odata-v4:
@@ -1057,7 +1057,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/util
       prettier:
-        specifier: ^3.8.1
+        specifier: 3.9.6
         version: 3.9.6
 
   test-packages/test-services-openapi:
@@ -1111,13 +1111,13 @@ importers:
         specifier: workspace:^
         version: link:../test-services-openapi
       bignumber.js:
-        specifier: ^11.0.0
+        specifier: 11.1.5
         version: 11.1.5
       moment:
-        specifier: ^2.30.1
+        specifier: 2.30.1
         version: 2.30.1
       tsd:
-        specifier: ^0.33.0
+        specifier: 0.33.0
         version: 0.33.0
 
   test-resources/test/test-util:
@@ -2557,17 +2557,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@22.19.19':
-    resolution: {integrity: sha512-dyh/xO2Fh5bYrfWaaqGrRQQGkNdmYw6AmaAUvYeUMNTWQtvb796ikLdmTchRmOlOiIJ1TDXfWgVx1QkUlQ6Hew==}
-
-  '@types/node@22.20.0':
-    resolution: {integrity: sha512-QWlFW2wf3nTjC13/DqRnBpR4ZO36VJH/JVBkA/vcnmbTBNQIlnObqyqZE1tUR7+Ni23Lda8R1BxMfbXRpCUx5g==}
-
   '@types/node@22.20.1':
     resolution: {integrity: sha512-EANqOCF9QFyra+4pfxUcX9STKJpCLjMbObVzljIJomAWSnuSIEAvyzEU53GaajbXJEgdh0iEcPL+DGvpUd4k1Q==}
-
-  '@types/node@26.1.1':
-    resolution: {integrity: sha512-nxAkRSVkN1Y0JC1W8ky/fTfkGsMmcrRsbx+3XoZE+rMOX71kLYTV7fLXpqud1GpbpP5TuffXFqfX7fH2GgZREw==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -2975,11 +2966,6 @@ packages:
   acorn-walk@8.3.5:
     resolution: {integrity: sha512-HEHNfbars9v4pgpW6SO1KSPkfoS0xVOM/9UzkJltjlsHZmJasxg8aXkuZa7SMf8vKGIBhpUsPluQSqhJFCqebw==}
     engines: {node: '>=0.4.0'}
-
-  acorn@8.17.0:
-    resolution: {integrity: sha512-xRQbDb9BnwDafYNn6Vwl839DYVjqXYb1XVGtWAZ1kcDc6iwAL4hg3B1dZlRiuENFeO2H53gFG3in621AdERVAg==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
 
   acorn@8.18.0:
     resolution: {integrity: sha512-lGq+9yr1/GuAWaVYIHRjvvySG5/4VfKIvC8EWxStPdcDh/Ka7FG3twP6v4d5BkravUilhIAsG4Qj83t02LWUPQ==}
@@ -6152,9 +6138,6 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
-  undici-types@8.3.0:
-    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
-
   undici@6.28.0:
     resolution: {integrity: sha512-LIY910g9TI13YS95lrMFrs8Rm/u/irgHeTWoKCoteeJ04CUJ92eEfj0rVn+7VKMPBpUPiUoBKfhNyLI23EE/KA==}
     engines: {node: '>=18.17'}
@@ -6935,7 +6918,7 @@ snapshots:
     dependencies:
       '@jest/fake-timers': 30.4.1
       '@jest/types': 30.4.1
-      '@types/node': 26.1.1
+      '@types/node': 22.20.1
       jest-mock: 30.4.1
 
   '@jest/expect-utils@30.4.1':
@@ -6953,7 +6936,7 @@ snapshots:
     dependencies:
       '@jest/types': 30.4.1
       '@sinonjs/fake-timers': 15.4.0
-      '@types/node': 26.1.1
+      '@types/node': 22.20.1
       jest-message-util: 30.4.1
       jest-mock: 30.4.1
       jest-util: 30.4.1
@@ -7715,7 +7698,7 @@ snapshots:
 
   '@types/http-proxy@1.17.17':
     dependencies:
-      '@types/node': 26.1.1
+      '@types/node': 22.20.1
 
   '@types/istanbul-lib-coverage@2.0.6': {}
 
@@ -7740,33 +7723,21 @@ snapshots:
   '@types/jsonwebtoken@9.0.10':
     dependencies:
       '@types/ms': 2.1.0
-      '@types/node': 22.20.0
+      '@types/node': 22.20.1
 
   '@types/minimist@1.2.5': {}
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@22.19.19':
-    dependencies:
-      undici-types: 6.21.0
-
-  '@types/node@22.20.0':
-    dependencies:
-      undici-types: 6.21.0
-
   '@types/node@22.20.1':
     dependencies:
       undici-types: 6.21.0
-
-  '@types/node@26.1.1':
-    dependencies:
-      undici-types: 8.3.0
 
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/opossum@8.1.9':
     dependencies:
-      '@types/node': 22.20.0
+      '@types/node': 22.20.1
 
   '@types/retry@0.12.5': {}
 
@@ -7778,7 +7749,7 @@ snapshots:
 
   '@types/swagger2openapi@7.0.4':
     dependencies:
-      '@types/node': 22.19.19
+      '@types/node': 22.20.1
       openapi-types: 12.1.3
 
   '@types/triple-beam@1.3.5': {}
@@ -8182,9 +8153,7 @@ snapshots:
 
   acorn-walk@8.3.5:
     dependencies:
-      acorn: 8.17.0
-
-  acorn@8.17.0: {}
+      acorn: 8.18.0
 
   acorn@8.18.0: {}
 
@@ -9599,7 +9568,7 @@ snapshots:
 
   glob@13.0.6:
     dependencies:
-      minimatch: 10.2.5
+      minimatch: 10.2.6
       minipass: 7.1.3
       path-scurry: 2.0.2
 
@@ -10172,7 +10141,7 @@ snapshots:
   jest-mock@30.4.1:
     dependencies:
       '@jest/types': 30.4.1
-      '@types/node': 26.1.1
+      '@types/node': 22.20.1
       jest-util: 30.4.1
 
   jest-pnp-resolver@1.2.3(jest-resolve@30.4.1):
@@ -11852,7 +11821,7 @@ snapshots:
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
       '@types/node': 22.20.1
-      acorn: 8.17.0
+      acorn: 8.18.0
       acorn-walk: 8.3.5
       arg: 4.1.3
       create-require: 1.1.1
@@ -11981,7 +11950,7 @@ snapshots:
       '@gerrit0/mini-shiki': 3.23.0
       lunr: 2.3.9
       markdown-it: 14.3.0
-      minimatch: 10.2.5
+      minimatch: 10.2.6
       typescript: '@typescript/typescript6@6.0.2'
       yaml: 2.9.0
 
@@ -12039,8 +12008,6 @@ snapshots:
     optional: true
 
   undici-types@6.21.0: {}
-
-  undici-types@8.3.0: {}
 
   undici@6.28.0: {}
 

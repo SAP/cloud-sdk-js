@@ -3,7 +3,7 @@ description: Setup repo, node and pnpm.
 inputs:
   node-version:
     description: 'Node.js version'
-    default: '22'
+    default: '26'
   registry-token:
     description: 'The auth token for the npm registry'
   pnpm-version:

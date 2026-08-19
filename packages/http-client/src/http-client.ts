@@ -23,6 +23,7 @@ import axios from 'axios';
 import { isHttpRequestConfigWithOrigin } from './http-client-types';
 import { mergeOptionsWithPriority } from './http-request-config';
 import { csrf } from './csrf-token-middleware';
+import type { AxiosRequestConfig } from 'axios';
 import type {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -394,13 +395,46 @@ async function buildDestinationHttpRequestConfig(
   destination: HttpDestination,
   headers: Record<string, string>
 ): Promise<DestinationHttpRequestConfig> {
+  const beforeRedirect = getProxyHeadersBeforeRedirect(destination);
+
   return {
     baseURL: destination.url,
     headers,
     params: destination.queryParameters,
     proxy: getProxyConfig(destination),
+    ...(beforeRedirect && { beforeRedirect }),
     ...(await getAgentConfig(destination))
   };
+}
+
+function getProxyHeadersBeforeRedirect(
+  destination: HttpDestination
+): AxiosRequestConfig['beforeRedirect'] {
+  const proxyHeaders = destination.proxyConfiguration?.headers;
+
+  if (!Object.keys(proxyHeaders || {}).length) {
+    return undefined;
+  }
+
+  return options => {
+    if (!isSameOriginRedirect(options.href, destination.url)) {
+      return;
+    }
+
+    Object.assign(options.headers ?? (options.headers = {}), proxyHeaders);
+  };
+}
+
+function isSameOriginRedirect(targetUrl?: string, sourceUrl?: string): boolean {
+  if (!targetUrl || !sourceUrl) {
+    return false;
+  }
+
+  try {
+    return new URL(targetUrl).origin === new URL(sourceUrl).origin;
+  } catch {
+    return false;
+  }
 }
 
 async function buildHeaders(

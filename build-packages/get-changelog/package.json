@@ -19,7 +19,7 @@
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
     "@typescript/native": "npm:typescript@^7.0.2",
     "eslint": "^10.2.1",
-    "rolldown": "1.2.3",
+    "rolldown": "1.2.4",
     "prettier": "^3.8.1"
   }
 }

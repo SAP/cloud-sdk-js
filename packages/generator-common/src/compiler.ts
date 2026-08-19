@@ -1,13 +1,17 @@
-import { parse, resolve } from 'path';
-import { existsSync, promises } from 'fs';
-import { EOL } from 'os';
+import { parse, resolve } from 'node:path';
+import { promises } from 'node:fs';
+import { EOL } from 'node:os';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   createProgram,
+  flattenDiagnosticMessageText,
   getPreEmitDiagnostics,
   ModuleKind,
   ModuleResolutionKind,
-  ScriptTarget
+  parseJsonConfigFileContent,
+  readConfigFile as readTsConfigFile,
+  ScriptTarget,
+  sys
 } from 'typescript';
 import { glob } from 'glob';
 import { createFile, getFileExtension } from './file-writer';
@@ -137,23 +141,12 @@ function findPositions(
   return response;
 }
 
-async function readTsConfig(
-  pathToTsConfig: string
-): Promise<Record<string, any>> {
-  const fullPath =
-    parse(pathToTsConfig).ext === '.json'
-      ? pathToTsConfig
-      : resolve(pathToTsConfig, 'tsconfig.json');
-
-  if (!existsSync(fullPath)) {
-    throw new Error(`No tsconfig found under path ${fullPath}`);
-  }
-  return JSON.parse(
-    await promises.readFile(fullPath, {
-      encoding: 'utf8'
-    })
-  );
+function findTsConfigFile(pathToTsConfig: string): string {
+  return parse(pathToTsConfig).ext === '.json'
+    ? pathToTsConfig
+    : resolve(pathToTsConfig, 'tsconfig.json');
 }
+
 interface IncludeExclude {
   include: string[];
   exclude: string[];
@@ -173,28 +166,17 @@ const defaultIncludeExclude: IncludeExclude = {
 export async function readIncludeExcludeWithDefaults(
   pathToTsConfig: string
 ): Promise<IncludeExclude | undefined> {
-  const tsConfig = await readTsConfig(pathToTsConfig);
-  return {
-    include: tsConfig.include || defaultIncludeExclude.include,
-    exclude: tsConfig.exclude || defaultIncludeExclude.exclude
-  };
-}
-
-async function readRawCompilerOptions(
-  pathToTsConfig: string
-): Promise<CompilerOptions> {
-  const tsConfig = await readTsConfig(pathToTsConfig);
-  const compilerOptions: CompilerOptions = tsConfig.compilerOptions || {};
-  const pathToBase = tsConfig.extends;
-  if (!pathToBase) {
-    return compilerOptions;
+  const fullPath = findTsConfigFile(pathToTsConfig);
+  const configFile = readTsConfigFile(fullPath, sys.readFile);
+  if (configFile.error) {
+    throw new Error(
+      `Failed to read tsconfig at ${fullPath}: ${flattenDiagnosticMessageText(configFile.error.messageText, EOL)}`
+    );
   }
-  const dir = parse(pathToTsConfig).dir;
-  const bases = Array.isArray(pathToBase) ? pathToBase : [pathToBase];
-  const baseOptions = await Promise.all(
-    bases.map(base => readRawCompilerOptions(resolve(dir, base)))
-  );
-  return Object.assign({}, ...baseOptions, compilerOptions);
+  return {
+    include: configFile.config.include || defaultIncludeExclude.include,
+    exclude: configFile.config.exclude || defaultIncludeExclude.exclude
+  };
 }
 
 /**
@@ -206,23 +188,28 @@ async function readRawCompilerOptions(
 export async function readCompilerOptions(
   pathToTsConfig: string
 ): Promise<CompilerOptions> {
-  const options = await readRawCompilerOptions(pathToTsConfig);
-
-  if (options.moduleResolution) {
-    options.moduleResolution = parseModuleResolutionKind(
-      options.moduleResolution as any
+  const fullPath = findTsConfigFile(pathToTsConfig);
+  const configFile = readTsConfigFile(fullPath, sys.readFile);
+  if (configFile.error) {
+    throw new Error(
+      `Failed to read tsconfig at ${fullPath}: ${flattenDiagnosticMessageText(configFile.error.messageText, EOL)}`
     );
   }
 
-  if (options.lib && options.lib.length > 0) {
-    options.lib = options.lib!.map(name => `lib.${name}.d.ts`);
-  }
-  if (options.target) {
-    options.target = parseScriptTarget(options.target as any);
-  }
+  const { options, errors: parseErrors } = parseJsonConfigFileContent(
+    configFile.config,
+    sys,
+    parse(fullPath).dir
+  );
 
-  if (options.module) {
-    options.module = parseModuleKind(options.module as any);
+  // parseJsonConfigFileContent also resolves the file list. It reports TS18003 ("no inputs
+  // found") when the output directory doesn't exist yet, which is normal — we only need
+  // the compiler options here, not the file list.
+  const relevantErrors = parseErrors.filter(e => e.code !== 18003);
+  if (relevantErrors.length) {
+    throw new Error(
+      `Failed to parse compiler options in ${fullPath}:${EOL}${relevantErrors.map(e => flattenDiagnosticMessageText(e.messageText, EOL)).join(EOL)}`
+    );
   }
 
   if (
@@ -236,75 +223,6 @@ export async function readCompilerOptions(
   }
 
   return options;
-}
-
-function parseModuleResolutionKind(input: string): ModuleResolutionKind {
-  const moduleResolution = input.toLowerCase();
-  if (moduleResolution === 'bundler') {
-    return ModuleResolutionKind.Bundler;
-  }
-  if (moduleResolution === 'node') {
-    return ModuleResolutionKind.Node10;
-  }
-  if (moduleResolution === 'node16') {
-    return ModuleResolutionKind.Node16;
-  }
-  if (moduleResolution === 'nodenext') {
-    return ModuleResolutionKind.NodeNext;
-  }
-  return ModuleResolutionKind.Classic;
-}
-
-function parseScriptTarget(input: string): ScriptTarget {
-  const mapping: Record<string, ScriptTarget> = {
-    es3: ScriptTarget.ES3,
-    es5: ScriptTarget.ES5,
-    esnext: ScriptTarget.ESNext,
-    es2015: ScriptTarget.ES2015,
-    es2016: ScriptTarget.ES2016,
-    es2017: ScriptTarget.ES2017,
-    es2018: ScriptTarget.ES2018,
-    es2019: ScriptTarget.ES2019,
-    es2020: ScriptTarget.ES2020,
-    es2021: ScriptTarget.ES2021,
-    es2022: ScriptTarget.ES2022,
-    es2023: ScriptTarget.ES2023,
-    es2024: ScriptTarget.ES2024,
-    es2025: ScriptTarget.ES2025
-  };
-  if (mapping[input.toLowerCase()]) {
-    return mapping[input.toLowerCase()];
-  }
-  logger.warn(
-    `The selected ES target ${input} is not found - Fallback es2021 used`
-  );
-  return ScriptTarget.ES2021;
-}
-
-function parseModuleKind(input: string): ModuleKind {
-  const mapping: Record<string, ModuleKind> = {
-    commonjs: ModuleKind.CommonJS,
-    amd: ModuleKind.AMD,
-    umd: ModuleKind.UMD,
-    system: ModuleKind.System,
-    es2015: ModuleKind.ES2015,
-    es2020: ModuleKind.ES2020,
-    es2022: ModuleKind.ES2022,
-    esnext: ModuleKind.ESNext,
-    node16: ModuleKind.Node16,
-    node18: ModuleKind.Node18,
-    node20: ModuleKind.Node20,
-    nodenext: ModuleKind.NodeNext,
-    preserve: ModuleKind.Preserve
-  };
-
-  if (mapping[input.toLowerCase()]) {
-    return mapping[input.toLowerCase()];
-  }
-  logger.warn(
-    `The selected module kind ${input} is not found - Fallback commonJS used`
-  );
-  return ModuleKind.CommonJS;
 }
 
 function needsIgnoreDeprecationsTs6(

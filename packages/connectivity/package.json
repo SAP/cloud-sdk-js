@@ -26,7 +26,8 @@
         "types": "./src/scp-cf/token-accessor.ts",
         "default": "./src/scp-cf/token-accessor.ts"
       }
-    }
+    },
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"

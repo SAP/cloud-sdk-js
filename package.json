@@ -81,7 +81,7 @@
     "@typescript-eslint/parser": "^8.58.0",
     "@typescript/native": "npm:typescript@^7.0.2",
     "axios": "^1.15.0",
-    "knip": "6.29.0",
+    "knip": "6.32.2",
     "eslint": "^10.2.1",
     "execa": "^5.0.0",
     "glob": "^13.0.6",

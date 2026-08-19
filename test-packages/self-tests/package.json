@@ -5,15 +5,11 @@
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview",
   "license": "Apache-2.0",
   "private": true,
-  "types": "tsd-test",
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "test": "pnpm run test:madge-test",
     "test:madge-test": "pnpm exec ts-node madge-test/check-if-madge-is-working.ts",
     "lint:fix": "TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"
-  },
-  "tsd": {
-    "directory": "test-test"
   },
   "devDependencies": {
     "tsd": "^0.33.0",

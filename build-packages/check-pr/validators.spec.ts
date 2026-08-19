@@ -74,6 +74,27 @@ describe('check-pr', () => {
         'PR title does not adhere to conventional commit guidelines. Commit type found: featt. Must be one of feat, fix, chore.'
       );
     });
+
+    it('should ignore .changeset/config.json when validating changesets', async () => {
+      vol.fromNestedJSON(
+        {
+          '.changeset': {
+            'config.json': '{"changelog":"@changesets/cli/changelog"}',
+            'my-changeset.md':
+              "'@sap-cloud-sdk/generator': patch\n\n[fix] Something is fixed."
+          }
+        },
+        process.cwd()
+      );
+
+      getInput.mockReturnValue(
+        '.changeset/config.json .changeset/my-changeset.md'
+      );
+
+      await validateTitle('fix: test');
+
+      expect(setFailed).not.toHaveBeenCalled();
+    });
   });
 
   describe('validateBody', () => {

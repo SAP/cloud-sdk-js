@@ -19582,8 +19582,8 @@ function hasMatchingChangeset(allowedBumps, changedFileContents) {
 }
 async function extractChangesetFileContents() {
 	const changeSetFilesStr = getInput("changed-files").trim();
-	const changeSetFiles = changeSetFilesStr ? changeSetFilesStr.split(" ") : [];
-	return await Promise.all(changeSetFiles.map((file) => readFile(file, "utf-8")));
+	const changesetMarkdownFiles = (changeSetFilesStr ? changeSetFilesStr.split(" ") : []).filter((file) => /^\.changeset\/(pre\/)?[^/]+\.md$/.test(file));
+	return await Promise.all(changesetMarkdownFiles.map((file) => readFile(file, "utf-8")));
 }
 function validateChangesets(preamble, commitType, isBreaking, fileContents) {
 	const allowedBumps = getAllowedBumps(commitType, isBreaking);

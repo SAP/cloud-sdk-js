@@ -5,7 +5,7 @@ import {
 } from '../keys';
 import { changesetHeader, requestHeader } from './header';
 
-export const createTestEntity = [
+const createTestEntity = [
   ...changesetHeader(),
   '',
   'POST /sap/opu/odata/sap/API_TEST_SRV/A_TestEntity HTTP/1\\.1',

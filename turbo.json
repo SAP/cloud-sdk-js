@@ -70,15 +70,11 @@
       "dependsOn": ["^compile", "^generate"]
     },
     "check": {
-      "dependsOn": ["^compile", "check:dependencies", "check:public-api"]
+      "dependsOn": ["^compile", "check:public-api"]
     },
     "readme": {
       "dependsOn": ["@sap-cloud-sdk/util#compile"],
       "outputs": ["README.md"]
-    },
-    "check:dependencies": {
-      "dependsOn": ["^compile"],
-      "outputs": []
     },
     "check:public-api": {
       "dependsOn": ["@sap-cloud-sdk/util#compile"],

@@ -42,6 +42,7 @@ minimumReleaseAgeExclude:
   - '@sap-cloud-sdk/*'
   # Add minimum age exceptions for audit issues here
   # - sample-package@0.1.0
+  - 'knip@6.29.0'
 shellEmulator: true
 trustPolicy: no-downgrade
 

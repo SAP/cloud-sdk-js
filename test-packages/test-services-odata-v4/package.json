@@ -15,7 +15,6 @@
   },
   "scripts": {
     "generate": "ts-node generate-odata-services.ts",
-    "check:dependencies": "depcheck . --ignores='@sap-cloud-sdk/odata-v4'",
     "lint": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error"
   },
@@ -26,7 +25,6 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/util": "workspace:^",
-    "depcheck": "^1.4.7",
     "prettier": "^3.8.1"
   },
   "peerDependencies": {

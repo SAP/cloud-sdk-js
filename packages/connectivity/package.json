@@ -65,12 +65,12 @@
     "safe-stable-stringify": "^2.5.0"
   },
   "devDependencies": {
-    "@typescript/native": "npm:typescript@^7.0.2",
-    "@jest/globals": "^30.3.0",
+    "@typescript/native": "npm:typescript@7.0.2",
+    "@jest/globals": "30.4.1",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
-    "@types/async-retry": "^1.4.9",
-    "memfs": "^4.57.2",
-    "nock": "^14.0.11",
-    "prettier": "^3.8.1"
+    "@types/async-retry": "1.4.9",
+    "memfs": "4.68.1",
+    "nock": "14.0.17",
+    "prettier": "3.9.6"
   }
 }

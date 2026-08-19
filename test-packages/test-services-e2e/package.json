@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/generator": "workspace:^",
-    "prettier": "^3.8.1"
+    "prettier": "3.9.6"
   },
   "peerDependencies": {
     "@sap-cloud-sdk/odata-v4": "workspace:^",

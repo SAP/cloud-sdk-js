@@ -57,11 +57,11 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@jest/globals": "^30.3.0",
+    "@jest/globals": "30.4.1",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
-    "@typescript/native": "npm:typescript@^7.0.2",
-    "@types/fast-levenshtein": "^0.0.4",
-    "@types/yargs": "^17.0.33",
-    "memfs": "^4.57.2"
+    "@typescript/native": "npm:typescript@7.0.2",
+    "@types/fast-levenshtein": "0.0.4",
+    "@types/yargs": "17.0.35",
+    "memfs": "4.68.1"
   }
 }

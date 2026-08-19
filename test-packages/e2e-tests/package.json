@@ -38,7 +38,7 @@
     "axios": "^1.15.0",
     "bignumber.js": "^11.0.0",
     "depcheck": "^1.4.7",
-    "express": "^4.22.1",
+    "express": "^5.0.0",
     "http-proxy-middleware": "^3.0.7",
     "json-schema-faker": "^0.6.0",
     "memfs": "^4.57.2",

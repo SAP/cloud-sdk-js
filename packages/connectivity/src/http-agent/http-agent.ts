@@ -353,6 +353,7 @@ function getAgentCacheKeyInput(
   keyInput.cloudConnectorLocationId = destination.cloudConnectorLocationId;
   keyInput.proxyHost = destination.proxyConfiguration?.host;
   keyInput.proxyPort = destination.proxyConfiguration?.port;
+  // destination.url is the base URL, so it is a stable cache-key source.
   keyInput.target = destination.url;
   keyInput.proxyAuth = proxyAuth.scope;
   // For all other OnPremise flows the principal is not strictly required, but
@@ -381,7 +382,9 @@ type CacheScope<T> =
  * that keep-alive tunnels are not reused across subaccounts. The connectivity
  * service JWT is decoded and reduced to the stable, non-secret claims
  * `tenantId` (subaccount) and `clientId`, because the raw token rotates on
- * every refresh and must never be part of a cache key.
+ * every refresh and must never be part of a cache key. `clientId` is taken
+ * from that JWT rather than `destination.clientId`, because the JWT reflects
+ * the assumed identity.
  * @param destination - Destination carrying the proxy configuration.
  * @returns The derivation outcome for the subaccount scope.
  */

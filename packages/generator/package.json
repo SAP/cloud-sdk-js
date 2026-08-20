@@ -54,7 +54,7 @@
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
-    "readme": "pnpm exec ts-node ../../scripts/replace-common-readme.ts"
+    "readme": "node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
     "@sap-cloud-sdk/generator-common": "workspace:^",
@@ -71,8 +71,8 @@
     "@jest/globals": "30.4.1",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@typescript/native": "npm:typescript@7.0.2",
-    "execa": "5.1.1",
     "memfs": "4.68.1",
-    "prettier": "3.9.6"
+    "prettier": "3.9.6",
+    "tinyexec": "1.3.0"
   }
 }

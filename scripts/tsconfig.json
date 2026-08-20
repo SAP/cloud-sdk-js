@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "module": "nodenext",
+    "moduleDetection": "force",
+    "moduleResolution": "nodenext",
+    "noEmit": true,
+    "rewriteRelativeImportExtensions": true,
+    "target": "ES2023",
+    "types": ["node", "jest"],
+    "verbatimModuleSyntax": true
+  },
+  "include": ["*.ts"]
+}

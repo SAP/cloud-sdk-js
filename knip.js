@@ -69,7 +69,7 @@ export default {
     'test-packages/integration-tests': {
       ignoreDependencies: ['@sap-cloud-sdk/test-util-internal'],
       ignore: [
-        'test/throw-exception-with-logger-script.ts'
+        'test/throw-exception-with-logger-script.mjs'
       ]
     },
     'build-packages/check-public-api': {

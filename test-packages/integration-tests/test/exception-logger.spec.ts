@@ -1,6 +1,6 @@
 import { resolve } from 'path';
-import execa from 'execa';
 import { createLogger, kibana, local } from '@sap-cloud-sdk/util';
+import { execNodeScript } from './test-util';
 import type { Logger } from 'winston';
 
 describe('exception logger', () => {
@@ -15,30 +15,33 @@ describe('exception logger', () => {
   it('should log exception with local format if they fly in development mode', async () => {
     process.env.NODE_ENV = 'development';
     await expect(
-      execa('ts-node', [
-        resolve(__dirname, 'throw-exception-with-logger-script.ts')
-      ])
-    ).rejects.toThrow(/Test Exception Logger\n\s*at Object/);
+      execNodeScript(
+        resolve(__dirname, 'throw-exception-with-logger-script.mjs')
+      )
+    ).rejects.toThrow(/Test Exception Logger\n\s*at /);
     delete process.env.NODE_ENV;
   }, 60000);
 
   it('should log exception with kibana format if they fly in production mode', async () => {
     process.env.NODE_ENV = 'production';
     await expect(
-      execa('ts-node', [
-        resolve(__dirname, 'throw-exception-with-logger-script.ts')
-      ])
-    ).rejects.toThrow(/Test Exception Logger\\n\s*at Object/);
+      execNodeScript(
+        resolve(__dirname, 'throw-exception-with-logger-script.mjs')
+      )
+    ).rejects.toThrow(/Test Exception Logger\\n\s*at /);
     delete process.env.NODE_ENV;
   }, 60000);
 
   it('should not log the stack multiple times', async () => {
     try {
-      await execa('ts-node', [
-        resolve(__dirname, 'throw-exception-with-logger-script.ts')
-      ]);
+      await execNodeScript(
+        resolve(__dirname, 'throw-exception-with-logger-script.mjs')
+      );
     } catch (err) {
-      expect(err.message.match(/Test Exception Logger/g).length).toBe(1);
+      expect(err).toBeInstanceOf(Error);
+      expect(
+        (err as Error).message.match(/Test Exception Logger/g)
+      ).toHaveLength(1);
     }
   }, 60000);
 

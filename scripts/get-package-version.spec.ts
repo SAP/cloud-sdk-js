@@ -5,7 +5,7 @@ jest.mock('node:fs/promises', () => require('memfs').fs.promises);
 
 import { resolve } from 'path';
 import { vol } from 'memfs';
-import { getPackageVersion } from './get-package-version';
+import { getPackageVersion } from './get-package-version.ts';
 
 describe('get package version', () => {
   afterEach(() => {
@@ -13,7 +13,10 @@ describe('get package version', () => {
   });
 
   it('returns the version of the package json in the same directory', async () => {
-    vol.fromNestedJSON({ 'package.json': `{ "version": "1.2.3" }` }, process.cwd());
+    vol.fromNestedJSON(
+      { 'package.json': `{ "version": "1.2.3" }` },
+      process.cwd()
+    );
     expect(await getPackageVersion()).toEqual('1.2.3');
   });
 

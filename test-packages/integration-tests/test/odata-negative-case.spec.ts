@@ -1,17 +1,13 @@
-import { dirname, resolve, join } from 'path';
+import { resolve, join } from 'path';
 import { existsSync, promises } from 'fs';
-import execa from 'execa';
 import {
   testOutputRootDir,
   testResourcesDir
 } from '../../../test-resources/generator';
+import { execGenerator } from './test-util';
 
 // TODO use fs-mock
 describe('odata negative tests', () => {
-  const pathToGenerator = join(
-    dirname(require.resolve('@sap-cloud-sdk/generator')),
-    'cli.js'
-  );
   const testDir = join(testOutputRootDir, 'odata-negative');
 
   beforeAll(async () => {
@@ -30,17 +26,12 @@ describe('odata negative tests', () => {
 
   it('should fail on faulty edmx', async () => {
     await expect(
-      execa(
-        'node',
-        [
-          pathToGenerator,
-          '-i',
-          resolve(testResourcesDir, 'faulty-edmx'),
-          '-o',
-          join(testDir, 'faulty-edmx')
-        ],
-        { cwd: __dirname }
-      )
+      execGenerator([
+        '-i',
+        resolve(testResourcesDir, 'faulty-edmx'),
+        '-o',
+        join(testDir, 'faulty-edmx')
+      ])
     ).rejects.toThrow(
       'No types found for API_TEST_SRV.A_TestComplexTypeMISTAKE'
     );
@@ -48,29 +39,17 @@ describe('odata negative tests', () => {
 
   it('should fail on faulty typescript files.', async () => {
     await expect(
-      execa(
-        'node',
-        [
-          pathToGenerator,
-          '-i',
-          resolve(
-            testResourcesDir,
-            '../../odata-service-specs/v2/API_TEST_SRV'
-          ),
-          '-o',
-          join(testDir, 'faulty-typescript'),
-          '--include',
-          resolve(
-            testResourcesDir,
-            'faulty-typescript',
-            'faulty-typescript.ts'
-          ),
-          '--clearOutputDir',
-          '--transpile',
-          '--skipValidation'
-        ],
-        { cwd: __dirname }
-      )
+      execGenerator([
+        '-i',
+        resolve(testResourcesDir, '../../odata-service-specs/v2/API_TEST_SRV'),
+        '-o',
+        join(testDir, 'faulty-typescript'),
+        '--include',
+        resolve(testResourcesDir, 'faulty-typescript', 'faulty-typescript.ts'),
+        '--clearOutputDir',
+        '--transpile',
+        '--skipValidation'
+      ])
     ).rejects.toThrow("Cannot assign to 'foo' because it is a constant.");
   }, 150000);
 });

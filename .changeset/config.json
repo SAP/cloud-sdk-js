@@ -3,6 +3,10 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [["@sap-cloud-sdk/*"]],
+  "privatePackages": {
+    "version": true,
+    "tag": false
+  },
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",

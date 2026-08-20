@@ -125,6 +125,7 @@ function addCopyrightHeader(content: string, withCopyright: boolean): string {
   }
   return codeBlock`
 ${getCopyrightHeader()}
+
 ${content}
 \n
 `;

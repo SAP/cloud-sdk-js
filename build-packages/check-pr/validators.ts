@@ -55,7 +55,7 @@ function validateCommitType(commitType: string) {
   info('✓ Commit type: OK');
 }
 
-export function validatePostamble(title: string | undefined): void {
+function validatePostamble(title: string | undefined): void {
   if (!title || !title.trim().length) {
     return setFailed(
       'PR title does not have a title after conventional commit preamble.'
@@ -102,8 +102,11 @@ function hasMatchingChangeset(
 async function extractChangesetFileContents(): Promise<string[]> {
   const changeSetFilesStr = getInput('changed-files').trim();
   const changeSetFiles = changeSetFilesStr ? changeSetFilesStr.split(' ') : [];
+  const changesetMarkdownFiles = changeSetFiles.filter(file =>
+    /^\.changeset\/(pre\/)?[^/]+\.md$/.test(file)
+  );
   const fileContents = await Promise.all(
-    changeSetFiles.map(file => readFile(file, 'utf-8'))
+    changesetMarkdownFiles.map(file => readFile(file, 'utf-8'))
   );
   return fileContents;
 }

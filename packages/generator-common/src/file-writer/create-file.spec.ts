@@ -42,23 +42,33 @@ describe('createFile', () => {
     vol.reset();
   });
 
-  it('creates formatted content with copyright for non typescript files', async () => {
+  it('creates formatted content with copyright for .ts files', async () => {
     await createFile(
       'directory',
       'filename.ts',
       'const content = 123;',
       defaultCreateConfig
     );
-    expect(await readFile('directory/filename.ts', 'utf8'))
-      .toMatchInlineSnapshot(`
-      "/*
-       * Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.
-       *
-       * This is a generated file powered by the SAP Cloud SDK for JavaScript.
-       */
-      const content = 123;
-      "
-    `);
+    const content = await readFile('directory/filename.ts', 'utf8');
+    expect(content).toContain(
+      `Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.`
+    );
+    expect(content).toContain('\n */\n\n');
+    expect(content).toContain('const content = 123;');
+  });
+
+  it('creates formatted content with copyright for .d.ts files', async () => {
+    await createFile(
+      'directory',
+      'filename.d.ts',
+      'export declare const content: number;',
+      defaultCreateConfig
+    );
+    const result = await readFile('directory/filename.d.ts', 'utf8');
+    expect(result).toContain(
+      `Copyright (c) ${new Date().getFullYear()} SAP SE`
+    );
+    expect(result).toContain('\n */\n\n');
   });
 
   it('creates formatted content without copyright for non typescript files', async () => {

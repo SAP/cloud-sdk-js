@@ -1,11 +1,11 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.testService = testService;
 /*
  * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.testService = testService;
 const TestEntityApi_1 = require("./TestEntityApi");
 const TestEntityMultiLinkApi_1 = require("./TestEntityMultiLinkApi");
 const TestEntityOtherMultiLinkApi_1 = require("./TestEntityOtherMultiLinkApi");

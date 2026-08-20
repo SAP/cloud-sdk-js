@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 import { TestEntityMultiLink } from './TestEntityMultiLink';
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
 import { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';

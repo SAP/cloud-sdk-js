@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 import { Casetest_1 } from './Casetest_1';
 import { Casetest_1RequestBuilder } from './Casetest_1RequestBuilder';
 import {

@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 import { PhotosApi } from './PhotosApi';
 import { PeopleApi } from './PeopleApi';
 import { AirlinesApi } from './AirlinesApi';

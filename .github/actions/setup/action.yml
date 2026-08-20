@@ -3,7 +3,7 @@ description: Setup repo, node and pnpm.
 inputs:
   node-version:
     description: 'Node.js version'
-    default: '22'
+    default: '26'
   registry-token:
     description: 'The auth token for the npm registry'
   pnpm-version:
@@ -46,7 +46,7 @@ runs:
         persist-credentials: ${{ inputs.persist-credentials }}
         allow-unsafe-pr-checkout: ${{ inputs.allow-unsafe-pr-checkout }}
     - name: Setup pnpm
-      uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
       with:
         version: ${{ inputs.pnpm-version }}
     - name: Setup Node.js

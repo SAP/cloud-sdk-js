@@ -1,4 +1,9 @@
 "use strict";
+/*
+ * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.operations = void 0;
 exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
@@ -16,11 +21,6 @@ exports.testFunctionImportPost = testFunctionImportPost;
 exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
 exports.createTestComplexType = createTestComplexType;
 exports.fContinue = fContinue;
-/*
- * Copyright (c) 2026 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 const service_1 = require("./service");
 const TestComplexType_1 = require("./TestComplexType");

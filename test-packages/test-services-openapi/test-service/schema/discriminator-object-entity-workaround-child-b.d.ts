@@ -3,6 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+
 /**
  * Representation of the 'DiscriminatorObjectEntityWorkaroundChildB' schema.
  */

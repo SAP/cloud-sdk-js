@@ -67,7 +67,13 @@ function serializeOperationSignature(operation: OpenApiOperation): string {
     ? `queryString${operation.queryStringParameter.required ? '' : '?'}: string`
     : undefined;
 
-  return [pathParams, requestBodyParam, queryParams, queryStringParam, headerParams]
+  return [
+    pathParams,
+    requestBodyParam,
+    queryParams,
+    queryStringParam,
+    headerParams
+  ]
     .filter(params => params)
     .join(', ');
 }

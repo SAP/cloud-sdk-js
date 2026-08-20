@@ -53,13 +53,39 @@ export function mergeOptionsWithPriority(
   if (headersOrParams) {
     return origins.reduce(
       (mergedHeadersOrParams, origin) =>
-        mergeIgnoreCase(
+        mergeOptionsWithSymbols(
           mergedHeadersOrParams,
           headersOrParams[origin as keyof OriginOptionsInternal]
         ),
       {}
     );
   }
+}
+
+function mergeOptionsWithSymbols(
+  left: Record<string, any> = {},
+  right: Record<string, any> = {}
+): Record<string, any> {
+  return addSymbolProperties(mergeIgnoreCase(left, right), left, right);
+}
+
+function addSymbolProperties(
+  target: Record<string, any>,
+  ...sources: (Record<string, any> | undefined)[]
+): Record<string, any> {
+  return sources.reduce<Record<string, any>>((merged, source) => {
+    if (!source) {
+      return merged;
+    }
+
+    return Object.getOwnPropertySymbols(source).reduce(
+      (withSymbols, symbolKey) => ({
+        ...withSymbols,
+        [symbolKey]: Reflect.get(source, symbolKey)
+      }),
+      merged
+    );
+  }, target);
 }
 
 /**

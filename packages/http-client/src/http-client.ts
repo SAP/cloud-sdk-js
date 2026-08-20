@@ -155,6 +155,13 @@ export const oDataTypedClientParameterEncoder: ParameterEncoder = (
   params: Record<string, any>
 ) => params;
 
+function applyParameterEncoder(
+  parameterEncoder: ParameterEncoder,
+  parameters: Record<string, any>
+): Record<string, any> {
+  return preserveRawQueryString(parameters, parameterEncoder(parameters));
+}
+
 function encodeQueryParameters(options: {
   parameterEncoder: ParameterEncoder;
   parameters: OriginOptionsInternal;
@@ -165,7 +172,7 @@ function encodeQueryParameters(options: {
     Object.entries(parameters).map(([key, value]) =>
       exclude.includes(key as keyof OriginOptionsInternal)
         ? [key, value]
-        : [key, value ? parameterEncoder(value) : value]
+        : [key, value ? applyParameterEncoder(parameterEncoder, value) : value]
     )
   );
 }
@@ -453,7 +460,36 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
  * URI encoding in encodeAllParameters.
  * @internal
  */
-export const RAW_QUERY_STRING_KEY = '__raw_query_string__';
+export const RAW_QUERY_STRING_KEY = Symbol('__raw_query_string__');
+
+type QueryParametersWithRawQueryString = Record<string, any> & {
+  [RAW_QUERY_STRING_KEY]: string;
+};
+
+function hasRawQueryString(
+  parameters: Record<string, any>
+): parameters is QueryParametersWithRawQueryString {
+  return typeof Reflect.get(parameters, RAW_QUERY_STRING_KEY) === 'string';
+}
+
+function preserveRawQueryString(
+  source: Record<string, any>,
+  target: Record<string, any>
+): Record<string, any> {
+  return hasRawQueryString(source)
+    ? withRawQueryString(target, source[RAW_QUERY_STRING_KEY])
+    : target;
+}
+
+/**
+ * @internal
+ */
+export function withRawQueryString(
+  parameters: Record<string, any>,
+  rawQueryString: string
+): Record<string, any> {
+  return { ...parameters, [RAW_QUERY_STRING_KEY]: rawQueryString };
+}
 
 /**
  * @internal
@@ -467,8 +503,8 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     httpsAgent: https.globalAgent,
     timeout: 0, // zero means no timeout https://github.com/axios/axios/blob/main/README.md#request-config
     paramsSerializer: {
-      serialize: (params = {}) => {
-        if (RAW_QUERY_STRING_KEY in params) {
+      serialize: (params: Record<string, any> = {}) => {
+        if (hasRawQueryString(params)) {
           return String(params[RAW_QUERY_STRING_KEY]);
         }
         return Object.entries(params)
@@ -499,19 +535,19 @@ export function getDefaultHttpRequestOptions(): HttpRequestOptions {
 
 /**
  * Encoder for encoding all query parameters (key and value) using encodeURIComponent.
- * The sentinel key {@link RAW_QUERY_STRING_KEY} is passed through verbatim because its value
- * is an already-formed query string that must not be double-encoded.
+ * The internal sentinel key for raw query strings is passed through verbatim because its
+ * value is an already-formed query string that must not be double-encoded.
  * @param parameter - Parameter to be encoded using encodeURIComponent.
  * @returns Encoded parameter object.
  */
 export const encodeAllParameters: ParameterEncoder = function (
   parameter: Record<string, any>
 ): Record<string, any> {
-  return Object.fromEntries(
-    Object.entries(parameter).map(([key, value]) =>
-      key === RAW_QUERY_STRING_KEY
-        ? [key, value] // raw query string — pass through as-is
-        : [encodeURIComponent(key), encodeURIComponent(value)]
-    )
+  const encoded: Record<string, any> = Object.fromEntries(
+    Object.entries(parameter).map(([key, value]) => [
+      encodeURIComponent(key),
+      encodeURIComponent(value)
+    ])
   );
+  return preserveRawQueryString(parameter, encoded);
 };

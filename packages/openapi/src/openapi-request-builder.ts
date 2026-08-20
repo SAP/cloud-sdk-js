@@ -16,7 +16,7 @@ import {
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
-  RAW_QUERY_STRING_KEY
+  withRawQueryString
 } from '@sap-cloud-sdk/http-client/internal';
 import type {
   Method,
@@ -397,10 +397,12 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private getParameters(): OriginOptions {
-    const queryParameters = { ...(this.parameters?.queryParameters || {}) };
+    let queryParameters = { ...(this.parameters?.queryParameters || {}) };
     if (this.parameters?.queryString !== undefined) {
-      // Route raw query string through the sentinel key so the paramsSerializer emits it verbatim.
-      queryParameters[RAW_QUERY_STRING_KEY] = this.parameters.queryString;
+      queryParameters = withRawQueryString(
+        queryParameters,
+        this.parameters.queryString
+      );
     }
     return { requestConfig: queryParameters };
   }

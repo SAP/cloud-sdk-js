@@ -185,7 +185,7 @@ export function parseQueryStringParameter(
   parameters: OpenAPIV3.ParameterObject[]
 ): OpenApiQueryStringParameter | undefined {
   const queryStringParams = parameters.filter(
-    param => (param.in as string) === 'querystring'
+    p => (p.in as string) === 'querystring'
   );
   if (!queryStringParams.length) {
     return undefined;
@@ -196,9 +196,7 @@ export function parseQueryStringParameter(
     );
   }
   const param = queryStringParams[0];
-  const content = (param as any).content as
-    | Record<string, unknown>
-    | undefined;
+  const content = (param as any).content as Record<string, unknown> | undefined;
   const mediaType = content && Object.keys(content)[0];
   if (!mediaType) {
     throw new Error(

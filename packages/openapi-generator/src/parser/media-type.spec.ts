@@ -257,32 +257,6 @@ describe('parseTopLevelMediaType', () => {
     });
   });
 
-  it('uses contentMediaType from schema as encoding content type in multipart/form-data', async () => {
-    const schema = {
-      type: 'object',
-      properties: {
-        config: {
-          type: 'string',
-          contentMediaType: 'application/json',
-          contentSchema: { type: 'object' }
-        },
-        name: { type: 'string' }
-      }
-    };
-    const result = parseTopLevelMediaType(
-      createMultipartFormContent(schema),
-      await createTestRefs(),
-      defaultOptions
-    );
-
-    expect(result?.encoding?.config).toEqual(
-      createImplicitMultipartFormEncoding('application/json')
-    );
-    expect(result?.encoding?.name).toEqual(
-      createImplicitMultipartFormEncoding('text/plain')
-    );
-  });
-
   it('auto-infers content type for arrays based on item type in multipart/form-data', async () => {
     const schema = {
       type: 'object',

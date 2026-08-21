@@ -165,30 +165,19 @@ export function parseSchema(
     };
   }
 
-  // OpenAPI 3.1 / JSON Schema 2020-12 expresses binary string content via
-  // 'contentEncoding'/'contentMediaType' instead of the 3.0 'format: binary'
-  // idiom. Map such content-encoded strings to 'Blob', consistent with the
-  // binary handling elsewhere.
-  // Note: contentMediaType alone only maps to Blob for binary media types.
-  // Text-based types (text/*, application/json, application/*+json, etc.) are
-  // plain strings whose content happens to follow a text format.
-  if (
-    hasType(schema, 'string') &&
-    (schema.contentEncoding || isBinaryMediaType(schema.contentMediaType))
-  ) {
-    return { type: 'Blob' };
-  }
+  if (hasType(schema, 'string')) {
+    // OAS 3.1: contentEncoding or a binary contentMediaType maps to Blob.
+    // Text-based types (text/*, application/json, etc.) fall through.
+    if (schema.contentEncoding || isBinaryMediaType(schema.contentMediaType)) {
+      return { type: 'Blob' };
+    }
 
-  // OpenAPI 3.1 / JSON Schema 2020-12: a string with a JSON contentMediaType
-  // and a contentSchema is typed as the contentSchema type. Serialization to a
-  // JSON string is only supported for multipart bodies (via FormDataBuilder);
-  // non-multipart bodies are not yet supported.
-  if (
-    schema.contentSchema &&
-    hasType(schema, 'string') &&
-    isJsonMediaType(schema.contentMediaType)
-  ) {
-    return parseSchema(schema.contentSchema, refs, options);
+    // OAS 3.1: a JSON contentMediaType + contentSchema types the field as the
+    // contentSchema type. Only supported for multipart bodies (FormDataBuilder
+    // handles JSON.stringify); non-multipart bodies are not yet handled.
+    if (schema.contentSchema && isJsonMediaType(schema.contentMediaType)) {
+      return parseSchema(schema.contentSchema, refs, options);
+    }
   }
 
   return {

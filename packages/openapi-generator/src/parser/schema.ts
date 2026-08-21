@@ -207,11 +207,8 @@ export function parseMediaTypeString(
   if (!mediaType) {
     return undefined;
   }
-  try {
-    return parseContentType(mediaType).type.toLowerCase();
-  } catch {
-    return undefined;
-  }
+  return parseContentType(mediaType)?.type?.toLowerCase();
+
 }
 
 /**
@@ -226,16 +223,18 @@ function isBinaryMediaType(mediaType: string | undefined): boolean {
   return (
     !!type &&
     !(
+      isJsonMediaType(mediaType) ||
       type.startsWith('text/') ||
-      type === 'application/json' ||
       type === 'application/xml' ||
-      type.endsWith('+json') ||
       type.endsWith('+xml')
     )
   );
 }
 
-function isJsonMediaType(mediaType: string | undefined): boolean {
+/**
+ * @internal
+ */
+export function isJsonMediaType(mediaType: string | undefined): boolean {
   const type = parseMediaTypeString(mediaType);
   return !!type && (type === 'application/json' || type.endsWith('+json'));
 }

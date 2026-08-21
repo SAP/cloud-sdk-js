@@ -174,7 +174,9 @@ export function parseSchema(
 
     // OAS 3.1: a JSON contentMediaType + contentSchema types the field as the
     // contentSchema type. Only supported for multipart bodies (FormDataBuilder
-    // handles JSON.stringify); non-multipart bodies are not yet handled.
+    // handles JSON.stringify).
+    // TODO: support non-multipart bodies by preserving wire-type metadata so
+    // the serialization layer knows to JSON.stringify the value.
     if (schema.contentSchema && isJsonMediaType(schema.contentMediaType)) {
       return parseSchema(schema.contentSchema, refs, options);
     }

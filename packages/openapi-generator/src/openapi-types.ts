@@ -666,4 +666,10 @@ export interface OpenApiSchemaProperties {
    * 2020-12, 3.1).
    */
   contentMediaType?: string;
+
+  /**
+   * Validates the structure of a string's decoded content when
+   * `contentMediaType` is present (JSON Schema 2020-12, 3.1).
+   */
+  contentSchema?: any;
 }

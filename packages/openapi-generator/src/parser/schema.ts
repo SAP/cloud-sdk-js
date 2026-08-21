@@ -179,9 +179,39 @@ export function parseSchema(
     return { type: 'Blob' };
   }
 
+  // OpenAPI 3.1 / JSON Schema 2020-12: a string with a JSON contentMediaType
+  // and a contentSchema is typed as the contentSchema type. Serialization to a
+  // JSON string is only supported for multipart bodies (via FormDataBuilder);
+  // non-multipart bodies are not yet supported.
+  if (
+    schema.contentSchema &&
+    hasType(schema, 'string') &&
+    isJsonMediaType(schema.contentMediaType)
+  ) {
+    return parseSchema(schema.contentSchema, refs, options);
+  }
+
   return {
     type: getType(schema.type, schema.format)
   };
+}
+
+/**
+ * Parse and normalize a media type string. Returns the lowercased type token,
+ * or undefined if the input is absent or unparsable.
+ * @internal
+ */
+export function parseMediaTypeString(
+  mediaType: string | undefined
+): string | undefined {
+  if (!mediaType) {
+    return undefined;
+  }
+  try {
+    return parseContentType(mediaType).type.toLowerCase();
+  } catch {
+    return undefined;
+  }
 }
 
 /**
@@ -192,24 +222,19 @@ export function parseSchema(
  * @internal
  */
 function isBinaryMediaType(mediaType: string | undefined): boolean {
-  if (!mediaType) {
-    return false;
-  }
-  let type: string;
-  try {
-    type = parseContentType(mediaType).type.toLowerCase();
-  } catch {
-    return false;
-  }
-  if (type.startsWith('text/')) {
-    return false;
-  }
-  return !(
+  const type = parseMediaTypeString(mediaType);
+  return !!type && !(
+    type.startsWith('text/') ||
     type === 'application/json' ||
     type === 'application/xml' ||
     type.endsWith('+json') ||
     type.endsWith('+xml')
   );
+}
+
+function isJsonMediaType(mediaType: string | undefined): boolean {
+  const type = parseMediaTypeString(mediaType);
+  return !!type && (type === 'application/json' || type.endsWith('+json'))
 }
 
 /**
@@ -638,7 +663,8 @@ export function parseSchemaProperties(
     'maxItems',
     'pattern',
     'contentEncoding',
-    'contentMediaType'
+    'contentMediaType',
+    'contentSchema'
   ];
   const collected = schemaPropertyNames.reduce(
     (properties, propertyName) => {

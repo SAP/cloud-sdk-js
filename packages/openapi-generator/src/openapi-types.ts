@@ -671,5 +671,5 @@ export interface OpenApiSchemaProperties {
    * Validates the structure of a string's decoded content when
    * `contentMediaType` is present (JSON Schema 2020-12, 3.1).
    */
-  contentSchema?: any;
+  contentSchema?: OpenApiV3xSchema | OpenAPIV3.ReferenceObject;
 }

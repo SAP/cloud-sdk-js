@@ -19,10 +19,10 @@ Depending on the proxy authentication, 403 or successful odata response will be 
 - from the proxy server, the requests sent by SDK is visible, which is not the case when using the connectivity service + the Cloud Connector
 
 ### Steps for local tests
-1. install dependencies via `yarn install`
+1. install dependencies via `pnpm install`
 1. go to `e2e-tests` directory by running e.g., `cd test-packages/e2e-tests`.
-1. start the proxy server by executing `yarn run start:proxy-server`
-1. run tests `yarn jest odata.spec.ts`
-1. stop the proxy server by running `yarn run stop:proxy-server`
+1. start the proxy server by executing `pnpm run start:proxy-server`
+1. run tests `pnpm jest odata.spec.ts`
+1. stop the proxy server by running `pnpm run stop:proxy-server`
 
 

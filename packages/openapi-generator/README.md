@@ -17,9 +17,9 @@ $ npm install @sap-cloud-sdk/openapi-generator
 To run the CLI locally, compile and link the package.
 
 ```bash
-$ yarn install
+$ npm install
 
-$ yarn compile
+$ npm run compile
 
 $ npm link
 

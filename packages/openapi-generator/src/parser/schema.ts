@@ -165,23 +165,40 @@ export function parseSchema(
     };
   }
 
-  // OpenAPI 3.1 / JSON Schema 2020-12 expresses binary string content via
-  // 'contentEncoding'/'contentMediaType' instead of the 3.0 'format: binary'
-  // idiom. Map such content-encoded strings to 'Blob', consistent with the
-  // binary handling elsewhere.
-  // Note: contentMediaType alone only maps to Blob for binary media types.
-  // Text-based types (text/*, application/json, application/*+json, etc.) are
-  // plain strings whose content happens to follow a text format.
-  if (
-    hasType(schema, 'string') &&
-    (schema.contentEncoding || isBinaryMediaType(schema.contentMediaType))
-  ) {
-    return { type: 'Blob' };
+  if (hasType(schema, 'string')) {
+    // OAS 3.1: contentEncoding or a binary contentMediaType maps to Blob.
+    // Text-based types (text/*, application/json, etc.) fall through.
+    if (schema.contentEncoding || isBinaryMediaType(schema.contentMediaType)) {
+      return { type: 'Blob' };
+    }
+
+    // OAS 3.1: a JSON contentMediaType + contentSchema types the field as the
+    // contentSchema type. Only supported for multipart bodies (FormDataBuilder
+    // handles JSON.stringify).
+    // TODO: support non-multipart bodies by preserving wire-type metadata so
+    // the serialization layer knows to JSON.stringify the value.
+    if (schema.contentSchema && isJsonMediaType(schema.contentMediaType)) {
+      return parseSchema(schema.contentSchema, refs, options);
+    }
   }
 
   return {
     type: getType(schema.type, schema.format)
   };
+}
+
+/**
+ * Parse and normalize a media type string. Returns the lowercased type token,
+ * or undefined if the input is absent or unparsable.
+ * @internal
+ */
+export function parseMediaTypeString(
+  mediaType: string | undefined
+): string | undefined {
+  if (!mediaType) {
+    return undefined;
+  }
+  return parseContentType(mediaType)?.type?.toLowerCase();
 }
 
 /**
@@ -192,24 +209,24 @@ export function parseSchema(
  * @internal
  */
 function isBinaryMediaType(mediaType: string | undefined): boolean {
-  if (!mediaType) {
-    return false;
-  }
-  let type: string;
-  try {
-    type = parseContentType(mediaType).type.toLowerCase();
-  } catch {
-    return false;
-  }
-  if (type.startsWith('text/')) {
-    return false;
-  }
-  return !(
-    type === 'application/json' ||
-    type === 'application/xml' ||
-    type.endsWith('+json') ||
-    type.endsWith('+xml')
+  const type = parseMediaTypeString(mediaType);
+  return (
+    !!type &&
+    !(
+      isJsonMediaType(mediaType) ||
+      type.startsWith('text/') ||
+      type === 'application/xml' ||
+      type.endsWith('+xml')
+    )
   );
+}
+
+/**
+ * @internal
+ */
+export function isJsonMediaType(mediaType: string | undefined): boolean {
+  const type = parseMediaTypeString(mediaType);
+  return !!type && (type === 'application/json' || type.endsWith('+json'));
 }
 
 /**
@@ -638,7 +655,8 @@ export function parseSchemaProperties(
     'maxItems',
     'pattern',
     'contentEncoding',
-    'contentMediaType'
+    'contentMediaType',
+    'contentSchema'
   ];
   const collected = schemaPropertyNames.reduce(
     (properties, propertyName) => {

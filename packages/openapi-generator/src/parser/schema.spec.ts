@@ -845,9 +845,16 @@ describe('schema parser', () => {
         const schema = {
           type: 'string',
           contentMediaType: 'application/json',
-          contentSchema: { type: 'object', properties: { name: { type: 'string' } } }
+          contentSchema: {
+            type: 'object',
+            properties: { name: { type: 'string' } }
+          }
         } as any;
-        const result = parseSchema(schema, await createTestRefs(), defaultOptions) as any;
+        const result = parseSchema(
+          schema,
+          await createTestRefs(),
+          defaultOptions
+        ) as any;
         expect(result.properties).toHaveLength(1);
         expect(result.properties[0].name).toBe('name');
       });
@@ -904,7 +911,10 @@ describe('schema parser', () => {
             contentMediaType: 'application/json',
             contentSchema: { type: 'object' }
           } as any)
-        ).toEqual({ contentMediaType: 'application/json', contentSchema: { type: 'object' } });
+        ).toEqual({
+          contentMediaType: 'application/json',
+          contentSchema: { type: 'object' }
+        });
       });
 
       it('collects the examples array in schema properties', () => {

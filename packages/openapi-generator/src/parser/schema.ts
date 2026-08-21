@@ -223,18 +223,21 @@ export function parseMediaTypeString(
  */
 function isBinaryMediaType(mediaType: string | undefined): boolean {
   const type = parseMediaTypeString(mediaType);
-  return !!type && !(
-    type.startsWith('text/') ||
-    type === 'application/json' ||
-    type === 'application/xml' ||
-    type.endsWith('+json') ||
-    type.endsWith('+xml')
+  return (
+    !!type &&
+    !(
+      type.startsWith('text/') ||
+      type === 'application/json' ||
+      type === 'application/xml' ||
+      type.endsWith('+json') ||
+      type.endsWith('+xml')
+    )
   );
 }
 
 function isJsonMediaType(mediaType: string | undefined): boolean {
   const type = parseMediaTypeString(mediaType);
-  return !!type && (type === 'application/json' || type.endsWith('+json'))
+  return !!type && (type === 'application/json' || type.endsWith('+json'));
 }
 
 /**

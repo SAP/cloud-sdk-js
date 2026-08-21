@@ -208,7 +208,6 @@ export function parseMediaTypeString(
     return undefined;
   }
   return parseContentType(mediaType)?.type?.toLowerCase();
-
 }
 
 /**

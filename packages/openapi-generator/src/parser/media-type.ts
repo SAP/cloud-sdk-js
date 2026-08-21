@@ -2,7 +2,11 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { parse as parseContentType, type ContentType } from 'content-type';
 import { parseSchema } from './schema';
 import type { OpenAPIV3 } from 'openapi-types';
-import type { OpenApiMediaTypeObject, OpenApiSchema } from '../openapi-types';
+import type {
+  OpenApiMediaTypeObject,
+  OpenApiSchema,
+  OpenApiV3xSchema
+} from '../openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
 import type { ParserOptions } from './options';
 
@@ -36,9 +40,11 @@ function parseContentTypes(contentType: string): ContentType[] {
  * @param s - The schema object to infer content type from.
  * @returns The inferred content type, or undefined if cannot be determined.
  */
-function inferContentTypeFromSchema(
-  s: OpenAPIV3.SchemaObject
-): string | undefined {
+function inferContentTypeFromSchema(s: OpenApiV3xSchema): string | undefined {
+  // Explicit contentMediaType takes priority over inferred defaults.
+  if (s.contentMediaType) {
+    return s.contentMediaType;
+  }
   // Binary format -> application/octet-stream
   if (s.type === 'string' && s.format === 'binary') {
     return 'application/octet-stream';

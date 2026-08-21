@@ -192,7 +192,9 @@ class FormDataBuilder {
     // Handle string data
     // Only use JSON.stringify for application/json content type - otherwise may unduly escape e.g. stringified XML
     // To avoid stringifying pre-stringified JSON, users should use `Blob` or raw `FormData`
-    const stringValue = allowedTypes.has('application/json')
+    const stringValue = allowedTypes
+      .values()
+      .some(val => val === 'application/json' || val.endsWith('+json'))
       ? JSON.stringify(value)
       : String(value);
 

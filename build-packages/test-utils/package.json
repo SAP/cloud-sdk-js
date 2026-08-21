@@ -13,7 +13,7 @@
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
-    "all": "yarn && yarn lint && yarn compile"
+    "all": "pnpm install && pnpm lint && pnpm compile"
   },
   "dependencies": {
     "@jest/globals": "^30.3.0",

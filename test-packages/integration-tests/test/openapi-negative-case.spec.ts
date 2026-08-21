@@ -1,18 +1,13 @@
-import { dirname, resolve, join } from 'path';
+import { resolve, join } from 'path';
 import { existsSync, promises } from 'fs';
-import execa from 'execa';
 import {
   testOutputRootDir,
   testResourcesDir
 } from '../../../test-resources/generator';
+import { execOpenApiGenerator } from './test-util';
 
 // TODO use fs-mock here
 describe('openapi negative tests', () => {
-  const pathToGenerator = join(
-    dirname(require.resolve('@sap-cloud-sdk/openapi-generator')),
-    'cli.js'
-  );
-
   const testDir = join(testOutputRootDir, 'openapi-negative');
   beforeAll(async () => {
     if (!existsSync(testOutputRootDir)) {
@@ -33,18 +28,13 @@ describe('openapi negative tests', () => {
     await promises.mkdir(output);
 
     await expect(
-      execa(
-        'node',
-        [
-          pathToGenerator,
-          '--input',
-          resolve(testResourcesDir, 'faulty-openapi'),
-          '--outputDir',
-          output,
-          '--clearOutputDir'
-        ],
-        { cwd: __dirname }
-      )
+      execOpenApiGenerator([
+        '--input',
+        resolve(testResourcesDir, 'faulty-openapi'),
+        '--outputDir',
+        output,
+        '--clearOutputDir'
+      ])
       // In the spec file the http method is not set
     ).rejects.toThrow(
       'Could not parse APIs. The document does not contain any operations.'
@@ -55,24 +45,19 @@ describe('openapi negative tests', () => {
     const output = join(testDir, 'transpilation-failed-1');
     await promises.mkdir(output);
     await expect(
-      execa(
-        'node',
-        [
-          pathToGenerator,
-          '--input',
-          resolve(
-            testOutputRootDir,
-            '../../openapi-service-specs/specifications/test-service.json'
-          ),
-          '-o',
-          output,
-          '--skipValidation',
-          '--clearOutputDir',
-          '--tsconfig',
-          resolve(testResourcesDir, 'faulty-openapi-tsconfig', 'tsconfig.json')
-        ],
-        { cwd: __dirname }
-      )
+      execOpenApiGenerator([
+        '--input',
+        resolve(
+          testOutputRootDir,
+          '../../openapi-service-specs/specifications/test-service.json'
+        ),
+        '-o',
+        output,
+        '--skipValidation',
+        '--clearOutputDir',
+        '--tsconfig',
+        resolve(testResourcesDir, 'faulty-openapi-tsconfig', 'tsconfig.json')
+      ])
       // In the faulty tsconfig.json a non existing lib is included
     ).rejects.toThrow("Argument for '--lib' option must be:");
   }, 120000);
@@ -81,25 +66,20 @@ describe('openapi negative tests', () => {
     const output = join(testDir, 'transpilation-failed-2');
     await promises.mkdir(output);
     await expect(
-      execa(
-        'node',
-        [
-          pathToGenerator,
-          '-i',
-          resolve(
-            testResourcesDir,
-            '../../openapi-service-specs/specifications/test-service.json'
-          ),
-          '-o',
-          output,
-          '--skipValidation',
-          '--clearOutputDir',
-          '--transpile',
-          '--include',
-          resolve(testResourcesDir, 'faulty-typescript', 'faulty-typescript.ts')
-        ],
-        { cwd: __dirname }
-      )
+      execOpenApiGenerator([
+        '-i',
+        resolve(
+          testResourcesDir,
+          '../../openapi-service-specs/specifications/test-service.json'
+        ),
+        '-o',
+        output,
+        '--skipValidation',
+        '--clearOutputDir',
+        '--transpile',
+        '--include',
+        resolve(testResourcesDir, 'faulty-typescript', 'faulty-typescript.ts')
+      ])
       // In the faulty tsconfig.json a non existing lib is included
     ).rejects.toThrow("Cannot assign to 'foo' because it is a constant.");
   }, 120000);

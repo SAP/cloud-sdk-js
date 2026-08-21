@@ -12,7 +12,6 @@
     "test:unit": "NODE_OPTIONS=--experimental-vm-modules pnpm exec jest",
     "lint": "eslint --ignore-pattern '!index.ts' && prettier --check **/*.ts",
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
-    "check:dependencies": "depcheck --skip-missing=true .",
     "all": "pnpm install && pnpm run lint && pnpm run compile"
   },
   "dependencies": {
@@ -20,12 +19,11 @@
     "@actions/github": "^9.1.0"
   },
   "devDependencies": {
-    "@typescript/native": "npm:typescript@^7.0.2",
+    "@typescript/native": "npm:typescript@7.0.2",
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
-    "depcheck": "^1.4.7",
-    "eslint": "^10.2.1",
-    "memfs": "^4.57.2",
+    "eslint": "10.8.1",
+    "memfs": "4.68.1",
     "rolldown": "1.2.4",
-    "prettier": "^3.8.1"
+    "prettier": "3.9.6"
   }
 }

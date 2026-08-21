@@ -4,7 +4,7 @@ jest.mock('node:fs', () => require('memfs').fs);
 jest.mock('node:fs/promises', () => require('memfs').fs.promises);
 
 import { vol } from 'memfs';
-import { getChangelog } from './get-changelog';
+import { getChangelog } from './get-changelog.ts';
 
 describe('get changelog', () => {
   afterEach(() => {

@@ -15,4 +15,4 @@ jobs:
     steps:
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
       - name: Download Stats
-        run: pnpm exec ts-node scripts/npm-stats.ts
+        run: node scripts/npm-stats.ts

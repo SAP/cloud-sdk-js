@@ -1,4 +1,4 @@
-import execa from 'execa';
+import { x } from 'tinyexec';
 
 interface DeprecateOptions {
   deprecateMessage: string;
@@ -60,9 +60,11 @@ const deprecateOptions: DeprecateOptions = {
  * [check all existing versions of a package] - `npm view @sap-cloud-sdk/util versions`
  */
 async function deprecateNpmPackage() {
-  const responses = await Promise.all(
+  await Promise.all(
     deprecateOptions.packageNamesToBeDeprecated.map(async packageName => {
-      const resVersions = await execa('npm', ['view', packageName, 'versions']);
+      const resVersions = await x('npm', ['view', packageName, 'versions'], {
+        throwOnError: true
+      });
       const allVersions = resVersions.stdout
         .replace(/'|\s|\[|]/g, '')
         .split(',');
@@ -71,9 +73,8 @@ async function deprecateNpmPackage() {
           allVersions
             .map(version => {
               // Pick the prefix of a version. e.g., 1.34.1-20201230083713.13 will be 1.34.1
-              const prefix = version.match(
-                deprecateOptions.versionsToBeDeprecated
-              );
+              const prefix =
+                deprecateOptions.versionsToBeDeprecated.exec(version);
               return prefix ? prefix[1] : undefined;
             })
             .filter(e => !!e)
@@ -87,15 +88,20 @@ async function deprecateNpmPackage() {
       console.log(`[Deprecating]: ${packageName}@${deprecateVersion}`);
       if (deprecateOptions.isProduction) {
         try {
-          await execa('npm', [
-            'deprecate',
-            `${packageName}@${deprecateVersion}`,
-            deprecateOptions.deprecateMessage
-          ]);
+          await x(
+            'npm',
+            [
+              'deprecate',
+              `${packageName}@${deprecateVersion}`,
+              deprecateOptions.deprecateMessage
+            ],
+            { throwOnError: true }
+          );
         } catch (e) {
+          const message = e instanceof Error ? e.message : String(e);
           // 422 means this version was deprecated before
-          if (!e?.message?.includes('422 Unprocessable Entity')) {
-            throw new Error(e);
+          if (!message.includes('422 Unprocessable Entity')) {
+            throw new Error(message);
           }
         }
         console.log(`[Done]: ${packageName}@${deprecateVersion}`);

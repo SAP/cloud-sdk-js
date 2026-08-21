@@ -3,10 +3,10 @@ import * as fsp from "node:fs/promises";
 import fsp__default, { readFile, writeFile } from "node:fs/promises";
 import * as path$1 from "node:path";
 import path, { basename, delimiter, dirname, normalize, resolve } from "node:path";
-import * as os$2 from "os";
+import * as os$1 from "os";
 import os, { EOL } from "os";
 import * as crypto from "crypto";
-import * as fs$4 from "fs";
+import * as fs$1 from "fs";
 import { constants, promises, readdir, readdirSync, realpath, realpathSync, stat, statSync } from "fs";
 import "path";
 import { basename as basename$1, dirname as dirname$1, isAbsolute, normalize as normalize$1, posix, relative, resolve as resolve$1, sep } from "path";
@@ -16,15 +16,15 @@ import { styleText } from "node:util";
 import { info } from "node:console";
 import "child_process";
 import "timers";
+import { spawn } from "node:child_process";
+import { cwd } from "node:process";
+import { pipeline } from "node:stream/promises";
+import readline from "node:readline";
 import * as fs from "node:fs";
 import fs__default, { closeSync, openSync, readSync, statSync as statSync$1 } from "node:fs";
 import { F_OK } from "node:constants";
 import { fileURLToPath } from "url";
 import { createRequire as createRequire$1 } from "module";
-import { spawn } from "node:child_process";
-import { cwd } from "node:process";
-import { pipeline } from "node:stream/promises";
-import readline from "node:readline";
 //#region \0rolldown/runtime.js
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -96,7 +96,7 @@ function toCommandValue(input) {
 */
 function issueCommand(command, properties, message) {
 	const cmd = new Command(command, properties, message);
-	process.stdout.write(cmd.toString() + os$2.EOL);
+	process.stdout.write(cmd.toString() + os$1.EOL);
 }
 const CMD_STRING = "::";
 var Command = class {
@@ -135,15 +135,15 @@ function escapeProperty(s) {
 function issueFileCommand(command, message) {
 	const filePath = process.env[`GITHUB_${command}`];
 	if (!filePath) throw new Error(`Unable to find environment variable for file command ${command}`);
-	if (!fs$4.existsSync(filePath)) throw new Error(`Missing file at path: ${filePath}`);
-	fs$4.appendFileSync(filePath, `${toCommandValue(message)}${os$2.EOL}`, { encoding: "utf8" });
+	if (!fs$1.existsSync(filePath)) throw new Error(`Missing file at path: ${filePath}`);
+	fs$1.appendFileSync(filePath, `${toCommandValue(message)}${os$1.EOL}`, { encoding: "utf8" });
 }
 function prepareKeyValueMessage(key, value) {
 	const delimiter = `ghadelimiter_${crypto.randomUUID()}`;
 	const convertedValue = toCommandValue(value);
 	if (key.includes(delimiter)) throw new Error(`Unexpected input: name should not contain the delimiter "${delimiter}"`);
 	if (convertedValue.includes(delimiter)) throw new Error(`Unexpected input: value should not contain the delimiter "${delimiter}"`);
-	return `${key}<<${delimiter}${os$2.EOL}${convertedValue}${os$2.EOL}${delimiter}`;
+	return `${key}<<${delimiter}${os$1.EOL}${convertedValue}${os$1.EOL}${delimiter}`;
 }
 //#endregion
 //#region ../../node_modules/.pnpm/tunnel@0.0.6/node_modules/tunnel/lib/tunnel.js
@@ -966,15 +966,15 @@ var require_tree = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/core/util.js
 var require_util$7 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$28 = __require$1("node:assert");
+	const assert$27 = __require$1("node:assert");
 	const { kDestroyed, kBodyUsed, kListeners, kBody } = require_symbols$4();
 	const { IncomingMessage } = __require$1("node:http");
-	const stream$1 = __require$1("node:stream");
+	const stream = __require$1("node:stream");
 	const net$2 = __require$1("node:net");
 	const { Blob: Blob$3 } = __require$1("node:buffer");
 	const nodeUtil$3 = __require$1("node:util");
 	const { stringify } = __require$1("node:querystring");
-	const { EventEmitter: EE$3 } = __require$1("node:events");
+	const { EventEmitter: EE$2 } = __require$1("node:events");
 	const { InvalidArgumentError } = require_errors$1();
 	const { headerNameLowerCasedRecord } = require_constants$6();
 	const { tree } = require_tree();
@@ -985,7 +985,7 @@ var require_util$7 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			this[kBodyUsed] = false;
 		}
 		async *[Symbol.asyncIterator]() {
-			assert$28(!this[kBodyUsed], "disturbed");
+			assert$27(!this[kBodyUsed], "disturbed");
 			this[kBodyUsed] = true;
 			yield* this[kBody];
 		}
@@ -993,11 +993,11 @@ var require_util$7 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	function wrapRequestBody(body) {
 		if (isStream(body)) {
 			if (bodyLength(body) === 0) body.on("data", function() {
-				assert$28(false);
+				assert$27(false);
 			});
 			if (typeof body.readableDidRead !== "boolean") {
 				body[kBodyUsed] = false;
-				EE$3.prototype.on.call(body, "data", function() {
+				EE$2.prototype.on.call(body, "data", function() {
 					this[kBodyUsed] = true;
 				});
 			}
@@ -1064,7 +1064,7 @@ var require_util$7 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	function getHostname(host) {
 		if (host[0] === "[") {
 			const idx = host.indexOf("]");
-			assert$28(idx !== -1);
+			assert$27(idx !== -1);
 			return host.substring(1, idx);
 		}
 		const idx = host.indexOf(":");
@@ -1073,7 +1073,7 @@ var require_util$7 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	}
 	function getServerName(host) {
 		if (!host) return null;
-		assert$28(typeof host === "string");
+		assert$27(typeof host === "string");
 		const servername = getHostname(host);
 		if (net$2.isIP(servername)) return "";
 		return servername;
@@ -1097,7 +1097,7 @@ var require_util$7 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		return null;
 	}
 	function isDestroyed(body) {
-		return body && !!(body.destroyed || body[kDestroyed] || stream$1.isDestroyed?.(body));
+		return body && !!(body.destroyed || body[kDestroyed] || stream.isDestroyed?.(body));
 	}
 	function destroy(stream, err) {
 		if (stream == null || !isStream(stream) || isDestroyed(stream)) return;
@@ -1194,13 +1194,13 @@ var require_util$7 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 	}
 	function isDisturbed(body) {
-		return !!(body && (stream$1.isDisturbed(body) || body[kBodyUsed]));
+		return !!(body && (stream.isDisturbed(body) || body[kBodyUsed]));
 	}
 	function isErrored(body) {
-		return !!(body && stream$1.isErrored(body));
+		return !!(body && stream.isErrored(body));
 	}
 	function isReadable(body) {
-		return !!(body && stream$1.isReadable(body));
+		return !!(body && stream.isReadable(body));
 	}
 	function getSocketInfo(socket) {
 		return {
@@ -1336,7 +1336,7 @@ var require_util$7 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	function errorRequest(client, request, err) {
 		try {
 			request.onError(err);
-			assert$28(request.aborted);
+			assert$27(request.aborted);
 		} catch (err) {
 			client.emit("error", err);
 		}
@@ -1518,7 +1518,7 @@ var require_diagnostics = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/core/request.js
 var require_request$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { InvalidArgumentError, NotSupportedError } = require_errors$1();
-	const assert$27 = __require$1("node:assert");
+	const assert$26 = __require$1("node:assert");
 	const { isValidHTTPToken, isValidHeaderValue, isStream, destroy, isBuffer, isFormDataLike, isIterable, isBlobLike, buildURL, validateHandler, getServerName, normalizedMethodRecords } = require_util$7();
 	const { channels } = require_diagnostics();
 	const { headerNameLowerCasedRecord } = require_constants$6();
@@ -1610,8 +1610,8 @@ var require_request$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			}
 		}
 		onConnect(abort) {
-			assert$27(!this.aborted);
-			assert$27(!this.completed);
+			assert$26(!this.aborted);
+			assert$26(!this.completed);
 			if (this.error) abort(this.error);
 			else {
 				this.abort = abort;
@@ -1622,8 +1622,8 @@ var require_request$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			return this[kHandler].onResponseStarted?.();
 		}
 		onHeaders(statusCode, headers, resume, statusText) {
-			assert$27(!this.aborted);
-			assert$27(!this.completed);
+			assert$26(!this.aborted);
+			assert$26(!this.completed);
 			if (channels.headers.hasSubscribers) channels.headers.publish({
 				request: this,
 				response: {
@@ -1639,8 +1639,8 @@ var require_request$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			}
 		}
 		onData(chunk) {
-			assert$27(!this.aborted);
-			assert$27(!this.completed);
+			assert$26(!this.aborted);
+			assert$26(!this.completed);
 			try {
 				return this[kHandler].onData(chunk);
 			} catch (err) {
@@ -1649,13 +1649,13 @@ var require_request$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			}
 		}
 		onUpgrade(statusCode, headers, socket) {
-			assert$27(!this.aborted);
-			assert$27(!this.completed);
+			assert$26(!this.aborted);
+			assert$26(!this.completed);
 			return this[kHandler].onUpgrade(statusCode, headers, socket);
 		}
 		onComplete(trailers) {
 			this.onFinally();
-			assert$27(!this.aborted);
+			assert$26(!this.aborted);
 			this.completed = true;
 			if (channels.trailers.hasSubscribers) channels.trailers.publish({
 				request: this,
@@ -2251,7 +2251,7 @@ var require_timers = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/core/connect.js
 var require_connect = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const net$1 = __require$1("node:net");
-	const assert$26 = __require$1("node:assert");
+	const assert$25 = __require$1("node:assert");
 	const util = require_util$7();
 	const { InvalidArgumentError, ConnectTimeoutError } = require_errors$1();
 	const timers = require_timers();
@@ -2310,7 +2310,7 @@ var require_connect = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				if (!tls) tls = __require$1("node:tls");
 				servername = servername || options.servername || util.getServerName(host) || null;
 				const sessionKey = servername || hostname;
-				assert$26(sessionKey);
+				assert$25(sessionKey);
 				const session = customSession || sessionCache.get(sessionKey) || null;
 				port = port || 443;
 				socket = tls.connect({
@@ -2328,7 +2328,7 @@ var require_connect = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					sessionCache.set(sessionKey, session);
 				});
 			} else {
-				assert$26(!httpSocket, "httpSocket can only be sent on TLS update");
+				assert$25(!httpSocket, "httpSocket can only be sent on TLS update");
 				port = port || 80;
 				socket = net$1.connect({
 					highWaterMark: 65536,
@@ -3029,7 +3029,7 @@ var require_global$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/web/fetch/data-url.js
 var require_data_url = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$25 = __require$1("node:assert");
+	const assert$24 = __require$1("node:assert");
 	const encoder = new TextEncoder();
 	/**
 	* @see https://mimesniff.spec.whatwg.org/#http-token-code-point
@@ -3043,7 +3043,7 @@ var require_data_url = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const HTTP_QUOTED_STRING_TOKENS = /^[\u0009\u0020-\u007E\u0080-\u00FF]+$/;
 	/** @param {URL} dataURL */
 	function dataURLProcessor(dataURL) {
-		assert$25(dataURL.protocol === "data:");
+		assert$24(dataURL.protocol === "data:");
 		let input = URLSerializer(dataURL, true);
 		input = input.slice(5);
 		const position = { position: 0 };
@@ -3208,7 +3208,7 @@ var require_data_url = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	function collectAnHTTPQuotedString(input, position, extractValue) {
 		const positionStart = position.position;
 		let value = "";
-		assert$25(input[position.position] === "\"");
+		assert$24(input[position.position] === "\"");
 		position.position++;
 		while (true) {
 			value += collectASequenceOfCodePoints((char) => char !== "\"" && char !== "\\", input, position);
@@ -3223,7 +3223,7 @@ var require_data_url = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				value += input[position.position];
 				position.position++;
 			} else {
-				assert$25(quoteOrBackslash === "\"");
+				assert$24(quoteOrBackslash === "\"");
 				break;
 			}
 		}
@@ -3234,7 +3234,7 @@ var require_data_url = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	* @see https://mimesniff.spec.whatwg.org/#serialize-a-mime-type
 	*/
 	function serializeAMimeType(mimeType) {
-		assert$25(mimeType !== "failure");
+		assert$24(mimeType !== "failure");
 		const { parameters, essence } = mimeType;
 		let serialization = essence;
 		for (let [name, value] of parameters.entries()) {
@@ -3687,7 +3687,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { collectASequenceOfCodePoints, collectAnHTTPQuotedString, removeChars, parseMIMEType } = require_data_url();
 	const { performance: performance$1 } = __require$1("node:perf_hooks");
 	const { isBlobLike, ReadableStreamFrom, isValidHTTPToken, normalizedMethodRecordsBase } = require_util$7();
-	const assert$24 = __require$1("node:assert");
+	const assert$23 = __require$1("node:assert");
 	const { isUint8Array } = __require$1("node:util/types");
 	const { webidl } = require_webidl();
 	let supportedHashes = [];
@@ -3862,7 +3862,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	}
 	function determineRequestsReferrer(request) {
 		const policy = request.referrerPolicy;
-		assert$24(policy);
+		assert$23(policy);
 		let referrerSource = null;
 		if (request.referrer === "client") {
 			const globalOrigin = getGlobalOrigin();
@@ -3900,7 +3900,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	* @param {boolean|undefined} originOnly
 	*/
 	function stripURLForReferrer(url, originOnly) {
-		assert$24(url instanceof URL);
+		assert$23(url instanceof URL);
 		url = new URL(url);
 		if (url.protocol === "file:" || url.protocol === "about:" || url.protocol === "blank:") return "no-referrer";
 		url.username = "";
@@ -4047,7 +4047,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	function serializeJavascriptValueToJSONString(value) {
 		const result = JSON.stringify(value);
 		if (result === void 0) throw new TypeError("Value is not JSON serializable");
-		assert$24(typeof result === "string");
+		assert$23(typeof result === "string");
 		return result;
 	}
 	const esIteratorPrototype = Object.getPrototypeOf(Object.getPrototypeOf([][Symbol.iterator]()));
@@ -4225,7 +4225,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	* @param {string} input
 	*/
 	function isomorphicEncode(input) {
-		assert$24(!invalidIsomorphicEncodeValueRegex.test(input));
+		assert$23(!invalidIsomorphicEncodeValueRegex.test(input));
 		return input;
 	}
 	/**
@@ -4249,7 +4249,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	* @param {URL} url
 	*/
 	function urlIsLocal(url) {
-		assert$24("protocol" in url);
+		assert$23("protocol" in url);
 		const protocol = url.protocol;
 		return protocol === "about:" || protocol === "blob:" || protocol === "data:";
 	}
@@ -4265,7 +4265,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	* @param {URL} url
 	*/
 	function urlIsHttpHttpsScheme(url) {
-		assert$24("protocol" in url);
+		assert$23("protocol" in url);
 		const protocol = url.protocol;
 		return protocol === "http:" || protocol === "https:";
 	}
@@ -4393,7 +4393,7 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					temporaryValue += collectAnHTTPQuotedString(input, position);
 					if (position.position < input.length) continue;
 				} else {
-					assert$24(input.charCodeAt(position.position) === 44);
+					assert$23(input.charCodeAt(position.position) === 44);
 					position.position++;
 				}
 			}
@@ -4707,7 +4707,7 @@ var require_formdata_parser = /* @__PURE__ */ __commonJSMin(((exports, module) =
 	const { HTTP_TOKEN_CODEPOINTS, isomorphicDecode } = require_data_url();
 	const { isFileLike } = require_file();
 	const { makeEntry } = require_formdata();
-	const assert$23 = __require$1("node:assert");
+	const assert$22 = __require$1("node:assert");
 	const { File: NodeFile } = __require$1("node:buffer");
 	const File = globalThis.File ?? NodeFile;
 	const formDataNameBuffer = Buffer.from("form-data; name=\"");
@@ -4740,7 +4740,7 @@ var require_formdata_parser = /* @__PURE__ */ __commonJSMin(((exports, module) =
 	* @param {ReturnType<import('./data-url')['parseMIMEType']>} mimeType
 	*/
 	function multipartFormDataParser(input, mimeType) {
-		assert$23(mimeType !== "failure" && mimeType.essence === "multipart/form-data");
+		assert$22(mimeType !== "failure" && mimeType.essence === "multipart/form-data");
 		const boundaryString = mimeType.parameters.get("boundary");
 		if (boundaryString === void 0) return "failure";
 		const boundary = Buffer.from(`--${boundaryString}`, "utf8");
@@ -4776,8 +4776,8 @@ var require_formdata_parser = /* @__PURE__ */ __commonJSMin(((exports, module) =
 				if (!isAsciiString(contentType)) contentType = "";
 				value = new File([body], filename, { type: contentType });
 			} else value = utf8DecodeBytes(Buffer.from(body));
-			assert$23(isUSVString(name));
-			assert$23(typeof value === "string" && isUSVString(value) || isFileLike(value));
+			assert$22(isUSVString(name));
+			assert$22(typeof value === "string" && isUSVString(value) || isFileLike(value));
 			entryList.push(makeEntry(name, value, filename));
 		}
 	}
@@ -4850,7 +4850,7 @@ var require_formdata_parser = /* @__PURE__ */ __commonJSMin(((exports, module) =
 	* @param {{ position: number }} position
 	*/
 	function parseMultipartFormDataName(input, position) {
-		assert$23(input[position.position - 1] === 34);
+		assert$22(input[position.position - 1] === 34);
 		/** @type {string | Buffer} */
 		let name = collectASequenceOfBytes((char) => char !== 10 && char !== 13 && char !== 34, input, position);
 		if (input[position.position] !== 34) return null;
@@ -4907,7 +4907,7 @@ var require_body = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { kState } = require_symbols$3();
 	const { webidl } = require_webidl();
 	const { Blob: Blob$1 } = __require$1("node:buffer");
-	const assert$22 = __require$1("node:assert");
+	const assert$21 = __require$1("node:assert");
 	const { isErrored, isDisturbed } = __require$1("node:stream");
 	const { isArrayBuffer } = __require$1("node:util/types");
 	const { serializeAMimeType } = require_data_url();
@@ -4940,7 +4940,7 @@ var require_body = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			start() {},
 			type: "bytes"
 		});
-		assert$22(isReadableStreamLike(stream));
+		assert$21(isReadableStreamLike(stream));
 		let action = null;
 		let source = null;
 		let length = null;
@@ -5027,9 +5027,9 @@ Content-Type: ${value.type || "application/octet-stream"}\r\n\r\n`);
 	function safelyExtractBody(object, keepalive = false) {
 		if (object instanceof ReadableStream) {
 			// istanbul ignore next
-			assert$22(!util.isDisturbed(object), "The body has already been consumed.");
+			assert$21(!util.isDisturbed(object), "The body has already been consumed.");
 			// istanbul ignore next
-			assert$22(!object.locked, "The stream is locked.");
+			assert$21(!object.locked, "The stream is locked.");
 		}
 		return extractBody(object, keepalive);
 	}
@@ -5158,7 +5158,7 @@ Content-Type: ${value.type || "application/octet-stream"}\r\n\r\n`);
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/dispatcher/client-h1.js
 var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$21 = __require$1("node:assert");
+	const assert$20 = __require$1("node:assert");
 	const util = require_util$7();
 	const { channels } = require_diagnostics();
 	const timers = require_timers();
@@ -5188,35 +5188,35 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				return 0;
 			},
 			wasm_on_status: (p, at, len) => {
-				assert$21(currentParser.ptr === p);
+				assert$20(currentParser.ptr === p);
 				const start = at - currentBufferPtr + currentBufferRef.byteOffset;
 				return currentParser.onStatus(new FastBuffer(currentBufferRef.buffer, start, len)) || 0;
 			},
 			wasm_on_message_begin: (p) => {
-				assert$21(currentParser.ptr === p);
+				assert$20(currentParser.ptr === p);
 				return currentParser.onMessageBegin() || 0;
 			},
 			wasm_on_header_field: (p, at, len) => {
-				assert$21(currentParser.ptr === p);
+				assert$20(currentParser.ptr === p);
 				const start = at - currentBufferPtr + currentBufferRef.byteOffset;
 				return currentParser.onHeaderField(new FastBuffer(currentBufferRef.buffer, start, len)) || 0;
 			},
 			wasm_on_header_value: (p, at, len) => {
-				assert$21(currentParser.ptr === p);
+				assert$20(currentParser.ptr === p);
 				const start = at - currentBufferPtr + currentBufferRef.byteOffset;
 				return currentParser.onHeaderValue(new FastBuffer(currentBufferRef.buffer, start, len)) || 0;
 			},
 			wasm_on_headers_complete: (p, statusCode, upgrade, shouldKeepAlive) => {
-				assert$21(currentParser.ptr === p);
+				assert$20(currentParser.ptr === p);
 				return currentParser.onHeadersComplete(statusCode, Boolean(upgrade), Boolean(shouldKeepAlive)) || 0;
 			},
 			wasm_on_body: (p, at, len) => {
-				assert$21(currentParser.ptr === p);
+				assert$20(currentParser.ptr === p);
 				const start = at - currentBufferPtr + currentBufferRef.byteOffset;
 				return currentParser.onBody(new FastBuffer(currentBufferRef.buffer, start, len)) || 0;
 			},
 			wasm_on_message_complete: (p) => {
-				assert$21(currentParser.ptr === p);
+				assert$20(currentParser.ptr === p);
 				return currentParser.onMessageComplete() || 0;
 			}
 		} });
@@ -5234,7 +5234,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const TIMEOUT_KEEP_ALIVE = 8;
 	var Parser = class {
 		constructor(client, socket, { exports: exports$1 }) {
-			assert$21(Number.isFinite(client[kMaxHeadersSize]) && client[kMaxHeadersSize] > 0);
+			assert$20(Number.isFinite(client[kMaxHeadersSize]) && client[kMaxHeadersSize] > 0);
 			this.llhttp = exports$1;
 			this.ptr = this.llhttp.llhttp_alloc(constants.TYPE.RESPONSE);
 			this.client = client;
@@ -5279,10 +5279,10 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 		resume() {
 			if (this.socket.destroyed || !this.paused) return;
-			assert$21(this.ptr != null);
-			assert$21(currentParser == null);
+			assert$20(this.ptr != null);
+			assert$20(currentParser == null);
 			this.llhttp.llhttp_resume(this.ptr);
-			assert$21(this.timeoutType === TIMEOUT_BODY);
+			assert$20(this.timeoutType === TIMEOUT_BODY);
 			if (this.timeout) {
 				// istanbul ignore else: only for jest
 				if (this.timeout.refresh) this.timeout.refresh();
@@ -5299,9 +5299,9 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			}
 		}
 		execute(data) {
-			assert$21(this.ptr != null);
-			assert$21(currentParser == null);
-			assert$21(!this.paused);
+			assert$20(this.ptr != null);
+			assert$20(currentParser == null);
+			assert$20(!this.paused);
 			const { socket, llhttp } = this;
 			if (data.length > currentBufferSize) {
 				if (currentBufferPtr) llhttp.free(currentBufferPtr);
@@ -5336,9 +5336,9 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			}
 		}
 		finish() {
-			assert$21(currentParser === null);
-			assert$21(this.ptr != null);
-			assert$21(!this.paused);
+			assert$20(currentParser === null);
+			assert$20(this.ptr != null);
+			assert$20(!this.paused);
 			const { llhttp } = this;
 			let ret;
 			try {
@@ -5366,8 +5366,8 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			return new HTTPParserError(message, constants.ERROR[ret], data);
 		}
 		destroy() {
-			assert$21(this.ptr != null);
-			assert$21(currentParser == null);
+			assert$20(this.ptr != null);
+			assert$20(currentParser == null);
 			this.llhttp.llhttp_free(this.ptr);
 			this.ptr = null;
 			this.timeout && timers.clearTimeout(this.timeout);
@@ -5417,14 +5417,14 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 		onUpgrade(head) {
 			const { upgrade, client, socket, headers, statusCode } = this;
-			assert$21(upgrade);
-			assert$21(client[kSocket] === socket);
-			assert$21(!socket.destroyed);
-			assert$21(!this.paused);
-			assert$21((headers.length & 1) === 0);
+			assert$20(upgrade);
+			assert$20(client[kSocket] === socket);
+			assert$20(!socket.destroyed);
+			assert$20(!this.paused);
+			assert$20((headers.length & 1) === 0);
 			const request = client[kQueue][client[kRunningIdx]];
-			assert$21(request);
-			assert$21(request.upgrade || request.method === "CONNECT");
+			assert$20(request);
+			assert$20(request.upgrade || request.method === "CONNECT");
 			this.statusCode = null;
 			this.statusText = "";
 			this.shouldKeepAlive = null;
@@ -5458,8 +5458,8 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			const request = client[kQueue][client[kRunningIdx]];
 			/* istanbul ignore next: difficult to make a test case for */
 			if (!request) return -1;
-			assert$21(!this.upgrade);
-			assert$21(this.statusCode < 200);
+			assert$20(!this.upgrade);
+			assert$20(this.statusCode < 200);
 			if (statusCode === 100) {
 				util.destroy(socket, new SocketError("bad response", util.getSocketInfo(socket)));
 				return -1;
@@ -5468,7 +5468,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				util.destroy(socket, new SocketError("bad upgrade", util.getSocketInfo(socket)));
 				return -1;
 			}
-			assert$21(this.timeoutType === TIMEOUT_HEADERS);
+			assert$20(this.timeoutType === TIMEOUT_HEADERS);
 			this.statusCode = statusCode;
 			this.shouldKeepAlive = shouldKeepAlive || request.method === "HEAD" && !socket[kReset] && this.connection.toLowerCase() === "keep-alive";
 			if (this.statusCode >= 200) {
@@ -5479,16 +5479,16 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				if (this.timeout.refresh) this.timeout.refresh();
 			}
 			if (request.method === "CONNECT") {
-				assert$21(client[kRunning] === 1);
+				assert$20(client[kRunning] === 1);
 				this.upgrade = true;
 				return 2;
 			}
 			if (upgrade) {
-				assert$21(client[kRunning] === 1);
+				assert$20(client[kRunning] === 1);
 				this.upgrade = true;
 				return 2;
 			}
-			assert$21((this.headers.length & 1) === 0);
+			assert$20((this.headers.length & 1) === 0);
 			this.headers = [];
 			this.headersSize = 0;
 			if (this.shouldKeepAlive && client[kPipelining]) {
@@ -5513,13 +5513,13 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			const { client, socket, statusCode, maxResponseSize } = this;
 			if (socket.destroyed) return -1;
 			const request = client[kQueue][client[kRunningIdx]];
-			assert$21(request);
-			assert$21(this.timeoutType === TIMEOUT_BODY);
+			assert$20(request);
+			assert$20(this.timeoutType === TIMEOUT_BODY);
 			if (this.timeout) {
 				// istanbul ignore else: only for jest
 				if (this.timeout.refresh) this.timeout.refresh();
 			}
-			assert$21(statusCode >= 200);
+			assert$20(statusCode >= 200);
 			if (maxResponseSize > -1 && this.bytesRead + buf.length > maxResponseSize) {
 				util.destroy(socket, new ResponseExceededMaxSizeError());
 				return -1;
@@ -5531,10 +5531,10 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			const { client, socket, statusCode, upgrade, headers, contentLength, bytesRead, shouldKeepAlive } = this;
 			if (socket.destroyed && (!statusCode || shouldKeepAlive)) return -1;
 			if (upgrade) return;
-			assert$21(statusCode >= 100);
-			assert$21((this.headers.length & 1) === 0);
+			assert$20(statusCode >= 100);
+			assert$20((this.headers.length & 1) === 0);
 			const request = client[kQueue][client[kRunningIdx]];
-			assert$21(request);
+			assert$20(request);
 			this.statusCode = null;
 			this.statusText = "";
 			this.bytesRead = 0;
@@ -5553,7 +5553,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			client[kQueue][client[kRunningIdx]++] = null;
 			socket[kSocketUsed] = true;
 			if (socket[kWriting]) {
-				assert$21(client[kRunning] === 0);
+				assert$20(client[kRunning] === 0);
 				util.destroy(socket, new InformationalError("reset"));
 				return constants.ERROR.PAUSED;
 			} else if (!shouldKeepAlive) {
@@ -5571,13 +5571,13 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		/* istanbul ignore else */
 		if (timeoutType === TIMEOUT_HEADERS) {
 			if (!socket[kWriting] || socket.writableNeedDrain || client[kRunning] > 1) {
-				assert$21(!paused, "cannot be paused while waiting for headers");
+				assert$20(!paused, "cannot be paused while waiting for headers");
 				util.destroy(socket, new HeadersTimeoutError());
 			}
 		} else if (timeoutType === TIMEOUT_BODY) {
 			if (!paused) util.destroy(socket, new BodyTimeoutError());
 		} else if (timeoutType === TIMEOUT_KEEP_ALIVE) {
-			assert$21(client[kRunning] === 0 && client[kKeepAliveTimeoutValue]);
+			assert$20(client[kRunning] === 0 && client[kKeepAliveTimeoutValue]);
 			util.destroy(socket, new InformationalError("socket idle timeout"));
 		}
 	}
@@ -5596,7 +5596,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		socket[kSocketUsed] = false;
 		socket[kParser] = new Parser(client, socket, llhttpInstance);
 		addListener(socket, "error", function(err) {
-			assert$21(err.code !== "ERR_TLS_CERT_ALTNAME_INVALID");
+			assert$20(err.code !== "ERR_TLS_CERT_ALTNAME_INVALID");
 			const parser = this[kParser];
 			if (err.code === "ECONNRESET" && parser.statusCode && !parser.shouldKeepAlive) {
 				const parserErr = parser.finish();
@@ -5635,7 +5635,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			client[kSocket] = null;
 			client[kHTTPContext] = null;
 			if (client.destroyed) {
-				assert$21(client[kPending] === 0);
+				assert$20(client[kPending] === 0);
 				const requests = client[kQueue].splice(client[kRunningIdx]);
 				for (let i = 0; i < requests.length; i++) {
 					const request = requests[i];
@@ -5647,7 +5647,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				util.errorRequest(client, request, err);
 			}
 			client[kPendingIdx] = client[kRunningIdx];
-			assert$21(client[kRunning] === 0);
+			assert$20(client[kRunning] === 0);
 			client.emit("disconnect", client[kUrl], [client], err);
 			client[kResume]();
 		});
@@ -5821,11 +5821,11 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			else writeBlob(abort, body, client, request, socket, contentLength, header, expectsPayload);
 		} else if (util.isStream(body)) writeStream(abort, body, client, request, socket, contentLength, header, expectsPayload);
 		else if (util.isIterable(body)) writeIterable(abort, body, client, request, socket, contentLength, header, expectsPayload);
-		else assert$21(false);
+		else assert$20(false);
 		return true;
 	}
 	function writeStream(abort, body, client, request, socket, contentLength, header, expectsPayload) {
-		assert$21(contentLength !== 0 || client[kRunning] === 0, "stream body cannot be pipelined");
+		assert$20(contentLength !== 0 || client[kRunning] === 0, "stream body cannot be pipelined");
 		let finished = false;
 		const writer = new AsyncWriter({
 			abort,
@@ -5860,7 +5860,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		const onFinished = function(err) {
 			if (finished) return;
 			finished = true;
-			assert$21(socket.destroyed || socket[kWriting] && client[kRunning] <= 1);
+			assert$20(socket.destroyed || socket[kWriting] && client[kRunning] <= 1);
 			socket.off("drain", onDrain).off("error", onFinished);
 			body.removeListener("data", onData).removeListener("end", onFinished).removeListener("close", onClose);
 			if (!err) try {
@@ -5884,11 +5884,11 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (!body) {
 				if (contentLength === 0) socket.write(`${header}content-length: 0\r\n\r\n`, "latin1");
 				else {
-					assert$21(contentLength === null, "no body must not have content length");
+					assert$20(contentLength === null, "no body must not have content length");
 					socket.write(`${header}\r\n`, "latin1");
 				}
 			} else if (util.isBuffer(body)) {
-				assert$21(contentLength === body.byteLength, "buffer body must have content length");
+				assert$20(contentLength === body.byteLength, "buffer body must have content length");
 				socket.cork();
 				socket.write(`${header}content-length: ${contentLength}\r\n\r\n`, "latin1");
 				socket.write(body);
@@ -5903,7 +5903,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 	}
 	async function writeBlob(abort, body, client, request, socket, contentLength, header, expectsPayload) {
-		assert$21(contentLength === body.size, "blob body must have content length");
+		assert$20(contentLength === body.size, "blob body must have content length");
 		try {
 			if (contentLength != null && contentLength !== body.size) throw new RequestContentLengthMismatchError();
 			const buffer = Buffer.from(await body.arrayBuffer());
@@ -5920,7 +5920,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 	}
 	async function writeIterable(abort, body, client, request, socket, contentLength, header, expectsPayload) {
-		assert$21(contentLength !== 0 || client[kRunning] === 0, "iterator body cannot be pipelined");
+		assert$20(contentLength !== 0 || client[kRunning] === 0, "iterator body cannot be pipelined");
 		let callback = null;
 		function onDrain() {
 			if (callback) {
@@ -5930,7 +5930,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			}
 		}
 		const waitForDrain = () => new Promise((resolve, reject) => {
-			assert$21(callback === null);
+			assert$20(callback === null);
 			if (socket[kError]) reject(socket[kError]);
 			else callback = resolve;
 		});
@@ -6021,7 +6021,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			const { socket, client, abort } = this;
 			socket[kWriting] = false;
 			if (err) {
-				assert$21(client[kRunning] <= 1, "pipeline should only contain this request");
+				assert$20(client[kRunning] <= 1, "pipeline should only contain this request");
 				abort(err);
 			}
 		}
@@ -6031,7 +6031,7 @@ var require_client_h1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/dispatcher/client-h2.js
 var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$20 = __require$1("node:assert");
+	const assert$19 = __require$1("node:assert");
 	const { pipeline: pipeline$3 } = __require$1("node:stream");
 	const util = require_util$7();
 	const { RequestContentLengthMismatchError, RequestAbortedError, SocketError, InformationalError } = require_errors$1();
@@ -6076,7 +6076,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			const err = this[kSocket][kError] || this[kError] || new SocketError("closed", util.getSocketInfo(socket));
 			client[kHTTP2Session] = null;
 			if (client.destroyed) {
-				assert$20(client[kPending] === 0);
+				assert$19(client[kPending] === 0);
 				const requests = client[kQueue].splice(client[kRunningIdx]);
 				for (let i = 0; i < requests.length; i++) {
 					const request = requests[i];
@@ -6088,7 +6088,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		client[kHTTP2Session] = session;
 		socket[kHTTP2Session] = session;
 		util.addListener(socket, "error", function(err) {
-			assert$20(err.code !== "ERR_TLS_CERT_ALTNAME_INVALID");
+			assert$19(err.code !== "ERR_TLS_CERT_ALTNAME_INVALID");
 			this[kError] = err;
 			this[kClient][kOnError](err);
 		});
@@ -6100,7 +6100,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			client[kSocket] = null;
 			if (this[kHTTP2Session] != null) this[kHTTP2Session].destroy(err);
 			client[kPendingIdx] = client[kRunningIdx];
-			assert$20(client[kRunning] === 0);
+			assert$19(client[kRunning] === 0);
 			client.emit("disconnect", client[kUrl], [client], err);
 			client[kResume]();
 		});
@@ -6142,7 +6142,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 	}
 	function onHttp2SessionError(err) {
-		assert$20(err.code !== "ERR_TLS_CERT_ALTNAME_INVALID");
+		assert$19(err.code !== "ERR_TLS_CERT_ALTNAME_INVALID");
 		this[kSocket][kError] = err;
 		this[kClient][kOnError](err);
 	}
@@ -6179,7 +6179,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			util.errorRequest(client, request, err);
 			client[kPendingIdx] = client[kRunningIdx];
 		}
-		assert$20(client[kRunning] === 0);
+		assert$19(client[kRunning] === 0);
 		client.emit("disconnect", client[kUrl], [client], err);
 		client[kResume]();
 	}
@@ -6265,7 +6265,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			process.emitWarning(new RequestContentLengthMismatchError());
 		}
 		if (contentLength != null) {
-			assert$20(body, "no body must not have content length");
+			assert$19(body, "no body must not have content length");
 			headers[HTTP2_HEADER_CONTENT_LENGTH] = `${contentLength}`;
 		}
 		session.ref();
@@ -6327,13 +6327,13 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				else writeBlob(abort, stream, body, client, request, client[kSocket], contentLength, expectsPayload);
 			} else if (util.isStream(body)) writeStream(abort, client[kSocket], expectsPayload, stream, body, client, request, contentLength);
 			else if (util.isIterable(body)) writeIterable(abort, stream, body, client, request, client[kSocket], contentLength, expectsPayload);
-			else assert$20(false);
+			else assert$19(false);
 		}
 	}
 	function writeBuffer(abort, h2stream, body, client, request, socket, contentLength, expectsPayload) {
 		try {
 			if (body != null && util.isBuffer(body)) {
-				assert$20(contentLength === body.byteLength, "buffer body must have content length");
+				assert$19(contentLength === body.byteLength, "buffer body must have content length");
 				h2stream.cork();
 				h2stream.write(body);
 				h2stream.uncork();
@@ -6348,7 +6348,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 	}
 	function writeStream(abort, socket, expectsPayload, h2stream, body, client, request, contentLength) {
-		assert$20(contentLength !== 0 || client[kRunning] === 0, "stream body cannot be pipelined");
+		assert$19(contentLength !== 0 || client[kRunning] === 0, "stream body cannot be pipelined");
 		const pipe = pipeline$3(body, h2stream, (err) => {
 			if (err) {
 				util.destroy(pipe, err);
@@ -6366,7 +6366,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 	}
 	async function writeBlob(abort, h2stream, body, client, request, socket, contentLength, expectsPayload) {
-		assert$20(contentLength === body.size, "blob body must have content length");
+		assert$19(contentLength === body.size, "blob body must have content length");
 		try {
 			if (contentLength != null && contentLength !== body.size) throw new RequestContentLengthMismatchError();
 			const buffer = Buffer.from(await body.arrayBuffer());
@@ -6383,7 +6383,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		}
 	}
 	async function writeIterable(abort, h2stream, body, client, request, socket, contentLength, expectsPayload) {
-		assert$20(contentLength !== 0 || client[kRunning] === 0, "iterator body cannot be pipelined");
+		assert$19(contentLength !== 0 || client[kRunning] === 0, "iterator body cannot be pipelined");
 		let callback = null;
 		function onDrain() {
 			if (callback) {
@@ -6393,7 +6393,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			}
 		}
 		const waitForDrain = () => new Promise((resolve, reject) => {
-			assert$20(callback === null);
+			assert$19(callback === null);
 			if (socket[kError]) reject(socket[kError]);
 			else callback = resolve;
 		});
@@ -6422,9 +6422,9 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 var require_redirect_handler = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const util = require_util$7();
 	const { kBodyUsed } = require_symbols$4();
-	const assert$19 = __require$1("node:assert");
+	const assert$18 = __require$1("node:assert");
 	const { InvalidArgumentError } = require_errors$1();
-	const EE$2 = __require$1("node:events");
+	const EE$1 = __require$1("node:events");
 	const redirectableStatusCodes = [
 		300,
 		301,
@@ -6440,7 +6440,7 @@ var require_redirect_handler = /* @__PURE__ */ __commonJSMin(((exports, module) 
 			this[kBodyUsed] = false;
 		}
 		async *[Symbol.asyncIterator]() {
-			assert$19(!this[kBodyUsed], "disturbed");
+			assert$18(!this[kBodyUsed], "disturbed");
 			this[kBodyUsed] = true;
 			yield* this[kBody];
 		}
@@ -6462,11 +6462,11 @@ var require_redirect_handler = /* @__PURE__ */ __commonJSMin(((exports, module) 
 			this.redirectionLimitReached = false;
 			if (util.isStream(this.opts.body)) {
 				if (util.bodyLength(this.opts.body) === 0) this.opts.body.on("data", function() {
-					assert$19(false);
+					assert$18(false);
 				});
 				if (typeof this.opts.body.readableDidRead !== "boolean") {
 					this.opts.body[kBodyUsed] = false;
-					EE$2.prototype.on.call(this.opts.body, "data", function() {
+					EE$1.prototype.on.call(this.opts.body, "data", function() {
 						this[kBodyUsed] = true;
 					});
 				}
@@ -6538,7 +6538,7 @@ var require_redirect_handler = /* @__PURE__ */ __commonJSMin(((exports, module) 
 			for (let i = 0; i < headers.length; i += 2) if (!shouldRemoveHeader(headers[i], removeContent, unknownOrigin)) ret.push(headers[i], headers[i + 1]);
 		} else if (headers && typeof headers === "object") {
 			for (const key of Object.keys(headers)) if (!shouldRemoveHeader(key, removeContent, unknownOrigin)) ret.push(key, headers[key]);
-		} else assert$19(headers == null, "headers must be an object or an array");
+		} else assert$18(headers == null, "headers must be an object or an array");
 		return ret;
 	}
 	module.exports = RedirectHandler;
@@ -6566,7 +6566,7 @@ var require_redirect_interceptor = /* @__PURE__ */ __commonJSMin(((exports, modu
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/dispatcher/client.js
 var require_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$18 = __require$1("node:assert");
+	const assert$17 = __require$1("node:assert");
 	const net = __require$1("node:net");
 	const http = __require$1("node:http");
 	const util = require_util$7();
@@ -6732,13 +6732,13 @@ var require_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const createRedirectInterceptor = require_redirect_interceptor();
 	function onError(client, err) {
 		if (client[kRunning] === 0 && err.code !== "UND_ERR_INFO" && err.code !== "UND_ERR_SOCKET") {
-			assert$18(client[kPendingIdx] === client[kRunningIdx]);
+			assert$17(client[kPendingIdx] === client[kRunningIdx]);
 			const requests = client[kQueue].splice(client[kRunningIdx]);
 			for (let i = 0; i < requests.length; i++) {
 				const request = requests[i];
 				util.errorRequest(client, request, err);
 			}
-			assert$18(client[kSize] === 0);
+			assert$17(client[kSize] === 0);
 		}
 	}
 	/**
@@ -6746,14 +6746,14 @@ var require_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	* @returns
 	*/
 	async function connect(client) {
-		assert$18(!client[kConnecting]);
-		assert$18(!client[kHTTPContext]);
+		assert$17(!client[kConnecting]);
+		assert$17(!client[kHTTPContext]);
 		let { host, hostname, protocol, port } = client[kUrl];
 		if (hostname[0] === "[") {
 			const idx = hostname.indexOf("]");
-			assert$18(idx !== -1);
+			assert$17(idx !== -1);
 			const ip = hostname.substring(1, idx);
-			assert$18(net.isIP(ip));
+			assert$17(net.isIP(ip));
 			hostname = ip;
 		}
 		client[kConnecting] = true;
@@ -6787,7 +6787,7 @@ var require_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				util.destroy(socket.on("error", noop), new ClientDestroyedError());
 				return;
 			}
-			assert$18(socket);
+			assert$17(socket);
 			try {
 				client[kHTTPContext] = socket.alpnProtocol === "h2" ? await connectH2(client, socket) : await connectH1(client, socket);
 			} catch (err) {
@@ -6830,7 +6830,7 @@ var require_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				error: err
 			});
 			if (err.code === "ERR_TLS_CERT_ALTNAME_INVALID") {
-				assert$18(client[kRunning] === 0);
+				assert$17(client[kRunning] === 0);
 				while (client[kPending] > 0 && client[kQueue][client[kPendingIdx]].servername === client[kServerName]) {
 					const request = client[kQueue][client[kPendingIdx]++];
 					util.errorRequest(client, request, err);
@@ -6858,7 +6858,7 @@ var require_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	function _resume(client, sync) {
 		while (true) {
 			if (client.destroyed) {
-				assert$18(client[kPending] === 0);
+				assert$17(client[kPending] === 0);
 				return;
 			}
 			if (client[kClosedResolve] && !client[kSize]) {
@@ -7665,7 +7665,7 @@ var require_env_http_proxy_agent = /* @__PURE__ */ __commonJSMin(((exports, modu
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/handler/retry-handler.js
 var require_retry_handler = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$17 = __require$1("node:assert");
+	const assert$16 = __require$1("node:assert");
 	const { kRetryHandlerDefaultRetry } = require_symbols$4();
 	const { RequestRetryError } = require_errors$1();
 	const { isDisturbed, parseHeaders, parseRangeHeader, wrapRequestBody } = require_util$7();
@@ -7828,8 +7828,8 @@ var require_retry_handler = /* @__PURE__ */ __commonJSMin(((exports, module) => 
 					return false;
 				}
 				const { start, size, end = size - 1 } = contentRange;
-				assert$17(this.start === start, "content-range mismatch");
-				assert$17(this.end == null || this.end === end, "content-range mismatch");
+				assert$16(this.start === start, "content-range mismatch");
+				assert$16(this.end == null || this.end === end, "content-range mismatch");
 				this.resume = resume;
 				return true;
 			}
@@ -7843,8 +7843,8 @@ var require_retry_handler = /* @__PURE__ */ __commonJSMin(((exports, module) => 
 						return false;
 					}
 					const { start, size, end = size - 1 } = range;
-					assert$17(start != null && Number.isFinite(start), "content-range mismatch");
-					assert$17(end != null && Number.isFinite(end), "invalid content-length");
+					assert$16(start != null && Number.isFinite(start), "content-range mismatch");
+					assert$16(end != null && Number.isFinite(end), "invalid content-length");
 					this.start = start;
 					this.end = end;
 				}
@@ -7852,8 +7852,8 @@ var require_retry_handler = /* @__PURE__ */ __commonJSMin(((exports, module) => 
 					const contentLength = headers["content-length"];
 					this.end = contentLength != null ? Number(contentLength) - 1 : null;
 				}
-				assert$17(Number.isFinite(this.start));
-				assert$17(this.end == null || Number.isFinite(this.end), "invalid content-length");
+				assert$16(Number.isFinite(this.start));
+				assert$16(this.end == null || Number.isFinite(this.end), "invalid content-length");
 				this.resume = resume;
 				this.etag = headers.etag != null ? headers.etag : null;
 				if (this.etag != null && this.etag.startsWith("W/")) this.etag = null;
@@ -7943,7 +7943,7 @@ var require_retry_agent = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/api/readable.js
 var require_readable = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$16 = __require$1("node:assert");
+	const assert$15 = __require$1("node:assert");
 	const { Readable: Readable$2 } = __require$1("node:stream");
 	const { RequestAbortedError, NotSupportedError, InvalidArgumentError, AbortError } = require_errors$1();
 	const util = require_util$7();
@@ -8029,7 +8029,7 @@ var require_readable = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				this[kBody] = ReadableStreamFrom(this);
 				if (this[kConsume]) {
 					this[kBody].getReader();
-					assert$16(this[kBody].locked);
+					assert$15(this[kBody].locked);
 				}
 			}
 			return this[kBody];
@@ -8064,7 +8064,7 @@ var require_readable = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		return util.isDisturbed(self) || isLocked(self);
 	}
 	async function consume(stream, type) {
-		assert$16(!stream[kConsume]);
+		assert$15(!stream[kConsume]);
 		return new Promise((resolve, reject) => {
 			if (isUnusable(stream)) {
 				const rState = stream._readableState;
@@ -8171,12 +8171,12 @@ var require_readable = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/api/util.js
 var require_util$5 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$15 = __require$1("node:assert");
+	const assert$14 = __require$1("node:assert");
 	const { ResponseStatusCodeError } = require_errors$1();
 	const { chunksDecode } = require_readable();
 	const CHUNK_LIMIT = 131072;
 	async function getResolveErrorBodyCallback({ callback, body, contentType, statusCode, statusMessage, headers }) {
-		assert$15(body);
+		assert$14(body);
 		let chunks = [];
 		let length = 0;
 		try {
@@ -8224,7 +8224,7 @@ var require_util$5 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/api/api-request.js
 var require_api_request = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$14 = __require$1("node:assert");
+	const assert$13 = __require$1("node:assert");
 	const { Readable } = require_readable();
 	const { InvalidArgumentError, RequestAbortedError } = require_errors$1();
 	const util = require_util$7();
@@ -8282,7 +8282,7 @@ var require_api_request = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				abort(this.reason);
 				return;
 			}
-			assert$14(this.callback);
+			assert$13(this.callback);
 			this.abort = abort;
 			this.context = context;
 		}
@@ -8419,8 +8419,8 @@ var require_abort_signal = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/api/api-stream.js
 var require_api_stream = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$13 = __require$1("node:assert");
-	const { finished: finished$1, PassThrough: PassThrough$3 } = __require$1("node:stream");
+	const assert$12 = __require$1("node:assert");
+	const { finished: finished$1, PassThrough: PassThrough$2 } = __require$1("node:stream");
 	const { InvalidArgumentError, InvalidReturnValueError } = require_errors$1();
 	const util = require_util$7();
 	const { getResolveErrorBodyCallback } = require_util$5();
@@ -8462,7 +8462,7 @@ var require_api_stream = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				abort(this.reason);
 				return;
 			}
-			assert$13(this.callback);
+			assert$12(this.callback);
 			this.abort = abort;
 			this.context = context;
 		}
@@ -8480,7 +8480,7 @@ var require_api_stream = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			let res;
 			if (this.throwOnError && statusCode >= 400) {
 				const contentType = (responseHeaders === "raw" ? util.parseHeaders(rawHeaders) : headers)["content-type"];
-				res = new PassThrough$3();
+				res = new PassThrough$2();
 				this.callback = null;
 				this.runInAsyncScope(getResolveErrorBodyCallback, null, {
 					callback,
@@ -8564,12 +8564,12 @@ var require_api_stream = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/api/api-pipeline.js
 var require_api_pipeline = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const { Readable: Readable$1, Duplex, PassThrough: PassThrough$2 } = __require$1("node:stream");
+	const { Readable: Readable$1, Duplex, PassThrough: PassThrough$1 } = __require$1("node:stream");
 	const { InvalidArgumentError, InvalidReturnValueError, RequestAbortedError } = require_errors$1();
 	const util = require_util$7();
 	const { AsyncResource: AsyncResource$2 } = __require$1("node:async_hooks");
 	const { addSignal, removeSignal } = require_abort_signal();
-	const assert$12 = __require$1("node:assert");
+	const assert$11 = __require$1("node:assert");
 	const kResume = Symbol("resume");
 	var PipelineRequest = class extends Readable$1 {
 		constructor() {
@@ -8652,8 +8652,8 @@ var require_api_pipeline = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				abort(this.reason);
 				return;
 			}
-			assert$12(!res, "pipeline cannot be retried");
-			assert$12(!ret.destroyed);
+			assert$11(!res, "pipeline cannot be retried");
+			assert$11(!ret.destroyed);
 			this.abort = abort;
 			this.context = context;
 		}
@@ -8724,7 +8724,7 @@ var require_api_pipeline = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			}, pipelineHandler);
 			return pipelineHandler.ret;
 		} catch (err) {
-			return new PassThrough$2().destroy(err);
+			return new PassThrough$1().destroy(err);
 		}
 	}
 	module.exports = pipeline;
@@ -8736,7 +8736,7 @@ var require_api_upgrade = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { AsyncResource: AsyncResource$1 } = __require$1("node:async_hooks");
 	const util = require_util$7();
 	const { addSignal, removeSignal } = require_abort_signal();
-	const assert$11 = __require$1("node:assert");
+	const assert$10 = __require$1("node:assert");
 	var UpgradeHandler = class extends AsyncResource$1 {
 		constructor(opts, callback) {
 			if (!opts || typeof opts !== "object") throw new InvalidArgumentError("invalid opts");
@@ -8756,7 +8756,7 @@ var require_api_upgrade = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				abort(this.reason);
 				return;
 			}
-			assert$11(this.callback);
+			assert$10(this.callback);
 			this.abort = abort;
 			this.context = null;
 		}
@@ -8764,7 +8764,7 @@ var require_api_upgrade = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			throw new SocketError("bad upgrade", null);
 		}
 		onUpgrade(statusCode, rawHeaders, socket) {
-			assert$11(statusCode === 101);
+			assert$10(statusCode === 101);
 			const { callback, opaque, context } = this;
 			removeSignal(this);
 			this.callback = null;
@@ -8811,7 +8811,7 @@ var require_api_upgrade = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/api/api-connect.js
 var require_api_connect = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$10 = __require$1("node:assert");
+	const assert$9 = __require$1("node:assert");
 	const { AsyncResource } = __require$1("node:async_hooks");
 	const { InvalidArgumentError, SocketError } = require_errors$1();
 	const util = require_util$7();
@@ -8834,7 +8834,7 @@ var require_api_connect = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				abort(this.reason);
 				return;
 			}
-			assert$10(this.callback);
+			assert$9(this.callback);
 			this.abort = abort;
 			this.context = context;
 		}
@@ -9324,7 +9324,7 @@ var require_mock_interceptor = /* @__PURE__ */ __commonJSMin(((exports, module) 
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/mock/mock-client.js
 var require_mock_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const { promisify: promisify$2 } = __require$1("node:util");
+	const { promisify: promisify$1 } = __require$1("node:util");
 	const Client = require_client();
 	const { buildMockDispatch } = require_mock_utils();
 	const { kDispatches, kMockAgent, kClose, kOriginalClose, kOrigin, kOriginalDispatch, kConnected } = require_mock_symbols();
@@ -9357,7 +9357,7 @@ var require_mock_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			return new MockInterceptor(opts, this[kDispatches]);
 		}
 		async [kClose]() {
-			await promisify$2(this[kOriginalClose])();
+			await promisify$1(this[kOriginalClose])();
 			this[kConnected] = 0;
 			this[kMockAgent][Symbols.kClients].delete(this[kOrigin]);
 		}
@@ -9367,7 +9367,7 @@ var require_mock_client = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/mock/mock-pool.js
 var require_mock_pool = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const { promisify: promisify$1 } = __require$1("node:util");
+	const { promisify } = __require$1("node:util");
 	const Pool = require_pool();
 	const { buildMockDispatch } = require_mock_utils();
 	const { kDispatches, kMockAgent, kClose, kOriginalClose, kOrigin, kOriginalDispatch, kConnected } = require_mock_symbols();
@@ -9400,7 +9400,7 @@ var require_mock_pool = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			return new MockInterceptor(opts, this[kDispatches]);
 		}
 		async [kClose]() {
-			await promisify$1(this[kOriginalClose])();
+			await promisify(this[kOriginalClose])();
 			this[kConnected] = 0;
 			this[kMockAgent][Symbols.kClients].delete(this[kOrigin]);
 		}
@@ -9960,7 +9960,7 @@ var require_headers = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { kEnumerableProperty } = require_util$7();
 	const { iteratorMixin, isValidHeaderName, isValidHeaderValue } = require_util$6();
 	const { webidl } = require_webidl();
-	const assert$9 = __require$1("node:assert");
+	const assert$8 = __require$1("node:assert");
 	const util = __require$1("node:util");
 	const kHeadersMap = Symbol("headers map");
 	const kHeadersSortedMap = Symbol("headers map sorted");
@@ -10128,11 +10128,11 @@ var require_headers = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				const iterator = this[kHeadersMap][Symbol.iterator]();
 				const firstValue = iterator.next().value;
 				array[0] = [firstValue[0], firstValue[1].value];
-				assert$9(firstValue[1].value !== null);
+				assert$8(firstValue[1].value !== null);
 				for (let i = 1, j = 0, right = 0, left = 0, pivot = 0, x, value; i < size; ++i) {
 					value = iterator.next().value;
 					x = array[i] = [value[0], value[1].value];
-					assert$9(x[1] !== null);
+					assert$8(x[1] !== null);
 					left = 0;
 					right = i;
 					while (left < right) {
@@ -10153,7 +10153,7 @@ var require_headers = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				let i = 0;
 				for (const { 0: name, 1: { value } } of this[kHeadersMap]) {
 					array[i++] = [name, value];
-					assert$9(value !== null);
+					assert$8(value !== null);
 				}
 				return array.sort(compareHeaderName);
 			}
@@ -10333,7 +10333,7 @@ var require_response = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { FormData } = require_formdata();
 	const { URLSerializer } = require_data_url();
 	const { kConstruct } = require_symbols$4();
-	const assert$8 = __require$1("node:assert");
+	const assert$7 = __require$1("node:assert");
 	const { types: types$2 } = __require$1("node:util");
 	const textEncoder = new TextEncoder("utf-8");
 	var Response = class Response {
@@ -10522,7 +10522,7 @@ var require_response = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				return p in state ? state[p] : target[p];
 			},
 			set(target, p, value) {
-				assert$8(!(p in state));
+				assert$7(!(p in state));
 				target[p] = value;
 				return true;
 			}
@@ -10551,10 +10551,10 @@ var require_response = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			headersList: [],
 			body: null
 		});
-		else assert$8(false);
+		else assert$7(false);
 	}
 	function makeAppropriateNetworkError(fetchParams, err = null) {
-		assert$8(isCancelled(fetchParams));
+		assert$7(isCancelled(fetchParams));
 		return isAborted(fetchParams) ? makeNetworkError(Object.assign(new DOMException("The operation was aborted.", "AbortError"), { cause: err })) : makeNetworkError(Object.assign(new DOMException("Request was cancelled."), { cause: err }));
 	}
 	function initializeResponse(response, init, body) {
@@ -10684,7 +10684,7 @@ var require_request = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { webidl } = require_webidl();
 	const { URLSerializer } = require_data_url();
 	const { kConstruct } = require_symbols$4();
-	const assert$7 = __require$1("node:assert");
+	const assert$6 = __require$1("node:assert");
 	const { getMaxListeners, setMaxListeners, getEventListeners, defaultMaxListeners } = __require$1("node:events");
 	const kAbortController = Symbol("abortController");
 	const requestFinalizer = new FinalizationRegistry(({ signal, abort }) => {
@@ -10739,7 +10739,7 @@ var require_request = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				fallbackMode = "cors";
 			} else {
 				this[kDispatcher] = init.dispatcher || input[kDispatcher];
-				assert$7(input instanceof Request);
+				assert$6(input instanceof Request);
 				request = input[kState];
 				signal = input[kSignal];
 			}
@@ -11187,10 +11187,10 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const zlib = __require$1("node:zlib");
 	const { bytesMatch, makePolicyContainer, clonePolicyContainer, requestBadPort, TAOCheck, appendRequestOriginHeader, responseLocationURL, requestCurrentURL, setRequestReferrerPolicyOnRedirect, tryUpgradeRequestToAPotentiallyTrustworthyURL, createOpaqueTimingInfo, appendFetchMetadata, corsCheck, crossOriginResourcePolicyCheck, determineRequestsReferrer, coarsenedSharedCurrentTime, createDeferredPromise, isBlobLike, sameOrigin, isCancelled, isAborted, isErrorLike, fullyReadBody, readableStreamClose, isomorphicEncode, urlIsLocal, urlIsHttpHttpsScheme, urlHasHttpsScheme, clampAndCoarsenConnectionTimingInfo, simpleRangeHeaderValue, buildContentRange, createInflate, extractMimeType } = require_util$6();
 	const { kState, kDispatcher } = require_symbols$3();
-	const assert$6 = __require$1("node:assert");
+	const assert$5 = __require$1("node:assert");
 	const { safelyExtractBody, extractBody } = require_body();
 	const { redirectStatusSet, nullBodyStatus, safeMethodsSet, requestBodyHeader, subresourceSet } = require_constants$4();
-	const EE$1 = __require$1("node:events");
+	const EE = __require$1("node:events");
 	const { Readable, pipeline: pipeline$2, finished } = __require$1("node:stream");
 	const { addAbortListener, isErrored, isReadable, bufferToLowerCasedHeaderName } = require_util$7();
 	const { dataURLProcessor, serializeAMimeType, minimizeSupportedMimeType } = require_data_url();
@@ -11201,7 +11201,7 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const defaultUserAgent = typeof __UNDICI_IS_NODE__ !== "undefined" || typeof esbuildDetection !== "undefined" ? "node" : "undici";
 	/** @type {import('buffer').resolveObjectURL} */
 	let resolveObjectURL;
-	var Fetch = class extends EE$1 {
+	var Fetch = class extends EE {
 		constructor(dispatcher) {
 			super();
 			this.dispatcher = dispatcher;
@@ -11248,7 +11248,7 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		let controller = null;
 		addAbortListener(requestObject.signal, () => {
 			locallyAborted = true;
-			assert$6(controller != null);
+			assert$5(controller != null);
 			controller.abort(requestObject.signal.reason);
 			const realResponse = responseObject?.deref();
 			abortFetch(p, request, realResponse, requestObject.signal.reason);
@@ -11306,7 +11306,7 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		});
 	}
 	function fetching({ request, processRequestBodyChunkLength, processRequestEndOfBody, processResponse, processResponseEndOfBody, processResponseConsumeBody, useParallelQueue = false, dispatcher = getGlobalDispatcher() }) {
-		assert$6(dispatcher);
+		assert$5(dispatcher);
 		let taskDestination = null;
 		let crossOriginIsolatedCapability = false;
 		if (request.client != null) {
@@ -11327,7 +11327,7 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			taskDestination,
 			crossOriginIsolatedCapability
 		};
-		assert$6(!request.body || request.body.stream);
+		assert$5(!request.body || request.body.stream);
 		if (request.window === "client") request.window = request.client?.globalObject?.constructor?.name === "Window" ? request.client : "no-window";
 		if (request.origin === "client") request.origin = request.client.origin;
 		if (request.policyContainer === "client") {
@@ -11373,7 +11373,7 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (request.responseTainting === "basic") response = filterResponse(response, "basic");
 			else if (request.responseTainting === "cors") response = filterResponse(response, "cors");
 			else if (request.responseTainting === "opaque") response = filterResponse(response, "opaque");
-			else assert$6(false);
+			else assert$5(false);
 		}
 		let internalResponse = response.status === 0 ? response : response.internalResponse;
 		if (internalResponse.urlList.length === 0) internalResponse.urlList.push(...request.urlList);
@@ -11528,7 +11528,7 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (request.redirect === "error") response = makeNetworkError("unexpected redirect");
 			else if (request.redirect === "manual") response = actualResponse;
 			else if (request.redirect === "follow") response = await httpRedirectFetch(fetchParams, response);
-			else assert$6(false);
+			else assert$5(false);
 		}
 		response.timingInfo = timingInfo;
 		return response;
@@ -11561,7 +11561,7 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			request.headersList.delete("host", true);
 		}
 		if (request.body != null) {
-			assert$6(request.body.source != null);
+			assert$5(request.body.source != null);
 			request.body = safelyExtractBody(request.body.source)[0];
 		}
 		const timingInfo = fetchParams.timingInfo;
@@ -11633,7 +11633,7 @@ var require_fetch = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		return response;
 	}
 	async function httpNetworkFetch(fetchParams, includeCredentials = false, forceNewConnection = false) {
-		assert$6(!fetchParams.controller.connection || fetchParams.controller.connection.destroyed);
+		assert$5(!fetchParams.controller.connection || fetchParams.controller.connection.destroyed);
 		fetchParams.controller.connection = {
 			abort: null,
 			destroyed: false,
@@ -12600,7 +12600,7 @@ var require_symbols$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/web/cache/util.js
 var require_util$3 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const assert$5 = __require$1("node:assert");
+	const assert$4 = __require$1("node:assert");
 	const { URLSerializer } = require_data_url();
 	const { isValidHeaderName } = require_util$6();
 	/**
@@ -12618,7 +12618,7 @@ var require_util$3 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	* @param {string} header
 	*/
 	function getFieldValues(header) {
-		assert$5(header !== null);
+		assert$4(header !== null);
 		const values = [];
 		for (let value of header.split(",")) {
 			value = value.trim();
@@ -12643,7 +12643,7 @@ var require_cache = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { kState } = require_symbols$3();
 	const { fetching } = require_fetch();
 	const { urlIsHttpHttpsScheme, createDeferredPromise, readAllBytes } = require_util$6();
-	const assert$4 = __require$1("node:assert");
+	const assert$3 = __require$1("node:assert");
 	/**
 	* @see https://w3c.github.io/ServiceWorker/#dfn-cache-batch-operation
 	* @typedef {Object} CacheBatchOperation
@@ -12852,7 +12852,7 @@ var require_cache = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				r = request[kState];
 				if (r.method !== "GET" && !options.ignoreMethod) return false;
 			} else {
-				assert$4(typeof request === "string");
+				assert$3(typeof request === "string");
 				r = new Request(request)[kState];
 			}
 			/** @type {CacheBatchOperation[]} */
@@ -12940,7 +12940,7 @@ var require_cache = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 						if (requestResponses.length === 0) return [];
 						for (const requestResponse of requestResponses) {
 							const idx = cache.indexOf(requestResponse);
-							assert$4(idx !== -1);
+							assert$3(idx !== -1);
 							cache.splice(idx, 1);
 						}
 					} else if (operation.type === "put") {
@@ -12964,7 +12964,7 @@ var require_cache = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 						requestResponses = this.#queryCache(operation.request);
 						for (const requestResponse of requestResponses) {
 							const idx = cache.indexOf(requestResponse);
-							assert$4(idx !== -1);
+							assert$3(idx !== -1);
 							cache.splice(idx, 1);
 						}
 						cache.push([operation.request, operation.response]);
@@ -13424,11 +13424,11 @@ var require_util$2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 }));
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/web/cookies/parse.js
-var require_parse$4 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+var require_parse$3 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { maxNameValuePairSize, maxAttributeValueSize } = require_constants$3();
 	const { isCTLExcludingHtab } = require_util$2();
 	const { collectASequenceOfCodePointsFast } = require_data_url();
-	const assert$3 = __require$1("node:assert");
+	const assert$2 = __require$1("node:assert");
 	/**
 	* @description Parses the field-value attributes of a set-cookie header string.
 	* @see https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis#section-5.4
@@ -13469,7 +13469,7 @@ var require_parse$4 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	*/
 	function parseUnparsedAttributes(unparsedAttributes, cookieAttributeList = {}) {
 		if (unparsedAttributes.length === 0) return cookieAttributeList;
-		assert$3(unparsedAttributes[0] === ";");
+		assert$2(unparsedAttributes[0] === ";");
 		unparsedAttributes = unparsedAttributes.slice(1);
 		let cookieAv = "";
 		if (unparsedAttributes.includes(";")) {
@@ -13527,7 +13527,7 @@ var require_parse$4 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 //#endregion
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/web/cookies/index.js
 var require_cookies = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const { parseSetCookie } = require_parse$4();
+	const { parseSetCookie } = require_parse$3();
 	const { stringify } = require_util$2();
 	const { webidl } = require_webidl();
 	const { Headers } = require_headers();
@@ -14501,7 +14501,7 @@ var require_permessage_deflate = /* @__PURE__ */ __commonJSMin(((exports, module
 //#region ../../node_modules/.pnpm/undici@6.28.0/node_modules/undici/lib/web/websocket/receiver.js
 var require_receiver = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const { Writable } = __require$1("node:stream");
-	const assert$2 = __require$1("node:assert");
+	const assert$1 = __require$1("node:assert");
 	const { parserStates, opcodes, states, emptyBuffer, sentCloseFrameState } = require_constants$2();
 	const { kReadyState, kSentClose, kResponse, kReceivedClose } = require_symbols();
 	const { channels } = require_diagnostics();
@@ -14738,7 +14738,7 @@ var require_receiver = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			return output;
 		}
 		parseCloseBody(data) {
-			assert$2(data.length !== 1);
+			assert$1(data.length !== 1);
 			/** @type {number|undefined} */
 			let code;
 			if (data.length >= 2) code = data.readUInt16BE(0);
@@ -16212,9 +16212,9 @@ var Summary = class {
 	}
 };
 new Summary();
-const { chmod, copyFile, lstat, mkdir, open, readdir: readdir$1, rename, rm, rmdir, stat: stat$1, symlink, unlink } = fs$4.promises;
+const { chmod, copyFile, lstat, mkdir, open, readdir: readdir$1, rename, rm, rmdir, stat: stat$1, symlink, unlink } = fs$1.promises;
 process.platform;
-fs$4.constants.O_RDONLY;
+fs$1.constants.O_RDONLY;
 process.platform;
 events.EventEmitter;
 events.EventEmitter;
@@ -16257,7 +16257,7 @@ function getInput(name, options) {
 */
 function setOutput(name, value) {
 	if (process.env["GITHUB_OUTPUT"] || "") return issueFileCommand("OUTPUT", prepareKeyValueMessage(name, value));
-	process.stdout.write(os$2.EOL);
+	process.stdout.write(os$1.EOL);
 	issueCommand("set-output", { name }, toCommandValue(value));
 }
 /**
@@ -16265,1680 +16265,350 @@ function setOutput(name, value) {
 * @param message info message
 */
 function info$1(message) {
-	process.stdout.write(message + os$2.EOL);
+	process.stdout.write(message + os$1.EOL);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/isexe@2.0.0/node_modules/isexe/windows.js
-var require_windows = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = isexe;
-	isexe.sync = sync;
-	var fs$3 = __require$1("fs");
-	function checkPathExt(path, options) {
-		var pathext = options.pathExt !== void 0 ? options.pathExt : process.env.PATHEXT;
-		if (!pathext) return true;
-		pathext = pathext.split(";");
-		if (pathext.indexOf("") !== -1) return true;
-		for (var i = 0; i < pathext.length; i++) {
-			var p = pathext[i].toLowerCase();
-			if (p && path.substr(-p.length).toLowerCase() === p) return true;
-		}
-		return false;
-	}
-	function checkStat(stat, path, options) {
-		if (!stat.isSymbolicLink() && !stat.isFile()) return false;
-		return checkPathExt(path, options);
-	}
-	function isexe(path, options, cb) {
-		fs$3.stat(path, function(er, stat) {
-			cb(er, er ? false : checkStat(stat, path, options));
-		});
-	}
-	function sync(path, options) {
-		return checkStat(fs$3.statSync(path), path, options);
-	}
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/isexe@2.0.0/node_modules/isexe/mode.js
-var require_mode = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = isexe;
-	isexe.sync = sync;
-	var fs$2 = __require$1("fs");
-	function isexe(path, options, cb) {
-		fs$2.stat(path, function(er, stat) {
-			cb(er, er ? false : checkStat(stat, options));
-		});
-	}
-	function sync(path, options) {
-		return checkStat(fs$2.statSync(path), options);
-	}
-	function checkStat(stat, options) {
-		return stat.isFile() && checkMode(stat, options);
-	}
-	function checkMode(stat, options) {
-		var mod = stat.mode;
-		var uid = stat.uid;
-		var gid = stat.gid;
-		var myUid = options.uid !== void 0 ? options.uid : process.getuid && process.getuid();
-		var myGid = options.gid !== void 0 ? options.gid : process.getgid && process.getgid();
-		var u = parseInt("100", 8);
-		var g = parseInt("010", 8);
-		var o = parseInt("001", 8);
-		var ug = u | g;
-		return mod & o || mod & g && gid === myGid || mod & u && uid === myUid || mod & ug && myUid === 0;
-	}
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/isexe@2.0.0/node_modules/isexe/index.js
-var require_isexe = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	__require$1("fs");
-	var core;
-	if (process.platform === "win32" || global.TESTING_WINDOWS) core = require_windows();
-	else core = require_mode();
-	module.exports = isexe;
-	isexe.sync = sync;
-	function isexe(path, options, cb) {
-		if (typeof options === "function") {
-			cb = options;
-			options = {};
-		}
-		if (!cb) {
-			if (typeof Promise !== "function") throw new TypeError("callback not provided");
-			return new Promise(function(resolve, reject) {
-				isexe(path, options || {}, function(er, is) {
-					if (er) reject(er);
-					else resolve(is);
-				});
-			});
-		}
-		core(path, options || {}, function(er, is) {
-			if (er) {
-				if (er.code === "EACCES" || options && options.ignoreErrors) {
-					er = null;
-					is = false;
-				}
-			}
-			cb(er, is);
-		});
-	}
-	function sync(path, options) {
-		try {
-			return core.sync(path, options || {});
-		} catch (er) {
-			if (options && options.ignoreErrors || er.code === "EACCES") return false;
-			else throw er;
-		}
-	}
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/which@2.0.2/node_modules/which/which.js
-var require_which = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const isWindows = process.platform === "win32" || process.env.OSTYPE === "cygwin" || process.env.OSTYPE === "msys";
-	const path$6 = __require$1("path");
-	const COLON = isWindows ? ";" : ":";
-	const isexe = require_isexe();
-	const getNotFoundError = (cmd) => Object.assign(/* @__PURE__ */ new Error(`not found: ${cmd}`), { code: "ENOENT" });
-	const getPathInfo = (cmd, opt) => {
-		const colon = opt.colon || COLON;
-		const pathEnv = cmd.match(/\//) || isWindows && cmd.match(/\\/) ? [""] : [...isWindows ? [process.cwd()] : [], ...(opt.path || process.env.PATH || 
-		/* istanbul ignore next: very unusual */ "").split(colon)];
-		const pathExtExe = isWindows ? opt.pathExt || process.env.PATHEXT || ".EXE;.CMD;.BAT;.COM" : "";
-		const pathExt = isWindows ? pathExtExe.split(colon) : [""];
-		if (isWindows) {
-			if (cmd.indexOf(".") !== -1 && pathExt[0] !== "") pathExt.unshift("");
-		}
+//#region ../../node_modules/.pnpm/tinyexec@1.3.0/node_modules/tinyexec/dist/main.mjs
+const isPathLikePattern = /^path$/i;
+const defaultEnvPathInfo = {
+	key: "PATH",
+	value: ""
+};
+function getPathFromEnv(env) {
+	for (const key in env) {
+		if (!Object.prototype.hasOwnProperty.call(env, key) || !isPathLikePattern.test(key)) continue;
+		const value = env[key];
+		if (!value) return defaultEnvPathInfo;
 		return {
-			pathEnv,
-			pathExt,
-			pathExtExe
+			key,
+			value
 		};
-	};
-	const which = (cmd, opt, cb) => {
-		if (typeof opt === "function") {
-			cb = opt;
-			opt = {};
-		}
-		if (!opt) opt = {};
-		const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt);
-		const found = [];
-		const step = (i) => new Promise((resolve, reject) => {
-			if (i === pathEnv.length) return opt.all && found.length ? resolve(found) : reject(getNotFoundError(cmd));
-			const ppRaw = pathEnv[i];
-			const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
-			const pCmd = path$6.join(pathPart, cmd);
-			const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
-			resolve(subStep(p, i, 0));
-		});
-		const subStep = (p, i, ii) => new Promise((resolve, reject) => {
-			if (ii === pathExt.length) return resolve(step(i + 1));
-			const ext = pathExt[ii];
-			isexe(p + ext, { pathExt: pathExtExe }, (er, is) => {
-				if (!er && is) {
-					if (opt.all) found.push(p + ext);
-					else return resolve(p + ext);
-				}
-				return resolve(subStep(p, i, ii + 1));
-			});
-		});
-		return cb ? step(0).then((res) => cb(null, res), cb) : step(0);
-	};
-	const whichSync = (cmd, opt) => {
-		opt = opt || {};
-		const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt);
-		const found = [];
-		for (let i = 0; i < pathEnv.length; i++) {
-			const ppRaw = pathEnv[i];
-			const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
-			const pCmd = path$6.join(pathPart, cmd);
-			const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
-			for (let j = 0; j < pathExt.length; j++) {
-				const cur = p + pathExt[j];
-				try {
-					if (isexe.sync(cur, { pathExt: pathExtExe })) {
-						if (opt.all) found.push(cur);
-						else return cur;
-					}
-				} catch (ex) {}
-			}
-		}
-		if (opt.all && found.length) return found;
-		if (opt.nothrow) return null;
-		throw getNotFoundError(cmd);
-	};
-	module.exports = which;
-	which.sync = whichSync;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/path-key@3.1.1/node_modules/path-key/index.js
-var require_path_key = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const pathKey = (options = {}) => {
-		const environment = options.env || process.env;
-		if ((options.platform || process.platform) !== "win32") return "PATH";
-		return Object.keys(environment).reverse().find((key) => key.toUpperCase() === "PATH") || "Path";
-	};
-	module.exports = pathKey;
-	module.exports.default = pathKey;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/util/resolveCommand.js
-var require_resolveCommand = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const path$5 = __require$1("path");
-	const which = require_which();
-	const getPathKey = require_path_key();
-	function resolveCommandAttempt(parsed, withoutPathExt) {
-		const env = parsed.options.env || process.env;
-		const cwd = process.cwd();
-		const hasCustomCwd = parsed.options.cwd != null;
-		const shouldSwitchCwd = hasCustomCwd && process.chdir !== void 0 && !process.chdir.disabled;
-		if (shouldSwitchCwd) try {
-			process.chdir(parsed.options.cwd);
-		} catch (err) {}
-		let resolved;
-		try {
-			resolved = which.sync(parsed.command, {
-				path: env[getPathKey({ env })],
-				pathExt: withoutPathExt ? path$5.delimiter : void 0
-			});
-		} catch (e) {} finally {
-			if (shouldSwitchCwd) process.chdir(cwd);
-		}
-		if (resolved) resolved = path$5.resolve(hasCustomCwd ? parsed.options.cwd : "", resolved);
-		return resolved;
 	}
-	function resolveCommand(parsed) {
-		return resolveCommandAttempt(parsed) || resolveCommandAttempt(parsed, true);
-	}
-	module.exports = resolveCommand;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/util/escape.js
-var require_escape = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
-	function escapeCommand(arg) {
-		arg = arg.replace(metaCharsRegExp, "^$1");
-		return arg;
-	}
-	function escapeArgument(arg, doubleEscapeMetaChars) {
-		arg = `${arg}`;
-		arg = arg.replace(/(?=(\\+?)?)\1"/g, "$1$1\\\"");
-		arg = arg.replace(/(?=(\\+?)?)\1$/, "$1$1");
-		arg = `"${arg}"`;
-		arg = arg.replace(metaCharsRegExp, "^$1");
-		if (doubleEscapeMetaChars) arg = arg.replace(metaCharsRegExp, "^$1");
-		return arg;
-	}
-	module.exports.command = escapeCommand;
-	module.exports.argument = escapeArgument;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/shebang-regex@3.0.0/node_modules/shebang-regex/index.js
-var require_shebang_regex = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = /^#!(.*)/;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/shebang-command@2.0.0/node_modules/shebang-command/index.js
-var require_shebang_command = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const shebangRegex = require_shebang_regex();
-	module.exports = (string = "") => {
-		const match = string.match(shebangRegex);
-		if (!match) return null;
-		const [path, argument] = match[0].replace(/#! ?/, "").split(" ");
-		const binary = path.split("/").pop();
-		if (binary === "env") return argument;
-		return argument ? `${binary} ${argument}` : binary;
+	return defaultEnvPathInfo;
+}
+function addNodeBinToPath(cwd, path) {
+	const parts = path.value.split(delimiter);
+	const nodeBinPaths = [];
+	let currentPath = cwd;
+	let lastPath;
+	do {
+		nodeBinPaths.push(resolve(currentPath, "node_modules", ".bin"));
+		lastPath = currentPath;
+		currentPath = dirname(currentPath);
+	} while (currentPath !== lastPath);
+	nodeBinPaths.push(dirname(process.execPath));
+	const newPath = nodeBinPaths.concat(parts).join(delimiter);
+	return {
+		key: path.key,
+		value: newPath
 	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/util/readShebang.js
-var require_readShebang = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const fs$1 = __require$1("fs");
-	const shebangCommand = require_shebang_command();
-	function readShebang(command) {
+}
+function computeEnv(cwd, env, nodePath = true) {
+	const envWithDefault = {
+		...process.env,
+		...env
+	};
+	if (!nodePath) return envWithDefault;
+	const envPathInfo = addNodeBinToPath(cwd, getPathFromEnv(envWithDefault));
+	envWithDefault[envPathInfo.key] = envPathInfo.value;
+	return envWithDefault;
+}
+const combineStreams = (streams) => {
+	let streamCount = streams.length;
+	const combined = new PassThrough();
+	const maybeEmitEnd = () => {
+		if (--streamCount === 0) combined.end();
+	};
+	for (const stream of streams) pipeline(stream, combined, { end: false }).then(maybeEmitEnd).catch(maybeEmitEnd);
+	return combined;
+};
+const metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
+const shebangRegExp = /^#!\s*(.+)/;
+const isWindowsExecutableRegExp = /\.(?:com|exe)$/i;
+const isNodeModulesCmdRegExp = /node_modules[\\/]\.bin[\\/][^\\/]+\.cmd$/i;
+const isWindows = process.platform === "win32";
+const defaultPathExt = [
+	".EXE",
+	".CMD",
+	".BAT",
+	".COM"
+];
+const noPathExt = [""];
+/**
+* Normalizes the command and arguments to work cross-platform.
+* On Windows, this basically handles things like shebangs, calling
+* `node_modules/.bin` commands, and escaping meta characters.
+* On other platforms, it just returns the command and arguments as-is.
+*/
+function normalizeSpawnCommand(command, args = [], options = {}) {
+	if (options.shell === true || !isWindows) return {
+		command,
+		args,
+		options
+	};
+	let file = resolveCommand(command, options);
+	let shebang = null;
+	if (file !== null) {
 		const size = 150;
 		const buffer = Buffer.alloc(size);
-		let fd;
+		let fd = null;
 		try {
-			fd = fs$1.openSync(command, "r");
-			fs$1.readSync(fd, buffer, 0, size, 0);
-			fs$1.closeSync(fd);
-		} catch (e) {}
-		return shebangCommand(buffer.toString());
-	}
-	module.exports = readShebang;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/parse.js
-var require_parse$3 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const path$4 = __require$1("path");
-	const resolveCommand = require_resolveCommand();
-	const escape = require_escape();
-	const readShebang = require_readShebang();
-	const isWin = process.platform === "win32";
-	const isExecutableRegExp = /\.(?:com|exe)$/i;
-	const isCmdShimRegExp = /node_modules[\\/].bin[\\/][^\\/]+\.cmd$/i;
-	function detectShebang(parsed) {
-		parsed.file = resolveCommand(parsed);
-		const shebang = parsed.file && readShebang(parsed.file);
-		if (shebang) {
-			parsed.args.unshift(parsed.file);
-			parsed.command = shebang;
-			return resolveCommand(parsed);
+			fd = openSync(file, "r");
+			readSync(fd, buffer, 0, size, 0);
+		} catch {} finally {
+			if (fd !== null) closeSync(fd);
 		}
-		return parsed.file;
-	}
-	function parseNonShell(parsed) {
-		if (!isWin) return parsed;
-		const commandFile = detectShebang(parsed);
-		const needsShell = !isExecutableRegExp.test(commandFile);
-		if (parsed.options.forceShell || needsShell) {
-			const needsDoubleEscapeMetaChars = isCmdShimRegExp.test(commandFile);
-			parsed.command = path$4.normalize(parsed.command);
-			parsed.command = escape.command(parsed.command);
-			parsed.args = parsed.args.map((arg) => escape.argument(arg, needsDoubleEscapeMetaChars));
-			parsed.args = [
-				"/d",
-				"/s",
-				"/c",
-				`"${[parsed.command].concat(parsed.args).join(" ")}"`
-			];
-			parsed.command = process.env.comspec || "cmd.exe";
-			parsed.options.windowsVerbatimArguments = true;
+		const match = buffer.toString().match(shebangRegExp);
+		if (match !== null) {
+			const line = match[1].trim();
+			const separatorIndex = line.indexOf(" ");
+			const path = separatorIndex !== -1 ? line.slice(0, separatorIndex) : line;
+			const argument = separatorIndex !== -1 ? line.slice(separatorIndex + 1) : "";
+			const binary = basename(path);
+			shebang = binary === "env" ? argument || null : binary;
 		}
-		return parsed;
 	}
-	function parse(command, args, options) {
-		if (args && !Array.isArray(args)) {
-			options = args;
-			args = null;
-		}
-		args = args ? args.slice(0) : [];
-		options = Object.assign({}, options);
-		const parsed = {
-			command,
-			args,
-			options,
-			file: void 0,
-			original: {
-				command,
-				args
-			}
+	if (shebang !== null && file !== null) {
+		args = [file, ...args];
+		command = shebang;
+		file = resolveCommand(command, options);
+	}
+	if (file === null || !isWindowsExecutableRegExp.test(file)) {
+		const needsDoubleEscapeMetaChars = file !== null && isNodeModulesCmdRegExp.test(file);
+		command = normalize(command);
+		command = command.replace(metaCharsRegExp, "^$1");
+		args = args.map((arg) => {
+			arg = arg.replace(/(?=(\\+?)?)\1"/g, "$1$1\\\"");
+			arg = arg.replace(/(?=(\\+?)?)\1$/, "$1$1");
+			arg = `"${arg}"`;
+			arg = arg.replace(metaCharsRegExp, "^$1");
+			if (needsDoubleEscapeMetaChars) arg = arg.replace(metaCharsRegExp, "^$1");
+			return arg;
+		});
+		args = [
+			"/d",
+			"/s",
+			"/c",
+			`"${[command, ...args].join(" ")}"`
+		];
+		command = options.env?.comspec ?? "cmd.exe";
+		options = {
+			...options,
+			windowsVerbatimArguments: true
 		};
-		return options.shell ? parsed : parseNonShell(parsed);
 	}
-	module.exports = parse;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/enoent.js
-var require_enoent = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const isWin = process.platform === "win32";
-	function notFoundError(original, syscall) {
-		return Object.assign(/* @__PURE__ */ new Error(`${syscall} ${original.command} ENOENT`), {
-			code: "ENOENT",
-			errno: "ENOENT",
-			syscall: `${syscall} ${original.command}`,
-			path: original.command,
-			spawnargs: original.args
+	return {
+		command,
+		args,
+		options
+	};
+}
+/**
+* Resolves the command to an absolute path if possible.
+* Handles things like traversing PATH and adding extensions from PATHEXT
+*/
+function resolveCommand(command, options) {
+	const cwd$3 = (options.cwd ?? cwd()).toString();
+	const env = options.env ?? process.env;
+	const PATH = getPathFromEnv(env).value;
+	const pathEnv = command.includes("/") || command.includes("\\") ? [""] : [cwd$3, ...PATH.split(delimiter)];
+	let pathExt = env.PATHEXT ? env.PATHEXT.split(delimiter) : defaultPathExt;
+	if (command.includes(".") && pathExt[0] !== "") pathExt = ["", ...pathExt];
+	for (const extensions of [pathExt, noPathExt]) for (const path of pathEnv) {
+		const dest = resolve(cwd$3, path.startsWith("\"") && path.endsWith("\"") && path.length > 1 ? path.slice(1, -1) : path, command);
+		for (const ext of extensions) {
+			const destWithExt = dest + ext;
+			try {
+				if (statSync$1(destWithExt).isFile()) return destWithExt;
+			} catch {}
+		}
+	}
+	return null;
+}
+var NonZeroExitError = class extends Error {
+	result;
+	output;
+	exitCode;
+	get signalCode() {
+		return this.result.signalCode;
+	}
+	constructor(result, output, command, args) {
+		let target = "The process";
+		if (command) target = `The command \`${args?.length ? `${command} ${args.map((a) => /[ "'`()]/.test(a) ? JSON.stringify(a) : a).join(" ")}` : command}\``;
+		const exitCode = result.exitCode ?? 1;
+		super(result.signalCode !== null ? `${target} was killed by the signal ${result.signalCode}` : `${target} exited with a non-zero status (${exitCode})`);
+		this.result = result;
+		this.output = output;
+		this.exitCode = exitCode;
+		Object.defineProperty(this, "result", {
+			enumerable: false,
+			writable: false,
+			configurable: false
 		});
 	}
-	function hookChildProcess(cp, parsed) {
-		if (!isWin) return;
-		const originalEmit = cp.emit;
-		cp.emit = function(name, arg1) {
-			if (name === "exit") {
-				const err = verifyENOENT(arg1, parsed);
-				if (err) return originalEmit.call(cp, "error", err);
-			}
-			return originalEmit.apply(cp, arguments);
+};
+const defaultOptions$1 = {
+	timeout: void 0,
+	persist: false
+};
+const defaultNodeOptions = { windowsHide: true };
+function combineSignals(signals) {
+	const controller = new AbortController();
+	for (const signal of signals) {
+		if (signal.aborted) {
+			controller.abort();
+			return signal;
+		}
+		const onAbort = () => {
+			controller.abort(signal.reason);
 		};
+		signal.addEventListener("abort", onAbort, { signal: controller.signal });
 	}
-	function verifyENOENT(status, parsed) {
-		if (isWin && status === 1 && !parsed.file) return notFoundError(parsed.original, "spawn");
-		return null;
+	return controller.signal;
+}
+async function readStream(stream) {
+	let output = "";
+	try {
+		for await (const chunk of stream) output += chunk.toString();
+	} catch {}
+	return output;
+}
+var ExecProcess = class {
+	_process;
+	_aborted = false;
+	_options;
+	_command;
+	_args;
+	_resolveClose;
+	_processClosed;
+	_thrownError;
+	get process() {
+		return this._process;
 	}
-	function verifyENOENTSync(status, parsed) {
-		if (isWin && status === 1 && !parsed.file) return notFoundError(parsed.original, "spawnSync");
-		return null;
+	get pid() {
+		return this._process?.pid;
 	}
-	module.exports = {
-		hookChildProcess,
-		verifyENOENT,
-		verifyENOENTSync,
-		notFoundError
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/index.js
-var require_cross_spawn = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const cp = __require$1("child_process");
-	const parse = require_parse$3();
-	const enoent = require_enoent();
-	function spawn(command, args, options) {
-		const parsed = parse(command, args, options);
-		const spawned = cp.spawn(parsed.command, parsed.args, parsed.options);
-		enoent.hookChildProcess(spawned, parsed);
-		return spawned;
+	get exitCode() {
+		if (this._process && this._process.exitCode !== null) return this._process.exitCode;
 	}
-	function spawnSync(command, args, options) {
-		const parsed = parse(command, args, options);
-		const result = cp.spawnSync(parsed.command, parsed.args, parsed.options);
-		result.error = result.error || enoent.verifyENOENTSync(result.status, parsed);
+	get signalCode() {
+		return this._process?.signalCode ?? null;
+	}
+	constructor(command, args, options) {
+		this._options = {
+			...defaultOptions$1,
+			...options
+		};
+		this._command = command;
+		this._args = args ?? [];
+		this._processClosed = new Promise((resolve) => {
+			this._resolveClose = resolve;
+		});
+	}
+	kill(signal) {
+		return this._process?.kill(signal) === true;
+	}
+	get aborted() {
+		return this._aborted;
+	}
+	get killed() {
+		return this._process?.killed === true;
+	}
+	pipe(command, args, options) {
+		return exec(command, args, {
+			...options,
+			stdin: this
+		});
+	}
+	async *[Symbol.asyncIterator]() {
+		const proc = this._process;
+		if (!proc) return;
+		const streams = [];
+		if (this._streamErr) streams.push(this._streamErr);
+		if (this._streamOut) streams.push(this._streamOut);
+		const streamCombined = combineStreams(streams);
+		const rl = readline.createInterface({ input: streamCombined });
+		for await (const chunk of rl) yield chunk.toString();
+		await this._processClosed;
+		proc.removeAllListeners();
+		if (this._thrownError) throw this._thrownError;
+		if (this._options?.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, void 0, this._command, this._args);
+	}
+	async _waitForOutput() {
+		const proc = this._process;
+		if (!proc) throw new Error("No process was started");
+		const [stdout, stderr] = await Promise.all([this._streamOut ? readStream(this._streamOut) : "", this._streamErr ? readStream(this._streamErr) : ""]);
+		await this._processClosed;
+		const { stdin } = this._options;
+		if (stdin && typeof stdin !== "string") await stdin;
+		proc.removeAllListeners();
+		if (this._thrownError) throw this._thrownError;
+		const result = {
+			stderr,
+			stdout,
+			exitCode: this.exitCode
+		};
+		if (this._options.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, result, this._command, this._args);
 		return result;
 	}
-	module.exports = spawn;
-	module.exports.spawn = spawn;
-	module.exports.sync = spawnSync;
-	module.exports._parse = parse;
-	module.exports._enoent = enoent;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/strip-final-newline@2.0.0/node_modules/strip-final-newline/index.js
-var require_strip_final_newline = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = (input) => {
-		const LF = typeof input === "string" ? "\n" : "\n".charCodeAt();
-		const CR = typeof input === "string" ? "\r" : "\r".charCodeAt();
-		if (input[input.length - 1] === LF) input = input.slice(0, input.length - 1);
-		if (input[input.length - 1] === CR) input = input.slice(0, input.length - 1);
-		return input;
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/npm-run-path@4.0.1/node_modules/npm-run-path/index.js
-var require_npm_run_path = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const path$3 = __require$1("path");
-	const pathKey = require_path_key();
-	const npmRunPath = (options) => {
-		options = {
-			cwd: process.cwd(),
-			path: process.env[pathKey()],
-			execPath: process.execPath,
-			...options
-		};
-		let previous;
-		let cwdPath = path$3.resolve(options.cwd);
-		const result = [];
-		while (previous !== cwdPath) {
-			result.push(path$3.join(cwdPath, "node_modules/.bin"));
-			previous = cwdPath;
-			cwdPath = path$3.resolve(cwdPath, "..");
-		}
-		const execPathDir = path$3.resolve(options.cwd, options.execPath, "..");
-		result.push(execPathDir);
-		return result.concat(options.path).join(path$3.delimiter);
-	};
-	module.exports = npmRunPath;
-	module.exports.default = npmRunPath;
-	module.exports.env = (options) => {
-		options = {
-			env: process.env,
-			...options
-		};
-		const env = { ...options.env };
-		const path = pathKey({ env });
-		options.path = env[path];
-		env[path] = module.exports(options);
-		return env;
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/mimic-fn@2.1.0/node_modules/mimic-fn/index.js
-var require_mimic_fn = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const mimicFn = (to, from) => {
-		for (const prop of Reflect.ownKeys(from)) Object.defineProperty(to, prop, Object.getOwnPropertyDescriptor(from, prop));
-		return to;
-	};
-	module.exports = mimicFn;
-	module.exports.default = mimicFn;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/onetime@5.1.2/node_modules/onetime/index.js
-var require_onetime = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const mimicFn = require_mimic_fn();
-	const calledFunctions = /* @__PURE__ */ new WeakMap();
-	const onetime = (function_, options = {}) => {
-		if (typeof function_ !== "function") throw new TypeError("Expected a function");
-		let returnValue;
-		let callCount = 0;
-		const functionName = function_.displayName || function_.name || "<anonymous>";
-		const onetime = function(...arguments_) {
-			calledFunctions.set(onetime, ++callCount);
-			if (callCount === 1) {
-				returnValue = function_.apply(this, arguments_);
-				function_ = null;
-			} else if (options.throw === true) throw new Error(`Function \`${functionName}\` can only be called once`);
-			return returnValue;
-		};
-		mimicFn(onetime, function_);
-		calledFunctions.set(onetime, callCount);
-		return onetime;
-	};
-	module.exports = onetime;
-	module.exports.default = onetime;
-	module.exports.callCount = (function_) => {
-		if (!calledFunctions.has(function_)) throw new Error(`The given function \`${function_.name}\` is not wrapped by the \`onetime\` package`);
-		return calledFunctions.get(function_);
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/human-signals@2.1.0/node_modules/human-signals/build/src/core.js
-var require_core = /* @__PURE__ */ __commonJSMin(((exports) => {
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.SIGNALS = void 0;
-	exports.SIGNALS = [
-		{
-			name: "SIGHUP",
-			number: 1,
-			action: "terminate",
-			description: "Terminal closed",
-			standard: "posix"
-		},
-		{
-			name: "SIGINT",
-			number: 2,
-			action: "terminate",
-			description: "User interruption with CTRL-C",
-			standard: "ansi"
-		},
-		{
-			name: "SIGQUIT",
-			number: 3,
-			action: "core",
-			description: "User interruption with CTRL-\\",
-			standard: "posix"
-		},
-		{
-			name: "SIGILL",
-			number: 4,
-			action: "core",
-			description: "Invalid machine instruction",
-			standard: "ansi"
-		},
-		{
-			name: "SIGTRAP",
-			number: 5,
-			action: "core",
-			description: "Debugger breakpoint",
-			standard: "posix"
-		},
-		{
-			name: "SIGABRT",
-			number: 6,
-			action: "core",
-			description: "Aborted",
-			standard: "ansi"
-		},
-		{
-			name: "SIGIOT",
-			number: 6,
-			action: "core",
-			description: "Aborted",
-			standard: "bsd"
-		},
-		{
-			name: "SIGBUS",
-			number: 7,
-			action: "core",
-			description: "Bus error due to misaligned, non-existing address or paging error",
-			standard: "bsd"
-		},
-		{
-			name: "SIGEMT",
-			number: 7,
-			action: "terminate",
-			description: "Command should be emulated but is not implemented",
-			standard: "other"
-		},
-		{
-			name: "SIGFPE",
-			number: 8,
-			action: "core",
-			description: "Floating point arithmetic error",
-			standard: "ansi"
-		},
-		{
-			name: "SIGKILL",
-			number: 9,
-			action: "terminate",
-			description: "Forced termination",
-			standard: "posix",
-			forced: true
-		},
-		{
-			name: "SIGUSR1",
-			number: 10,
-			action: "terminate",
-			description: "Application-specific signal",
-			standard: "posix"
-		},
-		{
-			name: "SIGSEGV",
-			number: 11,
-			action: "core",
-			description: "Segmentation fault",
-			standard: "ansi"
-		},
-		{
-			name: "SIGUSR2",
-			number: 12,
-			action: "terminate",
-			description: "Application-specific signal",
-			standard: "posix"
-		},
-		{
-			name: "SIGPIPE",
-			number: 13,
-			action: "terminate",
-			description: "Broken pipe or socket",
-			standard: "posix"
-		},
-		{
-			name: "SIGALRM",
-			number: 14,
-			action: "terminate",
-			description: "Timeout or timer",
-			standard: "posix"
-		},
-		{
-			name: "SIGTERM",
-			number: 15,
-			action: "terminate",
-			description: "Termination",
-			standard: "ansi"
-		},
-		{
-			name: "SIGSTKFLT",
-			number: 16,
-			action: "terminate",
-			description: "Stack is empty or overflowed",
-			standard: "other"
-		},
-		{
-			name: "SIGCHLD",
-			number: 17,
-			action: "ignore",
-			description: "Child process terminated, paused or unpaused",
-			standard: "posix"
-		},
-		{
-			name: "SIGCLD",
-			number: 17,
-			action: "ignore",
-			description: "Child process terminated, paused or unpaused",
-			standard: "other"
-		},
-		{
-			name: "SIGCONT",
-			number: 18,
-			action: "unpause",
-			description: "Unpaused",
-			standard: "posix",
-			forced: true
-		},
-		{
-			name: "SIGSTOP",
-			number: 19,
-			action: "pause",
-			description: "Paused",
-			standard: "posix",
-			forced: true
-		},
-		{
-			name: "SIGTSTP",
-			number: 20,
-			action: "pause",
-			description: "Paused using CTRL-Z or \"suspend\"",
-			standard: "posix"
-		},
-		{
-			name: "SIGTTIN",
-			number: 21,
-			action: "pause",
-			description: "Background process cannot read terminal input",
-			standard: "posix"
-		},
-		{
-			name: "SIGBREAK",
-			number: 21,
-			action: "terminate",
-			description: "User interruption with CTRL-BREAK",
-			standard: "other"
-		},
-		{
-			name: "SIGTTOU",
-			number: 22,
-			action: "pause",
-			description: "Background process cannot write to terminal output",
-			standard: "posix"
-		},
-		{
-			name: "SIGURG",
-			number: 23,
-			action: "ignore",
-			description: "Socket received out-of-band data",
-			standard: "bsd"
-		},
-		{
-			name: "SIGXCPU",
-			number: 24,
-			action: "core",
-			description: "Process timed out",
-			standard: "bsd"
-		},
-		{
-			name: "SIGXFSZ",
-			number: 25,
-			action: "core",
-			description: "File too big",
-			standard: "bsd"
-		},
-		{
-			name: "SIGVTALRM",
-			number: 26,
-			action: "terminate",
-			description: "Timeout or timer",
-			standard: "bsd"
-		},
-		{
-			name: "SIGPROF",
-			number: 27,
-			action: "terminate",
-			description: "Timeout or timer",
-			standard: "bsd"
-		},
-		{
-			name: "SIGWINCH",
-			number: 28,
-			action: "ignore",
-			description: "Terminal window size changed",
-			standard: "bsd"
-		},
-		{
-			name: "SIGIO",
-			number: 29,
-			action: "terminate",
-			description: "I/O is available",
-			standard: "other"
-		},
-		{
-			name: "SIGPOLL",
-			number: 29,
-			action: "terminate",
-			description: "Watched event",
-			standard: "other"
-		},
-		{
-			name: "SIGINFO",
-			number: 29,
-			action: "ignore",
-			description: "Request for process information",
-			standard: "other"
-		},
-		{
-			name: "SIGPWR",
-			number: 30,
-			action: "terminate",
-			description: "Device running out of power",
-			standard: "systemv"
-		},
-		{
-			name: "SIGSYS",
-			number: 31,
-			action: "core",
-			description: "Invalid system call",
-			standard: "other"
-		},
-		{
-			name: "SIGUNUSED",
-			number: 31,
-			action: "terminate",
-			description: "Invalid system call",
-			standard: "other"
-		}
-	];
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/human-signals@2.1.0/node_modules/human-signals/build/src/realtime.js
-var require_realtime = /* @__PURE__ */ __commonJSMin(((exports) => {
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.SIGRTMAX = exports.getRealtimeSignals = void 0;
-	const getRealtimeSignals = function() {
-		const length = SIGRTMAX - SIGRTMIN + 1;
-		return Array.from({ length }, getRealtimeSignal);
-	};
-	exports.getRealtimeSignals = getRealtimeSignals;
-	const getRealtimeSignal = function(value, index) {
-		return {
-			name: `SIGRT${index + 1}`,
-			number: SIGRTMIN + index,
-			action: "terminate",
-			description: "Application-specific signal (realtime)",
-			standard: "posix"
-		};
-	};
-	const SIGRTMIN = 34;
-	const SIGRTMAX = 64;
-	exports.SIGRTMAX = SIGRTMAX;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/human-signals@2.1.0/node_modules/human-signals/build/src/signals.js
-var require_signals$1 = /* @__PURE__ */ __commonJSMin(((exports) => {
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.getSignals = void 0;
-	var _os$1 = __require$1("os");
-	var _core = require_core();
-	var _realtime = require_realtime();
-	const getSignals = function() {
-		const realtimeSignals = (0, _realtime.getRealtimeSignals)();
-		return [..._core.SIGNALS, ...realtimeSignals].map(normalizeSignal);
-	};
-	exports.getSignals = getSignals;
-	const normalizeSignal = function({ name, number: defaultNumber, description, action, forced = false, standard }) {
-		const { signals: { [name]: constantSignal } } = _os$1.constants;
-		const supported = constantSignal !== void 0;
-		return {
-			name,
-			number: supported ? constantSignal : defaultNumber,
-			description,
-			supported,
-			action,
-			forced,
-			standard
-		};
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/human-signals@2.1.0/node_modules/human-signals/build/src/main.js
-var require_main = /* @__PURE__ */ __commonJSMin(((exports) => {
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.signalsByNumber = exports.signalsByName = void 0;
-	var _os = __require$1("os");
-	var _signals = require_signals$1();
-	var _realtime = require_realtime();
-	const getSignalsByName = function() {
-		return (0, _signals.getSignals)().reduce(getSignalByName, {});
-	};
-	const getSignalByName = function(signalByNameMemo, { name, number, description, supported, action, forced, standard }) {
-		return {
-			...signalByNameMemo,
-			[name]: {
-				name,
-				number,
-				description,
-				supported,
-				action,
-				forced,
-				standard
-			}
-		};
-	};
-	exports.signalsByName = getSignalsByName();
-	const getSignalsByNumber = function() {
-		const signals = (0, _signals.getSignals)();
-		const length = _realtime.SIGRTMAX + 1;
-		const signalsA = Array.from({ length }, (value, number) => getSignalByNumber(number, signals));
-		return Object.assign({}, ...signalsA);
-	};
-	const getSignalByNumber = function(number, signals) {
-		const signal = findSignalByNumber(number, signals);
-		if (signal === void 0) return {};
-		const { name, description, supported, action, forced, standard } = signal;
-		return { [number]: {
-			name,
-			number,
-			description,
-			supported,
-			action,
-			forced,
-			standard
-		} };
-	};
-	const findSignalByNumber = function(number, signals) {
-		const signal = signals.find(({ name }) => _os.constants.signals[name] === number);
-		if (signal !== void 0) return signal;
-		return signals.find((signalA) => signalA.number === number);
-	};
-	exports.signalsByNumber = getSignalsByNumber();
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/execa@5.1.1/node_modules/execa/lib/error.js
-var require_error = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const { signalsByName } = require_main();
-	const getErrorPrefix = ({ timedOut, timeout, errorCode, signal, signalDescription, exitCode, isCanceled }) => {
-		if (timedOut) return `timed out after ${timeout} milliseconds`;
-		if (isCanceled) return "was canceled";
-		if (errorCode !== void 0) return `failed with ${errorCode}`;
-		if (signal !== void 0) return `was killed with ${signal} (${signalDescription})`;
-		if (exitCode !== void 0) return `failed with exit code ${exitCode}`;
-		return "failed";
-	};
-	const makeError = ({ stdout, stderr, all, error, signal, exitCode, command, escapedCommand, timedOut, isCanceled, killed, parsed: { options: { timeout } } }) => {
-		exitCode = exitCode === null ? void 0 : exitCode;
-		signal = signal === null ? void 0 : signal;
-		const signalDescription = signal === void 0 ? void 0 : signalsByName[signal].description;
-		const errorCode = error && error.code;
-		const execaMessage = `Command ${getErrorPrefix({
-			timedOut,
-			timeout,
-			errorCode,
-			signal,
-			signalDescription,
-			exitCode,
-			isCanceled
-		})}: ${command}`;
-		const isError = Object.prototype.toString.call(error) === "[object Error]";
-		const shortMessage = isError ? `${execaMessage}\n${error.message}` : execaMessage;
-		const message = [
-			shortMessage,
-			stderr,
-			stdout
-		].filter(Boolean).join("\n");
-		if (isError) {
-			error.originalMessage = error.message;
-			error.message = message;
-		} else error = new Error(message);
-		error.shortMessage = shortMessage;
-		error.command = command;
-		error.escapedCommand = escapedCommand;
-		error.exitCode = exitCode;
-		error.signal = signal;
-		error.signalDescription = signalDescription;
-		error.stdout = stdout;
-		error.stderr = stderr;
-		if (all !== void 0) error.all = all;
-		if ("bufferedData" in error) delete error.bufferedData;
-		error.failed = true;
-		error.timedOut = Boolean(timedOut);
-		error.isCanceled = isCanceled;
-		error.killed = killed && !timedOut;
-		return error;
-	};
-	module.exports = makeError;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/execa@5.1.1/node_modules/execa/lib/stdio.js
-var require_stdio = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const aliases = [
-		"stdin",
-		"stdout",
-		"stderr"
-	];
-	const hasAlias = (options) => aliases.some((alias) => options[alias] !== void 0);
-	const normalizeStdio = (options) => {
-		if (!options) return;
-		const { stdio } = options;
-		if (stdio === void 0) return aliases.map((alias) => options[alias]);
-		if (hasAlias(options)) throw new Error(`It's not possible to provide \`stdio\` in combination with one of ${aliases.map((alias) => `\`${alias}\``).join(", ")}`);
-		if (typeof stdio === "string") return stdio;
-		if (!Array.isArray(stdio)) throw new TypeError(`Expected \`stdio\` to be of type \`string\` or \`Array\`, got \`${typeof stdio}\``);
-		const length = Math.max(stdio.length, aliases.length);
-		return Array.from({ length }, (value, index) => stdio[index]);
-	};
-	module.exports = normalizeStdio;
-	module.exports.node = (options) => {
-		const stdio = normalizeStdio(options);
-		if (stdio === "ipc") return "ipc";
-		if (stdio === void 0 || typeof stdio === "string") return [
-			stdio,
-			stdio,
-			stdio,
-			"ipc"
-		];
-		if (stdio.includes("ipc")) return stdio;
-		return [...stdio, "ipc"];
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/signal-exit@3.0.7/node_modules/signal-exit/signals.js
-var require_signals = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = [
-		"SIGABRT",
-		"SIGALRM",
-		"SIGHUP",
-		"SIGINT",
-		"SIGTERM"
-	];
-	if (process.platform !== "win32") module.exports.push("SIGVTALRM", "SIGXCPU", "SIGXFSZ", "SIGUSR2", "SIGTRAP", "SIGSYS", "SIGQUIT", "SIGIOT");
-	if (process.platform === "linux") module.exports.push("SIGIO", "SIGPOLL", "SIGPWR", "SIGSTKFLT", "SIGUNUSED");
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/signal-exit@3.0.7/node_modules/signal-exit/index.js
-var require_signal_exit = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	var process = global.process;
-	const processOk = function(process) {
-		return process && typeof process === "object" && typeof process.removeListener === "function" && typeof process.emit === "function" && typeof process.reallyExit === "function" && typeof process.listeners === "function" && typeof process.kill === "function" && typeof process.pid === "number" && typeof process.on === "function";
-	};
-	/* istanbul ignore if */
-	if (!processOk(process)) module.exports = function() {
-		return function() {};
-	};
-	else {
-		var assert$1 = __require$1("assert");
-		var signals = require_signals();
-		var isWin$1 = /^win/i.test(process.platform);
-		var EE = __require$1("events");
-		/* istanbul ignore if */
-		if (typeof EE !== "function") EE = EE.EventEmitter;
-		var emitter;
-		if (process.__signal_exit_emitter__) emitter = process.__signal_exit_emitter__;
-		else {
-			emitter = process.__signal_exit_emitter__ = new EE();
-			emitter.count = 0;
-			emitter.emitted = {};
-		}
-		if (!emitter.infinite) {
-			emitter.setMaxListeners(Infinity);
-			emitter.infinite = true;
-		}
-		module.exports = function(cb, opts) {
-			/* istanbul ignore if */
-			if (!processOk(global.process)) return function() {};
-			assert$1.equal(typeof cb, "function", "a callback must be provided for exit handler");
-			if (loaded === false) load();
-			var ev = "exit";
-			if (opts && opts.alwaysLast) ev = "afterexit";
-			var remove = function() {
-				emitter.removeListener(ev, cb);
-				if (emitter.listeners("exit").length === 0 && emitter.listeners("afterexit").length === 0) unload();
-			};
-			emitter.on(ev, cb);
-			return remove;
-		};
-		var unload = function unload() {
-			if (!loaded || !processOk(global.process)) return;
-			loaded = false;
-			signals.forEach(function(sig) {
-				try {
-					process.removeListener(sig, sigListeners[sig]);
-				} catch (er) {}
-			});
-			process.emit = originalProcessEmit;
-			process.reallyExit = originalProcessReallyExit;
-			emitter.count -= 1;
-		};
-		module.exports.unload = unload;
-		var emit = function emit(event, code, signal) {
-			/* istanbul ignore if */
-			if (emitter.emitted[event]) return;
-			emitter.emitted[event] = true;
-			emitter.emit(event, code, signal);
-		};
-		var sigListeners = {};
-		signals.forEach(function(sig) {
-			sigListeners[sig] = function listener() {
-				/* istanbul ignore if */
-				if (!processOk(global.process)) return;
-				if (process.listeners(sig).length === emitter.count) {
-					unload();
-					emit("exit", null, sig);
-					/* istanbul ignore next */
-					emit("afterexit", null, sig);
-					/* istanbul ignore next */
-					if (isWin$1 && sig === "SIGHUP") sig = "SIGINT";
-					/* istanbul ignore next */
-					process.kill(process.pid, sig);
-				}
-			};
-		});
-		module.exports.signals = function() {
-			return signals;
-		};
-		var loaded = false;
-		var load = function load() {
-			if (loaded || !processOk(global.process)) return;
-			loaded = true;
-			emitter.count += 1;
-			signals = signals.filter(function(sig) {
-				try {
-					process.on(sig, sigListeners[sig]);
-					return true;
-				} catch (er) {
-					return false;
-				}
-			});
-			process.emit = processEmit;
-			process.reallyExit = processReallyExit;
-		};
-		module.exports.load = load;
-		var originalProcessReallyExit = process.reallyExit;
-		var processReallyExit = function processReallyExit(code) {
-			/* istanbul ignore if */
-			if (!processOk(global.process)) return;
-			process.exitCode = code || /* istanbul ignore next */ 0;
-			emit("exit", process.exitCode, null);
-			/* istanbul ignore next */
-			emit("afterexit", process.exitCode, null);
-			/* istanbul ignore next */
-			originalProcessReallyExit.call(process, process.exitCode);
-		};
-		var originalProcessEmit = process.emit;
-		var processEmit = function processEmit(ev, arg) {
-			if (ev === "exit" && processOk(global.process)) {
-				/* istanbul ignore else */
-				if (arg !== void 0) process.exitCode = arg;
-				var ret = originalProcessEmit.apply(this, arguments);
-				/* istanbul ignore next */
-				emit("exit", process.exitCode, null);
-				/* istanbul ignore next */
-				emit("afterexit", process.exitCode, null);
-				/* istanbul ignore next */
-				return ret;
-			} else return originalProcessEmit.apply(this, arguments);
-		};
+	then(onfulfilled, onrejected) {
+		return this._waitForOutput().then(onfulfilled, onrejected);
 	}
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/execa@5.1.1/node_modules/execa/lib/kill.js
-var require_kill = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const os$1 = __require$1("os");
-	const onExit = require_signal_exit();
-	const DEFAULT_FORCE_KILL_TIMEOUT = 5e3;
-	const spawnedKill = (kill, signal = "SIGTERM", options = {}) => {
-		const killResult = kill(signal);
-		setKillTimeout(kill, signal, options, killResult);
-		return killResult;
-	};
-	const setKillTimeout = (kill, signal, options, killResult) => {
-		if (!shouldForceKill(signal, options, killResult)) return;
-		const timeout = getForceKillAfterTimeout(options);
-		const t = setTimeout(() => {
-			kill("SIGKILL");
-		}, timeout);
-		// istanbul ignore else
-		if (t.unref) t.unref();
-	};
-	const shouldForceKill = (signal, { forceKillAfterTimeout }, killResult) => {
-		return isSigterm(signal) && forceKillAfterTimeout !== false && killResult;
-	};
-	const isSigterm = (signal) => {
-		return signal === os$1.constants.signals.SIGTERM || typeof signal === "string" && signal.toUpperCase() === "SIGTERM";
-	};
-	const getForceKillAfterTimeout = ({ forceKillAfterTimeout = true }) => {
-		if (forceKillAfterTimeout === true) return DEFAULT_FORCE_KILL_TIMEOUT;
-		if (!Number.isFinite(forceKillAfterTimeout) || forceKillAfterTimeout < 0) throw new TypeError(`Expected the \`forceKillAfterTimeout\` option to be a non-negative integer, got \`${forceKillAfterTimeout}\` (${typeof forceKillAfterTimeout})`);
-		return forceKillAfterTimeout;
-	};
-	const spawnedCancel = (spawned, context) => {
-		if (spawned.kill()) context.isCanceled = true;
-	};
-	const timeoutKill = (spawned, signal, reject) => {
-		spawned.kill(signal);
-		reject(Object.assign(/* @__PURE__ */ new Error("Timed out"), {
-			timedOut: true,
-			signal
-		}));
-	};
-	const setupTimeout = (spawned, { timeout, killSignal = "SIGTERM" }, spawnedPromise) => {
-		if (timeout === 0 || timeout === void 0) return spawnedPromise;
-		let timeoutId;
-		const timeoutPromise = new Promise((resolve, reject) => {
-			timeoutId = setTimeout(() => {
-				timeoutKill(spawned, killSignal, reject);
-			}, timeout);
-		});
-		const safeSpawnedPromise = spawnedPromise.finally(() => {
-			clearTimeout(timeoutId);
-		});
-		return Promise.race([timeoutPromise, safeSpawnedPromise]);
-	};
-	const validateTimeout = ({ timeout }) => {
-		if (timeout !== void 0 && (!Number.isFinite(timeout) || timeout < 0)) throw new TypeError(`Expected the \`timeout\` option to be a non-negative integer, got \`${timeout}\` (${typeof timeout})`);
-	};
-	const setExitHandler = async (spawned, { cleanup, detached }, timedPromise) => {
-		if (!cleanup || detached) return timedPromise;
-		const removeExitHandler = onExit(() => {
-			spawned.kill();
-		});
-		return timedPromise.finally(() => {
-			removeExitHandler();
-		});
-	};
-	module.exports = {
-		spawnedKill,
-		spawnedCancel,
-		setupTimeout,
-		validateTimeout,
-		setExitHandler
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/is-stream@2.0.1/node_modules/is-stream/index.js
-var require_is_stream = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const isStream = (stream) => stream !== null && typeof stream === "object" && typeof stream.pipe === "function";
-	isStream.writable = (stream) => isStream(stream) && stream.writable !== false && typeof stream._write === "function" && typeof stream._writableState === "object";
-	isStream.readable = (stream) => isStream(stream) && stream.readable !== false && typeof stream._read === "function" && typeof stream._readableState === "object";
-	isStream.duplex = (stream) => isStream.writable(stream) && isStream.readable(stream);
-	isStream.transform = (stream) => isStream.duplex(stream) && typeof stream._transform === "function";
-	module.exports = isStream;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/get-stream@6.0.1/node_modules/get-stream/buffer-stream.js
-var require_buffer_stream = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const { PassThrough: PassThroughStream } = __require$1("stream");
-	module.exports = (options) => {
-		options = { ...options };
-		const { array } = options;
-		let { encoding } = options;
-		const isBuffer = encoding === "buffer";
-		let objectMode = false;
-		if (array) objectMode = !(encoding || isBuffer);
-		else encoding = encoding || "utf8";
-		if (isBuffer) encoding = null;
-		const stream = new PassThroughStream({ objectMode });
-		if (encoding) stream.setEncoding(encoding);
-		let length = 0;
-		const chunks = [];
-		stream.on("data", (chunk) => {
-			chunks.push(chunk);
-			if (objectMode) length = chunks.length;
-			else length += chunk.length;
-		});
-		stream.getBufferedValue = () => {
-			if (array) return chunks;
-			return isBuffer ? Buffer.concat(chunks, length) : chunks.join("");
+	_streamOut;
+	_streamErr;
+	spawn() {
+		const cwd$1 = cwd();
+		const options = this._options;
+		const nodeOptions = {
+			...defaultNodeOptions,
+			...options.nodeOptions
 		};
-		stream.getBufferedLength = () => length;
-		return stream;
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/get-stream@6.0.1/node_modules/get-stream/index.js
-var require_get_stream = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const { constants: BufferConstants } = __require$1("buffer");
-	const stream = __require$1("stream");
-	const { promisify } = __require$1("util");
-	const bufferStream = require_buffer_stream();
-	const streamPipelinePromisified = promisify(stream.pipeline);
-	var MaxBufferError = class extends Error {
-		constructor() {
-			super("maxBuffer exceeded");
-			this.name = "MaxBufferError";
+		const signals = [];
+		this._resetState();
+		if (options.timeout !== void 0) signals.push(AbortSignal.timeout(options.timeout));
+		if (options.signal !== void 0) signals.push(options.signal);
+		if (options.persist === true) nodeOptions.detached = true;
+		if (signals.length > 0) nodeOptions.signal = combineSignals(signals);
+		nodeOptions.env = computeEnv(cwd$1, nodeOptions.env, options.nodePath);
+		const crossResult = normalizeSpawnCommand(this._command, this._args, nodeOptions);
+		const handle = spawn(crossResult.command, crossResult.args, crossResult.options);
+		if (handle.stderr) this._streamErr = handle.stderr;
+		if (handle.stdout) this._streamOut = handle.stdout;
+		this._process = handle;
+		handle.once("error", this._onError);
+		handle.once("close", this._onClose);
+		if (handle.stdin) {
+			const { stdin } = options;
+			if (typeof stdin === "string") handle.stdin.end(stdin);
+			else stdin?.process?.stdout?.pipe(handle.stdin);
 		}
-	};
-	async function getStream(inputStream, options) {
-		if (!inputStream) throw new Error("Expected a stream");
-		options = {
-			maxBuffer: Infinity,
-			...options
-		};
-		const { maxBuffer } = options;
-		const stream = bufferStream(options);
-		await new Promise((resolve, reject) => {
-			const rejectPromise = (error) => {
-				if (error && stream.getBufferedLength() <= BufferConstants.MAX_LENGTH) error.bufferedData = stream.getBufferedValue();
-				reject(error);
-			};
-			(async () => {
-				try {
-					await streamPipelinePromisified(inputStream, stream);
-					resolve();
-				} catch (error) {
-					rejectPromise(error);
-				}
-			})();
-			stream.on("data", () => {
-				if (stream.getBufferedLength() > maxBuffer) rejectPromise(new MaxBufferError());
-			});
-		});
-		return stream.getBufferedValue();
 	}
-	module.exports = getStream;
-	module.exports.buffer = (stream, options) => getStream(stream, {
-		...options,
-		encoding: "buffer"
-	});
-	module.exports.array = (stream, options) => getStream(stream, {
-		...options,
-		array: true
-	});
-	module.exports.MaxBufferError = MaxBufferError;
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/merge-stream@2.0.0/node_modules/merge-stream/index.js
-var require_merge_stream = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const { PassThrough: PassThrough$1 } = __require$1("stream");
-	module.exports = function() {
-		var sources = [];
-		var output = new PassThrough$1({ objectMode: true });
-		output.setMaxListeners(0);
-		output.add = add;
-		output.isEmpty = isEmpty;
-		output.on("unpipe", remove);
-		Array.prototype.slice.call(arguments).forEach(add);
-		return output;
-		function add(source) {
-			if (Array.isArray(source)) {
-				source.forEach(add);
-				return this;
-			}
-			sources.push(source);
-			source.once("end", remove.bind(null, source));
-			source.once("error", output.emit.bind(output, "error"));
-			source.pipe(output, { end: false });
-			return this;
-		}
-		function isEmpty() {
-			return sources.length == 0;
-		}
-		function remove(source) {
-			sources = sources.filter(function(it) {
-				return it !== source;
-			});
-			if (!sources.length && output.readable) output.end();
-		}
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/execa@5.1.1/node_modules/execa/lib/stream.js
-var require_stream = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const isStream = require_is_stream();
-	const getStream = require_get_stream();
-	const mergeStream = require_merge_stream();
-	const handleInput = (spawned, input) => {
-		if (input === void 0 || spawned.stdin === void 0) return;
-		if (isStream(input)) input.pipe(spawned.stdin);
-		else spawned.stdin.end(input);
-	};
-	const makeAllStream = (spawned, { all }) => {
-		if (!all || !spawned.stdout && !spawned.stderr) return;
-		const mixed = mergeStream();
-		if (spawned.stdout) mixed.add(spawned.stdout);
-		if (spawned.stderr) mixed.add(spawned.stderr);
-		return mixed;
-	};
-	const getBufferedData = async (stream, streamPromise) => {
-		if (!stream) return;
-		stream.destroy();
-		try {
-			return await streamPromise;
-		} catch (error) {
-			return error.bufferedData;
-		}
-	};
-	const getStreamPromise = (stream, { encoding, buffer, maxBuffer }) => {
-		if (!stream || !buffer) return;
-		if (encoding) return getStream(stream, {
-			encoding,
-			maxBuffer
+	_resetState() {
+		this._aborted = false;
+		this._processClosed = new Promise((resolve) => {
+			this._resolveClose = resolve;
 		});
-		return getStream.buffer(stream, { maxBuffer });
-	};
-	const getSpawnedResult = async ({ stdout, stderr, all }, { encoding, buffer, maxBuffer }, processDone) => {
-		const stdoutPromise = getStreamPromise(stdout, {
-			encoding,
-			buffer,
-			maxBuffer
-		});
-		const stderrPromise = getStreamPromise(stderr, {
-			encoding,
-			buffer,
-			maxBuffer
-		});
-		const allPromise = getStreamPromise(all, {
-			encoding,
-			buffer,
-			maxBuffer: maxBuffer * 2
-		});
-		try {
-			return await Promise.all([
-				processDone,
-				stdoutPromise,
-				stderrPromise,
-				allPromise
-			]);
-		} catch (error) {
-			return Promise.all([
-				{
-					error,
-					signal: error.signal,
-					timedOut: error.timedOut
-				},
-				getBufferedData(stdout, stdoutPromise),
-				getBufferedData(stderr, stderrPromise),
-				getBufferedData(all, allPromise)
-			]);
+		this._thrownError = void 0;
+	}
+	_onError = (err) => {
+		if (err.name === "AbortError" && (!(err.cause instanceof Error) || err.cause.name !== "TimeoutError")) {
+			this._aborted = true;
+			return;
 		}
+		this._thrownError = err;
 	};
-	const validateInputSync = ({ input }) => {
-		if (isStream(input)) throw new TypeError("The `input` option cannot be a stream in sync mode");
+	_onClose = () => {
+		if (this._resolveClose) this._resolveClose();
 	};
-	module.exports = {
-		handleInput,
-		makeAllStream,
-		getSpawnedResult,
-		validateInputSync
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/execa@5.1.1/node_modules/execa/lib/promise.js
-var require_promise = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const nativePromisePrototype = (async () => {})().constructor.prototype;
-	const descriptors = [
-		"then",
-		"catch",
-		"finally"
-	].map((property) => [property, Reflect.getOwnPropertyDescriptor(nativePromisePrototype, property)]);
-	const mergePromise = (spawned, promise) => {
-		for (const [property, descriptor] of descriptors) {
-			const value = typeof promise === "function" ? (...args) => Reflect.apply(descriptor.value, promise(), args) : descriptor.value.bind(promise);
-			Reflect.defineProperty(spawned, property, {
-				...descriptor,
-				value
-			});
-		}
-		return spawned;
-	};
-	const getSpawnedPromise = (spawned) => {
-		return new Promise((resolve, reject) => {
-			spawned.on("exit", (exitCode, signal) => {
-				resolve({
-					exitCode,
-					signal
-				});
-			});
-			spawned.on("error", (error) => {
-				reject(error);
-			});
-			if (spawned.stdin) spawned.stdin.on("error", (error) => {
-				reject(error);
-			});
-		});
-	};
-	module.exports = {
-		mergePromise,
-		getSpawnedPromise
-	};
-}));
-//#endregion
-//#region ../../node_modules/.pnpm/execa@5.1.1/node_modules/execa/lib/command.js
-var require_command = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const normalizeArgs = (file, args = []) => {
-		if (!Array.isArray(args)) return [file];
-		return [file, ...args];
-	};
-	const NO_ESCAPE_REGEXP = /^[\w.-]+$/;
-	const DOUBLE_QUOTES_REGEXP = /"/g;
-	const escapeArg = (arg) => {
-		if (typeof arg !== "string" || NO_ESCAPE_REGEXP.test(arg)) return arg;
-		return `"${arg.replace(DOUBLE_QUOTES_REGEXP, "\\\"")}"`;
-	};
-	const joinCommand = (file, args) => {
-		return normalizeArgs(file, args).join(" ");
-	};
-	const getEscapedCommand = (file, args) => {
-		return normalizeArgs(file, args).map((arg) => escapeArg(arg)).join(" ");
-	};
-	const SPACES_REGEXP = / +/g;
-	const parseCommand = (command) => {
-		const tokens = [];
-		for (const token of command.trim().split(SPACES_REGEXP)) {
-			const previousToken = tokens[tokens.length - 1];
-			if (previousToken && previousToken.endsWith("\\")) tokens[tokens.length - 1] = `${previousToken.slice(0, -1)} ${token}`;
-			else tokens.push(token);
-		}
-		return tokens;
-	};
-	module.exports = {
-		joinCommand,
-		getEscapedCommand,
-		parseCommand
-	};
-}));
+};
+const x = (command, args, userOptions) => {
+	const proc = new ExecProcess(command, args, userOptions);
+	proc.spawn();
+	return proc;
+};
+const exec = x;
 //#endregion
 //#region ../../node_modules/.pnpm/@changesets+errors@1.0.0/node_modules/@changesets/errors/dist/index.mjs
-var import_execa = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
-	const path$2 = __require$1("path");
-	const childProcess = __require$1("child_process");
-	const crossSpawn = require_cross_spawn();
-	const stripFinalNewline = require_strip_final_newline();
-	const npmRunPath = require_npm_run_path();
-	const onetime = require_onetime();
-	const makeError = require_error();
-	const normalizeStdio = require_stdio();
-	const { spawnedKill, spawnedCancel, setupTimeout, validateTimeout, setExitHandler } = require_kill();
-	const { handleInput, getSpawnedResult, makeAllStream, validateInputSync } = require_stream();
-	const { mergePromise, getSpawnedPromise } = require_promise();
-	const { joinCommand, parseCommand, getEscapedCommand } = require_command();
-	const DEFAULT_MAX_BUFFER = 1e8;
-	const getEnv = ({ env: envOption, extendEnv, preferLocal, localDir, execPath }) => {
-		const env = extendEnv ? {
-			...process.env,
-			...envOption
-		} : envOption;
-		if (preferLocal) return npmRunPath.env({
-			env,
-			cwd: localDir,
-			execPath
-		});
-		return env;
-	};
-	const handleArguments = (file, args, options = {}) => {
-		const parsed = crossSpawn._parse(file, args, options);
-		file = parsed.command;
-		args = parsed.args;
-		options = parsed.options;
-		options = {
-			maxBuffer: DEFAULT_MAX_BUFFER,
-			buffer: true,
-			stripFinalNewline: true,
-			extendEnv: true,
-			preferLocal: false,
-			localDir: options.cwd || process.cwd(),
-			execPath: process.execPath,
-			encoding: "utf8",
-			reject: true,
-			cleanup: true,
-			all: false,
-			windowsHide: true,
-			...options
-		};
-		options.env = getEnv(options);
-		options.stdio = normalizeStdio(options);
-		if (process.platform === "win32" && path$2.basename(file, ".exe") === "cmd") args.unshift("/q");
-		return {
-			file,
-			args,
-			options,
-			parsed
-		};
-	};
-	const handleOutput = (options, value, error) => {
-		if (typeof value !== "string" && !Buffer.isBuffer(value)) return error === void 0 ? void 0 : "";
-		if (options.stripFinalNewline) return stripFinalNewline(value);
-		return value;
-	};
-	const execa = (file, args, options) => {
-		const parsed = handleArguments(file, args, options);
-		const command = joinCommand(file, args);
-		const escapedCommand = getEscapedCommand(file, args);
-		validateTimeout(parsed.options);
-		let spawned;
-		try {
-			spawned = childProcess.spawn(parsed.file, parsed.args, parsed.options);
-		} catch (error) {
-			const dummySpawned = new childProcess.ChildProcess();
-			const errorPromise = Promise.reject(makeError({
-				error,
-				stdout: "",
-				stderr: "",
-				all: "",
-				command,
-				escapedCommand,
-				parsed,
-				timedOut: false,
-				isCanceled: false,
-				killed: false
-			}));
-			return mergePromise(dummySpawned, errorPromise);
-		}
-		const spawnedPromise = getSpawnedPromise(spawned);
-		const timedPromise = setupTimeout(spawned, parsed.options, spawnedPromise);
-		const processDone = setExitHandler(spawned, parsed.options, timedPromise);
-		const context = { isCanceled: false };
-		spawned.kill = spawnedKill.bind(null, spawned.kill.bind(spawned));
-		spawned.cancel = spawnedCancel.bind(null, spawned, context);
-		const handlePromise = async () => {
-			const [{ error, exitCode, signal, timedOut }, stdoutResult, stderrResult, allResult] = await getSpawnedResult(spawned, parsed.options, processDone);
-			const stdout = handleOutput(parsed.options, stdoutResult);
-			const stderr = handleOutput(parsed.options, stderrResult);
-			const all = handleOutput(parsed.options, allResult);
-			if (error || exitCode !== 0 || signal !== null) {
-				const returnedError = makeError({
-					error,
-					exitCode,
-					signal,
-					stdout,
-					stderr,
-					all,
-					command,
-					escapedCommand,
-					parsed,
-					timedOut,
-					isCanceled: context.isCanceled,
-					killed: spawned.killed
-				});
-				if (!parsed.options.reject) return returnedError;
-				throw returnedError;
-			}
-			return {
-				command,
-				escapedCommand,
-				exitCode: 0,
-				stdout,
-				stderr,
-				all,
-				failed: false,
-				timedOut: false,
-				isCanceled: false,
-				killed: false
-			};
-		};
-		const handlePromiseOnce = onetime(handlePromise);
-		handleInput(spawned, parsed.options.input);
-		spawned.all = makeAllStream(spawned, parsed.options);
-		return mergePromise(spawned, handlePromiseOnce);
-	};
-	module.exports = execa;
-	module.exports.sync = (file, args, options) => {
-		const parsed = handleArguments(file, args, options);
-		const command = joinCommand(file, args);
-		const escapedCommand = getEscapedCommand(file, args);
-		validateInputSync(parsed.options);
-		let result;
-		try {
-			result = childProcess.spawnSync(parsed.file, parsed.args, parsed.options);
-		} catch (error) {
-			throw makeError({
-				error,
-				stdout: "",
-				stderr: "",
-				all: "",
-				command,
-				escapedCommand,
-				parsed,
-				timedOut: false,
-				isCanceled: false,
-				killed: false
-			});
-		}
-		const stdout = handleOutput(parsed.options, result.stdout, result.error);
-		const stderr = handleOutput(parsed.options, result.stderr, result.error);
-		if (result.error || result.status !== 0 || result.signal !== null) {
-			const error = makeError({
-				stdout,
-				stderr,
-				error: result.error,
-				signal: result.signal,
-				exitCode: result.status,
-				command,
-				escapedCommand,
-				parsed,
-				timedOut: result.error && result.error.code === "ETIMEDOUT",
-				isCanceled: false,
-				killed: result.signal !== null
-			});
-			if (!parsed.options.reject) return error;
-			throw error;
-		}
-		return {
-			command,
-			escapedCommand,
-			exitCode: 0,
-			stdout,
-			stderr,
-			failed: false,
-			timedOut: false,
-			isCanceled: false,
-			killed: false
-		};
-	};
-	module.exports.command = (command, options) => {
-		const [file, ...args] = parseCommand(command);
-		return execa(file, args, options);
-	};
-	module.exports.commandSync = (command, options) => {
-		const [file, ...args] = parseCommand(command);
-		return execa.sync(file, args, options);
-	};
-	module.exports.node = (scriptPath, args, options = {}) => {
-		if (args && !Array.isArray(args) && typeof args === "object") {
-			options = args;
-			args = [];
-		}
-		const stdio = normalizeStdio.node(options);
-		const defaultExecArgv = process.execArgv.filter((arg) => !arg.startsWith("--inspect"));
-		const { nodePath = process.execPath, nodeOptions = defaultExecArgv } = options;
-		return execa(nodePath, [
-			...nodeOptions,
-			scriptPath,
-			...Array.isArray(args) ? args : []
-		], {
-			...options,
-			stdin: void 0,
-			stdout: void 0,
-			stderr: void 0,
-			stdio,
-			shell: false
-		});
-	};
-})))();
 var GitError = class extends Error {
 	code;
 	constructor(code, message) {
@@ -19581,7 +18251,7 @@ var Walker = class {
 			symlinks: /* @__PURE__ */ new Map(),
 			visited: [""].slice(0, 0),
 			controller: new Aborter(),
-			fs: options.fs || fs$4
+			fs: options.fs || fs$1
 		};
 		this.joinPath = build$7(this.root, options);
 		this.pushDirectory = build$6(this.root, options);
@@ -21936,7 +20606,7 @@ function formatPaths(paths, mapper) {
 	if (mapper) for (let i = paths.length - 1; i >= 0; i--) paths[i] = mapper(paths[i]);
 	return paths;
 }
-const defaultOptions$1 = {
+const defaultOptions = {
 	caseSensitiveMatch: true,
 	debug: !!process.env.TINYGLOBBY_DEBUG,
 	expandDirectories: true,
@@ -21945,7 +20615,7 @@ const defaultOptions$1 = {
 };
 function getOptions(options) {
 	const opts = Object.assign({}, options);
-	for (const key in defaultOptions$1) if (opts[key] === void 0) Object.assign(opts, { [key]: defaultOptions$1[key] });
+	for (const key in defaultOptions) if (opts[key] === void 0) Object.assign(opts, { [key]: defaultOptions[key] });
 	opts.cwd = (opts.cwd instanceof URL ? fileURLToPath(opts.cwd) : resolve$1(opts.cwd || process.cwd())).replace(BACKSLASHES, "/");
 	opts.ignore = ensureStringArray(opts.ignore);
 	opts.fs && (opts.fs = {
@@ -31329,346 +29999,6 @@ async function migratePreState(rootDir, preState) {
 	return preState;
 }
 //#endregion
-//#region ../../node_modules/.pnpm/tinyexec@1.3.0/node_modules/tinyexec/dist/main.mjs
-const isPathLikePattern = /^path$/i;
-const defaultEnvPathInfo = {
-	key: "PATH",
-	value: ""
-};
-function getPathFromEnv(env) {
-	for (const key in env) {
-		if (!Object.prototype.hasOwnProperty.call(env, key) || !isPathLikePattern.test(key)) continue;
-		const value = env[key];
-		if (!value) return defaultEnvPathInfo;
-		return {
-			key,
-			value
-		};
-	}
-	return defaultEnvPathInfo;
-}
-function addNodeBinToPath(cwd, path) {
-	const parts = path.value.split(delimiter);
-	const nodeBinPaths = [];
-	let currentPath = cwd;
-	let lastPath;
-	do {
-		nodeBinPaths.push(resolve(currentPath, "node_modules", ".bin"));
-		lastPath = currentPath;
-		currentPath = dirname(currentPath);
-	} while (currentPath !== lastPath);
-	nodeBinPaths.push(dirname(process.execPath));
-	const newPath = nodeBinPaths.concat(parts).join(delimiter);
-	return {
-		key: path.key,
-		value: newPath
-	};
-}
-function computeEnv(cwd, env, nodePath = true) {
-	const envWithDefault = {
-		...process.env,
-		...env
-	};
-	if (!nodePath) return envWithDefault;
-	const envPathInfo = addNodeBinToPath(cwd, getPathFromEnv(envWithDefault));
-	envWithDefault[envPathInfo.key] = envPathInfo.value;
-	return envWithDefault;
-}
-const combineStreams = (streams) => {
-	let streamCount = streams.length;
-	const combined = new PassThrough();
-	const maybeEmitEnd = () => {
-		if (--streamCount === 0) combined.end();
-	};
-	for (const stream of streams) pipeline(stream, combined, { end: false }).then(maybeEmitEnd).catch(maybeEmitEnd);
-	return combined;
-};
-const metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
-const shebangRegExp = /^#!\s*(.+)/;
-const isWindowsExecutableRegExp = /\.(?:com|exe)$/i;
-const isNodeModulesCmdRegExp = /node_modules[\\/]\.bin[\\/][^\\/]+\.cmd$/i;
-const isWindows = process.platform === "win32";
-const defaultPathExt = [
-	".EXE",
-	".CMD",
-	".BAT",
-	".COM"
-];
-const noPathExt = [""];
-/**
-* Normalizes the command and arguments to work cross-platform.
-* On Windows, this basically handles things like shebangs, calling
-* `node_modules/.bin` commands, and escaping meta characters.
-* On other platforms, it just returns the command and arguments as-is.
-*/
-function normalizeSpawnCommand(command, args = [], options = {}) {
-	if (options.shell === true || !isWindows) return {
-		command,
-		args,
-		options
-	};
-	let file = resolveCommand(command, options);
-	let shebang = null;
-	if (file !== null) {
-		const size = 150;
-		const buffer = Buffer.alloc(size);
-		let fd = null;
-		try {
-			fd = openSync(file, "r");
-			readSync(fd, buffer, 0, size, 0);
-		} catch {} finally {
-			if (fd !== null) closeSync(fd);
-		}
-		const match = buffer.toString().match(shebangRegExp);
-		if (match !== null) {
-			const line = match[1].trim();
-			const separatorIndex = line.indexOf(" ");
-			const path = separatorIndex !== -1 ? line.slice(0, separatorIndex) : line;
-			const argument = separatorIndex !== -1 ? line.slice(separatorIndex + 1) : "";
-			const binary = basename(path);
-			shebang = binary === "env" ? argument || null : binary;
-		}
-	}
-	if (shebang !== null && file !== null) {
-		args = [file, ...args];
-		command = shebang;
-		file = resolveCommand(command, options);
-	}
-	if (file === null || !isWindowsExecutableRegExp.test(file)) {
-		const needsDoubleEscapeMetaChars = file !== null && isNodeModulesCmdRegExp.test(file);
-		command = normalize(command);
-		command = command.replace(metaCharsRegExp, "^$1");
-		args = args.map((arg) => {
-			arg = arg.replace(/(?=(\\+?)?)\1"/g, "$1$1\\\"");
-			arg = arg.replace(/(?=(\\+?)?)\1$/, "$1$1");
-			arg = `"${arg}"`;
-			arg = arg.replace(metaCharsRegExp, "^$1");
-			if (needsDoubleEscapeMetaChars) arg = arg.replace(metaCharsRegExp, "^$1");
-			return arg;
-		});
-		args = [
-			"/d",
-			"/s",
-			"/c",
-			`"${[command, ...args].join(" ")}"`
-		];
-		command = options.env?.comspec ?? "cmd.exe";
-		options = {
-			...options,
-			windowsVerbatimArguments: true
-		};
-	}
-	return {
-		command,
-		args,
-		options
-	};
-}
-/**
-* Resolves the command to an absolute path if possible.
-* Handles things like traversing PATH and adding extensions from PATHEXT
-*/
-function resolveCommand(command, options) {
-	const cwd$3 = (options.cwd ?? cwd()).toString();
-	const env = options.env ?? process.env;
-	const PATH = getPathFromEnv(env).value;
-	const pathEnv = command.includes("/") || command.includes("\\") ? [""] : [cwd$3, ...PATH.split(delimiter)];
-	let pathExt = env.PATHEXT ? env.PATHEXT.split(delimiter) : defaultPathExt;
-	if (command.includes(".") && pathExt[0] !== "") pathExt = ["", ...pathExt];
-	for (const extensions of [pathExt, noPathExt]) for (const path of pathEnv) {
-		const dest = resolve(cwd$3, path.startsWith("\"") && path.endsWith("\"") && path.length > 1 ? path.slice(1, -1) : path, command);
-		for (const ext of extensions) {
-			const destWithExt = dest + ext;
-			try {
-				if (statSync$1(destWithExt).isFile()) return destWithExt;
-			} catch {}
-		}
-	}
-	return null;
-}
-var NonZeroExitError = class extends Error {
-	result;
-	output;
-	exitCode;
-	get signalCode() {
-		return this.result.signalCode;
-	}
-	constructor(result, output, command, args) {
-		let target = "The process";
-		if (command) target = `The command \`${args?.length ? `${command} ${args.map((a) => /[ "'`()]/.test(a) ? JSON.stringify(a) : a).join(" ")}` : command}\``;
-		const exitCode = result.exitCode ?? 1;
-		super(result.signalCode !== null ? `${target} was killed by the signal ${result.signalCode}` : `${target} exited with a non-zero status (${exitCode})`);
-		this.result = result;
-		this.output = output;
-		this.exitCode = exitCode;
-		Object.defineProperty(this, "result", {
-			enumerable: false,
-			writable: false,
-			configurable: false
-		});
-	}
-};
-const defaultOptions = {
-	timeout: void 0,
-	persist: false
-};
-const defaultNodeOptions = { windowsHide: true };
-function combineSignals(signals) {
-	const controller = new AbortController();
-	for (const signal of signals) {
-		if (signal.aborted) {
-			controller.abort();
-			return signal;
-		}
-		const onAbort = () => {
-			controller.abort(signal.reason);
-		};
-		signal.addEventListener("abort", onAbort, { signal: controller.signal });
-	}
-	return controller.signal;
-}
-async function readStream(stream) {
-	let output = "";
-	try {
-		for await (const chunk of stream) output += chunk.toString();
-	} catch {}
-	return output;
-}
-var ExecProcess = class {
-	_process;
-	_aborted = false;
-	_options;
-	_command;
-	_args;
-	_resolveClose;
-	_processClosed;
-	_thrownError;
-	get process() {
-		return this._process;
-	}
-	get pid() {
-		return this._process?.pid;
-	}
-	get exitCode() {
-		if (this._process && this._process.exitCode !== null) return this._process.exitCode;
-	}
-	get signalCode() {
-		return this._process?.signalCode ?? null;
-	}
-	constructor(command, args, options) {
-		this._options = {
-			...defaultOptions,
-			...options
-		};
-		this._command = command;
-		this._args = args ?? [];
-		this._processClosed = new Promise((resolve) => {
-			this._resolveClose = resolve;
-		});
-	}
-	kill(signal) {
-		return this._process?.kill(signal) === true;
-	}
-	get aborted() {
-		return this._aborted;
-	}
-	get killed() {
-		return this._process?.killed === true;
-	}
-	pipe(command, args, options) {
-		return exec(command, args, {
-			...options,
-			stdin: this
-		});
-	}
-	async *[Symbol.asyncIterator]() {
-		const proc = this._process;
-		if (!proc) return;
-		const streams = [];
-		if (this._streamErr) streams.push(this._streamErr);
-		if (this._streamOut) streams.push(this._streamOut);
-		const streamCombined = combineStreams(streams);
-		const rl = readline.createInterface({ input: streamCombined });
-		for await (const chunk of rl) yield chunk.toString();
-		await this._processClosed;
-		proc.removeAllListeners();
-		if (this._thrownError) throw this._thrownError;
-		if (this._options?.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, void 0, this._command, this._args);
-	}
-	async _waitForOutput() {
-		const proc = this._process;
-		if (!proc) throw new Error("No process was started");
-		const [stdout, stderr] = await Promise.all([this._streamOut ? readStream(this._streamOut) : "", this._streamErr ? readStream(this._streamErr) : ""]);
-		await this._processClosed;
-		const { stdin } = this._options;
-		if (stdin && typeof stdin !== "string") await stdin;
-		proc.removeAllListeners();
-		if (this._thrownError) throw this._thrownError;
-		const result = {
-			stderr,
-			stdout,
-			exitCode: this.exitCode
-		};
-		if (this._options.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, result, this._command, this._args);
-		return result;
-	}
-	then(onfulfilled, onrejected) {
-		return this._waitForOutput().then(onfulfilled, onrejected);
-	}
-	_streamOut;
-	_streamErr;
-	spawn() {
-		const cwd$1 = cwd();
-		const options = this._options;
-		const nodeOptions = {
-			...defaultNodeOptions,
-			...options.nodeOptions
-		};
-		const signals = [];
-		this._resetState();
-		if (options.timeout !== void 0) signals.push(AbortSignal.timeout(options.timeout));
-		if (options.signal !== void 0) signals.push(options.signal);
-		if (options.persist === true) nodeOptions.detached = true;
-		if (signals.length > 0) nodeOptions.signal = combineSignals(signals);
-		nodeOptions.env = computeEnv(cwd$1, nodeOptions.env, options.nodePath);
-		const crossResult = normalizeSpawnCommand(this._command, this._args, nodeOptions);
-		const handle = spawn(crossResult.command, crossResult.args, crossResult.options);
-		if (handle.stderr) this._streamErr = handle.stderr;
-		if (handle.stdout) this._streamOut = handle.stdout;
-		this._process = handle;
-		handle.once("error", this._onError);
-		handle.once("close", this._onClose);
-		if (handle.stdin) {
-			const { stdin } = options;
-			if (typeof stdin === "string") handle.stdin.end(stdin);
-			else stdin?.process?.stdout?.pipe(handle.stdin);
-		}
-	}
-	_resetState() {
-		this._aborted = false;
-		this._processClosed = new Promise((resolve) => {
-			this._resolveClose = resolve;
-		});
-		this._thrownError = void 0;
-	}
-	_onError = (err) => {
-		if (err.name === "AbortError" && (!(err.cause instanceof Error) || err.cause.name !== "TimeoutError")) {
-			this._aborted = true;
-			return;
-		}
-		this._thrownError = err;
-	};
-	_onClose = () => {
-		if (this._resolveClose) this._resolveClose();
-	};
-};
-const x = (command, args, userOptions) => {
-	const proc = new ExecProcess(command, args, userOptions);
-	proc.spawn();
-	return proc;
-};
-const exec = x;
-//#endregion
 //#region ../../node_modules/.pnpm/@changesets+git@4.0.0/node_modules/@changesets/git/dist/index.mjs
 async function getDivergedCommit(cwd, ref) {
 	const cmd = await exec("git", [
@@ -32395,7 +30725,7 @@ async function bump() {
 	info$1("updating root package.json");
 	await updateRootPackageJson(version);
 	info$1("setting version");
-	await (0, import_execa.command)("node_modules/@changesets/cli/bin.js version");
+	await x("node", ["node_modules/@changesets/cli/bin.js", "version"], { throwOnError: true });
 }
 async function updateRootPackageJson(version) {
 	await transformFile(resolve("package.json"), (packageJson) => formatJson({
@@ -32403,6 +30733,6 @@ async function updateRootPackageJson(version) {
 		version: `${version}`
 	}));
 }
-bump();
+await bump();
 //#endregion
 export {};

@@ -79,6 +79,15 @@ export async function convertToOpenApiV3xDocument(
         'OpenAPI 3.1 support is an experimental feature. Use with caution.'
       );
     }
+    if (version.startsWith('3.2')) {
+      logger.warn(
+        'OpenAPI 3.2 support is an experimental feature. Use with caution. The document is treated as 3.1 for parsing; 3.2-only constructs may be ignored.'
+      );
+      // SwaggerParser rejects any version outside its 3.0/3.1 allowlist. 3.2
+      // schema constructs are JSON Schema 2020-12 (already handled by the 3.1
+      // path), so relabel the document as 3.1.1 for the downstream parser.
+      openApiDocument.openapi = '3.1.1';
+    }
     return openApiDocument as OpenAPIV3.Document | OpenAPIV3_1.Document;
   }
 

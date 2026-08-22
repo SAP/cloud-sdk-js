@@ -222,6 +222,12 @@ export interface OpenApiOperation extends Omit<
    * Header parameters available for this operation.
    */
   headerParameters: OpenApiParameter[];
+
+  /**
+   * Single parameter capturing the entire raw query string (OpenAPI 3.2
+   * `in: querystring`). Mutually exclusive with `queryParameters`.
+   */
+  queryStringParameter?: OpenApiQueryStringParameter;
 }
 
 const supportedMethods = {
@@ -232,7 +238,8 @@ const supportedMethods = {
   delete: 'delete',
   head: 'head',
   options: 'options',
-  trace: 'trace'
+  trace: 'trace',
+  query: 'query'
 } as const;
 
 /**
@@ -258,6 +265,34 @@ export interface OpenApiParameter
    * Name as in the specification.
    */
   originalName: string;
+}
+
+/**
+ * Representation of an OpenAPI 3.2 `in: querystring` parameter, which serializes
+ * the whole query string via `content` rather than a schema.
+ * @internal
+ */
+export interface OpenApiQueryStringParameter {
+  /**
+   * Name as in the specification.
+   */
+  originalName: string;
+
+  /**
+   * Media type used to serialize the query string (from the parameter's
+   * `content`), e.g. `application/x-www-form-urlencoded`.
+   */
+  mediaType: string;
+
+  /**
+   * Denotes whether the parameter is required.
+   */
+  required: boolean;
+
+  /**
+   * Description of the parameter.
+   */
+  description?: string;
 }
 
 /**

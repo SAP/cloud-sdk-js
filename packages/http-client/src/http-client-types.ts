@@ -85,7 +85,9 @@ export type Method =
   | 'put'
   | 'PUT'
   | 'patch'
-  | 'PATCH';
+  | 'PATCH'
+  | 'query'
+  | 'QUERY';
 
 /**
  * This interface is compatible with RawAxiosRequestConfig.

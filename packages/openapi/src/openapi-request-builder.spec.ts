@@ -4,6 +4,10 @@ jest.mock('@sap-cloud-sdk/resilience/internal', () => ({
   ...jest.requireActual('@sap-cloud-sdk/resilience/internal')
 }));
 import * as httpClient from '@sap-cloud-sdk/http-client';
+import {
+  getAxiosConfigWithDefaultsWithoutMethod,
+  RAW_QUERY_STRING_KEY
+} from '@sap-cloud-sdk/http-client/internal';
 import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import { parseDestination } from '@sap-cloud-sdk/connectivity/internal';
 import { retry, timeout } from '@sap-cloud-sdk/resilience';
@@ -893,6 +897,58 @@ describe('openapi-request-builder', () => {
       });
       const requestConfig = await requestBuilder['requestConfig']();
       expect(requestConfig['method']).toBe('merge');
+    });
+
+    it('emits a raw querystring parameter verbatim through the paramsSerializer', async () => {
+      const builder = new OpenApiRequestBuilder('get', '/entity', {
+        queryString: 'a=1&b=2'
+      });
+      const config = await (builder as any).requestConfig();
+      const serialize =
+        getAxiosConfigWithDefaultsWithoutMethod().paramsSerializer!.serialize!;
+      // config.params is OriginOptions; .requestConfig is the flat params object passed to axios.
+      expect(serialize(config.params.requestConfig)).toEqual('a=1&b=2');
+    });
+
+    it('does not percent-encode a raw querystring after encodeAllParameters runs (E2E encoding path)', async () => {
+      // This is the regression test for the encodeAllParameters bug: the sentinel key and its
+      // value must survive the encoding step unmodified so the URL ends up with a=1&b=2 not a%3D1%26b%3D2.
+      jest.spyOn(resilienceInternal, 'executeWithMiddleware');
+      const builder = new OpenApiRequestBuilder('get', '/entity', {
+        queryString: 'a=1&b=2'
+      });
+      nock(destination.url).get(/.*/).reply(200, dummyResponse);
+      await builder.executeRaw(destination);
+
+      expect(resilienceInternal.executeWithMiddleware).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          fnArgument: expect.objectContaining({
+            // After encoding the sentinel key must still be present with the raw value intact.
+            params: expect.objectContaining({
+              [RAW_QUERY_STRING_KEY]: 'a=1&b=2'
+            })
+          })
+        })
+      );
+    });
+
+    it('still encodes normal query parameters after the sentinel exemption (regression guard)', async () => {
+      jest.spyOn(resilienceInternal, 'executeWithMiddleware');
+      const builder = new OpenApiRequestBuilder('get', '/entity', {
+        queryParameters: { 'id^': '^test' }
+      });
+      nock(destination.url).get(/.*/).reply(200, dummyResponse);
+      await builder.executeRaw(destination);
+
+      expect(resilienceInternal.executeWithMiddleware).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          fnArgument: expect.objectContaining({
+            params: { 'id%5E': '%5Etest' }
+          })
+        })
+      );
     });
   });
 });

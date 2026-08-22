@@ -14,7 +14,10 @@ import {
   noDestinationErrorMessage
 } from '@sap-cloud-sdk/connectivity/internal';
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
-import { filterCustomRequestConfig } from '@sap-cloud-sdk/http-client/internal';
+import {
+  filterCustomRequestConfig,
+  withRawQueryString
+} from '@sap-cloud-sdk/http-client/internal';
 import type {
   Method,
   HttpResponse,
@@ -396,7 +399,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private getParameters(): OriginOptions {
-    return { requestConfig: this.parameters?.queryParameters || {} };
+    let queryParameters = { ...(this.parameters?.queryParameters || {}) };
+    if (this.parameters?.queryString !== undefined) {
+      queryParameters = withRawQueryString(
+        queryParameters,
+        this.parameters.queryString
+      );
+    }
+    return { requestConfig: queryParameters };
   }
 
   private getBody(): any {
@@ -454,6 +464,10 @@ export interface OpenApiRequestParameters {
    * Request body typically used with "create" and "update" operations (POST, PUT, PATCH).
    */
   body?: any;
+  /**
+   * Raw query string carried verbatim (OpenAPI 3.2 `in: querystring`).
+   */
+  queryString?: string;
   /**
    * Encoding metadata for multipart/form-data properties.
    * @internal

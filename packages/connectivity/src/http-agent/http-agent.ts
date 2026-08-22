@@ -305,15 +305,18 @@ export const defaultAgentOptions: https.AgentOptions | http.AgentOptions = {
 
 /**
  * Builds a secret-free cache key input for the agent cache.
- * For direct destinations the agent is fully defined by its protocol, TLS options and
- * optional `agentOptions`. For the on-premise connectivity proxy all requests share the
- * same proxy origin, so keep-alive sockets would otherwise be reused across Cloud
- * Connector tunnels. To prevent this, the key is additionally scoped by the location ID,
- * the proxy host/port and the propagated principal (derived from stable, non-secret JWT
- * claims).
+ * For non-OnPremise destinations the agent is fully defined by its protocol, TLS
+ * options and optional `agentOptions` - auth headers are sent per request, so
+ * sharing keep-alive sockets is safe.
+ * For OnPremise destinations all keep-alive sockets are Cloud Connector tunnels
+ * through the same connectivity proxy origin, bound to the subaccount, location
+ * ID, target system and propagated principal of their first request. The key is
+ * therefore scoped by all of these dimensions (derived from stable, non-secret
+ * JWT claims). If any dimension cannot be derived, caching is skipped entirely
+ * instead of risking cross-context socket reuse.
  * @param destination - Destination to derive the cache key dimensions from.
  * @param options - TLS/agent options that define the agent instance.
- * @returns A plain object to be hashed into the agent cache key.
+ * @returns A plain object to be hashed into the agent cache key, or `undefined` to skip caching.
  */
 function getAgentCacheKeyInput(
   destination: HttpDestination,
@@ -326,31 +329,90 @@ function getAgentCacheKeyInput(
     agentOptions: destination.agentOptions
   };
 
-  if (destination.proxyType === 'OnPremise') {
-    keyInput.cloudConnectorLocationId = destination.cloudConnectorLocationId;
-    keyInput.proxyHost = destination.proxyConfiguration?.host;
-    keyInput.proxyPort = destination.proxyConfiguration?.port;
+  if (destination.proxyType !== 'OnPremise') {
+    return keyInput;
+  }
 
-    const principal = getPrincipalCacheKey(destination);
+  const proxyAuth = getProxyAuthCacheKey(destination);
+  const principal = getPrincipalCacheKey(destination);
 
+  if (
+    // Without a subaccount scope tunnels could be reused across subaccounts.
+    proxyAuth.status !== 'derived' ||
+    // A present but unusable user token means we cannot scope the principal.
+    principal.status === 'invalid' ||
     // PrincipalPropagation binds the Cloud Connector tunnel to the propagated
     // user. Without a stable userId we cannot derive a safe cache key and must
     // skip caching to avoid reusing a tunnel across principals.
-    if (
-      destination.authentication === 'PrincipalPropagation' &&
-      !principal?.userId
-    ) {
-      return undefined;
-    }
+    (destination.authentication === 'PrincipalPropagation' &&
+      (principal.status !== 'derived' || !principal.scope.userId))
+  ) {
+    return undefined;
+  }
 
-    // For all other OnPremise flows the principal is not strictly required, but
-    // we still scope by full available principal information for better cache isolation.
-    if (principal) {
-      keyInput.principal = principal;
-    }
+  keyInput.cloudConnectorLocationId = destination.cloudConnectorLocationId;
+  keyInput.proxyHost = destination.proxyConfiguration?.host;
+  keyInput.proxyPort = destination.proxyConfiguration?.port;
+  // destination.url is the base URL, so it is a stable cache-key source.
+  keyInput.target = destination.url;
+  keyInput.proxyAuth = proxyAuth.scope;
+  // For all other OnPremise flows the principal is not strictly required, but
+  // we still scope by full available principal information for better cache isolation.
+  if (principal.status === 'derived') {
+    keyInput.principal = principal.scope;
   }
 
   return keyInput;
+}
+
+/**
+ * Outcome of deriving a cache key scope from an auth header.
+ * - `derived`: a stable, non-secret scope could be extracted.
+ * - `absent`: no auth header is present - no identity context to scope by.
+ * - `invalid`: a header is present but cannot be reduced to stable claims, so no safe cache key can be built.
+ * @template T - Type of the derived scope.
+ */
+type CacheScope<T> =
+  | { status: 'derived'; scope: T }
+  | { status: 'absent' }
+  | { status: 'invalid' };
+
+/**
+ * Derives a stable subaccount scope from the `Proxy-Authorization` header, so
+ * that keep-alive tunnels are not reused across subaccounts. The connectivity
+ * service JWT is decoded and reduced to the stable, non-secret claims
+ * `tenantId` (subaccount) and `clientId`, because the raw token rotates on
+ * every refresh and must never be part of a cache key. `clientId` is taken
+ * from that JWT rather than `destination.clientId`, because the JWT reflects
+ * the assumed identity.
+ * @param destination - Destination carrying the proxy configuration.
+ * @returns The derivation outcome for the subaccount scope.
+ */
+function getProxyAuthCacheKey(
+  destination: HttpDestination
+): CacheScope<{ tenantId?: string; clientId?: string }> {
+  const authHeader =
+    destination.proxyConfiguration?.headers?.['Proxy-Authorization'];
+  if (!authHeader) {
+    return { status: 'absent' };
+  }
+
+  const bearerMatch = authHeader.match(/^Bearer (.+)$/i);
+  if (!bearerMatch) {
+    return { status: 'invalid' };
+  }
+
+  try {
+    const decoded = decodeJwt(bearerMatch[1]);
+    const tenantId = getTenantId(decoded);
+    const clientId = decoded.clientid;
+    if (!tenantId && !clientId) {
+      return { status: 'invalid' };
+    }
+    return { status: 'derived', scope: { tenantId, clientId } };
+  } catch {
+    return { status: 'invalid' };
+  }
 }
 
 /**
@@ -358,20 +420,18 @@ function getAgentCacheKeyInput(
  * the propagated JWT. The raw token must not be part of the cache key, because
  * it is a secret and rotates on every refresh. `userId` and `tenantId` are
  * stable claims that scope the cache entry to a principal.
- * PrincipalPropagation flows require a `userId`; other flows include the
- * principal only when a user token is present.
  * @param destination - Destination carrying the propagated principal JWT.
- * @returns A stable identity scope, or `undefined` if no usable token is present.
+ * @returns The derivation outcome for the principal scope.
  */
 function getPrincipalCacheKey(
   destination: HttpDestination
-): { userId?: string; tenantId?: string } | undefined {
+): CacheScope<{ userId?: string; tenantId?: string }> {
   const authHeader =
     destination.proxyConfiguration?.headers?.[
       'SAP-Connectivity-Authentication'
     ];
   if (!authHeader) {
-    return undefined;
+    return { status: 'absent' };
   }
 
   const encoded = authHeader.replace(/^Bearer /i, '');
@@ -381,13 +441,12 @@ function getPrincipalCacheKey(
     const userId = getUserId(decoded);
 
     if (!tenantId && !userId) {
-      return undefined;
+      return { status: 'invalid' };
     }
 
-    return { userId, tenantId };
+    return { status: 'derived', scope: { userId, tenantId } };
   } catch {
-    // A malformed token must not break agent creation; fall back to location/host scoping.
-    return undefined;
+    return { status: 'invalid' };
   }
 }
 
@@ -405,7 +464,8 @@ async function getAgentCacheKey(
 
 function createAgentImpl(
   destination: HttpDestination,
-  options: https.AgentOptions
+  options: https.AgentOptions,
+  willBeCached: boolean
 ): HttpAgentConfig | HttpsAgentConfig {
   const protocol = getProtocolOrDefault(destination);
   logger.debug(
@@ -413,6 +473,9 @@ function createAgentImpl(
   );
   const optionsWithDefaults = {
     ...defaultAgentOptions,
+    // Disable keep-alive for agents that will not be cached,
+    // as there will be no chance to reuse sockets.
+    ...(!willBeCached ? { keepAlive: false } : {}),
     ...destination.agentOptions,
     ...options
   };
@@ -436,10 +499,10 @@ async function createAgent(
     logger.info(
       `Could not derive a cache key for destination ${destination.name || '<unknown>'}. Creating a new agent without caching.`
     );
-    return createAgentImpl(destination, options);
+    return createAgentImpl(destination, options, false);
   }
   return agentCache.getOrInsertComputed(cacheKey, () => ({
-    entry: createAgentImpl(destination, options)
+    entry: createAgentImpl(destination, options, true)
   }));
 }
 

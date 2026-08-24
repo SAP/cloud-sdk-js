@@ -104,7 +104,7 @@ async function isVersioned(majorVersion: string): Promise<boolean> {
   );
 }
 
-export async function addCurrentChangelog(): Promise<void> {
+async function addCurrentChangelog(): Promise<void> {
   const changelog = await getChangelogWithVersion();
   const releaseNotesFilePath = await getReleaseNotesFilePath();
   const releaseNotes = await readFile(releaseNotesFilePath, {
@@ -120,3 +120,5 @@ export async function addCurrentChangelog(): Promise<void> {
   );
   await writeFile(releaseNotesFilePath, newReleaseNotes);
 }
+
+await addCurrentChangelog();

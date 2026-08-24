@@ -121,4 +121,4 @@ async function addCurrentChangelog(): Promise<void> {
   await writeFile(releaseNotesFilePath, newReleaseNotes);
 }
 
-addCurrentChangelog();
+await addCurrentChangelog();

@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/http-client
 
+## 4.9.0
+
+### Patch Changes
+
+- 05e9299: [fix] Restore proxy authorization headers for same-origin redirects when using proxy configuration.
+- Updated dependencies [9f55261]
+  - @sap-cloud-sdk/connectivity@4.9.0
+  - @sap-cloud-sdk/resilience@4.9.0
+  - @sap-cloud-sdk/util@4.9.0
+
 ## 4.8.0
 
 ### Minor Changes

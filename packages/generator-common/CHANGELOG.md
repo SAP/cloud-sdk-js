@@ -1,5 +1,16 @@
 # @sap-cloud-sdk/generator-common
 
+## 4.9.0
+
+### Minor Changes
+
+- 118131d: [compat] Generated files now include a blank line between the copyright header and the file content.
+
+### Patch Changes
+
+- 88c304e: [fix] `readCompilerOptions` now uses the TypeScript compiler API for tsconfig parsing, fixing support for JSONC (comments, trailing commas), package-name `extends` (e.g. `@tsconfig/node18`), and circular `extends` chains.
+- @sap-cloud-sdk/util@4.9.0
+
 ## 4.8.0
 
 ### Minor Changes

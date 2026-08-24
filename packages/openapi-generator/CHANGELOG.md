@@ -1,5 +1,21 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 4.9.0
+
+### Minor Changes
+
+- 404dc92: [feat] Support `contentSchema` in OpenAPI 3.1 schemas: fields with `contentMediaType: application/json` and a `contentSchema` are now typed as the `contentSchema` type instead of `string`. Serialization to a JSON string is supported for multipart bodies via `FormDataBuilder`; non-multipart bodies are not yet handled.
+- 404dc92: [compat] Fields with `contentMediaType: application/json` and a `contentSchema` will now be typed as the `contentSchema` type instead of `string`. Re-generate your client to pick up the new types.
+- 5f6fe80: [feat] OpenAPI generator now supports OAS 3.1 input. This feature is experiemental. Use with caution.
+
+### Patch Changes
+
+- Updated dependencies [88c304e]
+- Updated dependencies [118131d]
+  - @sap-cloud-sdk/generator-common@4.9.0
+  - @sap-cloud-sdk/openapi@4.9.0
+  - @sap-cloud-sdk/util@4.9.0
+
 ## 4.8.0
 
 ### Minor Changes

@@ -28,6 +28,26 @@
 
 -
  
+# 4.9.0
+## Compatibility Notes
+
+- [generator-common] Generated files now include a blank line between the copyright header and the file content. (118131d)
+- [openapi-generator] Fields with `contentMediaType: application/json` and a `contentSchema` will now be typed as the `contentSchema` type instead of `string`. Re-generate your client to pick up the new types. (404dc92)
+
+## New Features
+
+- [openapi-generator] Support `contentSchema` in OpenAPI 3.1 schemas: fields with `contentMediaType: application/json` and a `contentSchema` are now typed as the `contentSchema` type instead of `string`. Serialization to a JSON string is supported for multipart bodies via `FormDataBuilder`; non-multipart bodies are not yet handled. (404dc92)
+- [openapi-generator] OpenAPI generator now supports OAS 3.1 input. This feature is experiemental. Use with caution. (5f6fe80)
+
+## Fixed Issues
+
+- [connectivity] Extend OnPremise HTTP agent cache key to scope it more strongly.
+  The cache key now includes the subaccount identity ensuring keep-alive sockets are not reused across tenants in multi-tenant technical user flows.
+  If no stable identity context can be derived from the request, a fresh agent without keep-alive is created for each request.
+  This matches the behavior of the previous implementation in SAP Cloud SDK v4.6.0 and lower, which did not cache agents in any case. (9f55261)
+- [generator-common] `readCompilerOptions` now uses the TypeScript compiler API for tsconfig parsing, fixing support for JSONC (comments, trailing commas), package-name `extends` (e.g. `@tsconfig/node18`), and circular `extends` chains. (88c304e)
+- [http-client] Restore proxy authorization headers for same-origin redirects when using proxy configuration. (05e9299)
+
 # 4.8.0
 ## Compatibility Notes
 

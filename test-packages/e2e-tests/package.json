@@ -32,7 +32,7 @@
     "@sap-cloud-sdk/test-services-e2e": "workspace:^",
     "@sap-cloud-sdk/test-services-openapi": "workspace:^",
     "@sap-cloud-sdk/util": "workspace:^",
-    "@sap/cds": "10.0.5",
+    "@sap/cds": "10.0.6",
     "@sap/cds-dk": "10.0.7",
     "axios": "1.19.0",
     "bignumber.js": "11.1.5",

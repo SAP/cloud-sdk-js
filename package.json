@@ -63,7 +63,7 @@
     "type-tests": "pnpm --filter @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@changesets/cli": "3.0.0",
+    "@changesets/cli": "3.0.1",
     "@eslint/eslintrc": "3.3.6",
     "@eslint/js": "10.0.1",
     "@jest/globals": "30.4.1",
@@ -94,7 +94,7 @@
     "tinyexec": "1.3.0",
     "ts-jest": "29.4.12",
     "ts-node": "10.9.2",
-    "turbo": "2.10.10",
+    "turbo": "2.10.11",
     "typedoc": "0.28.20",
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "unionfs": "4.6.0"

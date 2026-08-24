@@ -20,19 +20,24 @@ const allowedMediaTypes = [
   '*/*'
 ];
 
+type ParsedContentType = Pick<ContentType, 'type' | 'parameters'>;
+
 interface EncodingInfo {
   contentType: string;
   isImplicit: boolean;
-  parsedContentTypes: ContentType[];
+  parsedContentTypes: ParsedContentType[];
 }
 
 type EncodingMap = Record<string, EncodingInfo>;
 
-function parseContentTypes(contentType: string): ContentType[] {
+function parseContentTypes(contentType: string): ParsedContentType[] {
   return contentType
     .split(',')
     .map(ct => ct.trim())
-    .map(ct => parseContentType(ct));
+    .map(ct => {
+      const { type, parameters } = parseContentType(ct);
+      return { type, parameters };
+    });
 }
 
 /**

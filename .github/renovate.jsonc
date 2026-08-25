@@ -10,7 +10,7 @@
     },
     {
       // These packages require ESM in their next major version, stay on current major until we support ESM
-      "matchPackageNames": ["yargs", "@stylistic/eslint-plugin"],
+      "matchPackageNames": ["content-type", "yargs", "@stylistic/eslint-plugin"],
       "matchUpdateTypes": ["major"],
       "enabled": false
     },

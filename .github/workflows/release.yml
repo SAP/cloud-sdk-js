@@ -55,6 +55,7 @@ jobs:
       - name: Open PR
         working-directory: cloud-sdk
         env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           GIT_AUTHOR_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}
           GIT_AUTHOR_EMAIL: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
           GIT_COMMITTER_NAME: ${{ vars.SAP_CLOUD_SDK_BOT_NAME }}

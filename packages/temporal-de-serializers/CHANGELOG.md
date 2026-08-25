@@ -1,5 +1,14 @@
 # @sap-cloud-sdk/temporal-de-serializers
 
+## 4.9.1
+
+### Patch Changes
+
+- e8f8134: [fix] Export `./internal.js` named export in `package.json` for compatibility.
+  Please migrate to the new named export `./internal`, the old export is deprecated and will be removed in the next major release.
+- Updated dependencies [e8f8134]
+  - @sap-cloud-sdk/odata-common@4.9.1
+
 ## 4.9.0
 
 ### Patch Changes

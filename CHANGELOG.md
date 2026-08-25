@@ -28,6 +28,12 @@
 
 -
  
+# 4.9.1
+## Fixed Issues
+
+- [connectivity, generator, generator-common, http-client, odata-common, odata-v2, odata-v4, openapi, openapi-generator, resilience, temporal-de-serializers] Export `./internal.js` named export in `package.json` for compatibility.
+  Please migrate to the new named export `./internal`, the old export is deprecated and will be removed in the next major release. (e8f8134)
+
 # 4.9.0
 ## Compatibility Notes
 

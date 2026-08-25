@@ -17,21 +17,30 @@ describe('combined resilience features', () => {
     SERVICE_UNAVAILABLE: 503
   };
   const host = 'http://example.com';
-  const request = config => axios.request(config);
+  const request = (config: RawAxiosRequestConfig) => axios.request(config);
 
   beforeEach(() => {
     Object.keys(circuitBreakers).forEach(key => delete circuitBreakers[key]);
     nock.cleanAll();
   });
 
+  afterEach(() => {
+    jest.useRealTimers();
+    jest.restoreAllMocks();
+  });
+
   it('needs to retry with delay below timeout', async () => {
-    nock('https://example.com', {})
+    jest.useFakeTimers();
+    jest.spyOn(Math, 'random').mockReturnValue(0);
+    const firstResponse = Promise.withResolvers<void>();
+    const scope = nock('https://example.com', {})
       .get('/retry')
-      .delay(300)
+      .delay(5)
       .reply(HTTP_STATUS.SERVICE_UNAVAILABLE)
       .get('/retry')
-      .delay(300)
+      .delay(5)
       .reply(HTTP_STATUS.OK);
+    scope.once('replied', () => firstResponse.resolve());
 
     const requestConfig = {
       baseURL: 'https://example.com',
@@ -39,25 +48,33 @@ describe('combined resilience features', () => {
       url: '/retry'
     };
 
-    await expect(
-      executeWithMiddleware([retry(2), timeout(600)], {
-        context: {
-          uri: 'https://example.com',
-          tenantId: 'dummy-tenant'
-        },
-        fnArgument: requestConfig,
-        fn: request
-      })
-    ).resolves.not.toThrow();
-  }, 10000);
+    const result = executeWithMiddleware([retry(2), timeout(50)], {
+      context: {
+        uri: 'https://example.com',
+        tenantId: 'dummy-tenant'
+      },
+      fnArgument: requestConfig,
+      fn: request
+    });
+    const resultExpectation = expect(result).resolves.toMatchObject({
+      status: HTTP_STATUS.OK
+    });
+    await jest.advanceTimersByTimeAsync(0);
+    await firstResponse.promise;
+    await jest.advanceTimersByTimeAsync(1000);
+    await jest.advanceTimersByTimeAsync(0);
+    await resultExpectation;
+  });
 
   it('needs to retry with delay above timeout and gets status code of the response with small delay', async () => {
+    jest.useFakeTimers();
+    jest.spyOn(Math, 'random').mockReturnValue(0);
     nock('https://example.com', {})
       .get('/retry')
-      .delay(300)
+      .delay(5000)
       .reply(HTTP_STATUS.NO_CONTENT)
       .get('/retry')
-      .delay(50)
+      .delay(5)
       .reply(HTTP_STATUS.OK);
 
     const config = {
@@ -66,7 +83,7 @@ describe('combined resilience features', () => {
       url: '/retry'
     };
 
-    const response = await executeWithMiddleware([retry(2), timeout(200)], {
+    const result = executeWithMiddleware([retry(2), timeout(200)], {
       context: {
         uri: 'https://example.com',
         tenantId: 'dummy-tenant'
@@ -74,9 +91,12 @@ describe('combined resilience features', () => {
       fnArgument: config,
       fn: request
     });
-
-    expect(response.status).toBe(HTTP_STATUS.OK);
-  }, 10000);
+    const resultExpectation = expect(result).resolves.toMatchObject({
+      status: HTTP_STATUS.OK
+    });
+    await jest.advanceTimersByTimeAsync(1200);
+    await resultExpectation;
+  });
 
   it('uses circuit breaker and timeout by default with resilience()', async () => {
     const delay = 100;

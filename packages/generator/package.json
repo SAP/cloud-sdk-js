@@ -21,6 +21,10 @@
       "types": "./dist/internal.d.ts",
       "default": "./dist/internal.js"
     },
+    "./internal.js": {
+      "types": "./dist/internal.d.ts",
+      "default": "./dist/internal.js"
+    },
     "./test/test-util/create-generator-options": {
       "workspace": {
         "types": "./test/test-util/create-generator-options.ts",

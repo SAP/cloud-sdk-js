@@ -887,8 +887,8 @@ importers:
         specifier: 2.2.0
         version: 2.2.0
       openapi-backend:
-        specifier: 5.20.0
-        version: 5.20.0
+        specifier: 5.20.1
+        version: 5.20.1
       pm2:
         specifier: 7.0.3
         version: 7.0.3
@@ -4825,8 +4825,8 @@ packages:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
 
-  openapi-backend@5.20.0:
-    resolution: {integrity: sha512-X0t2X0PSg2GtOie/ZKwblXdxisxXTaGhGw3xku6vOki+uGKQtRDU/9sWoyD1IVmT3w65eK0hHanGM8YZIYsk7w==}
+  openapi-backend@5.20.1:
+    resolution: {integrity: sha512-fIVOc4jipstFljp9GlLf5RyVMSx2pXtkOdWltYEU1/97GpiTyt9IyWBnm5xrq6YKHv3cX6LZ0IzpRl2UJb6qjA==}
     engines: {node: '>=20.0.0'}
 
   openapi-schema-validator@12.1.3:
@@ -9800,7 +9800,7 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  openapi-backend@5.20.0:
+  openapi-backend@5.20.1:
     dependencies:
       '@apidevtools/json-schema-ref-parser': 11.9.3
       ajv: 8.20.0

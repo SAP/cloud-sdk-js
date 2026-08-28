@@ -1,64 +1,29 @@
-import nock from 'nock';
 import axios from 'axios';
+import nock from 'nock';
 import { timeout } from './timeout';
 import { executeWithMiddleware } from './middleware';
 import { resilience } from './resilience';
+import type { MiddlewareContext } from './middleware';
+import type { AxiosResponse, RawAxiosRequestConfig } from 'axios';
 
 describe('timeout', () => {
-  const request = config => axios.request(config);
+  const request = (config: RawAxiosRequestConfig) => axios.request(config);
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
   it('uses a custom timeout if given', async () => {
-    const delayInResponse = 100;
     nock('https://example.com', {})
       .get('/with-delay')
-      .times(2)
-      .delay(delayInResponse)
-      .reply(200);
-
-    const requestConfig = {
-      baseURL: 'https://example.com',
-      method: 'get',
-      url: '/with-delay'
-    };
-
-    await expect(
-      executeWithMiddleware([timeout(delayInResponse * 0.5)], {
-        context: {
-          uri: 'https://example.com',
-          tenantId: 'dummy-tenant'
-        },
-        fnArgument: requestConfig,
-        fn: request
-      })
-    ).rejects.toThrow(
-      'Request to URL: https://example.com ran into a timeout after 50ms.'
-    );
-
-    await expect(
-      executeWithMiddleware(
-        resilience({ timeout: delayInResponse * 2, circuitBreaker: false }),
-        {
-          context: {
-            uri: 'https://example.com',
-            tenantId: 'dummy-tenant'
-          },
-          fnArgument: requestConfig,
-          fn: request
-        }
-      )
-    ).resolves.not.toThrow();
-  }, 15000);
-
-  it('uses 10 seconds default timeout', async () => {
-    const oneSecond = 1000;
-    nock('https://example.com', {})
-      .get('/with-delay')
-      .times(1)
-      .delay(oneSecond)
+      .delay(5000)
       .reply(200)
       .get('/with-delay')
-      .times(1)
-      .delay(11 * oneSecond)
+      .delay(5)
       .reply(200);
 
     const requestConfig = {
@@ -66,7 +31,8 @@ describe('timeout', () => {
       method: 'get',
       url: '/with-delay'
     };
-    const response = await executeWithMiddleware([timeout()], {
+
+    const rejection = executeWithMiddleware([timeout(100)], {
       context: {
         uri: 'https://example.com',
         tenantId: 'dummy-tenant'
@@ -74,21 +40,69 @@ describe('timeout', () => {
       fnArgument: requestConfig,
       fn: request
     });
+    const rejectionExpectation = expect(rejection).rejects.toThrow(
+      'Request to URL: https://example.com ran into a timeout after 100ms.'
+    );
+    await jest.advanceTimersByTimeAsync(100);
+    await rejectionExpectation;
 
-    expect(response.status).toEqual(200);
-
-    await expect(
-      executeWithMiddleware([timeout()], {
+    const success = executeWithMiddleware(
+      resilience<
+        RawAxiosRequestConfig,
+        AxiosResponse,
+        MiddlewareContext<RawAxiosRequestConfig>
+      >({ timeout: 200, circuitBreaker: false }),
+      {
         context: {
           uri: 'https://example.com',
-          tenantId: 'dummy-tenant',
-          fnArgument: requestConfig
+          tenantId: 'dummy-tenant'
         },
         fnArgument: requestConfig,
         fn: request
-      })
-    ).rejects.toThrow(
+      }
+    );
+    await jest.advanceTimersByTimeAsync(0);
+    await expect(success).resolves.toMatchObject({ status: 200 });
+  });
+
+  it('uses 10 seconds default timeout', async () => {
+    nock('https://example.com', {})
+      .get('/with-delay')
+      .delay(5)
+      .reply(200)
+      .get('/with-delay')
+      .delay(15000)
+      .reply(200);
+
+    const requestConfig = {
+      baseURL: 'https://example.com',
+      method: 'get',
+      url: '/with-delay'
+    };
+
+    const success = executeWithMiddleware([timeout()], {
+      context: {
+        uri: 'https://example.com',
+        tenantId: 'dummy-tenant'
+      },
+      fnArgument: requestConfig,
+      fn: request
+    });
+    await jest.advanceTimersByTimeAsync(0);
+    await expect(success).resolves.toMatchObject({ status: 200 });
+
+    const timedOut = executeWithMiddleware([timeout()], {
+      context: {
+        uri: 'https://example.com',
+        tenantId: 'dummy-tenant'
+      },
+      fnArgument: requestConfig,
+      fn: request
+    });
+    const timeoutExpectation = expect(timedOut).rejects.toThrow(
       'Request to URL: https://example.com ran into a timeout after 10000ms'
     );
-  }, 15000);
+    await jest.advanceTimersByTimeAsync(10000);
+    await timeoutExpectation;
+  });
 });

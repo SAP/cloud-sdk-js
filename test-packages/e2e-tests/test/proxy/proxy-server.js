@@ -20,14 +20,21 @@ app.use((req, res, next) => {
     res.sendStatus(403);
   }
 });
-// [define proxy behaviour] use the "url" value from the original request
+// [define proxy behaviour] use the path from the original request URL
 app.use(
   '/',
   createProxyMiddleware({
     target: odataBaseUrl,
     changeOrigin: true,
-    pathRewrite: (path, req) => {
-      return req.url;
+    pathRewrite: (path) => {
+      // http-proxy-middleware v4 (httpxy) passes the full absolute URL as path for proxy requests;
+      // extract just the path+query portion so the target doesn't receive a double URL.
+      try {
+        const { pathname, search } = new URL(path);
+        return pathname + search;
+      } catch {
+        return path;
+      }
     }
   })
 );

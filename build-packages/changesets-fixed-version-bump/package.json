@@ -23,7 +23,7 @@
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
     "eslint": "10.9.0",
     "memfs": "4.68.1",
-    "rolldown": "1.2.4",
+    "rolldown": "1.2.5",
     "prettier": "3.9.6"
   }
 }

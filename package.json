@@ -78,7 +78,7 @@
     "@types/sap__xsenv": "3.3.2",
     "@types/semver": "7.8.0",
     "@types/voca": "1.4.6",
-    "@typescript-eslint/parser": "8.67.0",
+    "@typescript-eslint/parser": "8.68.0",
     "@typescript/native": "npm:typescript@7.0.2",
     "axios": "1.19.0",
     "knip": "6.32.2",

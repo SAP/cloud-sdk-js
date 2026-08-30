@@ -80,7 +80,7 @@
     "@types/voca": "1.4.6",
     "@typescript-eslint/parser": "8.68.0",
     "@typescript/native": "npm:typescript@7.0.2",
-    "axios": "1.19.0",
+    "axios": "1.20.0",
     "knip": "6.32.2",
     "eslint": "10.9.1",
     "glob": "13.0.6",

@@ -34,7 +34,7 @@
     "@sap-cloud-sdk/util": "workspace:^",
     "@sap/cds": "10.0.6",
     "@sap/cds-dk": "10.0.7",
-    "axios": "1.19.0",
+    "axios": "1.20.0",
     "bignumber.js": "11.1.5",
     "express": "5.2.1",
     "http-proxy-middleware": "4.2.0",

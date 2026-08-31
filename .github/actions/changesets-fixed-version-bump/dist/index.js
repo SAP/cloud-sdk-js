@@ -17618,9 +17618,7 @@ function getHighestReleaseType(releases) {
 		case "minor":
 			highestReleaseType = "minor";
 			break;
-		case "patch":
-			if (highestReleaseType === "none") highestReleaseType = "patch";
-			break;
+		case "patch": if (highestReleaseType === "none") highestReleaseType = "patch";
 	}
 	return highestReleaseType;
 }

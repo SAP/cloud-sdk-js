@@ -34,7 +34,7 @@ export function importBatchDeclarations(
     },
     {
       kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: options?.generateESM ? './index.js' : './index',
+      moduleSpecifier: options?.generateEsm ? './index.js' : './index',
       namedImports: getNamedImports(service)
     }
   ];

@@ -29,7 +29,7 @@ export function entityImportDeclarations(
       ...complexTypeImportDeclarations(entity.properties, options),
       {
         namedImports: [`${entity.className}Api`],
-        moduleSpecifier: options?.generateESM
+        moduleSpecifier: options?.generateEsm
           ? `./${entity.className}Api.js`
           : `./${entity.className}Api`,
         kind: StructureKind.ImportDeclaration,
@@ -48,7 +48,7 @@ export function entityImportDeclarations(
     ...complexTypeImportDeclarations(entity.properties, options),
     {
       namedImports: [`${entity.className}Api`],
-      moduleSpecifier: options?.generateESM
+      moduleSpecifier: options?.generateEsm
         ? `./${entity.className}Api.js`
         : `./${entity.className}Api`,
       kind: StructureKind.ImportDeclaration,
@@ -88,6 +88,6 @@ function otherEntityImport(
   return {
     kind: StructureKind.ImportDeclaration,
     namedImports: [name, `${name}Type`],
-    moduleSpecifier: options?.generateESM ? `./${name}.js` : `./${name}`
+    moduleSpecifier: options?.generateEsm ? `./${name}.js` : `./${name}`
   };
 }

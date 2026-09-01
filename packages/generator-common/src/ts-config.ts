@@ -6,17 +6,17 @@ const { readFile, lstat } = promises;
  * @internal
  */
 export const defaultTsConfig = (
-  generateESM?: boolean
+  generateEsm?: boolean
 ): Record<string, any> => ({
   compilerOptions: {
     target: 'es2021',
-    module: generateESM ? 'nodenext' : 'node16',
+    module: generateEsm ? 'nodenext' : 'node16',
     lib: ['esnext'],
     declaration: true,
     declarationMap: false,
     sourceMap: true,
     diagnostics: true,
-    moduleResolution: generateESM ? 'nodenext' : 'node16',
+    moduleResolution: generateEsm ? 'nodenext' : 'node16',
     esModuleInterop: true,
     inlineSources: false,
     strict: true
@@ -27,8 +27,8 @@ export const defaultTsConfig = (
 /**
  * @internal
  */
-export function formatTsConfig(generateESM?: boolean): string {
-  return JSON.stringify(defaultTsConfig(generateESM), null, 2) + '\n';
+export function formatTsConfig(generateEsm?: boolean): string {
+  return JSON.stringify(defaultTsConfig(generateEsm), null, 2) + '\n';
 }
 
 /**
@@ -53,18 +53,18 @@ export async function readCustomTsConfig(configPath: string): Promise<string> {
  * If transpile is true or tsconfig is provided, return the appropriate config.
  * @param transpile - Whether to transpile.
  * @param tsconfig - Path to custom tsconfig file.
- * @param generateESM - Whether to generate ES modules instead of CommonJS.
+ * @param generateEsm - Whether to generate ES modules instead of CommonJS.
  * @returns The serialized tsconfig.json contents.
  * @internal
  */
 export async function tsconfigJson(
   transpile?: boolean,
   tsconfig?: string,
-  generateESM?: boolean
+  generateEsm?: boolean
 ): Promise<string | undefined> {
   if (transpile || tsconfig) {
     return tsconfig
       ? readCustomTsConfig(tsconfig)
-      : formatTsConfig(generateESM);
+      : formatTsConfig(generateEsm);
   }
 }

@@ -16,7 +16,7 @@ describe('tsconfigJson', () => {
     expect(JSON.parse(tsConfig!)).toEqual(defaultTsConfig(false));
   });
 
-  it('returns the default tsconfig with ESM config when generateESM is true', async () => {
+  it('returns the default tsconfig with ESM config when generateEsm is true', async () => {
     const tsConfig = await tsconfigJson(true, undefined, true);
     expect(JSON.parse(tsConfig!)).toEqual(defaultTsConfig(true));
   });

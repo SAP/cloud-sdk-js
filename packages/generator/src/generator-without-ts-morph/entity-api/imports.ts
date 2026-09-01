@@ -44,7 +44,7 @@ function complexTypeImport(
 ): Import {
   return {
     names: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])],
-    moduleIdentifier: options?.generateESM
+    moduleIdentifier: options?.generateEsm
       ? `./${prop.jsType}.js`
       : `./${prop.jsType}`,
     typeOnly: false
@@ -96,7 +96,7 @@ function enumTypeImport(
   options?: CreateFileOptions
 ): Import {
   return {
-    moduleIdentifier: options?.generateESM
+    moduleIdentifier: options?.generateEsm
       ? `./${prop.jsType}.js`
       : `./${prop.jsType}`,
     names: [prop.jsType],

@@ -183,7 +183,7 @@ export async function generateProject(
   }
 
   const project = new Project(
-    projectOptions(options.generateESM ? 'esm' : 'commonjs')
+    projectOptions(options.generateEsm ? 'esm' : 'commonjs')
   );
 
   const promises = services.map(service =>
@@ -245,7 +245,7 @@ async function getFileCreationOptions(
       options.prettierConfig?.toString()
     ),
     overwrite: options.overwrite,
-    generateESM: options.generateESM
+    generateEsm: options.generateEsm
   };
 }
 
@@ -325,7 +325,7 @@ export async function generateSourcesForService(
           sdkVersion: await getSdkVersion(),
           description: packageDescription(service.speakingModuleName),
           oDataVersion: service.oDataVersion,
-          generateESM: options.generateESM
+          generateEsm: options.generateEsm
         }),
         createFileOptions
       )
@@ -336,7 +336,7 @@ export async function generateSourcesForService(
     const tsConfig = await tsconfigJson(
       options.transpile,
       options.tsconfig,
-      options.generateESM
+      options.generateEsm
     );
     if (tsConfig) {
       filePromises.push(

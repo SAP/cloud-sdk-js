@@ -38,7 +38,7 @@ function getImports(
     .map(ref => ({
       names: [ref.schemaName],
       typeOnly: true,
-      moduleIdentifier: options?.generateESM
+      moduleIdentifier: options?.generateEsm
         ? `./${ref.fileName}.js`
         : `./${ref.fileName}`
     }));

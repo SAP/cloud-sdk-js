@@ -43,7 +43,7 @@ function exportStatement(
 ): ExportDeclarationStructure {
   return {
     kind: StructureKind.ExportDeclaration,
-    moduleSpecifier: options?.generateESM
+    moduleSpecifier: options?.generateEsm
       ? `./${moduleName}.js`
       : `./${moduleName}`
   };

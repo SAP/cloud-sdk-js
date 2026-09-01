@@ -97,7 +97,7 @@ describe('complex type imports', () => {
   });
 
   const esmOptions = {
-    generateESM: true
+    generateEsm: true
   } as CreateFileOptions;
   it('adds .js in import declarations when ESM flag is true', () => {
     const actual = importDeclarations(complexMealWithDesert, 'v2', esmOptions);

@@ -40,7 +40,7 @@ describe('parseGeneratorOptions', () => {
     verbose: false,
     overwrite: false,
     config: undefined,
-    generateESM: false,
+    generateEsm: false,
     schemaPrefix: '',
     resolveExternal: true
   };

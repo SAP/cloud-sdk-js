@@ -17,7 +17,7 @@ export interface OpenAPIGeneratorOptions {
   /**
    * Whether to generate ECMAScript modules instead of CommonJS modules.
    */
-  generateESM?: boolean;
+  generateEsm?: boolean;
   /**
    * Prefix all schema names with a value.
    * @experimental
@@ -40,11 +40,12 @@ export type ParsedGeneratorOptions = ParsedOptions<typeof cliOptions>;
  */
 export const cliOptions = {
   ...getCommonCliOptions('OpenApi'),
-  generateESM: {
+  generateEsm: {
     describe:
       'When enabled, all generated files follow the ECMAScript module syntax.',
     type: 'boolean',
-    default: false
+    default: false,
+    alias: 'generateESM'
   },
   schemaPrefix: {
     describe:

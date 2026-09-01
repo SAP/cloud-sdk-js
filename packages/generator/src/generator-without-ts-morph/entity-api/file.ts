@@ -43,14 +43,14 @@ function getImports(
   return [
     {
       names: [`${entity.className}`],
-      moduleIdentifier: options?.generateESM
+      moduleIdentifier: options?.generateEsm
         ? `./${entity.className}.js`
         : `./${entity.className}`,
       typeOnly: false
     },
     {
       names: [`${entity.className}RequestBuilder`],
-      moduleIdentifier: options?.generateESM
+      moduleIdentifier: options?.generateEsm
         ? `./${entity.className}RequestBuilder.js`
         : `./${entity.className}RequestBuilder`,
       typeOnly: false
@@ -109,7 +109,7 @@ function otherEntityImports(
   return [
     {
       names: [`${name}Api`],
-      moduleIdentifier: options?.generateESM
+      moduleIdentifier: options?.generateEsm
         ? `./${name}Api.js`
         : `./${name}Api`
     }

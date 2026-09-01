@@ -31,7 +31,7 @@ describe('imports', () => {
     const actual = requestBuilderImportDeclarations(breakfastEntity, 'v2', {
       overwrite: true,
       prettierOptions: defaultPrettierConfig,
-      generateESM: true
+      generateEsm: true
     });
     expect(actual[1].moduleIdentifier).toBe('./Breakfast.js');
   });

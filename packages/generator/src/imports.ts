@@ -195,7 +195,7 @@ function complexTypeImportDeclaration(
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: options?.generateESM
+    moduleSpecifier: options?.generateEsm
       ? `./${prop.jsType}.js`
       : `./${prop.jsType}`,
     namedImports: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])]
@@ -208,7 +208,7 @@ function enumTypeImportDeclaration(
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: options?.generateESM
+    moduleSpecifier: options?.generateEsm
       ? `./${prop.jsType}.js`
       : `./${prop.jsType}`,
     namedImports: [prop.jsType]

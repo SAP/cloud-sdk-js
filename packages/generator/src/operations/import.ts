@@ -66,7 +66,7 @@ function returnTypeImport(
   returnType: VdmOperationReturnType,
   options?: CreateFileOptions
 ): ImportDeclarationStructure[] {
-  const extension = options?.generateESM ? '.js' : '';
+  const extension = options?.generateEsm ? '.js' : '';
   const typeImports: ImportDeclarationStructure[] = [
     {
       kind: StructureKind.ImportDeclaration,
@@ -115,7 +115,7 @@ export function operationDeclarations(
       'Bound and unbound operations found in generation - this should not happen.'
     );
   }
-  const extension = options?.generateESM ? '.js' : '';
+  const extension = options?.generateEsm ? '.js' : '';
   const serviceImport: ImportDeclarationStructure[] = includesBound
     ? []
     : [

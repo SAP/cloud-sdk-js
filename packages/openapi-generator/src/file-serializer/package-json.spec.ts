@@ -22,19 +22,19 @@ describe('packageJson', () => {
     expect(parsed.license).toBe('UNLICENSED');
   });
 
-  it('includes type module when generateESM is true', () => {
+  it('includes type module when generateEsm is true', () => {
     const parsed = JSON.parse(
       packageJson({
         npmPackageName: 'workflow-service',
         description: 'description',
         sdkVersion: '1.35.0',
-        generateESM: true
+        generateEsm: true
       })
     );
     expect(parsed.type).toBe('module');
   });
 
-  it('includes type module when generateESM is undefined', () => {
+  it('includes type module when generateEsm is undefined', () => {
     const parsed = JSON.parse(
       packageJson({
         npmPackageName: 'workflow-service',

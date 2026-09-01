@@ -140,7 +140,7 @@ describe('schemaFile', () => {
 
   it('serializes schema file for schema including ESM references', async () => {
     const createFileOptions: CreateFileOptions = {
-      generateESM: true,
+      generateEsm: true,
       overwrite: false,
       prettierOptions: await readPrettierConfig(undefined)
     };

@@ -70,7 +70,7 @@ function getImports(api: OpenApiApi, options?: CreateFileOptions): Import[] {
 
   const refImports = {
     names: refs,
-    moduleIdentifier: options?.generateESM ? './schema/index.js' : './schema',
+    moduleIdentifier: options?.generateEsm ? './schema/index.js' : './schema',
     typeOnly: true
   };
   const openApiImports = {

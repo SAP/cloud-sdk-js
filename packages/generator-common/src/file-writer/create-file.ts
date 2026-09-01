@@ -28,7 +28,7 @@ export interface CreateFileOptions {
   /**
    * Flag to indicate if the file is generated as ESM.
    */
-  generateESM?: boolean;
+  generateEsm?: boolean;
 }
 
 /**

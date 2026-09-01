@@ -8,10 +8,10 @@ import type { PackageJsonOptions } from '@sap-cloud-sdk/generator-common/interna
  * @internal
  */
 export function packageJson(
-  options: PackageJsonOptions & { generateESM?: boolean }
+  options: PackageJsonOptions & { generateEsm?: boolean }
 ): string {
-  // Determine module type based on generateESM option
-  const moduleType = options.generateESM ? 'esm' : 'commonjs';
+  // Determine module type based on generateEsm option
+  const moduleType = options.generateEsm ? 'esm' : 'commonjs';
 
   return (
     JSON.stringify(

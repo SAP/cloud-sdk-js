@@ -118,11 +118,12 @@ export function getCommonCliOptions(serviceType: ServiceType) {
       default: false,
       hidden: true
     },
-    generateESM: {
+    generateEsm: {
       describe:
         'When enabled, all generated files follow the ECMAScript module syntax.',
       type: 'boolean',
-      default: false
+      default: false,
+      alias: 'generateESM'
     }
   } as const;
 }
@@ -202,5 +203,5 @@ export interface CommonGeneratorOptions {
   /**
    * Generate ECMAScript modules instead of CommonJS modules.
    */
-  generateESM?: boolean;
+  generateEsm?: boolean;
 }

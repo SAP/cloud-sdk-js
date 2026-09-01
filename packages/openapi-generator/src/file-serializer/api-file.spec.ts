@@ -141,7 +141,7 @@ describe('api-file', () => {
 
   it('creates an api file following the esm pattern', async () => {
     const createFileOptions = {
-      generateESM: true,
+      generateEsm: true,
       overwrite: false,
       prettierOptions: await readPrettierConfig(undefined)
     };

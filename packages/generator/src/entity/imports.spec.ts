@@ -3,7 +3,7 @@ import { entityImportDeclarations, otherEntityImports } from './imports';
 import type { CreateFileOptions } from '@sap-cloud-sdk/generator-common/internal';
 
 const esmOptions = {
-  generateESM: true
+  generateEsm: true
 } as CreateFileOptions;
 
 describe('imports', () => {

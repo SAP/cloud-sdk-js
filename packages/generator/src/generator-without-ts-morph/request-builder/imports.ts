@@ -68,10 +68,10 @@ function entityImportDeclaration(
   entity: VdmEntity,
   options?: CreateFileOptions
 ): Import {
-  const generateESM = options?.generateESM;
+  const generateEsm = options?.generateEsm;
   return {
     names: [entity.className],
-    moduleIdentifier: generateESM
+    moduleIdentifier: generateEsm
       ? `./${entity.className}.js`
       : `./${entity.className}`
   };
@@ -84,13 +84,13 @@ function entityKeyImportDeclaration(
   properties: VdmProperty[],
   options?: CreateFileOptions
 ): Import[] {
-  const generateESM = options?.generateESM;
+  const generateEsm = options?.generateEsm;
   return unique(
     properties
       .filter(property => property.isEnum)
       .map(property => property.jsType)
   ).map(type => ({
     names: [type],
-    moduleIdentifier: generateESM ? `./${type}.js` : `./${type}`
+    moduleIdentifier: generateEsm ? `./${type}.js` : `./${type}`
   }));
 }

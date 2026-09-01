@@ -19,7 +19,7 @@ describe('index-file', () => {
         schemas: [{}]
       } as OpenApiDocument;
       const createFileOptions: CreateFileOptions = {
-        generateESM: true,
+        generateEsm: true,
         overwrite: false,
         prettierOptions: await readPrettierConfig(undefined)
       };
@@ -56,7 +56,7 @@ describe('index-file', () => {
         ]
       } as unknown as OpenApiDocument;
       const createFileOptions: CreateFileOptions = {
-        generateESM: true,
+        generateEsm: true,
         overwrite: false,
         prettierOptions: await readPrettierConfig(undefined)
       };

@@ -89,7 +89,7 @@ export async function generateWithParsedOptions(
   const tsConfig = await tsconfigJson(
     options.transpile,
     options.tsconfig,
-    options.generateESM
+    options.generateEsm
   );
 
   const promises = inputFilePaths.map(inputFilePath =>
@@ -138,7 +138,7 @@ async function getFileCreationOptions(
   return {
     prettierOptions: await readPrettierConfig(options.prettierConfig),
     overwrite: options.overwrite,
-    generateESM: options.generateESM
+    generateEsm: options.generateEsm
   };
 }
 
@@ -345,7 +345,7 @@ async function generatePackageJson(
       npmPackageName: openApiDocument.serviceOptions.packageName,
       description: packageDescription(openApiDocument.serviceName),
       sdkVersion: await getSdkVersion(),
-      generateESM: options.generateESM
+      generateEsm: options.generateEsm
     }),
     createFileOptions
   );

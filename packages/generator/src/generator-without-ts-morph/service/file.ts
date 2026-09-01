@@ -38,7 +38,7 @@ function getImports(
   return [
     {
       names: [...names, ...parameterNames],
-      moduleIdentifier: options?.generateESM
+      moduleIdentifier: options?.generateEsm
         ? './operations.js'
         : './operations'
     }
@@ -57,7 +57,7 @@ export function imports(
   const serviceImports = [
     ...service.entities.map(entity => ({
       names: [`${entity.className}Api`],
-      moduleIdentifier: options?.generateESM
+      moduleIdentifier: options?.generateEsm
         ? `./${entity.className}Api.js`
         : `./${entity.className}Api`
     })),
@@ -87,7 +87,7 @@ export function imports(
   if (hasEntities(service)) {
     serviceImports.push({
       names: ['batch', 'changeset'],
-      moduleIdentifier: options?.generateESM
+      moduleIdentifier: options?.generateEsm
         ? './BatchRequest.js'
         : './BatchRequest'
     });

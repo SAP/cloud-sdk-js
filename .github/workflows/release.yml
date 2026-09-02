@@ -28,7 +28,6 @@ jobs:
           permission-pull-requests: write
       - uses: sap/cloud-sdk-js/.github/actions/setup@main
         with:
-          ref: 'main'
           persist-credentials: true
           package-manager-cache: false
       - name: Legacy Release

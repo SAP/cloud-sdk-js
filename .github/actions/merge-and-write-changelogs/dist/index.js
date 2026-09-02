@@ -16253,7 +16253,7 @@ function info(message) {
 	process.stdout.write(message + os$1.EOL);
 }
 //#endregion
-//#region ../../node_modules/.pnpm/fdir@6.5.0_picomatch@4.0.5/node_modules/fdir/dist/index.mjs
+//#region ../../node_modules/.pnpm/fdir@6.5.0_picomatch@4.0.7/node_modules/fdir/dist/index.mjs
 var __require = /* @__PURE__ */ createRequire$1(import.meta.url);
 function cleanPath(path) {
 	let normalized = normalize(path);
@@ -16761,7 +16761,7 @@ var Builder = class {
 	}
 };
 //#endregion
-//#region ../../node_modules/.pnpm/picomatch@4.0.5/node_modules/picomatch/lib/constants.js
+//#region ../../node_modules/.pnpm/picomatch@4.0.7/node_modules/picomatch/lib/constants.js
 var require_constants = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const WIN_SLASH = "\\\\/";
 	const WIN_NO_SLASH = `[^${WIN_SLASH}]`;
@@ -16930,7 +16930,7 @@ var require_constants = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	};
 }));
 //#endregion
-//#region ../../node_modules/.pnpm/picomatch@4.0.5/node_modules/picomatch/lib/utils.js
+//#region ../../node_modules/.pnpm/picomatch@4.0.7/node_modules/picomatch/lib/utils.js
 var require_utils$1 = /* @__PURE__ */ __commonJSMin(((exports) => {
 	const { REGEX_BACKSLASH, REGEX_REMOVE_BACKSLASH, REGEX_SPECIAL_CHARS, REGEX_SPECIAL_CHARS_GLOBAL } = require_constants();
 	exports.isObject = (val) => val !== null && typeof val === "object" && !Array.isArray(val);
@@ -16978,7 +16978,7 @@ var require_utils$1 = /* @__PURE__ */ __commonJSMin(((exports) => {
 	};
 }));
 //#endregion
-//#region ../../node_modules/.pnpm/picomatch@4.0.5/node_modules/picomatch/lib/scan.js
+//#region ../../node_modules/.pnpm/picomatch@4.0.7/node_modules/picomatch/lib/scan.js
 var require_scan = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const utils = require_utils$1();
 	const { CHAR_ASTERISK, CHAR_AT, CHAR_BACKWARD_SLASH, CHAR_COMMA, CHAR_DOT, CHAR_EXCLAMATION_MARK, CHAR_FORWARD_SLASH, CHAR_LEFT_CURLY_BRACE, CHAR_LEFT_PARENTHESES, CHAR_LEFT_SQUARE_BRACKET, CHAR_PLUS, CHAR_QUESTION_MARK, CHAR_RIGHT_CURLY_BRACE, CHAR_RIGHT_PARENTHESES, CHAR_RIGHT_SQUARE_BRACKET } = require_constants();
@@ -17007,7 +17007,7 @@ var require_scan = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const scan = (input, options) => {
 		const opts = options || {};
 		const length = input.length - 1;
-		const scanToEnd = opts.parts === true || opts.scanToEnd === true;
+		const scanToEnd = opts.parts === true || opts.tokens === true || opts.scanToEnd === true;
 		const slashes = [];
 		const tokens = [];
 		const parts = [];
@@ -17110,14 +17110,18 @@ var require_scan = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					finished = true;
 					if (code === CHAR_EXCLAMATION_MARK && index === start) negatedExtglob = true;
 					if (scanToEnd === true) {
+						let parens = 0;
 						while (eos() !== true && (code = advance())) {
 							if (code === CHAR_BACKWARD_SLASH) {
 								backslashes = token.backslashes = true;
-								code = advance();
+								advance();
 								continue;
 							}
-							if (code === CHAR_RIGHT_PARENTHESES) {
-								isGlob = token.isGlob = true;
+							if (code === CHAR_LEFT_PARENTHESES) {
+								parens++;
+								continue;
+							}
+							if (code === CHAR_RIGHT_PARENTHESES && --parens === 0) {
 								finished = true;
 								break;
 							}
@@ -17165,13 +17169,18 @@ var require_scan = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			if (opts.noparen !== true && code === CHAR_LEFT_PARENTHESES) {
 				isGlob = token.isGlob = true;
 				if (scanToEnd === true) {
+					let parens = 1;
 					while (eos() !== true && (code = advance())) {
-						if (code === CHAR_LEFT_PARENTHESES) {
+						if (code === CHAR_BACKWARD_SLASH) {
 							backslashes = token.backslashes = true;
-							code = advance();
+							advance();
 							continue;
 						}
-						if (code === CHAR_RIGHT_PARENTHESES) {
+						if (code === CHAR_LEFT_PARENTHESES) {
+							parens++;
+							continue;
+						}
+						if (code === CHAR_RIGHT_PARENTHESES && --parens === 0) {
 							finished = true;
 							break;
 						}
@@ -17234,7 +17243,7 @@ var require_scan = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		if (opts.parts === true || opts.tokens === true) {
 			let prevIndex;
 			for (let idx = 0; idx < slashes.length; idx++) {
-				const n = prevIndex ? prevIndex + 1 : start;
+				const n = prevIndex !== void 0 ? prevIndex + 1 : start;
 				const i = slashes[idx];
 				const value = input.slice(n, i);
 				if (opts.tokens) {
@@ -17245,17 +17254,18 @@ var require_scan = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					depth(tokens[idx]);
 					state.maxDepth += tokens[idx].depth;
 				}
-				if (idx !== 0 || value !== "") parts.push(value);
-				prevIndex = i;
-			}
-			if (prevIndex && prevIndex + 1 < input.length) {
-				const value = input.slice(prevIndex + 1);
-				parts.push(value);
-				if (opts.tokens) {
-					tokens[tokens.length - 1].value = value;
-					depth(tokens[tokens.length - 1]);
-					state.maxDepth += tokens[tokens.length - 1].depth;
+				if (i >= start) {
+					parts.push(value);
+					prevIndex = i;
 				}
+			}
+			const n = prevIndex !== void 0 ? prevIndex + 1 : start;
+			const value = input.slice(n);
+			parts.push(value);
+			if (opts.tokens && prevIndex && prevIndex + 1 < input.length) {
+				tokens[tokens.length - 1].value = value;
+				depth(tokens[tokens.length - 1]);
+				state.maxDepth += tokens[tokens.length - 1].depth;
 			}
 			state.slashes = slashes;
 			state.parts = parts;
@@ -17265,7 +17275,7 @@ var require_scan = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = scan;
 }));
 //#endregion
-//#region ../../node_modules/.pnpm/picomatch@4.0.5/node_modules/picomatch/lib/parse.js
+//#region ../../node_modules/.pnpm/picomatch@4.0.7/node_modules/picomatch/lib/parse.js
 var require_parse$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const constants = require_constants();
 	const utils = require_utils$1();
@@ -18167,6 +18177,7 @@ var require_parse$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					rest = rest.slice(3);
 					consume("/**", 3);
 				}
+				const isEnd = eos() || state.parens > 0 && rest === ")".repeat(state.parens) && !extglobs.some((extglob) => extglob.type === "negate");
 				if (prior.type === "bos" && eos()) {
 					prev.type = "globstar";
 					prev.value += value;
@@ -18176,7 +18187,7 @@ var require_parse$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 					consume(value);
 					continue;
 				}
-				if (prior.type === "slash" && prior.prev.type !== "bos" && !afterStar && eos()) {
+				if (prior.type === "slash" && prior.prev.type !== "bos" && !afterStar && isEnd) {
 					state.output = state.output.slice(0, -(prior.output + prev.output).length);
 					prior.output = `(?:${prior.output}`;
 					prev.type = "globstar";
@@ -18341,7 +18352,7 @@ var require_parse$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = parse;
 }));
 //#endregion
-//#region ../../node_modules/.pnpm/picomatch@4.0.5/node_modules/picomatch/lib/picomatch.js
+//#region ../../node_modules/.pnpm/picomatch@4.0.7/node_modules/picomatch/lib/picomatch.js
 var require_picomatch$1 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const scan = require_scan();
 	const parse = require_parse$1();

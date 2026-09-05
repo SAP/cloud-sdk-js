@@ -170,6 +170,12 @@ export class DestinationFromServiceRetriever {
     'isolationStrategy' | 'selectionStrategy' | 'useCache'
   >;
 
+  /**
+   * Whether the auth tokens of the retrieved destination were fetched for the subscriber
+   * tenant and are therefore not valid for other tenants.
+   */
+  private isSubscriberSpecific = false;
+
   private constructor(
     options: DestinationFetchOptions,
     readonly subscriberToken: SubscriberToken | undefined,
@@ -226,6 +232,10 @@ export class DestinationFromServiceRetriever {
       getSubdomain(this.subscriberToken?.serviceJwt?.decoded) ||
       getSubdomain(this.subscriberToken?.userJwt?.decoded);
     const subdomainProvider = getSubdomain(this.providerServiceToken?.decoded);
+    if (subdomainSubscriber && subdomainSubscriber !== subdomainProvider) {
+      // The destination is fetched for the subscriber tenant via the `X-tenant` header.
+      this.isSubscriberSpecific = true;
+    }
     return subdomainSubscriber || subdomainProvider || undefined;
   }
 
@@ -316,6 +326,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     logger.debug(
       `UserExchange flow started for destination ${destinationName} of the ${origin} account.`
     );
+
+    // The destination is fetched for the subscriber user via the `X-user-token` header.
+    this.isSubscriberSpecific = true;
 
     return {
       authHeaderJwt: serviceJwt.encoded, // token to get destination from service
@@ -471,6 +484,12 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     if (destination.authentication === 'SAMLAssertion') {
       logger.debug(
         'Destination with authentication type SAMLAssertion will not be cached.'
+      );
+      return;
+    }
+    if (destinationOrigin === 'provider' && this.isSubscriberSpecific) {
+      logger.debug(
+        'Provider destination fetched with subscriber specific tokens will not be cached, because the cache key of provider destinations does not contain the subscriber.'
       );
       return;
     }

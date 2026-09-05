@@ -73,7 +73,7 @@
     "@jest/globals": "30.4.1",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@types/async-retry": "1.4.9",
-    "memfs": "4.68.1",
+    "memfs": "4.68.2",
     "nock": "14.0.17",
     "prettier": "3.9.6"
   }

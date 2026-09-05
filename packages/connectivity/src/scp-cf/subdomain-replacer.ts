@@ -14,11 +14,25 @@ export function getIssuerSubdomain(
     isIasToken && decodedJwt?.ias_iss ? decodedJwt.ias_iss : decodedJwt?.iss;
 
   if (issuer) {
-    if (!isValidUrl(issuer)) {
+    const normalizedIssuer = prependDefaultScheme(issuer);
+    if (!isValidUrl(normalizedIssuer)) {
       throw new Error(`Issuer URL in JWT is not a valid URL: "${issuer}".`);
     }
-    return getHost(new URL(issuer)).split('.')[0];
+    return getHost(new URL(normalizedIssuer)).split('.')[0];
   }
+}
+
+const schemePattern = /^[a-zA-Z][a-zA-Z\d+\-.]*:\/\//;
+
+/**
+ * Identity providers can be configured to issue tokens with a schemeless `iss` claim,
+ * e.g. `tenant.accounts.ondemand.com` instead of `https://tenant.accounts.ondemand.com`.
+ * Such values cannot be parsed by the `URL` constructor, so a default scheme is added.
+ * @param issuer - The issuer value taken from the JWT.
+ * @returns The issuer prefixed with `https://`, if it does not already contain a scheme.
+ */
+function prependDefaultScheme(issuer: string): string {
+  return schemePattern.test(issuer) ? issuer : `https://${issuer}`;
 }
 
 function getHost(url: URL): string {

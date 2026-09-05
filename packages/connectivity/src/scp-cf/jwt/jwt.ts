@@ -70,6 +70,8 @@ export function getTenantId(
   );
 }
 
+const schemePattern = /^[a-zA-Z][a-zA-Z\d+\-.]*:\/\//;
+
 /**
  * Check if the given JWT is an IAS token.
  * Currently, there are only two domains for IAS tokens:
@@ -83,7 +85,13 @@ export function isIasToken(decodedJwt: JwtPayload): boolean {
     return false;
   }
   try {
-    const issUrl = new URL(decodedJwt.iss);
+    // Identity providers can be configured to issue tokens with a schemeless `iss` claim,
+    // e.g. `tenant.accounts.ondemand.com`, which cannot be parsed by the `URL` constructor.
+    const issUrl = new URL(
+      schemePattern.test(decodedJwt.iss)
+        ? decodedJwt.iss
+        : `https://${decodedJwt.iss}`
+    );
     const hostname = issUrl.hostname.toLowerCase();
     return (
       hostname.endsWith('.accounts.ondemand.com') ||

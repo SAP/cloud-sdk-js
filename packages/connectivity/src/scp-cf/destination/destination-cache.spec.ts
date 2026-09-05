@@ -14,6 +14,7 @@ import {
 import {
   certificateSingleResponse,
   destinationName,
+  oauthClientCredentialsSingleResponse,
   oauthSingleResponse,
   onPremisePrincipalPropagationMultipleResponse,
   samlAssertionSingleResponse
@@ -230,6 +231,45 @@ describe('destination cache', () => {
 
       expect(c1).toBeUndefined();
       expect(c2!.url).toBe('https://provider.example');
+    });
+
+    it('does not cache a provider destination that was fetched for the subscriber tenant', async () => {
+      nock.cleanAll();
+      mockServiceBindings();
+      mockServiceToken();
+      mockJwtBearerToken();
+
+      // `tokenServiceURLType: 'Common'` makes the destination service issue a token for the
+      // tenant given in the `X-tenant` header, i.e. the returned destination is subscriber specific.
+      const destinationForSubscriberTenant = {
+        ...oauthClientCredentialsSingleResponse,
+        destinationConfiguration: {
+          ...oauthClientCredentialsSingleResponse.destinationConfiguration,
+          tokenServiceURLType: 'Common'
+        }
+      };
+      mockFetchDestinationCalls(destinationForSubscriberTenant, {
+        mockWithTokenRetrievalCall: {
+          headers: { 'x-tenant': testTenants.subscriber }
+        }
+      });
+
+      const destination = await getDestination({
+        destinationName,
+        jwt: subscriberUserToken,
+        isolationStrategy: 'tenant',
+        cacheVerificationKeys: false,
+        selectionStrategy: alwaysProvider
+      });
+
+      expect(destination).not.toBeNull();
+      await expect(
+        destinationCache.retrieveDestinationFromCache(
+          decodeJwt(providerServiceToken),
+          destinationName,
+          'tenant'
+        )
+      ).resolves.toBeUndefined();
     });
 
     it('caches only subscriber if selection strategy always subscriber', async () => {

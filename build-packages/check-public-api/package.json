@@ -28,7 +28,7 @@
     "eslint": "10.9.1",
     "memfs": "4.68.1",
     "prettier": "3.9.6",
-    "rolldown": "1.2.5",
+    "rolldown": "1.2.6",
     "typescript": "npm:@typescript/typescript6@6.0.2"
   }
 }

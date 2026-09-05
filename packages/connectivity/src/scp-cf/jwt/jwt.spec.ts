@@ -4,7 +4,15 @@ import {
   mockServiceBindings,
   signedJwtForVerification
 } from '@sap-cloud-sdk/test-util-internal';
-import { audiences, decodeJwt, isXsuaaToken, retrieveJwt, userId } from './jwt';
+import {
+  audiences,
+  decodeJwt,
+  getSubdomain,
+  isIasToken,
+  isXsuaaToken,
+  retrieveJwt,
+  userId
+} from './jwt';
 
 describe('jwt', () => {
   describe('userId', () => {
@@ -46,6 +54,55 @@ describe('jwt', () => {
     it('returns false if no enhancer is set', () => {
       const jwt = decodeJwt(signedJwtForVerification({}));
       expect(isXsuaaToken(jwt)).toBe(false);
+    });
+  });
+
+  describe('isIasToken()', () => {
+    it('returns true if the issuer is an IAS domain', () => {
+      expect(isIasToken({ iss: 'https://tenant.accounts.ondemand.com' })).toBe(
+        true
+      );
+      expect(
+        isIasToken({ iss: 'https://tenant.accounts400.ondemand.com' })
+      ).toBe(true);
+    });
+
+    it('returns true if the issuer is an IAS domain without a scheme', () => {
+      expect(isIasToken({ iss: 'tenant.accounts.ondemand.com' })).toBe(true);
+      expect(isIasToken({ iss: 'tenant.accounts400.ondemand.com' })).toBe(true);
+    });
+
+    it('returns false if the issuer is not an IAS domain', () => {
+      expect(
+        isIasToken({
+          iss: 'https://tenant.authentication.sap.hana.ondemand.com'
+        })
+      ).toBe(false);
+      expect(
+        isIasToken({ iss: 'tenant.authentication.sap.hana.ondemand.com' })
+      ).toBe(false);
+    });
+
+    it('returns false if the issuer is missing or unparsable', () => {
+      expect(isIasToken({})).toBe(false);
+      expect(isIasToken({ iss: 'not a valid issuer' })).toBe(false);
+    });
+  });
+
+  describe('getSubdomain()', () => {
+    it('returns undefined for an IAS token without a scheme in the issuer', () => {
+      expect(
+        getSubdomain({ iss: 'tenant.accounts.ondemand.com' })
+      ).toBeUndefined();
+    });
+
+    it('prefers the `zdn` attribute over the issuer', () => {
+      expect(
+        getSubdomain({
+          ext_attr: { zdn: 'subscriber' },
+          iss: 'https://provider.authentication.sap.hana.ondemand.com'
+        })
+      ).toBe('subscriber');
     });
   });
 

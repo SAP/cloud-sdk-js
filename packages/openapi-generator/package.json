@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@typescript/native": "npm:typescript@7.0.2",
-    "@jest/globals": "30.4.1",
+    "@jest/globals": "30.5.1",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@types/swagger2openapi": "7.0.4",
     "memfs": "4.68.1",

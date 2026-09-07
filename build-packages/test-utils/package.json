@@ -15,13 +15,15 @@
     "lint:fix": "eslint --ignore-pattern '!index.ts' --fix --quiet && prettier --write **/*.ts",
     "all": "pnpm install && pnpm lint && pnpm compile"
   },
-  "dependencies": {
-    "@jest/globals": "^30.3.0",
+  "peerDependencies": {
+    "@jest/globals": "^30.5.1",
     "memfs": "^4.57.2"
   },
   "devDependencies": {
+    "@jest/globals": "^30.5.1",
     "@typescript/native": "npm:typescript@7.0.2",
     "eslint": "10.9.1",
+    "memfs": "4.68.1",
     "prettier": "3.9.6",
     "rolldown": "1.2.5"
   }

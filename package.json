@@ -63,7 +63,7 @@
     "type-tests": "pnpm --filter @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@changesets/cli": "3.0.1",
+    "@changesets/cli": "3.0.2",
     "@eslint/eslintrc": "3.3.7",
     "@eslint/js": "10.0.1",
     "@jest/globals": "30.4.1",

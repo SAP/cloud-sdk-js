@@ -30,7 +30,7 @@
     "@sap-cloud-sdk/odata-v2": "workspace:^",
     "@sap-cloud-sdk/openapi-generator": "workspace:^",
     "@sap-cloud-sdk/test-util-internal": "*",
-    "@jest/globals": "30.4.1",
+    "@jest/globals": "30.5.1",
     "bignumber.js": "11.1.5",
     "jsonwebtoken": "9.0.3",
     "memfs": "4.68.1",

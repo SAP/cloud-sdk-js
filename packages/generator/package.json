@@ -72,7 +72,7 @@
     "winston": "^3.19.0"
   },
   "devDependencies": {
-    "@jest/globals": "30.4.1",
+    "@jest/globals": "30.5.1",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@typescript/native": "npm:typescript@7.0.2",
     "memfs": "4.68.1",

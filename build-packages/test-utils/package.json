@@ -22,7 +22,7 @@
   "devDependencies": {
     "@jest/globals": "30.5.1",
     "@typescript/native": "npm:typescript@7.0.2",
-    "eslint": "10.9.1",
+    "eslint": "10.10.0",
     "memfs": "4.68.1",
     "prettier": "3.9.6",
     "rolldown": "1.2.5"

@@ -13,6 +13,6 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: $/.github/actions/setup
       - name: Download Stats
         run: node scripts/npm-stats.ts

@@ -25,7 +25,7 @@ jobs:
           owner: SAP
           repositories: cloud-sdk-js
           permission-contents: write
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: $/.github/actions/setup
         with:
           token: ${{ steps.app-token.outputs.token }}
           ref: 'main'
@@ -33,7 +33,7 @@ jobs:
 
       - name: bump version
         id: bump
-        uses: ./.github/actions/changesets-fixed-version-bump
+        uses: $/.github/actions/changesets-fixed-version-bump
         with:
           majorVersion: ${{ inputs.majorVersion }}
 
@@ -47,10 +47,10 @@ jobs:
         id: merge-changelogs
         env:
           VERSION: ${{ steps.bump.outputs.version }}
-        uses: ./.github/actions/merge-and-write-changelogs
+        uses: $/.github/actions/merge-and-write-changelogs
 
       - name: commit and tag
-        uses: ./.github/actions/commit-and-tag
+        uses: $/.github/actions/commit-and-tag
         with:
           version: ${{ steps.bump.outputs.version }}
           user-email: ${{ vars.SAP_CLOUD_SDK_BOT_EMAIL }}
@@ -61,7 +61,7 @@ jobs:
     needs: [bump]
     permissions:
       contents: read
-    uses: ./.github/workflows/api-docs.yml
+    uses: $/.github/workflows/api-docs.yml
     secrets:
       SAP_CLOUD_SDK_BOT_CLIENT_ID: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
       SAP_CLOUD_SDK_BOT_PRIVATE_KEY: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}

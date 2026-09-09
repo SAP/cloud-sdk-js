@@ -52,7 +52,7 @@
     "readme": "node ../../scripts/replace-common-readme.ts"
   },
   "dependencies": {
-    "@apidevtools/swagger-parser": "^12.1.0",
+    "@apidevtools/swagger-parser": "^13.0.0",
     "@sap-cloud-sdk/generator-common": "workspace:^",
     "@sap-cloud-sdk/openapi": "workspace:^",
     "@sap-cloud-sdk/util": "workspace:^",

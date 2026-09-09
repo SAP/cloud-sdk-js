@@ -83,7 +83,12 @@ export function isIasToken(decodedJwt: JwtPayload): boolean {
     return false;
   }
   try {
-    const issUrl = new URL(decodedJwt.iss);
+    // Identity providers can be configured to issue tokens with a schemeless `iss` claim,
+    // e.g. `tenant.accounts.ondemand.com` instead of `https://tenant.accounts.ondemand.com`.
+    const issWithScheme = URL.canParse(decodedJwt.iss)
+      ? decodedJwt.iss
+      : `https://${decodedJwt.iss}`;
+    const issUrl = new URL(issWithScheme);
     const hostname = issUrl.hostname.toLowerCase();
     return (
       hostname.endsWith('.accounts.ondemand.com') ||

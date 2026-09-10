@@ -2470,9 +2470,7 @@ function oi(e, t, r) {
 			case "styles":
 				Y(s.value) && Er(s.value.elements[0]);
 				break;
-			case "template":
-				s.value.type === "TemplateLiteral" && Er(s.value);
-				break;
+			case "template": s.value.type === "TemplateLiteral" && Er(s.value);
 		}
 	}
 	e.type === "TaggedTemplateExpression" && (e.tag.type === "MemberExpression" || e.tag.type === "Identifier" && (e.tag.name === "gql" || e.tag.name === "graphql" || e.tag.name === "css" || e.tag.name === "md" || e.tag.name === "markdown" || e.tag.name === "html") || e.tag.type === "CallExpression") && Er(t.quasi), (e.type === "CallExpression" || e.type === "MemberExpression") && !e.optional && delete t.optional, e.type === "TemplateLiteral" && Er(t);
@@ -2673,9 +2671,7 @@ function pi(e, t, r, n, o) {
 				case Me:
 					v = h[0], h.shift();
 					break;
-				case Ne:
-					v = h.contents[0], h.contents.shift();
-					break;
+				case Ne: v = h.contents[0], h.contents.shift();
 			}
 			E = [
 				T,

@@ -2865,8 +2865,8 @@ __esmMin((() => {
 				var Hn = x.options && x.options.ranges;
 				typeof ot.yy.parseError == "function" ? this.parseError = ot.yy.parseError : this.parseError = Object.getPrototypeOf(this).parseError;
 				for (var Un = function() {
-					var Y;
-					return Y = x.lex() || Cr, typeof Y != "number" && (Y = S.symbols_[Y] || Y), Y;
+					var Y = x.lex() || Cr;
+					return typeof Y != "number" && (Y = S.symbols_[Y] || Y), Y;
 				}, L, _e, lt, q, Le, St = {}, jt, j, _r, Qt;;) {
 					if (lt = y[y.length - 1], this.defaultActions[lt] ? q = this.defaultActions[lt] : ((L === null || typeof L > "u") && (L = Un()), q = yt[lt] && yt[lt][L]), typeof q > "u" || !q.length || !q[0]) {
 						var De = "";

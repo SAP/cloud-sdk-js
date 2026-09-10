@@ -2797,9 +2797,7 @@ __esmMin((() => {
 					case "{":
 						this.emptyRule(e);
 						break;
-					default:
-						this.other(e);
-						break;
+					default: this.other(e);
 				}
 				this.endFile();
 			}

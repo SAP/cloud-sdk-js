@@ -1360,7 +1360,6 @@ function uf(e, t, a = 0, s, f, h, b) {
 							default:
 								let Rt = l, fn = O(0);
 								oe(l) === 45 && (l++, O(fn), l === Rt + 1 && G(E.Subpattern_flags_must_be_present_when_there_is_a_minus_sign, Rt, l - Rt)), pn(58), le = !0;
-								break;
 						}
 						else Ye++, le = !0;
 						un(!0), pn(41);
@@ -1620,9 +1619,7 @@ function uf(e, t, a = 0, s, f, h, b) {
 				case 124:
 					Y !== 1 && (he = !0), l++, h = l, Y = 0;
 					break;
-				default:
-					Et(), Y++;
-					break;
+				default: Et(), Y++;
 			}
 		}
 		function Et() {
@@ -6864,7 +6861,6 @@ function ki(e) {
 		case ye.PublicKeyword: return "public";
 		case ye.ProtectedKeyword: return "protected";
 		case ye.PrivateKeyword: return "private";
-		default: break;
 	}
 }
 function rr(e, t, a) {
@@ -21620,9 +21616,7 @@ ${je.join(`
 						case w.NamespaceImport:
 							s.specifiers.push(this.convertChild(t.importClause.namedBindings));
 							break;
-						case w.NamedImports:
-							s.specifiers.push(...this.convertChildren(t.importClause.namedBindings.elements));
-							break;
+						case w.NamedImports: s.specifiers.push(...this.convertChildren(t.importClause.namedBindings.elements));
 					}
 					return s;
 				}

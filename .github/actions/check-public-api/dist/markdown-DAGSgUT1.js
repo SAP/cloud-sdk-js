@@ -5051,16 +5051,13 @@ function ME(e, t, r) {
 				offset: o.position.end.offset
 			});
 			break;
-		case "end":
-			a !== null && (n.push({
-				start: a,
-				end: {
-					index: i,
-					offset: o.position.start.offset
-				}
-			}), a = null);
-			break;
-		default: break;
+		case "end": a !== null && (n.push({
+			start: a,
+			end: {
+				index: i,
+				offset: o.position.start.offset
+			}
+		}), a = null);
 	}
 	return ae(e, t, r, { processor({ index: i }) {
 		if (n.length > 0) {
@@ -9712,7 +9709,7 @@ $$`;
 		function PF(e, t, r) {
 			var n = this, a, u, i, o, s, l, c, f, h, m;
 			if (r) return !0;
-			for (a = n.inlineMethods, o = a.length, u = n.inlineTokenizers, i = -1, h = t.length; ++i < o;) f = a[i], !(f === "text" || !u[f]) && (c = u[f].locator, c || e.file.fail("Missing locator: `" + f + "`"), l = c.call(n, t, 1), l !== -1 && l < h && (h = l));
+			for (a = n.inlineMethods, o = a.length, u = n.inlineTokenizers, i = -1, h = t.length; ++i < o;) f = a[i], f !== "text" && u[f] && (c = u[f].locator, c || e.file.fail("Missing locator: `" + f + "`"), l = c.call(n, t, 1), l !== -1 && l < h && (h = l));
 			s = t.slice(0, h), m = e.now(), n.decode(s, m, D);
 			function D(x, g, k) {
 				e(k || x)({

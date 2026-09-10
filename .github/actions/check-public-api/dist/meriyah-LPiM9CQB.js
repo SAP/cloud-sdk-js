@@ -274,9 +274,7 @@ function ln(e) {
 			case 91:
 				n |= G.Class;
 				break;
-			case 93:
-				n &= G.Escape;
-				break;
+			case 93: n &= G.Escape;
 		}
 		if ((a === 13 || a === 10 || a === 8232 || a === 8233) && e.report(34), e.index >= e.source.length) return e.report(34);
 	}
@@ -2414,12 +2412,10 @@ function xt(e, t, n, u, o, i, l, f, c, a) {
 				s |= 512;
 			}
 			break;
-		case 12402:
-			if (e.getToken() !== 67174411 && (e.flags & 1) === 0) {
-				if ((e.getToken() & 1073741824) === 1073741824) return ge(e, t, u, d, s, l, a);
-				e.options.next && (s |= 1024);
-			}
-			break;
+		case 12402: if (e.getToken() !== 67174411 && (e.flags & 1) === 0) {
+			if ((e.getToken() & 1073741824) === 1073741824) return ge(e, t, u, d, s, l, a);
+			e.options.next && (s |= 1024);
+		}
 	}
 	else if (h === 69271571) s |= 2, d = ue(e, o, u, c);
 	else if ((h & 134217728) === 134217728) d = O(e, t);

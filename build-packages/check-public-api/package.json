@@ -14,19 +14,21 @@
     "lint:fix": "eslint --fix --quiet && prettier --write **/*.ts",
     "all": "pnpm install && pnpm run lint && pnpm run compile"
   },
+  "peerDependencies": {
+    "memfs": "^4.71.0"
+  },
   "dependencies": {
     "@actions/core": "^3.0.0",
     "@manypkg/get-packages": "^3.1.0",
     "@sap-cloud-sdk/generator-common": "workspace:^",
     "@sap-cloud-sdk/util": "workspace:^",
-    "glob": "^13.0.6",
-    "memfs": "^4.57.2"
+    "glob": "^13.0.6"
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
     "@typescript/native": "npm:typescript@7.0.2",
     "eslint": "10.10.0",
-    "memfs": "4.68.1",
+    "memfs": "4.71.0",
     "prettier": "3.9.6",
     "rolldown": "1.2.7",
     "typescript": "npm:@typescript/typescript6@6.0.2"

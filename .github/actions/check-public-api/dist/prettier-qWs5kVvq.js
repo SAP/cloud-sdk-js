@@ -11196,11 +11196,11 @@ __esmMin((() => {
 		init_utilities();
 		plugins = /* @__PURE__ */ toLazyLoadPlugins({
 			name: "acorn",
-			load: () => import("./acorn-B69G-rKa.js"),
+			load: () => import("./acorn-C1UtiyOH.js"),
 			parsers: ["acorn", "espree"]
 		}, {
 			name: "angular",
-			load: () => import("./angular-Bjd53B5q.js"),
+			load: () => import("./angular-Bm7T0xrX.js"),
 			parsers: [
 				"__ng_action",
 				"__ng_binding",
@@ -11209,7 +11209,7 @@ __esmMin((() => {
 			]
 		}, {
 			name: "babel",
-			load: () => import("./babel-4YK37r31.js"),
+			load: () => import("./babel-DBAFcQCf.js"),
 			parsers: [
 				"__babel_estree",
 				"__js_expression",
@@ -11228,17 +11228,17 @@ __esmMin((() => {
 			]
 		}, {
 			name: "estree",
-			load: () => import("./estree-DVAF7P78.js"),
+			load: () => import("./estree-DDEziFo7.js"),
 			options: options_default4,
 			languages: [...languages_evaluate_default6, ...languages_evaluate_default5],
 			printers: ["estree", "estree-json"]
 		}, {
 			name: "flow",
-			load: () => import("./flow-Vpubdiou.js"),
+			load: () => import("./flow-CCcHGKrt.js"),
 			parsers: ["flow"]
 		}, {
 			name: "glimmer",
-			load: () => import("./glimmer-DCFXmOvj.js"),
+			load: () => import("./glimmer-Dmxexemb.js"),
 			languages: languages_evaluate_default3,
 			parsers: ["glimmer"],
 			printers: ["glimmer"]
@@ -11251,7 +11251,7 @@ __esmMin((() => {
 			printers: ["graphql"]
 		}, {
 			name: "html",
-			load: () => import("./html-CmsQnnzp.js"),
+			load: () => import("./html-BSlOZpay.js"),
 			options: options_default3,
 			languages: languages_evaluate_default4,
 			parsers: [
@@ -11264,7 +11264,7 @@ __esmMin((() => {
 			printers: ["html"]
 		}, {
 			name: "markdown",
-			load: () => import("./markdown-BF7gew0M.js"),
+			load: () => import("./markdown-DAGSgUT1.js"),
 			options: options_default5,
 			languages: languages_evaluate_default7,
 			parsers: [
@@ -11275,11 +11275,11 @@ __esmMin((() => {
 			printers: ["mdast"]
 		}, {
 			name: "meriyah",
-			load: () => import("./meriyah-BXLPM_l0.js"),
+			load: () => import("./meriyah-LPiM9CQB.js"),
 			parsers: ["meriyah"]
 		}, {
 			name: "postcss",
-			load: () => import("./postcss-CXF6Gu8l.js"),
+			load: () => import("./postcss-XwtttQ7m.js"),
 			options: options_default,
 			languages: languages_evaluate_default,
 			parsers: [
@@ -11290,7 +11290,7 @@ __esmMin((() => {
 			printers: ["postcss"]
 		}, {
 			name: "typescript",
-			load: () => import("./typescript-mmBHwcNl.js"),
+			load: () => import("./typescript-69gs_2CI.js"),
 			parsers: ["typescript"]
 		}, {
 			name: "yaml",

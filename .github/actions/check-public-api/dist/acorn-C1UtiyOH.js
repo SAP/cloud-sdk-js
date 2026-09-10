@@ -4148,9 +4148,7 @@ __esmMin((() => {
 			case `
 `:
 			case "\u2028":
-			case "\u2029":
-				++this.curLine, this.lineStart = this.pos + 1;
-				break;
+			case "\u2029": ++this.curLine, this.lineStart = this.pos + 1;
 		}
 		this.raise(this.start, "Unterminated template");
 	};

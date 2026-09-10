@@ -6873,8 +6873,8 @@ __esmMin((() => {
 			return this.next(), this.isLineTerminator() ? e.label = null : (e.label = this.parseIdentifier(), this.semicolon()), this.verifyBreakContinue(e, t), this.finishNode(e, t ? "BreakStatement" : "ContinueStatement");
 		}
 		verifyBreakContinue(e, t) {
-			let s;
-			for (s = 0; s < this.state.labels.length; ++s) {
+			let s = 0;
+			for (; s < this.state.labels.length; ++s) {
 				let i = this.state.labels[s];
 				if ((e.label == null || i.name === e.label.name) && (i.kind != null && (t || i.kind === 1) || e.label && t)) break;
 			}
@@ -8451,12 +8451,10 @@ __esmMin((() => {
 						return this.next(), this.tsParseDeclaration(r, 124, !1, s);
 					}
 					break;
-				case 126:
-					if (this.nextTokenIsIdentifierOnSameLine()) {
-						let r = this.startNode();
-						return i || this.raise(m.UnexpectedTypeDeclaration, r, "type"), this.next(), this.tsParseTypeAliasDeclaration(r);
-					}
-					break;
+				case 126: if (this.nextTokenIsIdentifierOnSameLine()) {
+					let r = this.startNode();
+					return i || this.raise(m.UnexpectedTypeDeclaration, r, "type"), this.next(), this.tsParseTypeAliasDeclaration(r);
+				}
 			}
 			return super.parseStatementContent(t, s);
 		}
@@ -8551,7 +8549,7 @@ __esmMin((() => {
 			s && (t.typeAnnotation = s);
 		}
 		parseClassProperty(t) {
-			if (this.parseClassPropertyAnnotation(t), this.state.isAmbientContext && !(t.readonly && !t.typeAnnotation) && this.match(25) && this.raise(m.DeclareClassFieldHasInitializer, this.state.startLoc), t.abstract && this.match(25)) {
+			if (this.parseClassPropertyAnnotation(t), this.state.isAmbientContext && (!t.readonly || t.typeAnnotation) && this.match(25) && this.raise(m.DeclareClassFieldHasInitializer, this.state.startLoc), t.abstract && this.match(25)) {
 				let { key: s } = t;
 				this.raise(m.AbstractPropertyHasInitializer, this.state.startLoc, { propertyName: s.type === "Identifier" && !t.computed ? s.name : `[${this.input.slice(this.offsetToSourcePos(s.start), this.offsetToSourcePos(s.end))}]` });
 			}

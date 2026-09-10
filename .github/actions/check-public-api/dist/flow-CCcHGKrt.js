@@ -348,8 +348,8 @@ __esmMin((() => {
 			return (g + I) * 3 / 4 - I;
 		}
 		function rE(A) {
-			var g, I = IB(A), B = I[0], C = I[1], Q = new GE(kE(A, B, C)), i = 0, o = C > 0 ? B - 4 : B, e;
-			for (e = 0; e < o; e += 4) g = $[A.charCodeAt(e)] << 18 | $[A.charCodeAt(e + 1)] << 12 | $[A.charCodeAt(e + 2)] << 6 | $[A.charCodeAt(e + 3)], Q[i++] = g >> 16 & 255, Q[i++] = g >> 8 & 255, Q[i++] = g & 255;
+			var g, I = IB(A), B = I[0], C = I[1], Q = new GE(kE(A, B, C)), i = 0, o = C > 0 ? B - 4 : B, e = 0;
+			for (; e < o; e += 4) g = $[A.charCodeAt(e)] << 18 | $[A.charCodeAt(e + 1)] << 12 | $[A.charCodeAt(e + 2)] << 6 | $[A.charCodeAt(e + 3)], Q[i++] = g >> 16 & 255, Q[i++] = g >> 8 & 255, Q[i++] = g & 255;
 			return C === 2 && (g = $[A.charCodeAt(e)] << 2 | $[A.charCodeAt(e + 1)] >> 4, Q[i++] = g & 255), C === 1 && (g = $[A.charCodeAt(e)] << 10 | $[A.charCodeAt(e + 1)] << 4 | $[A.charCodeAt(e + 2)] >> 2, Q[i++] = g >> 8 & 255, Q[i++] = g & 255), Q;
 		}
 		function cE(A) {
@@ -694,8 +694,8 @@ __esmMin((() => {
 			B ? (B = Number(B), B > C && (B = C)) : B = C;
 			let Q = g.length;
 			B > Q / 2 && (B = Q / 2);
-			let i;
-			for (i = 0; i < B; ++i) {
+			let i = 0;
+			for (; i < B; ++i) {
 				let o = parseInt(g.substr(i * 2, 2), 16);
 				if (lg(o)) return i;
 				A[I + i] = o;
@@ -1178,8 +1178,8 @@ __esmMin((() => {
 			return Ug.toByteArray(OE(A));
 		}
 		function Bg(A, g, I, B) {
-			let C;
-			for (C = 0; C < B && !(C + I >= g.length || C >= A.length); ++C) g[C + I] = A[C];
+			let C = 0;
+			for (; C < B && !(C + I >= g.length || C >= A.length); ++C) g[C + I] = A[C];
 			return C;
 		}
 		function EA(A, g) {
@@ -3815,9 +3815,7 @@ __esmMin((() => {
 					break;
 				case "ExportDefaultDeclaration": return "module";
 				case "ExportNamedDeclaration":
-				case "ExportAllDeclaration":
-					if (g.exportKind === "value" || g.exportKind == null) return "module";
-					break;
+				case "ExportAllDeclaration": if (g.exportKind === "value" || g.exportKind == null) return "module";
 			}
 			return "script";
 		}
@@ -7282,9 +7280,7 @@ __esmMin((() => {
 				case "RecordDeclarationStaticProperty":
 					B.push(G);
 					break;
-				case "MethodDefinition":
-					G.static ? Q.push(G) : C.push(G);
-					break;
+				case "MethodDefinition": G.static ? Q.push(G) : C.push(G);
 			}
 			let i = /* @__PURE__ */ new Map(), o = {
 				type: "ObjectPattern",

@@ -6185,7 +6185,7 @@ If '${e}' is a directive input, make sure the directive is imported by the curre
 				var s;
 				let o = this._containerStack[a], l = o instanceof U ? o.fullName : o.name;
 				if (Pe(l) ? l === t : (l === t || t === null) && o instanceof r) return o.endSourceSpan = n, o.sourceSpan.end = n !== null ? n.end : o.sourceSpan.end, this._containerStack.splice(a, this._containerStack.length - a), !i;
-				(o instanceof ge || !((s = this._getTagDefinition(o)) !== null && s !== void 0 && s.closedByParent)) && (i = !0);
+				(o instanceof ge || (s = this._getTagDefinition(o)) === null || s === void 0 || !s.closedByParent) && (i = !0);
 			}
 			return !1;
 		}

@@ -4420,9 +4420,7 @@ If '${e}' is a directive input, make sure the directive is imported by the curre
 			default:
 				r = !1;
 				break;
-			case "\\":
-				r = !r;
-				break;
+			case "\\": r = !r;
 		}
 	}, Ji = function(n) {
 		w(this, m, wn).call(this, n.key.span), Xi(n) && n.value && w(this, m, wn).call(this, n.value.span);

@@ -14,10 +14,13 @@ export function getIssuerSubdomain(
     isIasToken && decodedJwt?.ias_iss ? decodedJwt.ias_iss : decodedJwt?.iss;
 
   if (issuer) {
-    if (!isValidUrl(issuer)) {
+    // Identity providers can be configured to issue tokens with a schemeless `iss` claim,
+    // e.g. `tenant.accounts.ondemand.com` instead of `https://tenant.accounts.ondemand.com`.
+    const issWithScheme = URL.canParse(issuer) ? issuer : `https://${issuer}`;
+    if (!URL.canParse(issWithScheme)) {
       throw new Error(`Issuer URL in JWT is not a valid URL: "${issuer}".`);
     }
-    return getHost(new URL(issuer)).split('.')[0];
+    return getHost(new URL(issWithScheme)).split('.')[0];
   }
 }
 

@@ -38,7 +38,7 @@ jobs:
       matrix:
         node-version: [26, 24, 22]
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: $/.github/actions/setup
         with:
           node-version: ${{ matrix.node-version }}
       - run: pnpm run generate
@@ -68,7 +68,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: $/.github/actions/setup
       - name: Test Service Version Check
         run: pnpm run check:test-service
       - parallel:
@@ -79,7 +79,7 @@ jobs:
           - name: Undeclared dependency Check
             run: pnpm run check:dependencies --reporter=github-actions
           - name: Check public api
-            uses: ./.github/actions/check-public-api
+            uses: $/.github/actions/check-public-api
             with:
               force_internal_exports: 'true'
               excluded_packages: 'eslint-config, util, test-util'
@@ -90,7 +90,7 @@ jobs:
           - name: API Doc Check
             run: pnpm run doc
           - name: License Check
-            uses: ./.github/actions/check-license
+            uses: $/.github/actions/check-license
       - name: Slack Notify
         if: ${{ github.event_name != 'pull_request' && (failure() || cancelled()) }}
         env:
@@ -110,7 +110,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: $/.github/actions/setup
       - run: pnpm run test:e2e
 
   canary-release-pre-check:
@@ -125,7 +125,7 @@ jobs:
       REF_NAME: ${{ github.ref_name }}
       REF: ${{ github.ref }}
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: $/.github/actions/setup
       - name: Check if latest commit is within 24 hrs
         id: date-check
         run: |
@@ -153,7 +153,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: $/.github/actions/setup
         with:
           persist-credentials: true
           package-manager-cache: false
@@ -186,10 +186,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: sap/cloud-sdk-js/.github/actions/setup@main
+      - uses: $/.github/actions/setup
       - name: Get Changelog
         id: get-changelog
-        uses: ./.github/actions/get-changelog
+        uses: $/.github/actions/get-changelog
       - name: Create Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

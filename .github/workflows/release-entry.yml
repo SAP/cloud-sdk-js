@@ -28,7 +28,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    uses: ./.github/workflows/release.yml
+    uses: $/.github/workflows/release.yml
     secrets:
       SAP_CLOUD_SDK_BOT_CLIENT_ID: ${{ secrets.SAP_CLOUD_SDK_BOT_CLIENT_ID }}
       SAP_CLOUD_SDK_BOT_PRIVATE_KEY: ${{ secrets.SAP_CLOUD_SDK_BOT_PRIVATE_KEY }}
@@ -39,7 +39,7 @@ jobs:
       contents: write
       pull-requests: write
       id-token: write
-    uses: ./.github/workflows/build.yml
+    uses: $/.github/workflows/build.yml
     secrets:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     with:

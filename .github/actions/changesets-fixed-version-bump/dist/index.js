@@ -13,6 +13,7 @@ import { basename as basename$1, dirname as dirname$1, isAbsolute, normalize as 
 import * as events from "events";
 import { PassThrough } from "node:stream";
 import { styleText } from "node:util";
+import { fileURLToPath } from "node:url";
 import { info } from "node:console";
 import "child_process";
 import "timers";
@@ -23,7 +24,7 @@ import readline from "node:readline";
 import * as fs from "node:fs";
 import fs__default, { closeSync, openSync, readSync, statSync as statSync$1 } from "node:fs";
 import { F_OK } from "node:constants";
-import { fileURLToPath } from "url";
+import { fileURLToPath as fileURLToPath$1 } from "url";
 import { createRequire as createRequire$1 } from "module";
 //#region \0rolldown/runtime.js
 var __create = Object.create;
@@ -16269,24 +16270,24 @@ function info$1(message) {
 }
 //#endregion
 //#region ../../node_modules/.pnpm/tinyexec@1.3.0/node_modules/tinyexec/dist/main.mjs
-const isPathLikePattern = /^path$/i;
-const defaultEnvPathInfo = {
+const isPathLikePattern$1 = /^path$/i;
+const defaultEnvPathInfo$1 = {
 	key: "PATH",
 	value: ""
 };
-function getPathFromEnv(env) {
+function getPathFromEnv$1(env) {
 	for (const key in env) {
-		if (!Object.prototype.hasOwnProperty.call(env, key) || !isPathLikePattern.test(key)) continue;
+		if (!Object.prototype.hasOwnProperty.call(env, key) || !isPathLikePattern$1.test(key)) continue;
 		const value = env[key];
-		if (!value) return defaultEnvPathInfo;
+		if (!value) return defaultEnvPathInfo$1;
 		return {
 			key,
 			value
 		};
 	}
-	return defaultEnvPathInfo;
+	return defaultEnvPathInfo$1;
 }
-function addNodeBinToPath(cwd, path) {
+function addNodeBinToPath$1(cwd, path) {
 	const parts = path.value.split(delimiter);
 	const nodeBinPaths = [];
 	let currentPath = cwd;
@@ -16303,17 +16304,17 @@ function addNodeBinToPath(cwd, path) {
 		value: newPath
 	};
 }
-function computeEnv(cwd, env, nodePath = true) {
+function computeEnv$1(cwd, env, nodePath = true) {
 	const envWithDefault = {
 		...process.env,
 		...env
 	};
 	if (!nodePath) return envWithDefault;
-	const envPathInfo = addNodeBinToPath(cwd, getPathFromEnv(envWithDefault));
+	const envPathInfo = addNodeBinToPath$1(cwd, getPathFromEnv$1(envWithDefault));
 	envWithDefault[envPathInfo.key] = envPathInfo.value;
 	return envWithDefault;
 }
-const combineStreams = (streams) => {
+const combineStreams$1 = (streams) => {
 	let streamCount = streams.length;
 	const combined = new PassThrough();
 	const maybeEmitEnd = () => {
@@ -16322,31 +16323,31 @@ const combineStreams = (streams) => {
 	for (const stream of streams) pipeline(stream, combined, { end: false }).then(maybeEmitEnd).catch(maybeEmitEnd);
 	return combined;
 };
-const metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
-const shebangRegExp = /^#!\s*(.+)/;
-const isWindowsExecutableRegExp = /\.(?:com|exe)$/i;
-const isNodeModulesCmdRegExp = /node_modules[\\/]\.bin[\\/][^\\/]+\.cmd$/i;
-const isWindows = process.platform === "win32";
-const defaultPathExt = [
+const metaCharsRegExp$1 = /([()\][%!^"`<>&|;, *?])/g;
+const shebangRegExp$1 = /^#!\s*(.+)/;
+const isWindowsExecutableRegExp$1 = /\.(?:com|exe)$/i;
+const isNodeModulesCmdRegExp$1 = /node_modules[\\/]\.bin[\\/][^\\/]+\.cmd$/i;
+const isWindows$1 = process.platform === "win32";
+const defaultPathExt$1 = [
 	".EXE",
 	".CMD",
 	".BAT",
 	".COM"
 ];
-const noPathExt = [""];
+const noPathExt$1 = [""];
 /**
 * Normalizes the command and arguments to work cross-platform.
 * On Windows, this basically handles things like shebangs, calling
 * `node_modules/.bin` commands, and escaping meta characters.
 * On other platforms, it just returns the command and arguments as-is.
 */
-function normalizeSpawnCommand(command, args = [], options = {}) {
-	if (options.shell === true || !isWindows) return {
+function normalizeSpawnCommand$1(command, args = [], options = {}) {
+	if (options.shell === true || !isWindows$1) return {
 		command,
 		args,
 		options
 	};
-	let file = resolveCommand(command, options);
+	let file = resolveCommand$1(command, options);
 	let shebang = null;
 	if (file !== null) {
 		const size = 150;
@@ -16358,7 +16359,7 @@ function normalizeSpawnCommand(command, args = [], options = {}) {
 		} catch {} finally {
 			if (fd !== null) closeSync(fd);
 		}
-		const match = buffer.toString().match(shebangRegExp);
+		const match = buffer.toString().match(shebangRegExp$1);
 		if (match !== null) {
 			const line = match[1].trim();
 			const separatorIndex = line.indexOf(" ");
@@ -16371,18 +16372,18 @@ function normalizeSpawnCommand(command, args = [], options = {}) {
 	if (shebang !== null && file !== null) {
 		args = [file, ...args];
 		command = shebang;
-		file = resolveCommand(command, options);
+		file = resolveCommand$1(command, options);
 	}
-	if (file === null || !isWindowsExecutableRegExp.test(file)) {
-		const needsDoubleEscapeMetaChars = file !== null && isNodeModulesCmdRegExp.test(file);
+	if (file === null || !isWindowsExecutableRegExp$1.test(file)) {
+		const needsDoubleEscapeMetaChars = file !== null && isNodeModulesCmdRegExp$1.test(file);
 		command = normalize(command);
-		command = command.replace(metaCharsRegExp, "^$1");
+		command = command.replace(metaCharsRegExp$1, "^$1");
 		args = args.map((arg) => {
 			arg = arg.replace(/(?=(\\+?)?)\1"/g, "$1$1\\\"");
 			arg = arg.replace(/(?=(\\+?)?)\1$/, "$1$1");
 			arg = `"${arg}"`;
-			arg = arg.replace(metaCharsRegExp, "^$1");
-			if (needsDoubleEscapeMetaChars) arg = arg.replace(metaCharsRegExp, "^$1");
+			arg = arg.replace(metaCharsRegExp$1, "^$1");
+			if (needsDoubleEscapeMetaChars) arg = arg.replace(metaCharsRegExp$1, "^$1");
 			return arg;
 		});
 		args = [
@@ -16407,14 +16408,14 @@ function normalizeSpawnCommand(command, args = [], options = {}) {
 * Resolves the command to an absolute path if possible.
 * Handles things like traversing PATH and adding extensions from PATHEXT
 */
-function resolveCommand(command, options) {
+function resolveCommand$1(command, options) {
 	const cwd$3 = (options.cwd ?? cwd()).toString();
 	const env = options.env ?? process.env;
-	const PATH = getPathFromEnv(env).value;
+	const PATH = getPathFromEnv$1(env).value;
 	const pathEnv = command.includes("/") || command.includes("\\") ? [""] : [cwd$3, ...PATH.split(delimiter)];
-	let pathExt = env.PATHEXT ? env.PATHEXT.split(delimiter) : defaultPathExt;
+	let pathExt = env.PATHEXT ? env.PATHEXT.split(delimiter) : defaultPathExt$1;
 	if (command.includes(".") && pathExt[0] !== "") pathExt = ["", ...pathExt];
-	for (const extensions of [pathExt, noPathExt]) for (const path of pathEnv) {
+	for (const extensions of [pathExt, noPathExt$1]) for (const path of pathEnv) {
 		const dest = resolve(cwd$3, path.startsWith("\"") && path.endsWith("\"") && path.length > 1 ? path.slice(1, -1) : path, command);
 		for (const ext of extensions) {
 			const destWithExt = dest + ext;
@@ -16425,7 +16426,7 @@ function resolveCommand(command, options) {
 	}
 	return null;
 }
-var NonZeroExitError = class extends Error {
+var NonZeroExitError$1 = class extends Error {
 	result;
 	output;
 	exitCode;
@@ -16447,12 +16448,12 @@ var NonZeroExitError = class extends Error {
 		});
 	}
 };
-const defaultOptions$1 = {
+const defaultOptions$2 = {
 	timeout: void 0,
 	persist: false
 };
-const defaultNodeOptions = { windowsHide: true };
-function combineSignals(signals) {
+const defaultNodeOptions$1 = { windowsHide: true };
+function combineSignals$1(signals) {
 	const controller = new AbortController();
 	for (const signal of signals) {
 		if (signal.aborted) {
@@ -16466,14 +16467,14 @@ function combineSignals(signals) {
 	}
 	return controller.signal;
 }
-async function readStream(stream) {
+async function readStream$1(stream) {
 	let output = "";
 	try {
 		for await (const chunk of stream) output += chunk.toString();
 	} catch {}
 	return output;
 }
-var ExecProcess = class {
+var ExecProcess$1 = class {
 	_process;
 	_aborted = false;
 	_options;
@@ -16496,7 +16497,7 @@ var ExecProcess = class {
 	}
 	constructor(command, args, options) {
 		this._options = {
-			...defaultOptions$1,
+			...defaultOptions$2,
 			...options
 		};
 		this._command = command;
@@ -16515,7 +16516,7 @@ var ExecProcess = class {
 		return this._process?.killed === true;
 	}
 	pipe(command, args, options) {
-		return exec(command, args, {
+		return exec$1(command, args, {
 			...options,
 			stdin: this
 		});
@@ -16526,18 +16527,18 @@ var ExecProcess = class {
 		const streams = [];
 		if (this._streamErr) streams.push(this._streamErr);
 		if (this._streamOut) streams.push(this._streamOut);
-		const streamCombined = combineStreams(streams);
+		const streamCombined = combineStreams$1(streams);
 		const rl = readline.createInterface({ input: streamCombined });
 		for await (const chunk of rl) yield chunk.toString();
 		await this._processClosed;
 		proc.removeAllListeners();
 		if (this._thrownError) throw this._thrownError;
-		if (this._options?.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, void 0, this._command, this._args);
+		if (this._options?.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError$1(this, void 0, this._command, this._args);
 	}
 	async _waitForOutput() {
 		const proc = this._process;
 		if (!proc) throw new Error("No process was started");
-		const [stdout, stderr] = await Promise.all([this._streamOut ? readStream(this._streamOut) : "", this._streamErr ? readStream(this._streamErr) : ""]);
+		const [stdout, stderr] = await Promise.all([this._streamOut ? readStream$1(this._streamOut) : "", this._streamErr ? readStream$1(this._streamErr) : ""]);
 		await this._processClosed;
 		const { stdin } = this._options;
 		if (stdin && typeof stdin !== "string") await stdin;
@@ -16548,7 +16549,7 @@ var ExecProcess = class {
 			stdout,
 			exitCode: this.exitCode
 		};
-		if (this._options.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, result, this._command, this._args);
+		if (this._options.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError$1(this, result, this._command, this._args);
 		return result;
 	}
 	then(onfulfilled, onrejected) {
@@ -16560,7 +16561,7 @@ var ExecProcess = class {
 		const cwd$1 = cwd();
 		const options = this._options;
 		const nodeOptions = {
-			...defaultNodeOptions,
+			...defaultNodeOptions$1,
 			...options.nodeOptions
 		};
 		const signals = [];
@@ -16568,9 +16569,9 @@ var ExecProcess = class {
 		if (options.timeout !== void 0) signals.push(AbortSignal.timeout(options.timeout));
 		if (options.signal !== void 0) signals.push(options.signal);
 		if (options.persist === true) nodeOptions.detached = true;
-		if (signals.length > 0) nodeOptions.signal = combineSignals(signals);
-		nodeOptions.env = computeEnv(cwd$1, nodeOptions.env, options.nodePath);
-		const crossResult = normalizeSpawnCommand(this._command, this._args, nodeOptions);
+		if (signals.length > 0) nodeOptions.signal = combineSignals$1(signals);
+		nodeOptions.env = computeEnv$1(cwd$1, nodeOptions.env, options.nodePath);
+		const crossResult = normalizeSpawnCommand$1(this._command, this._args, nodeOptions);
 		const handle = spawn(crossResult.command, crossResult.args, crossResult.options);
 		if (handle.stderr) this._streamErr = handle.stderr;
 		if (handle.stdout) this._streamOut = handle.stdout;
@@ -16601,12 +16602,12 @@ var ExecProcess = class {
 		if (this._resolveClose) this._resolveClose();
 	};
 };
-const x = (command, args, userOptions) => {
-	const proc = new ExecProcess(command, args, userOptions);
+const x$1 = (command, args, userOptions) => {
+	const proc = new ExecProcess$1(command, args, userOptions);
 	proc.spawn();
 	return proc;
 };
-const exec = x;
+const exec$1 = x$1;
 //#endregion
 //#region ../../node_modules/.pnpm/@changesets+errors@1.0.0/node_modules/@changesets/errors/dist/index.mjs
 var GitError = class extends Error {
@@ -20615,7 +20616,7 @@ function formatPaths(paths, mapper) {
 	if (mapper) for (let i = paths.length - 1; i >= 0; i--) paths[i] = mapper(paths[i]);
 	return paths;
 }
-const defaultOptions = {
+const defaultOptions$1 = {
 	caseSensitiveMatch: true,
 	debug: !!process.env.TINYGLOBBY_DEBUG,
 	expandDirectories: true,
@@ -20624,8 +20625,8 @@ const defaultOptions = {
 };
 function getOptions(options) {
 	const opts = Object.assign({}, options);
-	for (const key in defaultOptions) if (opts[key] === void 0) Object.assign(opts, { [key]: defaultOptions[key] });
-	opts.cwd = (opts.cwd instanceof URL ? fileURLToPath(opts.cwd) : resolve$1(opts.cwd || process.cwd())).replace(BACKSLASHES, "/");
+	for (const key in defaultOptions$1) if (opts[key] === void 0) Object.assign(opts, { [key]: defaultOptions$1[key] });
+	opts.cwd = (opts.cwd instanceof URL ? fileURLToPath$1(opts.cwd) : resolve$1(opts.cwd || process.cwd())).replace(BACKSLASHES, "/");
 	opts.ignore = ensureStringArray(opts.ignore);
 	opts.fs && (opts.fs = {
 		readdir: opts.fs.readdir || readdir,
@@ -31915,6 +31916,347 @@ async function migratePreState(rootDir, preState) {
 	return preState;
 }
 //#endregion
+//#region ../../node_modules/.pnpm/tinyexec@1.3.1/node_modules/tinyexec/dist/main.mjs
+const isPathLikePattern = /^path$/i;
+const defaultEnvPathInfo = {
+	key: "PATH",
+	value: ""
+};
+function getPathFromEnv(env) {
+	for (const key in env) {
+		if (!Object.prototype.hasOwnProperty.call(env, key) || !isPathLikePattern.test(key)) continue;
+		const value = env[key];
+		if (!value) return defaultEnvPathInfo;
+		return {
+			key,
+			value
+		};
+	}
+	return defaultEnvPathInfo;
+}
+function addNodeBinToPath(cwd, path) {
+	const parts = path.value.split(delimiter);
+	const nodeBinPaths = [];
+	let currentPath = typeof cwd === "string" ? cwd : fileURLToPath(cwd, { windows: false });
+	let lastPath;
+	do {
+		nodeBinPaths.push(resolve(currentPath, "node_modules", ".bin"));
+		lastPath = currentPath;
+		currentPath = dirname(currentPath);
+	} while (currentPath !== lastPath);
+	nodeBinPaths.push(dirname(process.execPath));
+	const newPath = nodeBinPaths.concat(parts).join(delimiter);
+	return {
+		key: path.key,
+		value: newPath
+	};
+}
+function computeEnv(cwd, env, nodePath = true) {
+	const envWithDefault = {
+		...process.env,
+		...env
+	};
+	if (!nodePath) return envWithDefault;
+	const envPathInfo = addNodeBinToPath(cwd, getPathFromEnv(envWithDefault));
+	envWithDefault[envPathInfo.key] = envPathInfo.value;
+	return envWithDefault;
+}
+const combineStreams = (streams) => {
+	let streamCount = streams.length;
+	const combined = new PassThrough();
+	const maybeEmitEnd = () => {
+		if (--streamCount === 0) combined.end();
+	};
+	for (const stream of streams) pipeline(stream, combined, { end: false }).then(maybeEmitEnd).catch(maybeEmitEnd);
+	return combined;
+};
+const metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
+const shebangRegExp = /^#!\s*(.+)/;
+const isWindowsExecutableRegExp = /\.(?:com|exe)$/i;
+const isNodeModulesCmdRegExp = /node_modules[\\/]\.bin[\\/][^\\/]+\.cmd$/i;
+const isWindows = process.platform === "win32";
+const defaultPathExt = [
+	".EXE",
+	".CMD",
+	".BAT",
+	".COM"
+];
+const noPathExt = [""];
+/**
+* Normalizes the command and arguments to work cross-platform.
+* On Windows, this basically handles things like shebangs, calling
+* `node_modules/.bin` commands, and escaping meta characters.
+* On other platforms, it just returns the command and arguments as-is.
+*/
+function normalizeSpawnCommand(command, args = [], options = {}) {
+	if (options.shell === true || !isWindows) return {
+		command,
+		args,
+		options
+	};
+	let file = resolveCommand(command, options);
+	let shebang = null;
+	if (file !== null) {
+		const size = 150;
+		const buffer = Buffer.alloc(size);
+		let fd = null;
+		try {
+			fd = openSync(file, "r");
+			readSync(fd, buffer, 0, size, 0);
+		} catch {} finally {
+			if (fd !== null) closeSync(fd);
+		}
+		const match = buffer.toString().match(shebangRegExp);
+		if (match !== null) {
+			const line = match[1].trim();
+			const separatorIndex = line.indexOf(" ");
+			const path = separatorIndex !== -1 ? line.slice(0, separatorIndex) : line;
+			const argument = separatorIndex !== -1 ? line.slice(separatorIndex + 1) : "";
+			const binary = basename(path);
+			shebang = binary === "env" ? argument || null : binary;
+		}
+	}
+	if (shebang !== null && file !== null) {
+		args = [file, ...args];
+		command = shebang;
+		file = resolveCommand(command, options);
+	}
+	if (file === null || !isWindowsExecutableRegExp.test(file)) {
+		const needsDoubleEscapeMetaChars = file !== null && isNodeModulesCmdRegExp.test(file);
+		command = normalize(command);
+		command = command.replace(metaCharsRegExp, "^$1");
+		args = args.map((arg) => {
+			arg = arg.replace(/(?=(\\+?)?)\1"/g, "$1$1\\\"");
+			arg = arg.replace(/(?=(\\+?)?)\1$/, "$1$1");
+			arg = `"${arg}"`;
+			arg = arg.replace(metaCharsRegExp, "^$1");
+			if (needsDoubleEscapeMetaChars) arg = arg.replace(metaCharsRegExp, "^$1");
+			return arg;
+		});
+		args = [
+			"/d",
+			"/s",
+			"/c",
+			`"${[command, ...args].join(" ")}"`
+		];
+		command = options.env?.comspec ?? "cmd.exe";
+		options = {
+			...options,
+			windowsVerbatimArguments: true
+		};
+	}
+	return {
+		command,
+		args,
+		options
+	};
+}
+/**
+* Resolves the command to an absolute path if possible.
+* Handles things like traversing PATH and adding extensions from PATHEXT
+*/
+function resolveCommand(command, options) {
+	const cwd$3 = (options.cwd ?? cwd()).toString();
+	const env = options.env ?? process.env;
+	const PATH = getPathFromEnv(env).value;
+	const pathEnv = command.includes("/") || command.includes("\\") ? [""] : [cwd$3, ...PATH.split(delimiter)];
+	let pathExt = env.PATHEXT ? env.PATHEXT.split(delimiter) : defaultPathExt;
+	if (command.includes(".") && pathExt[0] !== "") pathExt = ["", ...pathExt];
+	for (const extensions of [pathExt, noPathExt]) for (const path of pathEnv) {
+		const unquoted = path.startsWith("\"") && path.endsWith("\"") && path.length > 1 ? path.slice(1, -1) : path;
+		const dest = resolve(cwd$3, unquoted, command);
+		for (const ext of extensions) {
+			const destWithExt = dest + ext;
+			try {
+				if (statSync$1(destWithExt).isFile()) return destWithExt;
+			} catch {}
+		}
+	}
+	return null;
+}
+var NonZeroExitError = class extends Error {
+	result;
+	output;
+	exitCode;
+	get signalCode() {
+		return this.result.signalCode;
+	}
+	constructor(result, output, command, args) {
+		let target = "The process";
+		if (command) target = `The command \`${args?.length ? `${command} ${args.map((a) => /[ "'`()]/.test(a) ? JSON.stringify(a) : a).join(" ")}` : command}\``;
+		const exitCode = result.exitCode ?? 1;
+		super(result.signalCode !== null ? `${target} was killed by the signal ${result.signalCode}` : `${target} exited with a non-zero status (${exitCode})`);
+		this.result = result;
+		this.output = output;
+		this.exitCode = exitCode;
+		Object.defineProperty(this, "result", {
+			enumerable: false,
+			writable: false,
+			configurable: false
+		});
+	}
+};
+const defaultOptions = {
+	timeout: void 0,
+	persist: false
+};
+const defaultNodeOptions = { windowsHide: true };
+function combineSignals(signals) {
+	const controller = new AbortController();
+	for (const signal of signals) {
+		if (signal.aborted) {
+			controller.abort();
+			return signal;
+		}
+		const onAbort = () => {
+			controller.abort(signal.reason);
+		};
+		signal.addEventListener("abort", onAbort, { signal: controller.signal });
+	}
+	return controller.signal;
+}
+async function readStream(stream) {
+	let output = "";
+	try {
+		for await (const chunk of stream) output += chunk.toString();
+	} catch {}
+	return output;
+}
+var ExecProcess = class {
+	_process;
+	_aborted = false;
+	_options;
+	_command;
+	_args;
+	_resolveClose;
+	_processClosed;
+	_thrownError;
+	get process() {
+		return this._process;
+	}
+	get pid() {
+		return this._process?.pid;
+	}
+	get exitCode() {
+		if (this._process && this._process.exitCode !== null) return this._process.exitCode;
+	}
+	get signalCode() {
+		return this._process?.signalCode ?? null;
+	}
+	constructor(command, args, options) {
+		this._options = {
+			...defaultOptions,
+			...options
+		};
+		this._command = command;
+		this._args = args ?? [];
+		this._processClosed = new Promise((resolve) => {
+			this._resolveClose = resolve;
+		});
+	}
+	kill(signal) {
+		return this._process?.kill(signal) === true;
+	}
+	get aborted() {
+		return this._aborted;
+	}
+	get killed() {
+		return this._process?.killed === true;
+	}
+	pipe(command, args, options) {
+		return exec(command, args, {
+			...options,
+			stdin: this
+		});
+	}
+	async *[Symbol.asyncIterator]() {
+		const proc = this._process;
+		if (!proc) return;
+		const streams = [];
+		if (this._streamErr) streams.push(this._streamErr);
+		if (this._streamOut) streams.push(this._streamOut);
+		const streamCombined = combineStreams(streams);
+		const rl = readline.createInterface({ input: streamCombined });
+		for await (const chunk of rl) yield chunk.toString();
+		await this._processClosed;
+		proc.removeAllListeners();
+		if (this._thrownError) throw this._thrownError;
+		if (this._options?.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, void 0, this._command, this._args);
+	}
+	async _waitForOutput() {
+		const proc = this._process;
+		if (!proc) throw new Error("No process was started");
+		const [stdout, stderr] = await Promise.all([this._streamOut ? readStream(this._streamOut) : "", this._streamErr ? readStream(this._streamErr) : ""]);
+		await this._processClosed;
+		const { stdin } = this._options;
+		if (stdin && typeof stdin !== "string") await stdin;
+		proc.removeAllListeners();
+		if (this._thrownError) throw this._thrownError;
+		const result = {
+			stderr,
+			stdout,
+			exitCode: this.exitCode
+		};
+		if (this._options.throwOnError && (this.exitCode !== 0 && this.exitCode !== void 0 || this.signalCode !== null)) throw new NonZeroExitError(this, result, this._command, this._args);
+		return result;
+	}
+	then(onfulfilled, onrejected) {
+		return this._waitForOutput().then(onfulfilled, onrejected);
+	}
+	_streamOut;
+	_streamErr;
+	spawn() {
+		const options = this._options;
+		const nodeOptions = {
+			...defaultNodeOptions,
+			...options.nodeOptions
+		};
+		const cwd$1 = nodeOptions?.cwd ?? cwd();
+		const signals = [];
+		this._resetState();
+		if (options.timeout !== void 0) signals.push(AbortSignal.timeout(options.timeout));
+		if (options.signal !== void 0) signals.push(options.signal);
+		if (options.persist === true) nodeOptions.detached = true;
+		if (signals.length > 0) nodeOptions.signal = combineSignals(signals);
+		nodeOptions.env = computeEnv(cwd$1, nodeOptions.env, options.nodePath);
+		const crossResult = normalizeSpawnCommand(this._command, this._args, nodeOptions);
+		const handle = spawn(crossResult.command, crossResult.args, crossResult.options);
+		if (handle.stderr) this._streamErr = handle.stderr;
+		if (handle.stdout) this._streamOut = handle.stdout;
+		this._process = handle;
+		handle.once("error", this._onError);
+		handle.once("close", this._onClose);
+		if (handle.stdin) {
+			const { stdin } = options;
+			if (typeof stdin === "string") handle.stdin.end(stdin);
+			else stdin?.process?.stdout?.pipe(handle.stdin);
+		}
+	}
+	_resetState() {
+		this._aborted = false;
+		this._processClosed = new Promise((resolve) => {
+			this._resolveClose = resolve;
+		});
+		this._thrownError = void 0;
+	}
+	_onError = (err) => {
+		if (err.name === "AbortError" && (!(err.cause instanceof Error) || err.cause.name !== "TimeoutError")) {
+			this._aborted = true;
+			return;
+		}
+		this._thrownError = err;
+	};
+	_onClose = () => {
+		if (this._resolveClose) this._resolveClose();
+	};
+};
+const x = (command, args, userOptions) => {
+	const proc = new ExecProcess(command, args, userOptions);
+	proc.spawn();
+	return proc;
+};
+const exec = x;
+//#endregion
 //#region ../../node_modules/.pnpm/@changesets+git@4.0.0/node_modules/@changesets/git/dist/index.mjs
 async function getDivergedCommit(cwd, ref) {
 	const cmd = await exec("git", [
@@ -32641,7 +32983,7 @@ async function bump() {
 	info$1("updating root package.json");
 	await updateRootPackageJson(version);
 	info$1("setting version");
-	await x("node", ["node_modules/@changesets/cli/bin.js", "version"], { throwOnError: true });
+	await x$1("node", ["node_modules/@changesets/cli/bin.js", "version"], { throwOnError: true });
 }
 async function updateRootPackageJson(version) {
 	await transformFile(resolve("package.json"), (packageJson) => formatJson({

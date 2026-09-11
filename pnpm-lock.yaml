@@ -865,8 +865,8 @@ importers:
         specifier: 10.1.0
         version: 10.1.0(@eslint/js@10.0.1(eslint@10.10.0(jiti@2.7.0)))
       '@sap/cds-dk':
-        specifier: 10.0.7
-        version: 10.0.7
+        specifier: 10.1.0
+        version: 10.1.0
       axios:
         specifier: 1.20.0
         version: 1.20.0
@@ -2358,8 +2358,8 @@ packages:
     engines: {node: '>=22'}
     hasBin: true
 
-  '@sap/cds-dk@10.0.7':
-    resolution: {integrity: sha512-M1INFmdNzr7dOoYzJ1MVhTyqYSg+vi8oH96N96CHo/cIM+wxMBJ9G/0OPppNs+pPrBPqkF91Xhy/FSGzwr7mfA==}
+  '@sap/cds-dk@10.1.0':
+    resolution: {integrity: sha512-HNO0sRtIjXh9geAplplNtzV41kIUqV3nO3F6vd7JPhBfnqlYh8IkVUTZdu//E7AakTX3TNtFmgS9NTM1jni95Q==}
     hasBin: true
     bundledDependencies:
       - '@cap-js/asyncapi'
@@ -7193,7 +7193,7 @@ snapshots:
 
   '@sap/cds-compiler@7.0.3': {}
 
-  '@sap/cds-dk@10.0.7': {}
+  '@sap/cds-dk@10.1.0': {}
 
   '@sap/cds-fiori@2.3.0(@sap/cds@10.1.0(@eslint/js@10.0.1(eslint@10.10.0(jiti@2.7.0))))':
     dependencies:

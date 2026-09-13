@@ -25,6 +25,6 @@
     "eslint": "10.10.0",
     "memfs": "4.71.0",
     "prettier": "3.9.6",
-    "rolldown": "1.2.7"
+    "rolldown": "1.2.8"
   }
 }

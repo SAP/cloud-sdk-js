@@ -28,7 +28,7 @@
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",
     "@typescript/native": "npm:typescript@7.0.2",
     "eslint": "10.10.0",
-    "memfs": "4.71.0",
+    "memfs": "4.75.0",
     "prettier": "3.9.6",
     "rolldown": "1.2.8",
     "typescript": "npm:@typescript/typescript6@6.0.2"

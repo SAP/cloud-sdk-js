@@ -21,7 +21,7 @@ If you are not in the owner list, you will not be able to proceed.
 Releases are triggered by bumping the version using `pnpm version`.
 We have a github [workflow](https://github.com/SAP/cloud-sdk-js/actions/workflows/bump.yml?query=workflow%3Abump) to do this.
 
-Depending on the version you want to release, you have to choose:
+Depending on the version you want to release, choose:
 
 - `main`, as default value, for a current version release
 - e.g. `1.0-main`, for version 1 release

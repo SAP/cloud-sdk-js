@@ -13,7 +13,7 @@ All SAP Cloud SDK modules will be published with the same version regardless whe
 - publish draft release
 - merge API docs PR
 
-## How to bump a version
+## How to Bump a Version
 
 The release process can only be triggered by owners of the repository.
 If you are not in the owner list, you will not be able to proceed.
@@ -31,7 +31,7 @@ To trigger it, press "Run workflow".
 This will create a version tag (e. g. `v1.18.0`), which in turn creates a Github release draft.
 The name of the release will be the name of the tag.
 
-## How to trigger a release
+## How to Trigger a Release
 
 The information from the changesets is automatically copied as description for the draft.
 If you are not happy with this, adjust the release notes on this tag, but keep in mind to also update the RELEASE_NOTES.md.
@@ -40,12 +40,12 @@ If you are not happy with this, adjust the release notes on this tag, but keep i
 Once all checks have passed, you can publish the release by pressing the green "Publish" button.
 This will trigger the release pipeline, that publishes all modules to npm.
 
-## How to update api doc
+## How to update API docs
 
 An API docs PR will be automatically created in https://github.com/SAP/cloud-sdk.
 Make sure to merge it. 
 
-### What to do when the build fails
+### What to do When the Build Fails
 
 You should only trigger a release, when the last build on the main branch succeeded.
 If the pipeline still fails for some reason, remove the tag on Github (and locally if you pulled it) and revert the bump commit, before fixing the issue.

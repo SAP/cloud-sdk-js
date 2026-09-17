@@ -40,7 +40,7 @@ If you are not happy with this, adjust the release notes on this tag, but keep i
 Once all checks have passed, you can publish the release by pressing the green "Publish" button.
 This will trigger the release pipeline, that publishes all modules to npm.
 
-## How to update API docs
+## How to Update API Docs
 
 An API docs PR will be automatically created in https://github.com/SAP/cloud-sdk.
 Make sure to merge it. 

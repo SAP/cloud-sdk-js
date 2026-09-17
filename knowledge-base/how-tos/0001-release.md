@@ -8,12 +8,17 @@ All SAP Cloud SDK modules will be published with the same version regardless whe
 - Make sure there is no unchecked [dependabot findings](https://github.com/SAP/cloud-sdk-js/security/dependabot)
 - Ensure that the changelog is up-to-date and correct.
 
+## TLDR;
+- run `bump.yml` workflow
+- publish draft release
+- merge API docs PR
+
 ## How to bump a version
 
 The release process can only be triggered by owners of the repository.
 If you are not in the owner list, you will not be able to proceed.
 
-Releases are triggered by bumping the version using `yarn run version` (NOT `yarn version`!).
+Releases are triggered by bumping the version using `pnpm version`.
 We have a github [workflow](https://github.com/SAP/cloud-sdk-js/actions/workflows/bump.yml?query=workflow%3Abump) to do this.
 
 Depending on the version you want to release, you have to choose:

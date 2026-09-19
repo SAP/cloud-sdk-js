@@ -74,7 +74,7 @@
     "@sap-cloud-sdk/util": "workspace:^",
     "@types/jest": "30.0.0",
     "@types/jsonwebtoken": "9.0.10",
-    "@types/node": "22.20.2",
+    "@types/node": "22.20.3",
     "@types/sap__xsenv": "3.3.2",
     "@types/semver": "7.8.0",
     "@types/voca": "1.4.6",

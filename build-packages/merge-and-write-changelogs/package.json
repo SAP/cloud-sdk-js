@@ -21,6 +21,6 @@
     "@typescript/native": "npm:typescript@7.0.2",
     "eslint": "10.11.0",
     "rolldown": "1.2.8",
-    "prettier": "3.9.6"
+    "prettier": "3.9.8"
   }
 }

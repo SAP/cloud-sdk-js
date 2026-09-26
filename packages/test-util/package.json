@@ -52,6 +52,6 @@
     "@jest/globals": "30.5.2",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "memfs": "4.71.0",
-    "prettier": "3.9.6"
+    "prettier": "3.9.8"
   }
 }

@@ -62,6 +62,6 @@
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "jsonwebtoken": "9.0.3",
     "nock": "14.0.17",
-    "prettier": "3.9.6"
+    "prettier": "3.9.8"
   }
 }

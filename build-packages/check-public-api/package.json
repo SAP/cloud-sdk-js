@@ -30,7 +30,7 @@
     "eslint": "10.11.0",
     "memfs": "4.71.0",
     "prettier": "3.9.6",
-    "rolldown": "1.2.8",
+    "rolldown": "1.2.9",
     "typescript": "npm:@typescript/typescript6@6.0.2"
   }
 }

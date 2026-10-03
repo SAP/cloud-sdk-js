@@ -33,7 +33,7 @@
     "@jest/globals": "30.5.2",
     "bignumber.js": "11.1.5",
     "jsonwebtoken": "9.0.3",
-    "memfs": "4.71.0",
+    "memfs": "4.79.0",
     "moment": "2.31.0",
     "nock": "14.0.17",
     "prettier": "3.9.6",

@@ -5,7 +5,7 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "10.34.5",
+      "version": "10.34.6",
       "onFail": "warn"
     }
   },

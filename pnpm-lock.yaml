@@ -358,8 +358,8 @@ importers:
         specifier: 4.71.0
         version: 4.71.0
       nock:
-        specifier: 14.0.17
-        version: 14.0.17
+        specifier: 15.0.1
+        version: 15.0.1
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -520,8 +520,8 @@ importers:
         specifier: 9.0.3
         version: 9.0.3
       nock:
-        specifier: 14.0.17
-        version: 14.0.17
+        specifier: 15.0.1
+        version: 15.0.1
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -594,8 +594,8 @@ importers:
         specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       nock:
-        specifier: 14.0.17
-        version: 14.0.17
+        specifier: 15.0.1
+        version: 15.0.1
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -631,8 +631,8 @@ importers:
         specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       nock:
-        specifier: 14.0.17
-        version: 14.0.17
+        specifier: 15.0.1
+        version: 15.0.1
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -662,8 +662,8 @@ importers:
         specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       nock:
-        specifier: 14.0.17
-        version: 14.0.17
+        specifier: 15.0.1
+        version: 15.0.1
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -739,8 +739,8 @@ importers:
         specifier: npm:typescript@7.0.2
         version: typescript@7.0.2
       nock:
-        specifier: 14.0.17
-        version: 14.0.17
+        specifier: 15.0.1
+        version: 15.0.1
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -817,8 +817,8 @@ importers:
         specifier: 4.71.0
         version: 4.71.0
       nock:
-        specifier: 14.0.17
-        version: 14.0.17
+        specifier: 15.0.1
+        version: 15.0.1
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -959,8 +959,8 @@ importers:
         specifier: 2.31.0
         version: 2.31.0
       nock:
-        specifier: 14.0.17
-        version: 14.0.17
+        specifier: 15.0.1
+        version: 15.0.1
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -1869,6 +1869,10 @@ packages:
     resolution: {integrity: sha512-VVPPgHyQ6ShqnrmDWuxjmUIsO9gWyOZFmuOfLd9LfBGQJwZfy0gvv9pbHSJuoFNIYC7ZDX9aoFwowjcdSC4E8w==}
     engines: {node: '>=18'}
 
+  '@mswjs/interceptors@0.44.0':
+    resolution: {integrity: sha512-IYHevRStF4ijM20GI9c9Ndhw483NSAjCydQhUr4/zIB0BNLsTVw3vFAxTo6TlvX4QnV60wEHttUa9539TTAq+A==}
+    engines: {node: '>=22'}
+
   '@napi-rs/wasm-runtime@1.2.3':
     resolution: {integrity: sha512-UMduMbqO5s5zF2NkNacMT/yK5Y5QiKvWr2+50bzIIxFDwVJ2h49b+oyjaCGPhJxd2/gC2x39EHv/gHVuu36x2Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=23.5.0}
@@ -1947,6 +1951,9 @@ packages:
 
   '@open-draft/until@2.1.0':
     resolution: {integrity: sha512-U69T3ItWHvLwGg5eJ0n3I62nWuE6ilHlmz7zM0npLBRvPRd7e6NYmg54vvRtP5mZG7kZqZCFVdsTWo7BPtBujg==}
+
+  '@open-draft/until@3.0.1':
+    resolution: {integrity: sha512-s7/9ELP4aP9YZtW7RJaa0Xf3RISaRH9+EFN18FtykJYRHGNrl8f9ymvoNXzjhrjmftFvkQudtuDU9RYhk0xs3A==}
 
   '@oxc-parser/binding-android-arm-eabi@0.150.0':
     resolution: {integrity: sha512-oQef2Zu4Prz1KLKznz3HqZzU9uVoA5PMoDZuuLmqms7hKmKSAPzlaMnLllJq3t+rgKmfJJ2siPrpZfFrW06btw==}
@@ -2650,6 +2657,9 @@ packages:
 
   '@types/babel__traverse@7.28.0':
     resolution: {integrity: sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==}
+
+  '@types/debug@4.1.13':
+    resolution: {integrity: sha512-KSVgmQmzMwPlmtljOomayoR89W4FynCAi3E8PPs7vmDVPe84hT+vGPKkJfThkmXs0x0jAaa9U8uW8bbfyS2fWw==}
 
   '@types/eslint@7.29.0':
     resolution: {integrity: sha512-VNcvioYDH8/FxaeTKkM4/TiTwt6pBV9E3OfGmvaw8tPl0rrHCJ4Ll15HRT+pMiFAf/MLQvAzC+6RzUMEL9Ceng==}
@@ -4940,6 +4950,10 @@ packages:
     resolution: {integrity: sha512-EjRr1weMa4ALQX35AgZTEnP+weJJjlW1KGDiNM2IQC2069YDHas4f4B4UUYR+TTLyKWxJvOz2wObDKQs/LNreA==}
     engines: {node: '>=18.20.0 <20 || >=20.12.1'}
 
+  nock@15.0.1:
+    resolution: {integrity: sha512-Mjx5Xl4t9vP13eUZPWqwwpjjXNjvhUTo1qTdryVM3+7t6Z2w6WHZ9GVZk/zQ8Ym1vbmloWaglye3cloyHAJ8FA==}
+    engines: {node: '>=20.12.1'}
+
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
 
@@ -5375,6 +5389,9 @@ packages:
   retry@0.13.1:
     resolution: {integrity: sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==}
     engines: {node: '>= 4'}
+
+  rettime@0.11.12:
+    resolution: {integrity: sha512-5ExtR1ppiDBQkVoPw5NAqdbfH4Iq2VOmQKHMtUoaFxA9bo2krzFYBtyq6K40xxbYp+2w/YOr6D+1ToF6tTN53A==}
 
   reusify@1.1.0:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
@@ -7043,6 +7060,17 @@ snapshots:
       outvariant: 1.4.3
       strict-event-emitter: 0.5.1
 
+  '@mswjs/interceptors@0.44.0':
+    dependencies:
+      '@open-draft/until': 3.0.1
+      '@types/debug': 4.1.13
+      debug: 4.4.3
+      is-node-process: 1.2.0
+      outvariant: 1.4.3
+      rettime: 0.11.12
+    transitivePeerDependencies:
+      - supports-color
+
   '@napi-rs/wasm-runtime@1.2.3(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
       '@emnapi/core': 1.10.0
@@ -7137,6 +7165,8 @@ snapshots:
       outvariant: 1.4.3
 
   '@open-draft/until@2.1.0': {}
+
+  '@open-draft/until@3.0.1': {}
 
   '@oxc-parser/binding-android-arm-eabi@0.150.0':
     optional: true
@@ -7554,6 +7584,10 @@ snapshots:
   '@types/babel__traverse@7.28.0':
     dependencies:
       '@babel/types': 7.29.8
+
+  '@types/debug@4.1.13':
+    dependencies:
+      '@types/ms': 2.1.0
 
   '@types/eslint@7.29.0':
     dependencies:
@@ -10103,6 +10137,12 @@ snapshots:
       json-stringify-safe: 5.0.1
       propagate: 2.0.1
 
+  nock@15.0.1:
+    dependencies:
+      '@mswjs/interceptors': 0.44.0
+    transitivePeerDependencies:
+      - supports-color
+
   node-addon-api@7.1.1: {}
 
   node-cache@5.1.2:
@@ -10633,6 +10673,8 @@ snapshots:
       signal-exit: 3.0.7
 
   retry@0.13.1: {}
+
+  rettime@0.11.12: {}
 
   reusify@1.1.0: {}
 

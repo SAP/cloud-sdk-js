@@ -64,7 +64,7 @@
     "@sap-cloud-sdk/resilience": "workspace:^",
     "@sap-cloud-sdk/test-services-odata-v2": "workspace:^",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
-    "nock": "14.0.17",
+    "nock": "15.0.1",
     "prettier": "3.9.6"
   }
 }

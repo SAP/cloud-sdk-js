@@ -63,7 +63,7 @@
     "@typescript/native": "npm:typescript@7.0.2",
     "@sap-cloud-sdk/test-services-odata-v4": "workspace:^",
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
-    "nock": "14.0.17",
+    "nock": "15.0.1",
     "prettier": "3.9.6"
   }
 }

@@ -74,7 +74,7 @@
     "@sap-cloud-sdk/test-util-internal": "workspace:^",
     "@types/async-retry": "1.4.9",
     "memfs": "4.71.0",
-    "nock": "14.0.17",
+    "nock": "15.0.1",
     "prettier": "3.9.6"
   }
 }

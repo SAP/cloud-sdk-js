@@ -17,13 +17,21 @@ $ npm install @sap-cloud-sdk/generator
 
 ## Usage (CLI)
 
-The generator is primarily meant to be used on the command line:
+The generator is primarily meant to be used on the command line.
+
+After installing `@sap-cloud-sdk/generator`, run the binary via your package manager:
 
 ```sh
-generate-odata-client --input path/to/your/service-specification(s) --outputDir path/where/the/modules/are/stored
+npx @sap-cloud-sdk/generator generate-odata-client --input path/to/your/service-specification(s) --outputDir path/where/the/modules/are/stored
 ```
 
-Run `generate-odata-client --help` for further options.
+Or, if installed locally in a project, use `pnpm exec` / `yarn exec` / `npx` without fetching from the registry:
+
+```sh
+pnpm exec generate-odata-client --input path/to/your/service-specification(s) --outputDir path/where/the/modules/are/stored
+```
+
+Run `npx @sap-cloud-sdk/generator generate-odata-client --help` for further options.
 
 ## Usage (programatically)
 

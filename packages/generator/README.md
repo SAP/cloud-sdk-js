@@ -12,7 +12,7 @@ This packages contains the generator to create your own service module using a s
 ## Installation
 
 ```sh
-$ npm install @sap-cloud-sdk/generator
+npm install @sap-cloud-sdk/generator
 ```
 
 ## Usage (CLI)

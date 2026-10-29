@@ -19,7 +19,7 @@ export function serializeOperation(
 ): string {
   const requestBuilderParams = [
     `'${operation.method}'`,
-    `"${operation.pathPattern}"`
+    JSON.stringify(operation.pathPattern)
   ];
 
   const bodyAndQueryParams = serializeParamsForRequestBuilder(operation);
@@ -208,5 +208,5 @@ function getOperationDescriptionText(operation: OpenApiOperation): string {
     return operation.description;
   }
 
-  return `Create a request builder for execution of ${operation.method} requests to the '${operation.pathPattern}' endpoint.`;
+  return `Create a request builder for execution of ${operation.method} requests to the ${JSON.stringify(operation.pathPattern)} endpoint.`;
 }

@@ -29,7 +29,7 @@ export const DefaultApi = {
       DefaultApi._defaultBasePath
     ),
   /**
-   * Create a request builder for execution of patch requests to the '/entities/{pathParam}' endpoint.
+   * Create a request builder for execution of patch requests to the "/entities/{pathParam}" endpoint.
    * @param pathParam - Path parameter.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.

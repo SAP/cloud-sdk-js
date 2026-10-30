@@ -12,7 +12,7 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
 export const ExtensionApi = {
   _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test-cases/extension' endpoint.
+   * Create a request builder for execution of get requests to the "/test-cases/extension" endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   niceGetFunction: () =>
@@ -23,7 +23,7 @@ export const ExtensionApi = {
       ExtensionApi._defaultBasePath
     ),
   /**
-   * Create a request builder for execution of post requests to the '/test-cases/extension' endpoint.
+   * Create a request builder for execution of post requests to the "/test-cases/extension" endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   nicePostFunction: () =>

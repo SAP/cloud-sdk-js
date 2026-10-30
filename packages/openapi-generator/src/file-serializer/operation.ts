@@ -19,7 +19,9 @@ export function serializeOperation(
 ): string {
   const requestBuilderParams = [
     `'${operation.method}'`,
-    `"${operation.pathPattern}"`
+    // pathPattern is the only spec-derived value that reaches an executable position in generated code;
+    // method is from a fixed enum, and operationId/parameter names are camelCased by the parser.
+    JSON.stringify(operation.pathPattern)
   ];
 
   const bodyAndQueryParams = serializeParamsForRequestBuilder(operation);
@@ -208,5 +210,5 @@ function getOperationDescriptionText(operation: OpenApiOperation): string {
     return operation.description;
   }
 
-  return `Create a request builder for execution of ${operation.method} requests to the '${operation.pathPattern}' endpoint.`;
+  return `Create a request builder for execution of ${operation.method} requests to the ${JSON.stringify(operation.pathPattern)} endpoint.`;
 }

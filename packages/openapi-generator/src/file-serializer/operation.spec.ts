@@ -550,6 +550,23 @@ fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
 `);
   });
 
+  it('escapes a malicious pathPattern to prevent code injection', () => {
+    const operation: OpenApiOperation = {
+      operationId: 'getFn',
+      method: 'get',
+      tags: [],
+      pathParameters: [],
+      queryParameters: [],
+      headerParameters: [],
+      responses: {},
+      response: { type: 'string' },
+      pathPattern: '/users"+require("child_process").execSync("id")+"'
+    };
+    const result = serializeOperation(operation, apiName);
+    expect(result).toContain(JSON.stringify(operation.pathPattern));
+    expect(result).not.toContain('require("child_process")');
+  });
+
   function getOperation(): OpenApiOperation {
     return {
       response: { type: 'string' },

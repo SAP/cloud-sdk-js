@@ -19,6 +19,8 @@ export function serializeOperation(
 ): string {
   const requestBuilderParams = [
     `'${operation.method}'`,
+    // pathPattern is the only spec-derived value that reaches an executable position in generated code;
+    // method is from a fixed enum, and operationId/parameter names are camelCased by the parser.
     JSON.stringify(operation.pathPattern)
   ];
 

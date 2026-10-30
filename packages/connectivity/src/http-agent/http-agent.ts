@@ -1,7 +1,7 @@
+import { getFips } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import http from 'node:http';
 import https from 'node:https';
-import * as jks from 'jks-js';
 import { createLogger, last } from '@sap-cloud-sdk/util';
 /* Careful the proxy imports cause circular dependencies if imported from scp directly */
 /* eslint-disable import-x/no-internal-modules */
@@ -40,7 +40,7 @@ export async function getAgentConfig(
 ): Promise<HttpAgentConfig | HttpsAgentConfig> {
   const certificateOptions = {
     ...getTrustStoreOptions(destination),
-    ...getKeyStoreOptions(destination),
+    ...(await getKeyStoreOptions(destination)),
     ...(await getMtlsOptions(destination))
   };
   return createAgent(destination, certificateOptions);
@@ -105,7 +105,7 @@ function getTrustStoreOptions(destination: HttpDestination): {
  * @param destination - Destination object.
  * @returns Options, which can be used later by tls.createSecureContext() e.g. pfx and passphrase or an empty object, if the protocol is not 'https:' or no client information are in the definition.
  */
-function getKeyStoreOptions(destination: Destination):
+async function getKeyStoreOptions(destination: Destination): Promise<
   | {
       pfx?: Buffer;
       passphrase?: string;
@@ -114,7 +114,8 @@ function getKeyStoreOptions(destination: Destination):
       cert?: Buffer;
       key?: Buffer;
       passphrase?: string;
-    } {
+    }
+> {
   if (
     // Only add certificates, when using ClientCertificateAuthentication (https://github.com/SAP/cloud-sdk-js/issues/3544)
     destination.authentication === 'ClientCertificateAuthentication' &&
@@ -138,31 +139,39 @@ function getKeyStoreOptions(destination: Destination):
       getFormat(certificate) === 'jks' ||
       getFormat(certificate) === 'keystore'
     ) {
-      const pemKeystore = jks.toPem(
-        certBuffer,
-        destination.keyStorePassword || ''
-      );
-      const aliases = Object.keys(pemKeystore);
-      if (aliases.length === 0) {
+      if (getFips()) {
+        throw new Error(
+          'JKS key decryption is not FIPS 140-2 compliant: the format uses a non-approved cipher. Use PKCS#12 instead.'
+        );
+      }
+
+      const { certificateToPem, decryptJksPrivateKey, parseJks } =
+        await import('./jks-parser.js');
+      const password = destination.keyStorePassword || '';
+      const keystore = parseJks(certBuffer, password);
+      if (keystore.entryCount === 0) {
         throw Error('No entries found in JKS keystore');
       }
-      const alias = aliases[0];
 
-      if (aliases.length > 1) {
+      const [entry] = keystore.keyEntries;
+      if (!entry || entry.certChain.length === 0) {
+        throw Error('Invalid JKS entry: missing cert or key');
+      }
+
+      if (keystore.entryCount > 1) {
         logger.debug(
-          `JKS keystore contains ${aliases.length} aliases. ` +
+          `JKS keystore contains ${keystore.entryCount} aliases. ` +
             'Using the first one. ' +
             'If this is not the correct certificate, please use a JKS file with only one entry.'
         );
       }
 
-      const entry = pemKeystore[alias];
-      if (!entry.cert || !entry.key) {
-        throw Error('Invalid JKS entry: missing cert or key');
-      }
       return {
-        cert: Buffer.from(entry.cert, 'utf8'),
-        key: Buffer.from(entry.key, 'utf8')
+        cert: Buffer.from(
+          entry.certChain.map(certificateToPem).join(''),
+          'utf8'
+        ),
+        key: decryptJksPrivateKey(entry.encryptedKey, password)
       };
     }
     // if the format is pem, the key and certificate needs to be passed separately

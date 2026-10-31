@@ -51,8 +51,8 @@
     "compile": "tsc -b",
     "prepublishOnly": "pnpm run compile && pnpm run readme",
     "test": "pnpm run test:unit",
-    "test:unit": "jest",
-    "coverage": "jest --coverage",
+    "test:unit": "NODE_OPTIONS=\"--experimental-vm-modules ${NODE_OPTIONS:-}\" jest",
+    "coverage": "NODE_OPTIONS=\"--experimental-vm-modules ${NODE_OPTIONS:-}\" jest --coverage",
     "lint": "eslint --ext .ts . && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -c",
     "lint:fix": "TIMING=1 eslint --ext .ts . --fix --quiet && prettier . --config ../../.prettierrc --ignore-path ../../.prettierignore -w --log-level error",
     "readme": "node ../../scripts/replace-common-readme.ts"
@@ -64,7 +64,6 @@
     "@sap/xssec": "^4.13.0",
     "async-retry": "^1.3.3",
     "axios": "^1.15.0",
-    "jks-js": "^1.1.6",
     "jsonwebtoken": "^9.0.3",
     "safe-stable-stringify": "^2.5.0"
   },

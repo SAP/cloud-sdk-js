@@ -2,10 +2,13 @@
 const jsdoc = require('eslint-plugin-jsdoc');
 const unusedImports = require('eslint-plugin-unused-imports');
 const importEslint = require('eslint-plugin-import-x');
-const { createTypeScriptImportResolver } = require('eslint-import-resolver-typescript');
+const {
+  createTypeScriptImportResolver
+} = require('eslint-import-resolver-typescript');
 const tsEslint = require('typescript-eslint');
 const eslint = require('@eslint/js');
-const stylistic = require('@stylistic/eslint-plugin');
+const { fixupPluginRules } = require('@eslint/compat');
+const stylistic = fixupPluginRules(require('@stylistic/eslint-plugin'));
 
 const localRules = {
   'no-uppercase-internal-tag': {
@@ -280,7 +283,7 @@ const flatConfig = [
     }
   },
   {
-    files: ['**/test/**/*', '**/*.test.ts', '**/*.spec.ts'],
+    files: ['**/test/**/*.ts', '**/*.test.ts', '**/*.spec.ts'],
     rules: {
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       'import-x/no-internal-modules': 'off',

@@ -138,6 +138,14 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
       return this.entityToApi[parseEntityNameFromMetadataUri(entityUri)];
     }
 
+    const context = responseBody?.['@odata.context'];
+    if (typeof context === 'string') {
+      const entityName = parseEntityNameFromContext(context);
+      if (entityName && this.entityToApi[entityName]) {
+        return this.entityToApi[entityName];
+      }
+    }
+
     logger.warn('Could not parse constructor from response body.');
     return undefined;
   }
@@ -245,4 +253,18 @@ export function parseEntityNameFromMetadataUri(uri: string): string {
     );
   }
   return entityName;
+}
+
+/**
+ * Parse the entity set name from an OData v4 context URL, e.g. `$metadata#People`, `$metadata#People/$entity` or `$metadata#People(Name,Age)`.
+ * OData v4 responses do not contain `__metadata`, so the `@odata.context` annotation is used to identify the entity instead.
+ * @param context - The value of the `@odata.context` annotation.
+ * @returns The entity set name or `undefined` if the context URL has no fragment.
+ * @internal
+ */
+export function parseEntityNameFromContext(
+  context: string
+): string | undefined {
+  const fragment = context.split('#')[1];
+  return fragment?.split(/[(/]/)[0] || undefined;
 }

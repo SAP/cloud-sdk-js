@@ -14,6 +14,11 @@ export const kibana = combine(
   json()
 );
 
+/**
+ * Transforms given info into Kibana-compatible format.
+ * @param info Info that is to be transformed.
+ * @returns Info in Kibana-compatible format. 
+ */
 function kibanaTransformer(info: TransformableInfo): TransformableInfo {
   return {
     ...info,

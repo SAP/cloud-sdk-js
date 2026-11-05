@@ -114,10 +114,63 @@ const docsApi: OpenApiApi = {
     }
   ]
 };
+const mediaVariantApi: OpenApiApi = {
+  name: 'TestApi',
+  operations: [
+    {
+      operationId: 'predictWithJson',
+      method: 'post',
+      tags: [],
+      pathParameters: [],
+      queryParameters: [],
+      headerParameters: [],
+      requestBody: {
+        required: true,
+        schema: { type: 'object' },
+        mediaType: 'application/json'
+      },
+      response: { type: 'any' },
+      pathPattern: '/predict'
+    },
+    {
+      operationId: 'predictWithMultipartFormData',
+      method: 'post',
+      tags: [],
+      pathParameters: [],
+      queryParameters: [],
+      headerParameters: [],
+      requestBody: {
+        required: true,
+        schema: { type: 'object' },
+        mediaType: 'multipart/form-data',
+        encoding: {
+          file: {
+            contentType: 'application/octet-stream',
+            isImplicit: true,
+            parsedContentTypes: [
+              { type: 'application/octet-stream', parameters: {} }
+            ]
+          }
+        }
+      },
+      response: { type: 'any' },
+      pathPattern: '/predict'
+    }
+  ]
+};
 
 describe('api-file', () => {
   it('serializes api file with one operation and no references', () => {
     expect(apiFile(singleOperationApi, 'MyServiceName')).toMatchSnapshot();
+  });
+  it('serializes each request body media type variant', () => {
+    const serialized = apiFile(mediaVariantApi, 'MyServiceName');
+
+    expect(serialized).toContain('predictWithJson:');
+    expect(serialized).toContain('predictWithMultipartFormData:');
+    expect(serialized).toContain("'content-type': 'application/json'");
+    expect(serialized).toContain("'content-type': 'multipart/form-data'");
+    expect(serialized).toContain('_encoding:');
   });
 
   it('serializes api file with multiple operations and references', async () => {

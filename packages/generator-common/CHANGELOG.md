@@ -1,5 +1,15 @@
 # @sap-cloud-sdk/generator-common
 
+## 4.10.0
+
+### Minor Changes
+
+- caf9ad9: [improvement] Rename `generateESM` to `generateEsm`.
+
+### Patch Changes
+
+- @sap-cloud-sdk/util@4.10.0
+
 ## 4.9.1
 
 ### Patch Changes

@@ -53,7 +53,7 @@ describe('CSRF middleware', () => {
   });
 
   it('fetches and adds the csrf token without cookie', async () => {
-    nock(host).head('/some/path/').reply(200, {}, csrfResponseHeaders);
+    nock(host).head('/some/path').reply(200, {}, csrfResponseHeaders);
     nock(host).post('/some/path').reply(200, {});
     const spy = jest.spyOn(axios, 'request');
     await executeHttpRequest(
@@ -72,7 +72,7 @@ describe('CSRF middleware', () => {
 
   it('fetches and adds the csrf token with cookie', async () => {
     nock(host)
-      .head('/some/path/')
+      .head('/some/path')
       .reply(200, {}, { ...csrfResponseHeaders, 'set-cookie': 'cookieValue' });
     nock(host).post('/some/path').reply(200, {});
     const spy = jest.spyOn(axios, 'request');
@@ -92,7 +92,7 @@ describe('CSRF middleware', () => {
 
   it('fetches and adds the csrf token with cookie and merge existing cookies', async () => {
     nock(host)
-      .head('/some/path/')
+      .head('/some/path')
       .reply(200, {}, { ...csrfResponseHeaders, 'set-cookie': 'cookieValue' });
     nock(host).post('/some/path').reply(200, {});
     const spy = jest.spyOn(axios, 'request');
@@ -117,8 +117,8 @@ describe('CSRF middleware', () => {
     );
   });
 
-  it('fetches headers from "/some/path/" first, without sending data', async () => {
-    nock(host).head('/some/path/').reply(200, {}, csrfResponseHeaders);
+  it('fetches headers from "/some/path" first, without sending data', async () => {
+    nock(host).head('/some/path').reply(200, {}, csrfResponseHeaders);
     nock(host).post('/some/path').reply(200, {});
     const spy = jest.spyOn(axios, 'request');
     await executeHttpRequest(
@@ -136,9 +136,9 @@ describe('CSRF middleware', () => {
     );
   });
 
-  it('fetches header from "/some/path" if "/some/path/" fails', async () => {
-    nock(host).head('/some/path/').reply(500, {}, {});
-    nock(host).head('/some/path').reply(200, {}, csrfResponseHeaders);
+  it('fetches header from "/some/path/" if "/some/path" fails', async () => {
+    nock(host).head('/some/path').reply(500, {}, {});
+    nock(host).head('/some/path/').reply(200, {}, csrfResponseHeaders);
     nock(host).post('/some/path').reply(200, {});
     const spy = jest.spyOn(axios, 'request');
     await executeHttpRequest(
@@ -150,14 +150,14 @@ describe('CSRF middleware', () => {
       expect.objectContaining({
         method: 'head',
         headers: csrfFetchHeader,
-        url: 'some/path'
+        url: 'some/path/'
       })
     );
   });
 
-  it('fetches header from "/some/path" if "/some/path/" does not return a token', async () => {
-    nock(host).head('/some/path/').reply(200, {}, {});
-    nock(host).head('/some/path').reply(200, {}, csrfResponseHeaders);
+  it('fetches header from "/some/path/" if "/some/path" does not return a token', async () => {
+    nock(host).head('/some/path').reply(200, {}, {});
+    nock(host).head('/some/path/').reply(200, {}, csrfResponseHeaders);
     nock(host).post('/some/path').reply(200, {});
     const spy = jest.spyOn(axios, 'request');
     await executeHttpRequest(
@@ -169,7 +169,7 @@ describe('CSRF middleware', () => {
       expect.objectContaining({
         method: 'head',
         headers: csrfFetchHeader,
-        url: 'some/path'
+        url: 'some/path/'
       })
     );
   });
@@ -218,7 +218,7 @@ describe('CSRF middleware', () => {
   });
 
   it('fetches headers without parameters at resource URL', async () => {
-    nock(host).head('/some/path/').reply(200, {}, csrfResponseHeaders);
+    nock(host).head('/some/path').reply(200, {}, csrfResponseHeaders);
     nock(host).post('/some/path?paraKey=paraValue').reply(200, {});
     const spy = jest.spyOn(axios, 'request');
     await executeHttpRequest(
@@ -230,7 +230,7 @@ describe('CSRF middleware', () => {
       expect.objectContaining({
         method: 'head',
         headers: csrfFetchHeader,
-        url: 'some/path/'
+        url: 'some/path'
       })
     );
   });

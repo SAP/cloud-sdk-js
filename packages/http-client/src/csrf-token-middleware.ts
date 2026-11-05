@@ -208,13 +208,13 @@ async function makeCsrfRequests(
     return makeCsrfRequest(axiosConfig, options);
   }
 
-  // The S/4 does a redirect if the CSRF token is fetched in case the '/' is not in the URL.
+  // To request the CSRF token, the S4 will reject the URL has / as last character
   // TODO: remove once https://github.com/axios/axios/issues/3369 is really fixed. Issue is closed but problem stays.
-  // We try first with slash and then without
+  // We try first without slash and then with
   /* eslint-disable no-return-await */
   return (
-    (await makeCsrfRequest(appendSlash(axiosConfig), options)) ??
-    (await makeCsrfRequest(removeSlash(axiosConfig), options))
+    (await makeCsrfRequest(removeSlash(axiosConfig), options)) ??
+    (await makeCsrfRequest(appendSlash(axiosConfig), options))
   );
 }
 

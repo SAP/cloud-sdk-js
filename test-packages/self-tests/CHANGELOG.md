@@ -1,5 +1,9 @@
 # @sap-cloud-sdk/self-tests
 
+## 4.10.0
+
+No changes in this release.
+
 ## 4.9.1
 
 ## 4.9.0

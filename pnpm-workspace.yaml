@@ -46,6 +46,8 @@ minimumReleaseAgeExclude:
   - 'knip@6.29.0'
   # Renovate security update: moment@2.31.0
   - moment@2.31.0
+  # Renovate security update: multer@2.5.0
+  - multer@2.5.0
 shellEmulator: true
 trustPolicy: no-downgrade
 

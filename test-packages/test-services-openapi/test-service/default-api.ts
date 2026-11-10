@@ -12,7 +12,7 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
 export const DefaultApi = {
   _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test-cases/default-tag' endpoint.
+   * Create a request builder for execution of get requests to the "/test-cases/default-tag" endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   noTag: () =>
@@ -23,7 +23,7 @@ export const DefaultApi = {
       DefaultApi._defaultBasePath
     ),
   /**
-   * Create a request builder for execution of post requests to the '/test-cases/default-tag' endpoint.
+   * Create a request builder for execution of post requests to the "/test-cases/default-tag" endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   defaultTag: () =>

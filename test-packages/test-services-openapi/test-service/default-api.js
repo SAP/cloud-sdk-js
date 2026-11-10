@@ -14,12 +14,12 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
 exports.DefaultApi = {
     _defaultBasePath: undefined,
     /**
-     * Create a request builder for execution of get requests to the '/test-cases/default-tag' endpoint.
+     * Create a request builder for execution of get requests to the "/test-cases/default-tag" endpoint.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     noTag: () => new openapi_1.OpenApiRequestBuilder('get', '/test-cases/default-tag', {}, exports.DefaultApi._defaultBasePath),
     /**
-     * Create a request builder for execution of post requests to the '/test-cases/default-tag' endpoint.
+     * Create a request builder for execution of post requests to the "/test-cases/default-tag" endpoint.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     defaultTag: () => new openapi_1.OpenApiRequestBuilder('post', '/test-cases/default-tag', {}, exports.DefaultApi._defaultBasePath)

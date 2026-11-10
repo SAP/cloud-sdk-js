@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-util-build-internal",
-  "version": "4.9.1",
+  "version": "4.10.0",
   "description": "Shared test utilities for SAP Cloud SDK packages",
   "private": true,
   "type": "module",
@@ -22,7 +22,7 @@
   "devDependencies": {
     "@jest/globals": "30.5.2",
     "@typescript/native": "npm:typescript@7.0.2",
-    "eslint": "10.12.0",
+    "eslint": "10.13.0",
     "memfs": "4.71.0",
     "prettier": "3.9.6",
     "rolldown": "1.2.8"

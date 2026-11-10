@@ -54,7 +54,7 @@ describe('serializeOperation', () => {
     };
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
 "/**
- * Create a request builder for execution of get requests to the '/test/{id}/{subId}' endpoint.
+ * Create a request builder for execution of get requests to the "/test/{id}/{subId}" endpoint.
  * @param id - Path parameter.
  * @param subId - Path parameter.
  * @param queryParameters - Object containing the following keys: limit.
@@ -108,22 +108,22 @@ getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}, headerP
     };
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of delete requests to the '/test/{id}' endpoint.
-       * @param id - Path parameter.
-       * @param headerParameters - Object containing the following keys: resource-group.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      deleteFn: (id: string, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<Record<string, any>>(
-        'delete',
-        "/test/{id}",
-        {
-              pathParameters: { id },
-              headerParameters
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of delete requests to the "/test/{id}" endpoint.
+ * @param id - Path parameter.
+ * @param headerParameters - Object containing the following keys: resource-group.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+deleteFn: (id: string, headerParameters?: {'resource-group'?: string}) => new OpenApiRequestBuilder<Record<string, any>>(
+  'delete',
+  "/test/{id}",
+  {
+        pathParameters: { id },
+        headerParameters
+      },
+  TestApi._defaultBasePath
+)"
+`);
   });
 
   it('serializes operation with only path parameters', () => {
@@ -152,20 +152,20 @@ getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}, headerP
     };
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of delete requests to the '/test/{id}' endpoint.
-       * @param id - Path parameter.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
-        'delete',
-        "/test/{id}",
-        {
-              pathParameters: { id }
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of delete requests to the "/test/{id}" endpoint.
+ * @param id - Path parameter.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
+  'delete',
+  "/test/{id}",
+  {
+        pathParameters: { id }
+      },
+  TestApi._defaultBasePath
+)"
+`);
   });
 
   it('serializes operation with path parameters inside ()', () => {
@@ -237,7 +237,7 @@ getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}, headerP
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
 "/**
- * Create a request builder for execution of get requests to the '/test' endpoint.
+ * Create a request builder for execution of get requests to the "/test" endpoint.
  * @param queryParameters - Object containing the following keys: limit, page.
  * @param headerParameters - Object containing the following keys: resource-group.
  * @returns The request builder, use the \`execute()\` method to trigger the request.
@@ -303,7 +303,7 @@ getFn: (queryParameters: {'limit'?: number, 'page'?: number}, headerParameters: 
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
 "/**
- * Create a request builder for execution of get requests to the '/test' endpoint.
+ * Create a request builder for execution of get requests to the "/test" endpoint.
  * @param queryParameters - Object containing the following keys: limit, page.
  * @param headerParameters - Object containing the following keys: authentication, resource-group.
  * @returns The request builder, use the \`execute()\` method to trigger the request.
@@ -353,7 +353,7 @@ getFn: (queryParameters: {'limit'?: number, 'page'?: number}, headerParameters: 
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
 "/**
- * Create a request builder for execution of get requests to the '/test' endpoint.
+ * Create a request builder for execution of get requests to the "/test" endpoint.
  * @param queryParameters - Object containing the following keys: limit.
  * @param headerParameters - Object containing the following keys: resource-group.
  * @returns The request builder, use the \`execute()\` method to trigger the request.
@@ -411,7 +411,7 @@ getFn: (queryParameters: {'limit': number}, headerParameters?: {'resource-group'
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
 "/**
- * Create a request builder for execution of get requests to the '/test' endpoint.
+ * Create a request builder for execution of get requests to the "/test" endpoint.
  * @param queryParameters - Object containing the following keys: limit, page.
  * @param headerParameters - Object containing the following keys: resource-group.
  * @returns The request builder, use the \`execute()\` method to trigger the request.
@@ -450,20 +450,20 @@ getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {
     };
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of get requests to the '/test' endpoint.
-       * @param queryParameters - Object containing the following keys: limit.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      getFn: (queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
-        'get',
-        "/test",
-        {
-              queryParameters
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of get requests to the "/test" endpoint.
+ * @param queryParameters - Object containing the following keys: limit.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+getFn: (queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
+  'get',
+  "/test",
+  {
+        queryParameters
+      },
+  TestApi._defaultBasePath
+)"
+`);
   });
 
   it('serializes operation with inline request body', () => {
@@ -495,22 +495,22 @@ getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {
       pathPattern: '/test/{id}'
     };
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of post requests to the '/test/{id}' endpoint.
-       * @param id - Path parameter.
-       * @param body - Request body.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
-        'post',
-        "/test/{id}",
-        {
-              pathParameters: { id },
-              body
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of post requests to the "/test/{id}" endpoint.
+ * @param id - Path parameter.
+ * @param body - Request body.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
+  'post',
+  "/test/{id}",
+  {
+        pathParameters: { id },
+        body
+      },
+  TestApi._defaultBasePath
+)"
+`);
   });
 
   it('serializes operation with referenced request body', () => {
@@ -534,20 +534,37 @@ getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {
     };
 
     expect(serializeOperation(operation, apiName)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of post requests to the '/test' endpoint.
-       * @param body - Request body.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */
-      fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
-        'post',
-        "/test",
-        {
-              body
-            },
-        TestApi._defaultBasePath
-      )"
-    `);
+"/**
+ * Create a request builder for execution of post requests to the "/test" endpoint.
+ * @param body - Request body.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */
+fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
+  'post',
+  "/test",
+  {
+        body
+      },
+  TestApi._defaultBasePath
+)"
+`);
+  });
+
+  it('escapes a malicious pathPattern to prevent code injection', () => {
+    const operation: OpenApiOperation = {
+      operationId: 'getFn',
+      method: 'get',
+      tags: [],
+      pathParameters: [],
+      queryParameters: [],
+      headerParameters: [],
+      responses: {},
+      response: { type: 'string' },
+      pathPattern: '/users"+require("child_process").execSync("id")+"'
+    };
+    const result = serializeOperation(operation, apiName);
+    expect(result).toContain(JSON.stringify(operation.pathPattern));
+    expect(result).not.toContain('require("child_process")');
   });
 
   function getOperation(): OpenApiOperation {
@@ -563,11 +580,11 @@ getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {
   it('creates a description for operations if not present', () => {
     const operation = getOperation();
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of GET requests to the '/my/Api' endpoint.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */"
-    `);
+"/**
+ * Create a request builder for execution of GET requests to the "/my/Api" endpoint.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */"
+`);
   });
 
   it('uses the description for operations if present', () => {
@@ -585,13 +602,13 @@ getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {
       { name: 'path-parameter-2' }
     ] as OpenApiParameter[];
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of GET requests to the '/my/Api' endpoint.
-       * @param pathParameter1 - Path parameter.
-       * @param path-parameter-2 - Path parameter.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */"
-    `);
+"/**
+ * Create a request builder for execution of GET requests to the "/my/Api" endpoint.
+ * @param pathParameter1 - Path parameter.
+ * @param path-parameter-2 - Path parameter.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */"
+`);
   });
 
   it('uses path parameter description if present', () => {
@@ -617,25 +634,25 @@ getFn: (queryParameters: {'limit': number, 'page'?: number}, headerParameters: {
       { name: 'headerParameter1' }
     ] as OpenApiParameter[];
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of GET requests to the '/my/Api' endpoint.
-       * @param queryParameters - Object containing the following keys: queryParameter1, queryParameter2.
-       * @param headerParameters - Object containing the following keys: headerParameter1.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */"
-    `);
+"/**
+ * Create a request builder for execution of GET requests to the "/my/Api" endpoint.
+ * @param queryParameters - Object containing the following keys: queryParameter1, queryParameter2.
+ * @param headerParameters - Object containing the following keys: headerParameter1.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */"
+`);
   });
 
   it('creates documentation with body parameter', () => {
     const operation = getOperation();
     operation.requestBody = { schema: { type: 'string' }, required: true };
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
-      "/**
-       * Create a request builder for execution of GET requests to the '/my/Api' endpoint.
-       * @param body - Request body.
-       * @returns The request builder, use the \`execute()\` method to trigger the request.
-       */"
-    `);
+"/**
+ * Create a request builder for execution of GET requests to the "/my/Api" endpoint.
+ * @param body - Request body.
+ * @returns The request builder, use the \`execute()\` method to trigger the request.
+ */"
+`);
   });
 
   it('uses the body description if present', () => {

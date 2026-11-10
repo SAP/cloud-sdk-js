@@ -1,5 +1,14 @@
 # @sap-cloud-sdk/connectivity
 
+## 4.10.0
+
+### Patch Changes
+
+- 697b17d: [Fixed Issue] Fix subscriber destination lookup failing when the identity provider issues tokens with a schemeless `iss` claim, e.g. `tenant.accounts.ondemand.com` instead of `https://tenant.accounts.ondemand.com`. Such issuers are now prefixed with `https://` before being parsed, instead of causing a silent fallback to the provider account.
+- 697b17d: [Fixed Issue] Fix IAS tokens being classified as non-IAS tokens when the identity provider issues them with a schemeless `iss` claim, e.g. `tenant.accounts.ondemand.com` instead of `https://tenant.accounts.ondemand.com`.
+- @sap-cloud-sdk/resilience@4.10.0
+  - @sap-cloud-sdk/util@4.10.0
+
 ## 4.9.1
 
 ### Patch Changes

@@ -10,7 +10,7 @@ import type { QueryParameterType, RefType, ResponseType } from './schema/index.j
 export const TestApi = {
   _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test/{id}' endpoint.
+   * Create a request builder for execution of get requests to the "/test/{id}" endpoint.
    * @param id - Path parameter.
    * @param queryParameters - Object containing the following keys: queryParam.
    * @param headerParameters - Object containing the following keys: headerParam.
@@ -27,7 +27,7 @@ export const TestApi = {
     TestApi._defaultBasePath
   ),
   /**
-   * Create a request builder for execution of post requests to the '/test' endpoint.
+   * Create a request builder for execution of post requests to the "/test" endpoint.
    * @param body - Request body.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
@@ -51,7 +51,7 @@ exports[`api-file creates an api file with documentation 1`] = `
 export const TestApi = {
   _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test' endpoint.
+   * Create a request builder for execution of get requests to the "/test" endpoint.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
   getFn: () => new OpenApiRequestBuilder<any>(
@@ -80,7 +80,7 @@ import type { QueryParameterType, RefType, ResponseType } from './schema';
 export const TestApi = {
   _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test/{id}' endpoint.
+   * Create a request builder for execution of get requests to the "/test/{id}" endpoint.
    * @param id - Path parameter.
    * @param queryParameters - Object containing the following keys: queryParam.
    * @param headerParameters - Object containing the following keys: headerParam.
@@ -97,7 +97,7 @@ export const TestApi = {
     TestApi._defaultBasePath
   ),
   /**
-   * Create a request builder for execution of post requests to the '/test' endpoint.
+   * Create a request builder for execution of post requests to the "/test" endpoint.
    * @param body - Request body.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
@@ -122,7 +122,7 @@ import type { QueryParameterType, RefType, ResponseType } from './schema';
 export const TestApi = {
   _defaultBasePath: '/base/path/to/service',
   /**
-   * Create a request builder for execution of get requests to the '/test/{id}' endpoint.
+   * Create a request builder for execution of get requests to the "/test/{id}" endpoint.
    * @param id - Path parameter.
    * @param queryParameters - Object containing the following keys: queryParam.
    * @param headerParameters - Object containing the following keys: headerParam.
@@ -139,7 +139,7 @@ export const TestApi = {
     TestApi._defaultBasePath
   ),
   /**
-   * Create a request builder for execution of post requests to the '/test' endpoint.
+   * Create a request builder for execution of post requests to the "/test" endpoint.
    * @param body - Request body.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */
@@ -163,7 +163,7 @@ exports[`api-file serializes api file with one operation and no references 1`] =
 export const TestApi = {
   _defaultBasePath: undefined,
   /**
-   * Create a request builder for execution of get requests to the '/test/{id}' endpoint.
+   * Create a request builder for execution of get requests to the "/test/{id}" endpoint.
    * @param id - Path parameter.
    * @returns The request builder, use the \`execute()\` method to trigger the request.
    */

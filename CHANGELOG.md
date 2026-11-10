@@ -28,6 +28,17 @@
 
 -
  
+# 4.10.0
+## Fixed Issues
+
+- [connectivity] Fix subscriber destination lookup failing when the identity provider issues tokens with a schemeless `iss` claim, e.g. `tenant.accounts.ondemand.com` instead of `https://tenant.accounts.ondemand.com`. Such issuers are now prefixed with `https://` before being parsed, instead of causing a silent fallback to the provider account. (697b17d)
+- [connectivity] Fix IAS tokens being classified as non-IAS tokens when the identity provider issues them with a schemeless `iss` claim, e.g. `tenant.accounts.ondemand.com` instead of `https://tenant.accounts.ondemand.com`. (697b17d)
+- [openapi-generator] Escape `pathPattern` with `JSON.stringify` in generated code to prevent code injection via crafted OpenAPI path keys. (04ea565)
+
+## Improvements
+
+- [generator, generator-common, openapi-generator] Rename `generateESM` to `generateEsm`. (caf9ad9)
+
 # 4.9.1
 ## Fixed Issues
 

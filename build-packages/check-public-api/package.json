@@ -22,7 +22,7 @@
     "@manypkg/get-packages": "^3.1.0",
     "@sap-cloud-sdk/generator-common": "workspace:^",
     "@sap-cloud-sdk/util": "workspace:^",
-    "glob": "^13.0.6"
+    "glob": "^14.0.0"
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-util-build-internal": "workspace:^",

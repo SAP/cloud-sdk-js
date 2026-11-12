@@ -34,15 +34,3 @@ jobs:
         run: node --inspect test-script.js && cat result.txt
       - name: compare v2 and canary
         run: node scripts/compare-memory-usage.ts "$(cat ./test-packages/memory-tests/sdk-v2/result.txt)" "$(cat ./test-packages/memory-tests/sdk-canary/result.txt)"
-      - name: Slack Notify
-        if: failure() || cancelled()
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_USERNAME: SDK Pipeline Bot
-          SLACK_TITLE: Memory tests ${{ job.status }}
-          SLACK_MESSAGE: 'Test failed'
-          MSG_MINIMAL: event,actions url
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_MSG_AUTHOR: ' '
-          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
-        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0

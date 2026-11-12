@@ -20,15 +20,3 @@ jobs:
         with:
           report-branch: fosstars-report
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Slack Notify
-        if: failure() || cancelled()
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_USERNAME: SDK Pipeline Bot
-          SLACK_TITLE: Fosstars scan ${{ job.status }}
-          SLACK_MESSAGE: 'Test failed'
-          MSG_MINIMAL: event,actions url
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_MSG_AUTHOR: ' '
-          SLACK_ICON: https://sap.github.io/cloud-sdk/img/logo.png
-        uses: rtCamp/action-slack-notify@33ca3be66c6f378fe1610fd1d5258632dbed5e58 # v2.4.0

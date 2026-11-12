@@ -50,6 +50,8 @@ minimumReleaseAgeExclude:
   - multer@2.5.0
   # Renovate security update: fast-xml-parser@5.12.0
   - fast-xml-parser@5.12.0
+  # Renovate security update: glob@14.0.2
+  - glob@14.0.2
 shellEmulator: true
 trustPolicy: no-downgrade
 

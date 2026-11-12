@@ -54,7 +54,7 @@
   "dependencies": {
     "@sap-cloud-sdk/util": "workspace:^",
     "fast-levenshtein": "~3.0.0",
-    "glob": "^13.0.6",
+    "glob": "^14.0.0",
     "prettier": "^3.8.1",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "voca": "^1.4.1",

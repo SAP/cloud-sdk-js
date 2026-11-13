@@ -139,12 +139,6 @@ async function getKeyStoreOptions(destination: Destination): Promise<
       getFormat(certificate) === 'jks' ||
       getFormat(certificate) === 'keystore'
     ) {
-      if (getFips()) {
-        throw new Error(
-          'JKS key decryption is not FIPS 140-2 compliant: the format uses a non-approved cipher. Use PKCS#12 instead.'
-        );
-      }
-
       const { certificateToPem, decryptJksPrivateKey, parseJks } =
         await import('./jks-parser.js');
       const password = destination.keyStorePassword || '';
@@ -260,10 +254,18 @@ function mtlsIsEnabled(destination: Destination) {
 /*
  The node client supports only these store formats https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions.
  */
-const supportedCertificateFormats = ['p12', 'pfx', 'pem', 'jks', 'keystore'];
+const baseCertificateFormats = ['p12', 'pfx', 'pem'];
 
-function isSupportedFormat(format: string | undefined): boolean {
-  return !!format && supportedCertificateFormats.includes(format);
+/*
+ jks/keystore rely on the JKS KeyProtector (a SHA-1 keystream), which is not a
+ FIPS 140-2 approved cipher, so they are only supported when FIPS mode is off.
+ */
+const jksCertificateFormats = ['jks', 'keystore'];
+
+function supportedCertificateFormats(): string[] {
+  return getFips()
+    ? baseCertificateFormats
+    : [...baseCertificateFormats, ...jksCertificateFormats];
 }
 
 function selectCertificate(destination: Destination): DestinationCertificate {
@@ -286,9 +288,15 @@ function getFormat(certificate: DestinationCertificate): string | undefined {
 
 function validateFormat(certificate: DestinationCertificate) {
   const format = getFormat(certificate);
-  if (!isSupportedFormat(format)) {
+  const supported = supportedCertificateFormats();
+  if (!format || !supported.includes(format)) {
+    // Give an actionable hint when a JKS keystore is rejected only because FIPS mode is active.
+    const fipsHint =
+      format && jksCertificateFormats.includes(format) && getFips()
+        ? ' JKS/keystore keystores are not available in FIPS mode because the JKS KeyProtector is not FIPS 140-2 approved; use a PKCS#12 (.p12/.pfx) keystore instead.'
+        : '';
     throw Error(
-      `The format of the provided certificate '${certificate.name}' is not supported. Supported formats are: ${supportedCertificateFormats.join(', ')}.`
+      `The format of the provided certificate '${certificate.name}' is not supported. Supported formats are: ${supported.join(', ')}.${fipsHint}`
     );
   }
 }

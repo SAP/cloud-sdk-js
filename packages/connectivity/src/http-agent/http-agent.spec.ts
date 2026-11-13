@@ -223,12 +223,35 @@ describe('createAgent', () => {
   });
 
   it('rejects JKS keystores in FIPS mode before parsing their contents', async () => {
-    jest.mocked(getFips).mockReturnValueOnce(1);
+    jest.mocked(getFips).mockReturnValue(1);
     await expect(
       getAgentConfig(jksDestination(jksPassword, Buffer.from('invalid')))
-    ).rejects.toThrow(
-      'JKS key decryption is not FIPS 140-2 compliant: the format uses a non-approved cipher. Use PKCS#12 instead.'
-    );
+    ).rejects.toThrow('JKS/keystore keystores are not available in FIPS mode');
+  });
+
+  it('still accepts PKCS#12 keystores in FIPS mode', async () => {
+    jest.mocked(getFips).mockReturnValue(1);
+    const destination: HttpDestination = {
+      url: 'https://destination.example.com',
+      authentication: 'ClientCertificateAuthentication',
+      keyStoreName: 'cert.p12',
+      keyStorePassword: 'password',
+      certificates: [
+        {
+          name: 'cert.p12',
+          content: 'base64string',
+          type: 'CERTIFICATE'
+        }
+      ]
+    };
+
+    expect(
+      (await getAgentConfig(destination))['httpsAgent']['options']
+    ).toMatchObject({
+      rejectUnauthorized: true,
+      passphrase: 'password',
+      pfx: Buffer.from('base64string', 'base64')
+    });
   });
 
   it('extracts a matching client certificate and private key from a JKS keystore', async () => {

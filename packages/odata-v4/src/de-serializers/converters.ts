@@ -126,15 +126,33 @@ function validateTime({ hours, minutes, seconds }: Time): boolean {
   if (hours < 0 || minutes < 0 || seconds < 0) {
     return false;
   }
-  if (hours > 23 || minutes > 59 || seconds > 59) {
+  // Seconds can have a fractional part, e.g. 59.5, so they must be checked against 60.
+  if (hours > 23 || minutes > 59 || seconds >= 60) {
     return false;
   }
   return true;
 }
 
 function padTimeComponent(timeComponent: number): string {
-  const [wholeNumber, fractionalNumber] = timeComponent.toString().split('.');
+  const [wholeNumber, fractionalNumber] =
+    toDecimalNotation(timeComponent).split('.');
   return fractionalNumber
     ? [wholeNumber.padStart(2, '0'), fractionalNumber].join('.')
     : wholeNumber.padStart(2, '0');
+}
+
+/**
+ * `Number.prototype.toString()` uses exponential notation for numbers below 1e-6, e.g. `1e-7`.
+ * Convert those to decimal notation, e.g. `0.0000001`, keeping all digits.
+ * @param value - Non-negative time component.
+ * @returns The time component in decimal notation.
+ */
+function toDecimalNotation(value: number): string {
+  const stringValue = value.toString();
+  const exponential = /^(\d)(?:\.(\d+))?e-(\d+)$/.exec(stringValue);
+  if (!exponential) {
+    return stringValue;
+  }
+  const [, leadingDigit, fractionDigits = '', exponent] = exponential;
+  return `0.${'0'.repeat(parseInt(exponent) - 1)}${leadingDigit}${fractionDigits}`;
 }

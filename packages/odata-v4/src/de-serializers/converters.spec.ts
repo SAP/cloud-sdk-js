@@ -401,6 +401,53 @@ describe('EDM to moment and back', () => {
       ).toBe('12:34:56.789');
     });
 
+    it('handles fractional seconds in the last second of a minute', () => {
+      expect(
+        serializeToTime({
+          hours: 23,
+          minutes: 59,
+          seconds: 59.5
+        })
+      ).toBe('23:59:59.5');
+      expect(
+        serializeToTime({
+          hours: 12,
+          minutes: 0,
+          seconds: 59.0001
+        })
+      ).toBe('12:00:59.0001');
+    });
+
+    it('handles fractional seconds below one microsecond without exponential notation', () => {
+      expect(
+        serializeToTime({
+          hours: 12,
+          minutes: 30,
+          seconds: 0.0000001
+        })
+      ).toBe('12:30:00.0000001');
+      expect(
+        serializeToTime({
+          hours: 0,
+          minutes: 0,
+          seconds: 0.000000123
+        })
+      ).toBe('00:00:00.000000123');
+    });
+
+    it('serializes deserialized times back to the original value', () => {
+      [
+        '00:00:00',
+        '12:34:56.789',
+        '23:59:59.5',
+        '23:59:59.999',
+        '12:30:00.0000001',
+        '24:00:00'
+      ].forEach(time => {
+        expect(serializeToTime(deserializeToTime(time))).toBe(time);
+      });
+    });
+
     xit('handles times with timezones', () => {
       // Currently not supported by us
     });
@@ -443,6 +490,13 @@ describe('EDM to moment and back', () => {
           hours: 12,
           minutes: 34,
           seconds: 90
+        })
+      ).toThrow();
+      expect(() =>
+        serializeToTime({
+          hours: 12,
+          minutes: 34,
+          seconds: 60
         })
       ).toThrow();
     });

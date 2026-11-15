@@ -1,5 +1,19 @@
 # @sap-cloud-sdk/openapi-generator
 
+## 4.10.0
+
+### Minor Changes
+
+- caf9ad9: [improvement] Rename `generateESM` to `generateEsm`.
+
+### Patch Changes
+
+- 04ea565: [fix] Escape `pathPattern` with `JSON.stringify` in generated code to prevent code injection via crafted OpenAPI path keys.
+- Updated dependencies [caf9ad9]
+  - @sap-cloud-sdk/generator-common@4.10.0
+  - @sap-cloud-sdk/openapi@4.10.0
+  - @sap-cloud-sdk/util@4.10.0
+
 ## 4.9.1
 
 ### Patch Changes

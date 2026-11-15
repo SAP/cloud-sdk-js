@@ -1,5 +1,20 @@
 # @sap-cloud-sdk/generator
 
+## 4.10.0
+
+### Minor Changes
+
+- caf9ad9: [improvement] Rename `generateESM` to `generateEsm`.
+
+### Patch Changes
+
+- Updated dependencies [caf9ad9]
+  - @sap-cloud-sdk/generator-common@4.10.0
+  - @sap-cloud-sdk/odata-common@4.10.0
+  - @sap-cloud-sdk/odata-v2@4.10.0
+  - @sap-cloud-sdk/odata-v4@4.10.0
+  - @sap-cloud-sdk/util@4.10.0
+
 ## 4.9.1
 
 ### Patch Changes

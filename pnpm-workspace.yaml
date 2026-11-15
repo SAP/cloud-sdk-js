@@ -48,6 +48,8 @@ minimumReleaseAgeExclude:
   - moment@2.31.0
   # Renovate security update: multer@2.5.0
   - multer@2.5.0
+  # Renovate security update: fast-xml-parser@5.12.0
+  - fast-xml-parser@5.12.0
 shellEmulator: true
 trustPolicy: no-downgrade
 

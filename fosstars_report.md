@@ -22,6 +22,8 @@ It used the following sub-scores:
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
+    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+        
     1.  **[Static analysis](#static-analysis)**: **10.0** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
@@ -35,8 +37,6 @@ It used the following sub-scores:
             
         1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **N/A** (weight is 0.2)
             
-    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-        
     1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
         
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
@@ -52,6 +52,8 @@ It used the following sub-scores:
                 
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
                 
+        1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+            
         1.  **[Static analysis](#static-analysis)**: **10.0** (weight is 1.0)
             1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
                 
@@ -65,8 +67,6 @@ It used the following sub-scores:
                 
             1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **N/A** (weight is 0.2)
                 
-        1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-            
         1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
             
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
@@ -146,6 +146,8 @@ This sub-score is based on the following sub-scores:
         
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
         
+1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+    
 1.  **[Static analysis](#static-analysis)**: **10.0** (weight is 1.0)
     1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
         
@@ -159,8 +161,6 @@ This sub-score is based on the following sub-scores:
         
     1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **N/A** (weight is 0.2)
         
-1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-    
 1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
     
 1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
@@ -219,6 +219,8 @@ This sub-score is based on the following sub-score:
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
+    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+        
     1.  **[Static analysis](#static-analysis)**: **10.0** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
@@ -232,8 +234,6 @@ This sub-score is based on the following sub-score:
             
         1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **N/A** (weight is 0.2)
             
-    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-        
     1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
         
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
@@ -285,14 +285,14 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-156 commits in the last 3 months results to 10.00 points
+148 commits in the last 3 months results to 10.00 points
 3 contributors increase the score value from 10.00 to 11.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 156
+1.  **Number of commits in the last three months:** 148
 1.  **Number of contributors in the last three months:** 3
 
 
@@ -348,6 +348,22 @@ This sub-score is based on the following sub-scores:
     
 
 
+### Fuzzing
+
+Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 2 features:
+
+
+
+1.  **Is it included to OSS-Fuzz?** No
+1.  **Programming languages:** JAVASCRIPT, TYPESCRIPT, OTHER
+
+
 ### Static analysis
 
 Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
@@ -372,22 +388,6 @@ This sub-score is based on the following sub-scores:
     
 1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **N/A** (weight is 0.2)
     
-
-
-### Fuzzing
-
-Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 2 features:
-
-
-
-1.  **Is it included to OSS-Fuzz?** No
-1.  **Programming languages:** JAVASCRIPT, TYPESCRIPT, OTHER
 
 
 ### Memory-safety testing

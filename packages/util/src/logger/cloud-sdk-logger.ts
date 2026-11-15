@@ -31,12 +31,15 @@ const moduleLogger = createLogger({
   messageContext: 'cloud-sdk-logger'
 });
 
-function toggleMuteLoggers(silence: boolean) {
+/**
+ * Mute/Unmute all logger output created by the SAP Cloud SDK Logger.
+ */
+function toggleMuteLoggers(silence: boolean): void {
   silent = silence;
   container.loggers.forEach(logger => toggleSilenceTransports(logger, silence));
 }
 
-function toggleSilenceTransports(logger: Logger, silence: boolean) {
+function toggleSilenceTransports(logger: Logger, silence: boolean): void {
   logger.transports.forEach(transport => (transport.silent = silence));
 }
 
@@ -144,9 +147,7 @@ export function createLogger(
 export function getLogger(
   messageContext = DEFAULT_LOGGER__MESSAGE_CONTEXT
 ): Logger | undefined {
-  if (container.has(messageContext)) {
-    return container.get(messageContext);
-  }
+  return container.get(messageContext) ?? undefined;
 }
 
 /**
@@ -314,7 +315,7 @@ function isCookieHeader(inputKey: string, value: any): boolean {
  * @param sensitiveKeys - The list of keys to be replaced. This overrides the default list.
  * @returns The sanitized copy of the input record.
  */
-export function sanitizeRecord<T = any>(
+export function sanitizeRecord<T = unknown>(
   input: Record<string, T>,
   replacementString = '<DATA NOT LOGGED TO PREVENT LEAKING SENSITIVE DATA>',
   sensitiveKeys: string[] = defaultSensitiveKeys

@@ -18,10 +18,7 @@ interface RawJksKeyEntry {
   certChain: Uint8Array[];
 }
 
-interface RawJksStore {
-  entryCount: number;
-  keyEntries: RawJksKeyEntry[];
-}
+type RawJksStore = Record<string, RawJksKeyEntry | undefined>;
 
 class BinaryReader {
   private readonly view: DataView;
@@ -105,7 +102,8 @@ export function parseJks(data: Uint8Array, password: string): RawJksStore {
     throw new Error(`Unreasonable JKS entry count: ${entryCount}`);
   }
 
-  const keyEntries: RawJksKeyEntry[] = [];
+  // Alias dictionaries preserve legacy enumeration order and duplicate replacement.
+  const entries = Object.create(null) as RawJksStore;
   for (let index = 0; index < entryCount; index++) {
     const tag = reader.readU32();
     if (tag === KEY_ENTRY) {
@@ -117,11 +115,12 @@ export function parseJks(data: Uint8Array, password: string): RawJksStore {
       for (let chainIndex = 0; chainIndex < chainLength; chainIndex++) {
         certChain.push(readCertificate(reader));
       }
-      keyEntries.push({ alias, encryptedKey, certChain });
+      entries[alias] = { alias, encryptedKey, certChain };
     } else if (tag === CERT_ENTRY) {
-      reader.readUTF(); // Alias.
+      const alias = reader.readUTF();
       reader.readBytes(8); // Timestamp.
       readCertificate(reader);
+      entries[alias] = undefined;
     } else {
       throw new Error(`Unknown JKS entry tag: ${tag}`);
     }
@@ -143,7 +142,7 @@ export function parseJks(data: Uint8Array, password: string): RawJksStore {
     );
   }
 
-  return { entryCount, keyEntries };
+  return entries;
 }
 
 interface DerElement {

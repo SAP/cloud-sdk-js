@@ -135,9 +135,11 @@ async function getKeyStoreOptions(destination: Destination): Promise<
 
     const certBuffer = Buffer.from(certificate.content, 'base64');
 
+    // JKS and PKCS#12 keystores can share a filename extension.
     if (
-      getFormat(certificate) === 'jks' ||
-      getFormat(certificate) === 'keystore'
+      (getFormat(certificate) === 'jks' ||
+        getFormat(certificate) === 'keystore') &&
+      isJks(certBuffer)
     ) {
       if (getFips()) {
         throw new Error(
@@ -148,22 +150,23 @@ async function getKeyStoreOptions(destination: Destination): Promise<
       const { certificateToPem, decryptJksPrivateKey, parseJks } =
         await import('./jks-parser.js');
       const password = destination.keyStorePassword || '';
-      const keystore = parseJks(certBuffer, password);
-      if (keystore.entryCount === 0) {
+      const entries = Object.values(parseJks(certBuffer, password));
+      if (entries.length === 0) {
         throw Error('No entries found in JKS keystore');
       }
 
-      const [entry] = keystore.keyEntries;
-      if (!entry || entry.certChain.length === 0) {
-        throw Error('Invalid JKS entry: missing cert or key');
-      }
+      const [entry] = entries;
 
-      if (keystore.entryCount > 1) {
+      if (entries.length > 1) {
         logger.debug(
-          `JKS keystore contains ${keystore.entryCount} aliases. ` +
+          `JKS keystore contains ${entries.length} aliases. ` +
             'Using the first one. ' +
             'If this is not the correct certificate, please use a JKS file with only one entry.'
         );
+      }
+
+      if (!entry || entry.certChain.length === 0) {
+        throw Error('Invalid JKS entry: missing cert or key');
       }
 
       return {
@@ -258,7 +261,8 @@ function mtlsIsEnabled(destination: Destination) {
 }
 
 /*
- The node client supports only these store formats https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions.
+ * The node client supports only these store formats https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions.
+ * In addition, the JKS/keystore format is accepted.
  */
 const supportedCertificateFormats = ['p12', 'pfx', 'pem', 'jks', 'keystore'];
 
@@ -282,6 +286,10 @@ function selectCertificate(destination: Destination): DestinationCertificate {
 
 function getFormat(certificate: DestinationCertificate): string | undefined {
   return last(certificate.name.split('.'));
+}
+
+function isJks(data: Buffer): boolean {
+  return data.length >= 4 && data.readUInt32BE(0) === 0xfeedfeed;
 }
 
 function validateFormat(certificate: DestinationCertificate) {

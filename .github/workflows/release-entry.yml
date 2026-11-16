@@ -40,8 +40,6 @@ jobs:
       pull-requests: write
       id-token: write
     uses: $/.github/workflows/build.yml
-    secrets:
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
     with:
       canary-release-skip-checks: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.canary-release == 'Skip Tests and Checks (Force Release)' }}
       is-workflow-call: true

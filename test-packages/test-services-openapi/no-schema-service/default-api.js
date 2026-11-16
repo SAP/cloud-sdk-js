@@ -14,7 +14,7 @@ const openapi_1 = require("@sap-cloud-sdk/openapi");
 exports.DefaultApi = {
     _defaultBasePath: '/base/path/to/service',
     /**
-     * Create a request builder for execution of get requests to the '/' endpoint.
+     * Create a request builder for execution of get requests to the "/" endpoint.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
     get: () => new openapi_1.OpenApiRequestBuilder('get', '/', {}, exports.DefaultApi._defaultBasePath)

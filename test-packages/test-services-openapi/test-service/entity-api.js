@@ -22,7 +22,7 @@ exports.EntityApi = {
         queryParameters
     }, exports.EntityApi._defaultBasePath),
     /**
-     * Create a request builder for execution of put requests to the '/entities' endpoint.
+     * Create a request builder for execution of put requests to the "/entities" endpoint.
      * @param body - Request body.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
@@ -40,7 +40,7 @@ exports.EntityApi = {
         headerParameters: { 'content-type': 'application/json' }
     }, exports.EntityApi._defaultBasePath),
     /**
-     * Create a request builder for execution of patch requests to the '/entities' endpoint.
+     * Create a request builder for execution of patch requests to the "/entities" endpoint.
      * @param body - Request body.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */
@@ -49,7 +49,7 @@ exports.EntityApi = {
         headerParameters: { 'content-type': 'application/json' }
     }, exports.EntityApi._defaultBasePath),
     /**
-     * Create a request builder for execution of delete requests to the '/entities' endpoint.
+     * Create a request builder for execution of delete requests to the "/entities" endpoint.
      * @param body - Request body.
      * @returns The request builder, use the `execute()` method to trigger the request.
      */

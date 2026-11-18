@@ -9,6 +9,11 @@
       "onFail": "warn"
     }
   },
+  "pnpm": {
+    "overrides": {
+      "fast-uri@<3.1.9": "^3.1.9"
+    }
+  },
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",

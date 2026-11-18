@@ -11,7 +11,8 @@
   },
   "pnpm": {
     "overrides": {
-      "fast-uri@<3.1.9": "^3.1.9"
+      "fast-uri@<3.1.9": "^3.1.9",
+      "node-forge@<1.4.1": "^1.4.1"
     }
   },
   "sideEffects": false,

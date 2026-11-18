@@ -150,12 +150,15 @@ async function getKeyStoreOptions(destination: Destination): Promise<
       const { certificateToPem, decryptJksPrivateKey, parseJks } =
         await import('./jks-parser.js');
       const password = destination.keyStorePassword || '';
-      const entries = Object.values(parseJks(certBuffer, password));
+      // Restore legacy alias ordering and duplicate replacement before selection.
+      const entries = Object.entries(
+        Object.fromEntries(parseJks(certBuffer, password))
+      );
       if (entries.length === 0) {
         throw Error('No entries found in JKS keystore');
       }
 
-      const [entry] = entries;
+      const entry = entries[0]?.[1];
 
       if (entries.length > 1) {
         logger.debug(

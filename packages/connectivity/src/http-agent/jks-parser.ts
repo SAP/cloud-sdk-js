@@ -13,12 +13,11 @@ const CERT_ENTRY = 2;
 const MAX_ENTRY_COUNT = 65_536;
 
 interface RawJksKeyEntry {
-  alias: string;
   encryptedKey: Uint8Array;
   certChain: Uint8Array[];
 }
 
-type RawJksStore = Record<string, RawJksKeyEntry | undefined>;
+type RawJksEntry = [alias: string, entry: RawJksKeyEntry | undefined];
 
 class BinaryReader {
   private readonly view: DataView;
@@ -83,7 +82,7 @@ function readCertificate(reader: BinaryReader): Uint8Array {
 }
 
 /** @internal */
-export function parseJks(data: Uint8Array, password: string): RawJksStore {
+export function parseJks(data: Uint8Array, password: string): RawJksEntry[] {
   const reader = new BinaryReader(data);
   const magic = reader.readU32();
   if (magic !== JKS_MAGIC) {
@@ -102,8 +101,7 @@ export function parseJks(data: Uint8Array, password: string): RawJksStore {
     throw new Error(`Unreasonable JKS entry count: ${entryCount}`);
   }
 
-  // Alias dictionaries preserve legacy enumeration order and duplicate replacement.
-  const entries = Object.create(null) as RawJksStore;
+  const entries: RawJksEntry[] = [];
   for (let index = 0; index < entryCount; index++) {
     const tag = reader.readU32();
     if (tag === KEY_ENTRY) {
@@ -115,12 +113,12 @@ export function parseJks(data: Uint8Array, password: string): RawJksStore {
       for (let chainIndex = 0; chainIndex < chainLength; chainIndex++) {
         certChain.push(readCertificate(reader));
       }
-      entries[alias] = { alias, encryptedKey, certChain };
+      entries.push([alias, { encryptedKey, certChain }]);
     } else if (tag === CERT_ENTRY) {
       const alias = reader.readUTF();
       reader.readBytes(8); // Timestamp.
       readCertificate(reader);
-      entries[alias] = undefined;
+      entries.push([alias, undefined]);
     } else {
       throw new Error(`Unknown JKS entry tag: ${tag}`);
     }

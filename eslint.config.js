@@ -5,6 +5,7 @@ const tsParser = require('@typescript-eslint/parser');
 const js = require('@eslint/js');
 
 const { FlatCompat } = require('@eslint/eslintrc');
+const { fixupConfigRules } = require('@eslint/compat');
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -49,7 +50,7 @@ module.exports = defineConfig([
       parser: tsParser,
       sourceType: 'module'
     },
-    extends: compat.extends('@sap-cloud-sdk'),
+    extends: fixupConfigRules(compat.extends('@sap-cloud-sdk')),
     rules: {
       radix: 'off',
       'no-restricted-syntax': [
@@ -88,7 +89,7 @@ module.exports = defineConfig([
     '**/*.json'
   ]),
   {
-    files: ['**/test/**/*', '**/*.spec.ts'],
+    files: ['**/test/**/*.ts', '**/*.spec.ts'],
     rules: {
       'import-x/no-internal-modules': 'off',
       'no-unused-expressions': 'off',
@@ -103,9 +104,7 @@ module.exports = defineConfig([
   },
   {
     // avoid circular imports via destination barrel
-    files: [
-      'packages/connectivity/src/scp-cf/token-accessor.ts'
-    ],
+    files: ['packages/connectivity/src/scp-cf/token-accessor.ts'],
     rules: {
       'import-x/no-internal-modules': [
         'error',

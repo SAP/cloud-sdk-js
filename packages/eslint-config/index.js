@@ -18,7 +18,7 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['**/test/**/*', '**/*.spec.ts'],
+      files: ['**/test/**/*.ts', '**/*.spec.ts'],
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         'import-x/no-internal-modules': 'off',
@@ -152,7 +152,7 @@ module.exports = {
       }
     ],
     'import-x/export': 'error',
-    'import-x/order':  [
+    'import-x/order': [
       'error',
       {
         groups: [

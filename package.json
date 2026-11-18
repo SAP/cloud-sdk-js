@@ -12,7 +12,8 @@
   "pnpm": {
     "overrides": {
       "fast-uri@<3.1.9": "^3.1.9",
-      "node-forge@<1.4.1": "^1.4.1"
+      "node-forge@<1.4.1": "^1.4.1",
+      "smol-toml@<1.9.0": "^1.9.0"
     }
   },
   "sideEffects": false,

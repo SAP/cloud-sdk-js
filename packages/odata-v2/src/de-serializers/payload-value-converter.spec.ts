@@ -185,6 +185,22 @@ describe('tsToEdm()', () => {
     expect(actual).toBe(expected);
   });
 
+  it('should parse small and large BigNumbers to Edm.Decimal without exponential notation', () => {
+    expect(
+      tsToEdm(new BigNumber('0.00000001'), 'Edm.Decimal', defaultDeSerializers)
+    ).toBe('0.00000001');
+    expect(
+      tsToEdm(new BigNumber('-1.5e-10'), 'Edm.Decimal', defaultDeSerializers)
+    ).toBe('-0.00000000015');
+    expect(
+      tsToEdm(
+        new BigNumber('1000000000000000000000'),
+        'Edm.Decimal',
+        defaultDeSerializers
+      )
+    ).toBe('1000000000000000000000');
+  });
+
   it('should parse number to Edm.Int16', () => {
     const expected = 16;
     const actual = tsToEdm(16, 'Edm.Int16', defaultDeSerializers);

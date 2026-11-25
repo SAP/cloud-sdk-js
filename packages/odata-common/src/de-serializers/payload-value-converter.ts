@@ -29,7 +29,10 @@ export function deserializeToBigNumber(value: any): BigNumber {
  * @internal
  */
 export function serializeFromBigNumber(value: BigNumber): string {
-  return value.toString();
+  // `toString()` uses exponential notation for small and large values (e.g. `1e-8`, `1e+21`),
+  // which is not a valid OData v2 decimal literal. `toFixed()` without arguments keeps all digits.
+  // The value is wrapped, because `Number.prototype.toFixed()` would round to an integer if a number is passed.
+  return new BigNumber(value).toFixed();
 }
 
 /**

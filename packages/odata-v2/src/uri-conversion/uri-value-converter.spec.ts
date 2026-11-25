@@ -38,6 +38,15 @@ describe('convertToUriFormat', () => {
     expect(convertToUriFormat(new BigNumber('64'), 'Edm.Decimal')).toBe('64M');
   });
 
+  it('Edm.Decimal without exponential notation', () => {
+    expect(convertToUriFormat(new BigNumber('0.00000001'), 'Edm.Decimal')).toBe(
+      '0.00000001M'
+    );
+    expect(convertToUriFormat(new BigNumber('1e21'), 'Edm.Decimal')).toBe(
+      '1000000000000000000000M'
+    );
+  });
+
   it('Edm.Double', () => {
     expect(convertToUriFormat(64, 'Edm.Double')).toBe('64D');
   });

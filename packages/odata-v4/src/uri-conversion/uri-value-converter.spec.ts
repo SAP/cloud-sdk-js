@@ -43,4 +43,13 @@ describe('convertToUriFormat', () => {
       '99.99'
     );
   });
+
+  it('should convert large Edm.Decimal values without exponential notation', () => {
+    expect(convertToUriFormat(new BigNumber('1e21'), 'Edm.Decimal')).toBe(
+      '1000000000000000000000'
+    );
+    expect(convertToUriFormat(1e21, 'Edm.Decimal')).toBe(
+      '1000000000000000000000'
+    );
+  });
 });

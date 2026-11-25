@@ -126,6 +126,62 @@ describe('token accessor', () => {
       expect(actual).toBe(accessToken);
     });
 
+    describe('security: tenant subdomain validation (PSINC0014501)', () => {
+      // A crafted `ext_attr.zdn` must never be used to build the OAuth2 token
+      // endpoint host — otherwise the client-credentials request (carrying the
+      // binding's client_id/client_secret) would be redirected to an
+      // attacker-controlled host (SSRF, GHSA-4mv3-jxxm-9cx2 / CVE-2026-89111).
+      it.each([
+        ['attacker.example:1234/', 'https://attacker.example:1234'],
+        ['127.0.0.1:9999/', 'https://127.0.0.1:9999']
+      ])(
+        'serviceToken rejects a crafted `zdn` "%s" and sends no token request',
+        async (maliciousZdn, attackerOrigin) => {
+          const attackerScope = nock(attackerOrigin)
+            .post('/oauth/token')
+            .reply(200, { access_token: 'leaked' });
+          const jwt = signedXsuaaJwt({ ext_attr: { zdn: maliciousZdn } });
+
+          await expect(serviceToken('destination', { jwt })).rejects.toThrow(
+            /Invalid tenant subdomain/
+          );
+          expect(attackerScope.isDone()).toBe(false);
+        }
+      );
+
+      it('jwtBearerToken rejects a crafted `zdn` and sends no token request', async () => {
+        const attackerScope = nock('https://attacker.example:1234')
+          .post('/oauth/token')
+          .reply(200, { access_token: 'leaked' });
+        const jwt = signedXsuaaJwt({
+          ext_attr: { zdn: 'attacker.example:1234/' }
+        });
+
+        await expect(jwtBearerToken(jwt, 'destination')).rejects.toThrow(
+          /Invalid tenant subdomain/
+        );
+        expect(attackerScope.isDone()).toBe(false);
+      });
+
+      it('still resolves the token from the subscriber host for a valid `zdn`', async () => {
+        const accessToken = signedJwt({ dummy: 'content' });
+        const jwt = signedXsuaaJwt({
+          ext_attr: { zdn: testTenants.subscriber }
+        });
+
+        mockClientCredentialsGrantCall(
+          subscriberXsuaaUrl,
+          { access_token: accessToken },
+          200,
+          destinationBindingClientSecretMock.credentials
+        );
+
+        await expect(serviceToken('destination', { jwt })).resolves.toBe(
+          accessToken
+        );
+      });
+    });
+
     it('authenticates with certificate', async () => {
       mockServiceBindings({ mockDestinationBindingWithCert: true });
       const expected = signedJwt({ dummy: 'content' });

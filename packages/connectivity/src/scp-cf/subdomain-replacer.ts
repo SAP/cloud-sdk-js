@@ -32,6 +32,35 @@ function getHost(url: URL): string {
   return host;
 }
 
+// A single RFC 1123 DNS label: ASCII letters, digits and hyphens, not starting
+// or ending with a hyphen, at most 63 characters long. Mirrors the validation
+// used by the SAP Cloud SDK for Python (GHSA-4mv3-jxxm-9cx2 / CVE-2026-89111).
+const tenantSubdomainRegex = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$/;
+
+/**
+ * @internal
+ * Validates that a tenant subdomain is a single RFC 1123 DNS label before it is
+ * used to build an OAuth2 token endpoint host. A crafted subdomain (e.g. one
+ * containing `.`, `:` or `/`) could otherwise redirect the token request to an
+ * attacker-controlled host and leak the service binding's client credentials
+ * (SSRF, CWE-918).
+ *
+ * An `undefined` subdomain is a no-op (no subdomain is used). Any defined value
+ * that is not a valid DNS label throws.
+ * @param subdomain - The tenant subdomain to validate.
+ * @throws If `subdomain` is defined but not a valid RFC 1123 DNS label.
+ */
+export function validateTenantSubdomain(subdomain: string | undefined): void {
+  if (subdomain === undefined) {
+    return;
+  }
+  if (!tenantSubdomainRegex.test(subdomain)) {
+    throw new Error(
+      `Invalid tenant subdomain: "${subdomain}". Expected a single RFC 1123 DNS label (ASCII letters, digits and hyphens, not starting or ending with a hyphen, at most 63 characters).`
+    );
+  }
+}
+
 /**
  * @internal
  * Replaces the first part of the hostname (subdomain) in a URL.

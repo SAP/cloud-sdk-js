@@ -1,7 +1,10 @@
 import { createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
 import { decode } from 'jsonwebtoken';
 import { Cache } from '../cache';
-import { getIssuerSubdomain } from '../subdomain-replacer';
+import {
+  getIssuerSubdomain,
+  validateTenantSubdomain
+} from '../subdomain-replacer';
 import type {
   Jwt,
   JwtPayload,
@@ -111,10 +114,15 @@ export function getSubdomain(
   jwt: JwtPayload | string | undefined
 ): string | undefined {
   const decodedJwt = jwt ? decodeJwt(jwt) : {};
-  return (
+  const subdomain =
     decodedJwt?.ext_attr?.zdn ||
-    (isIasToken(decodedJwt) ? undefined : getIssuerSubdomain(decodedJwt))
-  );
+    (isIasToken(decodedJwt) ? undefined : getIssuerSubdomain(decodedJwt));
+  // The subdomain can originate from an attacker-controlled JWT claim
+  // (`ext_attr.zdn`) and is used to build the OAuth2 token endpoint host.
+  // Reject anything that is not a plain DNS label to prevent token-request SSRF
+  // and client-credential disclosure (see GHSA-4mv3-jxxm-9cx2 / CVE-2026-89111).
+  validateTenantSubdomain(subdomain);
+  return subdomain;
 }
 
 /**

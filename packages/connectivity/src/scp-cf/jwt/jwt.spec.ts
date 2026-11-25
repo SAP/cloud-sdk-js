@@ -104,6 +104,31 @@ describe('jwt', () => {
         })
       ).toBe('subscriber');
     });
+
+    it('throws for a crafted `zdn` that is not a DNS label (SSRF vector)', () => {
+      // A malicious zdn would otherwise be used to build the OAuth2 token
+      // endpoint host and redirect the client-credentials request to an
+      // attacker (GHSA-4mv3-jxxm-9cx2 / CVE-2026-89111).
+      expect(() =>
+        getSubdomain({ ext_attr: { zdn: 'attacker.example:1234/' } })
+      ).toThrow(/Invalid tenant subdomain/);
+      expect(() =>
+        getSubdomain({ ext_attr: { zdn: '127.0.0.1:9999/' } })
+      ).toThrow(/Invalid tenant subdomain/);
+    });
+
+    it('still derives the subdomain from the issuer when no `zdn` is present', () => {
+      expect(
+        getSubdomain({
+          iss: 'https://subscriber.authentication.sap.hana.ondemand.com'
+        })
+      ).toBe('subscriber');
+    });
+
+    it('returns undefined when neither `zdn` nor issuer is present', () => {
+      expect(getSubdomain({})).toBeUndefined();
+      expect(getSubdomain(undefined)).toBeUndefined();
+    });
   });
 
   describe('retrieveJwt()', () => {

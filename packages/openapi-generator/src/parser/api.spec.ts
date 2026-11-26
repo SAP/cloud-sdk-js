@@ -93,6 +93,134 @@ describe('parseApis', () => {
     ]);
   });
 
+  it('preserves first-pass names when operation IDs are deduplicated', async () => {
+    const document: OpenAPIV3.Document = {
+      ...emptyDocument,
+      paths: {
+        '/duplicates': {
+          get: {
+            tags: ['duplicates'],
+            operationId: 'duplicateOperationId',
+            responses: { 200: { description: 'ok' } }
+          },
+          post: {
+            tags: ['duplicates'],
+            operationId: 'duplicateOperationId',
+            responses: { 200: { description: 'ok' } }
+          },
+          put: {
+            tags: ['duplicates'],
+            operationId: 'duplicateOperationId_1',
+            responses: { 200: { description: 'ok' } }
+          },
+          patch: {
+            tags: ['duplicates'],
+            operationId: 'duplicateOperationId1',
+            responses: { 200: { description: 'ok' } }
+          }
+        }
+      }
+    };
+    const nonStrictOptions = { ...options, strictNaming: false };
+
+    expect(
+      parseApis(
+        document,
+        await createRefs(document, nonStrictOptions),
+        nonStrictOptions
+      )[0].operations.map(({ operationId }) => operationId)
+    ).toEqual([
+      'duplicateOperationId',
+      'duplicateOperationId1_1',
+      'duplicateOperationId_1',
+      'duplicateOperationId1'
+    ]);
+  });
+  it('generates a named operation for every request body media type', async () => {
+    const document: OpenAPIV3.Document = {
+      ...emptyDocument,
+      paths: {
+        '/predict': {
+          post: {
+            tags: ['predict'],
+            operationId: 'predict',
+            requestBody: {
+              required: true,
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: { rows: { type: 'array' } }
+                  }
+                },
+                'multipart/form-data': {
+                  schema: {
+                    type: 'object',
+                    properties: { file: { type: 'string', format: 'binary' } }
+                  }
+                }
+              }
+            },
+            responses: { 200: { description: 'ok' } }
+          }
+        }
+      }
+    };
+
+    const operations = parseApis(
+      document,
+      await createRefs(document, options),
+      options
+    )[0].operations;
+
+    expect(
+      operations.map(operation => [
+        operation.operationId,
+        operation.requestBody?.mediaType
+      ])
+    ).toEqual([
+      ['predictWithJson', 'application/json'],
+      ['predictWithMultipartFormData', 'multipart/form-data']
+    ]);
+    const requestBody = document.paths!['/predict']!.post!
+      .requestBody as OpenAPIV3.RequestBodyObject;
+    const reversedDocument: OpenAPIV3.Document = {
+      ...document,
+      paths: {
+        '/predict': {
+          post: {
+            ...document.paths!['/predict']!.post,
+            requestBody: {
+              ...requestBody,
+              content: {
+                'multipart/form-data':
+                  requestBody.content!['multipart/form-data'],
+                'application/json': requestBody.content!['application/json']
+              }
+            }
+          }
+        }
+      }
+    };
+    const reversedOperations = parseApis(
+      reversedDocument,
+      await createRefs(reversedDocument, options),
+      options
+    )[0].operations;
+
+    expect(
+      reversedOperations
+        .map(operation => [
+          operation.operationId,
+          operation.requestBody?.mediaType
+        ])
+        .sort()
+    ).toEqual([
+      ['predictWithJson', 'application/json'],
+      ['predictWithMultipartFormData', 'multipart/form-data']
+    ]);
+  });
+
   it('parses APIs based on extensions', async () => {
     interface ExtensionType {
       [apiNameExtension]?: string;

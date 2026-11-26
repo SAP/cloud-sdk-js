@@ -1,10 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { parse as parseContentType, type ContentType } from 'content-type';
-import { parseSchema } from './schema';
+import { parseMediaTypeString, parseSchema } from './schema';
 import type { OpenAPIV3 } from 'openapi-types';
 import type {
   OpenApiMediaTypeObject,
-  OpenApiSchema,
+  OpenApiRequestBody,
   OpenApiV3xSchema
 } from '../openapi-types';
 import type { OpenApiDocumentRefs } from './refs';
@@ -29,6 +29,15 @@ interface EncodingInfo {
 }
 
 type EncodingMap = Record<string, EncodingInfo>;
+
+/**
+ * Parsed schema and wire metadata for one media type.
+ * @internal
+ */
+export type ParsedMediaType = Pick<
+  OpenApiRequestBody,
+  'schema' | 'mediaType' | 'encoding'
+>;
 
 function parseContentTypes(contentType: string): ParsedContentType[] {
   return contentType
@@ -178,29 +187,35 @@ function parseMultipartFormEncodings(
   return Object.keys(allEncodings).length ? allEncodings : undefined;
 }
 /**
- * Parse the type of a resolved request body or response object.
- * @param bodyOrResponseObject - The request body or response object to parse the type from.
+ * Parse one selected or preferred media type from a request body or response.
+ * @param bodyOrResponseObject - The request body or response object to parse.
  * @param refs - Object representing cross references throughout the document.
  * @param options - Options that were set for service generation.
- * @returns The type name of the request body if there is one.
+ * @param requestedMediaType - Optional media type to select from the content map.
+ * @returns Parsed schema, normalized media type, and optional encoding metadata.
  * @internal
  */
 export function parseTopLevelMediaType(
   bodyOrResponseObject:
     OpenAPIV3.RequestBodyObject | OpenAPIV3.ResponseObject | undefined,
   refs: OpenApiDocumentRefs,
-  options: ParserOptions
-):
-  | {
-      schema: OpenApiSchema;
-      mediaType: string;
-      encoding?: EncodingMap;
-    }
-  | undefined {
-  if (bodyOrResponseObject) {
+  options: ParserOptions,
+  requestedMediaType?: string
+): ParsedMediaType | undefined {
+  const normalizedRequestedMediaType = requestedMediaType
+    ? parseMediaTypeString(requestedMediaType)
+    : undefined;
+  if (
+    bodyOrResponseObject &&
+    (!requestedMediaType ||
+      (normalizedRequestedMediaType &&
+        allowedMediaTypes.includes(normalizedRequestedMediaType)))
+  ) {
     const mediaTypeObject = getMediaTypeObject(
       bodyOrResponseObject,
-      allowedMediaTypes
+      normalizedRequestedMediaType
+        ? [normalizedRequestedMediaType]
+        : allowedMediaTypes
     );
 
     if (mediaTypeObject) {
@@ -225,14 +240,9 @@ export function parseMediaType(
     OpenAPIV3.RequestBodyObject | OpenAPIV3.ResponseObject | undefined,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
-):
-  | {
-      schema: OpenApiSchema;
-      mediaType: string;
-      encoding?: EncodingMap;
-    }
-  | undefined {
+): ParsedMediaType | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
+  const normalizedMediaTypes = allMediaTypes.map(parseMediaTypeString);
   if (allMediaTypes.length) {
     const parsedSchema = parseTopLevelMediaType(
       bodyOrResponseObject,
@@ -252,7 +262,10 @@ export function parseMediaType(
       return parsedSchema;
     }
 
-    return allMediaTypes.every(type => allowedMediaTypes.includes(type))
+    const allMediaTypesSupported = normalizedMediaTypes.every(
+      (type): type is string => !!type && allowedMediaTypes.includes(type)
+    );
+    return allMediaTypesSupported
       ? parsedSchema
       : {
           schema: { anyOf: [parsedSchema.schema, { type: 'any' }] },
@@ -284,12 +297,18 @@ function getMediaTypeObject(
 ): OpenApiMediaTypeObject | undefined {
   if (bodyOrResponseObject?.content) {
     const mediaTypeEntry = Object.entries(bodyOrResponseObject.content).find(
-      ([key]) => contentType.includes(key.split(';')[0])
+      ([key]) => {
+        const normalizedMediaType = parseMediaTypeString(key);
+        return (
+          !!normalizedMediaType && contentType.includes(normalizedMediaType)
+        );
+      }
     );
     if (mediaTypeEntry) {
+      const normalizedMediaType = parseMediaTypeString(mediaTypeEntry[0]);
       return {
         ...mediaTypeEntry[1],
-        mediaType: mediaTypeEntry[0].split(';')[0]
+        mediaType: normalizedMediaType || mediaTypeEntry[0]
       };
     }
   }

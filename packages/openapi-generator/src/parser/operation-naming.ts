@@ -1,5 +1,6 @@
 import { partition, pascalCase, camelCase } from '@sap-cloud-sdk/util';
 import { operationNameExtension } from '../extensions';
+import { parseMediaTypeString } from './schema';
 import type { Method } from '../openapi-types';
 import type { OperationInfo } from './parsing-info';
 
@@ -40,6 +41,55 @@ export function nameOperations(operations: OperationInfo[]): OperationInfo[] {
     ...namedOperations,
     ...renamedUnnamedOperations
   ];
+}
+
+/**
+ * Create generated operation names for request body media type variants.
+ * @param operationName - Base operation name.
+ * @param mediaTypes - Media types represented by the operation variants.
+ * @returns One operation name per media type.
+ * @internal
+ */
+export function getOperationVariantNames(
+  operationName: string,
+  mediaTypes: string[]
+): string[] {
+  if (mediaTypes.length <= 1) {
+    return [operationName];
+  }
+
+  const shortSuffixes = mediaTypes.map(getMediaTypeSuffix);
+  const suffixCounts = new Map<string, number>();
+  shortSuffixes.forEach(suffix => {
+    suffixCounts.set(suffix, (suffixCounts.get(suffix) || 0) + 1);
+  });
+
+  return mediaTypes.map((mediaType, index) => {
+    const shortSuffix = shortSuffixes[index];
+    const suffix =
+      suffixCounts.get(shortSuffix)! > 1
+        ? pascalCase(
+            (
+              parseMediaTypeString(mediaType) || mediaType.toLowerCase()
+            ).replace(/[^a-z0-9]+/gi, ' ')
+          ) || 'MediaType'
+        : shortSuffix;
+    return `${operationName}With${suffix}`;
+  });
+}
+
+function getMediaTypeSuffix(mediaType: string): string {
+  const normalizedMediaType =
+    parseMediaTypeString(mediaType) || mediaType.toLowerCase();
+  if (normalizedMediaType === 'application/json') {
+    return 'Json';
+  }
+  if (normalizedMediaType === 'multipart/form-data') {
+    return 'MultipartFormData';
+  }
+
+  const subtype = normalizedMediaType.split('/')[1] || '';
+  return pascalCase(subtype.replace(/[^a-z0-9]+/gi, ' ')) || 'MediaType';
 }
 
 function validateUniqueExtensions(operations: OperationInfo[]): void {

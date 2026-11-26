@@ -1,4 +1,4 @@
-import { flat, pascalCase } from '@sap-cloud-sdk/util';
+import { flat, identity, pascalCase } from '@sap-cloud-sdk/util';
 import { methods } from '../openapi-types';
 import { apiNameExtension, defaultApiName } from '../extensions';
 import { parseOperation } from './operation';
@@ -45,11 +45,22 @@ export function parseApis(
           return operationInfo;
         }
       );
-      return {
-        name,
-        operations: uniquelyNamedOperations.map(operationInfo =>
+      const parsedOperations = flat(
+        uniquelyNamedOperations.map(operationInfo =>
           parseOperation(operationInfo, refs, options)
         )
+      );
+      const uniqueParsedNames = ensureUniqueNames(
+        parsedOperations.map(({ operationId }) => operationId),
+        options,
+        { format: identity, separator: '_' }
+      );
+      return {
+        name,
+        operations: parsedOperations.map((operation, i) => ({
+          ...operation,
+          operationId: uniqueParsedNames[i]
+        }))
       };
     }
   );

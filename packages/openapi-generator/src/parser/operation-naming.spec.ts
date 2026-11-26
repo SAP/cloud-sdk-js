@@ -1,6 +1,7 @@
 import { operationNameExtension } from '../extensions';
 import {
   getOperationNameFromPatternAndMethod,
+  getOperationVariantNames,
   nameOperations
 } from './operation-naming';
 import type { OperationInfo } from './parsing-info';
@@ -80,5 +81,22 @@ describe('getOperationNameFromPatternAndMethod', () => {
     expect(
       getOperationNameFromPatternAndMethod('/{placeholder}', 'get')
     ).toEqual('getByPlaceholder');
+  });
+});
+
+describe('getOperationVariantNames', () => {
+  it('adds deterministic suffixes to every media type variant', () => {
+    expect(
+      getOperationVariantNames('predict', [
+        'application/json',
+        'multipart/form-data'
+      ])
+    ).toEqual(['predictWithJson', 'predictWithMultipartFormData']);
+  });
+
+  it('uses the full media type when short suffixes collide', () => {
+    expect(
+      getOperationVariantNames('upload', ['application/json', 'text/json'])
+    ).toEqual(['uploadWithApplicationJson', 'uploadWithTextJson']);
   });
 });

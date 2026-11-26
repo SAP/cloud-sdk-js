@@ -1,6 +1,7 @@
 import { filterDuplicatesRight } from '@sap-cloud-sdk/util';
 import { reservedJsKeywords } from '@sap-cloud-sdk/generator-common/internal';
-import { parseRequestBody } from './request-body';
+import { parseRequestBodies } from './request-body';
+import { getOperationVariantNames } from './operation-naming';
 import { parseSchema } from './schema';
 import { parseResponses } from './responses';
 import { ensureUniqueNames } from './unique-naming';
@@ -22,8 +23,12 @@ export function parseOperation(
   { operation, pathPattern, method, pathItemParameters }: OperationInfo,
   refs: OpenApiDocumentRefs,
   options: ParserOptions
-): OpenApiOperation {
-  const requestBody = parseRequestBody(operation.requestBody, refs, options);
+): OpenApiOperation[] {
+  const requestBodies = parseRequestBodies(
+    operation.requestBody,
+    refs,
+    options
+  );
   const response = parseResponses(operation.responses, refs, options);
   const relevantParameters = getRelevantParameters(
     [...(pathItemParameters || []), ...(operation.parameters || [])],
@@ -42,18 +47,31 @@ export function parseOperation(
 
   const pathParameters = parsePathParameters(pathParams, refs, options);
 
-  return {
+  const parsedQueryParameters = parseParameters(queryParams, refs, options);
+  const parsedHeaderParameters = parseParameters(headerParams, refs, options);
+  const parsedPathPattern = parsePathPattern(pathPattern, pathParameters);
+  const requestBodyVariants = requestBodies.length
+    ? requestBodies
+    : [undefined];
+  const operationNames = requestBodies.length
+    ? getOperationVariantNames(
+        operation.operationId!,
+        requestBodies.map(requestBody => requestBody.mediaType)
+      )
+    : [operation.operationId!];
+
+  return requestBodyVariants.map((requestBody, index) => ({
     ...operation,
     method,
     requestBody,
     response,
-    queryParameters: parseParameters(queryParams, refs, options),
-    headerParameters: parseParameters(headerParams, refs, options),
+    queryParameters: parsedQueryParameters,
+    headerParameters: parsedHeaderParameters,
     pathParameters,
-    pathPattern: parsePathPattern(pathPattern, pathParameters),
-    operationId: operation.operationId!,
+    pathPattern: parsedPathPattern,
+    operationId: operationNames[index],
     tags: operation.tags!
-  };
+  }));
 }
 
 /**

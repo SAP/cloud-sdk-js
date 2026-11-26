@@ -653,6 +653,28 @@ describe('parseMediaType', () => {
       encoding: undefined
     });
   });
+  it('normalizes case and parameters for supported media types', async () => {
+    expect(
+      parseMediaType(
+        {
+          content: {
+            'Application/JSON; charset=utf-8': {
+              schema: { type: 'object' }
+            },
+            'multipart/form-data': {
+              schema: { type: 'object' }
+            }
+          }
+        },
+        await createTestRefs(),
+        defaultOptions
+      )
+    ).toEqual({
+      schema: emptyObjectSchema,
+      mediaType: 'application/json',
+      encoding: undefined
+    });
+  });
 
   it('returns anyOf schema if there are unsupported media type and supported media type', async () => {
     expect(
